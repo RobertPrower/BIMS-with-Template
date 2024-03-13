@@ -43,42 +43,42 @@
                     <div class=" text-center row">
 
                           <div class="form-floating mt-3 mb-3 col-md-4">
-                            <input type="text" class="form-control" id="floatingInput" placeholder="name@example.com">
+                            <input type="text" class="form-control" id="floatingInput">
                             <label for="floatingInput">First Name</label>
                           </div>
 
                           <div class="form-floating mt-3 mb-3 col-md-4">
-                            <input type="text" class="form-control" id="floatingInput" placeholder="name@example.com">
+                            <input type="text" class="form-control" id="floatingInput">
                             <label for="floatingInput">Middle Name</label>
                           </div>
 
                           <div class="form-floating mt-3 mb-3 col-md-4">
-                            <input type="text" class="form-control" id="floatingInput" placeholder="name@example.com">
+                            <input type="text" class="form-control" id="floatingInput">
                             <label for="floatingInput">Last Name</label>
                           </div>
 
                           <div class="form-floating mt-3 mb-3 col-md-4">
-                            <input type="text" class="form-control" id="floatingInput" placeholder="name@example.com">
+                            <input type="text" class="form-control" id="floatingInput">
                             <label for="floatingInput">House No. (Blk no, Lot no, Unit no)</label>
                           </div>
 
                           <div class="form-floating mt-3 mb-3 col-md-4">
-                            <input type="text" class="form-control" id="floatingInput" placeholder="name@example.com">
+                            <input type="text" class="form-control" id="floatingInput">
                             <label for="floatingInput">Street</label>
                           </div>
 
                           <div class="form-floating mt-3 mb-3 col-md-4">
-                            <input type="text" class="form-control" id="floatingInput" placeholder="name@example.com">
+                            <input type="text" class="form-control" id="floatingInput">
                             <label for="floatingInput">Subdivision</label>
                           </div>
 
                           <div class="form-floating mt-3 mb-3 col-md-4">
-                            <input type="text" class="form-control" id="floatingInput" placeholder="name@example.com">
+                            <input type="text" class="form-control" id="floatingInput">
                             <label for="floatingInput">Sex</label>
                           </div>
 
                           <div class="mt-3 mb-3 col-md-4">
-                            <select class="form-select" aria-label="Default select example" Style="Height: 48px">
+                            <select class="form-select" aria-label="Default select example" Style="Height: 58px">
                               <option hidden selected>Select Marital Status</option>
                               <option value="Single">Single</option>
                               <option value="Married">Married</option>
@@ -89,22 +89,22 @@
                           </div>
 
                           <div class="form-floating mt-3 mb-3 col-md-4">
-                            <input type="Date" class="form-control" id="floatingInput" placeholder="name@example.com">
+                            <input type="Date" class="form-control" id="floatingInput">
                             <label for="floatingInput">Birth Date</label>
                           </div> 
 
                           <div class="form-floating mt-3 mb-3 col-md-4">
-                            <input type="Text" class="form-control" id="floatingInput" placeholder="name@example.com">
+                            <input type="Text" class="form-control" id="floatingInput">
                             <label for="floatingInput">Birth Place</label>
                           </div> 
 
                           <div class="form-floating mt-3 mb-3 col-md-4">
-                            <input type="" class="form-control" id="floatingInput" placeholder="name@example.com">
+                            <input type="" class="form-control" id="floatingInput">
                             <label for="floatingInput">Cellphone Number</label>
                           </div> 
 
                           <div class="mt-3 mb-3 col-md-4">
-                            <select class="form-select" aria-label="Default select example" Style="Height: 48px">
+                            <select class="form-select" aria-label="Default select example" Style="Height: 58px">
                               <option hidden selected>Is a Voter?</option>
                               <option value="Yes">Yes</option>
                               <option value="No">No</option>

@@ -1292,8 +1292,7 @@ button.disabled:focus {
   color: #4bde97;
   background-color: rgba(75, 222, 151, 0.1);
 }
-input,
-select {
+input {
   border-radius: 6px;
   background-color: #eff0f6;
   min-height: 40px;
