@@ -117,9 +117,9 @@
                     </div>
                 </div>
 
-                <div class="justify-content-md-end col-md-3 mt-3 row-md-3">
+                <div class="justify-content-md-end col-md-3 mt-3">
 
-                  <div class="card" style="border-radius: 20px; height: 300 px">
+                  <div class="card" style="border-radius: 15px;">
                       <div class="card-body text-center">
                           <div class="mt-3 mb-4">
                               <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"

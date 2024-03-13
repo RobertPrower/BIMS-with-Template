@@ -68,9 +68,6 @@ textarea {
   font-size: 100%;
   line-height: 1.15;
   margin: 0;
-  border-color: #11111d;
-  border-style: solid;
-  border-width: 5px;
 }
 button,
 input {
@@ -1292,12 +1289,11 @@ button.disabled:focus {
   color: #4bde97;
   background-color: rgba(75, 222, 151, 0.1);
 }
-input,
-select {
+input {
   border-radius: 6px;
   background-color: #eff0f6;
   min-height: 40px;
-  border: solid 1px !important;
+  border: solid transparent 2px !important;
 }
 input[type="checkbox"],
 input[type="radio"] {
