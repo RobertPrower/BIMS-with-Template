@@ -247,15 +247,15 @@
                             
                             if($row['report_status'] === 'Ongoing'){       
                                 
-                                echo "<td class='d-flex justify-content-center'><div class='p-5'><span class='badge-pending'>{$row['report_status']}</span></div></td>";
+                                echo "<td class='d-flex justify-content-center'><div class='pt-5 pb-5'><span class='badge-pending'>{$row['report_status']}</span></div></td>";
                             
                             }elseif($row['report_status'] === 'Settled'){
 
-                                echo "<td class='d-flex justify-content-center'><div class='p-5'><span class='badge-success'>{$row['report_status']}</span></div></td>";
+                                echo "<td class='d-flex justify-content-center'><div class='pt-5 pb-5'><span class='badge-success'>{$row['report_status']}</span></div></td>";
 
                             }else{
 
-                                echo "<td class='d-flex justify-content-center'><div class='p-5'><span class='badge-trashed'>{$row['report_status']}</span></div></td>";
+                                echo "<td class='d-flex justify-content-center'><div class='pt-5 pb-5'><span class='badge-trashed'>{$row['report_status']}</span></div></td>";
                             }
 
                             echo "<td>{$row['date_of_incident']}</td>";
@@ -268,12 +268,12 @@
 
                             // For the Delete Button 
 
-                            /*echo "<form method='post' action='include/deleteblotterbtn.php' onsubmit='return confirmDelete();'>";
+                            echo "<form method='post' action='include/deleteblotterbtn.php' onsubmit='return confirmDelete();'>";
                             echo "<input type='hidden' name='delete_blotter_id' value='" . $row['blotter_id'] . "'>";
                             echo "<button type='submit' id='showdeletealert' name='deletebtn' class='btn btn-danger mx-1'>Delete</button>";
                             echo "</form>";
                             echo "</div>";
-                            echo "</td>";*/
+                            echo "</td>";
                             echo "</tr>";
                         }
                         ?>
