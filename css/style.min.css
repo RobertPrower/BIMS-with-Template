@@ -1275,24 +1275,28 @@ button.disabled:focus {
   text-align: center;
 }
 .badge-active {
-  color: #a0b5eb;
-  background-color: rgba(88, 135, 255, 0.1);
+  color: #f3f7ff;
+  background-color: rgba(88, 135, 255, 0.87);
+  align-items: center;
 }
 .badge-pending {
-  color: #ffb648;
-  background-color: rgba(255, 172, 50, 0.1);
+  color: #f3f7ff;
+  background-color: rgba(255, 173, 50, 0.822);
 }
 .badge-disabled {
   color: #fff;
   background-color: #ffb648;
+  align-items: center;
 }
 .badge-trashed {
-  color: #f26464;
-  background-color: rgba(245, 91, 93, 0.1);
+  color: #ffeeee;
+  background-color: rgba(245, 91, 93, 0.952);
+  align-items: center;
 }
 .badge-success {
-  color: #4bde97;
-  background-color: rgba(75, 222, 151, 0.1);
+  color: #e4f7ed;
+  background-color: rgba(0, 109, 56, 0.979);
+  align-items: center;
 }
 input,
 select {
@@ -1382,7 +1386,7 @@ label {
 }
 .users-table table {
   width: 100%;
-  text-align: left;
+  text-align: center;
   border-collapse: collapse;
   -webkit-transition: none;
   -o-transition: none;
@@ -1424,7 +1428,7 @@ label {
   padding-bottom: 15px;
 }
 .users-table td:first-child {
-  padding-left: 20px;
+  padding-left: 5px;
 }
 .users-table tbody {
   font-size: 14px;
@@ -1965,6 +1969,7 @@ label {
   -ms-flex-pack: end;
   justify-content: flex-end;
 }
+
 .stat-cards {
   margin-right: -10px;
   margin-left: -10px;
