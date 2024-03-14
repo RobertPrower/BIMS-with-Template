@@ -1384,14 +1384,18 @@ label {
   -webkit-transition: none;
   -o-transition: none;
   transition: none;
+  background-color: #bcbcbc;
 }
 .users-table-info {
   height: 48px;
   border-bottom: 1.2px solid #dadbe4;
   font-size: 14px;
+
 }
 .users-table-info th {
   font-weight: 500;
+  border-color: #11111d;
+
 }
 .users-table__checkbox {
   display: -webkit-box;
@@ -1412,11 +1416,13 @@ label {
   margin-right: 20px;
 }
 .users-table td {
-  background-color: #fff;
+  background-color: #dadada;
   border-top: 1px solid #eee;
   border-bottom: 1px solid #eee;
   padding-top: 15px;
   padding-bottom: 15px;
+
+  
 }
 .users-table td:first-child {
   padding-left: 20px;

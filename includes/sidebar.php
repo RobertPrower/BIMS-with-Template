@@ -5,8 +5,8 @@
                 <span class="sr-only">Home</span>
                 <span class="icon logo" aria-hidden="true"></span>
                 <div class="logo-text">
-                    <span class="logo-title">Elegant</span>
-                    <span class="logo-subtitle">Dashboard</span>
+                    <span class="logo-title">BIMS</span>
+                    <!--span class="logo-subtitle">Dashboard</span-->
                 </div>
 
             </a>
@@ -18,7 +18,7 @@
         <div class="sidebar-body">
             <ul class="sidebar-body-menu">
                 <li>
-                    <a href="/"><span class="icon home" aria-hidden="true"></span>Dashboard</a>
+                    <a href="index.php"><span class="icon home" aria-hidden="true"></span>Dashboard</a>
                 </li>
                 <li>
                     <a class="show-cat-btn" href="##">

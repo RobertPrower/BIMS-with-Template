@@ -37,7 +37,26 @@
     <form action="include/addresidentbtn.php" method="POST" enctype="multipart/form-data">
         <div class="form first">
             <div class="row">
-                <span class="title"><h3>Create New Resident</h3></span>
+                <span class="main-title"><h3>Create New Resident</h3></span>
+
+                <div class="justify-content-md-end col-md-3 mt-3 row-md-3">
+
+                  <div class="card" style="border-radius: 15px; height: 400px">
+                      <div class="card-body text-center">
+                          <div class="mt-3 mb-4">
+                              <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
+                              class="rounded-circle img-fluid" style="width: 200px;" />
+                          </div>
+                              <button type="button" class="btn btn-primary btn-lg col-md-12">Open Camera</button>
+
+
+                          <div class="form-floating mt-3 mb-3 col-md-13">
+                              <input type="file" class="form-control" id="floatingInput" placeholder="Upload Picture">
+                              <label for="floatingInput">Upload Image</label>
+                          </div>  
+                      </div>
+                  </div>
+                </div>
 
                 <div class="card col-md-9 p-3 mt-3 " style="border-radius: 15px;">
                     <div class=" text-center row">
@@ -116,21 +135,15 @@
                     </div>
                 </div>
 
-                <div class="justify-content-md-end col-md-3 mt-3 row-md-3">
+                <div class="container col-md-14">
 
-                  <div class="card" style="border-radius: 15px; height: 310px">
-                      <div class="card-body text-center">
-                          <div class="mt-3 mb-4">
-                              <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
-                              class="rounded-circle img-fluid" style="width: 100px;" />
-                            <div class="form-floating mt-3 mb-3 col-md-12">
-                              <input type="file" class="form-control" id="floatingInput" placeholder="Upload Picture">
-                              <label for="floatingInput">Upload Image</label>
-                            </div>
-                          </div>
-                      </div>
-                  </div>
+                    <div class="d-grid gap-5 d-md-flex justify-content-md-end pt-5">
+                        <button class="btn btn-secondary col-md-2" type="button">Back</button>
+                        <button type="submit" class="btn btn-primary col-md-2 ">Add</button>
+                    </div>
+                  
                 </div>
+            </div>
 
                 
                 
