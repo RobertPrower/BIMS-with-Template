@@ -1292,7 +1292,8 @@ button.disabled:focus {
   color: #4bde97;
   background-color: rgba(75, 222, 151, 0.1);
 }
-input, select {
+input,
+select {
   border-radius: 6px;
   background-color: #eff0f6;
   min-height: 40px;
@@ -1390,12 +1391,10 @@ label {
   height: 48px;
   border-bottom: 1.2px solid #dadbe4;
   font-size: 14px;
-
 }
 .users-table-info th {
   font-weight: 500;
   border-color: #11111d;
-
 }
 .users-table__checkbox {
   display: -webkit-box;
@@ -1421,8 +1420,6 @@ label {
   border-bottom: 1px solid #eee;
   padding-top: 15px;
   padding-bottom: 15px;
-
-  
 }
 .users-table td:first-child {
   padding-left: 20px;
