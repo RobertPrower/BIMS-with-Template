@@ -600,7 +600,9 @@ body {
 .main-wrapper {
   position: relative;
   width: 100%;
-  min-height: calc(100vh - 80px); /* Adjust the height as needed based on your footer height */
+  min-height: calc(
+    100vh - 80px
+  ); /* Adjust the height as needed based on your footer height */
   padding-bottom: 50px; /* Adjust the padding to create space between the table and the footer */
 }
 .footer,

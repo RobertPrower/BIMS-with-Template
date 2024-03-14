@@ -1,9 +1,8 @@
 <nav class="main-nav--bg">
   <div class="container main-nav">
-    <div class="main-nav-start">
-      <div class="search-wrapper">
-        <i data-feather="search" aria-hidden="true"></i>
-        <input type="text" placeholder="Enter keywords ..." required>
+    <h2 class="main-title">Dashboard</h2>
+      <div class="main-nav-start">
+        <div class="search-wrapper">
       </div>
     </div>
     <div class="main-nav-end">

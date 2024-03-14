@@ -22,7 +22,7 @@
                 </li>
                 <li>
                     <a class="show-cat-btn" href="##">
-                        <span class="icon document" aria-hidden="true"></span>Posts
+                        <span class="icon document" aria-hidden="true"></span>Users
                         <span class="category__btn transparent-btn" title="Open list">
                             <span class="sr-only">Open list</span>
                             <span class="icon arrow-down" aria-hidden="true"></span>
@@ -39,7 +39,7 @@
                 </li>
                 <li>
                     <a class="show-cat-btn" href="##">
-                        <span class="icon folder" aria-hidden="true"></span>Categories
+                        <span class="icon folder" aria-hidden="true"></span>Clearances
                         <span class="category__btn transparent-btn" title="Open list">
                             <span class="sr-only">Open list</span>
                             <span class="icon arrow-down" aria-hidden="true"></span>
@@ -53,7 +53,7 @@
                 </li>
                 <li>
                     <a class="show-cat-btn" href="##">
-                        <span class="icon image" aria-hidden="true"></span>Media
+                        <span class="icon image" aria-hidden="true"></span>Business Permits
                         <span class="category__btn transparent-btn" title="Open list">
                             <span class="sr-only">Open list</span>
                             <span class="icon arrow-down" aria-hidden="true"></span>
@@ -70,7 +70,7 @@
                 </li>
                 <li>
                     <a class="show-cat-btn" href="##">
-                        <span class="icon paper" aria-hidden="true"></span>Pages
+                        <span class="icon paper" aria-hidden="true"></span>Residents
                         <span class="category__btn transparent-btn" title="Open list">
                             <span class="sr-only">Open list</span>
                             <span class="icon arrow-down" aria-hidden="true"></span>
@@ -88,7 +88,23 @@
                 <li>
                     <a href="comments.html">
                         <span class="icon message" aria-hidden="true"></span>
-                        Comments
+                        Blotters
+                    </a>
+                    <span class="msg-counter">7</span>
+                </li>
+                <ul class="cat-sub-menu">
+                        <li>
+                            <a href="pages.html">All pages</a>
+                        </li>
+                        <li>
+                            <a href="new-page.html">Add new page</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="comments.html">
+                        <span class="icon message" aria-hidden="true"></span>
+                        Officials
                     </a>
                     <span class="msg-counter">7</span>
                 </li>
@@ -96,11 +112,16 @@
             <span class="system-menu__title">system</span>
             <ul class="sidebar-body-menu">
                 <li>
-                    <a href="appearance.html"><span class="icon edit" aria-hidden="true"></span>Appearance</a>
-                </li>
+                    <a class="show-cat-btn" href="##">
+                        <span class="icon category" aria-hidden="true"></span>Activity Log
+                        <span class="category__btn transparent-btn" title="Open list">
+                            <span class="sr-only">Open list</span>
+                            <span class="icon arrow-down" aria-hidden="true"></span>
+                        </span>
+                    </a>
                 <li>
                     <a class="show-cat-btn" href="##">
-                        <span class="icon category" aria-hidden="true"></span>Extentions
+                        <span class="icon category" aria-hidden="true"></span>Backup Database
                         <span class="category__btn transparent-btn" title="Open list">
                             <span class="sr-only">Open list</span>
                             <span class="icon arrow-down" aria-hidden="true"></span>
@@ -112,23 +133,6 @@
                         </li>
                         <li>
                             <a href="extention-02.html">Extentions-02</a>
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <a class="show-cat-btn" href="##">
-                        <span class="icon user-3" aria-hidden="true"></span>Users
-                        <span class="category__btn transparent-btn" title="Open list">
-                            <span class="sr-only">Open list</span>
-                            <span class="icon arrow-down" aria-hidden="true"></span>
-                        </span>
-                    </a>
-                    <ul class="cat-sub-menu">
-                        <li>
-                            <a href="users-01.html">Users-01</a>
-                        </li>
-                        <li>
-                            <a href="users-02.html">Users-02</a>
                         </li>
                     </ul>
                 </li>
