@@ -37,67 +37,67 @@
     <form action="include/addresidentbtn.php" method="POST" enctype="multipart/form-data">
         <div class="form first">
             <div class="row">
-                <span class="title"><h3>Create New Resident</h3></span>
+                <span class="main-title"><h3>Create New Resident</h3></span>
 
                 <div class="justify-content-md-end col-md-3 mt-3 row-md-3">
 
-                    <div class="card" style="border-radius: 15px; height: 400px">
-                        <div class="card-body text-center">
-                            <div class="mt-3 mb-4">
-                                <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
-                                class="rounded-circle img-fluid" style="width: 200px;" />
-                            </div>
-                                <button type="button" class="btn btn-primary btn-lg col-md-12">Open Camera</button>
+                  <div class="card" style="border-radius: 15px; height: 400px">
+                      <div class="card-body text-center">
+                          <div class="mt-3 mb-4">
+                              <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
+                              class="rounded-circle img-fluid" style="width: 200px;" />
+                          </div>
+                              <button type="button" class="btn btn-primary btn-lg col-md-12">Open Camera</button>
 
 
-                            <div class="form-floating mt-3 mb-3 col-md-13">
-                                <input type="file" class="form-control" id="floatingInput" placeholder="Upload Picture">
-                                <label for="floatingInput">Upload Image</label>
-                            </div>  
-                        </div>
-                    </div>
-                    </div>
+                          <div class="form-floating mt-3 mb-3 col-md-13">
+                              <input type="file" class="form-control" id="floatingInput" placeholder="Upload Picture">
+                              <label for="floatingInput">Upload Image</label>
+                          </div>  
+                      </div>
+                  </div>
+                </div>
 
                 <div class="card col-md-9 p-3 mt-3 " style="border-radius: 15px;">
                     <div class=" text-center row">
 
                           <div class="form-floating mt-3 mb-3 col-md-4">
-                            <input type="text" class="form-control" id="floatingInput" placeholder="name@example.com">
+                            <input type="text" class="form-control" id="floatingInput">
                             <label for="floatingInput">First Name</label>
                           </div>
 
                           <div class="form-floating mt-3 mb-3 col-md-4">
-                            <input type="text" class="form-control" id="floatingInput" placeholder="name@example.com">
+                            <input type="text" class="form-control" id="floatingInput">
                             <label for="floatingInput">Middle Name</label>
                           </div>
 
                           <div class="form-floating mt-3 mb-3 col-md-4">
-                            <input type="text" class="form-control" id="floatingInput" placeholder="name@example.com">
+                            <input type="text" class="form-control" id="floatingInput">
                             <label for="floatingInput">Last Name</label>
                           </div>
 
                           <div class="form-floating mt-3 mb-3 col-md-4">
-                            <input type="text" class="form-control" id="floatingInput" placeholder="name@example.com">
+                            <input type="text" class="form-control" id="floatingInput">
                             <label for="floatingInput">House No. (Blk no, Lot no, Unit no)</label>
                           </div>
 
                           <div class="form-floating mt-3 mb-3 col-md-4">
-                            <input type="text" class="form-control" id="floatingInput" placeholder="name@example.com">
+                            <input type="text" class="form-control" id="floatingInput">
                             <label for="floatingInput">Street</label>
                           </div>
 
                           <div class="form-floating mt-3 mb-3 col-md-4">
-                            <input type="text" class="form-control" id="floatingInput" placeholder="name@example.com">
+                            <input type="text" class="form-control" id="floatingInput">
                             <label for="floatingInput">Subdivision</label>
                           </div>
 
                           <div class="form-floating mt-3 mb-3 col-md-4">
-                            <input type="text" class="form-control" id="floatingInput" placeholder="name@example.com">
+                            <input type="text" class="form-control" id="floatingInput">
                             <label for="floatingInput">Sex</label>
                           </div>
 
                           <div class="mt-3 mb-3 col-md-4">
-                            <select class="form-select" aria-label="Default select example" Style="Height: 48px">
+                            <select class="form-select" aria-label="Default select example" Style="Height: 58px">
                               <option hidden selected>Select Marital Status</option>
                               <option value="Single">Single</option>
                               <option value="Married">Married</option>
@@ -108,22 +108,22 @@
                           </div>
 
                           <div class="form-floating mt-3 mb-3 col-md-4">
-                            <input type="Date" class="form-control" id="floatingInput" placeholder="name@example.com">
+                            <input type="Date" class="form-control" id="floatingInput">
                             <label for="floatingInput">Birth Date</label>
                           </div> 
 
                           <div class="form-floating mt-3 mb-3 col-md-4">
-                            <input type="Text" class="form-control" id="floatingInput" placeholder="name@example.com">
+                            <input type="Text" class="form-control" id="floatingInput">
                             <label for="floatingInput">Birth Place</label>
                           </div> 
 
                           <div class="form-floating mt-3 mb-3 col-md-4">
-                            <input type="" class="form-control" id="floatingInput" placeholder="name@example.com">
+                            <input type="" class="form-control" id="floatingInput">
                             <label for="floatingInput">Cellphone Number</label>
                           </div> 
 
                           <div class="mt-3 mb-3 col-md-4">
-                            <select class="form-select" aria-label="Default select example" Style="Height: 48px">
+                            <select class="form-select" aria-label="Default select example" Style="Height: 58px">
                               <option hidden selected>Is a Voter?</option>
                               <option value="Yes">Yes</option>
                               <option value="No">No</option>
@@ -143,6 +143,8 @@
                     </div>
                   
                 </div>
+            </div>
+
                 
                 
                 </div><!--End of Fields -->
