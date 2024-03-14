@@ -97,7 +97,7 @@
                           </div>
 
                           <div class="mt-3 mb-3 col-md-4">
-                            <select class="form-select" aria-label="Default select example" Style="Height: 48px">
+                            <select class="form-select" aria-label="Default select example" Style="Height: 58px">
                               <option hidden selected>Select Marital Status</option>
                               <option value="Single">Single</option>
                               <option value="Married">Married</option>
@@ -123,7 +123,7 @@
                           </div> 
 
                           <div class="mt-3 mb-3 col-md-4">
-                            <select class="form-select" aria-label="Default select example" Style="Height: 48px">
+                            <select class="form-select" aria-label="Default select example" Style="Height: 58px">
                               <option hidden selected>Is a Voter?</option>
                               <option value="Yes">Yes</option>
                               <option value="No">No</option>
