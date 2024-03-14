@@ -31,7 +31,6 @@
     <!-- ! Main -->
     <main class="main users chart-page" id="skip-target">
       <div class="container">
-        <h2 class="main-title">Dashboard</h2>
         <div class="row container">
 
           <div class="col-md-6 col-xl-3">
@@ -133,5 +132,4 @@
 <!-- Custom scripts -->
 <script src="js/script.js"></script>
 </body>
-
 </html>
