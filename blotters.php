@@ -1,3 +1,11 @@
+<?php 
+    include_once("includes/blottersearchfunction.php");
+
+    if (isset($_GET['success']) && $_GET['success'] === "deleted") {
+        echo "<script>alert('Record deleted successfully.')</script>";
+    }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -38,7 +46,130 @@
                         <div class="col-md-9">
                             <!-- Buttons -->
                             <div class="d-flex justify-content-start">
-                                <button type="button" class="btn btn-primary me-2">Add Blotter</button>
+                                <!--a href="createnewblotter.php" class="btn btn-primary me-2">Add Blotter</a-->
+                                <!--button type="button" class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#exampleModal"> Add Blotters </button-->
+
+                                <!-- Button to trigger modal -->
+                                <button type="button" class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#addBlotterModal">Add Blotter</button>
+                                <!-- Add Blotter Modal -->
+                                <div class="modal fade" id="addBlotterModal" tabindex="-1" aria-labelledby="addBlotterModalLabel" aria-hidden="true">
+                                  <div class="modal-dialog modal-xl">
+                                    <div class="modal-content">
+                                      <div class="modal-header">
+                                        <h5 class="modal-title" id="addBlotterModalLabel">Add Blotter</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                      </div>
+                                      <div class="modal-body">
+                                        <!-- Add your form elements here for adding a blotter -->
+                                        <!-- Example form -->
+                                        <div class="row">
+                                            <div class="mt-3" style="width: 270px">
+
+                                                <div class="col card" style="border-radius: 15px; height: 400px">
+                                                    <div class="text-center">
+                                                        <div class="mt-3 mb-4">
+                                                            <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
+                                                            class="rounded-circle img-fluid" style="width: 200px;" />
+                                                        </div>
+                                                            <button type="button" class="btn btn-primary btn-lg col-md-12">Open Camera</button>
+
+
+                                                        <div class="form-floating mt-3 mb-3 col-md-13">
+                                                            <input type="file" class="form-control" id="floatingInput" placeholder="Upload Picture">
+                                                            <label for="floatingInput">Upload Image</label>
+                                                        </div>  
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-9 card mt-3 " style="border-radius: 10px;" style="padding: 10px;">
+                                                <div class="text-center row">
+
+                                                    <div class="form-floating mt-3 mb-3 col-md-4">
+                                                        <input type="text" class="form-control" id="floatingInput" placeholder="name@example.com">
+                                                        <label for="floatingInput">First Name</label>
+                                                    </div>
+
+                                                    <div class="form-floating mt-3 mb-3 col-md-4">
+                                                        <input type="text" class="form-control" id="floatingInput" placeholder="name@example.com">
+                                                        <label for="floatingInput">Middle Name</label>
+                                                    </div>
+
+                                                    <div class="form-floating mt-3 mb-3 col-md-4">
+                                                        <input type="text" class="form-control" id="floatingInput" placeholder="name@example.com">
+                                                        <label for="floatingInput">Last Name</label>
+                                                    </div>
+
+                                                    <div class="form-floating mt-3 mb-3 col-md-4">
+                                                        <input type="text" class="form-control" id="floatingInput" placeholder="name@example.com">
+                                                        <label for="floatingInput">House No. (Blk no, Lot no, Unit no)</label>
+                                                    </div>
+
+                                                    <div class="form-floating mt-3 mb-3 col-md-4">
+                                                        <input type="text" class="form-control" id="floatingInput" placeholder="name@example.com">
+                                                        <label for="floatingInput">Street</label>
+                                                    </div>
+
+                                                    <div class="form-floating mt-3 mb-3 col-md-4">
+                                                        <input type="text" class="form-control" id="floatingInput" placeholder="name@example.com">
+                                                        <label for="floatingInput">Subdivision</label>
+                                                    </div>
+
+                                                    <div class="form-floating mt-3 mb-3 col-md-4">
+                                                        <input type="text" class="form-control" id="floatingInput" placeholder="name@example.com">
+                                                        <label for="floatingInput">Sex</label>
+                                                    </div>
+
+                                                    <div class="mt-3 mb-3 col-md-4">
+                                                        <select class="form-select" aria-label="Default select example" Style="Height: 58px">
+                                                        <option hidden selected>Select Marital Status</option>
+                                                        <option value="Single">Single</option>
+                                                        <option value="Married">Married</option>
+                                                        <option value="Widowed">Widowed</option>
+                                                        <option value="Annul">Annul</option>
+                                                        
+                                                        </select>
+                                                    </div>
+
+                                                    <div class="form-floating mt-3 mb-3 col-md-4">
+                                                        <input type="Date" class="form-control" id="floatingInput" placeholder="name@example.com">
+                                                        <label for="floatingInput">Birth Date</label>
+                                                    </div> 
+
+                                                    <div class="form-floating mt-3 mb-3 col-md-4">
+                                                        <input type="Text" class="form-control" id="floatingInput" placeholder="name@example.com">
+                                                        <label for="floatingInput">Birth Place</label>
+                                                    </div> 
+
+                                                    <div class="form-floating mt-3 mb-3 col-md-4">
+                                                        <input type="" class="form-control" id="floatingInput" placeholder="name@example.com">
+                                                        <label for="floatingInput">Cellphone Number</label>
+                                                    </div> 
+
+                                                    <div class="mt-3 mb-3 col-md-4">
+                                                        <select class="form-select" aria-label="Default select example" Style="Height: 58px">
+                                                        <option hidden selected>Is a Voter?</option>
+                                                        <option value="Yes">Yes</option>
+                                                        <option value="No">No</option>
+                                                        </select>
+                                                    </div>
+                                                
+
+
+                                                </div>
+                                        </div>
+                                        </div>
+                                      </div>
+                                      <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                        <button type="button" class="btn btn-primary">Save</button>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <!-- End of Add Blotter Modal -->
+                              
+
                                 <button type="button" class="btn btn-primary me-2">Edit Blotter</button>
                                 <button type="button" class="btn btn-primary me-2">View Blotter</button>
                             </div>
@@ -57,223 +188,98 @@
                     <table class="posts-table">
                         <thead>
                         <tr class="users-table-info">
-                            <th>
-                            <label class="users-table__checkbox ms-20">
-                                <input type="checkbox" class="check-all">Thumbnail
-                            </label>
-                            </th>
-                            <th>Title</th>
-                            <th>Author</th>
-                            <th>Status</th>
-                            <th>Date</th>
-                            <th>Action</th>
+            
+                            <!--th style="width: 2%;"class="text-center"><input type="checkbox" class="check-all"></th--> 
+                            <th style="width: 2%"class="text-center">ID</th> 
+                            <th style="width: 10%;"class="text-center">Date Reported</th>
+                            <th style="width: 10%;" class="text-center">Complainant Name</th>
+                            <th style="width: 10%;" class="text-center">Complainant Address</th>
+                            <th style="width: 10%;" class="text-center">Complainant Cellphone Number</th>
+                            <th style="width: 10%;" class="text-center">Respondent Name</th>
+                            <th style="width: 10%;" class="text-center">Respondent Address</th>
+                            <th style="width: 10%;" class="text-center">Respondent Cellphone Number</th>
+                            <th style="width: 10%;" class="text-center">Report Status</th>
+                            <th style="width: 10%;" class="text-center">Date of Incident</th>
+                            <th style="width: 10%;" class="text-center col-span-2">Blotter Action</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td>
-                            <label class="users-table__checkbox">
-                                <input type="checkbox" class="check">
-                                <div class="categories-table-img">
-                                <picture><source srcset="./img/categories/01.webp" type="image/webp"><img src="./img/categories/01.jpg" alt="category"></picture>
-                                </div>
-                            </label>
-                            </td>
-                            <td>
-                            Starting your traveling blog with Vasco
-                            </td>
-                            <td>
-                            <div class="pages-table-img">
-                                <picture><source srcset="./img/avatar/avatar-face-04.webp" type="image/webp"><img src="./img/avatar/avatar-face-04.png" alt="User Name"></picture>
-                                Jenny Wilson
-                            </div>
-                            </td>
-                            <td><span class="badge-pending">Pending</span></td>
-                            <td>17.04.2021</td>
-                            <td>
-                            <span class="p-relative">
-                                <button class="dropdown-btn transparent-btn" type="button" title="More info">
-                                <div class="sr-only">More info</div>
-                                <i data-feather="more-horizontal" aria-hidden="true"></i>
-                                </button>
-                                <ul class="users-item-dropdown dropdown">
-                                <li><a href="##">Edit</a></li>
-                                <li><a href="##">Quick edit</a></li>
-                                <li><a href="##">Trash</a></li>
-                                </ul>
-                            </span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                            <label class="users-table__checkbox">
-                                <input type="checkbox" class="check">
-                                <div class="categories-table-img">
-                                <picture><source srcset="./img/categories/02.webp" type="image/webp"><img src="./img/categories/02.jpg" alt="category"></picture>
-                                </div>
-                            </label>
-                            </td>
-                            <td>
-                            Start a blog to reach your creative peak
-                            </td>
-                            <td>
-                            <div class="pages-table-img">
-                                <picture><source srcset="./img/avatar/avatar-face-03.webp" type="image/webp"><img src="./img/avatar/avatar-face-03.png" alt="User Name"></picture>
-                                Annette Black
-                            </div>
-                            </td>
-                            <td><span class="badge-pending">Pending</span></td>
-                            <td>23.04.2021</td>
-                            <td>
-                            <span class="p-relative">
-                                <button class="dropdown-btn transparent-btn" type="button" title="More info">
-                                <div class="sr-only">More info</div>
-                                <i data-feather="more-horizontal" aria-hidden="true"></i>
-                                </button>
-                                <ul class="users-item-dropdown dropdown">
-                                <li><a href="##">Edit</a></li>
-                                <li><a href="##">Quick edit</a></li>
-                                <li><a href="##">Trash</a></li>
-                                </ul>
-                            </span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                            <label class="users-table__checkbox">
-                                <input type="checkbox" class="check">
-                                <div class="categories-table-img">
-                                <picture><source srcset="./img/categories/03.webp" type="image/webp"><img src="./img/categories/03.jpg" alt="category"></picture>
-                                </div>
-                            </label>
-                            </td>
-                            <td>
-                            Helping a local business reinvent itself
-                            </td>
-                            <td>
-                            <div class="pages-table-img">
-                                <picture><source srcset="./img/avatar/avatar-face-02.webp" type="image/webp"><img src="./img/avatar/avatar-face-02.png" alt="User Name"></picture>
-                                Kathryn Murphy
-                            </div>
-                            </td>
-                            <td><span class="badge-active">Active</span></td>
-                            <td>17.04.2021</td>
-                            <td>
-                            <span class="p-relative">
-                                <button class="dropdown-btn transparent-btn" type="button" title="More info">
-                                <div class="sr-only">More info</div>
-                                <i data-feather="more-horizontal" aria-hidden="true"></i>
-                                </button>
-                                <ul class="users-item-dropdown dropdown">
-                                <li><a href="##">Edit</a></li>
-                                <li><a href="##">Quick edit</a></li>
-                                <li><a href="##">Trash</a></li>
-                                </ul>
-                            </span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                            <label class="users-table__checkbox">
-                                <input type="checkbox" class="check">
-                                <div class="categories-table-img">
-                                <picture><source srcset="./img/categories/04.webp" type="image/webp"><img src="./img/categories/04.jpg" alt="category"></picture>
-                                </div>
-                            </label>
-                            </td>
-                            <td>
-                            Caring is the new marketing
-                            </td>
-                            <td>
-                            <div class="pages-table-img">
-                                <picture><source srcset="./img/avatar/avatar-face-05.webp" type="image/webp"><img src="./img/avatar/avatar-face-05.png" alt="User Name"></picture>
-                                Guy Hawkins
-                            </div>
-                            </td>
-                            <td><span class="badge-active">Active</span></td>
-                            <td>17.04.2021</td>
-                            <td>
-                            <span class="p-relative">
-                                <button class="dropdown-btn transparent-btn" type="button" title="More info">
-                                <div class="sr-only">More info</div>
-                                <i data-feather="more-horizontal" aria-hidden="true"></i>
-                                </button>
-                                <ul class="users-item-dropdown dropdown">
-                                <li><a href="##">Edit</a></li>
-                                <li><a href="##">Quick edit</a></li>
-                                <li><a href="##">Trash</a></li>
-                                </ul>
-                            </span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                            <label class="users-table__checkbox">
-                                <input type="checkbox" class="check">
-                                <div class="categories-table-img">
-                                <picture><source srcset="./img/categories/01.webp" type="image/webp"><img src="./img/categories/01.jpg" alt="category"></picture>
-                                </div>
-                            </label>
-                            </td>
-                            <td>
-                            How to build a loyal community online and offline
-                            </td>
-                            <td>
-                            <div class="pages-table-img">
-                                <picture><source srcset="./img/avatar/avatar-face-03.webp" type="image/webp"><img src="./img/avatar/avatar-face-03.png" alt="User Name"></picture>
-                                Robert Fox
-                            </div>
-                            </td>
-                            <td><span class="badge-active">Active</span></td>
-                            <td>17.04.2021</td>
-                            <td>
-                            <span class="p-relative">
-                                <button class="dropdown-btn transparent-btn" type="button" title="More info">
-                                <div class="sr-only">More info</div>
-                                <i data-feather="more-horizontal" aria-hidden="true"></i>
-                                </button>
-                                <ul class="users-item-dropdown dropdown">
-                                <li><a href="##">Edit</a></li>
-                                <li><a href="##">Quick edit</a></li>
-                                <li><a href="##">Trash</a></li>
-                                </ul>
-                            </span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                            <label class="users-table__checkbox">
-                                <input type="checkbox" class="check">
-                                <div class="categories-table-img">
-                                <picture><source srcset="./img/categories/03.webp" type="image/webp"><img src="./img/categories/03.jpg" alt="category"></picture>
-                                </div>
-                            </label>
-                            </td>
-                            <td>
-                            How to build a loyal community online and offline
-                            </td>
-                            <td>
-                            <div class="pages-table-img">
-                                <picture><source srcset="./img/avatar/avatar-face-03.webp" type="image/webp"><img src="./img/avatar/avatar-face-03.png" alt="User Name"></picture>
-                                Robert Fox
-                            </div>
-                            </td>
-                            <td><span class="badge-active">Active</span></td>
-                            <td>17.04.2021</td>
-                            <td>
-                            <span class="p-relative">
-                                <button class="dropdown-btn transparent-btn" type="button" title="More info">
-                                <div class="sr-only">More info</div>
-                                <i data-feather="more-horizontal" aria-hidden="true"></i>
-                                </button>
-                                <ul class="users-item-dropdown dropdown">
-                                <li><a href="##">Edit</a></li>
-                                <li><a href="##">Quick edit</a></li>
-                                <li><a href="##">Trash</a></li>
-                                </ul>
-                            </span>
-                            </td>
-                        </tr>
+                        
+                        
+                        <?php
+                            
+                        //To Populate table rows with user data
+                        foreach ($result as $row) {
+                            echo "<tr>";
+                            //echo '<td><input type="checkbox" class="check-all"></td>';
+                            echo "<td>{$row['blotter_id']}</td>";
+                            echo "<td>{$row['reported_date']}</td>";
+                            echo "<td>{$row['complainant_lname']}, {$row['complainant_fname']} {$row['complainant_mname']}</td>";
+                            echo "<td>{$row['complainant_address']}</td>";
+
+                            //Prevent "0" From appearing in Complainant Cellphone Number
+
+                            if($row['complainant_contact_num']== "0"){
+                                echo "<td> </td> ";
+                            } else{
+                                echo "<td>{$row['complainant_contact_num']}</td>";
+                            }
+
+                            //To prevent "," from appearing in the Respondent Name Column
+                            
+                            if(empty($row['respondent_lname']) && empty($row['respondent_fname'])){
+                                    echo "<td> </td> ";
+                                } else{
+                                echo  "<td> {$row['respondent_lname']}, {$row['respondent_fname']} {$row['respondent_mname']}</td>";
+                                }
+
+                            echo "<td>{$row['respondent_address']}</td>";
+
+                            //To prevent "0" from appearing in the Respondent Cellphone Number Column
+                            
+                            if($row['respondent_contact_num']== "0"){
+                                echo "<td> </td> ";
+                            } else{
+                                echo "<td>{$row['respondent_contact_num']}</td>";
+                            }
+
+                            //To display the status theam 
+                            
+                            if($row['report_status'] === 'Ongoing'){       
+                                
+                                echo "<td class='d-flex justify-content-center'><div class='p-5'><span class='badge-pending'>{$row['report_status']}</span></div></td>";
+                            
+                            }elseif($row['report_status'] === 'Settled'){
+
+                                echo "<td class='d-flex justify-content-center'><div class='p-5'><span class='badge-success'>{$row['report_status']}</span></div></td>";
+
+                            }else{
+
+                                echo "<td class='d-flex justify-content-center'><div class='p-5'><span class='badge-trashed'>{$row['report_status']}</span></div></td>";
+                            }
+
+                            echo "<td>{$row['date_of_incident']}</td>";
+                            echo "<td style='width: 15%;'><div class='btn-group text-center'>";
+
+                            echo "<form method='GET' action='viewandeditblotter.php'>";
+                            echo "<input type='hidden' name='id' value='" . $row['blotter_id'] . "'>";
+                            echo "<button type='submit' id='viewandeditblotter' class='btn btn-success mx-1'>Edit</button>";
+                            echo "</form>";
+
+                            // For the Delete Button 
+
+                            /*echo "<form method='post' action='include/deleteblotterbtn.php' onsubmit='return confirmDelete();'>";
+                            echo "<input type='hidden' name='delete_blotter_id' value='" . $row['blotter_id'] . "'>";
+                            echo "<button type='submit' id='showdeletealert' name='deletebtn' class='btn btn-danger mx-1'>Delete</button>";
+                            echo "</form>";
+                            echo "</div>";
+                            echo "</td>";*/
+                            echo "</tr>";
+                        }
+                        ?>
+                        </tbody>
+                    
+                        
                         </tbody>
                     </table>
                 </div>
@@ -291,6 +297,7 @@
 <script src="plugins/feather.min.js"></script>
 <!-- Custom scripts -->
 <script src="js/script.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 
 </html>
