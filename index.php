@@ -31,6 +31,7 @@
     <!-- ! Main -->
     <main class="main users chart-page" id="skip-target">
       <div class="container">
+        <h2 class="main-title">Dashboard</h2>
         <div class="row container">
 
           <div class="col-md-6 col-xl-3">
@@ -82,7 +83,7 @@
               </div>
               <div class="stat-cards-info">
                 <p class="stat-cards-info__num">0</p>
-                <p class="stat-cards-info__title">Total Blotters</p>
+                <p class="stat-cards-info__title">Total Residents</p>
                 <p class="stat-cards-info__progress">
                 </p>
               </div>
@@ -96,27 +97,21 @@
               </div>
               <div class="stat-cards-info">
                 <p class="stat-cards-info__num">0</p>
-                <p class="stat-cards-info__title">Total Users</p>
+                <p class="stat-cards-info__title">Total Residents</p>
                 <p class="stat-cards-info__progress">
                 </p>
               </div>
             </article>
           </div>
+      
 
-          <div class="col-md-6 col-xl-3">
-            <article class="stat-cards-item">
-              <div class="stat-cards-icon purple">
-                <i data-feather="file" aria-hidden="true"></i>
-              </div>
-              <div class="stat-cards-info">
-                <p class="stat-cards-info__num">0</p>
-                <p class="stat-cards-info__title">Active Users</p>
-                <p class="stat-cards-info__progress">
-                </p>
-              </div>
-            </article>
-          </div>
-          
+      
+
+        
+        
+    
+    
+       
         </div>
       </div>
     </main>
@@ -132,4 +127,5 @@
 <!-- Custom scripts -->
 <script src="js/script.js"></script>
 </body>
+
 </html>
