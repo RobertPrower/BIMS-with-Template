@@ -1820,10 +1820,25 @@ label {
   line-height: 15px;
   color: #5887ff;
 }
-.main-nav .nav-user-wrapper,
-.search-wrapper {
+.main-nav .nav-user-wrapper{
   position: relative;
+  
 }
+
+.search-wrapper input[type="text"]{
+  position: relative;
+  width: 110%;
+  
+}
+
+@media only screen and (max-width: 768px) {
+  .search-wrapper input[type="text"] {
+      position: relative;
+      width: 20%;
+      max-width: 30px; /* Optional: Set a maximum width */
+  }
+}
+
 .main-nav .nav-user-wrapper .users-item-dropdown {
   width: 171px;
   right: 0;

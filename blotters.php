@@ -42,10 +42,10 @@
         <div class="container">
                 <div class="container p-3">
                 <h2 class="main-title">Manage Blotters</h2>
-                    <div class="row">
-                        <div class="col-md-9">
+                    <div class="row pb-3">
+                        <div class="col-md-8">
                             <!-- Buttons -->
-                            <div class="d-flex justify-content-start">
+                            <div class="d-flex justify-content-start" style="padding-left: 15px;">
                                 <!--a href="createnewblotter.php" class="btn btn-primary me-2">Add Blotter</a-->
                                 <!--button type="button" class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#exampleModal"> Add Blotters </button-->
 
@@ -174,11 +174,13 @@
                                 <button type="button" class="btn btn-primary me-2">View Blotter</button>
                             </div>
                         </div>
-                        <div class="col-md-3">
+                        <div class="container col-md-3">
+                            <div class="row">
                             <!-- Search Box -->
                             <div class="search-wrapper">
-                                <i data-feather="search" aria-hidden="true"></i>
-                                <input type="text" placeholder="Enter keywords ..." required style="width:350px">
+                                <i data-feather="search" aria-hidden="true" required></i>
+                                <input type="text" placeholder="Enter keywords ..." required>
+
                             </div>
                         </div>
                     </div>
