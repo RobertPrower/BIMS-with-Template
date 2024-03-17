@@ -1827,15 +1827,14 @@ label {
 
 .search-wrapper input[type="text"]{
   position: relative;
-  width: 110%;
-  
+  width: calc(120% - 40px);  
 }
 
 @media only screen and (max-width: 768px) {
   .search-wrapper input[type="text"] {
       position: relative;
-      width: 20%;
-      max-width: 30px; /* Optional: Set a maximum width */
+      width: calc(100% - 40px);
+      max-width: 300px; /* Optional: Set a maximum width */
   }
 }
 

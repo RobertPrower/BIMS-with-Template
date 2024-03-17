@@ -46,9 +46,7 @@
                         <div class="col-md-8">
                             <!-- Buttons -->
                             <div class="d-flex justify-content-start" style="padding-left: 15px;">
-                                <!--a href="createnewblotter.php" class="btn btn-primary me-2">Add Blotter</a-->
-                                <!--button type="button" class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#exampleModal"> Add Blotters </button-->
-
+                               
                                 <!-- Button to trigger modal -->
                                 <button type="button" class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#addBlotterModal">Add Blotter</button>
                                 <!-- Add Blotter Modal -->
@@ -170,8 +168,8 @@
                                 <!-- End of Add Blotter Modal -->
                               
 
-                                <button type="button" class="btn btn-primary me-2">Edit Blotter</button>
-                                <button type="button" class="btn btn-primary me-2">View Blotter</button>
+                                <!--button type="button" class="btn btn-primary me-2">Edit Blotter</button-->
+                                <!--button type="button" class="btn btn-primary me-2">View Blotter</button-->
                             </div>
                         </div>
                         <div class="container col-md-3">
@@ -202,7 +200,7 @@
                             <th style="width: 10%;" class="text-center">Respondent Cellphone Number</th>
                             <th style="width: 10%;" class="text-center">Report Status</th>
                             <th style="width: 10%;" class="text-center">Date of Incident</th>
-                            <th style="width: 10%;" class="text-center col-span-2">Blotter Action</th>
+                            <th style="width: 10%;" class=" col-span-3">Blotter Action</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -261,21 +259,31 @@
                             }
 
                             echo "<td>{$row['date_of_incident']}</td>";
+
+                            //For the view button
                             echo "<td style='width: 15%;'><div class='btn-group text-center'>";
+
 
                             echo "<form method='GET' action='viewandeditblotter.php'>";
                             echo "<input type='hidden' name='id' value='" . $row['blotter_id'] . "'>";
-                            echo "<button type='submit' id='viewandeditblotter' class='btn btn-success mx-1'>Edit</button>";
+                            echo "<button type='submit' id='viewandeditblotter' class='btn btn-primary mx-1'>View</button>";
                             echo "</form>";
 
-                            // For the Delete Button 
+                            //For the edit button
 
-                            echo "<form method='post' action='include/deleteblotterbtn.php' onsubmit='return confirmDelete();'>";
-                            echo "<input type='hidden' name='delete_blotter_id' value='" . $row['blotter_id'] . "'>";
-                            echo "<button type='submit' id='showdeletealert' name='deletebtn' class='btn btn-danger mx-1'>Delete</button>";
-                            echo "</form>";
-                            echo "</div>";
-                            echo "</td>";
+                                echo "<form method='GET' action='viewandeditblotter.php'>";
+                                echo "<input type='hidden' name='id' value='" . $row['blotter_id'] . "'>";
+                                echo "<button type='submit' id='viewandeditblotter' class='btn btn-success mx-1'>Edit</button>";
+                                echo "</form>";
+
+                                // For the Delete Button 
+
+                                echo "<form method='post' action='include/deleteblotterbtn.php' onsubmit='return confirmDelete();'>";
+                                echo "<input type='hidden' name='delete_blotter_id' value='" . $row['blotter_id'] . "'>";
+                                echo "<button type='submit' id='showdeletealert' name='deletebtn' class='btn btn-danger mx-1'>Delete</button>";
+                                echo "</form>";
+                                echo "</div>";
+                                echo "</td>";
                             echo "</tr>";
                         }
                         ?>
