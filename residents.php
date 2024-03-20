@@ -40,7 +40,7 @@
         <!-- ! Main -->
         <main>
         <div class="container">
-                <div class="container p-3">
+            <div class="container p-3">
                 <h2 class="main-title">Manage Residents</h2>
                     <div class="row pb-3">
                         <div class="col-md-8">
@@ -87,7 +87,7 @@
                                                 <div class="text-center row">
 
                                                     <div class="form-floating mt-3 mb-3 col-md-4">
-                                                        <input type="text" class="form-control" id="floatingInput" name="fname">
+                                                        <input type="text" class="form-control" id="floatingInput" name="fname" required>
                                                         <label for="floatingInput">First Name</label>
                                                     </div>
 
@@ -97,27 +97,27 @@
                                                     </div>
 
                                                     <div class="form-floating mt-3 mb-3 col-md-4">
-                                                        <input type="text" class="form-control" id="floatingInput" name="lname">
+                                                        <input type="text" class="form-control" id="floatingInput" name="lname" required>
                                                         <label for="floatingInput">Last Name</label>
                                                     </div>
 
                                                     <div class="form-floating mt-3 mb-3 col-md-4">
-                                                        <input type="text" class="form-control" id="floatingInput" name="house_no">
+                                                        <input type="text" class="form-control" id="floatingInput" name="house_no" required>
                                                         <label for="floatingInput">House No. (Blk no, Lot no, Unit no)</label>
                                                     </div>
 
                                                     <div class="form-floating mt-3 mb-3 col-md-4">
-                                                        <input type="text" class="form-control" id="floatingInput" name="street">
+                                                        <input type="text" class="form-control" id="floatingInput" name="street" required>
                                                         <label for="floatingInput">Street</label>
                                                     </div>
 
                                                     <div class="form-floating mt-3 mb-3 col-md-4">
-                                                        <input type="text" class="form-control" id="floatingInput" name="subd">
+                                                        <input type="text" class="form-control" id="floatingInput" name="subd" required>
                                                         <label for="floatingInput">Subdivision</label>
                                                     </div>
 
                                                     <div class="form-floating mt-3 mb-3 col-md-4">
-                                                        <input type="text" class="form-control" id="floatingInput" name="sex">
+                                                        <input type="text" class="form-control" id="floatingInput" name="sex" required>
                                                         <label for="floatingInput">Sex</label>
                                                     </div>
 
@@ -133,18 +133,18 @@
                                                     </div>
 
                                                     <div class="form-floating mt-3 mb-3 col-md-4">
-                                                        <input type="Date" class="form-control" id="floatingInput" name="birth_date">
+                                                        <input type="Date" class="form-control" id="floatingInput" name="birth_date" required>
                                                         <label for="floatingInput">Birth Date</label>
                                                     </div> 
 
                                                     <div class="form-floating mt-3 mb-3 col-md-4">
-                                                        <input type="Text" class="form-control" id="floatingInput" name="birth_place">
+                                                        <input type="Text" class="form-control" id="floatingInput" name="birth_place" required>
                                                         <label for="floatingInput">Birth Place</label>
                                                     </div> 
 
                                                     <div class="form-floating mt-3 mb-3 col-md-4">
-                                                        <input type="" class="form-control" id="floatingInput" name="cellphone_number">
-                                                        <label for="floatingInput">Cellphone Number</label>
+                                                        <input type="" class="form-control" id="floatingInput" name="cellphone_number" required>
+                                                        <label for="floatingInput">Phone Number</label>
                                                     </div> 
 
                                                     <div class="mt-3 mb-3 col-md-4">
@@ -157,7 +157,7 @@
                                                 
 
 
-                                                </div>
+                                                 </div>
                                             </div>
                                         </div>
                                     </div>
@@ -192,7 +192,7 @@
                         <tr class="users-table-info">
             
                             <!--th style="width: 2%;"class="text-center"><input type="checkbox" class="check-all"></th--> 
-                            <th style="width: 2%"class="text-center">ID</th> 
+                            <!--th style="width: 2%"class="text-center">ID</th--> 
                             <th style="width: 10%;"class="text-center">Date Recorded</th>
                             <th style="width: 10%;" class="text-center">Full Name</th>
                             <th style="width: 10%;" class="text-center">Address</th>
@@ -202,7 +202,7 @@
                             <th style="width: 10%;" class="text-center">Birth Place</th>
                             <th style="width: 10%;" class="text-center">Phone Number</th>
                             <th style="width: 10%;" class="text-center">Is a Voter</th>
-                            <th style="width: 10%;" class=" col-span-3">Action</th>
+                            <th style="width: 10%;" class="text-center col-span-3">Action</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -214,7 +214,7 @@
                         foreach ($result as $row) {
                             echo "<tr>";
                             //echo '<td><input type="checkbox" class="check-all"></td>';
-                            echo "<td>{$row['resident_id']}</td>";
+                            //echo "<td>{$row['resident_id']}</td>";
                             echo "<td>{$row['date_recorded']}</td>";
                             echo "<td>{$row['last_name']}, {$row['first_name']} {$row['middle_name']}</td>";
                             echo "<td>{$row['house_number']}, {$row['street_name']}, {$row['subdivision']}</td>";
@@ -231,7 +231,7 @@
                                 echo "<td>{$row['cellphone_number']}</td>";
                             }
                             
-                            if($row['is_a_voter'] === "1"){
+                            if($row['is_a_voter'] === 1){
                             echo "<td>YES</td>";
                             }else{
                             echo "<td>NO</td>";
@@ -240,36 +240,45 @@
 
                             //For the view button
                             echo "<td style='width: 15%;'><div class='btn-group text-center'>";
-
-                            echo "<form method='GET' action='viewandeditblotter.php'>";
-                            echo "<input type='hidden' name='id' value='" . $row['resident_id'] . "'>";
-                            echo "<button type='submit' id='viewandeditblotter' class='btn btn-primary mx-1'>View</button>";
+                            echo "<form method='GET' action='residentviewform.php'>";
+                            echo "<input type='hidden' name='resident_id' value='" . $row['resident_id'] . "'>";
+                            echo "<button type='submit' id='view_resident' class='btn btn-primary mx-1'>View</button>";
                             echo "</form>";
+                            
+                            
+                            
 
                             //For the edit button
 
-                                echo "<form method='GET' action='viewandeditblotter.php'>";
-                                echo "<input type='hidden' name='id' value='" . $row['resident_id'] . "'>";
-                                echo "<button type='submit' id='viewandeditblotter' class='btn btn-success mx-1'>Edit</button>";
-                                echo "</form>";
+                            //$residentid = ;
+                           
+                            //echo "<form method='GET' action='includes/residenteditfunc.php>";
+                            //echo "<input type='hidden'>";
+                            echo '<a href="includes/residenteditfunc.php?resident_id='.$row['resident_id'].'" class="btn btn-success mx-1" " data-bs-toggle="modal" data-bs-target="#EditResidentModal">Edit</a>';
+                            //echo "</form>";
+                           
 
-                                // For the Delete Button 
 
-                                echo "<form method='post' action='include/deleteblotterbtn.php' onsubmit='return confirmDelete();'>";
-                                echo "<input type='hidden' name='delete_blotter_id' value='" . $row['resident_id'] . "'>";
-                                echo "<button type='submit' id='showdeletealert' name='deletebtn' class='btn btn-danger mx-1'>Delete</button>";
-                                echo "</form>";
-                                echo "</div>";
-                                echo "</td>";
+                            // For the Delete Button
+                            
+
+                            echo "<form method='POST' action='includes/deleteresidentbtn.php' onsubmit='return confirmDelete();'>";
+                            echo "<input type='text' name='delete_resident_id' value='" . $row['resident_id'] . "'>";
+                            echo "<button type='submit' id='showdeletealert' name='deletebtn' class='btn btn-danger mx-1'>Delete</button>";
+                            echo "</form>";
+                            echo "</div>";
+                            echo "</td>";
                             echo "</tr>";
+
                         }
                         ?>
                         </tbody>
                     
                         
                         </tbody>
-                    </table>
-                </div>
+                </table><!-- End of Table -->
+            <?php require_once("includes/residenteditform.php")?>
+            </div>  
         </div>
       </main>
     

@@ -38,18 +38,18 @@
                     </ul>
                 </li>
                 <li>
-                    <a class="show-cat-btn" href="##">
+                    <a class="show-cat-btn" href="../BIMS-with-template/residents.php">
                         <span class="icon folder" aria-hidden="true"></span>Residents
                         <span class="category__btn transparent-btn" title="Open list">
                             <span class="sr-only">Open list</span>
-                            <span class="icon arrow-down" aria-hidden="true"></span>
+                            <!--span class="icon arrow-down" aria-hidden="true"></span-->
                         </span>
                     </a>
-                    <ul class="cat-sub-menu">
+                    <!--ul class="cat-sub-menu">
                         <li>
                             <a href="categories.html">All categories</a>
                         </li>
-                    </ul>
+                    </ul-->
                 </li>
                 <li>
                     <a class="show-cat-btn" href="##">

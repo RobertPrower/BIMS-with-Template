@@ -30,7 +30,7 @@ if (isset($_GET['search'])) {
 
 } else {
     // If no search query is provided, fetch all user data from the database
-    $stmt = $pdo->query("SELECT * FROM resident");
+    $stmt = $pdo->query("SELECT * FROM resident WHERE is_deleted = 0");
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 ?>
