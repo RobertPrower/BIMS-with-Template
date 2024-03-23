@@ -4,6 +4,45 @@
     if (isset($_GET['success']) && $_GET['success'] === "deleted") {
         echo "<script>alert('Record deleted successfully.')</script>";
     }
+
+    if(isset($_GET['resident_id'])) {
+        $residentId = array($_GET['resident_id']);
+
+        // Query to retrieve resident data based on ID
+        $query = "SELECT * FROM resident WHERE resident_id = ?";
+        $stmt = $pdo->prepare($query);
+        $stmt->execute($residentId);
+        // Fetch the row
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        // Check if row is fetched successfully
+        if($row) {
+            // Access the data
+            $first_name = $row['first_name'];
+            $middle_name = $row['middle_name'];
+            $last_name = $row['last_name'];
+            $house_number = $row['house_number'];
+            $street = $row['street_name'];
+            $subdivision =$row['subdivision'];
+            $sex = $row['sex'];
+            $maritalstatus = $row['marital_status'];
+            $birth_date = $row['birth_date'];
+            $birth_place = $row['birth_place'];
+            $cellphone_number = $row['cellphone_number'];
+            $is_a_voter = $row['is_a_voter'];
+            
+            
+            // Other fields...
+        } else {
+            // Handle the case where resident ID is not found
+            echo "Resident ID not found.";
+            exit; // Optionally exit script or redirect to another page
+        }
+    } else {
+        // Handle the case where resident ID is not set in the URL
+        //echo $_GET['resident_id'];
+         // Optionally exit script or redirect to another page
+    }
 ?>
 
 <!DOCTYPE html>
@@ -21,6 +60,13 @@
   integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
   <link rel="stylesheet" href="./css/style.min.css">
   <!--link rel="stylesheet" href="./css/blottertablestyle.css"-->
+
+  <script type="text/javascript">
+                    
+                $("#EditResidentModal").modal({
+                    fadeDuration: 100
+                });
+            </script>
 </head>
 
 <body>
@@ -116,9 +162,12 @@
                                                         <label for="floatingInput">Subdivision</label>
                                                     </div>
 
-                                                    <div class="form-floating mt-3 mb-3 col-md-4">
-                                                        <input type="text" class="form-control" id="floatingInput" name="sex" required>
-                                                        <label for="floatingInput">Sex</label>
+                                                    <div class="mt-3 mb-3 col-md-4">
+                                                        <select class="form-select" aria-label="Default select example" Style="Height: 58px" name="sex">
+                                                        <option hidden selected>Select Sex</option>
+                                                        <option value="Male">Male</option>
+                                                        <option value="Female">Female</option>
+                                                        </select>
                                                     </div>
 
                                                     <div class="mt-3 mb-3 col-md-4">
@@ -178,9 +227,12 @@
                             <div class="row">
                             <!-- Search Box -->
                             <div class="search-wrapper">
-                                <i data-feather="search" aria-hidden="true" required></i>
-                                <input type="text" placeholder="Enter keywords ..." required>
-
+                           
+                                <form action="residents.php" method="GET" class="d-flex">
+                                <button type="submit" class="btn-sm btn-light" data-feather="search" aria-hidden="true" required><img src="icons/search.png" alt="Search Icon"></img></button>
+                                    <input type="text" class="form-control me-2" name="search" placeholder="Search...">
+                                   
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -254,7 +306,8 @@
                            
                             //echo "<form method='GET' action='includes/residenteditfunc.php>";
                             //echo "<input type='hidden'>";
-                            echo '<a href="includes/residenteditfunc.php?resident_id='.$row['resident_id'].'" class="btn btn-success mx-1" " data-bs-toggle="modal" data-bs-target="#EditResidentModal">Edit</a>';
+                            //echo '<a href="includes/residenteditfunc.php?resident_id='.$row['resident_id'].'" class="btn btn-success mx-1" " data-bs-toggle="modal" data-bs-target="#EditResidentModal">Edit</a>';
+                            echo '<a href="residents.php?resident_id='.$row['resident_id'].'" class="btn btn-success mx-1" >Edit</a>';
                             //echo "</form>";
                            
 
@@ -263,7 +316,7 @@
                             
 
                             echo "<form method='POST' action='includes/deleteresidentbtn.php' onsubmit='return confirmDelete();'>";
-                            echo "<input type='text' name='delete_resident_id' value='" . $row['resident_id'] . "'>";
+                            echo "<input type='hidden' name='delete_resident_id' value='" . $row['resident_id'] . "'>";
                             echo "<button type='submit' id='showdeletealert' name='deletebtn' class='btn btn-danger mx-1'>Delete</button>";
                             echo "</form>";
                             echo "</div>";
@@ -294,6 +347,7 @@
 <!-- Custom scripts -->
 <script src="js/script.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
 </body>
 
 </html>

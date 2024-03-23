@@ -22,7 +22,7 @@ if (isset($_GET['search'])) {
     $search = $_GET['search'];
     
     // Fetch user data from the database based on the search query
-    $query = "SELECT * FROM resident WHERE first_name LIKE :search OR last_name LIKE :search";
+    $query = "SELECT * FROM resident WHERE first_name LIKE :search OR last_name LIKE :search OR cellphone_number LIKE :search OR subdivision LIKE :search";
     $stmt = $pdo->prepare($query);
     $stmt->bindValue(':search', '%' . $search . '%', PDO::PARAM_STR);
     $stmt->execute();
