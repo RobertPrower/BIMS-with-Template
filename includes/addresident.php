@@ -2,24 +2,59 @@
 // Database connection
 require_once('connecttodb.php');
 
-// For Resident Details Set parameters and execute
-$first_name = $_POST['fname'];
-$middle_name = $_POST['mname'];
-$last_name = $_POST['lname'];
-$house_no = $_POST['house_no'];
-$street = $_POST['street'];
-$subdivision = $_POST['subd'];
-$sex = $_POST['sex'];
-$maritalstatus = $_POST['marital_status'];
-$birth_date = $_POST['birth_date']; // Corrected variable name
-$birth_place = $_POST['birth_place']; // Corrected variable name
-$cellphone_number = $_POST['cellphone_number'];
-$is_a_voter = $_POST['is_a_voter'];
-
-//To record the Date Recorded
-$reported_date = date("Y-m-d H:i:s");
-
 try {
+    // For Resident Details Set parameters and execute
+    $first_name = $_POST['fname'];
+    $middle_name = $_POST['mname'];
+    $last_name = $_POST['lname'];
+    $house_no = $_POST['house_no'];
+    $street = $_POST['street'];
+    $subdivision = $_POST['subd'];
+    $sex = $_POST['sex'];
+    $maritalstatus = $_POST['marital_status'];
+    $birth_date = $_POST['birth_date']; 
+    $birth_place = $_POST['birth_place']; 
+    $cellphone_number = $_POST['cellphone_number'];
+    $is_a_voter = $_POST['is_a_voter'];
+
+
+
+    //To record the Date Recorded
+    $reported_date = date("Y-m-d H:i:s");
+
+    if(isset($_POST['submit'])){
+        $file =$_FILES['image_file'];
+
+        $filename = $_FILES['image_file']['image_file'];
+        $filetmpname = $_FILES['image_file']['tmp_name'];
+        $filesize = $_FILES['image_file']['image_file'];
+        $fileerror = $_FILES['image_file']['error'];
+        $fileerror = $_FILES['image_file']['type'];
+
+        $fileext = explode('.', $filename);
+        $fileactualext = strtolower(end($fileext));
+
+        $allowed = array('jpg', 'jpeg', 'png');
+
+        if(in_array($fileactualext, $allowed)){
+            if($fileerror===0){
+                if($filesize < 1000000){
+                    $filenamenew = uniqid('',true).".".$fileactualext;
+                    $filedestination = 'uploads/'.$filenewname;
+                    move_uploaded_file($filetmpname, $filedestination);
+                    header("Location: residents.php?uploadsuccess");
+                }else{
+                    echo"YOUR FILE IS TOO BIG";
+                }
+            }else{
+                echo"THERE WAS AN ERROR UPLOADING THE FILE";
+            }
+        }else{
+            echo"YOU CANNOT UPLOAD FILES OF THIS TYPE";
+        }
+        
+    }
+
     // Retrieve the last used ID from the login table
     $last_id_query = "SELECT resident_id FROM resident ORDER BY resident_id DESC LIMIT 1";
     $last_id_stmt = $pdo->query($last_id_query);
@@ -31,6 +66,8 @@ try {
         // If there are no existing records, start with ID 1
         $next_id = 1;
     }
+
+    
 
     // Prepare and bind parameters
     $insert_query = "INSERT INTO resident (resident_id, date_recorded, first_name, middle_name, last_name, house_number, street_name, subdivision, sex, marital_status, birth_date, birth_place, cellphone_number, is_a_voter)
