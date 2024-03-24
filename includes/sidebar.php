@@ -38,42 +38,23 @@
                     </ul>
                 </li>
                 <li>
-                    <a class="show-cat-btn" href="../BIMS-with-template/residents.php">
-                        <span class="icon folder" aria-hidden="true"></span>Residents
-                        <span class="category__btn transparent-btn" title="Open list">
-                            <span class="sr-only">Open list</span>
-                            <!--span class="icon arrow-down" aria-hidden="true"></span-->
-                        </span>
-                    </a>
-                    <!--ul class="cat-sub-menu">
-                        <li>
-                            <a href="categories.html">All categories</a>
-                        </li>
-                    </ul-->
+                <a href="residents.php"><span class="icon home" aria-hidden="true"></span>Residents</a>
+                    
                 </li>
                 <li>
-                    <a class="show-cat-btn" href="##">
-                        <span class="icon image" aria-hidden="true"></span>Blotters
-                        <span class="category__btn transparent-btn" title="Open list">
-                            <span class="sr-only">Open list</span>
-                            <span class="icon arrow-down" aria-hidden="true"></span>
-                        </span>
-                    </a>
-                    <ul class="cat-sub-menu">
-                        <li>
-                            <a href="media-01.html">Media-01</a>
-                        </li>
-                        <li>
-                            <a href="media-02.html">Media-02</a>
-                        </li>
-                    </ul>
+                    <a href="blotters.php"><span class="icon edit" aria-hidden="true"></span>Blotters</a>
+                   
+                </li>
+                <li>
+                    <a href="blotters.php"><span class="icon user-3" aria-hidden="true"></span>Brgy Offcials</a>
+                   
                 </li>
                 <li>
                     <a class="show-cat-btn" href="##">
                         <span class="icon paper" aria-hidden="true"></span>Pages
                         <span class="category__btn transparent-btn" title="Open list">
                             <span class="sr-only">Open list</span>
-                            <span class="icon arrow-down" aria-hidden="true"></span>
+                           
                         </span>
                     </a>
                     <ul class="cat-sub-menu">
