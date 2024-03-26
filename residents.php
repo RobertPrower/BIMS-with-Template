@@ -7,6 +7,7 @@
 
     if(isset($_GET['resident_id'])) {
         $residentId = array($_GET['resident_id']);
+        //printf($_GET['resident_id']);
 
         // Query to retrieve resident data based on ID
         $query = "SELECT * FROM resident WHERE resident_id = ?";
@@ -59,15 +60,18 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" 
   integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
   <link rel="stylesheet" href="./css/style.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js" integrity="sha256-xLD7nhI62fcsEZK2/v8LsBcb4lG7dgULkuXoXB/j91c=" crossorigin="anonymous"></script>
+
   <!--link rel="stylesheet" href="./css/blottertablestyle.css"-->
 
-  <script type="text/javascript">
+  <!--script type="text/javascript">
                     
                 $("#EditResidentModal").modal({
                     fadeDuration: 100
                 });
-            </script>
-</head>
+            </script-->
+</head-->
 
 <body>
   <div class="layer"></div>
@@ -244,7 +248,7 @@
                         <tr class="users-table-info">
             
                             <!--th style="width: 2%;"class="text-center"><input type="checkbox" class="check-all"></th--> 
-                            <!--th style="width: 2%"class="text-center">ID</th--> 
+                            <th style="width: 2%"class="text-center resident_id">ID</th> 
                             <th style="width: 10%;"class="text-center">Date Recorded</th>
                             <th style="width: 10%;" class="text-center">Full Name</th>
                             <th style="width: 10%;" class="text-center">Address</th>
@@ -266,7 +270,7 @@
                         foreach ($result as $row) {
                             echo "<tr>";
                             //echo '<td><input type="checkbox" class="check-all"></td>';
-                            //echo "<td>{$row['resident_id']}</td>";
+                            echo "<td>{$row['resident_id']}</td>";
                             echo "<td>{$row['date_recorded']}</td>";
                             echo "<td>{$row['last_name']}, {$row['first_name']} {$row['middle_name']}</td>";
                             echo "<td>{$row['house_number']}, {$row['street_name']}, {$row['subdivision']}</td>";
@@ -307,7 +311,29 @@
                             //echo "<form method='GET' action='includes/residenteditfunc.php>";
                             //echo "<input type='hidden'>";
                             //echo '<a href="includes/residenteditfunc.php?resident_id='.$row['resident_id'].'" class="btn btn-success mx-1" " data-bs-toggle="modal" data-bs-target="#EditResidentModal">Edit</a>';
-                            echo '<a href="residents.php?resident_id='.$row['resident_id'].'" class="btn btn-success mx-1" >Edit</a>';
+                            //echo '<a href="includes/residenteditform.php?resident_id='.$row['resident_id'].'" class="btn btn-success mx-1" data-bs-toggle="modal" data-bs-target="#EditResidentModal">Edit</a>';
+                            //echo '<a href="resident.php" class="btn btn-success mx-1 editButton" data-id="'.$row['resident_id'].'" data-bs-toggle="modal" data-bs-target="#EditResidentModal">Edit</a>';
+                            
+                            echo '<a href="#" class="btn btn-success mx-1 editButton" 
+                            data-id="' . $row['resident_id'] . '"
+                            data-first-name="' . htmlspecialchars($row['first_name'], ENT_QUOTES) . '"
+                            data-middle-name="' . htmlspecialchars($row['middle_name'], ENT_QUOTES) . '"
+                            data-last-name="' . htmlspecialchars($row['last_name'], ENT_QUOTES) . '"
+                            data-house-no="' . htmlspecialchars($row['house_number'], ENT_QUOTES) . '"
+                            data-street-name="' . htmlspecialchars($row['street_name'], ENT_QUOTES) . '"
+                            data-subdivision="' . htmlspecialchars($row['subdivision'], ENT_QUOTES) . '"
+                            data-sex="' . htmlspecialchars($row['sex'], ENT_QUOTES) . '"
+                            data-marital-status="' . htmlspecialchars($row['marital_status'], ENT_QUOTES) . '"
+                            data-birth-date="' . htmlspecialchars($row['birth_date'], ENT_QUOTES) . '"
+                            data-birth-place="' . htmlspecialchars($row['birth_place'], ENT_QUOTES) . '"
+                            data-phone-number="' . htmlspecialchars($row['cellphone_number'], ENT_QUOTES) . '"
+                            data-isa-voter="' . htmlspecialchars($row['is_a_voter'], ENT_QUOTES) . '"
+                            
+
+
+
+                            data-bs-toggle="modal" data-bs-target="#EditResidentModal">Edit</a>';
+
                             //echo "</form>";
                            
 
@@ -339,6 +365,52 @@
   <?php require_once("includes/footer.php")?>
     </div>
 </div>
+<script> 
+
+        $(document).on('click', '.editButton', function() {
+            var resident_id = $(this).data('id');
+            var first_name = $(this).data('first-name');
+            var middle_name = $(this).data('middle-name');
+            var last_name = $(this).data('last-name');
+            var house_no = $(this).data('house-no');
+            var street_name = $(this).data('street-name');
+            var subdivision =$(this).data('subdivision');
+            var sex = $(this).data('sex');
+            var marital_status = $(this).data('marital-status');
+            var birth_date = $(this).data('birth-date');
+            var formattedBirthDate = new Date(birth_date).toLocaleDateString('en-US');
+            var birthplace = $(this).data('birth-place');
+            var phone_number = $(this).data('phone-number');
+            var is_a_voter = $(this).data('isa-voter');
+
+
+
+           
+            // Populate the modal with the retrieved data
+            $('#EditResidentModal input[name="resident_id"]').val(resident_id);
+            $('#EditResidentModal input[name="fname"]').val(first_name);
+            $('#EditResidentModal input[name="mname"]').val(middle_name);
+            $('#EditResidentModal input[name="lname"]').val(last_name);
+            $('#EditResidentModal input[name="house_no"]').val(house_no);
+            $('#EditResidentModal input[name="street"]').val(street_name);
+            $('#EditResidentModal input[name="subd"]').val(subdivision);
+            $('#EditResidentModal select[name="sex"]').val(sex);
+            $('#EditResidentModal select[name="marital_status"]').val(marital_status);
+            $('#EditResidentModal input[name="birth_date"]').val(birth_date);
+            $('#EditResidentModal input[name="birth_place"]').val(birthplace);
+            $('#EditResidentModal input[name="cp_number"]').val(phone_number);
+            $('#EditResidentModal select[name="is_a_voter"]').val(is_a_voter);
+
+
+            
+
+            // Display the modal
+            $('#EditResidentModal').modal('show');
+        });
+
+
+
+</script>
 
 <!-- Chart library -->
 <script src="./plugins/chart.min.js"></script>
@@ -347,7 +419,6 @@
 <!-- Custom scripts -->
 <script src="js/script.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-
 </body>
 
 </html>

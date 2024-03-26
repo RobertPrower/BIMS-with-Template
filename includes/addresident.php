@@ -82,29 +82,29 @@ require_once("connecttodb.php");
             $next_id = 1;
         }
 
-        $imagetoupload = $_FILES['image_file'];
+        //$imagetoupload = $_FILES['image_file'];
 
         // Prepare and bind parameters
-        $insert_query = "INSERT INTO resident (resident_id, date_recorded, img, first_name, middle_name, last_name, house_number, street_name, subdivision, sex, marital_status, birth_date, birth_place, cellphone_number, is_a_voter)
-                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 
+        $insert_query = "INSERT INTO resident (resident_id, date_recorded, first_name, middle_name, last_name, house_number, street_name, subdivision, sex, marital_status, birth_date, birth_place, cellphone_number, is_a_voter)
+                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 
                         ?)";
         $insert_stmt = $pdo->prepare($insert_query);
         
         $insert_stmt->bindParam(1, $next_id, PDO::PARAM_INT);
         $insert_stmt->bindParam(2, $reported_date);
-        $insert_stmt->bindParam(3, $imagetoupload);
-        $insert_stmt->bindParam(4, $first_name);
-        $insert_stmt->bindParam(5, $middle_name);
-        $insert_stmt->bindParam(6, $last_name);
-        $insert_stmt->bindParam(7, $house_no);
-        $insert_stmt->bindParam(8, $street);
-        $insert_stmt->bindParam(9, $subdivision);
-        $insert_stmt->bindParam(10, $sex);
-        $insert_stmt->bindParam(11, $maritalstatus);
-        $insert_stmt->bindParam(12, $birth_date);
-        $insert_stmt->bindParam(13, $birth_place);
-        $insert_stmt->bindParam(14, $cellphone_number);
-        $insert_stmt->bindParam(15, $is_a_voter);
+        //$insert_stmt->bindParam(3, $imagetoupload);
+        $insert_stmt->bindParam(3, $first_name);
+        $insert_stmt->bindParam(4, $middle_name);
+        $insert_stmt->bindParam(5, $last_name);
+        $insert_stmt->bindParam(6, $house_no);
+        $insert_stmt->bindParam(7, $street);
+        $insert_stmt->bindParam(8, $subdivision);
+        $insert_stmt->bindParam(9, $sex);
+        $insert_stmt->bindParam(10, $maritalstatus);
+        $insert_stmt->bindParam(11, $birth_date);
+        $insert_stmt->bindParam(12, $birth_place);
+        $insert_stmt->bindParam(13, $cellphone_number);
+        $insert_stmt->bindParam(14, $is_a_voter);
 
         $insert_stmt->execute();
         
