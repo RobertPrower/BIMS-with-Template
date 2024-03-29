@@ -85,6 +85,10 @@ select {
 [type="submit"],
 button {
   -webkit-appearance: button;
+  border-radius: 5px;
+  opacity: 0.2s;
+  transition: background-color 0.2s;
+  transition-duration: 0.2s;
 }
 [type="button"]::-moz-focus-inner,
 [type="reset"]::-moz-focus-inner,
@@ -600,7 +604,9 @@ body {
 .main-wrapper {
   position: relative;
   width: 100%;
-  min-height: calc(100vh - 80px); /* Adjust the height as needed based on your footer height */
+  min-height: calc(
+    100vh - 80px
+  ); /* Adjust the height as needed based on your footer height */
   padding-bottom: 50px; /* Adjust the padding to create space between the table and the footer */
 }
 .footer,
@@ -1820,21 +1826,20 @@ label {
   line-height: 15px;
   color: #5887ff;
 }
-.main-nav .nav-user-wrapper{
+.main-nav .nav-user-wrapper {
   position: relative;
-  
 }
 
-.search-wrapper input[type="text"]{
+.search-wrapper input[type="text"] {
   position: relative;
-  width: calc(130% - 40px);  
+  width: calc(130% - 40px);
 }
 
 @media only screen and (max-width: 768px) {
   .search-wrapper input[type="text"] {
-      position: relative;
-      width: calc(100% - 40px);
-      max-width: 300px; 
+    position: relative;
+    width: calc(100% - 40px);
+    max-width: 300px;
   }
 }
 
