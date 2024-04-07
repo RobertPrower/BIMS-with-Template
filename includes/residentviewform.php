@@ -3,7 +3,7 @@
 
 
                 <!-- Add Blotter Modal -->
-                <form action="#" id="editResidentForm" method="POST" enctype="multipart/form-data">
+                <form action="#" id="viewResidentForm" method="POST" enctype="multipart/form-data">
                 <div class="modal fade" id="ViewResidentModal" name="add" tabindex="-1" aria-labelledby="EditResidentModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-xl">
                 <div class="modal-content">
@@ -127,7 +127,6 @@
                 </div>
                 </form>
 
-            </div>
 
        
 

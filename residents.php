@@ -1,50 +1,7 @@
 <?php 
     include_once("includes/residentsearchfunction.php");
 
-    if (isset($_GET['success']) && $_GET['success'] === "deleted") {
-        echo "<script>alert('Record deleted successfully.')</script>";
-    }
-
-    if(isset($_GET['resident_id'])) {
-        $residentId = array($_GET['resident_id']);
-        //printf($_GET['resident_id']);
-
-        // Query to retrieve resident data based on ID
-        $query = "SELECT * FROM resident WHERE resident_id = ?";
-        $stmt = $pdo->prepare($query);
-        $stmt->execute($residentId);
-        // Fetch the row
-        $row = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        // Check if row is fetched successfully
-        if($row) {
-            // Access the data
-            $first_name = $row['first_name'];
-            $middle_name = $row['middle_name'];
-            $last_name = $row['last_name'];
-            $house_number = $row['house_number'];
-            $street = $row['street_name'];
-            $subdivision =$row['subdivision'];
-            $sex = $row['sex'];
-            $maritalstatus = $row['marital_status'];
-            $birth_date = $row['birth_date'];
-            $birth_place = $row['birth_place'];
-            $cellphone_number = $row['cellphone_number'];
-            $is_a_voter = $row['is_a_voter'];
-            
-            
-            // Other fields...
-        } else {
-            // Handle the case where resident ID is not found
-            echo "Resident ID not found.";
-            exit; // Optionally exit script or redirect to another page
-        }
-    } else {
-        // Handle the case where resident ID is not set in the URL
-        //echo $_GET['resident_id'];
-         // Optionally exit script or redirect to another page
-    }
-?>
+ ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -57,21 +14,13 @@
   <!-- Favicon -->
   <link rel="shortcut icon" href="./img/svg/logo.svg" type="image/x-icon">
   <!-- Custom styles -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" 
-  integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
   <link rel="stylesheet" href="./css/style.min.css">
+
+  <!--Scripts Must be Always On the Top -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js" integrity="sha256-xLD7nhI62fcsEZK2/v8LsBcb4lG7dgULkuXoXB/j91c=" crossorigin="anonymous"></script>
-
-  <!--link rel="stylesheet" href="./css/blottertablestyle.css"-->
-
-  <!--script type="text/javascript">
-                    
-                $("#EditResidentModal").modal({
-                    fadeDuration: 100
-                });
-            </script-->
-</head-->
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>  
 
 <body>
   <div class="layer"></div>
@@ -98,10 +47,10 @@
                             <div class="d-flex justify-content-start" style="padding-left: 15px;">
                                
                                 <!-- Button to trigger modal -->
-                                <button type="button" class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#addBlotterModal">Add Resident</button>
+                                <button type="button" class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#AddResidentModal">Add Resident</button>
                                 <!-- Add Blotter Modal -->
                                
-                                <div class="modal fade" id="addBlotterModal" name="add" tabindex="-1" aria-labelledby="addBlotterModalLabel" aria-hidden="true">
+                                <div class="modal fade" id="AddResidentModal" name="add" tabindex="-1" aria-labelledby="addBlotterModalLabel" aria-hidden="true">
                                 <div class="modal-dialog modal-xl">
                                     <div class="modal-content">
                                         <div class="modal-header">
@@ -111,7 +60,7 @@
                                     <div class="modal-body">
                                         <!-- Add your form elements here for adding a resident -->
                                         <!-- Example form -->
-                                 <form action="includes/addresident.php" method="POST" enctype="multipart/form-data">    
+                                 <form action="#" id="AddResidentModalForm" enctype="multipart/form-data">    
                                             <div class="row">
                                                 <div class="mt-3" style="width: 270px">
                                                 
@@ -216,7 +165,7 @@
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                            <button type="submit" name="submit" class="btn btn-primary">Save</button>
+                                            <button type="submit" id="addButton" name="submit" class="btn btn-primary">Save</button>
                                         </div>
                                         </div>
                                     </div>
@@ -297,24 +246,31 @@
                             //For the view button
                             echo "<td style='width: 15%;'><div class='btn-group text-center'>";
 
-                            echo "<form method='GET' action='residentviewform.php'>";
-                            echo "<input type='hidden' name='resident_id' value='" . $row['resident_id'] . "'>";
-                            echo "<button type='submit' id='view_resident' class='btn btn-primary mx-1'>View</button>";
+                            echo "<form method='GET' action='#'>";
+                            echo '<button href="#" class="btn btn-primary mx-1 viewButton" 
+                            data-id="' . $row['resident_id'] . '"
+                            data-first-name="' . htmlspecialchars($row['first_name'], ENT_QUOTES) . '"
+                            data-middle-name="' . htmlspecialchars($row['middle_name'], ENT_QUOTES) . '"
+                            data-last-name="' . htmlspecialchars($row['last_name'], ENT_QUOTES) . '"
+                            data-house-no="' . htmlspecialchars($row['house_number'], ENT_QUOTES) . '"
+                            data-street-name="' . htmlspecialchars($row['street_name'], ENT_QUOTES) . '"
+                            data-subdivision="' . htmlspecialchars($row['subdivision'], ENT_QUOTES) . '"
+                            data-sex="' . htmlspecialchars($row['sex'], ENT_QUOTES) . '"
+                            data-marital-status="' . htmlspecialchars($row['marital_status'], ENT_QUOTES) . '"
+                            data-birth-date="' . htmlspecialchars($row['birth_date'], ENT_QUOTES) . '"
+                            data-birth-place="' . htmlspecialchars($row['birth_place'], ENT_QUOTES) . '"
+                            data-phone-number="' . htmlspecialchars($row['cellphone_number'], ENT_QUOTES) . '"
+                            data-isa-voter="' . htmlspecialchars($row['is_a_voter'], ENT_QUOTES) . '"
+                            data-bs-toggle="modal" data-bs-target="#ViewResidentModal">View</button>';
                             echo "</form>";
                             
                             
                             
 
                             //For the edit button
-
-                            //$residentid = ;
                            
-                            echo "<form method='GET' action='#>";
-                            echo "<input type='hidden'>";
-                            //echo '<a href="includes/residenteditfunc.php?resident_id='.$row['resident_id'].'" class="btn btn-success mx-1" " data-bs-toggle="modal" data-bs-target="#EditResidentModal">Edit</a>';
-                            //echo '<a href="includes/residenteditform.php?resident_id='.$row['resident_id'].'" class="btn btn-success mx-1" data-bs-toggle="modal" data-bs-target="#EditResidentModal">Edit</a>';
-                            //echo '<a href="resident.php" class="btn btn-success mx-1 editButton" data-id="'.$row['resident_id'].'" data-bs-toggle="modal" data-bs-target="#EditResidentModal">Edit</a>';
-                            
+                            echo "<form method='GET' action='#'>";
+
                             echo '<button href="#" class="btn btn-success mx-1 editButton" 
                             data-id="' . $row['resident_id'] . '"
                             data-first-name="' . htmlspecialchars($row['first_name'], ENT_QUOTES) . '"
@@ -338,10 +294,9 @@
                             // For the Delete Button
                             
 
-                            echo "<form method='POST' action='includes/deleteresidentbtn.php' onsubmit='return confirmDelete();'>";
-                            echo "<input type='hidden' name='delete_resident_id' value='" . $row['resident_id'] . "'>";
-                            echo "<button type='submit' id='showdeletealert' name='deletebtn' class='btn btn-danger mx-1'>Delete</button>";
-                           
+                            echo "<form method='POST' action='#';'>";
+                            echo "<input type='hidden' id='resident_id' name='delete_resident_id' value='" . $row['resident_id'] . "'>";
+                            echo "<button type='submit' id='Delete_Button' name='deletebtn' class='btn btn-danger mx-1'>Delete</button>";
                            
                            
                             echo "</form>";
@@ -356,7 +311,10 @@
                         
                         </tbody>
                 </table><!-- End of Table -->
-            <?php require_once("includes/residenteditform.php")?>
+            <?php 
+             require_once("includes/residentviewform.php");
+            require_once("includes/residenteditform.php");
+            ?>
             </div>  
         </div>
       </main>
@@ -365,77 +323,60 @@
   <?php require_once("includes/footer.php")?>
     </div>
 </div>
+
 <script> 
 
-        $(document).on('click', '.editButton', function() {
-            var resident_id = $(this).data('id');
-            var first_name = $(this).data('first-name');
-            var middle_name = $(this).data('middle-name');
-            var last_name = $(this).data('last-name');
-            var house_no = $(this).data('house-no');
-            var street_name = $(this).data('street-name');
-            var subdivision =$(this).data('subdivision');
-            var sex = $(this).data('sex');
-            var marital_status = $(this).data('marital-status');
-            var birth_date = $(this).data('birth-date');
-            var formattedBirthDate = new Date(birth_date).toLocaleDateString('en-US');
-            var birthplace = $(this).data('birth-place');
-            var phone_number = $(this).data('phone-number');
-            var is_a_voter = $(this).data('isa-voter');
+  // Attach event listener to delete button
+  $("#deleteButton").click(function (event) {
+    // Prevent the default click action
+    event.preventDefault();
 
-
-
-           
-            // Populate the modal with the retrieved data
-            $('#EditResidentModal input[name="resident_id"]').val(resident_id);
-            $('#EditResidentModal input[name="fname"]').val(first_name);
-            $('#EditResidentModal input[name="mname"]').val(middle_name);
-            $('#EditResidentModal input[name="lname"]').val(last_name);
-            $('#EditResidentModal input[name="house_no"]').val(house_no);
-            $('#EditResidentModal input[name="street"]').val(street_name);
-            $('#EditResidentModal input[name="subd"]').val(subdivision);
-            $('#EditResidentModal select[name="sex"]').val(sex);
-            $('#EditResidentModal select[name="marital_status"]').val(marital_status);
-            $('#EditResidentModal input[name="birth_date"]').val(birth_date);
-            $('#EditResidentModal input[name="birth_place"]').val(birthplace);
-            $('#EditResidentModal input[name="cp_number"]').val(phone_number);
-            $('#EditResidentModal select[name="is_a_voter"]').val(is_a_voter);
-
-
-            
-
-            // Display the modal
-            $('#EditResidentModal').modal('show');
-        });
-
-</script>
-        
-<script> 
-
-$(document).ready(function() {
-    $('#saveButton').click(function() {
-        var formData = $('#editResidentForm').serialize(); // Serialize form data
-
+    // Show confirmation dialog
+    swal({
+      title: "Are you sure?",
+      text: "Once deleted, you will not be able to recover this entry!",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    })
+    .then((willDelete) => {
+      if (willDelete) {
+        // Send AJAX request to delete resident
         $.ajax({
-            url: 'includes/editresident.php',
-            type: 'POST',
-            data: formData,
-            success: function(response) {
-                console.log('Data saved successfully');
-                $('#EditResidentModal').modal('hide');
-                // Add code here for displaying success message or updating UI
-            },
-            error: function(xhr, status, error) {
-                console.error('Error saving data:', error);
-                // Add code here for displaying error message or handling the error
-            }
-        });
-    });
-});
+          url: "includes/deleteresident.php",
+          type: "POST",
+          data: { resident_id: $("#resident_id").val() }, // Assuming you have an input field with id="resident_id" to store the resident ID
+          dataType: "json",
+          success: function (response) {
+            // Handle success response
+            console.log("Data deleted successfully:", response);
 
+            // Optionally, perform any actions after deletion (e.g., refresh the page)
+          },
+          error: function (xhr, status, error) {
+            // Handle error response
+            console.error("Error deleting data:", error);
+            // Optionally, display an error message to the user
+          },
+        });
+      } else {
+        // User clicked the cancel button
+        swal("Entry not deleted!", {
+          icon: "info",
+        });
+      }
+    });
+  });
 
 
 </script>
+<script src="js/populateresidenteditmodal.js"> </script>
+
+<script src="js/populateresidentviewmodal.js"> </script>
+        
+<script src="js/editresidentaction.js"> </script>
+
+<script src="js/addresidentaction.js"> </script>
 
 <!-- Chart library -->
 <script src="./plugins/chart.min.js"></script>
