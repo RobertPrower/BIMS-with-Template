@@ -297,23 +297,28 @@
                             //For the view button
                             echo "<td style='width: 15%;'><div class='btn-group text-center'>";
 
-                            echo "<form method='GET' action='residentviewform.php'>";
-                            echo "<input type='hidden' name='resident_id' value='" . $row['resident_id'] . "'>";
-                            echo "<button type='submit' id='view_resident' class='btn btn-primary mx-1'>View</button>";
+                            echo "<form method='GET' action='#'>";
+                            echo '<button href="#" class="btn btn-primary mx-1 viewButton" 
+                            data-id="' . $row['resident_id'] . '"
+                            data-first-name="' . htmlspecialchars($row['first_name'], ENT_QUOTES) . '"
+                            data-middle-name="' . htmlspecialchars($row['middle_name'], ENT_QUOTES) . '"
+                            data-last-name="' . htmlspecialchars($row['last_name'], ENT_QUOTES) . '"
+                            data-house-no="' . htmlspecialchars($row['house_number'], ENT_QUOTES) . '"
+                            data-street-name="' . htmlspecialchars($row['street_name'], ENT_QUOTES) . '"
+                            data-subdivision="' . htmlspecialchars($row['subdivision'], ENT_QUOTES) . '"
+                            data-sex="' . htmlspecialchars($row['sex'], ENT_QUOTES) . '"
+                            data-marital-status="' . htmlspecialchars($row['marital_status'], ENT_QUOTES) . '"
+                            data-birth-date="' . htmlspecialchars($row['birth_date'], ENT_QUOTES) . '"
+                            data-birth-place="' . htmlspecialchars($row['birth_place'], ENT_QUOTES) . '"
+                            data-phone-number="' . htmlspecialchars($row['cellphone_number'], ENT_QUOTES) . '"
+                            data-isa-voter="' . htmlspecialchars($row['is_a_voter'], ENT_QUOTES) . '"
+                            data-bs-toggle="modal" data-bs-target="#ViewResidentModal">View</button>';
                             echo "</form>";
                             
                             
                             
 
                             //For the edit button
-
-                            //$residentid = ;
-                           
-                            echo "<form method='GET' action='#>";
-                            echo "<input type='hidden'>";
-                            //echo '<a href="includes/residenteditfunc.php?resident_id='.$row['resident_id'].'" class="btn btn-success mx-1" " data-bs-toggle="modal" data-bs-target="#EditResidentModal">Edit</a>';
-                            //echo '<a href="includes/residenteditform.php?resident_id='.$row['resident_id'].'" class="btn btn-success mx-1" data-bs-toggle="modal" data-bs-target="#EditResidentModal">Edit</a>';
-                            //echo '<a href="resident.php" class="btn btn-success mx-1 editButton" data-id="'.$row['resident_id'].'" data-bs-toggle="modal" data-bs-target="#EditResidentModal">Edit</a>';
                             
                             echo '<button href="#" class="btn btn-success mx-1 editButton" 
                             data-id="' . $row['resident_id'] . '"
@@ -356,7 +361,11 @@
                         
                         </tbody>
                 </table><!-- End of Table -->
-            <?php require_once("includes/residenteditform.php")?>
+            <?php 
+                
+                require_once("includes/residenteditform.php");
+                require_once("includes/residentviewform.php")
+            ?>
             </div>  
         </div>
       </main>
@@ -409,25 +418,80 @@
         });
 
 </script>
-        
+
+<script> 
+
+        $(document).on('click', '.viewButton', function() {
+            var resident_id = $(this).data('id');
+            var first_name = $(this).data('first-name');
+            var middle_name = $(this).data('middle-name');
+            var last_name = $(this).data('last-name');
+            var house_no = $(this).data('house-no');
+            var street_name = $(this).data('street-name');
+            var subdivision =$(this).data('subdivision');
+            var sex = $(this).data('sex');
+            var marital_status = $(this).data('marital-status');
+            var birth_date = $(this).data('birth-date');
+            var formattedBirthDate = new Date(birth_date).toLocaleDateString('en-US');
+            var birthplace = $(this).data('birth-place');
+            var phone_number = $(this).data('phone-number');
+            var is_a_voter = $(this).data('isa-voter');
+
+
+
+           
+            // Populate the modal with the retrieved data
+            $('#ViewResidentModal input[name="resident_id"]').val(resident_id);
+            $('#ViewResidentModal input[name="fname"]').val(first_name);
+            $('#ViewResidentModal input[name="mname"]').val(middle_name);
+            $('#ViewResidentModal input[name="lname"]').val(last_name);
+            $('#ViewResidentModal input[name="house_no"]').val(house_no);
+            $('#ViewResidentModal input[name="street"]').val(street_name);
+            $('#ViewResidentModal input[name="subd"]').val(subdivision);
+            $('#ViewResidentModal select[name="sex"]').val(sex);
+            $('#ViewResidentModal select[name="marital_status"]').val(marital_status);
+            $('#ViewResidentModal input[name="birth_date"]').val(birth_date);
+            $('#ViewResidentModal input[name="birth_place"]').val(birthplace);
+            $('#ViewResidentModal input[name="cp_number"]').val(phone_number);
+            $('#ViewResidentModal select[name="is_a_voter"]').val(is_a_voter);
+
+
+            
+
+            // Display the modal
+            $('#ViewResidentModal').modal('show');
+        });
+
+</script>
+
 <script> 
 
 $(document).ready(function() {
-    $('#saveButton').click(function() {
-        var formData = $('#editResidentForm').serialize(); // Serialize form data
-
+    // Attach event listener to form submission
+    $('#editResidentForm').submit(function(event) {
+        // Prevent the default form submission behavior
+        event.preventDefault();
+        
+        // Collect form data using FormData
+        var formData = new FormData(this);
+        
+        // Send AJAX request
         $.ajax({
             url: 'includes/editresident.php',
             type: 'POST',
             data: formData,
+            dataType: 'json',
+            contentType: false, // Ensure proper content type for FormData
+            processData: false, // Prevent jQuery from processing the data
             success: function(response) {
-                console.log('Data saved successfully');
-                $('#EditResidentModal').modal('hide');
-                // Add code here for displaying success message or updating UI
+                // Handle success response
+                console.log('Data saved successfully:', response);
+                // Optionally, update the UI or display a success message
             },
             error: function(xhr, status, error) {
+                // Handle error response
                 console.error('Error saving data:', error);
-                // Add code here for displaying error message or handling the error
+                // Optionally, display an error message to the user
             }
         });
     });
@@ -435,7 +499,11 @@ $(document).ready(function() {
 
 
 
+
+
 </script>
+        
+
 
 <!-- Chart library -->
 <script src="./plugins/chart.min.js"></script>
