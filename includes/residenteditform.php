@@ -3,7 +3,7 @@
 
 
                 <!-- Add Blotter Modal -->
-                <form action="includes/editresident.php" id="editResidentForm" method="POST" enctype="multipart/form-data">
+                <form action="editresident.php" method="POST" enctype="multipart/form-data">
                 <div class="modal fade" id="EditResidentModal" name="add" tabindex="-1" aria-labelledby="EditResidentModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-xl">
                 <div class="modal-content">
@@ -21,7 +21,6 @@
                 
                     <div class="row">
                         <div class="mt-3" style="width: 270px">
-
                         
                             <!--For the container of the camera and Picture-->
                             <div class="col card" style="border-radius: 15px; height: 400px">
@@ -126,7 +125,7 @@
                 </div>
                     <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" id="saveButton" class="btn btn-primary" data-id="' . $row['resident_id'] . '" >Save</button>
+                    <button type="button" id="saveButton" class="btn btn-primary" data-id="' . $row['resident_id'] . '" >Save</button>
                     </div>
                 </div>
                 </div>

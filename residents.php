@@ -467,31 +467,56 @@
 <script> 
 
 $(document).ready(function() {
-    // Attach event listener to form submission
-    $('#editResidentForm').submit(function(event) {
-        // Prevent the default form submission behavior
-        event.preventDefault();
+    // Attach click event handler to the save button
+    $('#saveButton').click(function() {
+        // Collect data from modal fields
+        var residentId = $('#EditResidentModal input[name="resident_id"]').val();
+        var firstName = $('#EditResidentModal input[name="fname"]').val();
+        var middleName = $('#EditResidentModal input[name="mname"]').val();
+        var lastName = $('#EditResidentModal input[name="lname"]').val();
+        var houseno = $('#EditResidentModal input[name="house_no"]').val();
+        var street = $('#EditResidentModal input[name="street"]').val();
+        var subdivision = $('#EditResidentModal input[name="subd"]').val();
+        var sex = $('#EditResidentModal input[name="sex"]').val();
+        var maritalstatus = $('#EditResidentModal input[name="marital_status"]').val();
+        var birthdate = $('#EditResidentModal input[name="birth_date"]').val();
+        var birthplace = $('#EditResidentModal input[name="birth_place"]').val();
+        var phonenumber = $('#EditResidentModal input[name="cp_number"]').val();
+        var isavoter = $('#EditResidentModal input[name="is_a_voter"]').val();
+
         
-        // Collect form data using FormData
-        var formData = new FormData(this);
-        
-        // Send AJAX request
+
+        // Send AJAX request to save the data
         $.ajax({
             url: 'includes/editresident.php',
             type: 'POST',
-            data: formData,
-            dataType: 'json',
-            contentType: false, // Ensure proper content type for FormData
-            processData: false, // Prevent jQuery from processing the data
+            data: {
+                resident_id: residentId,
+                first_name: firstName,
+                middle_name: middleName,
+                last_name: lastName,
+                house_no: houseno,
+                street_name: street,
+                subd: subdivision,
+                sex: sex,
+                marital_status: maritalstatus,
+                birth_date: birthdate,
+                birth_place: birthplace,
+                phone_number: phonenumber,
+                is_a_voter: isavoter
+                
+                
+                // Include other data fields as needed
+            },
             success: function(response) {
-                // Handle success response
-                console.log('Data saved successfully:', response);
-                // Optionally, update the UI or display a success message
+                // Handle successful response (if needed)
+                console.log('Data saved successfully');
+                // Close the modal or perform any other action
+                $('#EditResidentModal').modal('hide');
             },
             error: function(xhr, status, error) {
-                // Handle error response
+                // Handle error response (if needed)
                 console.error('Error saving data:', error);
-                // Optionally, display an error message to the user
             }
         });
     });
