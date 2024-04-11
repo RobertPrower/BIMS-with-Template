@@ -12,26 +12,44 @@ $(document).ready(function () {
       url: "includes/addresident.php",
       type: "POST",
       data: formData,
-      dataType: "json",
-      contentType: false, // Ensure proper content type for FormData
-      processData: false, // Prevent jQuery from processing the data
+      dataType: "JSON",
+      contentType: false, 
+      processData: false, 
       success: function (response) {
         // Handle success response
         console.log("Data saved successfully:", response);
 
-        $("#AddResidentModal").modal("hide");
-        swal({
-          title: "Add Entry",
-          text: "Entry Added Sucessfully!",
-          icon: "success",
-          button: "Close",
-        });
+        if (response.success){
+          $("#AddResidentModal").modal("hide");
+            swal({
+              title: "Add Entry",
+              text: "Entry Added Sucessfully!",
+              icon: "success",
+              button: "Close",
+            });
+         }else{
+          $("#AddResidentModal").modal("hide");
+            swal({
+              icon: "error",
+              title: "Oops...",
+              text: "Something went wrong!",
+          });
+         }// END of if 
+
       },
       error: function (xhr, status, error) {
+
         // Handle error response
         console.error("Error saving data:", error);
         // Optionally, display an error message to the user
+        $("#AddResidentModal").modal("hide");
+        swal({
+          icon: "error",
+          title: "Oops...",
+          text: "Something went wrong!",
+        });
       },
     });
+    //console.log(formData);
   });
 });

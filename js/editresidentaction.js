@@ -13,24 +13,40 @@ $(document).ready(function () {
       type: "POST",
       data: formData,
       dataType: "json",
-      contentType: false, // Ensure proper content type for FormData
-      processData: false, // Prevent jQuery from processing the data
+      contentType: false, 
+      processData: false, 
       success: function (response) {
         // Handle success response
         console.log("Data saved successfully:", response);
-
+        
+       if (response.success){
         $("#EditResidentModal").modal("hide");
-        swal({
-          title: "Edit Entry",
-          text: "Entry Edited Sucessfully!",
-          icon: "success",
-          button: "Close",
+          swal({
+            title: "Edit Entry",
+            text: "Entry Edited Sucessfully!",
+            icon: "success",
+            button: "Close",
+          });
+       }else{
+        $("#EditResidentModal").modal("hide");
+          swal({
+            icon: "error",
+            title: "Oops...",
+            text: "Something went wrong!",
         });
+       }// END of if 
+       
       },
       error: function (xhr, status, error) {
         // Handle error response
         console.error("Error saving data:", error);
         // Optionally, display an error message to the user
+        $("#EditResidentModal").modal("hide");
+        swal({
+          icon: "error",
+          title: "Oops...",
+          text: "Something went wrong!",
+        });
       },
     });
   });

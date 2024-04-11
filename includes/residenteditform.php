@@ -14,26 +14,62 @@
         <div class="modal-body">
 
         <!-- Edit form -->
-    <?php
-        
-
-        ?>
     
         <div class="row">
             <div class="mt-3" style="width: 270px">
             
                 <!--For the container of the camera and Picture-->
-                <div class="col card" style="border-radius: 15px; height: 400px">
+                <div class="col card" id="imageForm" style="border-radius: 15px; height: 400px">
                     <div class="text-center">
                         <div class="mt-3 mb-4">
-                            <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
+
+                           <!-- Hidden Text Box to Store the resident_id value -->
+                            <input hidden type="text" id="resident_id" name="resident_id" />
+
+                            <img id="imagePreview"
                             class="rounded-circle img-fluid" style="width: 200px; height: 200px;" />
+
+                            <script> 
+                        
+                            $(document).ready(function() {
+                                $('.editResidentButton').click(function() {
+                                    var residentId = $(this).data('id');
+                                    $.ajax({
+                                        url: 'includes/GetImageData.php', 
+                                        type: 'GET',
+                                        data: { id: residentId },
+                                        dataType: 'json',
+                                        success: function(response) {
+                                        
+                                        // Variables to collect the response of the server
+                                        var imagePath = response.imageData;
+                                        var correctimagepath = 'includes/'+imagePath;
+                                        var imageSize = response.imageSize;
+                                        var imageHeight = response.imageHeight;
+
+                                        // Display image
+                                        $('#imagePreview').attr('src', correctimagepath);
+
+                                        // Display metadata
+                                        $('#imageSize').text("Size: " + imageSize);
+                                        $('#imageHeight').text("Height: " + imageHeight);
+
+                                        console.log(imagePath);
+                                        },
+                                        error: function(xhr, status, error) {
+                                        console.error('Error fetching metadata:', error);
+                                        }
+                                    });
+                                });
+                            });
+
+                                </script>
                         </div>
                             <button type="button" class="btn btn-primary btn-lg col-md-12">Open Camera</button>
 
 
                         <div class="form-floating mt-3 mb-3 col-md-13">
-                            <input type="file" class="form-control" id="floatingInput" placeholder="Upload Picture">
+                            <input type="file" class="form-control" id="fileupload" name="image_file" placeholder="Upload Picture">
                             <label for="floatingInput">Upload Image</label>
                         </div>  
                     </div>
@@ -43,7 +79,7 @@
             <div class="col-md-9 card mt-3 " style="border-radius: 10px;" style="padding: 10px;">
                 <div class="text-center row">
 
-                    <input hidden type="text" id="resident_id" name="resident_id" />
+                 
 
 
                     <div class="form-floating mt-3 mb-3 col-md-4">
@@ -94,17 +130,17 @@
                     </div>
 
                     <div class="form-floating mt-3 mb-3 col-md-4">
-                        <input type="Date" class="form-control" id="floatingInput" id="birth_date"name="birth_date" required>
+                        <input type="Date" class="form-control" id="birth_date"name="birth_date" required>
                         <label for="floatingInput">Birth Date</label>
                     </div> 
 
                     <div class="form-floating mt-3 mb-3 col-md-4">
-                        <input type="Text" class="form-control" id="floatingInput" id="birth_place" name="birth_place" required>
+                        <input type="Text" class="form-control" id="birth_place" name="birth_place" required>
                         <label for="floatingInput">Birth Place</label>
                     </div> 
 
                     <div class="form-floating mt-3 mb-3 col-md-4">
-                        <input type="text" class="form-control" id="floatingInput" id="cp_number" name="cp_number"  required>
+                        <input type="text" class="form-control" id="cp_number" name="cp_number"  required>
                         <label for="floatingInput">Phone Number</label>
                     </div> 
 
@@ -114,10 +150,6 @@
                         <option value="0">No</option>
                     </select>
                     </div>
-
-                
-                
-
 
                 </div>
             </div>

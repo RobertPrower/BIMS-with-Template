@@ -100,6 +100,11 @@
                                                             <label for="floatingInput">Last Name</label>
                                                         </div>
 
+                                                        <!-- <div class="form-floating mt-3 mb-3 col-md-4">
+                                                            <input type="text" class="" id="floatingInput" name="suffix" style="width:25px">
+                                                            <label for="floatingInput">Suffix</label>
+                                                        </div> -->
+
                                                         <div class="form-floating mt-3 mb-3 col-md-4">
                                                             <input type="text" class="form-control" id="floatingInput" name="house_no" required>
                                                             <label for="floatingInput">House No. (Blk no, Lot no, Unit no)</label>
@@ -271,7 +276,7 @@
                            
                             echo "<form method='GET' action='#'>";
 
-                            echo '<button href="#" class="btn btn-success mx-1 editButton" 
+                            echo '<button href="#" class="btn btn-success mx-1 editResidentButton" 
                             data-id="' . $row['resident_id'] . '"
                             data-first-name="' . htmlspecialchars($row['first_name'], ENT_QUOTES) . '"
                             data-middle-name="' . htmlspecialchars($row['middle_name'], ENT_QUOTES) . '"

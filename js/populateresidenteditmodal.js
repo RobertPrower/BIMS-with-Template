@@ -1,6 +1,6 @@
-//Script for the Edit Button
+//Script for the  Retriving of Data for the Edit Modal.
 
-$(document).on("click", ".editButton", function () {
+$(document).on("click", ".editResidentButton", function () {
   var resident_id = $(this).data("id");
   var first_name = $(this).data("first-name");
   var middle_name = $(this).data("middle-name");
