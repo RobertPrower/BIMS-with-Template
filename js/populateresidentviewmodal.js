@@ -4,6 +4,7 @@ $(document).on("click", ".viewButton", function () {
   var first_name = $(this).data("first-name");
   var middle_name = $(this).data("middle-name");
   var last_name = $(this).data("last-name");
+  var suffix= $(this).data("suffix");
   var house_no = $(this).data("house-no");
   var street_name = $(this).data("street-name");
   var subdivision = $(this).data("subdivision");
@@ -33,4 +34,5 @@ $(document).on("click", ".viewButton", function () {
 
   // Display the modal
   $("#ViewResidentModal").modal("show");
+  console.log("Suffix is" + $suffix);
 });

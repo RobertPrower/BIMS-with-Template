@@ -283,6 +283,7 @@
                             data-first-name="' . htmlspecialchars($row['first_name'], ENT_QUOTES) . '"
                             data-middle-name="' . htmlspecialchars($row['middle_name'], ENT_QUOTES) . '"
                             data-last-name="' . htmlspecialchars($row['last_name'], ENT_QUOTES) . '"
+                            data-suffix="' . htmlspecialchars($row['suffix'], ENT_QUOTES) . '"
                             data-house-no="' . htmlspecialchars($row['house_number'], ENT_QUOTES) . '"
                             data-street-name="' . htmlspecialchars($row['street_name'], ENT_QUOTES) . '"
                             data-subdivision="' . htmlspecialchars($row['subdivision'], ENT_QUOTES) . '"

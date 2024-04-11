@@ -51,9 +51,14 @@
                                     <label for="floatingInput">Middle Name</label>
                                 </div>
 
-                                <div class="form-floating mt-3 mb-3 col-md-4">
+                                <div class="form-floating mt-3 mb-3 col-md-3">
                                     <input type="text" class="form-control" id="lname" name="lname" disabled>
                                     <label for="floatingInput">Last Name</label>
+                                </div>
+
+                                <div class="form-floating mt-3 mb-3 col-md-1">
+                                    <input type="text" class="form-control" id="suffix" name="suffix" style="width:50px" disabled>
+                                    <label for="floatingInput">Suffix</label>
                                 </div>
 
                                 <div class="form-floating mt-3 mb-3 col-md-4">
