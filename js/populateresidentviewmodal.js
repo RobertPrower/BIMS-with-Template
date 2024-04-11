@@ -20,6 +20,7 @@ $(document).on("click", ".viewButton", function () {
   $('#ViewResidentModal input[name="fname"]').val(first_name);
   $('#ViewResidentModal input[name="mname"]').val(middle_name);
   $('#ViewResidentModal input[name="lname"]').val(last_name);
+  $('#ViewResidentModal input[name="suffix"]').val(suffix);
   $('#ViewResidentModal input[name="house_no"]').val(house_no);
   $('#ViewResidentModal input[name="street"]').val(street_name);
   $('#ViewResidentModal input[name="subd"]').val(subdivision);

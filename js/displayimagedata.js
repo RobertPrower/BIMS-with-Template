@@ -14,7 +14,7 @@ $(document).ready(function () {
         var imageHeight = response.imageHeight;
 
         // Display image
-        $("#imagePreview").attr("src", correctimagepath);
+        $("#editimagePreview").attr("src", correctimagepath);
 
         // Display metadata
         $("#imageSize").text("Size: " + imageSize);

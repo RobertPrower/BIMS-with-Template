@@ -26,7 +26,7 @@
                            <!-- Hidden Text Box to Store the resident_id value -->
                             <input hidden type="text" id="resident_id" name="resident_id" />
 
-                            <img id="imagePreview"
+                            <img id="editimagePreview"
                             class="rounded-circle img-fluid" style="width: 200px; height: 200px;" />
 
                             <script src="js/displayimagedata.js"> </script>
@@ -35,7 +35,7 @@
 
 
                         <div class="form-floating mt-3 mb-3 col-md-13">
-                            <input type="file" class="form-control" id="fileupload" name="image_file" placeholder="Upload Picture">
+                            <input type="file" class="form-control" id="imagefile" name="image_file" placeholder="Upload Picture">
                             <label for="floatingInput">Upload Image</label>
                         </div>  
                     </div>
@@ -58,9 +58,14 @@
                         <label for="floatingInput">Middle Name</label>
                     </div>
 
-                    <div class="form-floating mt-3 mb-3 col-md-4">
+                    <div class="form-floating mt-3 mb-3 col-md-3">
                         <input type="text" class="form-control" id="lname" name="lname" required>
                         <label for="floatingInput">Last Name</label>
+                    </div>
+
+                    <div class="form-floating mt-3 mb-3 col-md-1">
+                        <input type="text" class="form-control" id="suffix" name="suffix" style="width:50px">
+                        <label for="floatingInput">Suffix</label>
                     </div>
 
                     <div class="form-floating mt-3 mb-3 col-md-4">

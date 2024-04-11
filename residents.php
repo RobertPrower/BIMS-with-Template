@@ -70,13 +70,14 @@
                                                             <div class="mt-3 mb-4">
                                                                 <!--input type="hidden" name="MAX_FILE_SIZE" value="1048576"-->
                                                                 <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
-                                                                class="rounded-circle img-fluid" style="width: 200px;" />
+                                                                class="rounded-circle img-fluid" id="imagePreview" style="width: 200px;" />
                                                             </div>
                                                                 <button type="button" class="btn btn-primary btn-lg col-md-12">Open Camera</button>
 
                                                             <div class="form-floating mt-3 mb-3 col-md-13">
-                                                                <input type="file" class="form-control" id="FILES" name="image_file" placeholder="Upload Picture" require>
+                                                                <input type="file" class="form-control" id="imagefile" name="image_file" placeholder="Upload Picture" require>
                                                                 <label for="floatingInput">Upload Image</label>
+                                                                <script src="js/limitfileresanddisplayimg.js"> </script>
                                                             </div>  
                                                         </div>
                                                     </div>
@@ -95,15 +96,15 @@
                                                             <label for="floatingInput">Middle Name</label>
                                                         </div>
 
-                                                        <div class="form-floating mt-3 mb-3 col-md-4">
+                                                        <div class="form-floating mt-3 mb-3 col-md-3">
                                                             <input type="text" class="form-control" id="floatingInput" name="lname" required>
                                                             <label for="floatingInput">Last Name</label>
                                                         </div>
 
-                                                        <!-- <div class="form-floating mt-3 mb-3 col-md-4">
-                                                            <input type="text" class="" id="floatingInput" name="suffix" style="width:25px">
+                                                        <div class="form-floating mt-3 mb-3 col-md-1">
+                                                            <input type="text" class="form-control" id="floatingInput" name="suffix" style="width:50px">
                                                             <label for="floatingInput">Suffix</label>
-                                                        </div> -->
+                                                        </div>
 
                                                         <div class="form-floating mt-3 mb-3 col-md-4">
                                                             <input type="text" class="form-control" id="floatingInput" name="house_no" required>
@@ -226,7 +227,7 @@
                             //echo '<td><input type="checkbox" class="check-all"></td>';
                             echo "<td>{$row['resident_id']}</td>";
                             echo "<td>{$row['date_recorded']}</td>";
-                            echo "<td>{$row['last_name']}, {$row['first_name']} {$row['middle_name']}</td>";
+                            echo "<td>{$row['last_name']}, {$row['first_name']} {$row['middle_name']} {$row['suffix']}</td>";
                             echo "<td>{$row['house_number']}, {$row['street_name']}, {$row['subdivision']}</td>";
                             echo "<td>{$row['sex']}</td>";
                             echo "<td>{$row['marital_status']}</td>";
@@ -257,6 +258,7 @@
                             data-first-name="' . htmlspecialchars($row['first_name'], ENT_QUOTES) . '"
                             data-middle-name="' . htmlspecialchars($row['middle_name'], ENT_QUOTES) . '"
                             data-last-name="' . htmlspecialchars($row['last_name'], ENT_QUOTES) . '"
+                            data-suffix="' . htmlspecialchars($row['suffix'], ENT_QUOTES) . '"
                             data-house-no="' . htmlspecialchars($row['house_number'], ENT_QUOTES) . '"
                             data-street-name="' . htmlspecialchars($row['street_name'], ENT_QUOTES) . '"
                             data-subdivision="' . htmlspecialchars($row['subdivision'], ENT_QUOTES) . '"

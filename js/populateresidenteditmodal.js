@@ -5,6 +5,7 @@ $(document).on("click", ".editResidentButton", function () {
   var first_name = $(this).data("first-name");
   var middle_name = $(this).data("middle-name");
   var last_name = $(this).data("last-name");
+  var Suffix = $(this).data("suffix");
   var house_no = $(this).data("house-no");
   var street_name = $(this).data("street-name");
   var subdivision = $(this).data("subdivision");
@@ -21,6 +22,8 @@ $(document).on("click", ".editResidentButton", function () {
   $('#EditResidentModal input[name="fname"]').val(first_name);
   $('#EditResidentModal input[name="mname"]').val(middle_name);
   $('#EditResidentModal input[name="lname"]').val(last_name);
+  $('#EditResidentModal input[name="suffix"]').val(Suffix);
+  console.log("Suffix is:" + Suffix);
   $('#EditResidentModal input[name="house_no"]').val(house_no);
   $('#EditResidentModal input[name="street"]').val(street_name);
   $('#EditResidentModal input[name="subd"]').val(subdivision);
