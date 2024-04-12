@@ -20,7 +20,8 @@
   <!--Scripts Must be Always On the Top -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js" integrity="sha256-xLD7nhI62fcsEZK2/v8LsBcb4lG7dgULkuXoXB/j91c=" crossorigin="anonymous"></script>
-  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>  
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert"></script>
+
 
 <body>
   <div class="layer"></div>
@@ -170,8 +171,10 @@
                                             </div>
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                            <button type="button" id="closeButton" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                             <button type="submit" id="addButton" name="submit" class="btn btn-primary">Save</button>
+
+                                            <script src="js/reseteditresidentformwhenclose.js">  </script>
                                         </div>
                                         </div>
                                     </div>
@@ -198,7 +201,7 @@
                 </div>
 
                 <div class="users-table table-wrapper">
-                    <table class="posts-table">
+                    <table class="posts-table ResidentTable" id="ResidentTable">
                         <thead>
                         <tr class="users-table-info">
             
@@ -242,7 +245,7 @@
                                 echo "<td>{$row['cellphone_number']}</td>";
                             }
                             
-                            if($row['is_a_voter'] === 1){
+                            if($row['is_a_voter'] == 1){
                             echo "<td>YES</td>";
                             }else{
                             echo "<td>NO</td>";
@@ -302,11 +305,9 @@
                             // For the Delete Button
                             
 
-                            echo "<form method='POST' action='#';'>";
-                            echo "<input type='hidden' id='resident_id' name='delete_resident_id' value='" . $row['resident_id'] . "'>";
-                            echo "<button type='submit' id='Delete_Button' name='deletebtn' class='btn btn-danger mx-1'>Delete</button>";
-                           
-                           
+                            echo "<form method='POST' action='#'>";
+                            //echo "<input type='hidden' id='resident_id' name='delete_resident_id' value='""'>";
+                            echo '<button type="submit" class="Delete_Button btn btn-danger mx-1" data-resident_id="' . $row['resident_id'] . '">Delete</button>';
                             echo "</form>";
                             echo "</div>";
                             echo "</td>";
@@ -317,7 +318,9 @@
                         </tbody>
                     
                         
-                        </tbody>
+                        <!-- </tbody> -->
+
+                    
                 </table><!-- End of Table -->
             <?php 
              require_once("includes/residentviewform.php");
@@ -334,47 +337,58 @@
 
 <script> 
 
-  // Attach event listener to delete button
-  $("#deleteButton").click(function (event) {
+$(document).on("click", ".Delete_Button", function (event) {
     // Prevent the default click action
     event.preventDefault();
 
-    // Show confirmation dialog
+    // Get the resident ID from the data attribute
+    var residentId = $(this).data("resident_id");
+
+    // Show confirmation dialog using SweetAlert
     swal({
-      title: "Are you sure?",
-      text: "Once deleted, you will not be able to recover this entry!",
-      icon: "warning",
-      buttons: true,
-      dangerMode: true,
+        title: "Are you sure?",
+        text: "Once deleted, you will not be able to recover this entry!",
+        icon: "warning",
+        buttons: ["Cancel", "Delete"],
+        dangerMode: true,
     })
     .then((willDelete) => {
-      if (willDelete) {
-        // Send AJAX request to delete resident
-        $.ajax({
-          url: "includes/deleteresident.php",
-          type: "POST",
-          data: { resident_id: $("#resident_id").val() }, // Assuming you have an input field with id="resident_id" to store the resident ID
-          dataType: "json",
-          success: function (response) {
-            // Handle success response
-            console.log("Data deleted successfully:", response);
-
-            // Optionally, perform any actions after deletion (e.g., refresh the page)
-          },
-          error: function (xhr, status, error) {
-            // Handle error response
-            console.error("Error deleting data:", error);
-            // Optionally, display an error message to the user
-          },
-        });
-      } else {
-        // User clicked the cancel button
-        swal("Entry not deleted!", {
-          icon: "info",
-        });
-      }
+        if (willDelete) {
+            // Send AJAX request to delete resident
+            $.ajax({
+                url: "includes/deleteresidentbtn.php",
+                type: "POST",
+                data: { resident_id: residentId },
+                dataType: "json",
+                success: function (response) {
+                    // Handle success response
+                    console.log("Data deleted successfully:", response);
+                    // Optionally, refresh the table or update UI here
+                    // RefreshTable(); // Example function to refresh table
+                    swal("Poof! Your imaginary file has been deleted!", {
+                        icon: "success",
+                    });
+                },
+                error: function (xhr, status, error) {
+                    // Handle error response
+                    console.error("Error deleting data:", error);
+                    // Display an error message to the user using SweetAlert
+                    swal("Error!", "Failed to delete the entry.", "error");
+                },
+            });
+        } else {
+            // User clicked the cancel button
+            swal("Entry not deleted!", {
+                icon: "info",
+            });
+        }
     });
-  });
+});
+
+
+
+
+
 
 
 </script>

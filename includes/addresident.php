@@ -54,8 +54,8 @@ try {
     }
 
     // Insert data into the resident table
-    $insert_query = "INSERT INTO resident (resident_id, date_recorded, first_name, middle_name, last_name, house_number, street_name, subdivision, sex, marital_status, birth_date, birth_place, cellphone_number, is_a_voter)
-                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    $insert_query = "INSERT INTO resident (resident_id, date_recorded, first_name, middle_name, last_name, suffix, house_number, street_name, subdivision, sex, marital_status, birth_date, birth_place, cellphone_number, is_a_voter)
+                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)";
     $insert_stmt = $pdo->prepare($insert_query);
     $insert_stmt->execute([
         $next_id,
@@ -63,6 +63,7 @@ try {
         $_POST['fname'],
         $_POST['mname'],
         $_POST['lname'],
+        $_POST['suffix'],
         $_POST['house_no'],
         $_POST['street'],
         $_POST['subd'],

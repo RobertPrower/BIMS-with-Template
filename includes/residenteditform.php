@@ -35,8 +35,10 @@
 
 
                         <div class="form-floating mt-3 mb-3 col-md-13">
-                            <input type="file" class="form-control" id="imagefile" name="image_file" placeholder="Upload Picture">
+                            <input type="file" class="form-control" id="editimagefile" name="image_file" placeholder="Upload Picture">
                             <label for="floatingInput">Upload Image</label>
+
+                            <script src="../js/limitfileresanddisplayimg copy.js"> </script>
                         </div>  
                     </div>
                 </div>

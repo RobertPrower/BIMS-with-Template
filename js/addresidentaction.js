@@ -1,3 +1,13 @@
+function RefreshTable(){
+  $.ajax({
+      url: 'includes/FetchDataForTableRefresh.php',
+      type: 'GET', 
+      success: function(data){
+          $('#ResidentTable').html(data);
+      }
+  });
+}
+
 $(document).ready(function () {
   // Attach event listener to form submission
   $("#AddResidentModalForm").submit(function (event) {
@@ -27,6 +37,8 @@ $(document).ready(function () {
               icon: "success",
               button: "Close",
             });
+
+            RefreshTable();
          }else{
           $("#AddResidentModal").modal("hide");
             swal({

@@ -64,9 +64,9 @@ require_once('connecttodb.php');
 
 
 // Check if the ID of the record to delete is provided in the POST data
-if (isset($_POST['delete_resident_id'])) {
+if (isset($_POST['resident_id'])) { // Use POST method
     // Get the ID of the record to delete
-    $id_to_delete = $_POST['delete_resident_id'];
+    $id_to_delete = $_POST['resident_id'];
 
     try {
         // Start a transaction
@@ -82,12 +82,12 @@ if (isset($_POST['delete_resident_id'])) {
         // Execute the update statement
         if ($update_stmt->execute()) {
             // Deletion successful
-            echo "<script> alert ('Record deleted successfully.') </script>";
+            echo json_encode(["success" => true, "message" => "Record deleted successfully."]);
             // Commit changes
             $pdo->commit();
         } else {
             // Error handling if update fails
-            echo "<script> alert ('Error deleting record:') </script> " . implode(" ", $update_stmt->errorInfo());
+            echo json_encode(["success" => false, "message" => "Error deleting record: " . implode(" ", $update_stmt->errorInfo())]);
         }
 
         // Close the prepared statement
@@ -95,11 +95,12 @@ if (isset($_POST['delete_resident_id'])) {
     } catch (PDOException $e) {
         // Rollback transaction if an exception occurs
         $pdo->rollBack();
-        echo "<script> alert ('Error deleting record:') </script> " . $e->getMessage();
+        echo json_encode(["success" => false, "message" => "Error deleting record: " . $e->getMessage()]);
     }
 } else {
     // If the ID is not provided in the POST data
-    echo "ID not provided.";
+    echo json_encode(["success" => false, "message" => "ID not provided."]);
 }
+
 
 ?>
