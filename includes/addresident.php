@@ -53,6 +53,20 @@ try {
         $next_id = 1;
     }
 
+    $fname=htmlspecialchars($_POST['fname']);
+    $mname=htmlspecialchars($_POST['mname']);
+    $lname=htmlspecialchars($_POST['lname']);
+    $suffix=htmlspecialchars($_POST['suffix']);
+    $houseno=htmlspecialchars($_POST['house_no']);
+    $street=htmlspecialchars($_POST['street']);
+    $sudb=htmlspecialchars($_POST['subd']);
+    $sex=htmlspecialchars($_POST['sex']);
+    $maritalstatus=htmlspecialchars($_POST['marital_status']);
+    $birthdate=htmlspecialchars($_POST['birth_date']);
+    $birthplace=htmlspecialchars($_POST['birth_place']);
+    $cellphonenumber=htmlspecialchars($_POST['cellphone_number']);
+    $is_a_voter=htmlspecialchars($_POST['is_a_voter']);
+
     // Insert data into the resident table
     $insert_query = "INSERT INTO resident (resident_id, date_recorded, first_name, middle_name, last_name, suffix, house_number, street_name, subdivision, sex, marital_status, birth_date, birth_place, cellphone_number, is_a_voter)
                         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)";
@@ -60,19 +74,21 @@ try {
     $insert_stmt->execute([
         $next_id,
         date("Y-m-d H:i:s"),
-        $_POST['fname'],
-        $_POST['mname'],
-        $_POST['lname'],
-        $_POST['suffix'],
-        $_POST['house_no'],
-        $_POST['street'],
-        $_POST['subd'],
-        $_POST['sex'],
-        $_POST['marital_status'],
-        $_POST['birth_date'],
-        $_POST['birth_place'],
-        $_POST['cellphone_number'],
-        $_POST['is_a_voter']
+        $fname,
+        $mname,
+        $lname,
+        $suffix,
+        $houseno,
+        $street,
+        $sudb,
+        $sex,
+        $maritalstatus,
+        $birthdate,
+        $birthplace,
+        $cellphonenumber,
+        $is_a_voter
+        
+      
     ]);
 
 

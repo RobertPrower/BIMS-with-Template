@@ -1,5 +1,5 @@
 //Script for the View Button
-$(document).on("click", ".viewButton", function () {
+$(document).on("click", ".viewResidentButton", function () {
   var resident_id = $(this).data("id");
   var first_name = $(this).data("first-name");
   var middle_name = $(this).data("middle-name");
@@ -34,5 +34,5 @@ $(document).on("click", ".viewButton", function () {
 
   // Display the modal
   $("#ViewResidentModal").modal("show");
-  console.log("Suffix is" + $suffix);
+  
 });

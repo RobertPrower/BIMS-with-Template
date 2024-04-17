@@ -256,7 +256,7 @@
                             echo "<td style='width: 15%;'><div class='btn-group text-center'>";
 
                             echo "<form method='GET' action='#'>";
-                            echo '<button href="#" class="btn btn-primary mx-1 viewButton" 
+                            echo '<button href="#" class="btn btn-primary mx-1 viewResidentButton" 
                             data-id="' . $row['resident_id'] . '"
                             data-first-name="' . htmlspecialchars($row['first_name'], ENT_QUOTES) . '"
                             data-middle-name="' . htmlspecialchars($row['middle_name'], ENT_QUOTES) . '"
