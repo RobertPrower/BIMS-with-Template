@@ -76,26 +76,32 @@ if (isset($_POST['resident_id'])) { // Use POST method
         $update_query = "UPDATE resident SET is_deleted = true WHERE resident_id = ?";
         $update_stmt = $pdo->prepare($update_query);
 
+        // Prepare a delete statement to remove the corresponding image
+        $delete_img_query = "UPDATE resident_img SET is_deleted = true WHERE id = ?";
+        $delete_img_stmt = $pdo->prepare($delete_img_query);
+
         // Bind the ID parameter
         $update_stmt->bindParam(1, $id_to_delete, PDO::PARAM_INT);
+        $delete_img_stmt->bindParam(1, $id_to_delete, PDO::PARAM_INT);
 
-        // Execute the update statement
-        if ($update_stmt->execute()) {
+        // Execute the update and delete statements
+        if ($update_stmt->execute() && $delete_img_stmt->execute()) {
             // Deletion successful
-            echo json_encode(["success" => true, "message" => "Record deleted successfully."]);
+            echo json_encode(["success" => true, "message" => "Record and image deleted successfully."]);
             // Commit changes
             $pdo->commit();
         } else {
-            // Error handling if update fails
-            echo json_encode(["success" => false, "message" => "Error deleting record: " . implode(" ", $update_stmt->errorInfo())]);
+            // Error handling if update or delete fails
+            echo json_encode(["success" => false, "message" => "Error deleting record or image: " . implode(" ", $update_stmt->errorInfo())]);
         }
 
-        // Close the prepared statement
+        // Close the prepared statements
         $update_stmt->closeCursor();
+        $delete_img_stmt->closeCursor();
     } catch (PDOException $e) {
         // Rollback transaction if an exception occurs
         $pdo->rollBack();
-        echo json_encode(["success" => false, "message" => "Error deleting record: " . $e->getMessage()]);
+        echo json_encode(["success" => false, "message" => "Error deleting record or image: " . $e->getMessage()]);
     }
 } else {
     // If the ID is not provided in the POST data
