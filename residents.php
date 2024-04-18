@@ -88,80 +88,82 @@
                                                     <div class="text-center row">
 
                                                         <div class="form-floating mt-3 mb-3 col-md-4">
-                                                            <input type="text" class="form-control" id="floatingInput" name="fname" required>
-                                                            <label for="floatingInput">First Name</label>
+                                                            <input type="text" class="form-control" id="fname" name="fname" placeholder="Enter First Name Here" required>
+                                                            <label for="fname">First Name</label>
                                                         </div>
 
                                                         <div class="form-floating mt-3 mb-3 col-md-4">
-                                                            <input type="text" class="form-control" id="floatingInput" name="mname">
-                                                            <label for="floatingInput">Middle Name</label>
+                                                            <input type="text" class="form-control" id="mname" name="mname" placeholder="Enter Middle Name Here">
+                                                            <label for="mname">Middle Name</label>
                                                         </div>
 
                                                         <div class="form-floating mt-3 mb-3 col-md-3">
-                                                            <input type="text" class="form-control" id="floatingInput" name="lname" required>
-                                                            <label for="floatingInput">Last Name</label>
+                                                            <input type="text" class="form-control" id="lname" name="lname" placeholder="Enter Last Name Here" required>
+                                                            <label for="lname">Last Name</label>
                                                         </div>
 
                                                         <div class="form-floating mt-3 mb-3 col-md-1">
-                                                            <input type="text" class="form-control" id="floatingInput" name="suffix" style="width:50px">
-                                                            <label for="floatingInput">Suffix</label>
+                                                            <input type="text" class="form-control" id="suffix" name="suffix" style="width:50px" placeholder="Enter Suffix Here">
+                                                            <label for="suffix">Suffix</label>
                                                         </div>
 
                                                         <div class="form-floating mt-3 mb-3 col-md-4">
-                                                            <input type="text" class="form-control" id="floatingInput" name="house_no" required>
-                                                            <label for="floatingInput">House No. (Blk no, Lot no, Unit no)</label>
+                                                            <input type="text" class="form-control" id="house_no" name="house_no" placeholder="Enter House No Here" required>
+                                                            <label for="house_no">House No. (Blk no, Lot no, Unit no)</label>
                                                         </div>
 
                                                         <div class="form-floating mt-3 mb-3 col-md-4">
-                                                            <input type="text" class="form-control" id="floatingInput" name="street" required>
-                                                            <label for="floatingInput">Street</label>
+                                                            <input type="text" class="form-control" id="street" name="street" placeholder="Enter Street Here" required>
+                                                            <label for="street">Street</label>
                                                         </div>
 
                                                         <div class="form-floating mt-3 mb-3 col-md-4">
-                                                            <input type="text" class="form-control" id="floatingInput" name="subd" required>
-                                                            <label for="floatingInput">Subdivision</label>
+                                                            <input type="text" class="form-control" id="subd" name="subd" placeholder="Enter Subdvision Here" required>
+                                                            <label for="subd">Subdivision</label>
                                                         </div>
 
-                                                        <div class="mt-3 mb-3 col-md-4">
-                                                            <select class="form-select" aria-label="Default select example" Style="Height: 58px" name="sex">
-                                                            <option hidden selected>Select Sex</option>
-                                                            <option value="Male">Male</option>
-                                                            <option value="Female">Female</option>
+                                                        <div class="form-floating mt-3 mb-3 col-md-4">
+                                                            <select class="form-select" id="sex" aria-label="Floating label select example">
+                                                                <option hidden selected>Select Sex</option>
+                                                                <option value="Male">Male</option>
+                                                                <option value="Female">Female</option>
                                                             </select>
-                                                        </div>
-
-                                                        <div class="mt-3 mb-3 col-md-4">
-                                                            <select class="form-select" aria-label="Default select example" Style="Height: 58px" name="marital_status">
-                                                            <option hidden selected>Select Marital Status</option>
-                                                            <option value="Single">Single</option>
-                                                            <option value="Married">Married</option>
-                                                            <option value="Widowed">Widowed</option>
-                                                            <option value="Annul">Annul</option>
-                                                            
-                                                            </select>
+                                                            <label for="sex">Sex</label>
                                                         </div>
 
                                                         <div class="form-floating mt-3 mb-3 col-md-4">
-                                                            <input type="Date" class="form-control" id="floatingInput" name="birth_date" required>
-                                                            <label for="floatingInput">Birth Date</label>
+                                                            <select class="form-select" id="marital_status" aria-label="Floating label select example">
+                                                                <option hidden selected>Select Marital Status</option>
+                                                                <option value="Single">Single</option>
+                                                                <option value="Married">Married</option>
+                                                                <option value="Widow">Widow/Widower</option>
+                                                                <option value="Annul">Annul</option>
+                                                            </select>
+                                                            <label for="marital_status">Marital Status</label>
+                                                        </div>
+
+                                                        <div class="form-floating mt-3 mb-3 col-md-4">
+                                                            <input type="Date" class="form-control" id="birth_date" name="birth_date" required>
+                                                            <label for="birth_place">Birth Date</label>
                                                         </div> 
 
                                                         <div class="form-floating mt-3 mb-3 col-md-4">
-                                                            <input type="Text" class="form-control" id="floatingInput" name="birth_place" required>
-                                                            <label for="floatingInput">Birth Place</label>
+                                                            <input type="Text" class="form-control" id="birth_place" name="birth_place" placeholder="Enter Birth Place Here"required>
+                                                            <label for="birth_place">Birth Place</label>
                                                         </div> 
 
                                                         <div class="form-floating mt-3 mb-3 col-md-4">
-                                                            <input type="" class="form-control" id="floatingInput" name="cellphone_number" required>
-                                                            <label for="floatingInput">Phone Number</label>
+                                                            <input type="" class="form-control" id="cellphone_number" name="cellphone_number" placeholder="Enter Phone Number Here" required >
+                                                            <label for="cellphone_number">Phone Number</label>
                                                         </div> 
 
-                                                        <div class="mt-3 mb-3 col-md-4">
-                                                            <select class="form-select" name="is_a_voter" aria-label="Is a Voter" Style="Height: 58px">
-                                                            <option hidden selected>Is a Voter?</option>
-                                                            <option value="1">Yes</option>
-                                                            <option value="0">No</option>
+                                                        <div class="form-floating mt-3 mb-3 col-md-4">
+                                                            <select class="form-select" id="isavoter" aria-label="Floating label select example">
+                                                                <option hidden selected>Select Option</option>
+                                                                <option value="1">YES</option>
+                                                                <option value="0">NO</option>
                                                             </select>
+                                                            <label for="isavoter">Is a Voter</label>
                                                         </div>
                                                     
 

@@ -52,76 +52,83 @@
 
                     <div class="form-floating mt-3 mb-3 col-md-4">
                         <input type="text" class="form-control" id="fname" name="fname" required>
-                        <label for="floatingInput">First Name</label>
+                        <label for="fname">First Name</label>
                     </div>
 
                     <div class="form-floating mt-3 mb-3 col-md-4">
                         <input type="text" class="form-control" id="mname" name="mname" >
-                        <label for="floatingInput">Middle Name</label>
+                        <label for="mname">Middle Name</label>
                     </div>
 
                     <div class="form-floating mt-3 mb-3 col-md-3">
                         <input type="text" class="form-control" id="lname" name="lname" required>
-                        <label for="floatingInput">Last Name</label>
+                        <label for="lname">Last Name</label>
                     </div>
 
                     <div class="form-floating mt-3 mb-3 col-md-1">
                         <input type="text" class="form-control" id="suffix" name="suffix" style="width:50px">
-                        <label for="floatingInput">Suffix</label>
+                        <label for="suffix">Suffix</label>
                     </div>
 
                     <div class="form-floating mt-3 mb-3 col-md-4">
                         <input type="text" class="form-control" id="house_no" name="house_no" required>
-                        <label for="floatingInput">House No. (Blk no, Lot no, Unit no)</label>
+                        <label for="house_no">House No. (Blk no, Lot no, Unit no)</label>
                     </div>
 
                     <div class="form-floating mt-3 mb-3 col-md-4">
                         <input type="text" class="form-control" id="street" name="street" required>
-                        <label for="floatingInput">Street</label>
+                        <label for="street">Street</label>
                     </div>
 
                     <div class="form-floating mt-3 mb-3 col-md-4">
                         <input type="text" class="form-control" id="subd" name="subd" required>
-                        <label for="floatingInput">Subdivision</label>
+                        <label for="subb">Subdivision</label>
                     </div>
                 
-                    <div class="mt-3 mb-3 col-md-4">
-                    <select class="form-select" aria-label="Default select example" Style="Height: 58px" id="sex" name="sex">
-                    <option value="Male">Male</option>
-                    <option value="Female">Female</option>
-                    </select>
+                    <div class="form-floating mt-3 mb-3 col-md-4">
+                        <select class="form-select" id="sex" name="sex" aria-label="Floating label select example">
+                            <option hidden selected>Select Sex</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            
+                        </select>
+                        <label for="sex">Marital Status</label>
                     </div>
 
-                    <div class="mt-3 mb-3 col-md-4">
-                    <select class="form-select" aria-label="Default select example" Style="Height: 58px" id="marital_status" name="marital_status">
-                        <option hidden selected>Select Marital Status</option>
-                        <option value="Single" >Single</option>
-                        <option value="Married">Married</option>
-                        <option value="Widowed">Widow/Widower</option>
-                        <option value="Annul">Annul</option>
-                    </select>
+                    <div class="form-floating mt-3 mb-3 col-md-4">
+                        <select class="form-select" id="marital_status" name="marital_status" aria-label="Floating label select example">
+                            <option hidden selected>Select Marital Status</option>
+                            <option value="Single">Single</option>
+                            <option value="Married">Married</option>
+                            <option value="Widow">Widow/Widower</option>
+                            <option value="Annul">Annul</option>
+                        </select>
+                        <label for="marital_status">Marital Status</label>
                     </div>
 
                     <div class="form-floating mt-3 mb-3 col-md-4">
                         <input type="Date" class="form-control" id="birth_date"name="birth_date" required>
-                        <label for="floatingInput">Birth Date</label>
+                        <label for="birth_place">Birth Date</label>
                     </div> 
 
                     <div class="form-floating mt-3 mb-3 col-md-4">
                         <input type="Text" class="form-control" id="birth_place" name="birth_place" required>
-                        <label for="floatingInput">Birth Place</label>
+                        <label for="birth_place">Birth Place</label>
                     </div> 
 
                     <div class="form-floating mt-3 mb-3 col-md-4">
                         <input type="text" class="form-control" id="cp_number" name="cp_number"  required>
-                        <label for="floatingInput">Phone Number</label>
+                        <label for="cp_number">Phone Number</label>
                     </div> 
 
-                    <div class="mt-3 mb-3 col-md-4">
-                    <select class="form-select" aria-label="Default select example" Style="Height: 58px" id="is_a_voter" name="is_a_voter">
-                        <option value="1">Yes</option>
-                        <option value="0">No</option>
-                    </select>
+                    <div class="form-floating mt-3 mb-3 col-md-4">
+                        <select class="form-select" id="marital_status" name="is_a_voter" aria-label="Floating label select example">
+                            <option hidden selected>Select Option</option>
+                            <option value="1">YES</option>
+                            <option value="0">NO</option>
+                           
+                        </select>
+                        <label for="isavoter">Marital Status</label>
                     </div>
 
                 </div>

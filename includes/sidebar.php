@@ -22,7 +22,7 @@
                 </li>
                 <li>
                     <a class="show-cat-btn" href="##">
-                        <span class="icon document" aria-hidden="true"></span>Documents
+                        <span class="icon document" aria-hidden="true"></span> Documents
                         <span class="category__btn transparent-btn" title="Open list">
                             <span class="sr-only">Open list</span>
                             <span class="icon arrow-down" aria-hidden="true"></span>
@@ -46,7 +46,7 @@
                    
                 </li>
                 <li>
-                    <a href="blotters.php"><span class="icon user-3" aria-hidden="true"></span>Brgy Offcials</a>
+                    <a href="brgyofficials.php"><span class="icon user-3" aria-hidden="true"></span>Brgy Offcials</a>
                    
                 </li>
                 <li>
