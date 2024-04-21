@@ -19,7 +19,8 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" 
   integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
   <link rel="stylesheet" href="./css/style.min.css">
-  <!--link rel="stylesheet" href="./css/blottertablestyle.css"-->
+  <!--JavaScript-->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 
 <body>
@@ -47,8 +48,14 @@
                             <div class="d-flex justify-content-start" style="padding-left: 15px;">
                                
                                 <!-- Button to trigger modal -->
-                                <button type="button" class="btn btn-primary me-2 brgyofficialsbtn" data-modal-title="Add Official" data-bs-toggle="modal" data-bs-target="#addOfficialModal">Add Blotter</button>
-                                <?php include_once'includes/addbrgyoffcialsform.php';?>
+                                <button type="button" class="btn btn-primary me-2" data-bs-toggle="modal" 
+                                data-bs-target="#AddOfficialModal">Add Official</button>
+                                <?php 
+                                
+                                include_once('includes/addbrgyofficialsform.php');
+                                include_once('includes/editbrgyofficial.php');
+                                
+                                ?>
                  
                             </div>
                         </div>
@@ -72,9 +79,9 @@
                             <!--th style="width: 2%;"class="text-center"><input type="checkbox" class="check-all"></th--> 
                             
                             <th style="width: 10%;"class="text-center">Photo</th>
-                            <th style="width: 10%;"class="text-center">Date Last Edited</th>
                             <th style="width: 10%;" class="text-center">Full Name</th>
                             <th style="width: 10%;" class="text-center">Position</th>
+                            <th style="width: 10%;"class="text-center">Date Last Edited</th>
                             <th style="width: 10%;"class="text-center">Action</th>
                            
                         </tr>
@@ -88,24 +95,47 @@
                         foreach ($result as $row) {
                             echo "<tr>";
                             //echo '<td><input type="checkbox" class="check-all"></td>';
-                            echo "<td>{$row['date_last_edited']}</td>";
-                            echo "<td>{$row['date_last_edited']}</td>";
+                            
+                            echo "<td></td>";
                             echo "<td>{$row['official_name']}</td>";
                             echo "<td>{$row['official_position']}</td>";
+                            echo "<td>{$row['date_last_edited']}</td>";
 
                         //For the edit button
                             echo "<td>";
-                            echo "<form method='GET' action=''>";
-                            echo "<input type='hidden' name='id' value='" . $row['id'] . "'>";
-                            echo '<button type="button" class="btn btn-success me-2 brgyofficialsbtn" data-modal-title="Edit Official" data-bs-toggle="modal" data-bs-target="#addOfficialModal">Edit Official</button>';
-                            echo "</form>";
+                            
+                            echo '<button type="button" class="btn btn-success me-2 editOfficialBtn mx-1" data-modal-title="Edit Official" 
+                            data-official-id="' . $row['id'] . '" data-official-fullname="' . $row['official_name'] . '" data-official-position="' . $row['official_position'] .'" 
+                            data-bs-toggle="modal" data-bs-target="#EditOfficialModal" id="EditOfficialBtn">Edit Official</button>';
+                           
+                            echo '<button type="button" class="btn btn-danger" data-official-id = "' . $row['id'] . '" id="DeleteOfficialbtn">Delete</button>';
                             echo "</td>";
 
                         
                         }
                         ?>
                         </tbody>
-                    
+                        
+                        <script >
+                          $(document).on('click', '#DeleteOfficialbtn', function() {
+                            var official_id = $(this).data('official-id');
+                            $.ajax({
+                                url: 'includes/deleteofficialaction.php',
+                                type: 'POST',
+                                dataType: 'json',
+                                data: { id: official_id },
+                                contentType: 'application/x-www-form-urlencoded', 
+                                success: function(response) {
+                                    alert("Official Successfully Deleted");
+                                    console.log('Server response:', response);
+                                },
+                                error: function(jqXHR, textStatus, errorThrown) {
+                                    console.log('Error:', textStatus, errorThrown);
+                                }
+                            });
+                        });
+
+                        </script>
                         
                         </tbody>
                     </table>
@@ -123,19 +153,11 @@
 <!-- Icons library -->
 <script src="plugins/feather.min.js"></script>
 <!-- Custom scripts -->
-<script>
 
-var buttons = document.querySelectorAll('.brgyofficialsbtn');
-var modalTitle = document.getElementById('modal-title');
+<script src="js/populateofficialtotheeditmodal.js"></script>
 
-buttons.forEach(function(button) {
-    button.addEventListener('click',function(){
-        var title = this.getAttribute('data-modal-title');
-        modalTitle.textContent=title;
-    });
+<script src="js/addeditofficial.js"> </script>
 
-});
-</script>
 <script src="js/script.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
