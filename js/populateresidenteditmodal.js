@@ -1,6 +1,7 @@
 //Script for the  Retriving of Data for the Edit Modal.
 
 $(document).on("click", ".editResidentButton", function () {
+  event.preventDefault();  
   var resident_id = $(this).data("id");
   var first_name = $(this).data("first-name");
   var middle_name = $(this).data("middle-name");

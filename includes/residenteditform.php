@@ -92,7 +92,7 @@
                             <option value="Female">Female</option>
                             
                         </select>
-                        <label for="sex">Marital Status</label>
+                        <label for="sex">Sex</label>
                     </div>
 
                     <div class="form-floating mt-3 mb-3 col-md-4">
@@ -128,7 +128,7 @@
                             <option value="0">NO</option>
                            
                         </select>
-                        <label for="isavoter">Marital Status</label>
+                        <label for="isavoter">Is a Voter?</label>
                     </div>
 
                 </div>

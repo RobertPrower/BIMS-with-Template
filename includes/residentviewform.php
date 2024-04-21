@@ -78,22 +78,27 @@
                                     <label for="floatingInput">Subdivision</label>
                                 </div>
                             
-                                <div class="mt-3 mb-3 col-md-4">
-                                <select class="form-select" aria-label="Default select example" Style="Height: 58px" id="sex" name="sex" disabled>
-                                <option value="Male">Male</option>
-                                <option value="Female">Female</option>
-                                </select>
+                                <div class="form-floating mt-3 mb-3 col-md-4">
+                                    <select class="form-select" id="sex" name="sex" aria-label="Floating label select example" disabled>
+                                        <option hidden selected>Select Sex</option>
+                                        <option value="Male">Male</option>
+                                        <option value="Female">Female</option>
+                                        
+                                    </select>
+                                    <label for="sex">Sex</label>
                                 </div>
 
-                                <div class="mt-3 mb-3 col-md-4">
-                                <select class="form-select" aria-label="Default select example" Style="Height: 58px" id="marital_status" name="marital_status" disabled>
-                                    <option hidden selected>Select Marital Status</option>
-                                    <option value="Single" >Single</option>
-                                    <option value="Married">Married</option>
-                                    <option value="Widowed">Widow/Widower</option>
-                                    <option value="Annul">Annul</option>
-                                </select>
+                                <div class="form-floating mt-3 mb-3 col-md-4">
+                                    <select class="form-select" id="marital_status" name="marital_status" aria-label="Floating label select example" disabled>
+                                        <option hidden selected>Select Marital Status</option>
+                                        <option value="Single">Single</option>
+                                        <option value="Married">Married</option>
+                                        <option value="Widow">Widow/Widower</option>
+                                        <option value="Annul">Annul</option>
+                                    </select>
+                                    <label for="marital_status">Marital Status</label>
                                 </div>
+
 
                                 <div class="form-floating mt-3 mb-3 col-md-4">
                                     <input type="Date" class="form-control" id="floatingInput" id="birth_date"name="birth_date" disabled>
@@ -110,13 +115,15 @@
                                     <label for="floatingInput">Phone Number</label>
                                 </div> 
 
-                                <div class="mt-3 mb-3 col-md-4">
-                                <select class="form-select" aria-label="Default select example" Style="Height: 58px" id="is_a_voter" name="is_a_voter" disabled>
-                                    <option value="1">Yes</option>
-                                    <option value="0">No</option>
-                                </select>
+                                <div class="form-floating mt-3 mb-3 col-md-4">
+                                    <select class="form-select" id="marital_status" name="is_a_voter" aria-label="Floating label select example" disabled>
+                                        <option hidden selected>Select Option</option>
+                                        <option value="1">YES</option>
+                                        <option value="0">NO</option>
+                                    
+                                    </select>
+                                    <label for="isavoter">Is a Voter?</label>
                                 </div>
-
                             
                             
 

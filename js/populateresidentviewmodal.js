@@ -1,5 +1,7 @@
 //Script for the View Button
 $(document).on("click", ".viewResidentButton", function () {
+
+  event.preventDefault();
   var resident_id = $(this).data("id");
   var first_name = $(this).data("first-name");
   var middle_name = $(this).data("middle-name");
