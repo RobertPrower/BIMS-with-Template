@@ -61,7 +61,7 @@
                                     <div class="modal-body">
                                         <!-- Add your form elements here for adding a resident -->
                                         <!-- Example form -->
-                                 <form action="#" id="AddResidentModalForm" enctype="multipart/form-data">    
+                                 <form action="includes/addresident.php" id="AddResidentModalForm" enctype="multipart/form-data" method="POST">    
                                             <div class="row">
                                                 <div class="mt-3" style="width: 270px">
                                                 
@@ -118,12 +118,12 @@
                                                         </div>
 
                                                         <div class="form-floating mt-3 mb-3 col-md-4">
-                                                            <input type="text" class="form-control" id="subd" name="subd" placeholder="Enter Subdvision Here" required>
+                                                            <input type="text" class="form-control" id="subd" name="subd" placeholder="Enter Subdvision Here">
                                                             <label for="subd">Subdivision</label>
                                                         </div>
 
                                                         <div class="form-floating mt-3 mb-3 col-md-4">
-                                                            <select class="form-select" id="sex" aria-label="Floating label select example">
+                                                            <select class="form-select" id="sex" name="sex" aria-label="Floating label select example" required>
                                                                 <option hidden selected>Select Sex</option>
                                                                 <option value="Male">Male</option>
                                                                 <option value="Female">Female</option>
@@ -132,7 +132,7 @@
                                                         </div>
 
                                                         <div class="form-floating mt-3 mb-3 col-md-4">
-                                                            <select class="form-select" id="marital_status" aria-label="Floating label select example">
+                                                            <select class="form-select" id="marital_status" name="marital_status" aria-label="Floating label select example" required>
                                                                 <option hidden selected>Select Marital Status</option>
                                                                 <option value="Single">Single</option>
                                                                 <option value="Married">Married</option>
@@ -158,7 +158,7 @@
                                                         </div> 
 
                                                         <div class="form-floating mt-3 mb-3 col-md-4">
-                                                            <select class="form-select" id="isavoter" aria-label="Floating label select example">
+                                                            <select class="form-select" id="isavoter" name="is_a_voter" aria-label="Floating label select example" required>
                                                                 <option hidden selected>Select Option</option>
                                                                 <option value="1">YES</option>
                                                                 <option value="0">NO</option>
@@ -337,63 +337,7 @@
     </div>
 </div>
 
-<script> 
-
-$(document).on("click", ".Delete_Button", function (event) {
-    // Prevent the default click action
-    event.preventDefault();
-
-    // Get the resident ID from the data attribute
-    var residentId = $(this).data("resident_id");
-
-    // Show confirmation dialog using SweetAlert
-    swal({
-        title: "Are you sure?",
-        text: "Once deleted, you will not be able to recover this entry!",
-        icon: "warning",
-        buttons: ["Cancel", "Delete"],
-        dangerMode: true,
-    })
-    .then((willDelete) => {
-        if (willDelete) {
-            // Send AJAX request to delete resident
-            $.ajax({
-                url: "includes/deleteresidentbtn.php",
-                type: "POST",
-                data: { resident_id: residentId },
-                dataType: "json",
-                success: function (response) {
-                    // Handle success response
-                    console.log("Data deleted successfully:", response);
-                    // Optionally, refresh the table or update UI here
-                    // RefreshTable(); // Example function to refresh table
-                    swal("Poof! Your imaginary file has been deleted!", {
-                        icon: "success",
-                    });
-                },
-                error: function (xhr, status, error) {
-                    // Handle error response
-                    console.error("Error deleting data:", error);
-                    // Display an error message to the user using SweetAlert
-                    swal("Error!", "Failed to delete the entry.", "error");
-                },
-            });
-        } else {
-            // User clicked the cancel button
-            swal("Entry not deleted!", {
-                icon: "info",
-            });
-        }
-    });
-});
-
-
-
-
-
-
-
-</script>
+<script src="js/deleteresidentaction.js"> </script>
 <script src="js/populateresidenteditmodal.js"> </script>
 
 <script src="js/populateresidentviewmodal.js"> </script>

@@ -1,31 +1,30 @@
 <?php
 require_once("connecttodb.php");
 
-//ini_set('display_errors', 0);
 
 // Check if the request is a POST request
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Retrieve data sent via POST
-    $residentId = $_POST['resident_id'];
-    $firstName = $_POST['fname'];
-    $middleName = $_POST['mname'];
-    $lastName = $_POST['lname'];
-    $suffix = $_POST['suffix'];
-    $houseno = $_POST['house_no'];
-    $streetname = $_POST['street'];
-    $subdivision = $_POST['subd'];
-    $sex = $_POST['sex'];
-    $maritalstatus = $_POST['marital_status'];
-    $birthdate = $_POST['birth_date'];
-    $birthplace = $_POST['birth_place']; 
-    $phonenumber = $_POST['cp_number'];
-    $isavoter = $_POST['is_a_voter'];
+    $residentId = sanitizeData($_POST['resident_id']);
+    $firstName = sanitizeData($_POST['fname']);
+    $middleName = sanitizeData($_POST['mname']);
+    $lastName = sanitizeData($_POST['lname']);
+    $suffix = sanitizeData($_POST['suffix']);
+    $houseno = sanitizeData($_POST['house_no']);
+    $streetname = sanitizeData($_POST['street']);
+    $subdivision = sanitizeData($_POST['subd']);
+    $sex = sanitizeData($_POST['sex']);
+    $maritalstatus = sanitizeData($_POST['marital_status']);
+    $birthdate = sanitizeData($_POST['birth_date']);
+    $birthplace = sanitizeData($_POST['birth_place']); 
+    $phonenumber = sanitizeData($_POST['cp_number']);
+    $isavoter = sanitizeData($_POST['is_a_voter']);
 
    // Check if there is uploaded file or theres an error
    if(isset($_FILES['image_file']) && $_FILES['image_file']['error'] == UPLOAD_ERR_OK){
 
         //Variable for the Name of the Folder which is img
-        $target_dir = "img/";
+        $target_dir = "img/resident_img/";
 
         //Variable for the path
         $target_file = $target_dir . basename($_FILES["image_file"]["name"]);
@@ -58,32 +57,39 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             throw new Exception("Sorry, there was an error uploading your file.");
         }
 
-            // Extract image metadata
-            $imageSize = $check[0]; 
-            $imageHeight = $check[1]; 
-            $imageMimeType = $_FILES["image_file"]["type"];
-
+        
         //MetaData Entering to the Database
-        $stmt = $pdo->prepare("UPDATE resident_img SET `path`=?, `size`=?, height=?, mime_type=? WHERE id=?");
+        $stmt = $pdo->prepare("UPDATE resident SET img_path=? WHERE resident_id=?");
 
-        $stmt -> execute([$target_file, $imageSize, $imageHeight, $imageMimeType, $residentId]);
+        $stmt -> execute([$target_file, $residentId]);
 
-         // Retrieve the current filename from the database
-        $stmt = $pdo->prepare("SELECT `path` FROM resident_img WHERE id = ?");
-        $stmt->execute([$residentId]);
-        $currentFileName = $stmt->fetchColumn();
+        //Checks the img/resident_img folder for any used images
 
-        // If there's a current file, delete it
-        if($currentFileName) {
-            $currentFilePath = $target_dir . $currentFileName;
-            if(file_exists($currentFilePath)) {
-                unlink($currentFilePath); // Delete the file
+      // Fetch all filenames from the database
+        $stmt = $pdo->query("SELECT img_path FROM resident");
+        $dbFiles = $stmt->fetchAll(PDO::FETCH_COLUMN);
+
+        // Retrieve all filenames from the folder
+        $folderFiles = array_diff(scandir($target_dir), array('..', '.'));
+
+        // Prepend the directory path to each filename
+        $folderFiles = array_map(function($filename) use ($target_dir) {
+            return $target_dir . $filename;
+        }, $folderFiles);
+
+        // Find filenames in the folder but not in the database
+        $unusedFiles = array_diff($folderFiles, $dbFiles);
+
+        // Delete unused files
+        foreach ($unusedFiles as $filePath) {
+            if (file_exists($filePath)) {
+                unlink($filePath);
             }
         }
 
         $imgopresponse = "Image Updated Successfully";
 
-   }else{
+}else{
     $imgopresponse = "No File Uploaded or There an Error with the file";
    }
     
@@ -127,6 +133,16 @@ function generateUniqueFileName($target_dir, $originalFileName) {
     }
 
     return $fileName;
+}
+
+function sanitizeData($input){
+    $removedSpecialChar = trim ($input, "!@#$%^&*()-=[]{};:`~'<>,./\?| "); 
+    $removedSpecialCharinthemiddle= preg_replace('/[^a-zA-Z0-9\s\-ñÑ#]/u','', $removedSpecialChar);
+
+    $sanatizedData=htmlspecialchars($removedSpecialCharinthemiddle);
+
+    return $sanatizedData;
+
 }
 
 $pdo=null;

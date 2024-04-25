@@ -3,7 +3,7 @@ require_once("connecttodb.php");
 
 try {
     //Variable for the Name of the Folder which is img
-    $target_dir = "img/";
+    $target_dir = "img/resident_img/";
 
     //Variable for the path
     $target_file = $target_dir . basename($_FILES["image_file"]["name"]);
@@ -20,11 +20,6 @@ try {
     if ($check === false) {
         throw new Exception("File is not an image.");
     }
-
-    // Extract image metadata
-    $imageSize = $check[0]; 
-    $imageHeight = $check[1]; 
-    $imageMimeType = $_FILES["image_file"]["type"];
 
     // Check file size
     if ($_FILES["image_file"]["size"] > 500000) {
@@ -53,27 +48,28 @@ try {
         $next_id = 1;
     }
 
-    $fname=htmlspecialchars($_POST['fname']);
-    $mname=htmlspecialchars($_POST['mname']);
-    $lname=htmlspecialchars($_POST['lname']);
-    $suffix=htmlspecialchars($_POST['suffix']);
-    $houseno=htmlspecialchars($_POST['house_no']);
-    $street=htmlspecialchars($_POST['street']);
-    $sudb=htmlspecialchars($_POST['subd']);
-    $sex=htmlspecialchars($_POST['sex']);
-    $maritalstatus=htmlspecialchars($_POST['marital_status']);
-    $birthdate=htmlspecialchars($_POST['birth_date']);
-    $birthplace=htmlspecialchars($_POST['birth_place']);
-    $cellphonenumber=htmlspecialchars($_POST['cellphone_number']);
-    $is_a_voter=htmlspecialchars($_POST['is_a_voter']);
+    $fname=sanitizeData($_POST['fname']);
+    $mname=sanitizeData($_POST['mname']);
+    $lname=sanitizeData($_POST['lname']);
+    $suffix=sanitizeData($_POST['suffix']);
+    $houseno=sanitizeData($_POST['house_no']);
+    $street=sanitizeData($_POST['street']);
+    $sudb=sanitizeData($_POST['subd']);
+    $sex=sanitizeData($_POST['sex']);
+    $maritalstatus=sanitizeData($_POST['marital_status']);
+    $birthdate=sanitizeData($_POST['birth_date']);
+    $birthplace=sanitizeData($_POST['birth_place']);
+    $cellphonenumber=sanitizeData($_POST['cellphone_number']);
+    $is_a_voter=sanitizeData($_POST['is_a_voter']);
 
     // Insert data into the resident table
-    $insert_query = "INSERT INTO resident (resident_id, date_recorded, first_name, middle_name, last_name, suffix, house_number, street_name, subdivision, sex, marital_status, birth_date, birth_place, cellphone_number, is_a_voter)
-                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)";
+    $insert_query = "INSERT INTO resident (resident_id, date_recorded, img_path, first_name, middle_name, last_name, suffix, house_number, street_name, subdivision, sex, marital_status, birth_date, birth_place, cellphone_number, is_a_voter)
+                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?)";
     $insert_stmt = $pdo->prepare($insert_query);
     $insert_stmt->execute([
         $next_id,
         date("Y-m-d H:i:s"),
+        $target_file,
         $fname,
         $mname,
         $lname,
@@ -91,12 +87,6 @@ try {
       
     ]);
 
-
-  // Insert image metadata into the database
-    $insert_query = "INSERT INTO resident_img (id, path, size, height, mime_type) VALUES (?, ?, ?, ?, ?)";
-    $insert_stmt = $pdo->prepare($insert_query);
-    $insert_stmt->execute([$next_id,$target_file, $imageSize, $imageHeight, $imageMimeType]);
-
     // Success response
     $response = ["success" => true, "message" => "Data updated successfully"];
     echo json_encode($response);
@@ -107,17 +97,6 @@ try {
 }
 
 // Function to check if a file with the given name exists in the resident_img table
-function fileExistsInDatabase($filename){
-    global $pdo;
-
-    $query = "SELECT COUNT(*) FROM resident_img WHERE name= ?";
-    $stmt = $pdo->prepare($query);
-    $stmt ->execute([$filename]);
-
-    $count = $stmt -> fetchColumn();
-
-    return $count > 0;
-}
 
 function generateUniqueFileName($target_dir, $originalFileName) {
     $imageFileType = strtolower(pathinfo($originalFileName, PATHINFO_EXTENSION));
@@ -132,6 +111,16 @@ function generateUniqueFileName($target_dir, $originalFileName) {
     }
 
     return $fileName;
+}
+
+function sanitizeData($input){
+    $removedSpecialChar = trim ($input, "!@#$%^&*()-=[]{};:`~'<>,./\?| "); 
+    $removedSpecialCharinthemiddle= preg_replace('/[^a-zA-Z0-9\s\-ñÑ#]/u','', $removedSpecialChar);
+
+    $sanatizedData=htmlspecialchars($removedSpecialCharinthemiddle);
+
+    return $sanatizedData;
+
 }
 
 // Close the database connection
