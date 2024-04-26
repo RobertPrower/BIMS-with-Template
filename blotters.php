@@ -114,8 +114,12 @@
                                                     </div>
 
                                                     <div class="form-floating mt-3 mb-3 col-md-4">
-                                                        <input type="text" class="form-control" id="floatingInput" placeholder="name@example.com">
-                                                        <label for="floatingInput">Sex</label>
+                                                            <select class="form-select" id="sex" name="sex" aria-label="Floating label select example" required>
+                                                                <option hidden selected>Select Sex</option>
+                                                                <option value="Male">Male</option>
+                                                                <option value="Female">Female</option>
+                                                            </select>
+                                                            <label for="sex">Sex</label>
                                                     </div>
 
                                                     <div class="mt-3 mb-3 col-md-4">
@@ -150,17 +154,16 @@
                                                         <option value="Yes">Yes</option>
                                                         <option value="No">No</option>
                                                         </select>
-                                                    </div>
-                                                
-
-
+                                                    </div>                                                
                                                 </div>
-                                        </div>
+                                            </div>
                                         </div>
                                       </div>
                                       <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                        <button type="button" class="btn btn-primary">Save</button>
+                                        <button type="button" id="closeButton" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                            <button type="submit" id="addButton" name="submit" class="btn btn-primary">Save</button>
+                                            
+                                            <script src="js/.js"> </script>
                                       </div>
                                     </div>
                                   </div>

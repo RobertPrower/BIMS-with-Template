@@ -32,17 +32,16 @@
     <!-- ! Main -->
     <main class="main users chart-page" id="skip-target">
       <div class="container">
-        <h2 class="main-title">Dashboard</h2>
+        <h2 class="main-title">Create Documents</h2>
         <div class="row container">
 
           <div class="col-md-6 col-xl-3">
             <article class="stat-cards-item">
-              <div class="stat-cards-icon primary">
+              <div class="stat-cards-icon primary" id="btnBrgyIDreq">
                 <i data-feather="bar-chart-2" aria-hidden="true"></i>
               </div>
               <div class="stat-cards-info">
-                <p class="stat-cards-info__num">0</p>
-                <p class="stat-cards-info__title">Total certificates</p>
+                <p class="stat-cards-info__num">Barangay ID request</p>
                 <p class="stat-cards-info__progress">
                 </p>
               </div>
@@ -55,8 +54,7 @@
                 <i data-feather="file" aria-hidden="true"></i>
               </div>
               <div class="stat-cards-info">
-                <p class="stat-cards-info__num">0</p>
-                <p class="stat-cards-info__title">Total Permits</p>
+                <p class="stat-cards-info__num">Barangay Clearances</p>
                 <p class="stat-cards-info__progress">
                 </p>
               </div>
@@ -69,8 +67,7 @@
                 <i data-feather="file" aria-hidden="true"></i>
               </div>
               <div class="stat-cards-info">
-                <p class="stat-cards-info__num">0</p>
-                <p class="stat-cards-info__title">Total Residents</p>
+                <p class="stat-cards-info__num">Indigency</p>
                 <p class="stat-cards-info__progress">
                 </p>
               </div>
@@ -83,8 +80,7 @@
                 <i data-feather="file" aria-hidden="true"></i>
               </div>
               <div class="stat-cards-info">
-                <p class="stat-cards-info__num">0</p>
-                <p class="stat-cards-info__title">Total Residents</p>
+                <p class="stat-cards-info__num">New First-Time-Job-Seeker</p>
                 <p class="stat-cards-info__progress">
                 </p>
               </div>
@@ -97,16 +93,12 @@
                 <i data-feather="file" aria-hidden="true"></i>
               </div>
               <div class="stat-cards-info">
-                <p class="stat-cards-info__num">0</p>
-                <p class="stat-cards-info__title">Total Residents</p>
+                <p class="stat-cards-info__num">Good Moral</p>
                 <p class="stat-cards-info__progress">
                 </p>
               </div>
             </article>
           </div>
-
-    
-       
         </div>
       </div>
     </main>
