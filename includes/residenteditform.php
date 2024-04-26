@@ -86,7 +86,7 @@
                     </div>
                 
                     <div class="form-floating mt-3 mb-3 col-md-4">
-                        <select class="form-select" id="sex" name="sex" aria-label="Floating label select example">
+                        <select class="form-select" id="sex" name="sex" aria-label="Floating label select example" required>
                             <option hidden selected>Select Sex</option>
                             <option value="Male">Male</option>
                             <option value="Female">Female</option>
@@ -96,7 +96,7 @@
                     </div>
 
                     <div class="form-floating mt-3 mb-3 col-md-4">
-                        <select class="form-select" id="marital_status" name="marital_status" aria-label="Floating label select example">
+                        <select class="form-select" id="marital_status" name="marital_status" aria-label="Floating label select example" required>
                             <option hidden selected>Select Marital Status</option>
                             <option value="Single">Single</option>
                             <option value="Married">Married</option>
@@ -122,7 +122,7 @@
                     </div> 
 
                     <div class="form-floating mt-3 mb-3 col-md-4">
-                        <select class="form-select" id="marital_status" name="is_a_voter" aria-label="Floating label select example">
+                        <select class="form-select" id="marital_status" name="is_a_voter" aria-label="Floating label select example" required>
                             <option hidden selected>Select Option</option>
                             <option value="1">YES</option>
                             <option value="0">NO</option>
