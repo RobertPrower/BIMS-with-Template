@@ -49,7 +49,7 @@
           </div>
 
           <div class="col-md-6 col-xl-3">
-            <article class="stat-cards-item">
+            <article class="stat-cards-item" button class="btn-brgyClearance">
               <div class="stat-cards-icon warning">
                 <i data-feather="file" aria-hidden="true"></i>
               </div>
