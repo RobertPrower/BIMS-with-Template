@@ -48,19 +48,89 @@ $pdf -> Line(1,260,220,260);
 $pdf -> SetLineWidth(0.5);
 $pdf -> Line(70,40,70,260);
 
+//For the Brgy Officials List
+$pdf -> AddFont('Bookman Old Style', 'B', 'BookmanOldStyle.php'); 
+$pdf -> SetFont('Bookman Old Style','B',13);
+$pdf->SetTextColor(79, 98, 40);
+$text = 'DONNA DE GANA-JARITO';
+$w=$pdf->GetStringWidth($text);
+$pdf -> SetXY((70-$w)/2,48);
+$pdf -> Cell($w, 8, $text, 0, 0, 'C');
+
+$pdf -> AddFont('Bookman Old Style', 'B', 'BookmanOldStyle.php'); 
+$pdf -> SetFont('Bookman Old Style','B',10);
+$pdf->SetTextColor(79, 98, 40);
+$text = 'PUNONG BARANGAY';
+$w=$pdf->GetStringWidth($text);
+$pdf -> SetXY((70-$w)/2,54);
+$pdf -> Cell($w, 8, $text, 0, 0, 'C');
+
+$pdf -> AddFont('Bookman Old Style', 'B', 'BookmanOldStyle.php'); 
+$pdf -> SetFont('Bookman Old Style','B',11);
+$pdf->SetTextColor(79, 98, 40);
+$text = 'BARANGAY KAGAWAD';
+$w=$pdf->GetStringWidth($text);
+$pdf -> SetXY((70-$w)/2,64);
+$pdf -> Cell($w, 8, $text, 0, 0, 'C');
+
+$pdf -> AddFont('Bookman Old Style', 'B', 'BookmanOldStyle.php'); 
+$pdf -> SetFont('Bookman Old Style','B',11);
+$pdf->SetTextColor(79, 98, 40);
+$text = 'KGD.'.' '. strtoupper('Darwin L. Dela Cruz');
+$w=$pdf->GetStringWidth($text);
+$pdf -> SetXY((70-$w)/2,76);
+$pdf -> Cell($w, 8, $text, 0, 0, 'C');
+
+$pdf -> AddFont('Bookman Old Style', 'B', 'BookmanOldStyle.php'); 
+$pdf -> SetFont('Bookman Old Style','B',9);
+$pdf->SetTextColor(79, 98, 40);
+$text = 'KGD. ELOISA MARIE T. ENCARNATION';
+$w=$pdf->GetStringWidth($text);
+$pdf -> SetXY((70-$w)/2,84);
+$pdf -> Cell($w, 8, $text, 0, 0, 'C');
+
+$pdf -> AddFont('Bookman Old Style', 'B', 'BookmanOldStyle.php'); 
+$pdf -> SetFont('Bookman Old Style','B',10);
+$pdf->SetTextColor(79, 98, 40);
+$text = 'KGD. GINA T. ORTIZ';
+$w=$pdf->GetStringWidth($text);
+$pdf -> SetXY((70-$w)/2,94);
+$pdf -> Cell($w, 8, $text, 0, 0, 'C');
+
+$pdf -> AddFont('Bookman Old Style', 'B', 'BookmanOldStyle.php'); 
+$pdf -> SetFont('Bookman Old Style','B',11);
+$pdf->SetTextColor(79, 98, 40);
+$text = 'KGD. FRANCIS S. ACOSTA';
+$w=$pdf->GetStringWidth($text);
+$pdf -> SetXY((70-$w)/2,104);
+$pdf -> Cell($w, 8, $text, 0, 0, 'C');
+
+$pdf -> AddFont('Bookman Old Style', 'B', 'BookmanOldStyle.php'); 
+$pdf -> SetFont('Bookman Old Style','B',11);
+$pdf->SetTextColor(79, 98, 40);
+$text = 'KGD. RENATO C. BUSANTE.';
+$w=$pdf->GetStringWidth($text);
+$pdf -> SetXY((70-$w)/2,114);
+$pdf -> Cell($w, 8, $text, 0, 0, 'C');
+
+
 //For the Body
+
+$maxY = $pdf->GetY();
+
 $pdf -> AddFont('Cambria', 'BU', 'cambria.php'); 
 $pdf -> SetFont('Cambria','BU',25);
+$pdf->SetTextColor(0, 0, 0);
 $text = 'CERTIFICATION';
 $w=$pdf->GetStringWidth($text);
-$pdf -> SetX(70 + (216-70-$w)/2);
-$pdf -> Cell($w, 50, $text, 0, 1, 'C');
+$pdf -> SetXY(110 + (135-70-$w)/2, max($maxY, 50));
+$pdf -> Cell($w, 1, $text, 0, 1, 'C');
 
 $pdf -> AddFont('Cambria', 'B', 'cambria.php'); 
 $pdf -> SetFont('Cambria','B',17);
 $text = 'To whom it may concern: ';
 $w=$pdf->GetStringWidth($text);
-$pdf -> SetX(80 + (135-70-$w)/2);
+$pdf -> SetXY(80 + (135-70-$w)/2, max($maxY, 80));
 $pdf -> Cell($w, 15, $text, 0, 1, 'C');
 
 $fname='Robert';
@@ -75,13 +145,13 @@ $text = 'This is to certify';
 $pdf -> MultiCell(146, 10, wrapText($pdf,$text,146), 0, 'C');
 
 $pdf -> SetFont('Cambria','B',17);
-$pdf -> SetXY(82,98.5);
+$pdf -> SetXY(90,95);
 $text=$fname.' '.$mname.'.'.' '.$lname.' '. $suffix;
 multiLineText($pdf, $text, 146);
 
 $pdf -> SetFont('Cambria','B',14);
-$pdf -> SetXY(120,98.5);
 $text='is a bonifade';
+$pdf -> SetXY(120,110);
 multiLineText($pdf, $text, 146);
 
 
