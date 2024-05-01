@@ -19,8 +19,14 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" 
   integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
   <link rel="stylesheet" href="./css/style.min.css">
+  <!-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.css"> -->
+
   <!--JavaScript-->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdn.datatables.net/2.0.5/js/dataTables.js"></script> 
+  <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js"></script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
 </head>
 
 <body>
@@ -72,19 +78,19 @@
                 </div>
 
                 <div class="users-table table-wrapper">
-                    <table class="posts-table">
+                    <table class="posts-table" id="officials_table">
                         <thead>
-                        <tr class="users-table-info">
-            
-                            <!--th style="width: 2%;"class="text-center"><input type="checkbox" class="check-all"></th--> 
+                            <tr class="users-table-info">
+                
+                                <!--th style="width: 2%;"class="text-center"><input type="checkbox" class="check-all"></th--> 
+                                
+                                <th style="width: 5%;"class="text-center">id</th>
+                                <th style="width: 10%;" class="text-center">Full Name</th>
+                                <th style="width: 10%;" class="text-center">Position</th>
+                                <th style="width: 10%;"class="text-center">Date Last Edited</th>
+                                <th style="width: 10%;"class="text-center">Action</th>
                             
-                            <th style="width: 10%;"class="text-center">Photo</th>
-                            <th style="width: 10%;" class="text-center">Full Name</th>
-                            <th style="width: 10%;" class="text-center">Position</th>
-                            <th style="width: 10%;"class="text-center">Date Last Edited</th>
-                            <th style="width: 10%;"class="text-center">Action</th>
-                           
-                        </tr>
+                            </tr>
                         </thead>
                         <tbody>
                         
@@ -96,7 +102,7 @@
                             echo "<tr>";
                             //echo '<td><input type="checkbox" class="check-all"></td>';
                             
-                            echo "<td></td>";
+                            echo "<td>{$row['id']}</td>";
                             echo "<td>{$row['official_name']}</td>";
                             echo "<td>{$row['official_position']}</td>";
                             echo "<td>{$row['date_last_edited']}</td>";
@@ -115,6 +121,8 @@
                         }
                         ?>
                         </tbody>
+
+                        
                         
                         <script >
                           $(document).on('click', '#DeleteOfficialbtn', function() {
@@ -155,8 +163,6 @@
 <!-- Custom scripts -->
 
 <script src="js/populateofficialtotheeditmodal.js"></script>
-
-<script src="js/addeditofficial.js"> </script>
 
 <script src="js/script.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>

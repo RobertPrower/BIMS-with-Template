@@ -30,7 +30,7 @@
                     </a>
                     <ul class="cat-sub-menu">
                         <li>
-                            <a href="posts.html">All Posts</a>
+                            <a href="create-documents.php">Control Panel</a>
                         </li>
                         <li>
                             <a href="new-post.html">Add new post</a>

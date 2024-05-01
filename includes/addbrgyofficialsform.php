@@ -49,7 +49,44 @@
         <button type="submit" id="AddOfficialBtn" class="btn btn-primary addOfficialbtnsubmit">Add</button>
         </div>
 
-        <script src="js/addeditofficial.js"></script>
+        <script>
+                $('#AddOfficialModalForm').submit(function(){
+                    event.preventDefault();
+                
+                    var formData = new FormData(this);
+                
+                    console.log(formData);
+                
+                    $.ajax({
+                    
+                        url: 'includes/addofficialsaction.php',
+                        type: 'POST',
+                        dataType: 'json',
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        success: function(response){
+                            swal({
+                            title: "Success!",
+                            text: "Official Added Successfully",
+                            icon: "success",
+                            });
+                        console.log('Server response:', response);
+                        },
+                        error: function(jqXHR, textStatus, errorThrown){
+                        console.log('Error:', textStatus, errorThrown);
+                        }
+  
+                    });
+    
+            });
+
+  
+
+
+
+        </script>
+
 
     </div>
     </div>

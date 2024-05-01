@@ -34,22 +34,38 @@
       <div class="container">
         <h2 class="main-title">Create Documents</h2>
         <div class="row container">
+          <style>
+
+              .btn-for-docu:hover {
+                background-color: #C0C0C0;
+                color: #fff;
+                padding: 0.5rem 1rem;
+                border: solid;
+                border-color: black;
+                border-radius: 20px;
+                cursor: pointer;
+                transition: background-color 0.2s ease;
+                transform: rotateY(260deg);
+                transition: transform 0.2s ease;
+              }
+          </style>
 
           <div class="col-md-6 col-xl-3">
-            <article class="stat-cards-item">
+            <a class="stat-cards-item btn-for-docu">
               <div class="stat-cards-icon primary" id="btnBrgyIDreq">
-                <i data-feather="bar-chart-2" aria-hidden="true"></i>
+                <i data-feather="bar-chart-2" aria-hidden="true">
+                </i>
               </div>
               <div class="stat-cards-info">
                 <p class="stat-cards-info__num">Barangay ID request</p>
                 <p class="stat-cards-info__progress">
                 </p>
               </div>
-            </article>
+            </a>
           </div>
 
           <div class="col-md-6 col-xl-3">
-            <article class="stat-cards-item" button class="btn-brgyClearance">
+            <a class="stat-cards-item btn-for-docu">
               <div class="stat-cards-icon warning">
                 <i data-feather="file" aria-hidden="true"></i>
               </div>
@@ -58,20 +74,20 @@
                 <p class="stat-cards-info__progress">
                 </p>
               </div>
-            </article>
+            </a>
           </div>
 
           <div class="col-md-6 col-xl-3">
-            <article class="stat-cards-item">
+            <a class="stat-cards-item btn-for-docu">
               <div class="stat-cards-icon purple">
-                <i data-feather="file" aria-hidden="true"></i>
+                <i data-feather="home" aria-hidden="true"></i>
               </div>
               <div class="stat-cards-info">
-                <p class="stat-cards-info__num">Indigency</p>
+                <p class="stat-cards-info__num">Residency</p>
                 <p class="stat-cards-info__progress">
                 </p>
               </div>
-            </article>
+            </a>
           </div>
 
           <div class="col-md-6 col-xl-3">

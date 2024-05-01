@@ -50,6 +50,43 @@
 
         </div>
 
+        <script>
+              $('#EditOfficialModalForm').submit(function(){
+                    event.preventDefault();
+                
+                    var formData = new FormData(this);
+                
+                    console.log(formData);
+                
+                    $.ajax({
+                    
+                        url: 'includes/addofficialsaction.php',
+                        type: 'POST',
+                        dataType: 'json',
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        success: function(response){
+                        swal({
+                            title: "Success",
+                            text: "Official Edited Successfully",
+                            icon: "success",
+                        });
+                        $('#EditOfficialModal').modal('hide');
+                        $('#EditOfficialModalForm')[0].reset();
+                                                
+                        console.log('Server response:', response);
+                        },
+                        error: function(jqXHR, textStatus, errorThrown){
+                        console.log('Error:', textStatus, errorThrown);
+                        }
+                
+                    });
+                    
+                    
+                });
+
+        </script>
 
     </div>
     </div>
