@@ -84,75 +84,83 @@
                 
                                 <!--th style="width: 2%;"class="text-center"><input type="checkbox" class="check-all"></th--> 
                                 
-                                <th style="width: 5%;"class="text-center">id</th>
-                                <th style="width: 10%;" class="text-center">Full Name</th>
-                                <th style="width: 10%;" class="text-center">Position</th>
-                                <th style="width: 10%;"class="text-center">Date Last Edited</th>
-                                <th style="width: 10%;"class="text-center">Action</th>
+                                <th style="width: 5%;"class="text-center">id
+                                </th>
+                                
+                                <th style="width: 10%;" class="text-center">Full Name
+                                </th>
+                                
+                                <th style="width: 10%;" class="text-center">Position
+                                </th>
+                                
+                                <th style="width: 10%;"class="text-center">Date Last Edited
+                                </th>
+                                
+                                <th style="width: 10%;"class="text-center">Action
+                                </th>
                             
                             </tr>
                         </thead>
-                        <tbody>
-                        
-                        
-                        <?php
+                            <tbody>
                             
-                        //To Populate table rows with user data
-                        foreach ($result as $row) {
-                            echo "<tr>";
-                            //echo '<td><input type="checkbox" class="check-all"></td>';
-                            
-                            echo "<td>{$row['id']}</td>";
-                            echo "<td>{$row['official_name']}</td>";
-                            echo "<td>{$row['official_position']}</td>";
-                            echo "<td>{$row['date_last_edited']}</td>";
+                                <?php
+                                    
+                                //To Populate table rows with user data
+                                foreach ($result as $row) {
+                                    echo "<tr>";
+                                    //echo '<td><input type="checkbox" class="check-all"></td>';
+                                    
+                                    echo "<td>{$row['id']}</td>";
+                                    echo "<td>{$row['official_name']}</td>";
+                                    echo "<td>{$row['official_position']}</td>";
+                                    echo "<td>{$row['date_last_edited']}</td>";
 
-                        //For the edit button
-                            echo "<td>";
-                            
-                            echo '<button type="button" class="btn btn-success me-2 editOfficialBtn mx-1" data-modal-title="Edit Official" 
-                            data-official-id="' . $row['id'] . '" data-official-fullname="' . $row['official_name'] . '" data-official-position="' . $row['official_position'] .'" 
-                            data-bs-toggle="modal" data-bs-target="#EditOfficialModal" id="EditOfficialBtn">Edit Official</button>';
-                           
-                            echo '<button type="button" class="btn btn-danger" data-official-id = "' . $row['id'] . '" id="DeleteOfficialbtn">Delete</button>';
-                            echo "</td>";
+                                //For the edit button
+                                    echo "<td>";
+                                    
+                                    echo '<button type="button" class="btn btn-success me-2 editOfficialBtn mx-1" data-modal-title="Edit Official" 
+                                    data-official-id="' . $row['id'] . '" data-official-fullname="' . $row['official_name'] . '" data-official-position="' . $row['official_position'] .'" 
+                                    data-bs-toggle="modal" data-bs-target="#EditOfficialModal" id="EditOfficialBtn">Edit Official</button>';
+                                
+                                    echo '<button type="button" class="btn btn-danger" data-official-id = "' . $row['id'] . '" id="DeleteOfficialbtn">Delete</button>';
+                                    echo "</td>";
 
-                        
-                        }
-                        ?>
-                        </tbody>
-
-                        
-                        
-                        <script >
-                          $(document).on('click', '#DeleteOfficialbtn', function() {
-                            var official_id = $(this).data('official-id');
-                            $.ajax({
-                                url: 'includes/deleteofficialaction.php',
-                                type: 'POST',
-                                dataType: 'json',
-                                data: { id: official_id },
-                                contentType: 'application/x-www-form-urlencoded', 
-                                success: function(response) {
-                                    alert("Official Successfully Deleted");
-                                    console.log('Server response:', response);
-                                },
-                                error: function(jqXHR, textStatus, errorThrown) {
-                                    console.log('Error:', textStatus, errorThrown);
+                                
                                 }
-                            });
-                        });
+                                ?>
+                            </tbody>
 
-                        </script>
+                        
+                        
+                            <script >
+                                $(document).on('click', '#DeleteOfficialbtn', function() {
+                                    var official_id = $(this).data('official-id');
+                                    $.ajax({
+                                        url: 'includes/deleteofficialaction.php',
+                                        type: 'POST',
+                                        dataType: 'json',
+                                        data: { id: official_id },
+                                        contentType: 'application/x-www-form-urlencoded', 
+                                        success: function(response) {
+                                            alert("Official Successfully Deleted");
+                                            console.log('Server response:', response);
+                                        },
+                                        error: function(jqXHR, textStatus, errorThrown) {
+                                            console.log('Error:', textStatus, errorThrown);
+                                        }
+                                    });
+                                });
+
+                            </script>
                         
                         </tbody>
                     </table>
                 </div>
         </div>
-      </main>
+        </main>
     
     <!-- ! Footer -->
-  <?php require_once("includes/footer.php")?>
+        <?php require_once("includes/footer.php")?>
     </div>
 </div>
 

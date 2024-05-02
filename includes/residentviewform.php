@@ -1,3 +1,28 @@
+<?php
+        require_once("connecttodb.php");
+        
+        $sqlquery="SELECT 
+
+        `tbl-request`.`resident-id`,
+        resident.`resident_id`,
+        `tbl-request`.`request-id`,
+        `tbl-request`.`request-id`,
+        `tbl-request`.`date-requested`,
+        `tbl-clearance`.`clearance-desc`,
+        `tbl-clearance`.`purpose`,
+        `tbl-clearance`.`age`,
+        `tbl-clearance`.`status`
+
+        FROM	`tbl-request`
+        JOIN resident ON `tbl-request`.`resident-id`=resident.resident_id
+        JOIN `tbl-clearance` ON `tbl-request`.`request-id`=`tbl-clearance`.`request-id`
+        WHERE resident.`resident_id`=1";
+
+
+        $stmt=$pdo->prepare($sqlquery);
+        $stmt -> execute();
+        $result = $stmt->fetchAll();
+?>
 <!-- View Resident Modal -->
 <form action="#" id="viewResidentForm" method="POST" enctype="multipart/form-data">
     <div class="modal fade" id="ViewResidentModal" name="add" tabindex="-1" aria-labelledby="EditResidentModalLabel" aria-hidden="true">
@@ -31,7 +56,7 @@
                                         <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
                                         class="rounded-circle img-fluid" id="viewimagePreview" style="width: 200px; height: 200px;" />
 
-                                        <script src="js/displayimageonviewmodal.js"> </script>
+                                        <script src="js/displayimageonviewmodal.js"></script>
                                     </div>
                 
                                 </div>
@@ -45,37 +70,37 @@
 
 
                                 <div class="form-floating mt-3 mb-3 col-md-4">
-                                    <input type="text" class="form-control" id="fname" name="fname" disabled>
+                                    <input type="text" class="form-control" id="fname" name="fname" disabled/>
                                     <label for="floatingInput">First Name</label>
                                 </div>
 
                                 <div class="form-floating mt-3 mb-3 col-md-4">
-                                    <input type="text" class="form-control" id="mname" name="mname" disabled >
+                                    <input type="text" class="form-control" id="mname" name="mname" disabled/>
                                     <label for="floatingInput">Middle Name</label>
                                 </div>
 
                                 <div class="form-floating mt-3 mb-3 col-md-3">
-                                    <input type="text" class="form-control" id="lname" name="lname" disabled>
+                                    <input type="text" class="form-control" id="lname" name="lname" disabled/>
                                     <label for="floatingInput">Last Name</label>
                                 </div>
 
                                 <div class="form-floating mt-3 mb-3 col-md-1">
-                                    <input type="text" class="form-control" id="suffix" name="suffix" style="width:50px" disabled>
+                                    <input type="text" class="form-control" id="suffix" name="suffix" style="width:50px" disabled/>
                                     <label for="floatingInput">Suffix</label>
                                 </div>
 
                                 <div class="form-floating mt-3 mb-3 col-md-4">
-                                    <input type="text" class="form-control" id="house_no" name="house_no" disabled>
+                                    <input type="text" class="form-control" id="house_no" name="house_no" disabled/>
                                     <label for="floatingInput">House No. (Blk no, Lot no, Unit no)</label>
                                 </div>
 
                                 <div class="form-floating mt-3 mb-3 col-md-4">
-                                    <input type="text" class="form-control" id="street" name="street" disabled>
+                                    <input type="text" class="form-control" id="street" name="street" disabled/>
                                     <label for="floatingInput">Street</label>
                                 </div>
 
                                 <div class="form-floating mt-3 mb-3 col-md-4">
-                                    <input type="text" class="form-control" id="subd" name="subd" disabled>
+                                    <input type="text" class="form-control" id="subd" name="subd" disabled/>
                                     <label for="floatingInput">Subdivision</label>
                                 </div>
                             
@@ -130,7 +155,71 @@
                         </div>
                     </div>
                         </div>
-                        <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab" tabindex="0">...</div>
+
+
+                        <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab" tabindex="0">
+
+                    <!------------------------------------------------------------------------------------------------------------>
+                    
+                    <table class="posts-table my-4" id="officials_table">
+                        <thead>
+                            <tr class="users-table-info">
+                                
+                                <th style="width: 10%;" class="text-center">Date Requested
+                                </th>
+                                
+                                <th style="width: 10%;" class="text-center">Age
+
+                                   
+                                </th>
+                                
+                                <th style="width: 10%;"class="text-center">Purpose
+
+                                </th>
+
+                                <th style="width: 10%;"class="text-center">Certificate Description
+                                
+                                </th>
+
+                                <th style="width: 10%;"class="text-center">Status
+                                
+                                </th>
+                                
+                                <th style="width: 10%;"class="text-center">Action
+                                </th>
+                            
+                            </tr>
+                        </thead>
+                            <tbody>
+                            <?php
+                                    
+                                    //To Populate table rows with user data
+                                    foreach ($result as $row) {
+                                        echo "<tr>";
+                                        
+                                        echo "<td>{$row[4]}</td>";
+                                        echo " <td>{$row[7]}</td>";
+                                        echo "<td>{$row[6]}</td>";
+                                        echo "<td>{$row[5]}</td>";
+                                        echo "<td>{$row[8]}</td>";
+    
+                                    //For the edit button
+                                        echo "<td>";
+                                        
+                                       /* echo '<button type="button" class="btn btn-primary me-2 editOfficialBtn mx-1" data-modal-title="Edit Official" 
+                                        data-official-id="'  .'" data-official-fullname="' .  '" data-official-position="' .'" 
+                                        data-bs-toggle="modal" data-bs-target="#EditOfficialModal" id="EditOfficialBtn">View</button>';*/
+                                        echo "</tr>";
+                                    
+                                    }
+                                    ?>
+                                
+                            </tbody>
+                        
+                        </tbody>
+                    </table>
+
+                        </div>
                         <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab" tabindex="0">...</div>
                         </div>
                    

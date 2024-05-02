@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dashboard</title>
+  <title>Create Documents</title>
   <!-- Favicon -->
   <link rel="shortcut icon" href="./img/svg/logo.svg" type="image/x-icon">
   <!-- Custom styles -->
@@ -37,16 +37,15 @@
           <style>
 
               .btn-for-docu:hover {
-                background-color: #C0C0C0;
-                color: #fff;
+                background-color: #CED8FF;
+                opacity: 50;
                 padding: 0.5rem 1rem;
                 border: solid;
                 border-color: black;
                 border-radius: 20px;
                 cursor: pointer;
                 transition: background-color 0.2s ease;
-                transform: rotateY(260deg);
-                transition: transform 0.2s ease;
+                
               }
           </style>
 

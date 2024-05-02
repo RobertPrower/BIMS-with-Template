@@ -21,21 +21,10 @@
                     <a href="index.php"><span class="icon home" aria-hidden="true"></span>Dashboard</a>
                 </li>
                 <li>
-                    <a class="show-cat-btn" href="##">
+                    <a class="" href="create-documents.php">
                         <span class="icon document" aria-hidden="true"></span> Documents
-                        <span class="category__btn transparent-btn" title="Open list">
-                            <span class="sr-only">Open list</span>
-                            <span class="icon arrow-down" aria-hidden="true"></span>
-                        </span>
                     </a>
-                    <ul class="cat-sub-menu">
-                        <li>
-                            <a href="create-documents.php">Control Panel</a>
-                        </li>
-                        <li>
-                            <a href="new-post.html">Add new post</a>
-                        </li>
-                    </ul>
+                    
                 </li>
                 <li>
                 <a href="residents.php"><span class="icon home" aria-hidden="true"></span>Residents</a>
