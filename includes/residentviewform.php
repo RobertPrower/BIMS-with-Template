@@ -1,22 +1,19 @@
 <?php
         require_once("connecttodb.php");
         
-        $sqlquery="SELECT 
+        $sqlquery = "SELECT 
 
-        `tbl-request`.`resident-id`,
-        resident.`resident_id`,
-        `tbl-request`.`request-id`,
-        `tbl-request`.`request-id`,
-        `tbl-request`.`date-requested`,
-        `tbl-clearance`.`clearance-desc`,
-        `tbl-clearance`.`purpose`,
-        `tbl-clearance`.`age`,
-        `tbl-clearance`.`status`
+                    `tbl-request`.`clearance-no`,
+                    `tbl-clearance`.`clearance-desc`,
+                    `tbl-clearance`.`date-requested`,
+                    `tbl-clearance`.`purpose`,
+                    `tbl-clearance`.`age`,
+                    `tbl-clearance`.`status`
 
-        FROM	`tbl-request`
-        JOIN resident ON `tbl-request`.`resident-id`=resident.resident_id
-        JOIN `tbl-clearance` ON `tbl-request`.`request-id`=`tbl-clearance`.`request-id`
-        WHERE resident.`resident_id`=1";
+                    FROM	`tbl-request`
+                    JOIN resident ON `tbl-request`.`resident-no`=resident.`resident_id`
+                    JOIN `tbl-clearance` ON `tbl-request`.`clearance-no`=`tbl-clearance`.`clearance-id`
+                    WHERE resident.`resident_id`=1";
 
 
         $stmt=$pdo->prepare($sqlquery);
@@ -38,13 +35,13 @@
 
                     <nav>
                         <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                            <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Profile</button>
+                            <button class="nav-link show active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Profile</button>
                             <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Requested Documents</button>
                             <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">Blotters Involved</button>
                         </div>
                     </nav>
                         <div class="tab-content" id="nav-tabContent">
-                        <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab" tabindex="0">
+                        <div class="tab-pane fade active show" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab" tabindex="0">
                         <div class="row">
                         <div class="mt-3" style="width: 270px">
 
@@ -197,18 +194,26 @@
                                     foreach ($result as $row) {
                                         echo "<tr>";
                                         
-                                        echo "<td>{$row[4]}</td>";
-                                        echo " <td>{$row[7]}</td>";
-                                        echo "<td>{$row[6]}</td>";
-                                        echo "<td>{$row[5]}</td>";
-                                        echo "<td>{$row[8]}</td>";
+                                        echo "<td>{$row['date-requested']}</td>";
+                                        echo " <td>{$row['age']}</td>";
+                                        echo "<td>{$row['purpose']}</td>";
+                                        echo "<td>{$row['clearance-desc']}</td>";
+
+                                          if($row['status']='1'){
+                                                echo "<td> ACTIVE </td>";
+                                          }elseif($row['status']='1'){
+                                                echo "<td> EXPIRED </td>";
+                                          }else{
+                                                echo "<td> REVOKED </td>";
+                                          }
+                                        
+                                                
+                                           
     
                                     //For the edit button
                                         echo "<td>";
                                         
-                                       /* echo '<button type="button" class="btn btn-primary me-2 editOfficialBtn mx-1" data-modal-title="Edit Official" 
-                                        data-official-id="'  .'" data-official-fullname="' .  '" data-official-position="' .'" 
-                                        data-bs-toggle="modal" data-bs-target="#EditOfficialModal" id="EditOfficialBtn">View</button>';*/
+                                        echo '<button type="button" class="btn btn-primary me-2 editOfficialBtn mx-1" data-modal-title="Edit Official">View Document</button>';
                                         echo "</tr>";
                                     
                                     }
@@ -228,6 +233,8 @@
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     
                 </div>
+
+                </script>
             </div>
         </div>
     </div>
