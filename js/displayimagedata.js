@@ -16,10 +16,6 @@ $(document).ready(function () {
         // Display image
         $("#editimagePreview").attr("src", correctimagepath);
 
-        // Display metadata
-        $("#imageSize").text("Size: " + imageSize);
-        $("#imageHeight").text("Height: " + imageHeight);
-
         console.log(imagePath);
       },
       error: function (xhr, status, error) {

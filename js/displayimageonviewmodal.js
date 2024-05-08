@@ -10,15 +10,9 @@ $(".viewResidentButton").click(function () {
         // Variables to collect the response of the server
         var imagePath = response.imageData;
         var correctimagepath = "includes/" + imagePath;
-        var imageSize = response.imageSize;
-        var imageHeight = response.imageHeight;
 
         // Display image
         $("#viewimagePreview").attr("src", correctimagepath);
-
-        // Display metadata
-        $("#viewimageSize").text("Size: " + imageSize);
-        $("#viewimageHeight").text("Height: " + imageHeight);
 
         console.log(imagePath);
       },

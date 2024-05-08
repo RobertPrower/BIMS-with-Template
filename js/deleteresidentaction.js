@@ -23,8 +23,6 @@ $(document).on("click", ".Delete_Button", function (event) {
         success: function (response) {
           // Handle success response
           console.log("Data deleted successfully:", response);
-          // Optionally, refresh the table or update UI here
-          // RefreshTable(); // Example function to refresh table
           swal("Record Has Been Deleted", {
             icon: "success",
           });

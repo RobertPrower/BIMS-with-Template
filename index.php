@@ -1,3 +1,34 @@
+<?php
+
+    require_once('includes/connecttodb.php');
+
+    $sqlquery="SELECT COUNT(*) AS total FROM `tbl-request`";
+    $stmt= $pdo->prepare($sqlquery);
+    $stmt->execute();
+    $result=$stmt->fetchAll(PDO::FETCH_ASSOC);
+    $totalcert=[];
+
+    foreach($result as $total){
+
+      $totalcert[] = $total['total'];
+
+    }
+
+    $sqlquery="SELECT COUNT(*) AS total FROM resident";
+    $stmt= $pdo->prepare($sqlquery);
+    $stmt->execute();
+    $result=$stmt->fetchAll(PDO::FETCH_ASSOC);
+    $totalresident=[];
+
+    foreach($result as $total){
+
+      $totalresident[] = $total['total'];
+
+    }
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -41,7 +72,7 @@
                 <i data-feather="bar-chart-2" aria-hidden="true"></i>
               </div>
               <div class="stat-cards-info">
-                <p class="stat-cards-info__num">0</p>
+                <p class="stat-cards-info__num"><?php echo $totalcert[0];?></p>
                 <p class="stat-cards-info__title">Total certificates</p>
                 <p class="stat-cards-info__progress">
                 </p>
@@ -69,7 +100,7 @@
                 <i data-feather="file" aria-hidden="true"></i>
               </div>
               <div class="stat-cards-info">
-                <p class="stat-cards-info__num">0</p>
+                <p class="stat-cards-info__num"><?php echo $totalresident[0];?></p>
                 <p class="stat-cards-info__title">Total Residents</p>
                 <p class="stat-cards-info__progress">
                 </p>

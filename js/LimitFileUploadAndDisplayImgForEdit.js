@@ -12,7 +12,7 @@ $('#editimagefile').on('change', function() {
             text: "Please upload a vaild image file!",
         });
         $('#editimagePreview').attr('src', oldImageSrc);
-        $(fileInput).val(''); // use stored reference
+        $(fileInput).val(''); //Empties the file upload input box
         return;
     }
 
@@ -24,7 +24,7 @@ $('#editimagefile').on('change', function() {
             text: "Only png, jpg, jpeg and gif are allowed.",
         });
         $('#editimagePreview').attr('src', oldImageSrc);
-        $(fileInput).val(''); // use stored reference
+        $(fileInput).val('');  //Empties the file upload input box
         return;
     }
 
@@ -39,7 +39,7 @@ $('#editimagefile').on('change', function() {
                     text: "Please upload an image with dimensions not exceeding 200x200 pixels.",
                 });
                 $('#editimagePreview').attr('src', oldImageSrc);
-                $(fileInput).val(''); // use stored reference
+                $(fileInput).val('');  //Empties the file upload input box
                 return;
             }
             // If the image is valid, update the preview image source
