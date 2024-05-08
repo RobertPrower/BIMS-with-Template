@@ -14,9 +14,11 @@
   <link rel="stylesheet" href="./css/create-documents.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
 
   <!--JavaScript-->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </head>
 
@@ -125,7 +127,7 @@
       </div>
       <!-- Modal Content For certificate-of-residency -->
       <div class="modal fade" id="certificate-of-residency" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-xl">
+        <div class="modal-dialog  modal-xl">
           <div class="modal-content">
             <div class="modal-header">
               <h1 class="modal-title fs-5" id="exampleModalLabel">Create a Certificate of Residency</h1>
@@ -153,23 +155,24 @@
                   <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
 
                     <!-- Table Content -->
-                    <div class="content pt-4">
+                
+                    <div class="content pt-2">
                       <div class="users-table table-wrapper">
-                      <table class="posts-table ResidentTable" id="ResidentTable">
+                      <table class="tablehover ResidentTable" id="ResidentTable" style="scale: 98%;">
                           <thead>
                           <tr class="users-table-info">
               
-                              <!--th style="width: 2%;"class="text-center"><input type="checkbox" class="check-all"></th--> 
-                              <th style="width: 2%"class="text-center resident_id">ID</th> 
-                              <th style="width: 10%;"class="text-center">Date Recorded</th>
-                              <th style="width: 10%;" class="text-center">Full Name</th>
-                              <th style="width: 10%;" class="text-center">Address</th>
-                              <th style="width: 10%;" class="text-center">Sex</th>
-                              <th style="width: 10%;" class="text-center">Marital Status</th>
-                              <th style="width: 10%;" class="text-center">Birth Date</th>
-                              <th style="width: 10%;" class="text-center">Birth Place</th>
+                              <!-- <th style="width: 2%;"class="text-center"><input type="checkbox" class="check-all"></th> -->
+                              <th style="width:  1%;"class="text-center resident_id">ID</th> 
+                              <th style="width: 15%;"class="text-center">Date Recorded</th>
+                              <th style="width: 15%;" class="text-center">Full Name</th>
+                              <th style="width: 20%;" class="text-center">Address</th>
+                              <th style="width: 5%;" class="text-center">Sex</th>
+                              <th style="width: 8%;" class="text-center">Marital Status</th>
+                              <th style="width: 20%;" class="text-center">Birth Date</th>
+                              <th style="width: 25%;" class="text-center">Birth Place</th>
                               <th style="width: 10%;" class="text-center">Phone Number</th>
-                              <th style="width: 10%;" class="text-center">Is a Voter</th>
+                              <th style="width: 1%;" class="text-center">Is a Voter</th>
                           </tr>
                           </thead>
                           <tbody>
@@ -181,9 +184,9 @@
                               
                           //To Populate table rows with user data
                           foreach ($result as $row) {
-                              echo "<tr>";
-                              //echo '<td><input type="checkbox" class="check-all"></td>';
-                              echo "<td>{$row['resident_id']}</td>";
+                              echo "<tr class='text-center'>";
+                              // echo '<td><input type="checkbox" class="check-all"></td>';
+                              echo "<td class='resident_id'>{$row['resident_id']}</td>";
                               echo "<td>{$row['date_recorded']}</td>";
                               echo "<td>{$row['last_name']}, {$row['first_name']} {$row['middle_name']} {$row['suffix']}</td>";
                               echo "<td>{$row['house_number']}, {$row['street_name']}, {$row['subdivision']}</td>";
@@ -217,6 +220,7 @@
                       <!-- End of Table -->
                       </div>
                     </div>
+                    
 
                   </div>
                   <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">...</div>
@@ -226,7 +230,7 @@
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary">Save changes</button>
+              <button type="button" class="btn btn-primary" id="nextbtn">Next</button>
             </div>
           </div>
         </div>
@@ -242,6 +246,28 @@
 <!-- Icons library -->
 <script src="plugins/feather.min.js"></script>
 <!-- Custom scripts -->
+<script>
+$('#certificate-of-residency').on('shown.bs.modal', function () {
+    $('#ResidentTable').DataTable();     
+});
+</script>
+
+<script>
+$("table tr").click(function(){
+    $(this).toggleClass("selected").siblings().removeClass("selected");
+      var id = $(this).find(".resident_id").text(); 
+      var table = $('#ResidentTable').DataTable();
+
+      console.log(id);
+
+     table.on('search.dt', function() {
+    $('table tr.selected').removeClass('selected');
+    });
+});
+</script>
+
+
+
 <script src="js/script.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
