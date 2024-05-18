@@ -58,71 +58,17 @@
               }
           </style>
 
-          <div class="col-md-6 col-xl-3">
-            <a class="stat-cards-item btn-for-docu">
-              <div class="stat-cards-icon primary" id="btnBrgyIDreq">
-                <i data-feather="bar-chart-2" aria-hidden="true">
-                </i>
-              </div>
-              <div class="stat-cards-info">
-                <p class="stat-cards-info__num">Barangay ID request</p>
-                <p class="stat-cards-info__progress">
-                </p>
-              </div>
-            </a>
+          <div class="col-md-4">
+
+              <h4 class="main-title">Select Resident</h4>
+
+              <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#CreateResident"> Select A Resident </button> 
+              <br><br>
+              <h3>First Name: <h3 id="firstname"></h3></h3>
+
           </div>
 
-          <div class="col-md-6 col-xl-3">
-            <a class="stat-cards-item btn-for-docu">
-              <div class="stat-cards-icon warning">
-                <i data-feather="file" aria-hidden="true"></i>
-              </div>
-              <div class="stat-cards-info">
-                <p class="stat-cards-info__num">Barangay Clearances</p>
-                <p class="stat-cards-info__progress">
-                </p>
-              </div>
-            </a>
-          </div>
-
-          <div class="col-md-6 col-xl-3">
-            <a class="stat-cards-item btn-for-docu" data-bs-toggle="modal" data-bs-target="#certificate-of-residency">
-              <div class="stat-cards-icon purple">
-                <i data-feather="home" aria-hidden="true"></i>
-              </div>
-              <div class="stat-cards-info">
-                <p class="stat-cards-info__num">Residency</p>
-                <p class="stat-cards-info__progress">
-                </p>
-              </div>
-            </a>
-          </div>
-
-          <div class="col-md-6 col-xl-3">
-            <article class="stat-cards-item">
-              <div class="stat-cards-icon purple">
-                <i data-feather="file" aria-hidden="true"></i>
-              </div>
-              <div class="stat-cards-info">
-                <p class="stat-cards-info__num">New First-Time-Job-Seeker</p>
-                <p class="stat-cards-info__progress">
-                </p>
-              </div>
-            </article>
-          </div>
-
-          <div class="col-md-6 col-xl-3">
-            <article class="stat-cards-item">
-              <div class="stat-cards-icon purple">
-                <i data-feather="file" aria-hidden="true"></i>
-              </div>
-              <div class="stat-cards-info">
-                <p class="stat-cards-info__num">Good Moral</p>
-                <p class="stat-cards-info__progress">
-                </p>
-              </div>
-            </article>
-          </div>
+          
         </div>
       </div>
       <!-- Modal Content For certificate-of-residency -->
@@ -140,6 +86,12 @@
                   </li>
                   <li class="nav-item" role="presentation">
                     <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">Fill up the form</button>
+                  </li>
+                  <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact-tab-pane" type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false">Contact</button>
+                  </li>
+                  <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="disabled-tab" data-bs-toggle="tab" data-bs-target="#disabled-tab-pane" type="button" role="tab" aria-controls="disabled-tab-pane" aria-selected="false" disabled>Disabled</button>
                   </li>
               </ul>
                 <div class="tab-content" id="myTabContent">
@@ -224,7 +176,7 @@
                       <div class="col-md-12 card mt-2" style="border-radius: 10px;" style="padding: 10px;">
                           <div class="text-center row">
 
-                              <!-- <div class="form-floating mt-3 mb-3 col-md-4">
+                              <div class="form-floating mt-3 mb-3 col-md-4">
                                   <select class="form-select" id="docu_desc" name="sex" aria-label="Floating label select example" required>
                                       <option hidden selected>Select Document</option>
                                       <option value="Barangay Clearance">Barangay Clearance</option>
@@ -234,11 +186,6 @@
                                      
                                   </select>
                                   <label for="docu_desc">Document Description</label>
-                              </div> -->
-
-                              <div class="form-floating mt-3 mb-3 col-md-4">
-                                  <input type="file" class="form-control" id="editimagefile" name="image_file" placeholder="Upload Picture">
-                                  <label for="floatingInput">Upload Image</label>
                               </div>
 
                               <div class="form-floating mt-3 mb-3 col-md-4">
@@ -247,12 +194,11 @@
                               </div>
 
                               <div class="form-floating mt-3 mb-3 col-md-4">
-                                  <input type="text" class="form-control" id="Resident_Since" name="age" placeholder="Enter Street Here" required>
-                                  <label for="Resident_Since">Residence Since</label>
+                                  <input type="text" class="form-control" id="age" name="age" placeholder="Enter Street Here" required disabled>
+                                  <label for="age">Age</label>
                               </div>
 
-                            
-                          
+                              
 
 
                           </div>

@@ -49,7 +49,7 @@
                                
                                 <!-- Button to trigger modal -->
                                 <button type="button" class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#AddResidentModal">Add Resident</button>
-                                <!-- Add Blotter Modal -->
+                                <!-- Add Resident Modal -->
                                
                                 <div class="modal fade" id="AddResidentModal" name="add" tabindex="-1" aria-labelledby="addBlotterModalLabel" aria-hidden="true">
                                 <div class="modal-dialog modal-xl">
@@ -61,7 +61,7 @@
                                     <div class="modal-body">
                                         <!-- Add your form elements here for adding a resident -->
                                         <!-- Example form -->
-                                 <form action="includes/addresident.php" id="AddResidentModalForm" enctype="multipart/form-data" method="POST">    
+                                        <form action="includes/addresident.php" id="AddResidentModalForm" enctype="multipart/form-data" method="POST">    
                                             <div class="row">
                                                 <div class="mt-3" style="width: 270px">
                                                 
@@ -180,10 +180,10 @@
                                         </div>
                                         </div>
                                     </div>
-                                    </div>
-                                </form>
+                                </div>
+                                            </form>
                                 
-                                <!-- End of Add Blotter Modal -->
+                                <!-- End of Add Resident Modal -->
                               
                             </div>
                         </div>
@@ -328,6 +328,8 @@
              require_once("includes/residentviewform.php");
             require_once("includes/residenteditform.php");
             ?>
+            
+                </div>
             </div>  
         </div>
       </main>

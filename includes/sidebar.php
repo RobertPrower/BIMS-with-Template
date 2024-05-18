@@ -38,7 +38,7 @@
                     <a href="brgyofficials.php"><span class="icon user-3" aria-hidden="true"></span>Brgy Offcials</a>
                    
                 </li>
-                <li>
+                <!-- <li>
                     <a class="show-cat-btn" href="##">
                         <span class="icon paper" aria-hidden="true"></span>Pages
                         <span class="category__btn transparent-btn" title="Open list">
@@ -54,21 +54,21 @@
                             <a href="new-page.html">Add new page</a>
                         </li>
                     </ul>
-                </li>
-                <li>
+                </li> -->
+                <!-- <li>
                     <a href="comments.html">
                         <span class="icon message" aria-hidden="true"></span>
                         Comments
                     </a>
                     <span class="msg-counter">7</span>
-                </li>
+                </li> -->
             </ul>
             <span class="system-menu__title">system</span>
             <ul class="sidebar-body-menu">
-                <li>
+                <!-- <li>
                     <a href="appearance.html"><span class="icon edit" aria-hidden="true"></span>Appearance</a>
-                </li>
-                <li>
+                </li> -->
+                <!-- <li>
                     <a class="show-cat-btn" href="##">
                         <span class="icon category" aria-hidden="true"></span>Extentions
                         <span class="category__btn transparent-btn" title="Open list">
@@ -84,7 +84,7 @@
                             <a href="extention-02.html">Extentions-02</a>
                         </li>
                     </ul>
-                </li>
+                </li> -->
                 <li>
                     <a class="show-cat-btn" href="##">
                         <span class="icon user-3" aria-hidden="true"></span>Users

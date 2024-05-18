@@ -3,16 +3,16 @@
         
         $sqlquery = "SELECT 
 
-                    `tbl-request`.`clearance-no`,
-                    `tbl-clearance`.`clearance-desc`,
-                    `tbl-clearance`.`date-requested`,
-                    `tbl-clearance`.`purpose`,
-                    `tbl-clearance`.`age`,
-                    `tbl-clearance`.`status`
+                    `tbl-request`.`document-no`,
+                    `tbl-documents`.`document-desc`,
+                    `tbl-documents`.`date-requested`,
+                    `tbl-documents`.`purpose`,
+                    `tbl-documents`.`age`,
+                    `tbl-documents`.`status`
 
                     FROM	`tbl-request`
                     JOIN resident ON `tbl-request`.`resident-no`=resident.`resident_id`
-                    JOIN `tbl-clearance` ON `tbl-request`.`clearance-no`=`tbl-clearance`.`clearance-id`
+                    JOIN `tbl-documents` ON `tbl-request`.`document-no`=`tbl-documents`.`document-id`
                     WHERE resident.`resident_id`=1";
 
 
@@ -197,9 +197,9 @@
                                         echo "<td>{$row['date-requested']}</td>";
                                         echo " <td>{$row['age']}</td>";
                                         echo "<td>{$row['purpose']}</td>";
-                                        echo "<td>{$row['clearance-desc']}</td>";
+                                        echo "<td>{$row['document-desc']}</td>";
 
-                                          if($row['status']='1'){
+                                          if($row['status']=='1'){
                                                 echo "<td> ACTIVE </td>";
                                           }elseif($row['status']='1'){
                                                 echo "<td> EXPIRED </td>";
@@ -234,7 +234,7 @@
                     
                 </div>
 
-                </script>
+                
             </div>
         </div>
     </div>

@@ -86,9 +86,10 @@ select {
 button {
   -webkit-appearance: button;
   border-radius: 5px;
-  opacity: 0.2s;
-  transition: background-color 0.2s;
-  transition-duration: 0.2s;
+  opacity: 0.5s;
+  transition: 1s;
+  transition: background-color 0.3s;
+  transition-duration: 0.3s;
 }
 [type="button"]::-moz-focus-inner,
 [type="reset"]::-moz-focus-inner,
