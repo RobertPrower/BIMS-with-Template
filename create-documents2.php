@@ -64,7 +64,10 @@
 
               <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#CreateResident"> Select A Resident </button> 
               <br><br>
-              <h3>First Name: <h3 id="firstname"></h3></h3>
+          </div>
+
+          <div class="container">
+          <h3>First Name: <h3 id="firstname"></h3></h3>
 
           </div>
 

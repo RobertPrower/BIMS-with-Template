@@ -21,11 +21,23 @@
                     <a href="index.php"><span class="icon home" aria-hidden="true"></span>Dashboard</a>
                 </li>
                 <li>
-                    <a class="" href="create-documents.php">
-                        <span class="icon document" aria-hidden="true"></span> Documents
+                    <a href="create-documents.php">
+                        <span class="icon document" aria-hidden="true"></span>Documents
                     </a>
-                    
+                    <button class="category__btn transparent-btn show-cat-btn" title="Open list">
+                        <span class="sr-only">Open list</span>
+                        <span class="icon arrow-down" aria-hidden="true"></span>
+                    </button>
+                    <ul class="cat-sub-menu">
+                        <li>
+                            <a href="users-01.html">Certificate of Residency</a>
+                        </li>
+                        <li>
+                            <a href="users-02.html">Certificate of Indigency</a>
+                        </li>
+                    </ul>
                 </li>
+
                 <li>
                 <a href="residents.php"><span class="icon home" aria-hidden="true"></span>Residents</a>
                     

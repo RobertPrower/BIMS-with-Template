@@ -3129,6 +3129,8 @@ label {
   width: -webkit-max-content;
   width: -moz-max-content;
   width: max-content;
+  background-color: transparent;
+  
 }
 
 .form-label-wrapper {
@@ -3190,7 +3192,7 @@ label {
   margin-right: 12px;
 }
 
-.form-checkbox-label {
+.form-checkbox label {
   font-family: Inter;
   font-size: 14px;
   line-height: 1.71;
