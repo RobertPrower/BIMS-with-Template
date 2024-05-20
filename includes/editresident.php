@@ -19,6 +19,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $birthplace = sanitizeData($_POST['birth_place']); 
     $phonenumber = sanitizeData($_POST['cp_number']);
     $isavoter = sanitizeData($_POST['is_a_voter']);
+    $residentsince = sanitizeData($_POST['residentsince']);
+
 
    // Check if there is uploaded file or theres an error
    if(isset($_FILES['image_file']) && $_FILES['image_file']['error'] == UPLOAD_ERR_OK){
@@ -95,10 +97,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
     try {
         // Prepare SQL statement for updating resident data
-        $statement = $pdo->prepare("UPDATE resident SET first_name = ?, middle_name = ?, last_name = ?,suffix = ?, house_number = ?, street_name = ?, subdivision = ?, sex = ?, marital_status = ?, birth_date = ?, birth_place = ?, cellphone_number = ?, is_a_voter = ? WHERE resident_id = ?");
+        $statement = $pdo->prepare("UPDATE resident SET first_name = ?, middle_name = ?, last_name = ?,suffix = ?, house_number = ?, street_name = ?, subdivision = ?, resident_since=?, sex = ?, marital_status = ?, birth_date = ?, birth_place = ?, cellphone_number = ?, is_a_voter = ? WHERE resident_id = ?");
         
         // Bind parameters and execute the statement
-        $statement->execute([$firstName, $middleName, $lastName, $suffix, $houseno, $streetname, $subdivision, $sex, $maritalstatus, $birthdate, $birthplace, $phonenumber, $isavoter, $residentId]);
+        $statement->execute([$firstName, $middleName, $lastName, $suffix, $houseno, $streetname, $subdivision,$residentsince, $sex, $maritalstatus, $birthdate, $birthplace, $phonenumber, $isavoter, $residentId]);
         
         // Send success response
         echo json_encode(["success" => true, "message" => "Data updated successfully" . $imgopresponse]);

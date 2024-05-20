@@ -3,11 +3,51 @@
 require_once("fpdf186/fpdf.php");
 require_once('includes/connecttodb.php');
 
+global $pdo;
+
 $sqlquery="SELECT * FROM brgy_officials";
 $stmt=$pdo->prepare($sqlquery);
 $stmt->execute();
 
 $results=$stmt->fetchAll(PDO::FETCH_ASSOC); 
+
+$residentno=($_POST['resident_no']);
+$fname=utf8_decode($_POST['firstname']);
+$mname=utf8_decode($_POST['middlename']);
+$lname=utf8_decode($_POST['lastname']);
+if(isset($_POST['suffix'])){
+    $suffix=$_POST['suffix'];
+}else{
+    $suffix="";
+}
+$documentdesc='Certificate of Residency';
+$nowdate= date("Y-m-d H:i:s");
+$completeaddress=utf8_decode($_POST['address']);
+$presentedid=$_POST['presented_id'];
+$purpose=$_POST['purpose'];
+$residentsince=$_POST['r_since'];
+$docurequestdata=[$residentno, ];
+
+$sqlquery="SELECT TIMESTAMPDIFF(YEAR, `birth_date`, NOW()) AS Age FROM resident WHERE resident_id=?";
+$stmt=$pdo->prepare($sqlquery);
+$stmt->execute([$residentno]);
+$AgeResult= $stmt->fetchAll();
+$Age=$AgeResult[0]['Age'];
+
+$sqlquery2="INSERT INTO `tbl-documents`(`document-desc`, age) VALUES(?,?)";
+$stmt2=$pdo->prepare($sqlquery2);
+$stmt2->execute([$documentdesc, $Age]);
+
+$sqlquery3="INSERT INTO `tbl_docu_request`(`resident-no`, `document-no`, date_requested, presented_id, purpose )
+SELECT :residentno, MAX(`document-id`), :nowdate, :presentedid, :purpose
+FROM `tbl-documents`";
+$alldatatorequest=[$residentno,$nowdate,$presentedid,$purpose];
+$stmt3=$pdo->prepare($sqlquery3);
+$stmt3->execute([':residentno' => $residentno,
+':nowdate' => $nowdate,
+':presentedid' => $presentedid,
+':purpose' => $purpose]);
+
 $pdo=null;
 
 $officialname=[];
@@ -38,12 +78,6 @@ global $pdf;
 
 $pdf = new MyPDF ('P', 'mm', "Letter");
 $pdf -> AddPage();
-
-$fname="Eloisa Marie";
-$mname="Lumauig";
-$lname="Encarnation";
-$suffix="Jr";
-
 
 //Include the Logos Here
 $pdf -> Image('img/BagongPinas.jpeg', 5,10,25,25);
@@ -143,7 +177,7 @@ $pdf -> Cell($w, 10, $text, 0, 0, 'C');
 $pdf -> AddFont('Cambria Bold', 'B', 'cambriabold.php');
 $pdf -> SetFont('Cambria Bold','B',14);
 $pdf -> SetXY(120 + (130-70-$w)/2, max($maxY, 79));
-$text = $fname ." ". substr($mname, 0,1)."."." " .$lname. " " . $suffix.".";
+$text = $fname ." ". substr($mname, 0,1)."."." " .$lname. " " . "$suffix";
 $pdf -> Cell(50, 24, wrapText($pdf,$text,130), 0, 'C');
 
 $pdf -> SetFont('Cambria','',12);
@@ -196,14 +230,14 @@ $pdf -> AddFont('Cambria Bold', 'B', 'cambriabold.php');
 $pdf -> SetFont('Cambria Bold','B',12);
 $pdf -> SetTextColor(0,0,0);
 $pdf -> SetXY(70 + (150-80-$w)/2, max($maxY, 95));
-$text = 'Blk 8 Lot 4 Jeremiah st Cielito Homes Camarin Caloocan City';
+$text = $completeaddress;
 $pdf -> MultiCell(140, 24, wrapText($pdf,$text,130), 0, 'J');
 
 $pdf -> AddFont('Cambria Bold', 'B', 'cambriabold.php');
 $pdf -> SetFont('Cambria Bold','B',12);
 $pdf -> SetTextColor(0,0,0);
 $pdf -> SetXY(105 + (150-80-$w)/2, max($maxY, 102));
-$text = 'SINCE 1988 UP TO PRESENT.';
+$text = 'SINCE '.$residentsince.' UP TO PRESENT.';
 $pdf -> Cell($w, 24, wrapText($pdf,$text,130), 0, 'C');
 
 $pdf -> AddFont('Cambria', '', 'cambria.php');
@@ -254,7 +288,7 @@ $pdf -> AddFont('Cambria', '', 'cambria.php');
 $pdf -> SetFont('Cambria','B',12);
 $pdf -> SetTextColor(0,0,0);
 $pdf -> SetXY(30 + (255-100-$w)/2, max($maxY, 165));
-$text = 'Given this 29th day of February, 2024, at Barangay 177, Cielito';
+$text = 'Given this '. date('d').'th day of '.date('F Y').' at Barangay 177, Cielito';
 $pdf -> Cell($w, 24, wrapText($pdf,$text,130), 0, 'C');
 
 $pdf -> AddFont('Cambria', '', 'cambria.php');
@@ -346,6 +380,8 @@ function wrapText($pdf,$text,$maxWidth){
    }
    return $text;
 }
+
+
 
 
 ?>

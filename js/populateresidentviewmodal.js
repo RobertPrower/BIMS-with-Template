@@ -17,6 +17,7 @@ $(document).on("click", ".viewResidentButton", function () {
   var birthplace = $(this).data("birth-place");
   var phone_number = $(this).data("phone-number");
   var is_a_voter = $(this).data("isa-voter");
+  var resident_since = $(this).data("rsince");
 
   // Populate the modal with the retrieved data
   $('#ViewResidentModal input[name="resident_id"]').val(resident_id);
@@ -33,8 +34,10 @@ $(document).on("click", ".viewResidentButton", function () {
   $('#ViewResidentModal input[name="birth_place"]').val(birthplace);
   $('#ViewResidentModal input[name="cp_number"]').val(phone_number);
   $('#ViewResidentModal select[name="is_a_voter"]').val(is_a_voter);
+  $('#ViewResidentModal input[name="r_since"]').val(resident_since);
 
   // Display the modal
   $("#ViewResidentModal").modal("show");
+  console.log(resident_since);
   
 });

@@ -2,18 +2,21 @@
         require_once("connecttodb.php");
         
         $sqlquery = "SELECT 
-
-                    `tbl-request`.`document-no`,
+                    tbl_docu_request.`document-no`,
+                    `tbl_docu_request`.`date_requested`,
+                    `tbl_docu_request`.`purpose`,
+                    `tbl_docu_request`.`status`,
                     `tbl-documents`.`document-desc`,
-                    `tbl-documents`.`date-requested`,
-                    `tbl-documents`.`purpose`,
-                    `tbl-documents`.`age`,
-                    `tbl-documents`.`status`
-
-                    FROM	`tbl-request`
-                    JOIN resident ON `tbl-request`.`resident-no`=resident.`resident_id`
-                    JOIN `tbl-documents` ON `tbl-request`.`document-no`=`tbl-documents`.`document-id`
-                    WHERE resident.`resident_id`=1";
+                    `tbl-documents`.`age`
+                    FROM
+                        tbl_docu_request
+                    JOIN
+                        resident ON tbl_docu_request.`resident-no`=resident.`resident_id`
+                    JOIN
+                        `tbl-documents` ON tbl_docu_request.`document-no`=`tbl-documents`.`document-id`
+                    WHERE
+                        resident.`resident_id`=1
+    ";
 
 
         $stmt=$pdo->prepare($sqlquery);
@@ -26,7 +29,7 @@
         <div class="modal-dialog modal-xl">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="EditResidentModalLabel">View Resident Details</h5>
+                    <h5 class="modal-title" id="ViewResidentModalLabel">Select Resident</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -138,7 +141,7 @@
                                     <label for="floatingInput">Phone Number</label>
                                 </div> 
 
-                                <div class="form-floating mt-3 mb-3 col-md-4">
+                                <div class="form-floating mt-3 mb-3 col-md-2">
                                     <select class="form-select" id="marital_status" name="is_a_voter" aria-label="Floating label select example" disabled>
                                         <option hidden selected>Select Option</option>
                                         <option value="1">YES</option>
@@ -148,6 +151,10 @@
                                     <label for="isavoter">Is a Voter?</label>
                                 </div>
 
+                                <div class="form-floating mt-3 mb-3 col-md-2">
+                                    <input type="text" class="form-control" id="resident_since" name="r_since" disabled>
+                                    <label for="floatingInput">Resident Since</label>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -194,15 +201,22 @@
                                     foreach ($result as $row) {
                                         echo "<tr>";
                                         
-                                        echo "<td>{$row['date-requested']}</td>";
+                                        echo "<td>{$row['date_requested']}</td>";
                                         echo " <td>{$row['age']}</td>";
                                         echo "<td>{$row['purpose']}</td>";
                                         echo "<td>{$row['document-desc']}</td>";
 
-                                          if($row['status']=='1'){
-                                                echo "<td> ACTIVE </td>";
+                                          if($row['status']=='0'){
+                                                echo "
+                                                <div class='active-status'>
+                                                <td> ACTIVE </td>
+                                                </div>";
                                           }elseif($row['status']='1'){
-                                                echo "<td> EXPIRED </td>";
+                                                echo "
+                                                <div class='expired-secondary'>
+                                                <td> ACTIVE </td>
+                                                </div>
+                                                ";
                                           }else{
                                                 echo "<td> REVOKED </td>";
                                           }

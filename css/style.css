@@ -1865,7 +1865,7 @@ label {
 .users {
   /* Users Table */
 }
-
+/*
 .users-table table {
   width: 100%;
   text-align: left;
@@ -1976,7 +1976,7 @@ label {
 
 .table-wrapper table.library-table {
   min-width: 483px;
-}
+}*/
 
 .sidebar {
   position: -webkit-sticky;

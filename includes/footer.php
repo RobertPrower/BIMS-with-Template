@@ -10,9 +10,9 @@
 
     <ul class="footer-end">
       
-      <li><a href="##">About</a></li>
-      <li><a href="##">Support</a></li>
-      <li><a href="##">Puchase</a></li>
+      <li><a class="mx-2" href="##">About</a></li>
+      <li><a class="mx-2" href="##">Support</a></li>
+      <li><a class="mx-2" href="##">Puchase</a></li>
     </ul>
   </div>
 </footer>

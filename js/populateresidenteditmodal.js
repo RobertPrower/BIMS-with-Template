@@ -17,6 +17,8 @@ $(document).on("click", ".editResidentButton", function () {
   var birthplace = $(this).data("birth-place");
   var phone_number = $(this).data("phone-number");
   var is_a_voter = $(this).data("isa-voter");
+  var resident_since = $(this).data("residentsince");
+
 
   // Populate the modal with the retrieved data
   $('#EditResidentModal input[name="resident_id"]').val(resident_id);
@@ -33,6 +35,7 @@ $(document).on("click", ".editResidentButton", function () {
   $('#EditResidentModal input[name="birth_place"]').val(birthplace);
   $('#EditResidentModal input[name="cp_number"]').val(phone_number);
   $('#EditResidentModal select[name="is_a_voter"]').val(is_a_voter);
+  $('#EditResidentModal input[name="residentsince"]').val(resident_since);
 
   // Display the modal
   $("#EditResidentModal").modal("show");

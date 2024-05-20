@@ -16,11 +16,24 @@
   <!-- Custom styles -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
   <link rel="stylesheet" href="./css/style.min.css">
+  <!-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css"> -->
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/2.0.7/css/dataTables.bootstrap5.css">
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/2.0.7/css/dataTables.dataTables.min.css">
+
+  
+
+
+
 
   <!--Scripts Must be Always On the Top -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js" integrity="sha256-xLD7nhI62fcsEZK2/v8LsBcb4lG7dgULkuXoXB/j91c=" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert"></script>
+  <!-- <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script> -->
+  <script src="https://cdn.datatables.net/2.0.7/js/dataTables.min.js"></script>
+
+
+
 
 
 <body>
@@ -80,6 +93,7 @@
                                                                 <label for="floatingInput">Upload Image</label>
                                                                 <script src="js/limitfileresanddisplayimg.js"> </script>
                                                             </div>  
+
                                                         </div>
                                                     </div>
                                                 </div>
@@ -157,16 +171,19 @@
                                                             <label for="cellphone_number">Phone Number</label>
                                                         </div> 
 
-                                                        <div class="form-floating mt-3 mb-3 col-md-4">
+                                                        <div class="form-floating mt-3 mb-3 col-md-2">
                                                             <select class="form-select" id="isavoter" name="is_a_voter" aria-label="Floating label select example" required>
-                                                                <option hidden selected>Select Option</option>
+                                                                <option hidden selected>YES/NO</option>
                                                                 <option value="1">YES</option>
                                                                 <option value="0">NO</option>
                                                             </select>
                                                             <label for="isavoter">Is a Voter</label>
                                                         </div>
-                                                    
 
+                                                        <div class="form-floating mt-3 mb-3 col-md-2">
+                                                            <input type="Text" class="form-control" id="resident_since" name="resident_since" placeholder="Enter Birth Place Here"required>
+                                                        <label for="resident_since">Resident Since</label>
+                                                        </div> 
 
                                                     </div>
                                                 </div>
@@ -202,10 +219,11 @@
                     </div>
                 </div>
 
-                <div class="users-table table-wrapper">
-                    <table class="posts-table ResidentTable" id="ResidentTable">
+                <div class="">
+                    <!-- users-table table-wrapper -->
+                    <table class="stripe ResidentTable" id="ResidentTable" style="width:100%">
                         <thead>
-                        <tr class="users-table-info">
+                        <tr>
             
                             <!--th style="width: 2%;"class="text-center"><input type="checkbox" class="check-all"></th--> 
                             <th style="width: 2%"class="text-center resident_id">ID</th> 
@@ -273,6 +291,7 @@
                             data-birth-place="' . htmlspecialchars($row['birth_place'], ENT_QUOTES) . '"
                             data-phone-number="' . htmlspecialchars($row['cellphone_number'], ENT_QUOTES) . '"
                             data-isa-voter="' . htmlspecialchars($row['is_a_voter'], ENT_QUOTES) . '"
+                            data-rsince="' . htmlspecialchars($row['resident_since'], ENT_QUOTES) . '"
                             data-bs-toggle="modal" data-bs-target="#ViewResidentModal">View</button>';
                             echo "</form>";
                             
@@ -298,6 +317,7 @@
                             data-birth-place="' . htmlspecialchars($row['birth_place'], ENT_QUOTES) . '"
                             data-phone-number="' . htmlspecialchars($row['cellphone_number'], ENT_QUOTES) . '"
                             data-isa-voter="' . htmlspecialchars($row['is_a_voter'], ENT_QUOTES) . '"
+                            data-residentsince="' . htmlspecialchars($row['resident_since'], ENT_QUOTES) . '"
                             data-bs-toggle="modal" data-bs-target="#EditResidentModal">Edit</button>';
 
                             echo "</form>";
@@ -318,6 +338,12 @@
                         }
                         ?>
                         </tbody>
+
+                        <script>
+                            $(document).ready(function() {
+                                $('#ResidentTable').DataTable();
+                            });
+                        </script>
                     
                         
                         <!-- </tbody> -->

@@ -30,7 +30,7 @@
                     </button>
                     <ul class="cat-sub-menu">
                         <li>
-                            <a href="users-01.html">Certificate of Residency</a>
+                            <a href="create-certificate-of-residency.php">Certificate of Residency</a>
                         </li>
                         <li>
                             <a href="users-02.html">Certificate of Indigency</a>

@@ -121,7 +121,7 @@
                         <label for="cp_number">Phone Number</label>
                     </div> 
 
-                    <div class="form-floating mt-3 mb-3 col-md-4">
+                    <div class="form-floating mt-3 mb-3 col-md-2">
                         <select class="form-select" id="marital_status" name="is_a_voter" aria-label="Floating label select example" required>
                             <option hidden selected>Select Option</option>
                             <option value="1">YES</option>
@@ -129,6 +129,11 @@
                            
                         </select>
                         <label for="isavoter">Is a Voter?</label>
+                    </div>
+
+                    <div class="form-floating mt-3 mb-3 col-md-2">
+                        <input type="number" class="form-control" id="resident_since" name="residentsince" required>
+                        <label for="resident_since">Resident Since</label>
                     </div>
 
                 </div>

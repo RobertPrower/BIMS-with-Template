@@ -2,7 +2,7 @@
 
     require_once('includes/connecttodb.php');
 
-    $sqlquery="SELECT COUNT(*) AS total FROM `tbl-request`";
+    $sqlquery="SELECT COUNT(*) AS total FROM `tbl_docu_request`";
     $stmt= $pdo->prepare($sqlquery);
     $stmt->execute();
     $result=$stmt->fetchAll(PDO::FETCH_ASSOC);

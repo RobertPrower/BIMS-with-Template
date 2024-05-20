@@ -61,10 +61,12 @@ try {
     $birthplace=sanitizeData($_POST['birth_place']);
     $cellphonenumber=sanitizeData($_POST['cellphone_number']);
     $is_a_voter=sanitizeData($_POST['is_a_voter']);
+    $residentsince=sanitizeData($_POST['resident_since']);
+
 
     // Insert data into the resident table
-    $insert_query = "INSERT INTO resident (resident_id, date_recorded, img_path, first_name, middle_name, last_name, suffix, house_number, street_name, subdivision, sex, marital_status, birth_date, birth_place, cellphone_number, is_a_voter)
-                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?)";
+    $insert_query = "INSERT INTO resident (resident_id, date_recorded, img_path, first_name, middle_name, last_name, suffix, house_number, street_name, subdivision, resident_since, sex, marital_status, birth_date, birth_place, cellphone_number, is_a_voter)
+                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?,?)";
     $insert_stmt = $pdo->prepare($insert_query);
     $insert_stmt->execute([
         $next_id,
@@ -77,6 +79,7 @@ try {
         $houseno,
         $street,
         $sudb,
+        $residentsince,
         $sex,
         $maritalstatus,
         $birthdate,
