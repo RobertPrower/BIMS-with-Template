@@ -81,7 +81,7 @@
                     </div>
 
                     <div class="form-floating mt-3 mb-3 col-md-4">
-                        <input type="text" class="form-control" id="subd" name="subd" required>
+                        <input type="text" class="form-control" id="subd" name="subd">
                         <label for="subb">Subdivision</label>
                     </div>
                 
@@ -117,7 +117,7 @@
                     </div> 
 
                     <div class="form-floating mt-3 mb-3 col-md-4">
-                        <input type="text" class="form-control" id="cp_number" name="cp_number"  required>
+                        <input type="number" maxlength="11" class="form-control" id="cp_number" name="cp_number"  required>
                         <label for="cp_number">Phone Number</label>
                     </div> 
 
@@ -132,7 +132,7 @@
                     </div>
 
                     <div class="form-floating mt-3 mb-3 col-md-2">
-                        <input type="number" class="form-control" id="resident_since" name="residentsince" required>
+                        <input type="number" maxlength="4" class="form-control" id="resident_since" name="residentsince" required>
                         <label for="resident_since">Resident Since</label>
                     </div>
 

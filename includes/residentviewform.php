@@ -165,10 +165,14 @@
 
                     <!------------------------------------------------------------------------------------------------------------>
                     
-                    <table class="posts-table my-4" id="officials_table">
+                    <table class="posts-table my-4" id="RequestTable">
                         <thead>
                             <tr class="users-table-info">
                                 
+                                <th style="width: 10%;" class="text-center">ID
+                                </th>
+
+
                                 <th style="width: 10%;" class="text-center">Date Requested
                                 </th>
                                 
@@ -198,7 +202,7 @@
                             <?php
                                     
                                     //To Populate table rows with user data
-                                    foreach ($result as $row) {
+                                    /*foreach ($result as $row) {
                                         echo "<tr>";
                                         
                                         echo "<td>{$row['date_requested']}</td>";
@@ -230,7 +234,7 @@
                                         echo '<button type="button" class="btn btn-primary me-2 editOfficialBtn mx-1" data-modal-title="Edit Official">View Document</button>';
                                         echo "</tr>";
                                     
-                                    }
+                                    }*/
                                     ?>
                                 
                             </tbody>

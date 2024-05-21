@@ -19,6 +19,10 @@
   <!-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css"> -->
   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/2.0.7/css/dataTables.bootstrap5.css">
   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/2.0.7/css/dataTables.dataTables.min.css">
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/3.0.2/css/buttons.dataTables.css">
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/2.0.7/css/dataTables.dataTables.css">
+
+
 
   
 
@@ -31,6 +35,8 @@
   <script src="https://cdn.jsdelivr.net/npm/sweetalert"></script>
   <!-- <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script> -->
   <script src="https://cdn.datatables.net/2.0.7/js/dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/buttons/3.0.2/js/dataTables.buttons.js"></script>
+  <script> src="https://cdn.datatables.net/buttons/3.0.2/js/buttons.dataTables.js"</script>
 
 
 
@@ -62,166 +68,29 @@
                                
                                 <!-- Button to trigger modal -->
                                 <button type="button" class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#AddResidentModal">Add Resident</button>
-                                <!-- Add Blotter Modal -->
-                               
-                                <div class="modal fade" id="AddResidentModal" name="add" tabindex="-1" aria-labelledby="addBlotterModalLabel" aria-hidden="true">
-                                <div class="modal-dialog modal-xl">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="addBlotterModalLabel">Add Resident</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <!-- Add your form elements here for adding a resident -->
-                                        <!-- Example form -->
-                                 <form action="includes/addresident.php" id="AddResidentModalForm" enctype="multipart/form-data" method="POST">    
-                                            <div class="row">
-                                                <div class="mt-3" style="width: 270px">
-                                                
-                                                    <!--For the container of the camera and Picture-->
-                                                    <div class="col card" style="border-radius: 15px; height: 400px">
-                                                        <div class="text-center">
-                                                            <div class="mt-3 mb-4">
-                                                                <!--input type="hidden" name="MAX_FILE_SIZE" value="1048576"-->
-                                                                <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
-                                                                class="rounded-circle img-fluid" id="imagePreview" style="width: 200px;" />
-                                                            </div>
-                                                                <button type="button" class="btn btn-primary btn-lg col-md-12">Open Camera</button>
-
-                                                            <div class="form-floating mt-3 mb-3 col-md-13">
-                                                                <input type="file" class="form-control" id="imagefile" name="image_file" placeholder="Upload Picture" require>
-                                                                <label for="floatingInput">Upload Image</label>
-                                                                <script src="js/limitfileresanddisplayimg.js"> </script>
-                                                            </div>  
-
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-md-9 card mt-3 " style="border-radius: 10px;" style="padding: 10px;">
-                                                    <div class="text-center row">
-
-                                                        <div class="form-floating mt-3 mb-3 col-md-4">
-                                                            <input type="text" class="form-control" id="fname" name="fname" placeholder="Enter First Name Here" required>
-                                                            <label for="fname">First Name</label>
-                                                        </div>
-
-                                                        <div class="form-floating mt-3 mb-3 col-md-4">
-                                                            <input type="text" class="form-control" id="mname" name="mname" placeholder="Enter Middle Name Here">
-                                                            <label for="mname">Middle Name</label>
-                                                        </div>
-
-                                                        <div class="form-floating mt-3 mb-3 col-md-3">
-                                                            <input type="text" class="form-control" id="lname" name="lname" placeholder="Enter Last Name Here" required>
-                                                            <label for="lname">Last Name</label>
-                                                        </div>
-
-                                                        <div class="form-floating mt-3 mb-3 col-md-1">
-                                                            <input type="text" class="form-control" id="suffix" name="suffix" style="width:50px" placeholder="Enter Suffix Here">
-                                                            <label for="suffix">Suffix</label>
-                                                        </div>
-
-                                                        <div class="form-floating mt-3 mb-3 col-md-4">
-                                                            <input type="text" class="form-control" id="house_no" name="house_no" placeholder="Enter House No Here" required>
-                                                            <label for="house_no">House No. (Blk no, Lot no, Unit no)</label>
-                                                        </div>
-
-                                                        <div class="form-floating mt-3 mb-3 col-md-4">
-                                                            <input type="text" class="form-control" id="street" name="street" placeholder="Enter Street Here" required>
-                                                            <label for="street">Street</label>
-                                                        </div>
-
-                                                        <div class="form-floating mt-3 mb-3 col-md-4">
-                                                            <input type="text" class="form-control" id="subd" name="subd" placeholder="Enter Subdvision Here">
-                                                            <label for="subd">Subdivision</label>
-                                                        </div>
-
-                                                        <div class="form-floating mt-3 mb-3 col-md-4">
-                                                            <select class="form-select" id="sex" name="sex" aria-label="Floating label select example" required>
-                                                                <option hidden selected>Select Sex</option>
-                                                                <option value="Male">Male</option>
-                                                                <option value="Female">Female</option>
-                                                            </select>
-                                                            <label for="sex">Sex</label>
-                                                        </div>
-
-                                                        <div class="form-floating mt-3 mb-3 col-md-4">
-                                                            <select class="form-select" id="marital_status" name="marital_status" aria-label="Floating label select example" required>
-                                                                <option hidden selected>Select Marital Status</option>
-                                                                <option value="Single">Single</option>
-                                                                <option value="Married">Married</option>
-                                                                <option value="Widow">Widow/Widower</option>
-                                                                <option value="Annul">Annul</option>
-                                                            </select>
-                                                            <label for="marital_status">Marital Status</label>
-                                                        </div>
-
-                                                        <div class="form-floating mt-3 mb-3 col-md-4">
-                                                            <input type="Date" class="form-control" id="birth_date" name="birth_date" required>
-                                                            <label for="birth_place">Birth Date</label>
-                                                        </div> 
-
-                                                        <div class="form-floating mt-3 mb-3 col-md-4">
-                                                            <input type="Text" class="form-control" id="birth_place" name="birth_place" placeholder="Enter Birth Place Here"required>
-                                                            <label for="birth_place">Birth Place</label>
-                                                        </div> 
-
-                                                        <div class="form-floating mt-3 mb-3 col-md-4">
-                                                            <input type="" class="form-control" id="cellphone_number" name="cellphone_number" placeholder="Enter Phone Number Here" required >
-                                                            <label for="cellphone_number">Phone Number</label>
-                                                        </div> 
-
-                                                        <div class="form-floating mt-3 mb-3 col-md-2">
-                                                            <select class="form-select" id="isavoter" name="is_a_voter" aria-label="Floating label select example" required>
-                                                                <option hidden selected>YES/NO</option>
-                                                                <option value="1">YES</option>
-                                                                <option value="0">NO</option>
-                                                            </select>
-                                                            <label for="isavoter">Is a Voter</label>
-                                                        </div>
-
-                                                        <div class="form-floating mt-3 mb-3 col-md-2">
-                                                            <input type="Text" class="form-control" id="resident_since" name="resident_since" placeholder="Enter Birth Place Here"required>
-                                                        <label for="resident_since">Resident Since</label>
-                                                        </div> 
-
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" id="closeButton" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                            <button type="submit" id="addButton" name="submit" class="btn btn-primary">Save</button>
-
-                                            <script src="js/reseteditresidentformwhenclose.js">  </script>
-                                        </div>
-                                        </div>
-                                    </div>
-                                    </div>
-                                </form>
-                                
-                                <!-- End of Add Blotter Modal -->
+                                <!-- Modal on a spepare file -->
+                                <?php require_once('includes/addresidentmodal.php'); ?>
                               
                             </div>
                         </div>
                         <div class="container col-md-3">
                             <div class="row">
                             <!-- Search Box -->
-                            <div class="search-wrapper">
+                            <!-- <div class="search-wrapper">
                            
                                 <form action="residents.php" method="GET" class="d-flex">
                                     <button type="submit" class="btn-sm btn-light" data-feather="search" aria-hidden="true" required><img src="icons/search.png" alt="Search Icon"></img></button>
                                     <input type="text" class="form-control me-2" name="search" placeholder="Search...">
                                    
                                 </form>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                 </div>
 
-                <div class="">
+                <div class="users-table table-wrapper">
                     <!-- users-table table-wrapper -->
-                    <table class="stripe ResidentTable" id="ResidentTable" style="width:100%">
+                    <table class="ResidentTable" id="ResidentTable" style="width:100%">
                         <thead>
                         <tr>
             
@@ -230,13 +99,14 @@
                             <th style="width: 10%;"class="text-center">Date Recorded</th>
                             <th style="width: 10%;" class="text-center">Full Name</th>
                             <th style="width: 10%;" class="text-center">Address</th>
+                            <th style="width: 5%;" class="text-center">Resident Since</th>
                             <th style="width: 10%;" class="text-center">Sex</th>
                             <th style="width: 10%;" class="text-center">Marital Status</th>
                             <th style="width: 10%;" class="text-center">Birth Date</th>
                             <th style="width: 10%;" class="text-center">Birth Place</th>
                             <th style="width: 10%;" class="text-center">Phone Number</th>
                             <th style="width: 10%;" class="text-center">Is a Voter</th>
-                            <th style="width: 10%;" class="text-center col-span-3">Action</th>
+                            <th style="width: 10%;" class="text-center">Action</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -246,24 +116,18 @@
                             
                         //To Populate table rows with user data
                         foreach ($result as $row) {
-                            echo "<tr>";
                             //echo '<td><input type="checkbox" class="check-all"></td>';
-                            echo "<td>{$row['resident_id']}</td>";
-                            echo "<td>{$row['date_recorded']}</td>";
-                            echo "<td>{$row['last_name']}, {$row['first_name']} {$row['middle_name']} {$row['suffix']}</td>";
-                            echo "<td>{$row['house_number']}, {$row['street_name']}, {$row['subdivision']}</td>";
-                            echo "<td>{$row['sex']}</td>";
-                            echo "<td>{$row['marital_status']}</td>";
-                            echo "<td>{$row['birth_date']}</td>";
-                            echo "<td>{$row['birth_place']}</td>";
-
-                              //Prevent "0" From appearing in Cellphone Number
-
-                              if($row['cellphone_number']== "0"){
-                                echo "<td> </td> ";
-                            } else{
-                                echo "<td>{$row['cellphone_number']}</td>";
-                            }
+                            echo "  <tr>
+                                    <td>{$row['resident_id']}</td>
+                                    <td>{$row['date_recorded']}</td>
+                                    <td>{$row['last_name']}, {$row['first_name']} {$row['middle_name']} {$row['suffix']}</td>
+                                    <td>{$row['house_number']}, {$row['street_name']}, {$row['subdivision']}</td>
+                                    <td class='text-center'>{$row['resident_since']}
+                                    <td>{$row['sex']}</td>
+                                    <td>{$row['marital_status']}</td>
+                                    <td>{$row['birth_date']}</td>
+                                    <td>{$row['birth_place']}</td>
+                                    <td class='text-center'>{$row['cellphone_number']}</td>";
                             
                             if($row['is_a_voter'] == 1){
                             echo "<td>YES</td>";
@@ -271,12 +135,11 @@
                             echo "<td>NO</td>";
                             }
 
-
-                            //For the view button
-                            echo "<td style='width: 15%;'><div class='btn-group text-center'>";
-
-                            echo "<form method='GET' action='#'>";
-                            echo '<button href="#" class="btn btn-primary mx-1 viewResidentButton" 
+                            echo "<td style='width: 35%;'><div class='btn-group text-center'>";
+                            
+                             //For the view button
+                            echo '
+                            <button href="#" class="btn btn-primary mx-1 viewResidentButton" 
                             data-id="' . $row['resident_id'] . '"
                             data-first-name="' . htmlspecialchars($row['first_name'], ENT_QUOTES) . '"
                             data-middle-name="' . htmlspecialchars($row['middle_name'], ENT_QUOTES) . '"
@@ -293,15 +156,8 @@
                             data-isa-voter="' . htmlspecialchars($row['is_a_voter'], ENT_QUOTES) . '"
                             data-rsince="' . htmlspecialchars($row['resident_since'], ENT_QUOTES) . '"
                             data-bs-toggle="modal" data-bs-target="#ViewResidentModal">View</button>';
-                            echo "</form>";
-                            
-                            
-                            
 
-                            //For the edit button
-                           
-                            echo "<form method='GET' action='#'>";
-
+                            // //For the edit button
                             echo '<button href="#" class="btn btn-success mx-1 editResidentButton" 
                             data-id="' . $row['resident_id'] . '"
                             data-first-name="' . htmlspecialchars($row['first_name'], ENT_QUOTES) . '"
@@ -320,29 +176,54 @@
                             data-residentsince="' . htmlspecialchars($row['resident_since'], ENT_QUOTES) . '"
                             data-bs-toggle="modal" data-bs-target="#EditResidentModal">Edit</button>';
 
-                            echo "</form>";
-                           
-
-
                             // For the Delete Button
-                            
 
-                            echo "<form method='POST' action='#'>";
-                            //echo "<input type='hidden' id='resident_id' name='delete_resident_id' value='""'>";
-                            echo '<button type="submit" class="Delete_Button btn btn-danger mx-1" data-resident_id="' . $row['resident_id'] . '">Delete</button>';
-                            echo "</form>";
-                            echo "</div>";
-                            echo "</td>";
-                            echo "</tr>";
+                            // 
+                            echo '
+                            <button type="submit" class="Delete_Button btn btn-danger mx-1" data-resident_id="' . $row['resident_id'] . '">Delete</button>
+                            
+                            </div>
+                            </td>
+                            </tr>';
 
                         }
                         ?>
                         </tbody>
 
                         <script>
-                            $(document).ready(function() {
-                                $('#ResidentTable').DataTable();
+                          $(document).ready(function() {
+                            $('#ResidentTable').DataTable();
+
+                            $(document).on('click', '.viewResidentButton', function() {
+                                var resident_id = $(this).data('id');
+
+                                // Destroy existing DataTable if it exists
+                                if ($.fn.DataTable.isDataTable('#RequestTable')) {
+                                    $('#RequestTable').DataTable().destroy();
+                                }
+
+                                // Initialize DataTable with new data
+                                $('#RequestTable').DataTable({
+                                    ajax: {
+                                        url: 'includes/get-resident-docu-request.php',
+                                        type: 'POST',
+                                        data: {
+                                            id: resident_id
+                                        }, dataSrc: ''
+                                    },
+                                    columns: [
+                                        { data: 'document-no', title: 'ID' },
+                                        { data: 'date_requested', title: 'Date Requested' },
+                                        { data: 'purpose', title: 'Purpose' },
+                                        { data: 'document-desc', title: 'Certificate Description' },
+                                        { data: 'age', title: 'Age' },
+                                        { data: 'status', title: 'Status' }
+                                        
+                                    ]
+                                });
                             });
+                        });
+
                         </script>
                     
                         

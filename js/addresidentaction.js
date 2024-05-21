@@ -28,7 +28,8 @@ $(document).ready(function () {
               button: "Close",
             });
 
-            RefreshTable();
+            $('ResidentTable').DataTable();
+
          }else{
           $("#AddResidentModal").modal("hide");
             swal({

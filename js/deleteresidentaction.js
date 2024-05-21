@@ -26,6 +26,9 @@ $(document).on("click", ".Delete_Button", function (event) {
           swal("Record Has Been Deleted", {
             icon: "success",
           });
+
+          $('ResidentTable').DataTable();
+
         },
         error: function (xhr, status, error) {
           // Handle error response

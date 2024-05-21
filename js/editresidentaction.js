@@ -1,4 +1,5 @@
 $(document).ready(function () {
+
   // Attach event listener to form submission
   $("#EditResidentModalForm").submit(function (event) {
     // Prevent the default form submission behavior
@@ -6,6 +7,8 @@ $(document).ready(function () {
 
     // Collect form data using FormData
     var formData = new FormData(this);
+    
+
 
     // Send AJAX request
     $.ajax({
@@ -27,6 +30,7 @@ $(document).ready(function () {
             icon: "success",
             button: "Close",
           });
+          
        }else{
         $("#EditResidentModal").modal("hide");
           swal({

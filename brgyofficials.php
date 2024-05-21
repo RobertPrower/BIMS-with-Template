@@ -122,7 +122,7 @@
                                     data-official-id="' . $row['id'] . '" data-official-fullname="' . $row['official_name'] . '" data-official-position="' . $row['official_position'] .'" 
                                     data-bs-toggle="modal" data-bs-target="#EditOfficialModal" id="EditOfficialBtn">Edit Official</button>';
                                 
-                                    echo '<button type="button" class="btn btn-danger" data-official-id = "' . $row['id'] . '" id="DeleteOfficialbtn">Delete</button>';
+                                    //echo '<button type="button" class="btn btn-danger" data-official-id = "' . $row['id'] . '" id="DeleteOfficialbtn">Delete</button>';
                                     echo "</td>";
 
                                 

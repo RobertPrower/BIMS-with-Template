@@ -3,7 +3,7 @@ require_once("connecttodb.php");
 
 // Check if the search query is provided in the URL parameter
 if (isset($_GET['search'])) {
-    // Sanitize the search query to prevent SQL injection
+  
     $search = $_GET['search'];
     
     // Fetch user data from the database based on the search query
