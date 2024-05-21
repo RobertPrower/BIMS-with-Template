@@ -110,19 +110,19 @@ $pdf -> Cell($w, 8, $text, 0, 0, 'C');
 $maxY = $pdf->GetY();
 
 $pdf -> AddFont('Cambria', 'BU', 'cambria.php'); 
-$pdf -> SetFont('Cambria','BU',25);
+$pdf -> SetFont('Cambria','BU',21);
 $pdf->SetTextColor(0, 0, 0);
-$text = 'CERTIFICATE OF';
+$text = 'PAGPAPATUNAY NA MAHIRAP';
 $w=$pdf->GetStringWidth($text);
-$pdf -> SetXY(110 + (135-70-$w)/2, max($maxY, 60));
+$pdf -> SetXY(110 + (140-70-$w)/2, max($maxY, 52));
 $pdf -> Cell($w, 1, $text, 0, 1, 'C');
 
-$pdf -> AddFont('Cambria', 'BU', 'cambria.php'); 
-$pdf -> SetFont('Cambria','BU',25);
+$pdf -> AddFont('Cambria', 'B', 'cambria.php'); 
+$pdf -> SetFont('Cambria','B', 13);
 $pdf->SetTextColor(0, 0, 0);
-$text = 'GOOD MORAL';
+$text = 'SA KINAUUKULAN:';
 $w=$pdf->GetStringWidth($text);
-$pdf -> SetXY(120 + (148-102-$w)/2, max($maxY, 70));
+$pdf -> SetXY(80 + (130-102-$w)/2, max($maxY, 77));
 $pdf -> Cell($w, 1, $text, 0, 1, 'C');
 
 $pdf -> AddFont('Bookman Old Style', 'B', 'BookmanOldStyle.php'); 
@@ -142,11 +142,11 @@ $pdf -> SetXY((70-$w)/2,82);
 $pdf -> Cell($w, 8, $text, 0, 0, 'C');
 
 $pdf -> AddFont('Cambria', '', 'cambria.php'); 
-$pdf -> SetFont('Cambria','B',12);
+$pdf -> SetFont('Cambria','',13);
 $pdf->SetTextColor(0, 0, 0);
-$text = 'This is to certify that ROBERT L. SALAS,';
+$text = 'Sa pamamagitan nito ay pinapatunayan ng tanggapang ito';
 $w=$pdf->GetStringWidth($text);
-$pdf -> SetXY(73 + (185-70-$w)/2, max($maxY, 97));
+$pdf -> SetXY(78 + (200-70-$w)/2, max($maxY, 82));
 $pdf -> Cell($w, 10, $text, 0, 0, 'C');
 
 $pdf -> AddFont('Cambria', '', 'cambria.php');
@@ -155,9 +155,9 @@ $pdf -> SetXY(120 + (130-70-$w)/2, max($maxY, 79));
 $text = boldtext( $fname ." ". substr($mname, 0,1)."."." " .$lname. " " . $suffix.".");
 $pdf -> Cell(50, 24, wrapText($pdf,$text,130), 0, 'C');
 
-$pdf -> SetFont('Cambria','',12);
-$pdf -> SetXY(90 + (130-70-$w)/2, max($maxY, 98));
-$text2 = "of legal age, is a bonafide resident of this barangay, with postal";
+$pdf -> SetFont('Cambria','',13);
+$pdf -> SetXY(100 + (200-70-$w)/2, max($maxY, 82));
+$text2 = "na si ROBERT L. SALAS, nakatira  sa";
 $pdf -> Cell($w, 24, wrapText($pdf,$text2,130), 0, 'L');
 
 
@@ -172,9 +172,15 @@ function boldtext($text){
 
 
 $pdf -> AddFont('Cambria', '', 'cambria.php');
-$pdf -> SetFont('Cambria','B',12);
-$pdf -> SetXY(85 + (145-70-$w)/2, max($maxY, 104));
-$text = 'address located at 4779 GENESIS ST., CIELITO HOMES,';
+$pdf -> SetFont('Cambria','B',13);
+$pdf -> SetXY(100 + (180-70-$w)/2, max($maxY, 89));
+$text = '4779 Genesis St., Cielito Homes, Camarin,';
+$pdf -> Cell($w, 24, wrapText($pdf,$text,130), 0, 'C');
+
+$pdf -> AddFont('Cambria', '', 'cambria.php');
+$pdf -> SetFont('Cambria','',13);
+$pdf -> SetXY(120 + (195-70-$w)/2, max($maxY, 96));
+$text = 'Caloocan City.';
 $pdf -> Cell($w, 24, wrapText($pdf,$text,130), 0, 'C');
 
 $pdf -> AddFont('Bookman Old Style', '', 'BookmanOldStyle.php');
@@ -201,37 +207,43 @@ $w=$pdf->GetStringWidth($text);
 $pdf -> SetXY((70-$w)/2, 111);
 $pdf -> Cell($w, 8, $text, 0, 0, 'C');
 
-$pdf -> AddFont('Cambria', 'B', 'cambria.php');
-$pdf -> SetFont('Cambria','B',12);
+$pdf -> AddFont('Cambria', '', 'cambria.php');
+$pdf -> SetFont('Cambria','',13);
 $pdf -> SetTextColor(0,0,0);
-$pdf -> SetXY(70 + (165-80-$w)/2, max($maxY, 118));
-$text = 'This further certifies that ROBERT L. SALAS is known to';
+$pdf -> SetXY(80 + (140-80-$w)/2, max($maxY, 102));
+$text = 'ay nabibilang sa mahihirap na mamamayan dito sa aming';
 $pdf -> MultiCell(140, 24, wrapText($pdf,$text,130), 0, 'J');
 
-$pdf -> AddFont('Cambria', 'B', 'cambria.php');
-$pdf -> SetFont('Cambria','B',12);
+$pdf -> AddFont('Cambria', '', 'cambria.php');
+$pdf -> SetFont('Cambria','',13);
 $pdf -> SetTextColor(0,0,0);
-$pdf -> SetXY(110 + (70-80-$w)/2, max($maxY, 124));
-$text = 'me to be of good moral character, a law-abiding citizen and has no';
+$pdf -> SetXY(110 + (160-80-$w)/2, max($maxY, 108));
+$text = 'nasasakupan.';
 $pdf -> Cell($w, 24, wrapText($pdf,$text,130), 0, 'C');
 
 $pdf -> AddFont('Cambria', '', 'cambria.php');
-$pdf -> SetFont('Cambria','B',12);
-$pdf -> SetXY(38 + (215-80-$w)/2, max($maxY, 130));
-$text = 'derogatory record in our barangay.';
+$pdf -> SetFont('Cambria','',13);
+$pdf -> SetXY(60 + (173-80-$w)/2, max($maxY, 119));
+$text = 'Ang pagpapatunay na ito ay ipinagkaloob upang magamit na';
+$pdf -> Cell($w, 24, wrapText($pdf,$text,180), 0, 'C');
+
+$pdf -> AddFont('Cambria', '', 'cambria.php');
+$pdf -> SetFont('Cambria','B',13);
+$pdf -> SetXY(60 + (240-120-$w)/2, max($maxY, 125));
+$text = 'basehan upang siya ay makahingi ng tulong na';
 $pdf -> Cell($w, 24, wrapText($pdf,$text,130), 0, 'C');
 
 $pdf -> AddFont('Cambria', '', 'cambria.php');
-$pdf -> SetFont('Cambria','B',12);
-$pdf -> SetXY(60 + (240-120-$w)/2, max($maxY, 142));
-$text = 'This certification is being issued upon the request of';
+$pdf -> SetFont('Cambria','B',13);
+$pdf -> SetXY(77 + (230-140-$w)/2, max($maxY, 132));
+$text = 'MEDICAL ASSISTANCE mula sa tanggapan ng';
 $pdf -> Cell($w, 24, wrapText($pdf,$text,130), 0, 'C');
 
-$pdf -> AddFont('Cambria', '', 'cambria.php');
-$pdf -> SetFont('Cambria','B',12);
-$pdf -> SetXY(60 + (230-140-$w)/2, max($maxY, 148));
-$text = 'the above-mentioned name for VERIFICATION PURPOSES ONLY.';
-$pdf -> Cell($w, 24, wrapText($pdf,$text,130), 0, 'C');
+$pdf -> AddFont('Cambria', 'BU', 'cambria.php');
+$pdf -> SetFont('Cambria','BU',13);
+$pdf -> SetXY(75 + (230-80-$w)/2, max($maxY, 138));
+$text = 'MALASAKIT CENTER.';
+$pdf -> Cell($w, 24, wrapText($pdf,$text,180), 0, 'C');
 
 $pdf -> AddFont('Bookman Old Style', '', 'BookmanOldStyle.php'); 
 $pdf -> SetFont('Bookman Old Style','U',11);
@@ -260,15 +272,21 @@ $pdf -> Cell($w, 8, $text, 0, 0, 'C');
 $pdf -> AddFont('Cambria', '', 'cambria.php');
 $pdf -> SetFont('Cambria','B',12);
 $pdf -> SetTextColor(0,0,0);
-$pdf -> SetXY(30 + (288-100-$w)/2, max($maxY, 160));
-$text = 'Issued this 29th day of FEBRUARY 2024, at Barangay';
+$pdf -> SetXY(76 + (180-100-$w)/2, max($maxY, 155));
+$text = 'Ipinagkaloob ngayong ika-29 ng Pebrero, 2024 sa tanggapan';
 $pdf -> Cell($w, 24, wrapText($pdf,$text,130), 0, 'C');
 
 $pdf -> AddFont('Cambria', '', 'cambria.php');
 $pdf -> SetFont('Cambria','B',12);
-$pdf -> SetXY(30 + (265-100-$w)/2, max($maxY, 166));
-$text = '177, Cielito Homes Subdivision, Camarin, Caloocan City.';
+$pdf -> SetXY(74 + (175-100-$w)/2, max($maxY, 161));
+$text = 'ng Barangay 177, Cielito Homes Subdivision, Camarin, Lungsod';
 $pdf -> Cell($w, 24, wrapText($pdf,$text,130), 0, 'C');
+
+$pdf -> AddFont('Cambria', '', 'cambria.php');
+$pdf -> SetFont('Cambria','',13);
+$pdf -> SetXY(100 + (190-80-$w)/2, max($maxY, 166));
+$text = 'ng Caloocan.';
+$pdf -> Cell($w, 24, wrapText($pdf,$text,180), 0, 'C');
 
 $pdf -> AddFont('Bookman Old Style', '', 'BookmanOldStyle.php'); 
 $pdf -> SetFont('Bookman Old Style','U',11);
@@ -318,27 +336,26 @@ $w=$pdf->GetStringWidth($text);
 $pdf -> SetXY((70-$w)/2,180);
 $pdf -> Cell($w, 8, $text, 0, 0, 'C');
 
-$pdf -> AddFont('Cambria', 'BI', 'cambria.php');
-$pdf -> SetFont('Cambria','BI',8);
+$pdf -> AddFont('Cambria', '', 'cambria.php');
+$pdf -> SetFont('Cambria','B',8);
 $pdf->SetTextColor(0, 0, 0);
 $pdf -> SetXY(166, 220);
 $text = 'NOT VAILD WITHOUT DRY SEAL';
 $pdf -> Cell($w, 22, wrapText($pdf,$text,160), 0, 'R');
 
-$pdf -> AddFont('Cambria', 'BI', 'cambria.php');
-$pdf -> SetFont('Cambria','BI',11);
+$pdf -> AddFont('Cambria', '', 'cambria.php');
+$pdf -> SetFont('Cambria','B',11);
 $pdf->SetTextColor(255, 0, 0);
 $pdf -> SetXY(165, 225);
 $text = 'VAILD FOR (3 MONTHS) ';
 $pdf -> Cell($w, 22, wrapText($pdf,$text,160), 0, 'C');
 
-$pdf -> AddFont('Cambria', 'BI', 'cambria.php');
-$pdf -> SetFont('Cambria','BI',8);
+$pdf -> AddFont('Cambria', '', 'cambria.php');
+$pdf -> SetFont('Cambria','B',8);
 $pdf->SetTextColor(0, 0, 0);
 $pdf -> SetXY(169, 230);
 $text = 'FROM THE DATE ISSUED.';
 $pdf -> Cell($w, 22, wrapText($pdf,$text,160), 0, 'C');
-
 
 $pdf -> Cell(59, 10, '',0,1);
 
