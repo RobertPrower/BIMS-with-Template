@@ -59,6 +59,10 @@ sup {
 img {
   border-style: none;
 }
+
+.card label::after{
+  background-color: transparent !important;
+}
 button,
 input,
 optgroup,

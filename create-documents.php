@@ -13,12 +13,8 @@
   integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
   <link rel="stylesheet" href="./css/create-documents.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
-
   <!--JavaScript-->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </head>
 
@@ -125,151 +121,7 @@
           </div>
         </div>
       </div>
-      <!-- Modal Content For certificate-of-residency -->
-      <div class="modal fade" id="certificate-of-residency" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-xl">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h1 class="modal-title fs-5" id="exampleModalLabel">Create a Certificate of Residency</h1>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-              <ul class="nav nav-tabs" id="myTab" role="tablist">
-                  <li class="nav-item" role="presentation">
-                    <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">Select Resident</button>
-                  </li>
-                  <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">Fill up the form</button>
-                  </li>
-              </ul>
-                <div class="tab-content" id="myTabContent">
-
-                  <!-- 1st Tab Content-->
-
-                  <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
-
-                    <!-- Table Content -->
-                
-                    <div class="content pt-2">
-                      <div class="users-table table-wrapper">
-                      <table class="tablehover ResidentTable" id="ResidentTable" style="scale: 98%;">
-                          <thead>
-                          <tr class="users-table-info">
-              
-                              <!-- <th style="width: 2%;"class="text-center"><input type="checkbox" class="check-all"></th> -->
-                              <th style="width:  1%;"class="text-center resident_id">ID</th> 
-                              <th style="width: 15%;"class="text-center">Date Recorded</th>
-                              <th style="width: 15%;" class="text-center">Full Name</th>
-                              <th style="width: 20%;" class="text-center">Address</th>
-                              <th style="width: 5%;" class="text-center">Sex</th>
-                              <th style="width: 8%;" class="text-center">Marital Status</th>
-                              <th style="width: 20%;" class="text-center">Birth Date</th>
-                              <th style="width: 25%;" class="text-center">Birth Place</th>
-                              <th style="width: 10%;" class="text-center">Phone Number</th>
-                              <th style="width: 1%;" class="text-center">Is a Voter</th>
-                          </tr>
-                          </thead>
-                          <tbody>
-                          
-                          
-                          <?php
-
-                          require_once('includes/residentsearchfunction.php');
-                              
-                          //To Populate table rows with user data
-                          foreach ($result as $row) {
-                              echo "<tr class='text-center'>";
-                              // echo '<td><input type="checkbox" class="check-all"></td>';
-                              echo "<td class='resident_id'>{$row['resident_id']}</td>";
-                              echo "<td>{$row['date_recorded']}</td>";
-                              echo "<td>{$row['last_name']}, {$row['first_name']} {$row['middle_name']} {$row['suffix']}</td>";
-                              echo "<td>{$row['house_number']}, {$row['street_name']}, {$row['subdivision']}</td>";
-                              echo "<td>{$row['sex']}</td>";
-                              echo "<td>{$row['marital_status']}</td>";
-                              echo "<td>{$row['birth_date']}</td>";
-                              echo "<td>{$row['birth_place']}</td>";
-
-                                //Prevent "0" From appearing in Cellphone Number
-
-                                if($row['cellphone_number']== "0"){
-                                  echo "<td> </td> ";
-                              } else{
-                                  echo "<td>{$row['cellphone_number']}</td>";
-                              }
-                              
-                              if($row['is_a_voter'] == 1){
-                              echo "<td>YES</td>";
-                              }else{
-                              echo "<td>NO</td>";
-                              }
-                          }
-                          ?>
-                          </tbody>
-                      
-                          
-                          <!-- </tbody> -->
-
-                      
-                      </table>
-                      <!-- End of Table -->
-                      </div>
-                    </div>
-                    
-
-                  </div>
-                  <!-- Second Tab for the form -->
-                  <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
-                  <!-- Form for additional details -->
-                  <div class="row m-2">
-                      <div class="col-md-12 card mt-2" style="border-radius: 10px;" style="padding: 10px;">
-                          <div class="text-center row">
-
-                              <!-- <div class="form-floating mt-3 mb-3 col-md-4">
-                                  <select class="form-select" id="docu_desc" name="sex" aria-label="Floating label select example" required>
-                                      <option hidden selected>Select Document</option>
-                                      <option value="Barangay Clearance">Barangay Clearance</option>
-                                      <option value="Certificate of Indigency">Certificate of Indigency</option>
-                                      <option value="Certificate of Residency">Certificate of Residency</option>
-                                      <option value="Certificate of Good Moral">Certificate of Good Moral</option>
-                                     
-                                  </select>
-                                  <label for="docu_desc">Document Description</label>
-                              </div> -->
-
-                              <div class="form-floating mt-3 mb-3 col-md-4">
-                                  <input type="file" class="form-control" id="editimagefile" name="image_file" placeholder="Upload Picture">
-                                  <label for="floatingInput">Upload Image</label>
-                              </div>
-
-                              <div class="form-floating mt-3 mb-3 col-md-4">
-                                  <input type="text" class="form-control" id="purpose" name="purpose" placeholder="Enter House No Here" required>
-                                  <label for="purpose">Purpose</label>
-                              </div>
-
-                              <div class="form-floating mt-3 mb-3 col-md-4">
-                                  <input type="text" class="form-control" id="Resident_Since" name="age" placeholder="Enter Street Here" required>
-                                  <label for="Resident_Since">Residence Since</label>
-                              </div>
-
-                            
-                          
-
-
-                          </div>
-                      </div>
-                  </div>
-                  </div>
-                  <div class="tab-pane fade" id="contact-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabindex="0">...</div>
-                  <div class="tab-pane fade" id="disabled-tab-pane" role="tabpanel" aria-labelledby="disabled-tab" tabindex="0">...</div>
-                </div>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary" id="nextbtn">Next</button>
-            </div>
-          </div>
-        </div>
-      </div>
+      
     </main>
 
     <!-- ! Footer -->

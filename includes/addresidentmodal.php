@@ -68,7 +68,24 @@
                         </div>
 
                         <div class="form-floating mt-3 mb-3 col-md-4">
-                            <input type="text" class="form-control" id="subd" name="subd" placeholder="Enter Subdvision Here">
+                            <select class="form-select" id="subd" name="subd" aria-label="Floating label select example" required>
+                                <option hidden selected>Select</option>
+                                <option value="-">Not Applicable</option>
+                                <option value="Almar Subd">Almar Subd</option>
+                                <option value="Caritas Subd">Caritas Subd</option>
+                                <option value="Capitol Parkland Subd">Capitol Parkland Subd</option>
+                                <option value="Cassel Spring Subd">Cassel Spring Subd</option>
+                                <option value="Christina Homes Subd">Christina Homes Subd</option>
+                                <option value="Cielito Homes Subd">Cielito Homes Subd</option>
+                                <option value="Del Rey Ville 2 Subd">Del Rey Ville 2 Subd</option>
+                                <option value="Kassel Villas Subd">Kassel Villas Subd</option>
+                                <option value="Lilleville Subd">Lilleville Subd</option>
+                                <option value="Maligay Park Subd">Maligaya Park Subd</option>
+                                <option value="Cassel Spring Subd">Maria Luisa Subd</option>
+                                <option value="North Matrix Villge 1 Subd">North Matrix Village 1 Subd</option>
+                                <option value="North Matrix Ville Subd">North Matrix Ville Subd</option>
+                                <option value="North Triangle Subd">North Triangle Subd</option>
+                            </select>
                             <label for="subd">Subdivision</label>
                         </div>
 
@@ -94,7 +111,7 @@
 
                         <div class="form-floating mt-3 mb-3 col-md-4">
                             <input type="Date" class="form-control" id="birth_date" name="birth_date" required>
-                            <label for="birth_place">Birth Date</label>
+                            <label for="birth_date">Birth Date</label>
                         </div> 
 
                         <div class="form-floating mt-3 mb-3 col-md-4">

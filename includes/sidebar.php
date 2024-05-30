@@ -3,7 +3,7 @@
         <div class="sidebar-head">
             <a href="/" class="logo-wrapper" title="Home">
                 <span class="sr-only">Home</span>
-                <span class="icon logo" aria-hidden="true"></span>
+                <span class="mx-2" aria-hidden="true"><img src="img/Brgy177.png" style="width: 80px;height: 80px"></img></span>
                 <div class="logo-text">
                     <span class="logo-title">BIMS</span>
                     <!--span class="logo-subtitle">Dashboard</span-->

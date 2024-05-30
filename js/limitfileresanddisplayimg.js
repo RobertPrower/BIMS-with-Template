@@ -2,7 +2,7 @@ $('#imagefile').on('change', function() {
     var fileInput = this; // store reference to file input
     var file = this.files[0];
     var imageType = /image.*/;
-    var validExtensions = ['png', 'jpg', 'jpeg', 'gif']; 
+    var validExtensions = ['png', 'jpg', 'jpeg']; 
     var oldImageSrc = $('#imagePreview').attr('src'); 
 
     if (!file.type.match(imageType)) {
@@ -21,7 +21,7 @@ $('#imagefile').on('change', function() {
         swal({
             icon: "error",
             title: "Oops... Invalid extension!",
-            text: "Only png, jpg, jpeg and gif are allowed.",
+            text: "Only png, jpg, and jpeg are allowed.",
         });
         $('#imagePreview').attr('src', oldImageSrc);
         $(fileInput).val(''); // use stored reference

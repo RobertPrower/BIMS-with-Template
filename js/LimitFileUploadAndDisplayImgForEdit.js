@@ -2,7 +2,7 @@ $('#editimagefile').on('change', function() {
     var fileInput = this; // store reference to file input
     var file = this.files[0];
     var imageType = /image.*/;
-    var validExtensions = ['png', 'jpg', 'jpeg', 'gif']; 
+    var validExtensions = ['png', 'jpg', 'jpeg']; 
     var oldImageSrc = $('#editimagePreview').attr('src'); 
 
     if (!file.type.match(imageType)) {

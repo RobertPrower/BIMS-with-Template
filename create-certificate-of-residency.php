@@ -110,13 +110,13 @@
               </div>
 
               
-              <div class="form-floating mt-3 mb-3 col-md-4">
+              <div class="form-floating mt-3 mb-3 col-md-2">
                   <input type="Text" class="form-control" id="resident_since" name="r_since" placeholder="Enter Birth Place Here" required>
                   <label for="birth_place">Resident Since</label>
               </div> 
 
                   
-              <div class="form-floating mt-3 mb-3 col-md-4">
+              <div class="form-floating mt-3 mb-3 col-md-3">
                   <select class="form-select" id="isavoter" name="presented_id" aria-label="Floating label select example" required aria-required="true">
                       <option hidden value="">Select Option</option>
                       <option value="National ID">National ID</option>
@@ -143,7 +143,12 @@
                   <label for="isavoter">Presented ID</label>
               </div>
 
-              <div class="form-floating mt-3 mb-3 col-md-4">
+              <div class="form-floating mt-3 mb-3 col-md-2">
+                  <input type="text" class="form-control" id="IDnum" name="IDnum" placeholder="Enter Birth Place Here" required>
+                  <label for="IDnum">ID Number</label>
+              </div> 
+
+              <div class="form-floating mt-3 mb-3 col-md-3">
                   <select class="form-select" id="isavoter" name="purpose" aria-label="Floating label select example" required>
                       <option hidden value="">Select Option</option>
                       <option value="Verification Purposes">Verification Purposes</option>
@@ -151,25 +156,6 @@
                   </select>
                   <label for="isavoter">Purpose</label>
               </div>
-
-              <!-- <script>
-                  $('#SelectResidentForm').on('submit', function () {
-                      var f_name = $(this).data-fname();
-                      var m_name = $(this).data-mname();
-                      var l_name = $(this).data-lname();
-                      var suf = $(this).data-suffix();
-                      var houseno = $(this).data-houseno();
-                      var street = $(this).data-street();
-                      var subd = $(this).data-subd();
-                      var residentsince = $(this).data-residentsince();
-
-                      $('#certificatedetails input[name="fname"]').val(f_name);
-                      $('#certificatedetails input[name="mname"]').val(m_name);
-                      $('#certificatedetails input[name="lname"]').val(l_name);
-                      $('#certificatedetails input[name="suffix"]').val(suf);
-                      
-                  });
-              </script> -->
               
             </div>
           </div>

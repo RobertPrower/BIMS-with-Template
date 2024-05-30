@@ -12,31 +12,25 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>BIMS | Manage Residents</title>
   <!-- Favicon -->
-  <link rel="shortcut icon" href="./img/svg/logo.svg" type="image/x-icon">
+  <link rel="shortcut icon" href="./img/Brgy177.png" type="image/x-icon">
   <!-- Custom styles -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
   <link rel="stylesheet" href="./css/style.min.css">
   <!-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css"> -->
-  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/2.0.7/css/dataTables.bootstrap5.css">
+  <!-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/2.0.7/css/dataTables.bootstrap5.css">
   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/2.0.7/css/dataTables.dataTables.min.css">
   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/3.0.2/css/buttons.dataTables.css">
-  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/2.0.7/css/dataTables.dataTables.css">
-
-
-
-  
-
-
-
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/2.0.7/css/dataTables.dataTables.css"> -->
 
   <!--Scripts Must be Always On the Top -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js" integrity="sha256-xLD7nhI62fcsEZK2/v8LsBcb4lG7dgULkuXoXB/j91c=" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert"></script>
-  <!-- <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script> -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  <!-- <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
   <script src="https://cdn.datatables.net/2.0.7/js/dataTables.min.js"></script>
   <script src="https://cdn.datatables.net/buttons/3.0.2/js/dataTables.buttons.js"></script>
-  <script> src="https://cdn.datatables.net/buttons/3.0.2/js/buttons.dataTables.js"</script>
+  <script> src="https://cdn.datatables.net/buttons/3.0.2/js/buttons.dataTables.js"</script> -->
 
 
 
@@ -76,29 +70,29 @@
                         <div class="container col-md-3">
                             <div class="row">
                             <!-- Search Box -->
-                            <!-- <div class="search-wrapper">
+                            <div class="search-wrapper">
                            
                                 <form action="residents.php" method="GET" class="d-flex">
                                     <button type="submit" class="btn-sm btn-light" data-feather="search" aria-hidden="true" required><img src="icons/search.png" alt="Search Icon"></img></button>
                                     <input type="text" class="form-control me-2" name="search" placeholder="Search...">
                                    
                                 </form>
-                            </div> -->
+                            </div>
                         </div>
                     </div>
                 </div>
 
                 <div class="users-table table-wrapper">
                     <!-- users-table table-wrapper -->
-                    <table class="ResidentTable" id="ResidentTable" style="width:100%">
+                    <table class="users-table table-wrapper" id="ResidentTable" style="width:100%">
                         <thead>
                         <tr>
             
                             <!--th style="width: 2%;"class="text-center"><input type="checkbox" class="check-all"></th--> 
-                            <th style="width: 2%"class="text-center resident_id">ID</th> 
+                            <th style="width: 2%"class="text-center resident_id" hidden>ID</th> 
                             <th style="width: 10%;"class="text-center">Date Recorded</th>
-                            <th style="width: 10%;" class="text-center">Full Name</th>
-                            <th style="width: 10%;" class="text-center">Address</th>
+                            <th style="width: 15%;" class="text-center">Full Name</th>
+                            <th style="width: 15%;" class="text-center">Address</th>
                             <th style="width: 5%;" class="text-center">Resident Since</th>
                             <th style="width: 10%;" class="text-center">Sex</th>
                             <th style="width: 10%;" class="text-center">Marital Status</th>
@@ -118,7 +112,7 @@
                         foreach ($result as $row) {
                             //echo '<td><input type="checkbox" class="check-all"></td>';
                             echo "  <tr>
-                                    <td>{$row['resident_id']}</td>
+                                    <td hidden>{$row['resident_id']}</td>
                                     <td>{$row['date_recorded']}</td>
                                     <td>{$row['last_name']}, {$row['first_name']} {$row['middle_name']} {$row['suffix']}</td>
                                     <td>{$row['house_number']}, {$row['street_name']}, {$row['subdivision']}</td>
@@ -188,49 +182,20 @@
 
                         }
                         ?>
-                        </tbody>
-
-                        <script>
-                          $(document).ready(function() {
-                            $('#ResidentTable').DataTable();
-
-                            $(document).on('click', '.viewResidentButton', function() {
-                                var resident_id = $(this).data('id');
-
-                                // Destroy existing DataTable if it exists
-                                if ($.fn.DataTable.isDataTable('#RequestTable')) {
-                                    $('#RequestTable').DataTable().destroy();
-                                }
-
-                                // Initialize DataTable with new data
-                                $('#RequestTable').DataTable({
-                                    ajax: {
-                                        url: 'includes/get-resident-docu-request.php',
-                                        type: 'POST',
-                                        data: {
-                                            id: resident_id
-                                        }, dataSrc: ''
-                                    },
-                                    columns: [
-                                        { data: 'document-no', title: 'ID' },
-                                        { data: 'date_requested', title: 'Date Requested' },
-                                        { data: 'purpose', title: 'Purpose' },
-                                        { data: 'document-desc', title: 'Certificate Description' },
-                                        { data: 'age', title: 'Age' },
-                                        { data: 'status', title: 'Status' }
-                                        
-                                    ]
-                                });
-                            });
-                        });
-
-                        </script>
-                    
-                        
+                        </tbody> 
                         <!-- </tbody> -->
-
-                    
                 </table><!-- End of Table -->
+
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-end">
+                        <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                        <li class="page-item"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                    </ul>
+                </nav>
+
             <?php 
              require_once("includes/residentviewform.php");
             require_once("includes/residenteditform.php");
@@ -259,7 +224,6 @@
 <script src="plugins/feather.min.js"></script>
 <!-- Custom scripts -->
 <script src="js/script.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 
 </html>
