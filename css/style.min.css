@@ -60,15 +60,20 @@ img {
   border-style: none;
 }
 
-.users-table, .btn{
+.users-table,
+.btn {
   border-radius: 5px !important ;
 }
 
-form label::after{
-  background-color:transparent  !important;
+form label {
+  margin-left: 5px;
 }
 
-.card label::after{
+form label::after {
+  background-color: transparent !important;
+}
+
+.card label::after {
   background-color: transparent !important;
 }
 button,
@@ -1687,7 +1692,7 @@ label {
   color: rgba(255, 255, 255, 0.5);
 }
 .cat-sub-menu {
-  padding-left: 24px;
+  padding-left: 34px;
   height: 0;
 }
 .cat-sub-menu.visible {

@@ -48,6 +48,14 @@ $stmt3->execute([':residentno' => $residentno,
 ':presentedid' => $presentedid,
 ':purpose' => $purpose]);
 
+$sqlquery4="SELECT * FROM `certificate-img`";
+$stmt4=$pdo->prepare($sqlquery4);
+$stmt4->execute();
+
+$results4=$stmt4->fetchAll(PDO::FETCH_ASSOC); 
+
+
+
 $pdo=null;
 
 $officialname=[];
@@ -55,6 +63,12 @@ $officialname=[];
 foreach($results as $officials){    
 
     $officialname[]=$officials['official_name'];
+}
+
+$logo=[];
+
+foreach($results4 as $filename){
+    $logo[]=$filename['filename'];
 }
 
 // Footer function
@@ -80,13 +94,13 @@ $pdf = new MyPDF ('P', 'mm', "Letter");
 $pdf -> AddPage();
 
 //Include the Logos Here
-$pdf -> Image('img/BagongPinas.jpeg', 5,10,25,25);
+$pdf -> Image('img/'.$logo[2], 5,10,25,25);
 
-$pdf -> Image('img/CaloocanCityLogo.png', 29,12,23,23);
+$pdf -> Image('img/'.$logo[0], 29,12,23,23);
 
-$pdf -> Image('img/Brgy177.png', 170,12,23,23);
+$pdf -> Image('img/'.$logo[1], 170,12,23,23);
 
-$pdf -> Image('img/watermark.png', -33,5,280,297,'PNG' );
+$pdf -> Image('img/'.$logo[3], -33,5,280,297);
 
 $pdf->AliasNbPages();
 $pdf->SetAutoPageBreak(true, 10); // set the margin bottom to 10 mm

@@ -60,9 +60,22 @@ img {
   border-style: none;
 }
 
-.card label::after{
+.card label::after {
   background-color: transparent !important;
 }
+
+form label {
+  margin-left: 5px;
+}
+
+form label::after {
+  background-color: transparent !important;
+}
+
+.card label::after {
+  background-color: transparent !important;
+}
+
 button,
 input,
 optgroup,
@@ -1681,7 +1694,7 @@ label {
   color: rgba(255, 255, 255, 0.5);
 }
 .cat-sub-menu {
-  padding-left: 24px;
+  padding-left: 34px;
   height: 0;
 }
 .cat-sub-menu.visible {

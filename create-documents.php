@@ -82,7 +82,7 @@
           </div>
 
           <div class="col-md-6 col-xl-3">
-            <a class="stat-cards-item btn-for-docu" data-bs-toggle="modal" data-bs-target="#certificate-of-residency">
+            <a class="stat-cards-item btn-for-docu" href="create-certificate-of-residency.php">
               <div class="stat-cards-icon purple">
                 <i data-feather="home" aria-hidden="true"></i>
               </div>
@@ -119,6 +119,19 @@
               </div>
             </article>
           </div>
+
+          <div class="col-md-6 col-xl-3">
+            <article class="stat-cards-item">
+              <div class="stat-cards-icon purple">
+                <i data-feather="file" aria-hidden="true"></i>
+              </div>
+              <div class="stat-cards-info">
+                <p class="stat-cards-info__num">Settings</p>
+                <p class="stat-cards-info__progress">
+                </p>
+              </div>
+            </article>
+          </div>
         </div>
       </div>
       
@@ -133,28 +146,6 @@
 <!-- Icons library -->
 <script src="plugins/feather.min.js"></script>
 <!-- Custom scripts -->
-<script>
-$('#certificate-of-residency').on('shown.bs.modal', function () {
-    $('#ResidentTable').DataTable();     
-});
-</script>
-
-<script>
-$("table tr").click(function(){
-    $(this).toggleClass("selected").siblings().removeClass("selected");
-      var id = $(this).find(".resident_id").text(); 
-      var table = $('#ResidentTable').DataTable();
-
-      console.log(id);
-
-     table.on('search.dt', function() {
-    $('table tr.selected').removeClass('selected');
-    });
-});
-</script>
-
-
-
 <script src="js/script.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>

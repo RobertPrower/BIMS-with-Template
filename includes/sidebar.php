@@ -22,7 +22,7 @@
                 </li>
                 <li>
                     <a href="create-documents.php">
-                        <span class="icon document" aria-hidden="true"></span>Documents
+                        <span class="icon document" aria-hidden="true"></span>Certificates
                     </a>
                     <button class="category__btn transparent-btn show-cat-btn" title="Open list">
                         <span class="sr-only">Open list</span>
@@ -30,10 +30,10 @@
                     </button>
                     <ul class="cat-sub-menu">
                         <li>
-                            <a href="create-certificate-of-residency.php">Certificate of Residency</a>
+                            <a href="create-certificate-of-residency.php">Residency</a>
                         </li>
                         <li>
-                            <a href="users-02.html">Certificate of Indigency</a>
+                            <a href="users-02.html">Indigency</a>
                         </li>
                     </ul>
                 </li>
