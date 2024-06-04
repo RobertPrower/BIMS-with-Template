@@ -72,19 +72,19 @@
                                 <option hidden selected>Select</option>
                                 <option value="-">Not Applicable</option>
                                 <option value="Almar Subd">Almar Subd</option>
-                                <option value="Caritas Subd">Caritas Subd</option>
+                                <option value="Caritas">Caritas Subd</option>
                                 <option value="Capitol Parkland Subd">Capitol Parkland Subd</option>
                                 <option value="Cassel Spring Subd">Cassel Spring Subd</option>
-                                <option value="Christina Homes Subd">Christina Homes Subd</option>
-                                <option value="Cielito Homes Subd">Cielito Homes Subd</option>
-                                <option value="Del Rey Ville 2 Subd">Del Rey Ville 2 Subd</option>
-                                <option value="Kassel Villas Subd">Kassel Villas Subd</option>
+                                <option value="Christina Homes">Christina Homes Subd</option>
+                                <option value="Cielito Homes">Cielito Homes Subd</option>
+                                <option value="Del Rey Ville 2">Del Rey Ville 2 Subd</option>
+                                <option value="Kassel Villas">Kassel Villas Subd</option>
                                 <option value="Lilleville Subd">Lilleville Subd</option>
-                                <option value="Maligay Park Subd">Maligaya Park Subd</option>
-                                <option value="Cassel Spring Subd">Maria Luisa Subd</option>
-                                <option value="North Matrix Villge 1 Subd">North Matrix Village 1 Subd</option>
-                                <option value="North Matrix Ville Subd">North Matrix Ville Subd</option>
-                                <option value="North Triangle Subd">North Triangle Subd</option>
+                                <option value="Maligay Park">Maligaya Park Subd</option>
+                                <option value="Cassel Spring">Maria Luisa Subd</option>
+                                <option value="North Matrix Villge 1">North Matrix Village 1 Subd</option>
+                                <option value="North Matrix Ville">North Matrix Ville Subd</option>
+                                <option value="North Triangle">North Triangle Subd</option>
                             </select>
                             <label for="subd">Subdivision</label>
                         </div>
