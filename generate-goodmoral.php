@@ -1,22 +1,82 @@
 <?php
 
 require_once("fpdf186/fpdf.php");
+
 require_once('includes/connecttodb.php');
+
+global $pdo;
 
 $sqlquery="SELECT * FROM brgy_officials";
 $stmt=$pdo->prepare($sqlquery);
 $stmt->execute();
 
 $results=$stmt->fetchAll(PDO::FETCH_ASSOC); 
+
+$residentno=($_POST['resident_no']);
+$fname=utf8_decode($_POST['firstname']);
+$mname=utf8_decode($_POST['middlename']);
+$lname=utf8_decode($_POST['lastname']);
+if(isset($_POST['suffix'])){
+    $suffix=$_POST['suffix'];
+}else{
+    $suffix="";
+}
+$documentdesc='Certificate of Good Moral';
+$nowdate= date("Y-m-d H:i:s");
+$completeaddress=utf8_decode($_POST['address']);
+$presentedid=$_POST['presented_id'];
+$IDnumber=$_POST['IDnum'];
+$purpose=$_POST['purpose'];
+$residentsince=$_POST['r_since'];
+$docurequestdata=[$residentno];
+
+$sqlquery="SELECT TIMESTAMPDIFF(YEAR, `birth_date`, NOW()) AS Age FROM resident WHERE resident_id=?";
+$stmt=$pdo->prepare($sqlquery);
+$stmt->execute([$residentno]);
+$AgeResult= $stmt->fetchAll();
+$Age=$AgeResult[0]['Age'];
+
+$sqlquery2="INSERT INTO `tbl-documents`(`document-desc`, age) VALUES(?,?)";
+$stmt2=$pdo->prepare($sqlquery2);
+$stmt2->execute([$documentdesc, $Age]);
+
+$sqlquery3 = "INSERT INTO `tbl_docu_request` (`resident-no`, `document-no`, `date_requested`, `presented_id`, `IDnumber`, `purpose`)
+              SELECT :residentno, MAX(`document-id`), :nowdate, :presentedid, :IDnumber, :purpose
+              FROM `tbl-documents`";
+$alldatatorequest = [
+    ':residentno' => $residentno,
+    ':nowdate' => $nowdate,
+    ':presentedid' => $presentedid,
+    ':IDnumber' => $IDnumber,
+    ':purpose' => $purpose
+];
+$stmt3 = $pdo->prepare($sqlquery3);
+$stmt3->execute($alldatatorequest);
+
+
+$sqlquery4="SELECT * FROM `certificate-img`";
+$stmt4=$pdo->prepare($sqlquery4);
+$stmt4->execute();
+
+$results4=$stmt4->fetchAll(PDO::FETCH_ASSOC); 
+
+
+
 $pdo=null;
 
 $officialname=[];
-$officialposition=[];
 
 foreach($results as $officials){    
 
     $officialname[]=$officials['official_name'];
 }
+
+$logo=[];
+
+foreach($results4 as $filename){
+    $logo[]=$filename['filename'];
+}
+
 
 // Footer function
 class MyPDF extends FPDF {
@@ -40,20 +100,15 @@ global $pdf;
 $pdf = new MyPDF ('P', 'mm', "Letter");
 $pdf -> AddPage();
 
-$fname="";
-$mname="";
-$lname="";
-$suffix="";
-
 
 //Include the Logos Here
-$pdf -> Image('img/BagongPinas.jpeg', 5,10,25,25);
+$pdf -> Image('img/'.$logo[2], 5,10,25,25);
 
-$pdf -> Image('img/CaloocanCityLogo.png', 29,12,23,23);
+$pdf -> Image('img/'.$logo[0], 29,12,23,23);
 
-$pdf -> Image('img/Brgy177.png', 170,12,23,23);
+$pdf -> Image('img/'.$logo[1], 170,12,23,23);
 
-$pdf -> Image('img/watermark.png', -33,5,280,297,'PNG' );
+$pdf -> Image('img/'.$logo[3], -33,5,280,297);
 
 $pdf->AliasNbPages();
 $pdf->SetAutoPageBreak(true, 10); // set the margin bottom to 10 mm
@@ -144,37 +199,34 @@ $pdf -> Cell($w, 8, $text, 0, 0, 'C');
 $pdf -> AddFont('Cambria', '', 'cambria.php'); 
 $pdf -> SetFont('Cambria','B',12);
 $pdf->SetTextColor(0, 0, 0);
-$text = 'This is to certify that ROBERT L. SALAS,';
+$text = 'This is to certify that ,';
 $w=$pdf->GetStringWidth($text);
-$pdf -> SetXY(73 + (185-70-$w)/2, max($maxY, 97));
+$pdf -> SetXY(60 + (185-70-$w)/2, max($maxY, 97));
 $pdf -> Cell($w, 10, $text, 0, 0, 'C');
 
-$pdf -> AddFont('Cambria', '', 'cambria.php');
-$pdf -> SetFont('Cambria','',10);
-$pdf -> SetXY(120 + (130-70-$w)/2, max($maxY, 79));
-$text = boldtext( $fname ." ". substr($mname, 0,1)."."." " .$lname. " " . $suffix.".");
+$pdf -> AddFont('Cambria Bold', '', 'cambriabold.php');
+$pdf -> SetFont('Cambria Bold','',14);
+$pdf -> SetXY(130 + (130-70-$w)/2, max($maxY, 90));
+$text = $fname ." ". substr($mname, 0,1)."."." " .$lname. " " . $suffix;
 $pdf -> Cell(50, 24, wrapText($pdf,$text,130), 0, 'C');
 
 $pdf -> SetFont('Cambria','',12);
-$pdf -> SetXY(90 + (130-70-$w)/2, max($maxY, 98));
+$pdf -> SetXY(70 + (130-70-$w)/2, max($maxY, 98));
 $text2 = "of legal age, is a bonafide resident of this barangay, with postal";
 $pdf -> Cell($w, 24, wrapText($pdf,$text2,130), 0, 'L');
 
 
-
-function boldtext($text){
-    global $pdf;
-    $pdf -> AddFont('Cambria', '', 'cambria.php');
-    $pdf -> SetFont('Cambria','B',16);
-    $text = wrapText($pdf,$text,130);
-    return $text;
-}
-
-
 $pdf -> AddFont('Cambria', '', 'cambria.php');
 $pdf -> SetFont('Cambria','B',12);
-$pdf -> SetXY(85 + (145-70-$w)/2, max($maxY, 104));
-$text = 'address located at 4779 GENESIS ST., CIELITO HOMES,';
+$pdf -> SetXY(60 + (145-70-$w)/2, max($maxY, 104));
+$text = 'address located at';
+$pdf -> Cell($w, 24, wrapText($pdf,$text,130), 0, 'C');
+
+
+$pdf -> AddFont('Cambria Bold', '', 'cambriabold.php');
+$pdf -> SetFont('Cambria Bold','',12);
+$pdf -> SetXY(95 + (145-70-$w)/2, max($maxY, 104));
+$text = "Blk 8 Lot 4 Jeremiah st Cielito Homes";
 $pdf -> Cell($w, 24, wrapText($pdf,$text,130), 0, 'C');
 
 $pdf -> AddFont('Bookman Old Style', '', 'BookmanOldStyle.php');
@@ -205,20 +257,26 @@ $pdf -> AddFont('Cambria', 'B', 'cambria.php');
 $pdf -> SetFont('Cambria','B',12);
 $pdf -> SetTextColor(0,0,0);
 $pdf -> SetXY(70 + (165-80-$w)/2, max($maxY, 118));
-$text = 'This further certifies that ROBERT L. SALAS is known to';
+$text = 'This further certifies that';
 $pdf -> MultiCell(140, 24, wrapText($pdf,$text,130), 0, 'J');
+
+$pdf -> AddFont('Cambria Bold', '', 'cambriabold.php');
+$pdf -> SetFont('Cambria Bold','',14);
+$pdf -> SetXY(118 + (165-80-$w)/2, max($maxY, 118));
+$text = $fname ." ". substr($mname, 0,1)."."." " .$lname. " " . $suffix;
+$pdf -> Cell(50, 24, wrapText($pdf,$text,130), 0, 'C');
 
 $pdf -> AddFont('Cambria', 'B', 'cambria.php');
 $pdf -> SetFont('Cambria','B',12);
 $pdf -> SetTextColor(0,0,0);
 $pdf -> SetXY(110 + (70-80-$w)/2, max($maxY, 124));
-$text = 'me to be of good moral character, a law-abiding citizen and has no';
+$text = 'is known to be to be of good moral character, a law-abiding citizen';
 $pdf -> Cell($w, 24, wrapText($pdf,$text,130), 0, 'C');
 
 $pdf -> AddFont('Cambria', '', 'cambria.php');
 $pdf -> SetFont('Cambria','B',12);
 $pdf -> SetXY(38 + (215-80-$w)/2, max($maxY, 130));
-$text = 'derogatory record in our barangay.';
+$text = ' and has no derogatory record in our barangay.';
 $pdf -> Cell($w, 24, wrapText($pdf,$text,130), 0, 'C');
 
 $pdf -> AddFont('Cambria', '', 'cambria.php');
@@ -230,8 +288,14 @@ $pdf -> Cell($w, 24, wrapText($pdf,$text,130), 0, 'C');
 $pdf -> AddFont('Cambria', '', 'cambria.php');
 $pdf -> SetFont('Cambria','B',12);
 $pdf -> SetXY(60 + (230-140-$w)/2, max($maxY, 148));
-$text = 'the above-mentioned name for VERIFICATION PURPOSES ONLY.';
+$text = 'the above-mentioned name for';
 $pdf -> Cell($w, 24, wrapText($pdf,$text,130), 0, 'C');
+
+$pdf -> AddFont('Cambria Bold', '', 'cambriabold.php');
+$pdf -> SetFont('Cambria Bold','',14);
+$pdf -> SetXY(120 + (230-140-$w)/2, max($maxY, 148));
+$text = $purpose;
+$pdf -> Cell(50, 24, wrapText($pdf,$text,130), 0, 'C');
 
 $pdf -> AddFont('Bookman Old Style', '', 'BookmanOldStyle.php'); 
 $pdf -> SetFont('Bookman Old Style','U',11);
@@ -261,13 +325,13 @@ $pdf -> AddFont('Cambria', '', 'cambria.php');
 $pdf -> SetFont('Cambria','B',12);
 $pdf -> SetTextColor(0,0,0);
 $pdf -> SetXY(30 + (288-100-$w)/2, max($maxY, 160));
-$text = 'Issued this 29th day of FEBRUARY 2024, at Barangay';
+$text = 'Issued this'.' '. date('d').'th day of '.date('F Y').' '.'at Barangay 177';
 $pdf -> Cell($w, 24, wrapText($pdf,$text,130), 0, 'C');
 
 $pdf -> AddFont('Cambria', '', 'cambria.php');
 $pdf -> SetFont('Cambria','B',12);
-$pdf -> SetXY(30 + (265-100-$w)/2, max($maxY, 166));
-$text = '177, Cielito Homes Subdivision, Camarin, Caloocan City.';
+$pdf -> SetXY(40 + (265-100-$w)/2, max($maxY, 166));
+$text = 'Cielito Homes Subdivision, Camarin, Caloocan City.';
 $pdf -> Cell($w, 24, wrapText($pdf,$text,130), 0, 'C');
 
 $pdf -> AddFont('Bookman Old Style', '', 'BookmanOldStyle.php'); 
@@ -321,21 +385,21 @@ $pdf -> Cell($w, 8, $text, 0, 0, 'C');
 $pdf -> AddFont('Cambria', 'BI', 'cambria.php');
 $pdf -> SetFont('Cambria','BI',8);
 $pdf->SetTextColor(0, 0, 0);
-$pdf -> SetXY(166, 220);
+$pdf -> SetXY(156, 220);
 $text = 'NOT VAILD WITHOUT DRY SEAL';
 $pdf -> Cell($w, 22, wrapText($pdf,$text,160), 0, 'R');
 
 $pdf -> AddFont('Cambria', 'BI', 'cambria.php');
 $pdf -> SetFont('Cambria','BI',11);
 $pdf->SetTextColor(255, 0, 0);
-$pdf -> SetXY(165, 225);
+$pdf -> SetXY(156, 225);
 $text = 'VAILD FOR (3 MONTHS) ';
 $pdf -> Cell($w, 22, wrapText($pdf,$text,160), 0, 'C');
 
 $pdf -> AddFont('Cambria', 'BI', 'cambria.php');
 $pdf -> SetFont('Cambria','BI',8);
 $pdf->SetTextColor(0, 0, 0);
-$pdf -> SetXY(169, 230);
+$pdf -> SetXY(162, 230);
 $text = 'FROM THE DATE ISSUED.';
 $pdf -> Cell($w, 22, wrapText($pdf,$text,160), 0, 'C');
 

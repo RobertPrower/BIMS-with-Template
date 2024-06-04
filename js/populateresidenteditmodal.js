@@ -28,7 +28,7 @@ $(document).on("click", ".editResidentButton", function () {
   $('#EditResidentModal input[name="suffix"]').val(suffix);
   $('#EditResidentModal input[name="house_no"]').val(house_no);
   $('#EditResidentModal input[name="street"]').val(street_name);
-  $('#EditResidentModal input[name="subd"]').val(subdivision);
+  $('#EditResidentModal input[id="subd"]').val(subdivision);
   $('#EditResidentModal select[name="sex"]').val(sex);
   $('#EditResidentModal select[name="marital_status"]').val(marital_status);
   $('#EditResidentModal input[name="birth_date"]').val(birth_date);

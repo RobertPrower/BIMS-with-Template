@@ -108,7 +108,7 @@
           </div>
 
           <div class="col-md-6 col-xl-3">
-            <article class="stat-cards-item">
+            <a href="create-certificate-of-good-moral.php" class="btn-for-docu stat-cards-item">
               <div class="stat-cards-icon purple">
                 <i data-feather="file" aria-hidden="true"></i>
               </div>
@@ -117,11 +117,11 @@
                 <p class="stat-cards-info__progress">
                 </p>
               </div>
-            </article>
+            </a>
           </div>
 
           <div class="col-md-6 col-xl-3">
-            <article class="stat-cards-item">
+            <a href="certificate-settings.php" class="btn-for-docu stat-cards-item">
               <div class="stat-cards-icon purple">
                 <i data-feather="file" aria-hidden="true"></i>
               </div>
@@ -130,7 +130,7 @@
                 <p class="stat-cards-info__progress">
                 </p>
               </div>
-            </article>
+            </a>
           </div>
         </div>
       </div>

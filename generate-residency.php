@@ -24,6 +24,7 @@ $documentdesc='Certificate of Residency';
 $nowdate= date("Y-m-d H:i:s");
 $completeaddress=utf8_decode($_POST['address']);
 $presentedid=$_POST['presented_id'];
+$IDnumber=$_POST['IDnum'];
 $purpose=$_POST['purpose'];
 $residentsince=$_POST['r_since'];
 $docurequestdata=[$residentno, ];
@@ -38,15 +39,19 @@ $sqlquery2="INSERT INTO `tbl-documents`(`document-desc`, age) VALUES(?,?)";
 $stmt2=$pdo->prepare($sqlquery2);
 $stmt2->execute([$documentdesc, $Age]);
 
-$sqlquery3="INSERT INTO `tbl_docu_request`(`resident-no`, `document-no`, date_requested, presented_id, purpose )
-SELECT :residentno, MAX(`document-id`), :nowdate, :presentedid, :purpose
-FROM `tbl-documents`";
-$alldatatorequest=[$residentno,$nowdate,$presentedid,$purpose];
-$stmt3=$pdo->prepare($sqlquery3);
-$stmt3->execute([':residentno' => $residentno,
-':nowdate' => $nowdate,
-':presentedid' => $presentedid,
-':purpose' => $purpose]);
+$sqlquery3 = "INSERT INTO `tbl_docu_request` (`resident-no`, `document-no`, `date_requested`, `presented_id`, `IDnumber`, `purpose`)
+              SELECT :residentno, MAX(`document-id`), :nowdate, :presentedid, :IDnumber, :purpose
+              FROM `tbl-documents`";
+$alldatatorequest = [
+    ':residentno' => $residentno,
+    ':nowdate' => $nowdate,
+    ':presentedid' => $presentedid,
+    ':IDnumber' => $IDnumber,
+    ':purpose' => $purpose
+];
+$stmt3 = $pdo->prepare($sqlquery3);
+$stmt3->execute($alldatatorequest);
+
 
 $sqlquery4="SELECT * FROM `certificate-img`";
 $stmt4=$pdo->prepare($sqlquery4);

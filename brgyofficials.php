@@ -120,7 +120,7 @@
                                     
                                     echo '<button type="button" class="btn btn-success me-2 editOfficialBtn mx-1" data-modal-title="Edit Official" 
                                     data-official-id="' . $row['id'] . '" data-official-fullname="' . $row['official_name'] . '" data-official-position="' . $row['official_position'] .'" 
-                                    data-bs-toggle="modal" data-bs-target="#EditOfficialModal" id="EditOfficialBtn">Edit Official</button>';
+                                    data-bs-toggle="modal" data-bs-target="#EditOfficialModal" id="EditOfficialBtn">Update</button>';
                                 
                                     //echo '<button type="button" class="btn btn-danger" data-official-id = "' . $row['id'] . '" id="DeleteOfficialbtn">Delete</button>';
                                     echo "</td>";

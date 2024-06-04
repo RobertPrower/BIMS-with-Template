@@ -33,7 +33,10 @@
                             <a href="create-certificate-of-residency.php">Residency</a>
                         </li>
                         <li>
-                            <a href="users-02.html">Indigency</a>
+                            <a href="create-certificate-of-indigency.php">Indigency</a>
+                        </li>
+                        <li>
+                            <a href="create-certificate-of-good-moral.php">Good Moral</a>
                         </li>
                     </ul>
                 </li>

@@ -3,19 +3,78 @@
 require_once("fpdf186/fpdf.php");
 require_once('includes/connecttodb.php');
 
+global $pdo;
+
 $sqlquery="SELECT * FROM brgy_officials";
 $stmt=$pdo->prepare($sqlquery);
 $stmt->execute();
 
 $results=$stmt->fetchAll(PDO::FETCH_ASSOC); 
+
+$residentno=($_POST['resident_no']);
+$fname=utf8_decode($_POST['firstname']);
+$mname=utf8_decode($_POST['middlename']);
+$lname=utf8_decode($_POST['lastname']);
+if(isset($_POST['suffix'])){
+    $suffix=$_POST['suffix'];
+}else{
+    $suffix="";
+}
+$documentdesc='Certificate of Residency';
+$nowdate= date("Y-m-d H:i:s");
+$completeaddress=utf8_decode($_POST['address']);
+$presentedid=$_POST['presented_id'];
+$IDnumber=$_POST['IDnum'];
+$purpose=$_POST['purpose'];
+$agency=$_POST['agency'];
+$residentsince=$_POST['r_since'];
+$docurequestdata=[$residentno, ];
+
+$sqlquery="SELECT TIMESTAMPDIFF(YEAR, `birth_date`, NOW()) AS Age FROM resident WHERE resident_id=?";
+$stmt=$pdo->prepare($sqlquery);
+$stmt->execute([$residentno]);
+$AgeResult= $stmt->fetchAll();
+$Age=$AgeResult[0]['Age'];
+
+$sqlquery2="INSERT INTO `tbl-documents`(`document-desc`, age) VALUES(?,?)";
+$stmt2=$pdo->prepare($sqlquery2);
+$stmt2->execute([$documentdesc, $Age]);
+
+$sqlquery3 = "INSERT INTO `tbl_docu_request` (`resident-no`, `document-no`, `date_requested`, `presented_id`, `IDnumber`, `purpose`)
+              SELECT :residentno, MAX(`document-id`), :nowdate, :presentedid, :IDnumber, :purpose
+              FROM `tbl-documents`";
+$alldatatorequest = [
+    ':residentno' => $residentno,
+    ':nowdate' => $nowdate,
+    ':presentedid' => $presentedid,
+    ':IDnumber' => $IDnumber,
+    ':purpose' => $purpose
+];
+$stmt3 = $pdo->prepare($sqlquery3);
+$stmt3->execute($alldatatorequest);
+
+
+$sqlquery4="SELECT * FROM `certificate-img`";
+$stmt4=$pdo->prepare($sqlquery4);
+$stmt4->execute();
+
+$results4=$stmt4->fetchAll(PDO::FETCH_ASSOC); 
+
+
+
 $pdo=null;
 
 $officialname=[];
-$officialposition=[];
 
 foreach($results as $officials){    
 
     $officialname[]=$officials['official_name'];
+}
+
+$logo=[];
+
+foreach($results4 as $filename){
+    $logo[]=$filename['filename'];
 }
 
 // Footer function
@@ -40,20 +99,15 @@ global $pdf;
 $pdf = new MyPDF ('P', 'mm', "Letter");
 $pdf -> AddPage();
 
-$fname="";
-$mname="";
-$lname="";
-$suffix="";
-
 
 //Include the Logos Here
-$pdf -> Image('img/BagongPinas.jpeg', 5,10,25,25);
+$pdf -> Image('img/'.$logo[2], 5,10,25,25);
 
-$pdf -> Image('img/CaloocanCityLogo.png', 29,12,23,23);
+$pdf -> Image('img/'.$logo[0], 29,12,23,23);
 
-$pdf -> Image('img/Brgy177.png', 170,12,23,23);
+$pdf -> Image('img/'.$logo[1], 170,12,23,23);
 
-$pdf -> Image('img/watermark.png', -33,5,280,297,'PNG' );
+$pdf -> Image('img/'.$logo[3], -33,5,280,297);
 
 $pdf->AliasNbPages();
 $pdf->SetAutoPageBreak(true, 10); // set the margin bottom to 10 mm
@@ -117,8 +171,8 @@ $w=$pdf->GetStringWidth($text);
 $pdf -> SetXY(110 + (140-70-$w)/2, max($maxY, 52));
 $pdf -> Cell($w, 1, $text, 0, 1, 'C');
 
-$pdf -> AddFont('Cambria', 'B', 'cambria.php'); 
-$pdf -> SetFont('Cambria','B', 13);
+$pdf -> AddFont('Cambria Bold', '', 'cambriabold.php'); 
+$pdf -> SetFont('Cambria Bold','', 13);
 $pdf->SetTextColor(0, 0, 0);
 $text = 'SA KINAUUKULAN:';
 $w=$pdf->GetStringWidth($text);
@@ -149,38 +203,27 @@ $w=$pdf->GetStringWidth($text);
 $pdf -> SetXY(78 + (200-70-$w)/2, max($maxY, 82));
 $pdf -> Cell($w, 10, $text, 0, 0, 'C');
 
-$pdf -> AddFont('Cambria', '', 'cambria.php');
-$pdf -> SetFont('Cambria','',10);
-$pdf -> SetXY(120 + (130-70-$w)/2, max($maxY, 79));
-$text = boldtext( $fname ." ". substr($mname, 0,1)."."." " .$lname. " " . $suffix.".");
-$pdf -> Cell(50, 24, wrapText($pdf,$text,130), 0, 'C');
-
 $pdf -> SetFont('Cambria','',13);
-$pdf -> SetXY(100 + (200-70-$w)/2, max($maxY, 82));
-$text2 = "na si ROBERT L. SALAS, nakatira  sa";
+$pdf -> SetXY(80 + (200-70-$w)/2, max($maxY, 82));
+$text2 = "na si";
 $pdf -> Cell($w, 24, wrapText($pdf,$text2,130), 0, 'L');
 
-
-
-function boldtext($text){
-    global $pdf;
-    $pdf -> AddFont('Cambria', '', 'cambria.php');
-    $pdf -> SetFont('Cambria','B',16);
-    $text = wrapText($pdf,$text,130);
-    return $text;
-}
-
-
-$pdf -> AddFont('Cambria', '', 'cambria.php');
-$pdf -> SetFont('Cambria','B',13);
-$pdf -> SetXY(100 + (180-70-$w)/2, max($maxY, 89));
-$text = '4779 Genesis St., Cielito Homes, Camarin,';
-$pdf -> Cell($w, 24, wrapText($pdf,$text,130), 0, 'C');
-
-$pdf -> AddFont('Cambria', '', 'cambria.php');
 $pdf -> SetFont('Cambria','',13);
-$pdf -> SetXY(120 + (195-70-$w)/2, max($maxY, 96));
-$text = 'Caloocan City.';
+$pdf -> SetXY(160 + (200-70-$w)/2, max($maxY, 82));
+$text2 = ", nakatira  sa";
+$pdf -> Cell($w, 24, wrapText($pdf,$text2,130), 0, 'L');
+
+$pdf -> AddFont('Cambria Bold', 'B', 'cambriabold.php');
+$pdf -> SetFont('Cambria Bold','B',14);
+$pdf -> SetXY(95 + (200-70-$w)/2, max($maxY, 82));
+$text = $fname ." ". substr($mname, 0,1)."."." " .$lname. " " . $suffix;
+$pdf -> Cell(50, 24, wrapText($pdf,$text,130), 0, 'C');
+
+
+$pdf -> AddFont('Cambria Bold', '', 'cambriabold.php');
+$pdf -> SetFont('Cambria Bold','B',13);
+$pdf -> SetXY(90 + (180-70-$w)/2, max($maxY, 89));
+$text = wordwrap($completeaddress, 100, "<br>\n");
 $pdf -> Cell($w, 24, wrapText($pdf,$text,130), 0, 'C');
 
 $pdf -> AddFont('Bookman Old Style', '', 'BookmanOldStyle.php');
@@ -233,16 +276,21 @@ $pdf -> SetXY(60 + (240-120-$w)/2, max($maxY, 125));
 $text = 'basehan upang siya ay makahingi ng tulong na';
 $pdf -> Cell($w, 24, wrapText($pdf,$text,130), 0, 'C');
 
-$pdf -> AddFont('Cambria', '', 'cambria.php');
-$pdf -> SetFont('Cambria','B',13);
+$pdf -> AddFont('Cambria  Bold', '', 'cambriabold.php');
+$pdf -> SetFont('Cambria Bold','B',13);
 $pdf -> SetXY(77 + (230-140-$w)/2, max($maxY, 132));
-$text = 'MEDICAL ASSISTANCE mula sa tanggapan ng';
+$text = strtoupper($purpose);
 $pdf -> Cell($w, 24, wrapText($pdf,$text,130), 0, 'C');
 
-$pdf -> AddFont('Cambria', 'BU', 'cambria.php');
-$pdf -> SetFont('Cambria','BU',13);
+$pdf -> SetFont('Cambria','',13);
+$pdf -> SetXY(110 + (200-70-$w)/2, max($maxY, 132));
+$text2 = " mula sa tanggapan ng";
+$pdf -> Cell($w, 24, wrapText($pdf,$text2,130), 0, 'L');
+
+$pdf -> AddFont('Cambria Bold', 'BU', 'cambriabold.php');
+$pdf -> SetFont('Cambria Bold','BU',13);
 $pdf -> SetXY(75 + (230-80-$w)/2, max($maxY, 138));
-$text = 'MALASAKIT CENTER.';
+$text = strtoupper($agency);
 $pdf -> Cell($w, 24, wrapText($pdf,$text,180), 0, 'C');
 
 $pdf -> AddFont('Bookman Old Style', '', 'BookmanOldStyle.php'); 
@@ -273,7 +321,7 @@ $pdf -> AddFont('Cambria', '', 'cambria.php');
 $pdf -> SetFont('Cambria','B',12);
 $pdf -> SetTextColor(0,0,0);
 $pdf -> SetXY(76 + (180-100-$w)/2, max($maxY, 155));
-$text = 'Ipinagkaloob ngayong ika-29 ng Pebrero, 2024 sa tanggapan';
+$text = 'Ipinagkaloob ngayong ika-'.date('d').' ng '. date('F Y').' sa tanggapan';
 $pdf -> Cell($w, 24, wrapText($pdf,$text,130), 0, 'C');
 
 $pdf -> AddFont('Cambria', '', 'cambria.php');
