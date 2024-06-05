@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Create Documents</title>
+  <title>Create Certificates</title>
   <!-- Favicon -->
   <link rel="shortcut icon" href="./img/svg/logo.svg" type="image/x-icon">
   <!-- Custom styles -->
@@ -37,7 +37,7 @@
     <!-- ! Main -->
     <main class="main users chart-page" id="skip-target">
       <div class="container">
-        <h2 class="main-title">Create Documents</h2>
+        <h2 class="main-title">Create Certificates</h2>
         <div class="row container">
           <style>
 
@@ -95,16 +95,16 @@
           </div>
 
           <div class="col-md-6 col-xl-3">
-            <article class="stat-cards-item">
+            <a href="create-certificate-of-good-moral.php" class="btn-for-docu stat-cards-item">
               <div class="stat-cards-icon purple">
                 <i data-feather="file" aria-hidden="true"></i>
               </div>
               <div class="stat-cards-info">
-                <p class="stat-cards-info__num">New First-Time-Job-Seeker</p>
+                <p class="stat-cards-info__num">Indigency</p>
                 <p class="stat-cards-info__progress">
                 </p>
               </div>
-            </article>
+            </a>
           </div>
 
           <div class="col-md-6 col-xl-3">
@@ -114,6 +114,32 @@
               </div>
               <div class="stat-cards-info">
                 <p class="stat-cards-info__num">Good Moral</p>
+                <p class="stat-cards-info__progress">
+                </p>
+              </div>
+            </a>
+          </div>
+
+          <div class="col-md-6 col-xl-3">
+            <a href="create-certificate-of-good-moral.php" class="btn-for-docu stat-cards-item">
+              <div class="stat-cards-icon purple">
+                <i data-feather="file" aria-hidden="true"></i>
+              </div>
+              <div class="stat-cards-info">
+                <p class="stat-cards-info__num">Oath of Undertaking</p>
+                <p class="stat-cards-info__progress">
+                </p>
+              </div>
+            </a>
+          </div>
+
+          <div class="col-md-6 col-xl-3">
+            <a href="create-certificate-of-good-moral.php" class="btn-for-docu stat-cards-item">
+              <div class="stat-cards-icon purple">
+                <i data-feather="file" aria-hidden="true"></i>
+              </div>
+              <div class="stat-cards-info">
+                <p class="stat-cards-info__num">First-Time-Job-Seeker</p>
                 <p class="stat-cards-info__progress">
                 </p>
               </div>

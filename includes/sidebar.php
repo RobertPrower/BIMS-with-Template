@@ -38,6 +38,12 @@
                         <li>
                             <a href="create-certificate-of-good-moral.php">Good Moral</a>
                         </li>
+                        <li>
+                            <a href="create-certificate-of-good-moral.php">Oath of Undertaking</a>
+                        </li>
+                        <li>
+                            <a href="create-certificate-of-good-moral.php">First-Time-Job-Seeker</a>
+                        </li>
                     </ul>
                 </li>
 
