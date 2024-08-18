@@ -1,4 +1,18 @@
 $(document).ready(function () {
+  function reloadTable() {
+    $.ajax({
+      url: "includes/residenttableautoreload.php",
+      type: "POST",
+      data: { operation: "edit" },
+      dataType: "HTML",
+      success: function (data) {
+        $("#ResidentTable tbody").html(data);
+      },
+      error: function (xhr, status, error) {
+        console.error("Error fetching table data:", error);
+      },
+    });
+  }
 
   // Attach event listener to form submission
   $("#EditResidentModalForm").submit(function (event) {
@@ -7,8 +21,6 @@ $(document).ready(function () {
 
     // Collect form data using FormData
     var formData = new FormData(this);
-    
-
 
     // Send AJAX request
     $.ajax({
@@ -16,30 +28,30 @@ $(document).ready(function () {
       type: "POST",
       data: formData,
       dataType: "json",
-      contentType: false, 
-      processData: false, 
+      contentType: false,
+      processData: false,
       success: function (response) {
         // Handle success response
         console.log("Data saved successfully:", response);
-        
-       if (response.success){
-        $("#EditResidentModal").modal("hide");
+
+        if (response.success) {
+          $("#EditResidentModal").modal("hide");
           swal({
             title: "Edit Entry",
             text: "Entry Edited Sucessfully!",
             icon: "success",
             button: "Close",
           });
-          
-       }else{
-        $("#EditResidentModal").modal("hide");
+
+          reloadTable();
+        } else {
+          $("#EditResidentModal").modal("hide");
           swal({
             icon: "error",
             title: "Oops...",
             text: "Something went wrong!",
-        });
-       }// END of if 
-       
+          });
+        } // END of if
       },
       error: function (xhr, status, error) {
         // Handle error response

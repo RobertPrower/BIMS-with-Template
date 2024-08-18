@@ -184,7 +184,9 @@
                         ?>
                         </tbody> 
                         <!-- </tbody> -->
-                </table><!-- End of Table -->
+                    </table>
+                    <!-- End of Table -->
+                <!-- </div> -->
 
                 <nav aria-label="Page navigation example">
                     <ul class="pagination justify-content-end">

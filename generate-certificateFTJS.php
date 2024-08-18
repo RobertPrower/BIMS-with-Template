@@ -7,8 +7,7 @@ $sqlquery="SELECT * FROM brgy_officials";
 $stmt=$pdo->prepare($sqlquery);
 $stmt->execute();
 
-$results=$stmt->fetchAll(PDO::FETCH_ASSOC); 
-$pdo=null;
+$results=$stmt->fetchAll(PDO::FETCH_ASSOC);
 
 $officialname=[];
 $officialposition=[];
@@ -40,20 +39,48 @@ global $pdf;
 $pdf = new MyPDF ('P', 'mm', "A4");
 $pdf -> AddPage();
 
-$fname="";
-$mname="";
-$lname="";
-$suffix="";
+$residentno=($_POST['resident_no']);
+$fname=utf8_decode($_POST['firstname']);
+$mname=utf8_decode($_POST['middlename']);
+$lname=utf8_decode($_POST['lastname']);
+if(isset($_POST['suffix'])){
+    $suffix=$_POST['suffix'];
+}else{
+    $suffix="";
+}
+
+$documentdesc='Certificate of Residency';
+$nowdate= date("Y-m-d H:i:s");
+$completeaddress=utf8_decode($_POST['address']);
+$presentedid=$_POST['presented_id'];
+$IDnumber=$_POST['IDnum'];
+$purpose=$_POST['purpose'];
+// $agency=$_POST['agency'];
+$residentsince=$_POST['r_since'];
+$docurequestdata=[$residentno, ];
+
+$sqlquery4="SELECT * FROM `certificate-img`";
+$stmt4=$pdo->prepare($sqlquery4);
+$stmt4->execute();
+$results4=$stmt4->fetchAll(PDO::FETCH_ASSOC); 
+
+$logo=[];
+
+foreach($results4 as $filename){
+    $logo[]=$filename['filename'];
+}
+
+$pdo=null;
 
 
 //Include the Logos Here
-$pdf -> Image('img/BagongPinas.jpeg', 5,10,25,25);
+$pdf -> Image('img/'.$logo[2], 5,10,25,25);
 
-$pdf -> Image('img/CaloocanCityLogo.png', 29,12,23,23);
+$pdf -> Image('img/'.$logo[0], 29,12,23,23);
 
-$pdf -> Image('img/Brgy177.png', 170,12,23,23);
+$pdf -> Image('img/'.$logo[1], 170,12,23,23);
 
-$pdf -> Image('img/watermark.png', -37,13,285,300,'PNG' );
+$pdf -> Image('img/'.$logo[3], -33,5,280,297);
 
 $pdf->AliasNbPages();
 $pdf->SetAutoPageBreak(true, 10); // set the margin bottom to 10 mm
@@ -216,7 +243,7 @@ $pdf -> Cell($w, 24, wrapText($pdf,$text,150), 0, 'C');
 
 $pdf -> SetTextColor(0,0,0);
 $pdf -> SetXY(38 + (20-70-$w), max($maxY, 200));
-$text = 'Signed this 28th day of February, 2024, at Barangay 177, Cielito Homes Subd, Camarin,';
+$text = 'Signed this '.date('d').' of '. date('F Y').', at Barangay 177, Cielito Homes Subd, Camarin,';
 $pdf -> Cell($w, 24, wrapText($pdf,$text,200), 0, 'C');
 
 $pdf -> SetTextColor(0,0,0);
@@ -228,7 +255,7 @@ $pdf -> AddFont('Cambria', 'BU', 'cambria.php');
 $pdf -> SetFont('Cambria','BU',12);
 $pdf -> SetTextColor(0,0,0);
 $pdf -> SetXY(60 + (120-70-$w), max($maxY, 218));
-$text = 'ROSADEL SANTOME';
+$text = $fname . ' ' . substr($mname, 0, 1) . ' '. $lname;
 $pdf -> Cell($w, 24, wrapText($pdf,$text,200), 0, 'C');
 
 $pdf -> AddFont('Cambria', '', 'cambria.php'); 
