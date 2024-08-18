@@ -6,14 +6,14 @@
                     `tbl_docu_request`.`date_requested`,
                     `tbl_docu_request`.`purpose`,
                     `tbl_docu_request`.`status`,
-                    `tbl-documents`.`document-desc`,
-                    `tbl-documents`.`age`
+                    `tbl_documents`.`document-desc`,
+                    `tbl_documents`.`age`
                     FROM
                         tbl_docu_request
                     JOIN
                         resident ON tbl_docu_request.`resident-no`=resident.`resident_id`
                     JOIN
-                        `tbl-documents` ON tbl_docu_request.`document-no`=`tbl-documents`.`document-id`
+                        `tbl_documents` ON tbl_docu_request.`document-no`=`tbl_documents`.`document-id`
                     WHERE
                         resident.`resident_id`=1
     ";

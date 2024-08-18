@@ -82,6 +82,21 @@
 
           <div class="col-md-6 col-xl-3">
             <article class="stat-cards-item">
+              <div class="stat-cards-icon primary">
+                <i data-feather="bar-chart-2" aria-hidden="true"></i>
+              </div>
+              <div class="stat-cards-info">
+                <p class="stat-cards-info__num">0</p>
+                <p class="stat-cards-info__title">Total certificates</p>
+                <p class="stat-cards-info__title">For The Month</p>
+                <p class="stat-cards-info__progress">
+                </p>
+              </div>
+            </article>
+          </div>
+
+          <div class="col-md-6 col-xl-3">
+            <article class="stat-cards-item">
               <div class="stat-cards-icon warning">
                 <i data-feather="file" aria-hidden="true"></i>
               </div>
@@ -97,7 +112,7 @@
           <div class="col-md-6 col-xl-3">
             <article class="stat-cards-item">
               <div class="stat-cards-icon purple">
-                <i data-feather="file" aria-hidden="true"></i>
+                <i data-feather="home" aria-hidden="true"></i>
               </div>
               <div class="stat-cards-info">
                 <p class="stat-cards-info__num"><?php echo $totalresident[0];?></p>

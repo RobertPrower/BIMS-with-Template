@@ -91,7 +91,7 @@
 
                         <div class="form-floating mt-3 mb-3 col-md-4">
                             <select class="form-select" id="sex" name="sex" aria-label="Floating label select example" required>
-                                <option hidden selected>Select Sex</option>
+                                <option hidden selected>Select</option>
                                 <option value="Male">Male</option>
                                 <option value="Female">Female</option>
                             </select>

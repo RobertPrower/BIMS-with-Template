@@ -86,6 +86,9 @@
                                 
                                 <th style="width: 5%;"class="text-center">id
                                 </th>
+
+                                <th style="width: 10%;"class="text-center"> Image
+                                </th>
                                 
                                 <th style="width: 10%;" class="text-center">Full Name
                                 </th>
@@ -111,6 +114,7 @@
                                     //echo '<td><input type="checkbox" class="check-all"></td>';
                                     
                                     echo "<td>{$row['id']}</td>";
+                                    echo "<td></td>";
                                     echo "<td>{$row['official_name']}</td>";
                                     echo "<td>{$row['official_position']}</td>";
                                     echo "<td>{$row['date_last_edited']}</td>";

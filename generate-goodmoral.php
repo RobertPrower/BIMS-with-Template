@@ -4,7 +4,7 @@ require_once("fpdf186/fpdf.php");
 
 require_once('includes/connecttodb.php');
 
-global $pdo;
+$pdo;
 
 $sqlquery="SELECT * FROM brgy_officials";
 $stmt=$pdo->prepare($sqlquery);
@@ -36,13 +36,13 @@ $stmt->execute([$residentno]);
 $AgeResult= $stmt->fetchAll();
 $Age=$AgeResult[0]['Age'];
 
-$sqlquery2="INSERT INTO `tbl-documents`(`document-desc`, age) VALUES(?,?)";
+$sqlquery2="INSERT INTO `tbl_documents`(`document-desc`, age) VALUES(?,?)";
 $stmt2=$pdo->prepare($sqlquery2);
 $stmt2->execute([$documentdesc, $Age]);
 
 $sqlquery3 = "INSERT INTO `tbl_docu_request` (`resident-no`, `document-no`, `date_requested`, `presented_id`, `IDnumber`, `purpose`)
               SELECT :residentno, MAX(`document-id`), :nowdate, :presentedid, :IDnumber, :purpose
-              FROM `tbl-documents`";
+              FROM `tbl_documents`";
 $alldatatorequest = [
     ':residentno' => $residentno,
     ':nowdate' => $nowdate,

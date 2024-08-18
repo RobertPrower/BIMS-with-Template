@@ -46,7 +46,7 @@
         </div>
         <div class="modal-footer">
         <button type="reset" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="submit" id="EditOfficialBtn" class="btn btn-success editOfficialbtnsubmit">Edit</button>
+        <button type="submit" id="EditOfficialBtn" class="btn btn-success editOfficialbtnsubmit">Save</button>
 
         </div>
 
