@@ -36,8 +36,30 @@ $(document).on("click", ".viewResidentButton", function () {
   $('#ViewResidentModal select[name="is_a_voter"]').val(is_a_voter);
   $('#ViewResidentModal input[name="r_since"]').val(resident_since);
 
+  // To make the profile tab to the default tab when view button is clicked
+  $('#nav-home-tab').tab('show');
+
   // Display the modal
   $("#ViewResidentModal").modal("show");
   console.log(resident_since);
   
+});
+
+  //PHP request for the clearance tab of the modal
+$(document).on("click", "#ClrRequest", function () {
+
+  var residentID = $(this).data('id');
+
+  $.ajax({
+    url: "includes/residenttableautoreload.php",
+    type: "POST",
+    data: { rid: residentID  },
+    dataType: "HTML",
+    success: function (data) {
+      $("#ResidentTable tbody").html(data);
+    },
+    error: function (xhr, status, error) {
+      console.error("Error fetching table data:", error);
+    },
+  });
 });
