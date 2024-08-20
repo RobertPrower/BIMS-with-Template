@@ -56,7 +56,7 @@
                                         <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
                                         class="rounded-circle img-fluid" id="viewimagePreview" style="width: 200px; height: 200px;" />
 
-                                        <script src="js/displayimageonviewmodal.js"></script>
+                                        <script src="js/displayimagedata.js"></script>
                                     </div>
                 
                                 </div>
@@ -100,8 +100,24 @@
                                 </div>
 
                                 <div class="form-floating mt-3 mb-3 col-md-4">
-                                    <input type="text" class="form-control" id="subd" name="subd" disabled/>
-                                    <label for="floatingInput">Subdivision</label>
+                                    <select class="form-select" id="subd" name="subd" aria-label="Floating label select example" disabled>
+                                        <option value="">Not Applicable</option>
+                                        <option value="Almar Subd">Almar Subd</option>
+                                        <option value="Caritas Village">Caritas Village</option>
+                                        <option value="Capitol Parkland">Capitol Parkland</option>
+                                        <option value="Cassel Spring Subd">Cassel Spring Subd</option>
+                                        <option value="Christina Homes">Christina Homes</option>
+                                        <option value="Cielito Homes">Cielito Homes</option>
+                                        <option value="Del Rey Ville 2 Subd">Del Rey Ville 2</option>
+                                        <option value="Kassel Villas">Kassel Villas</option>
+                                        <option value="Lilleville Subd">Lilleville Subd</option>
+                                        <option value="Maligay Park">Maligaya Park</option>
+                                        <option value="Maria Luisa Subd">Maria Luisa Subd</option>
+                                        <option value="North Matrix Villge 1">North Matrix Village 1</option>
+                                        <option value="North Matrix Ville">North Matrix Ville</option>
+                                        <option value="North Triangle">North Triangle</option>
+                                    </select>
+                                    <label for="subd">Subdivision</label>
                                 </div>
                             
                                 <div class="form-floating mt-3 mb-3 col-md-4">

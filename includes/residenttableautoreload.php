@@ -4,22 +4,11 @@ include 'connecttodb.php';
 
 try {
 
-    if ($_POST['operation']==="add" || $_POST['operation']==="edit"){
     
-        $sql = "SELECT * FROM resident"; 
-        $stmt = $pdo->prepare($sql);
-        $stmt->execute();
-        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    } else {
-
         $sql = "SELECT * FROM resident WHERE is_deleted=0"; 
         $stmt = $pdo->prepare($sql);
         $stmt->execute();
         $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-    }
-
-    
 
     // Check if there are any results
     if (count($results) > 0) {
@@ -39,7 +28,9 @@ try {
             echo '<td>' . ($row['is_a_voter'] ? 'YES' : 'NO') . '</td>';
             echo '<td style="width: 35%;">
                 <div class="btn-group text-center">
-                    <button class="btn btn-primary mx-1 viewResidentButton"
+                        
+                        
+                    <button class="btn btn-primary mx-1 viewResidentButton" id=vbutton
                         data-id="' . htmlspecialchars($row['resident_id']) . '"
                         data-first-name="' . htmlspecialchars($row['first_name'], ENT_QUOTES) . '"
                         data-middle-name="' . htmlspecialchars($row['middle_name'], ENT_QUOTES) . '"
@@ -54,8 +45,10 @@ try {
                         data-birth-place="' . htmlspecialchars($row['birth_place'], ENT_QUOTES) . '"
                         data-phone-number="' . htmlspecialchars($row['cellphone_number'], ENT_QUOTES) . '"
                         data-isa-voter="' . htmlspecialchars($row['is_a_voter'], ENT_QUOTES) . '"
-                        data-residentsince="' . htmlspecialchars($row['resident_since'], ENT_QUOTES) . '"
+                        data-rsince="' . htmlspecialchars($row['resident_since'], ENT_QUOTES) . '"
                         data-bs-toggle="modal" data-bs-target="#ViewResidentModal">View</button>
+
+                        
                     <button class="btn btn-success mx-1 editResidentButton"
                         data-id="' . htmlspecialchars($row['resident_id']) . '"
                         data-first-name="' . htmlspecialchars($row['first_name'], ENT_QUOTES) . '"
@@ -73,7 +66,9 @@ try {
                         data-isa-voter="' . htmlspecialchars($row['is_a_voter'], ENT_QUOTES) . '"
                         data-residentsince="' . htmlspecialchars($row['resident_since'], ENT_QUOTES) . '"
                         data-bs-toggle="modal" data-bs-target="#EditResidentModal">Edit</button>
-                    <button class="btn btn-danger mx-1 deleteResidentButton"
+
+                      
+                    <button class="btn btn-danger mx-1 deleteResidentButton" id="deletebutton"
                         data-id="' . htmlspecialchars($row['resident_id']) . '">Delete</button>
                 </div>
             </td>';

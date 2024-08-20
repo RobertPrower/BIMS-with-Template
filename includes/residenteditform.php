@@ -81,7 +81,7 @@
                     </div>
 
                     <div class="form-floating mt-3 mb-3 col-md-4">
-                        <select class="form-select" id="subd" name="subd" aria-label="Floating label select example" required>
+                        <select class="form-select" id="subd" name="subd" aria-label="Floating label select example">
                             <option value="">Not Applicable</option>
                             <option value="Almar Subd">Almar Subd</option>
                             <option value="Caritas Village">Caritas Village</option>

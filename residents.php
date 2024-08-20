@@ -133,7 +133,7 @@
                             
                              //For the view button
                             echo '
-                            <button href="#" class="btn btn-primary mx-1 viewResidentButton" 
+                            <button href="#" class="btn btn-primary mx-1 viewResidentButton" id="vbutton"
                             data-id="' . $row['resident_id'] . '"
                             data-first-name="' . htmlspecialchars($row['first_name'], ENT_QUOTES) . '"
                             data-middle-name="' . htmlspecialchars($row['middle_name'], ENT_QUOTES) . '"
@@ -174,7 +174,7 @@
 
                             // 
                             echo '
-                            <button type="submit" class="Delete_Button btn btn-danger mx-1" data-resident_id="' . $row['resident_id'] . '">Delete</button>
+                            <button type="submit" class="Delete_Button btn btn-danger mx-1" id="deletebutton" data-resident_id="' . $row['resident_id'] . '">Delete</button>
                             
                             </div>
                             </td>
@@ -211,14 +211,11 @@
     </div>
 </div>
 
-<script src="js/deleteresidentaction.js"> </script>
 <script src="js/populateresidenteditmodal.js"> </script>
 
 <script src="js/populateresidentviewmodal.js"> </script>
         
-<script src="js/editresidentaction.js"> </script>
-
-<script src="js/addresidentaction.js"> </script>
+<script src="js/residentaction.js"> </script>
 
 <!-- Chart library -->
 <script src="./plugins/chart.min.js"></script>
