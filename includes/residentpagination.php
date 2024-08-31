@@ -2,20 +2,32 @@
 
 require_once('connecttodb.php');
 
-$items_per_page = isset($_GET['items_per_page']) ? (int)$_GET['items_per_page'] : 10;
-$current_page=isset($_GET['page']) ? (int)$_GET['page'] :1;
-$offset = ($current_page - 1) * $items_per_page;
+// Number of records per page
+$limit = 10;
 
-try {
-  $sqlquery="SELECT * FROM resident WHERE is_deleted=0 LIMIT :offset, :items_per_page";
-  $stmt = $pdo->prepare($sqlquery);
-  $stmt -> execute([$sqlquery]);
-  $results = $stmt -> fetchAll(PDO::FETCH_ASSOC);
+// Get the total number of records
+$stmt = $pdo->query("SELECT COUNT(*) FROM vw_all_resident");
+$total_records = $stmt->fetchColumn();
 
-    ECHO  json_encode($results);
-}catch(PDOException $e){
-  echo 'ERROR: ' . htmlspecialchars($e -> getMessage()); 
-}
+// Calculate the total number of pages
+$total_pages = ceil($total_records / $limit);
 
-$pdo=null;
+// Get the current page number from the URL, default to 1 if not set
+$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+
+// Calculate the offset for the query
+$offset = ($page - 1) * $limit;
+
+// Fetch the records for the current page
+$stmt = $pdo->prepare("SELECT * FROM vw_all_resident ? :limit OFFSET ?");
+$stmt->execute([$limit, $offset]);
+$items = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+$response = [
+  'items' => $items,
+  'total_pages' => $total_pages,
+  'current_page' => $page
+];
+
+echo json_encode($response);
 ?>

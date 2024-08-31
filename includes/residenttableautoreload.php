@@ -67,7 +67,7 @@ try {
 
                       
                     <button class="btn btn-danger mx-1 deleteResidentButton" id="deletebutton"
-                        data-id="' . htmlspecialchars($row['resident_id']) . '">Delete</button>
+                        data-resident_id = "' . htmlspecialchars($row['resident_id']) . '">Delete</button>
                 </div>
             </td>';
             echo '</tr>';

@@ -5,6 +5,30 @@ $operation_check=$_POST['operation'];
 
 if($operation_check == "ADD"){
     try {
+
+        // Retrieve data sent via POST
+        $residentId = sanitizeData($_POST['resident_id']);
+        $firstName = sanitizeData($_POST['fname']);
+        $middleName = sanitizeData($_POST['mname']);
+        $lastName = sanitizeData($_POST['lname']);
+        $suffix = sanitizeData($_POST['suffix']);
+        $houseno = sanitizeData($_POST['house_no']);
+        $streetname = sanitizeData($_POST['street']);
+        $subdivision = sanitizeData($_POST['subd']);
+        $sex = sanitizeData($_POST['sex']);
+        $maritalstatus = sanitizeData($_POST['marital_status']);
+        $birthdate = sanitizeData($_POST['birth_date']);
+        $birthplace = sanitizeData($_POST['birth_place']); 
+        $phonenumber = sanitizeData($_POST['cp_number']);
+        $isavoter = sanitizeData($_POST['is_a_voter']);
+        $residentsince = sanitizeData($_POST['residentsince']);
+
+        $userid=null;
+        $departno= null;
+        $dateadded=date("Y-m-d");
+        $timeadded= date('H:i:s');
+
+
         //Variable for the Name of the Folder which is img
         $target_dir = "img/resident_img/";
 
@@ -39,23 +63,16 @@ if($operation_check == "ADD"){
             throw new Exception("Sorry, there was an error uploading your file.");
         }
 
-        $fname=sanitizeData($_POST['fname']);
-        $mname=sanitizeData($_POST['mname']);
-        $lname=sanitizeData($_POST['lname']);
-        $suffix=sanitizeData($_POST['suffix']);
-        $houseno=sanitizeData($_POST['house_no']);
-        $street=sanitizeData($_POST['street']);
-        $sudb=sanitizeData($_POST['subd']);
-        $sex=sanitizeData($_POST['sex']);
-        $maritalstatus=sanitizeData($_POST['marital_status']);
-        $birthdate=sanitizeData($_POST['birth_date']);
-        $birthplace=sanitizeData($_POST['birth_place']);
-        $cellphonenumber=sanitizeData($_POST['cellphone_number']);
-        $is_a_voter=sanitizeData($_POST['is_a_voter']);
-        $residentsince=sanitizeData($_POST['resident_since']);
-        $userid=null;
-        $departno= null;
-
+        $audit_query = "INSERT INTO res_audit_trail (depart_no, added_by_no, date_added, time_added)
+        VALUES (?, ?,?,?)";
+        $audit_stmt = $pdo->prepare($audit_query);
+        $audit_stmt->execute
+        ([
+        $departno,
+        $userid,
+        $dateadded,
+        $timeadded
+        ]);
 
         // Insert data into the resident table
         $insert_query = "INSERT INTO resident (img_filename, last_name, first_name, middle_name, suffix, house_num, street, subdivision, 
@@ -81,14 +98,6 @@ if($operation_check == "ADD"){
             $is_a_voter,
             
         ]);
-        
-        // $audit_query = "INSERT INTO res_audit_trail (depart_no, added_by_no)
-        //             VALUES (?, ?)";
-        // $audit_stmt = $pdo->prepare($audit_query);
-        // $audit_stmt->execute([
-        //     $departno,
-        //     $userid]);
-
 
         // Success response encodes it to JSON format for the AJAX to read
         $response = ["success" => true, "message" => "Data Added successfully"];
@@ -99,6 +108,7 @@ if($operation_check == "ADD"){
         echo json_encode($response);
     }
 }elseif($operation_check == "EDIT"){
+
      // Retrieve data sent via POST
      $residentId = sanitizeData($_POST['resident_id']);
      $firstName = sanitizeData($_POST['fname']);
@@ -170,16 +180,17 @@ if($operation_check == "ADD"){
          $folderFiles = array_diff(scandir($target_dir), array('..', '.'));
  
          // Prepend the directory path to each filename
-         $folderFiles = array_map(function($filename) use ($target_dir) {
-             return $target_dir . $filename;
+         $folderFiles = array_map(function($filename) {
+             return $filename;
          }, $folderFiles);
  
          // Find filenames in the folder but not in the database
          $unusedFiles = array_diff($folderFiles, $dbFiles);
  
          // Delete unused files
-         foreach ($unusedFiles as $filePath) {
-             if (!file_exists($filePath)) {
+         foreach ($unusedFiles as $filename) {
+            $filePath = $target_dir . $filename;
+             if (file_exists($filePath)) {
                  unlink($filePath);
              }
          }

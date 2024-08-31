@@ -155,3 +155,53 @@ $(document).ready(function () {
     });
   });
 });
+
+//For the pagination
+
+$(document).ready(function() {
+  function loadPage(page) {
+      $.ajax({
+          url: 'includes/residentpagination.php',
+          type: 'GET',
+          data: { page: page },
+          dataType: 'json',
+          success: function(response) {
+              var items = response.items;
+              var totalPages = response.total_pages;
+              var currentPage = response.current_page;
+
+              // Clear previous content
+              $('#data-container').empty();
+              $('#pagination-controls').empty();
+
+              // Append items to the container
+              $.each(items, function(index, item) {
+                  $('#data-container').append('<div class="item"><h3>' + item.name + '</h3><p>' + item.description + '</p></div>');
+              });
+
+              // Create pagination controls
+              if (currentPage > 1) {
+                  $('#pagination-controls').append('<a href="#" data-page="' + (currentPage - 1) + '">Previous</a>');
+              }
+              
+              for (var i = 1; i <= totalPages; i++) {
+                  $('#pagination-controls').append('<a href="#" data-page="' + i + '"' + (i === currentPage ? ' class="active"' : '') + '>' + i + '</a>');
+              }
+              
+              if (currentPage < totalPages) {
+                  $('#pagination-controls').append('<a href="#" data-page="' + (currentPage + 1) + '">Next</a>');
+              }
+          }
+      });
+  }
+
+  // Load initial page
+  loadPage(1);
+
+  // Handle pagination link clicks
+  $(document).on('click', '#pagination-controls a', function(e) {
+      e.preventDefault();
+      var page = $(this).data('page');
+      loadPage(page);
+  });
+});
