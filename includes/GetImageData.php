@@ -2,7 +2,7 @@
 require_once'connecttodb.php';
 
 $id = $_GET['id'];
-$query = "SELECT img_path FROM resident WHERE resident_id = ?"; 
+$query = "SELECT img_filename FROM resident WHERE resident_id = ?"; 
 $statement = $pdo->prepare($query);
 $statement->execute([$id]);
 $result = $statement->fetch(PDO::FETCH_ASSOC);
@@ -10,7 +10,7 @@ $result = $statement->fetch(PDO::FETCH_ASSOC);
 if ($result) {
     // Prepare response
     $response = array(
-      "imageData" => $result['img_path']
+      "imageData" => $result['img_filename']
     
     );
 } else {

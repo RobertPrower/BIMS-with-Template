@@ -27,19 +27,13 @@ $purpose=$_POST['purpose'];
 $residentsince=$_POST['r_since'];
 $docurequestdata=[$residentno, ];
 
-$sqlquery="SELECT TIMESTAMPDIFF(YEAR, `birth_date`, NOW()) AS Age FROM resident WHERE resident_id=?";
-$stmt=$pdo->prepare($sqlquery);
-$stmt->execute([$residentno]);
-$AgeResult= $stmt->fetchAll();
-$Age=$AgeResult[0]['Age'];
-
-$sqlquery2="INSERT INTO `tbl_documents` (`document-desc`, age) VALUES(?,?)";
+$sqlquery2="INSERT INTO tbl_documents (document_desc) VALUES(?)";
 $stmt2=$pdo->prepare($sqlquery2);
-$stmt2->execute([$documentdesc, $Age]);
+$stmt2->execute([$documentdesc]);
 
-$sqlquery3 = "INSERT INTO `tbl_docu_request` (`resident-no`, `document-no`, `date_requested`, `presented_id`, `IDnumber`, `purpose`)
-              SELECT :residentno, MAX(`document-id`), :nowdate, :presentedid, :IDnumber, :purpose
-              FROM `tbl_documents`";
+$sqlquery3 = "INSERT INTO tbl_docu_request (resident_no, document_no, date_requested, presented_id, IDnumber, purpose)
+              SELECT :residentno, MAX(document_id), :nowdate, :presentedid, :IDnumber, :purpose
+              FROM tbl_documents";
 $alldatatorequest = [
     ':residentno' => $residentno,
     ':nowdate' => $nowdate,
@@ -50,16 +44,22 @@ $alldatatorequest = [
 $stmt3 = $pdo->prepare($sqlquery3);
 $stmt3->execute($alldatatorequest);
 
-
 $sqlquery4="SELECT * FROM `certificate-img`";
 $stmt4=$pdo->prepare($sqlquery4);
 $stmt4->execute();
 
 $results4=$stmt4->fetchAll(PDO::FETCH_ASSOC); 
 
+$request_id = $pdo->lastInsertId();
 
+$sqlquery5="SELECT age FROM tbl_docu_request WHERE request_id = ?";
+$stmt5=$pdo->prepare($sqlquery5);
+$stmt5->execute([$request_id]);
+$AgeResult= $stmt5->fetchAll();
+$Age=$AgeResult;
 
-//$pdo=null;
+//Close the Database Connection
+$pdo=null;
 
 $officialname=[];
 

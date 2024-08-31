@@ -27,7 +27,7 @@ $(document).on("click", ".viewResidentButton", function () {
   $('#ViewResidentModal input[name="suffix"]').val(suffix);
   $('#ViewResidentModal input[name="house_no"]').val(house_no);
   $('#ViewResidentModal input[name="street"]').val(street_name);
-  $('#ViewResidentModal input[name="subd"]').val(subdivision);
+  $('#ViewResidentModal select[name="subd"]').val(subdivision);
   $('#ViewResidentModal select[name="sex"]').val(sex);
   $('#ViewResidentModal select[name="marital_status"]').val(marital_status);
   $('#ViewResidentModal input[name="birth_date"]').val(birth_date);
@@ -36,30 +36,36 @@ $(document).on("click", ".viewResidentButton", function () {
   $('#ViewResidentModal select[name="is_a_voter"]').val(is_a_voter);
   $('#ViewResidentModal input[name="r_since"]').val(resident_since);
 
+  console.log(subdivision);
+
   // To make the profile tab to the default tab when view button is clicked
   $('#nav-home-tab').tab('show');
 
   // Display the modal
   $("#ViewResidentModal").modal("show");
-  console.log(resident_since);
   
 });
 
-  //PHP request for the clearance tab of the modal
-$(document).on("click", "#ClrRequest", function () {
+  //AJAX request for the clearance tab and table of the modal
+$(document).on("click", "#nav-clearance-tab", function () {
+  var resident_id = document.getElementById('resident_id');
+  var resident_value = resident_id.value;
 
-  var residentID = $(this).data('id');
+  console.log(resident_value);
+  
+    $.ajax({
+      url: "includes/get-resident-docu-request.php",
+      type: "POST",
+      data: {resident_id: resident_value},
+      dataType: "HTML",
+      success: function (data) {
+        $("#ResidentRequestTable tbody").html(data);
+      },
+      error: function (xhr, status, error) {
+        console.error("Error fetching table data:", error);
+      },
+    });
 
-  $.ajax({
-    url: "includes/residenttableautoreload.php",
-    type: "POST",
-    data: { rid: residentID  },
-    dataType: "HTML",
-    success: function (data) {
-      $("#ResidentTable tbody").html(data);
-    },
-    error: function (xhr, status, error) {
-      console.error("Error fetching table data:", error);
-    },
-  });
+
 });
+

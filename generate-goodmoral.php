@@ -4,14 +4,14 @@ require_once("fpdf186/fpdf.php");
 
 require_once('includes/connecttodb.php');
 
-$pdo;
-
+//To fetch the Brgy Officials
 $sqlquery="SELECT * FROM brgy_officials";
 $stmt=$pdo->prepare($sqlquery);
 $stmt->execute();
 
 $results=$stmt->fetchAll(PDO::FETCH_ASSOC); 
 
+//Declare the variables will be used in the document
 $residentno=($_POST['resident_no']);
 $fname=utf8_decode($_POST['firstname']);
 $mname=utf8_decode($_POST['middlename']);
@@ -30,19 +30,15 @@ $purpose=$_POST['purpose'];
 $residentsince=$_POST['r_since'];
 $docurequestdata=[$residentno];
 
-$sqlquery="SELECT TIMESTAMPDIFF(YEAR, `birth_date`, NOW()) AS Age FROM resident WHERE resident_id=?";
-$stmt=$pdo->prepare($sqlquery);
-$stmt->execute([$residentno]);
-$AgeResult= $stmt->fetchAll();
-$Age=$AgeResult[0]['Age'];
-
-$sqlquery2="INSERT INTO `tbl_documents`(`document-desc`, age) VALUES(?,?)";
+//Insert Certificate Description to tbl_documents
+$sqlquery2="INSERT INTO tbl_documents (document_desc) VALUES(?)";
 $stmt2=$pdo->prepare($sqlquery2);
-$stmt2->execute([$documentdesc, $Age]);
+$stmt2->execute([$documentdesc]);
 
-$sqlquery3 = "INSERT INTO `tbl_docu_request` (`resident-no`, `document-no`, `date_requested`, `presented_id`, `IDnumber`, `purpose`)
-              SELECT :residentno, MAX(`document-id`), :nowdate, :presentedid, :IDnumber, :purpose
-              FROM `tbl_documents`";
+//Insert the person details regarding the certificate
+$sqlquery3 = "INSERT INTO tbl_docu_request (resident_no, document_no, date_requested, presented_id, IDnumber, purpose)
+              SELECT :residentno, MAX(document_id), :nowdate, :presentedid, :IDnumber, :purpose
+              FROM tbl_documents";
 $alldatatorequest = [
     ':residentno' => $residentno,
     ':nowdate' => $nowdate,
@@ -53,17 +49,24 @@ $alldatatorequest = [
 $stmt3 = $pdo->prepare($sqlquery3);
 $stmt3->execute($alldatatorequest);
 
-
+//Fetch the certificate images
 $sqlquery4="SELECT * FROM `certificate-img`";
 $stmt4=$pdo->prepare($sqlquery4);
 $stmt4->execute();
 
 $results4=$stmt4->fetchAll(PDO::FETCH_ASSOC); 
 
+//Fetch the age from the SQL trigger result
+$request_id = $pdo->lastInsertId();
 
-
+$sqlquery5="SELECT age FROM tbl_docu_request WHERE request_id = ?";
+$stmt5=$pdo->prepare($sqlquery5);
+$stmt5->execute([$request_id]);
+$AgeResult= $stmt5->fetchAll();
+$Age=$AgeResult;
 $pdo=null;
 
+//Put the Official Name in Array
 $officialname=[];
 
 foreach($results as $officials){    
@@ -71,6 +74,7 @@ foreach($results as $officials){
     $officialname[]=$officials['official_name'];
 }
 
+//Put logos in array for display
 $logo=[];
 
 foreach($results4 as $filename){

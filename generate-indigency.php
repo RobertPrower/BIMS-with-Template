@@ -20,7 +20,7 @@ if(isset($_POST['suffix'])){
 }else{
     $suffix="";
 }
-$documentdesc='Certificate of Residency';
+$documentdesc='Certificate of Indigency';
 $nowdate= date("Y-m-d H:i:s");
 $completeaddress=utf8_decode($_POST['address']);
 $presentedid=$_POST['presented_id'];
@@ -30,18 +30,20 @@ $agency=$_POST['agency'];
 $residentsince=$_POST['r_since'];
 $docurequestdata=[$residentno, ];
 
-$sqlquery="SELECT TIMESTAMPDIFF(YEAR, `birth_date`, NOW()) AS Age FROM resident WHERE resident_id=?";
-$stmt=$pdo->prepare($sqlquery);
-$stmt->execute([$residentno]);
-$AgeResult= $stmt->fetchAll();
-$Age=$AgeResult[0]['Age'];
-
-$sqlquery2="INSERT INTO `tbl_documents` (`document-desc`, age) VALUES(?,?)";
+$sqlquery2="INSERT INTO tbl_documents (document_desc) VALUES(?)";
 $stmt2=$pdo->prepare($sqlquery2);
-$stmt2->execute([$documentdesc, $Age]);
+$stmt2->execute([$documentdesc]);
 
-$sqlquery3 = "INSERT INTO `tbl_docu_request` (`resident-no`, `document-no`, `date_requested`, `presented_id`, `IDnumber`, `purpose`)
-              SELECT :residentno, MAX(`document-id`), :nowdate, :presentedid, :IDnumber, :purpose
+$request_id = $pdo->lastInsertId();
+
+$sqlquery="SELECT age FROM tbl_docu_request WHERE request_id = ?";
+$stmt=$pdo->prepare($sqlquery);
+$stmt->execute([$request_id]);
+$AgeResult= $stmt->fetchAll();
+$Age=$AgeResult;
+
+$sqlquery3 = "INSERT INTO tbl_docu_request (resident_no, document_no, date_requested, presented_id, IDnumber, purpose)
+              SELECT :residentno, MAX(document_id), :nowdate, :presentedid, :IDnumber, :purpose
               FROM `tbl_documents`";
 $alldatatorequest = [
     ':residentno' => $residentno,

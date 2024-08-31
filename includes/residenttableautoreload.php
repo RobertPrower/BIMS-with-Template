@@ -3,9 +3,7 @@
 include 'connecttodb.php';
 
 try {
-
-    
-        $sql = "SELECT * FROM resident WHERE is_deleted=0"; 
+        $sql = "SELECT * FROM vw_all_resident"; 
         $stmt = $pdo->prepare($sql);
         $stmt->execute();
         $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -18,13 +16,13 @@ try {
             echo '<td hidden>' . htmlspecialchars($row['resident_id']) . '</td>';
             echo '<td>' . htmlspecialchars($row['date_recorded']) . '</td>';
             echo '<td>' . htmlspecialchars($row['last_name']) . ', ' . htmlspecialchars($row['first_name']) . ' ' . htmlspecialchars($row['middle_name']) . ' ' . htmlspecialchars($row['suffix']) . '</td>';
-            echo '<td>' . htmlspecialchars($row['house_number']) . ', ' . htmlspecialchars($row['street_name']) . ', ' . htmlspecialchars($row['subdivision']) . '</td>';
+            echo '<td>' . htmlspecialchars($row['house_num']) . ', ' . htmlspecialchars($row['street']) . ', ' . htmlspecialchars($row['subdivision']) . '</td>';
             echo '<td class="text-center">' . htmlspecialchars($row['resident_since']) . '</td>';
             echo '<td>' . htmlspecialchars($row['sex']) . '</td>';
             echo '<td>' . htmlspecialchars($row['marital_status']) . '</td>';
             echo '<td>' . htmlspecialchars($row['birth_date']) . '</td>';
             echo '<td>' . htmlspecialchars($row['birth_place']) . '</td>';
-            echo '<td class="text-center">' . htmlspecialchars($row['cellphone_number']) . '</td>';
+            echo '<td class="text-center">' . htmlspecialchars($row['cellphone_num']) . '</td>';
             echo '<td>' . ($row['is_a_voter'] ? 'YES' : 'NO') . '</td>';
             echo '<td style="width: 35%;">
                 <div class="btn-group text-center">
@@ -36,14 +34,14 @@ try {
                         data-middle-name="' . htmlspecialchars($row['middle_name'], ENT_QUOTES) . '"
                         data-last-name="' . htmlspecialchars($row['last_name'], ENT_QUOTES) . '"
                         data-suffix="' . htmlspecialchars($row['suffix'], ENT_QUOTES) . '"
-                        data-house-no="' . htmlspecialchars($row['house_number'], ENT_QUOTES) . '"
-                        data-street-name="' . htmlspecialchars($row['street_name'], ENT_QUOTES) . '"
+                        data-house-no="' . htmlspecialchars($row['house_num'], ENT_QUOTES) . '"
+                        data-street-name="' . htmlspecialchars($row['street'], ENT_QUOTES) . '"
                         data-subdivision="' . htmlspecialchars($row['subdivision'], ENT_QUOTES) . '"
                         data-sex="' . htmlspecialchars($row['sex'], ENT_QUOTES) . '"
                         data-marital-status="' . htmlspecialchars($row['marital_status'], ENT_QUOTES) . '"
                         data-birth-date="' . htmlspecialchars($row['birth_date'], ENT_QUOTES) . '"
                         data-birth-place="' . htmlspecialchars($row['birth_place'], ENT_QUOTES) . '"
-                        data-phone-number="' . htmlspecialchars($row['cellphone_number'], ENT_QUOTES) . '"
+                        data-phone-number="' . htmlspecialchars($row['cellphone_num'], ENT_QUOTES) . '"
                         data-isa-voter="' . htmlspecialchars($row['is_a_voter'], ENT_QUOTES) . '"
                         data-rsince="' . htmlspecialchars($row['resident_since'], ENT_QUOTES) . '"
                         data-bs-toggle="modal" data-bs-target="#ViewResidentModal">View</button>
@@ -55,14 +53,14 @@ try {
                         data-middle-name="' . htmlspecialchars($row['middle_name'], ENT_QUOTES) . '"
                         data-last-name="' . htmlspecialchars($row['last_name'], ENT_QUOTES) . '"
                         data-suffix="' . htmlspecialchars($row['suffix'], ENT_QUOTES) . '"
-                        data-house-no="' . htmlspecialchars($row['house_number'], ENT_QUOTES) . '"
-                        data-street-name="' . htmlspecialchars($row['street_name'], ENT_QUOTES) . '"
+                        data-house-no="' . htmlspecialchars($row['house_num'], ENT_QUOTES) . '"
+                        data-street-name="' . htmlspecialchars($row['street'], ENT_QUOTES) . '"
                         data-subdivision="' . htmlspecialchars($row['subdivision'], ENT_QUOTES) . '"
                         data-sex="' . htmlspecialchars($row['sex'], ENT_QUOTES) . '"
                         data-marital-status="' . htmlspecialchars($row['marital_status'], ENT_QUOTES) . '"
                         data-birth-date="' . htmlspecialchars($row['birth_date'], ENT_QUOTES) . '"
                         data-birth-place="' . htmlspecialchars($row['birth_place'], ENT_QUOTES) . '"
-                        data-phone-number="' . htmlspecialchars($row['cellphone_number'], ENT_QUOTES) . '"
+                        data-phone-number="' . htmlspecialchars($row['cellphone_num'], ENT_QUOTES) . '"
                         data-isa-voter="' . htmlspecialchars($row['is_a_voter'], ENT_QUOTES) . '"
                         data-residentsince="' . htmlspecialchars($row['resident_since'], ENT_QUOTES) . '"
                         data-bs-toggle="modal" data-bs-target="#EditResidentModal">Edit</button>

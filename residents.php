@@ -1,6 +1,5 @@
 <?php 
-    include_once("includes/residentsearchfunction.php");
-
+    include_once("includes/residentsearchfunction.php");// SQL Query for the table and search
  ?>
 
 <!DOCTYPE html>
@@ -115,13 +114,13 @@
                                     <td hidden>{$row['resident_id']}</td>
                                     <td>{$row['date_recorded']}</td>
                                     <td>{$row['last_name']}, {$row['first_name']} {$row['middle_name']} {$row['suffix']}</td>
-                                    <td>{$row['house_number']}, {$row['street_name']}, {$row['subdivision']}</td>
+                                    <td>{$row['house_num']}, {$row['street']}, {$row['subdivision']}</td>
                                     <td class='text-center'>{$row['resident_since']}
                                     <td>{$row['sex']}</td>
                                     <td>{$row['marital_status']}</td>
                                     <td>{$row['birth_date']}</td>
                                     <td>{$row['birth_place']}</td>
-                                    <td class='text-center'>{$row['cellphone_number']}</td>";
+                                    <td class='text-center'>{$row['cellphone_num']}</td>";
                             
                             if($row['is_a_voter'] == 1){
                             echo "<td>YES</td>";
@@ -139,14 +138,14 @@
                             data-middle-name="' . htmlspecialchars($row['middle_name'], ENT_QUOTES) . '"
                             data-last-name="' . htmlspecialchars($row['last_name'], ENT_QUOTES) . '"
                             data-suffix="' . htmlspecialchars($row['suffix'], ENT_QUOTES) . '"
-                            data-house-no="' . htmlspecialchars($row['house_number'], ENT_QUOTES) . '"
-                            data-street-name="' . htmlspecialchars($row['street_name'], ENT_QUOTES) . '"
+                            data-house-no="' . htmlspecialchars($row['house_num'], ENT_QUOTES) . '"
+                            data-street-name="' . htmlspecialchars($row['street'], ENT_QUOTES) . '"
                             data-subdivision="' . htmlspecialchars($row['subdivision'], ENT_QUOTES) . '"
                             data-sex="' . htmlspecialchars($row['sex'], ENT_QUOTES) . '"
                             data-marital-status="' . htmlspecialchars($row['marital_status'], ENT_QUOTES) . '"
                             data-birth-date="' . htmlspecialchars($row['birth_date'], ENT_QUOTES) . '"
                             data-birth-place="' . htmlspecialchars($row['birth_place'], ENT_QUOTES) . '"
-                            data-phone-number="' . htmlspecialchars($row['cellphone_number'], ENT_QUOTES) . '"
+                            data-phone-number="' . htmlspecialchars($row['cellphone_num'], ENT_QUOTES) . '"
                             data-isa-voter="' . htmlspecialchars($row['is_a_voter'], ENT_QUOTES) . '"
                             data-rsince="' . htmlspecialchars($row['resident_since'], ENT_QUOTES) . '"
                             data-bs-toggle="modal" data-bs-target="#ViewResidentModal">View</button>';
@@ -158,14 +157,14 @@
                             data-middle-name="' . htmlspecialchars($row['middle_name'], ENT_QUOTES) . '"
                             data-last-name="' . htmlspecialchars($row['last_name'], ENT_QUOTES) . '"
                             data-suffix="' . htmlspecialchars($row['suffix'], ENT_QUOTES) . '"
-                            data-house-no="' . htmlspecialchars($row['house_number'], ENT_QUOTES) . '"
-                            data-street-name="' . htmlspecialchars($row['street_name'], ENT_QUOTES) . '"
+                            data-house-no="' . htmlspecialchars($row['house_num'], ENT_QUOTES) . '"
+                            data-street-name="' . htmlspecialchars($row['street'], ENT_QUOTES) . '"
                             data-subdivision="' . htmlspecialchars($row['subdivision'], ENT_QUOTES) . '"
                             data-sex="' . htmlspecialchars($row['sex'], ENT_QUOTES) . '"
                             data-marital-status="' . htmlspecialchars($row['marital_status'], ENT_QUOTES) . '"
                             data-birth-date="' . htmlspecialchars($row['birth_date'], ENT_QUOTES) . '"
                             data-birth-place="' . htmlspecialchars($row['birth_place'], ENT_QUOTES) . '"
-                            data-phone-number="' . htmlspecialchars($row['cellphone_number'], ENT_QUOTES) . '"
+                            data-phone-number="' . htmlspecialchars($row['cellphone_num'], ENT_QUOTES) . '"
                             data-isa-voter="' . htmlspecialchars($row['is_a_voter'], ENT_QUOTES) . '"
                             data-residentsince="' . htmlspecialchars($row['resident_since'], ENT_QUOTES) . '"
                             data-bs-toggle="modal" data-bs-target="#EditResidentModal">Edit</button>';

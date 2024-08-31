@@ -3,7 +3,6 @@ $(document).ready(function () {
     $.ajax({
       url: "includes/residenttableautoreload.php",
       type: "POST",
-      data: { operation: "add" },
       dataType: "HTML",
       success: function (data) {
         $("#ResidentTable tbody").html(data);
@@ -19,9 +18,10 @@ $(document).ready(function () {
     event.preventDefault();
 
     var formData = new FormData(this);
+    formData.append("operation","ADD");
 
     $.ajax({
-      url: "includes/addresident.php",
+      url: "includes/residentoperation.php",
       type: "POST",
       data: formData,
       dataType: "JSON",
@@ -65,11 +65,10 @@ $(document).ready(function () {
   });
 
   //For Deleting Resident
-  $(document).ready(function () {
     $("#ResidentTable").on("click", "#deletebutton", function (event) {
       event.preventDefault();
 
-      var residentId = $(this).data("id");
+      var residentId = $(this).data("resident_id");
       console.log(residentId);
 
       swal({
@@ -81,9 +80,9 @@ $(document).ready(function () {
       }).then((willDelete) => {
         if (willDelete) {
           $.ajax({
-            url: "includes/deleteresidentbtn.php",
+            url: "includes/residentoperation.php",
             type: "POST",
-            data: { resident_id: residentId },
+            data: { resident_id: residentId, operation: "DELETE"},
             dataType: "json",
             success: function (response) {
               console.log("Data deleted successfully:", response);
@@ -101,23 +100,6 @@ $(document).ready(function () {
       });
     });
 
-    // Function to reload the table
-    function reloadTable() {
-      $.ajax({
-        url: "includes/residenttableautoreload.php",
-        type: "POST",
-        data: { operation: "view" },
-        dataType: "HTML",
-        success: function (data) {
-          $("#ResidentTable tbody").html(data);
-        },
-        error: function (xhr, status, error) {
-          console.error("Error fetching table data:", error);
-        },
-      });
-    }
-  });
-
   //For Editing Resident Entry
   $("#EditResidentModalForm").submit(function (event) {
     // Prevent the default form submission behavior
@@ -125,10 +107,12 @@ $(document).ready(function () {
 
     // Collect form data using FormData
     var formData = new FormData(this);
+    //For the PHP operation IF statement
+    formData.append("operation","EDIT");
 
     // Send AJAX request
     $.ajax({
-      url: "includes/editresident.php",
+      url: "includes/residentoperation.php",
       type: "POST",
       data: formData,
       dataType: "json",

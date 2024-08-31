@@ -7,7 +7,7 @@ if (isset($_GET['search'])) {
     $search = $_GET['search'];
     
     // Fetch user data from the database based on the search query
-    $query = "SELECT * FROM resident WHERE first_name LIKE :search OR last_name LIKE :search OR cellphone_number LIKE :search OR subdivision LIKE :search";
+    $query = "SELECT * FROM resident WHERE first_name LIKE :search OR last_name LIKE :search OR middle_name LIKE :search OR subdivision LIKE :search";
     $stmt = $pdo->prepare($query);
     $stmt->bindValue(':search', '%' . $search . '%', PDO::PARAM_STR);
     $stmt->execute();
@@ -15,7 +15,7 @@ if (isset($_GET['search'])) {
 
 } else {
     // If no search query is provided, fetch all user data from the database
-    $stmt = $pdo->query("SELECT * FROM resident WHERE is_deleted = 0");
+    $stmt = $pdo->query("SELECT * FROM vw_all_resident");
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 ?>

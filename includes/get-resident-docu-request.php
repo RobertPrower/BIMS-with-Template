@@ -1,32 +1,44 @@
 <?php 
 require_once('connecttodb.php');
 
-$id=$_POST['id'];
+$id=$_POST['resident_id'];
 
 if(isset($id)){
 
-    $sqlquery="
-    SELECT 
-        tbl_docu_request.`document-no` AS `document_no`,
-        tbl_docu_request.`date_requested`,
-        tbl_docu_request.`purpose`,
-        tbl_docu_request.`status`,
-        tbl_documents.`document-desc` AS `document_desc`,
-        tbl_documents.`age`
-    FROM
-        tbl_docu_request
-    JOIN
-        resident ON tbl_docu_request.`resident-no` = resident.`resident_id`
-    JOIN
-        tbl_documents ON tbl_docu_request.`document-no` = tbl_documents.`document-id`
-    WHERE
-        resident.`resident_id` = ?";
+    $sqlquery="SELECT * FROM vw_all_res_cert WHERE resident_no = ?";
 
     $stmt=$pdo->prepare($sqlquery);
     $stmt->execute([$id]);
     $result=$stmt->fetchAll(PDO::FETCH_ASSOC);
+                                    
+    //To Populate table rows with Resident Clearance data
+        foreach ($result as $row) {
+            echo "<tr>";
+            
+            echo   "<td>{$row['request_id']}</td>
+                    <td>{$row['date_issued']}</td>
+                    <td>{$row['expiration']}</td>
+                    <td>{$row['cert_type']}</td>
+                    <td>{$row['purpose']}</td>
+                    <td>{$row['age']}</td>
+                    <td>{$row['presented_id']}</td>
+                    <td>{$row['ID_number']}</td>";
 
-    echo json_encode($result);
+                if($row['status']=='0'){
+
+                    echo "<td style='background-color: green; color: white'> ACTIVE </td>";
+
+                }elseif($row['status']=='1'){
+                    
+                    echo "<td style='background-color: grey; color: white'> EXPIRED </td>";
+
+                }else{
+                    echo "<td style='background-color: red; color: white'> REVOKED </td>";
+                    
+                }
+                
+                        
+        }
    
 }else{
     echo json_encode("ID not provided");
