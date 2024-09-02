@@ -1,32 +1,32 @@
 <?php
 require_once("connecttodb.php");
 
+date_default_timezone_set('Asia/Hong_Kong'); //Set the default timezone
+
 $operation_check=$_POST['operation'];
+$nowdate = date("y-m-d");
+$time = date('H:i:s');
+$userid=null;
+$departno= null;
 
 if($operation_check == "ADD"){
     try {
 
         // Retrieve data sent via POST
-        $residentId = sanitizeData($_POST['resident_id']);
-        $firstName = sanitizeData($_POST['fname']);
-        $middleName = sanitizeData($_POST['mname']);
-        $lastName = sanitizeData($_POST['lname']);
-        $suffix = sanitizeData($_POST['suffix']);
-        $houseno = sanitizeData($_POST['house_no']);
-        $streetname = sanitizeData($_POST['street']);
-        $subdivision = sanitizeData($_POST['subd']);
-        $sex = sanitizeData($_POST['sex']);
-        $maritalstatus = sanitizeData($_POST['marital_status']);
-        $birthdate = sanitizeData($_POST['birth_date']);
-        $birthplace = sanitizeData($_POST['birth_place']); 
-        $phonenumber = sanitizeData($_POST['cp_number']);
-        $isavoter = sanitizeData($_POST['is_a_voter']);
-        $residentsince = sanitizeData($_POST['residentsince']);
-
-        $userid=null;
-        $departno= null;
-        $dateadded=date("Y-m-d");
-        $timeadded= date('H:i:s');
+        $fname=sanitizeData($_POST['fname']);
+        $mname=sanitizeData($_POST['mname']);
+        $lname=sanitizeData($_POST['lname']);
+        $suffix=sanitizeData($_POST['suffix']);
+        $houseno=sanitizeData($_POST['house_no']);
+        $street=sanitizeData($_POST['street']);
+        $sudb=sanitizeData($_POST['subd']);
+        $sex=sanitizeData($_POST['sex']);
+        $maritalstatus=sanitizeData($_POST['marital_status']);
+        $birthdate=sanitizeData($_POST['birth_date']);
+        $birthplace=sanitizeData($_POST['birth_place']);
+        $cellphonenumber=sanitizeData($_POST['cellphone_number']);
+        $is_a_voter=sanitizeData($_POST['is_a_voter']);
+        $residentsince=sanitizeData($_POST['resident_since']);
 
 
         //Variable for the Name of the Folder which is img
@@ -63,17 +63,7 @@ if($operation_check == "ADD"){
             throw new Exception("Sorry, there was an error uploading your file.");
         }
 
-        $audit_query = "INSERT INTO res_audit_trail (depart_no, added_by_no, date_added, time_added)
-        VALUES (?, ?,?,?)";
-        $audit_stmt = $pdo->prepare($audit_query);
-        $audit_stmt->execute
-        ([
-        $departno,
-        $userid,
-        $dateadded,
-        $timeadded
-        ]);
-
+       
         // Insert data into the resident table
         $insert_query = "INSERT INTO resident (img_filename, last_name, first_name, middle_name, suffix, house_num, street, subdivision, 
                             resident_since, sex, marital_status, birth_date, birth_place, cellphone_num, is_a_voter)
@@ -98,6 +88,18 @@ if($operation_check == "ADD"){
             $is_a_voter,
             
         ]);
+
+        $audit_query = "INSERT INTO res_audit_trail (added_depart_no, added_by_no, date_added, time_added)
+        VALUES (?, ?,?,?)";
+        $audit_stmt = $pdo->prepare($audit_query);
+        $audit_stmt->execute
+        ([
+        $departno,
+        $userid,
+        $datenow,
+        $timenow
+        ]);
+
 
         // Success response encodes it to JSON format for the AJAX to read
         $response = ["success" => true, "message" => "Data Added successfully"];
@@ -197,7 +199,6 @@ if($operation_check == "ADD"){
  
          $imgopresponse = "Image Updated Successfully";
 
-
     }elseif($_FILES['image_file']['error']==UPLOAD_ERR_INI_SIZE){
         $imgopresponse = "UPLOAD_ERR_INI_SIZE: You exceeded the allow file size";
     }elseif($_FILES['image_file']['error']==UPLOAD_ERR_FORM_SIZE){
@@ -205,7 +206,7 @@ if($operation_check == "ADD"){
     }elseif($_FILES['image_file']['error']==UPLOAD_ERR_PARTIAL){
         $imgopresponse = "UPLOAD_ERR_PARTIAL: The uploaded file was partially upload. Check your Internet Connection";
     }elseif($_FILES['image_file']['error']==UPLOAD_ERR_NO_FILE){
-        $imgopresponse = "UPLOAD_ERR_NO_FILE: Check your upload box if file has been loaded";
+        $imgopresponse = "UPLOAD_ERR_NO_FILE: No file is uploaded";
     }elseif($_FILES['image_file']['error']==UPLOAD_ERR_CANT_WRITE){
         $imgopresponse = "UPLOAD_ERR_CANT_WRITE: Unable to write file to disk.";
     }elseif($_FILES['image_file']['error']==UPLOAD_ERR_EXTENSION){
@@ -213,7 +214,7 @@ if($operation_check == "ADD"){
     }elseif($_FILES['image_file']['error']==UPLOAD_ERR_NO_TMP_DIR){
         $imgopresponse = "UPLOAD_ERR_NO_TEMP_DIR: You have a missing directory";
     }else{
-        $imgopresponse = "No Image Uploaded";
+        $imgopresponse = "No unknown Error";
     }// End of Image Check If statement
 
     try {
@@ -225,6 +226,10 @@ if($operation_check == "ADD"){
         
         // Send success response
         echo json_encode(["success" => true, "message" => "Data updated successfully" . $imgopresponse]);
+
+        $update_audit_sql= "INSERT INTO res_audit_trail(edited_depart_no, last_edited_by, last_edited_dt, last_edited_tm) VALUES(?,?,?,?)";
+         $atstmt= $pdo->prepare($update_audit_sql);
+         $atstmt -> execute([$departno, $userid, $nowdate, $time]);
 
         
     } catch (PDOException $e) {
@@ -259,6 +264,51 @@ if($operation_check == "ADD"){
         echo json_encode(["success" => false, "message" => "ID not Provided"]);
 
     }
+
+}elseif($operation_check=="PAGINATION"){
+   // Fetch the total number of records
+    $total_records = $pdo->query("SELECT COUNT(*) FROM vw_all_resident")->fetchColumn();
+    $limit = 10; //To limit the number of pages
+    $total_pages = ceil($total_records / $limit);
+
+    // Get the current page or set a default
+    $current_page = isset($_POST['pageno']) ? (int)$_POST['pageno'] : 1;
+    $current_page = max(1, min($current_page, $total_pages));
+    $start_from = ($current_page - 1) * $limit;
+
+    // Fetch the data for the current page
+    $query = $pdo->prepare("SELECT * FROM vw_all_resident ORDER BY last_name ASC LIMIT $start_from, $limit");
+    $query->execute();
+    $result = $query->fetchAll();
+
+    // Generate pagination controls
+    echo '<nav aria-label="Page navigation">';
+    echo '<ul class="pagination justify-content-end">';
+
+    // Previous Button
+    if ($current_page > 1) {
+    echo '<li class="page-item">
+            <a class="page-link" href="#" data-page="' . ($current_page - 1) . '">Previous</a>
+            </li>';
+    }
+
+    // Page Number Buttons
+    for ($i = 1; $i <= $total_pages; $i++) {
+    $active = $i == $current_page ? 'active' : '';
+    echo '<li class="page-item ' . $active . '">';
+    echo '<a class="page-link" href="#" data-page="' . $i . '">' . $i . '</a>';
+    echo '</li>';
+    }
+
+    // Next Button
+    if ($current_page < $total_pages) {
+    echo '<li class="page-item">
+            <a class="page-link" href="#" data-page="' . ($current_page + 1) . '">Next</a>
+            </li>';
+    }
+
+    echo '</ul>';
+    echo '</nav>';
 
 }
 

@@ -1,11 +1,16 @@
 $(document).ready(function () {
-  function reloadTable() {
+
+  reloadTable();
+
+  function reloadTable(page) {
     $.ajax({
       url: "includes/residenttableautoreload.php",
       type: "POST",
+      data: {pageno: page},
       dataType: "HTML",
       success: function (data) {
         $("#ResidentTable tbody").html(data);
+        updatePaginationControls(page);
       },
       error: function (xhr, status, error) {
         console.error("Error fetching table data:", error);
@@ -13,12 +18,79 @@ $(document).ready(function () {
     });
   }
 
+  function updatePaginationControls(currentPage){
+    var operation = "PAGINATION";
+    $.ajax({
+      url: "includes/residentoperation.php",
+      type: "POST",
+      data: {pageno: currentPage, operation: operation},
+      dataType: "HTML",
+      success: function (data) {
+        $(".pagination").html(data);
+      },
+      error: function (xhr, status, error) {
+        console.error("Error updating pagination data:", error);
+      },
+    });
+  }
+  //For pagination controls and make it dynamic
+  $(document).on('click', '.page-link', function(e) {
+    e.preventDefault();
+    
+    var page = $(this).data('page'); 
+    var operation = "PAGINATION";
+    
+    console.log('Operation:', operation);
+    console.log('Page:', page);
+
+    $('.pagination .page-item').removeClass('active');
+    $(this).parent().addClass('active');
+    
+
+    $.ajax({
+        url: 'includes/residentoperation.php',  
+        type: 'POST',
+        data: { pageno: page, operation: operation},
+        success: function(response) {
+            $('#ResidentTableBody').html(response);  
+            reloadTable(page)
+        },
+        error: function(xhr, status, error) {
+            console.error('AJAX Error:', status, error); 
+        }
+    });
+  });
+
+  //For the search box
+  $('#searchbox').on("keyup", function(){
+    let query = $(this).val();
+
+    if (query.length >2){
+      $.ajax({
+        url: "includes/residentoperation.php",
+        type: "POST",
+        data: {search: query, operation: "SEARCH"},
+        success: function(data){
+          $('#ResidentTableBody').html(data);
+      },
+      error: function(xhr, status, error) {
+          console.error('AJAX Error:', status, error);
+      }
+      });
+    }else{
+      $("ResidentTableBody").html(""); 
+    }
+  });
+
   //For Adding Resident
   $("#AddResidentModalForm").submit(function (event) {
     event.preventDefault();
 
     var formData = new FormData(this);
     formData.append("operation","ADD");
+
+    var page = $(this).data('pageno');
+    console.log(page);
 
     $.ajax({
       url: "includes/residentoperation.php",
@@ -40,7 +112,7 @@ $(document).ready(function () {
             button: "Close",
           });
 
-          reloadTable();
+          reloadTable(page);
         } else {
           $("#AddResidentModal").modal("hide");
           swal({
@@ -70,7 +142,7 @@ $(document).ready(function () {
 
       var residentId = $(this).data("resident_id");
       console.log(residentId);
-
+      var page = $(this).data("page");
       swal({
         title: "Are you sure?",
         text: "Once deleted, you will not be able to recover this entry!",
@@ -87,7 +159,7 @@ $(document).ready(function () {
             success: function (response) {
               console.log("Data deleted successfully:", response);
               swal("Record Has Been Deleted", { icon: "success" });
-              reloadTable();
+              reloadTable(page);
             },
             error: function (xhr, status, error) {
               console.error("Error deleting data:", error);
@@ -110,6 +182,10 @@ $(document).ready(function () {
     //For the PHP operation IF statement
     formData.append("operation","EDIT");
 
+    const textbox = document.getElementById('pageno');
+    const page = textbox.value;
+    console.log("Page Number: " + page);
+
     // Send AJAX request
     $.ajax({
       url: "includes/residentoperation.php",
@@ -131,7 +207,7 @@ $(document).ready(function () {
             button: "Close",
           });
 
-          reloadTable();
+          reloadTable(page);
         } else {
           $("#EditResidentModal").modal("hide");
           swal({
@@ -156,52 +232,3 @@ $(document).ready(function () {
   });
 });
 
-//For the pagination
-
-$(document).ready(function() {
-  function loadPage(page) {
-      $.ajax({
-          url: 'includes/residentpagination.php',
-          type: 'GET',
-          data: { page: page },
-          dataType: 'json',
-          success: function(response) {
-              var items = response.items;
-              var totalPages = response.total_pages;
-              var currentPage = response.current_page;
-
-              // Clear previous content
-              $('#data-container').empty();
-              $('#pagination-controls').empty();
-
-              // Append items to the container
-              $.each(items, function(index, item) {
-                  $('#data-container').append('<div class="item"><h3>' + item.name + '</h3><p>' + item.description + '</p></div>');
-              });
-
-              // Create pagination controls
-              if (currentPage > 1) {
-                  $('#pagination-controls').append('<a href="#" data-page="' + (currentPage - 1) + '">Previous</a>');
-              }
-              
-              for (var i = 1; i <= totalPages; i++) {
-                  $('#pagination-controls').append('<a href="#" data-page="' + i + '"' + (i === currentPage ? ' class="active"' : '') + '>' + i + '</a>');
-              }
-              
-              if (currentPage < totalPages) {
-                  $('#pagination-controls').append('<a href="#" data-page="' + (currentPage + 1) + '">Next</a>');
-              }
-          }
-      });
-  }
-
-  // Load initial page
-  loadPage(1);
-
-  // Handle pagination link clicks
-  $(document).on('click', '#pagination-controls a', function(e) {
-      e.preventDefault();
-      var page = $(this).data('page');
-      loadPage(page);
-  });
-});

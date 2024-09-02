@@ -2,7 +2,7 @@
 
 
 
-    <!-- Add Blotter Modal -->
+    <!-- Edit Blotter Modal -->
     <form action="#" id="EditResidentModalForm" method="POST" enctype="multipart/form-data">
     <div class="modal fade" id="EditResidentModal" name="add" tabindex="-1" aria-labelledby="EditResidentModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl">
@@ -25,6 +25,7 @@
 
                            <!-- Hidden Text Box to Store the resident_id value -->
                             <input hidden type="text" id="resident_id" name="resident_id" />
+                            <input hidden type="text" id="pageno" name="pageno" />
 
                             <img id="editimagePreview"
                             class="rounded-circle img-fluid" style="width: 200px; height: 200px;" />

@@ -15,7 +15,7 @@ if (isset($_GET['search'])) {
 
 } else {
     // If no search query is provided, fetch all user data from the database
-    $stmt = $pdo->query("SELECT * FROM vw_all_resident");
+    $stmt = $pdo->query("SELECT * FROM vw_all_resident  ORDER BY last_name ASC LIMIT 0, 10");
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 ?>

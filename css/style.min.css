@@ -1403,6 +1403,12 @@ label {
   padding: 5px 16px;
 }
 
+.pagination .page-item.disabled .page-link {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+
 .users-table table,
 .users-table-info {
   line-height: 1.4;

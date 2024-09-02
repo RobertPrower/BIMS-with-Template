@@ -1,4 +1,5 @@
 <?php 
+    include_once('includes/connecttodb.php');
     include_once("includes/residentsearchfunction.php");// SQL Query for the table and search
  ?>
 
@@ -54,31 +55,32 @@
         <div class="container">
             <div class="container p-3">
                 <h2 class="main-title">Manage Residents</h2>
-                    <div class="row pb-3">
-                        <div class="col-md-8">
-                            <!-- Buttons -->
-                            <div class="d-flex justify-content-start" style="padding-left: 15px;">
-                               
-                                <!-- Button to trigger modal -->
-                                <button type="button" class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#AddResidentModal">Add Resident</button>
-                                <!-- Modal on a spepare file -->
-                                <?php require_once('includes/addresidentmodal.php'); ?>
-                              
-                            </div>
+                <div class="row pb-3">
+                    <div class="col-md-8">
+                        <!-- Buttons -->
+                        <div class="d-flex justify-content-start" style="padding-left: 15px;">
+                        
+                            <!-- Button to trigger modal -->
+                            <button type="button" class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#AddResidentModal">Add Resident</button>
+                            <!-- Modal on a spepare file -->
+                            <?php require_once('includes/addresidentmodal.php'); ?>
+                        
                         </div>
-                        <div class="container col-md-3">
-                            <div class="row">
-                            <!-- Search Box -->
+                    </div>
+
+                    <div class="container col-md-3">
+                        <div class="row">
+                        <!-- Search Box -->
                             <div class="search-wrapper">
-                           
-                                <form action="residents.php" method="GET" class="d-flex">
-                                    <button type="submit" class="btn-sm btn-light" data-feather="search" aria-hidden="true" required><img src="icons/search.png" alt="Search Icon"></img></button>
-                                    <input type="text" class="form-control me-2" name="search" placeholder="Search...">
-                                   
-                                </form>
+                                                       
+                            <button type="submit" class="btn-sm btn-light" data-feather="search" aria-hidden="true" required></button>
+                            <input type="text" class="form-control me-2" id="searchbox" name="search" placeholder="Search...">
+                                
                             </div>
                         </div>
                     </div>
+                
+                    
                 </div>
 
                 <div class="users-table table-wrapper">
@@ -102,10 +104,13 @@
                             <th style="width: 10%;" class="text-center">Action</th>
                         </tr>
                         </thead>
-                        <tbody>
-                        
+
+                        <tbody id="ResidentTableBody">
+                        <!-- Table Body -->
                         
                         <?php
+
+                        /*
                             
                         //To Populate table rows with user data
                         foreach ($result as $row) {
@@ -114,7 +119,7 @@
                                     <td hidden>{$row['resident_id']}</td>
                                     <td>{$row['date_recorded']}</td>
                                     <td>{$row['last_name']}, {$row['first_name']} {$row['middle_name']} {$row['suffix']}</td>
-                                    <td>{$row['house_num']}, {$row['street']}, {$row['subdivision']}</td>
+                                    <td>{$row['house_num']}, {$row['street']} {$row['subdivision']}</td>
                                     <td class='text-center'>{$row['resident_since']}
                                     <td>{$row['sex']}</td>
                                     <td>{$row['marital_status']}</td>
@@ -152,6 +157,7 @@
 
                             // //For the edit button
                             echo '<button href="#" class="btn btn-success mx-1 editResidentButton" 
+                            data-pageno="'.$current_page.'"
                             data-id="' . $row['resident_id'] . '"
                             data-first-name="' . htmlspecialchars($row['first_name'], ENT_QUOTES) . '"
                             data-middle-name="' . htmlspecialchars($row['middle_name'], ENT_QUOTES) . '"
@@ -171,29 +177,49 @@
 
                             // For the Delete Button
 
-                            // 
-                            echo '
-                            <button type="submit" class="Delete_Button btn btn-danger mx-1" id="deletebutton" data-resident_id="' . $row['resident_id'] . '">Delete</button>
+                            echo 
+                            
+                            '<button type="submit" class="Delete_Button btn btn-danger mx-1" id="deletebutton" 
+                            data-pageno="'.$current_page.'"
+                            data-resident_id="' . $row['resident_id'] . '">Delete</button>
                             
                             </div>
                             </td>
                             </tr>';
 
                         }
-                        ?>
+                        */?>
                         </tbody> 
                         <!-- </tbody> -->
                     </table>
                     <!-- End of Table -->
                 <!-- </div> -->
+                <!-- /Div Causing the problem without it will work fine-->
 
-                <nav aria-label="Page navigation example">
+               <!-- Pagination Controls -->
+               <nav aria-label="Page navigation">
                     <ul class="pagination justify-content-end">
-                        <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                    
+                    <!-- Previous Button -->
+                    
+                        <li class="page-item">
+                            <a class="page-link" href="#">Previous</a>
+                        </li>
+                    
+
+                        <!-- Page Numbers -->
+                        
+                            <li class="page-item">
+                                <a class="page-link" href="#" data-page=""></a>
+                            </li>
+                       
+
+                        <!-- Next Button -->
+                      
+                            <li class="page-item">
+                                <a class="page-link" href="#">Next</a>
+                            </li>
+                        
                     </ul>
                 </nav>
 
@@ -203,7 +229,7 @@
             ?>
             </div>  
         </div>
-      </main>
+        </main>
     
     <!-- ! Footer -->
   <?php require_once("includes/footer.php")?>
@@ -215,6 +241,7 @@
 <script src="js/populateresidentviewmodal.js"> </script>
         
 <script src="js/residentaction.js"> </script>
+<script src="js/residentpagination.js"></script>
 
 <!-- Chart library -->
 <script src="./plugins/chart.min.js"></script>

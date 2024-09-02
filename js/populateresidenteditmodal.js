@@ -2,6 +2,7 @@
 
 $(document).on("click", ".editResidentButton", function () {
   event.preventDefault();  
+  var page = $(this).data('pageno');
   var resident_id = $(this).data("id");
   var first_name = $(this).data("first-name");
   var middle_name = $(this).data("middle-name");
@@ -21,6 +22,7 @@ $(document).on("click", ".editResidentButton", function () {
 
 
   // Populate the modal with the retrieved data
+  $('#EditResidentModal input[name="pageno"]').val(page);
   $('#EditResidentModal input[name="resident_id"]').val(resident_id);
   $('#EditResidentModal input[name="fname"]').val(first_name);
   $('#EditResidentModal input[name="mname"]').val(middle_name);
@@ -40,5 +42,6 @@ $(document).on("click", ".editResidentButton", function () {
   // Display the modal
   $("#EditResidentModal").modal("show");
   console.log("Suffix is:" + suffix);
+  console.log(page);
 
 });

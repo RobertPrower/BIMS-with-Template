@@ -1,9 +1,12 @@
 <?php
 
 include 'connecttodb.php';
+$limit = 10;
+$page = isset($_POST['pageno']) ? $_POST['pageno'] : 1;
+$start_from = ($page - 1) * $limit;
 
 try {
-        $sql = "SELECT * FROM vw_all_resident"; 
+        $sql = "SELECT * FROM vw_all_resident ORDER BY last_name ASC LIMIT $start_from, $limit"; 
         $stmt = $pdo->prepare($sql);
         $stmt->execute();
         $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -27,7 +30,6 @@ try {
             echo '<td style="width: 35%;">
                 <div class="btn-group text-center">
                         
-                        
                     <button class="btn btn-primary mx-1 viewResidentButton" id=vbutton
                         data-id="' . htmlspecialchars($row['resident_id']) . '"
                         data-first-name="' . htmlspecialchars($row['first_name'], ENT_QUOTES) . '"
@@ -48,6 +50,7 @@ try {
 
                         
                     <button class="btn btn-success mx-1 editResidentButton"
+                        data-pageno="'.$page.'"
                         data-id="' . htmlspecialchars($row['resident_id']) . '"
                         data-first-name="' . htmlspecialchars($row['first_name'], ENT_QUOTES) . '"
                         data-middle-name="' . htmlspecialchars($row['middle_name'], ENT_QUOTES) . '"
@@ -67,10 +70,12 @@ try {
 
                       
                     <button class="btn btn-danger mx-1 deleteResidentButton" id="deletebutton"
+                        data-pageno="'.$page.'"
                         data-resident_id = "' . htmlspecialchars($row['resident_id']) . '">Delete</button>
                 </div>
             </td>';
             echo '</tr>';
+          
         }
     } else {
         echo '<tr><td colspan="12">No records found.</td></tr>';
