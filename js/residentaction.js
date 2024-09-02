@@ -33,6 +33,43 @@ $(document).ready(function () {
       },
     });
   }
+
+  //Function to search for entries
+  function fetchResults(query, page = 1) {
+    $.ajax({
+        url: "includes/residentsearch.php",
+        type: "POST",
+        data: { search: query, page: page, operation: "SEARCH" },
+        success: function (data) {
+            $("#searchResults").html(data);
+        },
+        error: function (xhr, status, error) {
+            console.error("Error fetching search results:", error);
+        }
+    });
+
+    //For search Pagination clicks
+    $("#searchResults").on("click", ".page-link", function (e) {
+      e.preventDefault();
+      let page = $(this).data("page");
+      let query = $("#searchBox").val();
+      fetchResults(query, page);
+  });
+  }
+
+  //For the search box
+  $('#searchbox').on("keyup", function(){
+    let query = $(this).val();
+
+    if (query.length >2){
+
+      fetchResults(query);
+
+    }else{
+      $("ResidentTableBody").html(""); 
+    }
+  });
+
   //For pagination controls and make it dynamic
   $(document).on('click', '.page-link', function(e) {
     e.preventDefault();
@@ -59,27 +96,6 @@ $(document).ready(function () {
             console.error('AJAX Error:', status, error); 
         }
     });
-  });
-
-  //For the search box
-  $('#searchbox').on("keyup", function(){
-    let query = $(this).val();
-
-    if (query.length >2){
-      $.ajax({
-        url: "includes/residentoperation.php",
-        type: "POST",
-        data: {search: query, operation: "SEARCH"},
-        success: function(data){
-          $('#ResidentTableBody').html(data);
-      },
-      error: function(xhr, status, error) {
-          console.error('AJAX Error:', status, error);
-      }
-      });
-    }else{
-      $("ResidentTableBody").html(""); 
-    }
   });
 
   //For Adding Resident

@@ -266,6 +266,7 @@ if($operation_check == "ADD"){
     }
 
 }elseif($operation_check=="PAGINATION"){
+    
    // Fetch the total number of records
     $total_records = $pdo->query("SELECT COUNT(*) FROM vw_all_resident")->fetchColumn();
     $limit = 10; //To limit the number of pages
@@ -311,6 +312,7 @@ if($operation_check == "ADD"){
     echo '</nav>';
 
 }
+    
 
 // Function to check if a file with the given name exists in the resident_img table
 
@@ -330,7 +332,7 @@ function generateUniqueFileName($target_dir, $originalFileName) {
 }
 //To Sanitize the Data to prevent SQL Injections and Cross site scripting and insertion of special characters
 function sanitizeData($input){
-    $removedSpecialChar = trim ($input, "!@#$%^&*()-=[]{};:`~'<>,./\?| "); 
+    $removedSpecialChar = trim ($input, "!@#$%^&*()=[]{};:`~'<>,./\?| "); 
     $removedSpecialCharinthemiddle= preg_replace('/[^a-zA-Z0-9\s\-ñÑ#]/u','', $removedSpecialChar);
 
     $sanatizedData=htmlspecialchars($removedSpecialCharinthemiddle);
