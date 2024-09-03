@@ -19,11 +19,10 @@ $(document).ready(function () {
   }
 
   function updatePaginationControls(currentPage){
-    var operation = "PAGINATION";
     $.ajax({
       url: "includes/residentoperation.php",
       type: "POST",
-      data: {pageno: currentPage, operation: operation},
+      data: {pageno: currentPage, operation: "PAGINATION"},
       dataType: "HTML",
       success: function (data) {
         $(".pagination").html(data);
@@ -34,6 +33,20 @@ $(document).ready(function () {
     });
   }
 
+  function updateSearchPaginationControls(query, currentPage) {
+    $.ajax({
+        url: "includes/residentsearch.php",
+        type: "POST",
+        data: { search: query, pageno: currentPage, operation: "SEARCH_PAGINATION" },
+        success: function (data) {
+            $(".pagination").html(data);
+        },
+        error: function (xhr, status, error) {
+            console.error("Error updating search pagination data:", error);
+        },
+    });
+  }
+
   //Function to search for entries
   function fetchResults(query, page = 1) {
     $.ajax({
@@ -41,7 +54,8 @@ $(document).ready(function () {
         type: "POST",
         data: { search: query, page: page, operation: "SEARCH" },
         success: function (data) {
-            $("#searchResults").html(data);
+            $("#ResidentTableBody").html(data);
+            updateSearchPaginationControls(query);
         },
         error: function (xhr, status, error) {
             console.error("Error fetching search results:", error);
@@ -49,10 +63,11 @@ $(document).ready(function () {
     });
 
     //For search Pagination clicks
-    $("#searchResults").on("click", ".page-link", function (e) {
+    $("#ResidentTableBody").on("click", ".page-link", function (e) {
       e.preventDefault();
       let page = $(this).data("page");
-      let query = $("#searchBox").val();
+      let query = $("#searchbox").val();
+
       fetchResults(query, page);
   });
   }
@@ -67,6 +82,27 @@ $(document).ready(function () {
 
     }else{
       $("ResidentTableBody").html(""); 
+    }
+  });
+
+  $("#showdeletedentries").click(function() {
+    if ($("#showdeletedentries").is(":checked")){
+      var page = 1;
+      $.ajax({
+        url: "includes/residentoperation.php",
+        type: "POST",
+        data: {pageno: page, operation: "SHOW_DELETED"},
+        dataType: "HTML",
+        success: function (data) {
+          $("#ResidentTable tbody").html(data);
+          updatePaginationControls(page, "YES");
+        },
+        error: function (xhr, status, error) {
+          console.error("Error fetching table data:", error);
+        },
+      });
+    }else{
+      reloadTable();
     }
   });
 

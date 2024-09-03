@@ -63,6 +63,17 @@ if($operation_check == "ADD"){
             throw new Exception("Sorry, there was an error uploading your file.");
         }
 
+        //Record to Audit Trail
+        $audit_query = "INSERT INTO res_audit_trail (added_depart_no, added_by_no, date_added, time_added)
+        VALUES (?, ?,?,?)";
+        $audit_stmt = $pdo->prepare($audit_query);
+        $audit_stmt->execute
+        ([
+        $departno,
+        $userid,
+        $nowdate,
+        $time
+        ]);
        
         // Insert data into the resident table
         $insert_query = "INSERT INTO resident (img_filename, last_name, first_name, middle_name, suffix, house_num, street, subdivision, 
@@ -88,18 +99,6 @@ if($operation_check == "ADD"){
             $is_a_voter,
             
         ]);
-
-        $audit_query = "INSERT INTO res_audit_trail (added_depart_no, added_by_no, date_added, time_added)
-        VALUES (?, ?,?,?)";
-        $audit_stmt = $pdo->prepare($audit_query);
-        $audit_stmt->execute
-        ([
-        $departno,
-        $userid,
-        $datenow,
-        $timenow
-        ]);
-
 
         // Success response encodes it to JSON format for the AJAX to read
         $response = ["success" => true, "message" => "Data Added successfully"];
@@ -227,9 +226,9 @@ if($operation_check == "ADD"){
         // Send success response
         echo json_encode(["success" => true, "message" => "Data updated successfully" . $imgopresponse]);
 
-        $update_audit_sql= "INSERT INTO res_audit_trail(edited_depart_no, last_edited_by, last_edited_dt, last_edited_tm) VALUES(?,?,?,?)";
+        $update_audit_sql= "UPDATE res_audit_trail SET edited_depart_no=?, last_edited_by=?, last_edited_dt=?, last_edited_tm=? WHERE res_at_id=?";
          $atstmt= $pdo->prepare($update_audit_sql);
-         $atstmt -> execute([$departno, $userid, $nowdate, $time]);
+         $atstmt -> execute([$departno, $userid, $nowdate, $time, $residentId]);
 
         
     } catch (PDOException $e) {
@@ -253,6 +252,10 @@ if($operation_check == "ADD"){
             $update_query = "UPDATE resident SET is_deleted = 1 WHERE resident_id = ?";
             $update_stmt = $pdo->prepare($update_query);
             $update_stmt->execute([$id_to_delete]);
+
+            $update_audit_sql= "UPDATE res_audit_trail SET dept_del_no=?, del_by_no=?, del_date=?, del_time=? WHERE res_at_id=?";
+            $atstmt= $pdo->prepare($update_audit_sql);
+            $atstmt -> execute([$departno, $userid, $nowdate, $time, $id_to_delete]);
             echo json_encode(["success" => true, "message" => "Record Soft deleted successfully."]);
 
         }catch(PDOException $e){
@@ -311,6 +314,150 @@ if($operation_check == "ADD"){
     echo '</ul>';
     echo '</nav>';
 
+}elseif($operation_check=="SHOW_DELETED"){
+
+     // Fetch the total number of records
+     $total_records = $pdo->query("SELECT COUNT(*) FROM resident WHERE is_deleted=1")->fetchColumn();
+     $limit = 10; //To limit the number of pages
+     $total_pages = ceil($total_records / $limit);
+ 
+     // Get the current page or set a default
+     $current_page = isset($_POST['pageno']) ? (int)$_POST['pageno'] : 1;
+     $current_page = max(1, min($current_page, $total_pages));
+     $start_from = ($current_page - 1) * $limit;
+ 
+     // Fetch the data for the current page
+     $query = $pdo->prepare("SELECT 
+                                `resident`.`resident_id`       AS `resident_id`,
+                                `res_audit_trail`.`date_added` AS `date_recorded`,
+                                `resident`.`img_filename`      AS `img_filename`,
+                                `resident`.`last_name`         AS `last_name`,
+                                `resident`.`first_name`        AS `first_name`,
+                                `resident`.`middle_name`       AS `middle_name`,
+                                `resident`.`suffix`            AS `suffix`,
+                                `resident`.`house_num`         AS `house_num`,
+                                `resident`.`street`            AS `street`,
+                                `resident`.`subdivision`       AS `subdivision`,
+                                `resident`.`resident_since`    AS `resident_since`,
+                                `resident`.`sex`               AS `sex`,
+                                `resident`.`marital_status`    AS `marital_status`,
+                                `resident`.`birth_date`        AS `birth_date`,
+                                `resident`.`birth_place`       AS `birth_place`,
+                                `resident`.`cellphone_num`     AS `cellphone_num`,
+                                `resident`.`is_a_voter`        AS `is_a_voter`,
+                                `resident`.`is_deleted`        AS `is_deleted`
+                                FROM resident
+                                JOIN res_audit_trail ON resident.audit_trail = res_audit_trail.res_at_id      
+                                WHERE is_deleted=1 ORDER BY last_name ASC LIMIT $start_from, $limit");
+     $query->execute();
+     $results = $query->fetchAll();
+
+     foreach ($results as $row) {
+        echo '<tr>';
+        echo '<td hidden>' . htmlspecialchars($row['resident_id']) . '</td>';
+        echo '<td>' . htmlspecialchars($row['date_recorded']) . '</td>';
+        echo '<td>' . htmlspecialchars($row['last_name']) . ', ' . htmlspecialchars($row['first_name']) . ' ' . htmlspecialchars($row['middle_name']) . ' ' . htmlspecialchars($row['suffix']) . '</td>';
+        echo '<td>' . htmlspecialchars($row['house_num']) . ', ' . htmlspecialchars($row['street']) . ', ' . htmlspecialchars($row['subdivision']) . '</td>';
+        echo '<td class="text-center">' . htmlspecialchars($row['resident_since']) . '</td>';
+        echo '<td>' . htmlspecialchars($row['sex']) . '</td>';
+        echo '<td>' . htmlspecialchars($row['marital_status']) . '</td>';
+        echo '<td>' . htmlspecialchars($row['birth_date']) . '</td>';
+        echo '<td>' . htmlspecialchars($row['birth_place']) . '</td>';
+        echo '<td class="text-center">' . htmlspecialchars($row['cellphone_num']) . '</td>';
+        echo '<td>' . ($row['is_a_voter'] ? 'YES' : 'NO') . '</td>';
+        echo '<td style="width: 35%;">
+            <div class="btn-group text-center">
+                    
+                <button class="btn btn-primary mx-1 viewResidentButton" id=vbutton
+                    data-id="' . htmlspecialchars($row['resident_id']) . '"
+                    data-first-name="' . htmlspecialchars($row['first_name'], ENT_QUOTES) . '"
+                    data-middle-name="' . htmlspecialchars($row['middle_name'], ENT_QUOTES) . '"
+                    data-last-name="' . htmlspecialchars($row['last_name'], ENT_QUOTES) . '"
+                    data-suffix="' . htmlspecialchars($row['suffix'], ENT_QUOTES) . '"
+                    data-house-no="' . htmlspecialchars($row['house_num'], ENT_QUOTES) . '"
+                    data-street-name="' . htmlspecialchars($row['street'], ENT_QUOTES) . '"
+                    data-subdivision="' . htmlspecialchars($row['subdivision'], ENT_QUOTES) . '"
+                    data-sex="' . htmlspecialchars($row['sex'], ENT_QUOTES) . '"
+                    data-marital-status="' . htmlspecialchars($row['marital_status'], ENT_QUOTES) . '"
+                    data-birth-date="' . htmlspecialchars($row['birth_date'], ENT_QUOTES) . '"
+                    data-birth-place="' . htmlspecialchars($row['birth_place'], ENT_QUOTES) . '"
+                    data-phone-number="' . htmlspecialchars($row['cellphone_num'], ENT_QUOTES) . '"
+                    data-isa-voter="' . htmlspecialchars($row['is_a_voter'], ENT_QUOTES) . '"
+                    data-rsince="' . htmlspecialchars($row['resident_since'], ENT_QUOTES) . '"
+                    data-bs-toggle="modal" data-bs-target="#ViewResidentModal">View</button>
+
+                    
+                <button class="btn btn-success mx-1 editResidentButton"
+                    data-pageno="'.$page.'"
+                    data-id="' . htmlspecialchars($row['resident_id']) . '"
+                    data-first-name="' . htmlspecialchars($row['first_name'], ENT_QUOTES) . '"
+                    data-middle-name="' . htmlspecialchars($row['middle_name'], ENT_QUOTES) . '"
+                    data-last-name="' . htmlspecialchars($row['last_name'], ENT_QUOTES) . '"
+                    data-suffix="' . htmlspecialchars($row['suffix'], ENT_QUOTES) . '"
+                    data-house-no="' . htmlspecialchars($row['house_num'], ENT_QUOTES) . '"
+                    data-street-name="' . htmlspecialchars($row['street'], ENT_QUOTES) . '"
+                    data-subdivision="' . htmlspecialchars($row['subdivision'], ENT_QUOTES) . '"
+                    data-sex="' . htmlspecialchars($row['sex'], ENT_QUOTES) . '"
+                    data-marital-status="' . htmlspecialchars($row['marital_status'], ENT_QUOTES) . '"
+                    data-birth-date="' . htmlspecialchars($row['birth_date'], ENT_QUOTES) . '"
+                    data-birth-place="' . htmlspecialchars($row['birth_place'], ENT_QUOTES) . '"
+                    data-phone-number="' . htmlspecialchars($row['cellphone_num'], ENT_QUOTES) . '"
+                    data-isa-voter="' . htmlspecialchars($row['is_a_voter'], ENT_QUOTES) . '"
+                    data-residentsince="' . htmlspecialchars($row['resident_since'], ENT_QUOTES) . '"
+                    data-bs-toggle="modal" data-bs-target="#EditResidentModal">Edit</button>
+
+                    <button class="btn btn-warning mx-1 deleteResidentButton" id="undodeletebutton"
+                    data-pageno="'.$current_page.'"
+                    data-resident_id = "' . htmlspecialchars($row['resident_id']) . '">Recover</button>
+            
+            </div>
+        </td>
+        </tr>';
+      
+    }
+
+
+    
+
+}elseif($operation_check=="PAGINATION_FOR_DEL_REC"){
+    // Fetch the total number of records
+    $total_records = $pdo->query("SELECT COUNT(*) FROM resident WHERE is_deleted=1")->fetchColumn();
+    $limit = 10; //To limit the number of pages
+    $total_pages = ceil($total_records / $limit);
+
+    // Get the current page or set a default
+    $current_page = isset($_POST['pageno']) ? (int)$_POST['pageno'] : 1;
+    $current_page = max(1, min($current_page, $total_pages));
+    $start_from = ($current_page - 1) * $limit;
+
+    // Generate pagination controls
+    echo '<nav aria-label="Page navigation">';
+    echo '<ul class="pagination justify-content-end">';
+
+    // Previous Button
+    if ($current_page > 1) {
+    echo '<li class="page-item">
+            <a class="page-link" href="#" data-page="' . ($current_page - 1) . '">Previous</a>
+            </li>';
+    }
+
+    // Page Number Buttons
+    for ($i = 1; $i <= $total_pages; $i++) {
+    $active = $i == $current_page ? 'active' : '';
+    echo '<li class="page-item ' . $active . '">';
+    echo '<a class="page-link" href="#" data-page="' . $i . '">' . $i . '</a>';
+    echo '</li>';
+    }
+
+    // Next Button
+    if ($current_page < $total_pages) {
+    echo '<li class="page-item">
+            <a class="page-link" href="#" data-page="' . ($current_page + 1) . '">Next</a>
+            </li>';
+    }
+
+    echo '</ul>';
+    echo '</nav>';
 }
     
 

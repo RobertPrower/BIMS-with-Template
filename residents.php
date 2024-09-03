@@ -1,8 +1,3 @@
-<?php 
-    include_once('includes/connecttodb.php');
-    include_once("includes/residentsearchfunction.php");// SQL Query for the table and search
- ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -16,25 +11,13 @@
   <!-- Custom styles -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
   <link rel="stylesheet" href="./css/style.min.css">
-  <!-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css"> -->
-  <!-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/2.0.7/css/dataTables.bootstrap5.css">
-  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/2.0.7/css/dataTables.dataTables.min.css">
-  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/3.0.2/css/buttons.dataTables.css">
-  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/2.0.7/css/dataTables.dataTables.css"> -->
+
 
   <!--Scripts Must be Always On the Top -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js" integrity="sha256-xLD7nhI62fcsEZK2/v8LsBcb4lG7dgULkuXoXB/j91c=" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-  <!-- <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
-  <script src="https://cdn.datatables.net/2.0.7/js/dataTables.min.js"></script>
-  <script src="https://cdn.datatables.net/buttons/3.0.2/js/dataTables.buttons.js"></script>
-  <script> src="https://cdn.datatables.net/buttons/3.0.2/js/buttons.dataTables.js"</script> -->
-
-
-
-
 
 <body>
   <div class="layer"></div>
@@ -62,6 +45,12 @@
                         
                             <!-- Button to trigger modal -->
                             <button type="button" class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#AddResidentModal">Add Resident</button>
+                            
+                            <div class="form-check form-switch my-2">
+                                <input class="form-check-input" type="checkbox" id="showdeletedentries">
+                                <label class="form-check-label" for="showdeletedentries">Show deleted entries</label>
+                            </div>
+
                             <!-- Modal on a spepare file -->
                             <?php require_once('includes/addresidentmodal.php'); ?>
                         
