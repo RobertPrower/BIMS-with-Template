@@ -32,10 +32,10 @@ foreach ($results as $row) {
                         data-phone-number="' . htmlspecialchars($row['cellphone_num'], ENT_QUOTES) . '"
                         data-isa-voter="' . htmlspecialchars($row['is_a_voter'], ENT_QUOTES) . '"
                         data-rsince="' . htmlspecialchars($row['resident_since'], ENT_QUOTES) . '"
-                        data-bs-toggle="modal" data-bs-target="#ViewResidentModal">View</button>
+                        data-bs-toggle="modal" data-bs-target="#ViewResidentModal">View</button>';
 
-                        
-                    <button class="btn btn-success mx-1 editResidentButton"
+                    if($row['is_deleted'] == "0"){
+                        echo '<button class="btn btn-success mx-1 editResidentButton"
                         data-pageno="'.$page.'"
                         data-id="' . htmlspecialchars($row['resident_id']) . '"
                         data-first-name="' . htmlspecialchars($row['first_name'], ENT_QUOTES) . '"
@@ -51,10 +51,12 @@ foreach ($results as $row) {
                         data-birth-place="' . htmlspecialchars($row['birth_place'], ENT_QUOTES) . '"
                         data-phone-number="' . htmlspecialchars($row['cellphone_num'], ENT_QUOTES) . '"
                         data-isa-voter="' . htmlspecialchars($row['is_a_voter'], ENT_QUOTES) . '"
-                        data-residentsince="' . htmlspecialchars($row['resident_since'], ENT_QUOTES) . '"
+                        data-rsince="' . htmlspecialchars($row['resident_since'], ENT_QUOTES) . '"
                         data-bs-toggle="modal" data-bs-target="#EditResidentModal">Edit</button>';
+                    }else{
+                        //Nothing to Display
+                    }
 
-                      
                    if($row['is_deleted'] == "0"){ 
                         echo '<button class="btn btn-danger mx-1 deleteResidentButton" id="deletebutton"
                             data-pageno="'.$page.'"

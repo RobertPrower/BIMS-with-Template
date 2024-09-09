@@ -2,8 +2,6 @@
   <div class="container footer--flex">
     <div class="footer-start">
       <p>BIMS © Robert Salas, John Rin Hofileña, Renzy Carlo Morte</p>
-      
-
     </div>
 
     <p>CMS Template © Elegant Dashboard 2024</p>

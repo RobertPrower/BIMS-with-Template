@@ -8,9 +8,6 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-
-                    <!-- Edit form -->
-
                     <nav>
                         <div class="nav nav-tabs" id="nav-tab" role="tablist">
                             <button class="nav-link show" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#profile-tab" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Profile</button>
@@ -18,10 +15,10 @@
                             <button class="nav-link" id="nav-blotters-tab" data-bs-toggle="tab" data-bs-target="#nav-contact" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">Blotters Involved</button>
                         </div>
                     </nav>
-                        <div class="tab-content" id="nav-tabContent">
                         <!------------------------------------------------------------------------------------------------------------>
                                                 <!-- Profile Tab Content -->
                         <!-------------------------------------------------------------------------------------------------------------->
+                        <div class="tab-content" id="nav-tabContent">
                             <div class="tab-pane fade active show" id="profile-tab" role="tabpanel" aria-labelledby="nav-home-tab" tabindex="0">
                                 <div class="row">
 
@@ -134,7 +131,7 @@
                                             </div> 
 
                                             <div class="form-floating mt-3 mb-3 col-md-4">
-                                                <input type="text" class="form-control" id="floatingInput" id="cp_number" name="cp_number" disabled>
+                                                <input type="text" class="form-control" id="floatingInput" id="cp_number" name="cellphone_number" disabled>
                                                 <label for="floatingInput">Phone Number</label>
                                             </div> 
 
@@ -149,7 +146,7 @@
                                             </div>
 
                                             <div class="form-floating mt-3 mb-3 col-md-2">
-                                                <input type="text" class="form-control" id="resident_since" name="r_since" disabled>
+                                                <input type="text" class="form-control" id="resident_since" name="rsince" disabled>
                                                 <label for="floatingInput">Resident Since</label>
                                             </div>
                                         </div>
@@ -206,9 +203,10 @@
                         </tbody>
                     </table>
 
-                        </div>
-                        <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab" tabindex="0">...</div>
-                        </div>
+                    </div>
+
+                    <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab" tabindex="0">...</div>
+                    </div>
                    
                 </div>
                     <div class="modal-footer">

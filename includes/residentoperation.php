@@ -3,64 +3,89 @@ require_once("connecttodb.php");
 
 date_default_timezone_set('Asia/Hong_Kong'); //Set the default timezone
 
-$operation_check=$_POST['operation'];
-$nowdate = date("y-m-d");
-$time = date('H:i:s');
-$userid=null;
-$departno= null;
+$operation_check=$_POST['operation']; //Catches What operation to perform
+$nowdate = date("y-m-d"); //Checks the current date
+$time = date('H:i:s'); //Checks the current time
+$userid=null; // For the user currently using the system
+$departno= null; // For the users depart currently using
 
-if($operation_check == "ADD"){
+ // Retrieve data sent via POST for add and edit
+ $fname = (isset($_POST['fname'])) ? sanitizeData($_POST['fname']): null;
+ $mname = (isset($_POST['mname'])) ? sanitizeData($_POST['mname']): null;
+ $lname = (isset($_POST['lname'])) ? sanitizeData($_POST['lname']): null;
+ $suffix = (isset($_POST['suffix'])) ? sanitizeData($_POST['suffix']): null;
+ $houseno = (isset($_POST['house_no'])) ? sanitizeData($_POST['house_no']): null;
+ $street = (isset($_POST['street'])) ? sanitizeData($_POST['street']): null;
+ $subd = (isset($_POST['subd'])) ? sanitizeData($_POST['subd']): null;
+ $sex = (isset($_POST['sex'])) ? sanitizeData($_POST['sex']): null;
+ $maritalstatus = (isset($_POST['marital_status'])) ? sanitizeData($_POST['marital_status']): null;
+ $birthdate = (isset($_POST['birth_date'])) ? sanitizeData($_POST['birth_date']): null;
+ $birthplace = (isset($_POST['birth_place'])) ? sanitizeData($_POST['birth_place']): null;
+ $cellphonenumber = (isset($_POST['cellphone_number'])) ? sanitizeData($_POST['cellphone_number']): null;
+ $is_a_voter = (isset($_POST['is_a_voter'])) ? sanitizeData($_POST['is_a_voter']): null;
+ $residentsince = (isset($_POST['rsince'])) ? sanitizeData($_POST['rsince']): null;
+
+if($operation_check == "ADD"){ //For the add operation
     try {
 
-        // Retrieve data sent via POST
-        $fname=sanitizeData($_POST['fname']);
-        $mname=sanitizeData($_POST['mname']);
-        $lname=sanitizeData($_POST['lname']);
-        $suffix=sanitizeData($_POST['suffix']);
-        $houseno=sanitizeData($_POST['house_no']);
-        $street=sanitizeData($_POST['street']);
-        $sudb=sanitizeData($_POST['subd']);
-        $sex=sanitizeData($_POST['sex']);
-        $maritalstatus=sanitizeData($_POST['marital_status']);
-        $birthdate=sanitizeData($_POST['birth_date']);
-        $birthplace=sanitizeData($_POST['birth_place']);
-        $cellphonenumber=sanitizeData($_POST['cellphone_number']);
-        $is_a_voter=sanitizeData($_POST['is_a_voter']);
-        $residentsince=sanitizeData($_POST['resident_since']);
+        if(isset($_POST['imagefile'])){
+             //Variable for the Name of the Folder which is img
+            $target_dir = "img/resident_img/";
+
+            //Variable for the path
+            $target_file = $target_dir . basename($_FILES["image_file"]["name"]);
+
+            // To get the file extension and converts it to lower case
+            $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
+
+            // Generate a Unique filename via the generateUniqueFileName user define function below
+            $fileName = generateUniqueFileName($target_dir, basename($_FILES["image_file"]["name"]));
+            $target_file = $target_dir . $fileName;
+
+            // Check if file is an image
+            $check = getimagesize($_FILES["image_file"]["tmp_name"]);
+            if ($check === false) {
+                throw new Exception("File is not an image.");
+            }
+
+            // Check file size
+            if ($_FILES["image_file"]["size"] > 500000) {
+                throw new Exception("Sorry, your file is too large.");
+            }
+
+            // Allow only specific file formats
+            if (!in_array($imageFileType, ["jpg", "jpeg", "png"])) {
+                throw new Exception("Sorry, only JPG, JPEG & PNG files are allowed.");
+            }
+
+            // Move uploaded file to target directory
+            if (!move_uploaded_file($_FILES["image_file"]["tmp_name"], $target_file)) {
+                throw new Exception("Sorry, there was an error uploading your file.");
+            }
+
+        }elseif(isset($_POST['captureImageData'])){ //Incase the image comes from the camera
+            //Capture the Data
+            $data_uri = $_POST['captureImageData'];
+
+            //Extract the base64 Data
+            $encoded_image = explode(",", $data_uri)[1];
+
+            //Decode the base64 string
+            $decoded_image = base64_decode($encoded_image);
+
+            //For the filename being entered in the Database
+            $fileName =  'capture_'.time().'.jpg';
+
+            $filePath = 'img/resident_img/'.$fileName;
+
+            //Save the image file
+            file_put_contents($filePath, $decoded_image);
 
 
-        //Variable for the Name of the Folder which is img
-        $target_dir = "img/resident_img/";
+        }else{
 
-        //Variable for the path
-        $target_file = $target_dir . basename($_FILES["image_file"]["name"]);
+            exit(json_encode(['success' => false, 'message' => 'No image was sent!'.$e->Message()])); 
 
-        // To get the file extension and converts it to lower case
-        $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
-
-        // Generate a Unique filename via the generateUniqueFileName user define function below
-        $fileName = generateUniqueFileName($target_dir, basename($_FILES["image_file"]["name"]));
-        $target_file = $target_dir . $fileName;
-
-        // Check if file is an image
-        $check = getimagesize($_FILES["image_file"]["tmp_name"]);
-        if ($check === false) {
-            throw new Exception("File is not an image.");
-        }
-
-        // Check file size
-        if ($_FILES["image_file"]["size"] > 500000) {
-            throw new Exception("Sorry, your file is too large.");
-        }
-
-        // Allow only specific file formats
-        if (!in_array($imageFileType, ["jpg", "jpeg", "png"])) {
-            throw new Exception("Sorry, only JPG, JPEG & PNG files are allowed.");
-        }
-
-        // Move uploaded file to target directory
-        if (!move_uploaded_file($_FILES["image_file"]["tmp_name"], $target_file)) {
-            throw new Exception("Sorry, there was an error uploading your file.");
         }
 
         //Record to Audit Trail
@@ -89,7 +114,7 @@ if($operation_check == "ADD"){
             $suffix,
             $houseno,
             $street,
-            $sudb,
+            $subd,
             $residentsince,
             $sex,
             $maritalstatus,
@@ -112,24 +137,9 @@ if($operation_check == "ADD"){
 
      // Retrieve data sent via POST
      $residentId = sanitizeData($_POST['resident_id']);
-     $firstName = sanitizeData($_POST['fname']);
-     $middleName = sanitizeData($_POST['mname']);
-     $lastName = sanitizeData($_POST['lname']);
-     $suffix = sanitizeData($_POST['suffix']);
-     $houseno = sanitizeData($_POST['house_no']);
-     $streetname = sanitizeData($_POST['street']);
-     $subdivision = sanitizeData($_POST['subd']);
-     $sex = sanitizeData($_POST['sex']);
-     $maritalstatus = sanitizeData($_POST['marital_status']);
-     $birthdate = sanitizeData($_POST['birth_date']);
-     $birthplace = sanitizeData($_POST['birth_place']); 
-     $phonenumber = sanitizeData($_POST['cp_number']);
-     $isavoter = sanitizeData($_POST['is_a_voter']);
-     $residentsince = sanitizeData($_POST['residentsince']);
- 
  
     // Check if there is uploaded file or theres an error
-    if(isset($_FILES['image_file']) && $_FILES['image_file']['error'] == UPLOAD_ERR_OK){
+    if($_FILES['image_file']['error'] == UPLOAD_ERR_OK){
  
          //Variable for the Name of the Folder which is img
          $target_dir = "img/resident_img/";
@@ -199,21 +209,33 @@ if($operation_check == "ADD"){
          $imgopresponse = "Image Updated Successfully";
 
     }elseif($_FILES['image_file']['error']==UPLOAD_ERR_INI_SIZE){
+
         $imgopresponse = "UPLOAD_ERR_INI_SIZE: You exceeded the allow file size";
+
     }elseif($_FILES['image_file']['error']==UPLOAD_ERR_FORM_SIZE){
+
         $imgopresponse = "UPLOAD_ERR_INI_SIZE: You exceeded the allow HTML directive size";
+
     }elseif($_FILES['image_file']['error']==UPLOAD_ERR_PARTIAL){
+
         $imgopresponse = "UPLOAD_ERR_PARTIAL: The uploaded file was partially upload. Check your Internet Connection";
+
     }elseif($_FILES['image_file']['error']==UPLOAD_ERR_NO_FILE){
+
         $imgopresponse = "UPLOAD_ERR_NO_FILE: No file is uploaded";
+
     }elseif($_FILES['image_file']['error']==UPLOAD_ERR_CANT_WRITE){
         $imgopresponse = "UPLOAD_ERR_CANT_WRITE: Unable to write file to disk.";
+
     }elseif($_FILES['image_file']['error']==UPLOAD_ERR_EXTENSION){
         $imgopresponse = "UPLOAD_ERR_EXTENSION: A PHP extension stopped the file upload.";
+
     }elseif($_FILES['image_file']['error']==UPLOAD_ERR_NO_TMP_DIR){
         $imgopresponse = "UPLOAD_ERR_NO_TEMP_DIR: You have a missing directory";
+
     }else{
         $imgopresponse = "No unknown Error";
+        
     }// End of Image Check If statement
 
     try {
@@ -221,10 +243,10 @@ if($operation_check == "ADD"){
         $statement = $pdo->prepare("UPDATE resident SET first_name = ?, middle_name = ?, last_name = ?,suffix = ?, house_num = ?, street = ?, subdivision = ?, resident_since=?, sex = ?, marital_status = ?, birth_date = ?, birth_place = ?, cellphone_num = ?, is_a_voter = ? WHERE resident_id = ?");
         
         // Bind parameters and execute the statement
-        $statement->execute([$firstName, $middleName, $lastName, $suffix, $houseno, $streetname, $subdivision,$residentsince, $sex, $maritalstatus, $birthdate, $birthplace, $phonenumber, $isavoter, $residentId]);
+        $statement->execute([$fname, $mname, $lname, $suffix, $houseno, $street, $subd,$residentsince, $sex, $maritalstatus, $birthdate, $birthplace, $cellphonenumber, $is_a_voter, $residentId]);
         
         // Send success response
-        echo json_encode(["success" => true, "message" => "Data updated successfully" . $imgopresponse]);
+        echo json_encode(["success" => true, "message" => "Data updated successfully". " ImageStatus: " . $imgopresponse]);
 
         $update_audit_sql= "UPDATE res_audit_trail SET edited_depart_no=?, last_edited_by=?, last_edited_dt=?, last_edited_tm=? WHERE res_at_id=?";
          $atstmt= $pdo->prepare($update_audit_sql);
@@ -267,6 +289,33 @@ if($operation_check == "ADD"){
         echo json_encode(["success" => false, "message" => "ID not Provided"]);
 
     }
+}elseif($operation_check=="UNDO_DELETE"){
+    //For Admin only
+    $id_to_delete = $_POST['resident_id'];
+
+    if(isset($id_to_delete)){
+        // Prepare an update statement to mark the record as is_deleted=0
+        try{
+        
+            $update_query = "UPDATE resident SET is_deleted = 0 WHERE resident_id = ?";
+            $update_stmt = $pdo->prepare($update_query);
+            $update_stmt->execute([$id_to_delete]);
+
+            $update_audit_sql= "UPDATE res_audit_trail SET dept_rec_no=?, rec_by_no=?, rec_date=?, rec_time=? WHERE res_at_id=?";
+            $atstmt= $pdo->prepare($update_audit_sql);
+            $atstmt -> execute([$departno, $userid, $nowdate, $time, $id_to_delete]);
+            echo json_encode(["success" => true, "message" => "Record recovered successfully."]);
+
+        }catch(PDOException $e){
+            error_log($e->getMessage());
+            echo json_encode(["success" => false, "message" => "Error recovering the record" . $e->getMessage()]);
+
+        }
+    }else{
+        echo json_encode(["success" => false, "message" => "ID not Provided"]);
+
+    }
+
 
 }elseif($operation_check=="PAGINATION"){
     
@@ -285,34 +334,7 @@ if($operation_check == "ADD"){
     $query->execute();
     $result = $query->fetchAll();
 
-    // Generate pagination controls
-    echo '<nav aria-label="Page navigation">';
-    echo '<ul class="pagination justify-content-end">';
-
-    // Previous Button
-    if ($current_page > 1) {
-    echo '<li class="page-item">
-            <a class="page-link" href="#" data-page="' . ($current_page - 1) . '">Previous</a>
-            </li>';
-    }
-
-    // Page Number Buttons
-    for ($i = 1; $i <= $total_pages; $i++) {
-    $active = $i == $current_page ? 'active' : '';
-    echo '<li class="page-item ' . $active . '">';
-    echo '<a class="page-link" href="#" data-page="' . $i . '">' . $i . '</a>';
-    echo '</li>';
-    }
-
-    // Next Button
-    if ($current_page < $total_pages) {
-    echo '<li class="page-item">
-            <a class="page-link" href="#" data-page="' . ($current_page + 1) . '">Next</a>
-            </li>';
-    }
-
-    echo '</ul>';
-    echo '</nav>';
+    require_once'paginationtemplate.php';
 
 }elseif($operation_check=="SHOW_DELETED"){
 
@@ -322,9 +344,9 @@ if($operation_check == "ADD"){
      $total_pages = ceil($total_records / $limit);
  
      // Get the current page or set a default
-     $current_page = isset($_POST['pageno']) ? (int)$_POST['pageno'] : 1;
-     $current_page = max(1, min($current_page, $total_pages));
-     $start_from = ($current_page - 1) * $limit;
+     $page = isset($_POST['pageno']) ? (int)$_POST['pageno'] : 1;
+     $page = max(1, min($page, $total_pages));
+     $start_from = ($page - 1) * $limit;
  
      // Fetch the data for the current page
      $query = $pdo->prepare("SELECT 
@@ -352,68 +374,10 @@ if($operation_check == "ADD"){
      $query->execute();
      $results = $query->fetchAll();
 
-     foreach ($results as $row) {
-        echo '<tr>';
-        echo '<td hidden>' . htmlspecialchars($row['resident_id']) . '</td>';
-        echo '<td>' . htmlspecialchars($row['date_recorded']) . '</td>';
-        echo '<td>' . htmlspecialchars($row['last_name']) . ', ' . htmlspecialchars($row['first_name']) . ' ' . htmlspecialchars($row['middle_name']) . ' ' . htmlspecialchars($row['suffix']) . '</td>';
-        echo '<td>' . htmlspecialchars($row['house_num']) . ', ' . htmlspecialchars($row['street']) . ', ' . htmlspecialchars($row['subdivision']) . '</td>';
-        echo '<td class="text-center">' . htmlspecialchars($row['resident_since']) . '</td>';
-        echo '<td>' . htmlspecialchars($row['sex']) . '</td>';
-        echo '<td>' . htmlspecialchars($row['marital_status']) . '</td>';
-        echo '<td>' . htmlspecialchars($row['birth_date']) . '</td>';
-        echo '<td>' . htmlspecialchars($row['birth_place']) . '</td>';
-        echo '<td class="text-center">' . htmlspecialchars($row['cellphone_num']) . '</td>';
-        echo '<td>' . ($row['is_a_voter'] ? 'YES' : 'NO') . '</td>';
-        echo '<td style="width: 35%;">
-            <div class="btn-group text-center">
-                    
-                <button class="btn btn-primary mx-1 viewResidentButton" id=vbutton
-                    data-id="' . htmlspecialchars($row['resident_id']) . '"
-                    data-first-name="' . htmlspecialchars($row['first_name'], ENT_QUOTES) . '"
-                    data-middle-name="' . htmlspecialchars($row['middle_name'], ENT_QUOTES) . '"
-                    data-last-name="' . htmlspecialchars($row['last_name'], ENT_QUOTES) . '"
-                    data-suffix="' . htmlspecialchars($row['suffix'], ENT_QUOTES) . '"
-                    data-house-no="' . htmlspecialchars($row['house_num'], ENT_QUOTES) . '"
-                    data-street-name="' . htmlspecialchars($row['street'], ENT_QUOTES) . '"
-                    data-subdivision="' . htmlspecialchars($row['subdivision'], ENT_QUOTES) . '"
-                    data-sex="' . htmlspecialchars($row['sex'], ENT_QUOTES) . '"
-                    data-marital-status="' . htmlspecialchars($row['marital_status'], ENT_QUOTES) . '"
-                    data-birth-date="' . htmlspecialchars($row['birth_date'], ENT_QUOTES) . '"
-                    data-birth-place="' . htmlspecialchars($row['birth_place'], ENT_QUOTES) . '"
-                    data-phone-number="' . htmlspecialchars($row['cellphone_num'], ENT_QUOTES) . '"
-                    data-isa-voter="' . htmlspecialchars($row['is_a_voter'], ENT_QUOTES) . '"
-                    data-rsince="' . htmlspecialchars($row['resident_since'], ENT_QUOTES) . '"
-                    data-bs-toggle="modal" data-bs-target="#ViewResidentModal">View</button>
-
-                    
-                <button class="btn btn-success mx-1 editResidentButton"
-                    data-pageno="'.$page.'"
-                    data-id="' . htmlspecialchars($row['resident_id']) . '"
-                    data-first-name="' . htmlspecialchars($row['first_name'], ENT_QUOTES) . '"
-                    data-middle-name="' . htmlspecialchars($row['middle_name'], ENT_QUOTES) . '"
-                    data-last-name="' . htmlspecialchars($row['last_name'], ENT_QUOTES) . '"
-                    data-suffix="' . htmlspecialchars($row['suffix'], ENT_QUOTES) . '"
-                    data-house-no="' . htmlspecialchars($row['house_num'], ENT_QUOTES) . '"
-                    data-street-name="' . htmlspecialchars($row['street'], ENT_QUOTES) . '"
-                    data-subdivision="' . htmlspecialchars($row['subdivision'], ENT_QUOTES) . '"
-                    data-sex="' . htmlspecialchars($row['sex'], ENT_QUOTES) . '"
-                    data-marital-status="' . htmlspecialchars($row['marital_status'], ENT_QUOTES) . '"
-                    data-birth-date="' . htmlspecialchars($row['birth_date'], ENT_QUOTES) . '"
-                    data-birth-place="' . htmlspecialchars($row['birth_place'], ENT_QUOTES) . '"
-                    data-phone-number="' . htmlspecialchars($row['cellphone_num'], ENT_QUOTES) . '"
-                    data-isa-voter="' . htmlspecialchars($row['is_a_voter'], ENT_QUOTES) . '"
-                    data-residentsince="' . htmlspecialchars($row['resident_since'], ENT_QUOTES) . '"
-                    data-bs-toggle="modal" data-bs-target="#EditResidentModal">Edit</button>
-
-                    <button class="btn btn-warning mx-1 deleteResidentButton" id="undodeletebutton"
-                    data-pageno="'.$current_page.'"
-                    data-resident_id = "' . htmlspecialchars($row['resident_id']) . '">Recover</button>
-            
-            </div>
-        </td>
-        </tr>';
-      
+    if(!empty($results)){
+        require_once'residenttabletofetch.php';
+    }else{
+        echo '<tr><td colspan="11"><b>No Deleted Records found</b></td></tr>';
     }
 
 
@@ -430,34 +394,7 @@ if($operation_check == "ADD"){
     $current_page = max(1, min($current_page, $total_pages));
     $start_from = ($current_page - 1) * $limit;
 
-    // Generate pagination controls
-    echo '<nav aria-label="Page navigation">';
-    echo '<ul class="pagination justify-content-end">';
-
-    // Previous Button
-    if ($current_page > 1) {
-    echo '<li class="page-item">
-            <a class="page-link" href="#" data-page="' . ($current_page - 1) . '">Previous</a>
-            </li>';
-    }
-
-    // Page Number Buttons
-    for ($i = 1; $i <= $total_pages; $i++) {
-    $active = $i == $current_page ? 'active' : '';
-    echo '<li class="page-item ' . $active . '">';
-    echo '<a class="page-link" href="#" data-page="' . $i . '">' . $i . '</a>';
-    echo '</li>';
-    }
-
-    // Next Button
-    if ($current_page < $total_pages) {
-    echo '<li class="page-item">
-            <a class="page-link" href="#" data-page="' . ($current_page + 1) . '">Next</a>
-            </li>';
-    }
-
-    echo '</ul>';
-    echo '</nav>';
+    require_once('paginationtemplate.php');
 }
     
 

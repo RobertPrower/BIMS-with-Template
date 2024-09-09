@@ -18,6 +18,7 @@
   <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js" integrity="sha256-xLD7nhI62fcsEZK2/v8LsBcb4lG7dgULkuXoXB/j91c=" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  <script src="js/webcam.min.js"></script>
 
 <body>
   <div class="layer"></div>
@@ -52,7 +53,7 @@
                             </div>
 
                             <!-- Modal on a spepare file -->
-                            <?php require_once('includes/addresidentmodal.php'); ?>
+                            <?php require_once('includes/residentaddmodal.php'); ?>
                         
                         </div>
                     </div>
@@ -97,92 +98,13 @@
                         <tbody id="ResidentTableBody">
                         <!-- Table Body -->
                         
-                        <?php
+                            <!-- To be filled by the AJAX -->
 
-                        /*
-                            
-                        //To Populate table rows with user data
-                        foreach ($result as $row) {
-                            //echo '<td><input type="checkbox" class="check-all"></td>';
-                            echo "  <tr>
-                                    <td hidden>{$row['resident_id']}</td>
-                                    <td>{$row['date_recorded']}</td>
-                                    <td>{$row['last_name']}, {$row['first_name']} {$row['middle_name']} {$row['suffix']}</td>
-                                    <td>{$row['house_num']}, {$row['street']} {$row['subdivision']}</td>
-                                    <td class='text-center'>{$row['resident_since']}
-                                    <td>{$row['sex']}</td>
-                                    <td>{$row['marital_status']}</td>
-                                    <td>{$row['birth_date']}</td>
-                                    <td>{$row['birth_place']}</td>
-                                    <td class='text-center'>{$row['cellphone_num']}</td>";
-                            
-                            if($row['is_a_voter'] == 1){
-                            echo "<td>YES</td>";
-                            }else{
-                            echo "<td>NO</td>";
-                            }
-
-                            echo "<td style='width: 35%;'><div class='btn-group text-center'>";
-                            
-                             //For the view button
-                            echo '
-                            <button href="#" class="btn btn-primary mx-1 viewResidentButton" id="vbutton"
-                            data-id="' . $row['resident_id'] . '"
-                            data-first-name="' . htmlspecialchars($row['first_name'], ENT_QUOTES) . '"
-                            data-middle-name="' . htmlspecialchars($row['middle_name'], ENT_QUOTES) . '"
-                            data-last-name="' . htmlspecialchars($row['last_name'], ENT_QUOTES) . '"
-                            data-suffix="' . htmlspecialchars($row['suffix'], ENT_QUOTES) . '"
-                            data-house-no="' . htmlspecialchars($row['house_num'], ENT_QUOTES) . '"
-                            data-street-name="' . htmlspecialchars($row['street'], ENT_QUOTES) . '"
-                            data-subdivision="' . htmlspecialchars($row['subdivision'], ENT_QUOTES) . '"
-                            data-sex="' . htmlspecialchars($row['sex'], ENT_QUOTES) . '"
-                            data-marital-status="' . htmlspecialchars($row['marital_status'], ENT_QUOTES) . '"
-                            data-birth-date="' . htmlspecialchars($row['birth_date'], ENT_QUOTES) . '"
-                            data-birth-place="' . htmlspecialchars($row['birth_place'], ENT_QUOTES) . '"
-                            data-phone-number="' . htmlspecialchars($row['cellphone_num'], ENT_QUOTES) . '"
-                            data-isa-voter="' . htmlspecialchars($row['is_a_voter'], ENT_QUOTES) . '"
-                            data-rsince="' . htmlspecialchars($row['resident_since'], ENT_QUOTES) . '"
-                            data-bs-toggle="modal" data-bs-target="#ViewResidentModal">View</button>';
-
-                            // //For the edit button
-                            echo '<button href="#" class="btn btn-success mx-1 editResidentButton" 
-                            data-pageno="'.$current_page.'"
-                            data-id="' . $row['resident_id'] . '"
-                            data-first-name="' . htmlspecialchars($row['first_name'], ENT_QUOTES) . '"
-                            data-middle-name="' . htmlspecialchars($row['middle_name'], ENT_QUOTES) . '"
-                            data-last-name="' . htmlspecialchars($row['last_name'], ENT_QUOTES) . '"
-                            data-suffix="' . htmlspecialchars($row['suffix'], ENT_QUOTES) . '"
-                            data-house-no="' . htmlspecialchars($row['house_num'], ENT_QUOTES) . '"
-                            data-street-name="' . htmlspecialchars($row['street'], ENT_QUOTES) . '"
-                            data-subdivision="' . htmlspecialchars($row['subdivision'], ENT_QUOTES) . '"
-                            data-sex="' . htmlspecialchars($row['sex'], ENT_QUOTES) . '"
-                            data-marital-status="' . htmlspecialchars($row['marital_status'], ENT_QUOTES) . '"
-                            data-birth-date="' . htmlspecialchars($row['birth_date'], ENT_QUOTES) . '"
-                            data-birth-place="' . htmlspecialchars($row['birth_place'], ENT_QUOTES) . '"
-                            data-phone-number="' . htmlspecialchars($row['cellphone_num'], ENT_QUOTES) . '"
-                            data-isa-voter="' . htmlspecialchars($row['is_a_voter'], ENT_QUOTES) . '"
-                            data-residentsince="' . htmlspecialchars($row['resident_since'], ENT_QUOTES) . '"
-                            data-bs-toggle="modal" data-bs-target="#EditResidentModal">Edit</button>';
-
-                            // For the Delete Button
-
-                            echo 
-                            
-                            '<button type="submit" class="Delete_Button btn btn-danger mx-1" id="deletebutton" 
-                            data-pageno="'.$current_page.'"
-                            data-resident_id="' . $row['resident_id'] . '">Delete</button>
-                            
-                            </div>
-                            </td>
-                            </tr>';
-
-                        }
-                        */?>
                         </tbody> 
                         <!-- </tbody> -->
                     </table>
                     <!-- End of Table -->
-                <!-- </div> -->
+                </div>
                 <!-- /Div Causing the problem without it will work fine-->
 
                <!-- Pagination Controls -->
@@ -224,13 +146,9 @@
   <?php require_once("includes/footer.php")?>
     </div>
 </div>
-
-<script src="js/populateresidenteditmodal.js"> </script>
-
-<script src="js/populateresidentviewmodal.js"> </script>
         
 <script src="js/residentaction.js"> </script>
-<script src="js/residentpagination.js"></script>
+<script src="js/camerafunction.js"></script>
 
 <!-- Chart library -->
 <script src="./plugins/chart.min.js"></script>

@@ -1,9 +1,10 @@
-$('#imagefile').on('change', function() {
+$('#imagefile, #editimagefile').on('change', function() {
     var fileInput = this; // store reference to file input
     var file = this.files[0];
     var imageType = /image.*/;
     var validExtensions = ['png', 'jpg', 'jpeg']; 
-    var oldImageSrc = $('#imagePreview').attr('src'); 
+    var isEdit = $("#EditResidentModal").hasClass("show");
+    var oldImageSrc = (isEdit) ? $('#editimagePreview').attr('src') : $('#imagePreview').attr('src'); 
 
     if (!file.type.match(imageType)) {
         swal({
@@ -11,10 +12,16 @@ $('#imagefile').on('change', function() {
             title: "Oops... The uploaded file is not a image!",
             text: "Please upload a vaild image file!",
         });
-        $('#imagePreview').attr('src', oldImageSrc);
+
+        if(isEdit){
+            $('#editimagePreview').attr('src', oldImageSrc);
+        }else{
+            $('#imagePreview').attr('src', oldImageSrc);
+        }
+
         $(fileInput).val(''); // use stored reference
         return;
-    }
+    }//Pass to the next check
 
     var extension = file.name.split('.').pop().toLowerCase();
     if(validExtensions.indexOf(extension) == -1) {
@@ -23,7 +30,12 @@ $('#imagefile').on('change', function() {
             title: "Oops... Invalid extension!",
             text: "Only png, jpg, and jpeg are allowed.",
         });
-        $('#imagePreview').attr('src', oldImageSrc);
+
+        if(isEdit){
+            $('#editimagePreview').attr('src', oldImageSrc);
+        }else{
+            $('#imagePreview').attr('src', oldImageSrc);
+        }
         $(fileInput).val(''); // use stored reference
         return;
     }
@@ -38,12 +50,20 @@ $('#imagefile').on('change', function() {
                     title: "Oops... Image Size is too large",
                     text: "Please upload an image with dimensions not exceeding 200x200 pixels.",
                 });
-                $('#imagePreview').attr('src', oldImageSrc);
+                 if(isEdit){
+                    $('#editimagePreview').attr('src', oldImageSrc);
+                }else{
+                    $('#imagePreview').attr('src', oldImageSrc);
+                }
                 $(fileInput).val(''); // use stored reference
                 return;
             }
             // If the image is valid, update the preview image source
-            $('#imagePreview').attr('src', reader.result);
+            if(isEdit){
+                $('#editimagePreview').attr('src', reader.result);
+            }else{
+                $('#imagePreview').attr('src', reader.result);
+            }
         }
         img.src = reader.result;
     }

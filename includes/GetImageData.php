@@ -13,6 +13,7 @@ if ($result) {
       "imageData" => $result['img_filename']
     
     );
+  
 } else {
     $response = array("error" => "No data found for id: $id");
 }

@@ -1,7 +1,7 @@
 <?php
         require_once("connecttodb.php");
         
-        $sqlquery = "SELECT * FROM resident WHERE is_deleted=0";
+        $sqlquery = "SELECT * FROM vw_all_resident WHERE is_deleted=0";
 
 
         $stmt=$pdo->prepare($sqlquery);
@@ -47,12 +47,12 @@
                                 //To Populate table rows with user data
                                 foreach ($result as $row) {
                                     echo "<tr class='text-center' data-fname='{$row['first_name']} data-mname='{$row['middle_name']}' data-lname='{$row['last_name']}' data-suffix='{$row['suffix']}' 
-                                    data-houseno='{$row['house_number']}' data-street='{$row['street_name']}' data-sudb='{$row['subdivision']}' data-residentsince='{$row['resident_since']}'>";
+                                    data-houseno='{$row['house_num']}' data-street='{$row['street']}' data-sudb='{$row['subdivision']}' data-residentsince='{$row['resident_since']}'>";
                                     // echo '<td><input type="checkbox" class="check-all"></td>';
                                     echo "<td class='resident_id'>{$row['resident_id']}</td>";
                                     echo "<td>{$row['date_recorded']}</td>";
                                     echo "<td>{$row['last_name']}, {$row['first_name']} {$row['middle_name']} {$row['suffix']}</td>";
-                                    echo "<td>{$row['house_number']}, {$row['street_name']}, {$row['subdivision']}</td>";
+                                    echo "<td>{$row['house_num']}, {$row['street']}, {$row['subdivision']}</td>";
                                     echo "<td>{$row['resident_since']}</td>";
                                     echo "<td>{$row['sex']}</td>";
                                     echo "<td>{$row['marital_status']}</td>";
@@ -61,10 +61,10 @@
 
                                         //Prevent "0" From appearing in Cellphone Number
 
-                                        if($row['cellphone_number']== "0"){
+                                        if($row['cellphone_num']== "0"){
                                         echo "<td> </td> ";
                                     } else{
-                                        echo "<td>{$row['cellphone_number']}</td>";
+                                        echo "<td>{$row['cellphone_num']}</td>";
                                     }
                                     
                                     if($row['is_a_voter'] == 1){

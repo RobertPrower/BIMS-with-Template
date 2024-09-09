@@ -1408,6 +1408,27 @@ label {
   opacity: 0.5;
 }
 
+/* CSS for rounded circle frame */
+.camera-frame {
+  width: 100%;              /* Fill the circular container */
+  height: 100%; 
+  border-radius: 50%;        /* Make the frame circular */
+  overflow:hidden;          /* Ensure content outside the circle is hidden */
+  position: relative;
+  border: 2px solid #070707;    /* Optional: Add a border around the frame */
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Image preview and webcam feed styling */
+#cameraFeed, #imagePreview{
+  width: 200px !important;               /* Fill the circular container */
+  height: 200px !important;
+  object-fit:cover;          /* Ensure content covers the circle without distortion */
+  display:block;
+  overflow: hidden,
+}
 
 .users-table table,
 .users-table-info {
