@@ -151,6 +151,8 @@
                                             </div>
                                         </div>
                                     </div>
+                                <!-- </div> -->
+                                 <!-- Without this the footer wont mix with the mody -->
                             </div>
                         </div>
 
@@ -160,50 +162,58 @@
                      <!-------------------------------------------------------------------------------------------------------------->
                     <div class="tab-pane fade" id="clearance-tab" role="tabpanel" aria-labelledby="nav-clearance-tab" tabindex="0">
                     
-                    <table class="posts-table my-4" id="ResidentRequestTable">
-                        <thead>
-                            <tr class="users-table-info">
+                        <div class="users-table table-wrapper">
+
+                            <table class="users-table table-wrapper my-4" id="ResidentRequestTable">
+                                <thead>
+                                    <tr class="users-table-info">
+                                        
+                                        <th style="width: 8%;" class="text-center">Request ID
+                                        </th>
+
+                                        <th style="width: 10%;" class="text-center">Date Requested
+                                        </th>
+
+                                        <th style="width: 10%;" class="text-center">Expiry Date
+                                        </th>
+
+                                        <th style="width: 15%;" class="text-center">Certificate Description
+                                        </th>
+
+                                        <th style="width: 10%;" class="text-center">Purpose
+                                        </th>
+
+                                        <th style="width: 5%;" class="text-center">Age
+                                        </th>
+
+                                        <th style="width: 10%;" class="text-center">Presented ID
+                                        </th>
+
+                                        <th style="width: 10%;" class="text-center">ID Number
+                                        </th>
+
+                                        <th style="width: 10%;" class="text-center">Status
+                                        
+                                        </th>
+                                        
+                                    </tr>
+                                </thead>
+
+                                <tbody>
                                 
-                                <th style="width: 8%;" class="text-center">Request ID
-                                </th>
-
-                                <th style="width: 10%;" class="text-center">Date Requested
-                                </th>
-
-                                <th style="width: 10%;" class="text-center">Expiry Date
-                                </th>
-
-                                <th style="width: 15%;" class="text-center">Certificate Description
-                                </th>
-
-                                <th style="width: 10%;" class="text-center">Purpose
-                                </th>
-
-                                <th style="width: 5%;" class="text-center">Age
-                                </th>
-
-                                <th style="width: 10%;" class="text-center">Presented ID
-                                </th>
-
-                                <th style="width: 10%;" class="text-center">ID Number
-                                </th>
-
-                                <th style="width: 10%;" class="text-center">Status
+                                <!-- To be filled by AJAX request to Server -->
+                                    
+                                </tbody>
                                 
-                                </th>
-                                
-                            </tr>
-                        </thead>
-                            <tbody>
-                            
-                            <!-- To be filled by AJAX request to Server -->
-                                
-                            </tbody>
-                        
-                        </tbody>
-                    </table>
+                            </table>
+
+                        </div>
 
                     </div>
+
+                    <!------------------------------------------------------------------------------------------------------------>
+                                                <!-- Blotters Tab Content -->
+                     <!-------------------------------------------------------------------------------------------------------------->
 
                     <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab" tabindex="0">...</div>
                     </div>
