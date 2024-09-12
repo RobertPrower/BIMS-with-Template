@@ -36,110 +36,110 @@
         <?php require_once("includes/header.php")?>
         <!-- ! Main -->
         <main>
-        <div class="container">
-            <div class="container p-3">
-                <h2 class="main-title">Manage Residents</h2>
-                <div class="row pb-3">
-                    <div class="col-md-8">
-                        <!-- Buttons -->
-                        <div class="d-flex justify-content-start" style="padding-left: 15px;">
-                        
-                            <!-- Button to trigger modal -->
-                            <button type="button" class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#AddResidentModal">Add Resident</button>
+            <div class="container">
+                <div class="container p-3">
+                    <h2 class="main-title">Manage Residents</h2>
+                    <div class="row pb-3">
+                        <div class="col-md-8">
+                            <!-- Buttons -->
+                            <div class="d-flex justify-content-start" style="padding-left: 15px;">
                             
-                            <div class="form-check form-switch my-2">
-                                <input class="form-check-input" type="checkbox" id="showdeletedentries">
-                                <label class="form-check-label" for="showdeletedentries">Show deleted entries</label>
-                            </div>
+                                <!-- Button to trigger modal -->
+                                <button type="button" class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#AddResidentModal">Add Resident</button>
+                                
+                                <div class="form-check form-switch my-2">
+                                    <input class="form-check-input" type="checkbox" id="showdeletedentries">
+                                    <label class="form-check-label" for="showdeletedentries">Show deleted entries</label>
+                                </div>
 
-                            <!-- Modal on a spepare file -->
-                            <?php require_once('includes/residentaddmodal.php'); ?>
-                        
+                                <!-- Modal on a spepare file -->
+                                <?php require_once('includes/residentaddmodal.php'); ?>
+                            
+                            </div>
                         </div>
+
+                        <div class="container col-md-3">
+                            <div class="row">
+                            <!-- Search Box -->
+                                <div class="search-wrapper">
+                                                        
+                                <button type="submit" class="btn-sm btn-light" data-feather="search" aria-hidden="true" required></button>
+                                <input type="text" class="form-control me-2" id="searchbox" name="search" placeholder="Search...">
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    
+                        
                     </div>
 
-                    <div class="container col-md-3">
-                        <div class="row">
-                        <!-- Search Box -->
-                            <div class="search-wrapper">
-                                                       
-                            <button type="submit" class="btn-sm btn-light" data-feather="search" aria-hidden="true" required></button>
-                            <input type="text" class="form-control me-2" id="searchbox" name="search" placeholder="Search...">
-                                
-                            </div>
-                        </div>
+                    <div class="users-table table-wrapper">
+                        <!-- users-table table-wrapper -->
+                        <table class="users-table table-striped" id="ResidentTable" style="width:100%">
+                            <thead>
+                            <tr>
+                
+                                <!--th style="width: 2%;"class="text-center"><input type="checkbox" class="check-all"></th--> 
+                                <th style="width: 2%"class="text-center resident_id" hidden>ID</th> 
+                                <th style="width: 10%;"class="text-center">Date Recorded</th>
+                                <th style="width: 15%;" class="text-center">Full Name</th>
+                                <th style="width: 15%;" class="text-center">Address</th>
+                                <th style="width: 5%;" class="text-center">Resident Since</th>
+                                <th style="width: 10%;" class="text-center">Sex</th>
+                                <th style="width: 10%;" class="text-center">Marital Status</th>
+                                <th style="width: 10%;" class="text-center">Birth Date</th>
+                                <th style="width: 10%;" class="text-center">Birth Place</th>
+                                <th style="width: 10%;" class="text-center">Phone Number</th>
+                                <th style="width: 10%;" class="text-center">Is a Voter</th>
+                                <th style="width: 10%;" class="text-center">Action</th>
+                            </tr>
+                            </thead>
+
+                            <tbody id="ResidentTableBody">
+                            <!-- Table Body -->
+                            
+                                <!-- To be filled by the AJAX -->
+
+                            </tbody> 
+                            <!-- </tbody> -->
+                        </table>
+                        <!-- End of Table -->
                     </div>
                 
-                    
-                </div>
 
-                <div class="users-table table-wrapper">
-                    <!-- users-table table-wrapper -->
-                    <table class="users-table table-wrapper" id="ResidentTable" style="width:100%">
-                        <thead>
-                        <tr>
-            
-                            <!--th style="width: 2%;"class="text-center"><input type="checkbox" class="check-all"></th--> 
-                            <th style="width: 2%"class="text-center resident_id" hidden>ID</th> 
-                            <th style="width: 10%;"class="text-center">Date Recorded</th>
-                            <th style="width: 15%;" class="text-center">Full Name</th>
-                            <th style="width: 15%;" class="text-center">Address</th>
-                            <th style="width: 5%;" class="text-center">Resident Since</th>
-                            <th style="width: 10%;" class="text-center">Sex</th>
-                            <th style="width: 10%;" class="text-center">Marital Status</th>
-                            <th style="width: 10%;" class="text-center">Birth Date</th>
-                            <th style="width: 10%;" class="text-center">Birth Place</th>
-                            <th style="width: 10%;" class="text-center">Phone Number</th>
-                            <th style="width: 10%;" class="text-center">Is a Voter</th>
-                            <th style="width: 10%;" class="text-center">Action</th>
-                        </tr>
-                        </thead>
-
-                        <tbody id="ResidentTableBody">
-                        <!-- Table Body -->
+                <!-- Pagination Controls -->
+                <nav aria-label="Page navigation">
+                        <ul class="pagination justify-content-end">
                         
-                            <!-- To be filled by the AJAX -->
-
-                        </tbody> 
-                        <!-- </tbody> -->
-                    </table>
-                    <!-- End of Table -->
-                </div>
-               
-
-               <!-- Pagination Controls -->
-               <nav aria-label="Page navigation">
-                    <ul class="pagination justify-content-end">
-                    
-                    <!-- Previous Button -->
-                    
-                        <li class="page-item">
-                            <a class="page-link" href="#">Previous</a>
-                        </li>
-                    
-
-                        <!-- Page Numbers -->
+                        <!-- Previous Button -->
                         
                             <li class="page-item">
-                                <a class="page-link" href="#" data-page=""></a>
-                            </li>
-                       
-
-                        <!-- Next Button -->
-                      
-                            <li class="page-item">
-                                <a class="page-link" href="#">Next</a>
+                                <a class="page-link" href="#">Previous</a>
                             </li>
                         
-                    </ul>
-                </nav>
 
-            <?php 
-             require_once("includes/residentviewform.php");
-            require_once("includes/residenteditform.php");
-            ?>
-            </div>  
-        </div>
+                            <!-- Page Numbers -->
+                            
+                                <li class="page-item">
+                                    <a class="page-link" href="#" data-page=""></a>
+                                </li>
+                        
+
+                            <!-- Next Button -->
+                        
+                                <li class="page-item">
+                                    <a class="page-link" href="#">Next</a>
+                                </li>
+                            
+                        </ul>
+                    </nav>
+
+                    <?php 
+                    require_once("includes/residentviewform.php");
+                    require_once("includes/residenteditform.php");
+                    ?>
+                </div>  
+            </div>
         </main>
     
     <!-- ! Footer -->

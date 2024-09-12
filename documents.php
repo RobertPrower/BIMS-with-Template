@@ -134,6 +134,7 @@
                           
                       </ul>
                 </nav>
+                <?php include_once'includes/residentviewform.php'?>
               </div>
           </div>
         </main>

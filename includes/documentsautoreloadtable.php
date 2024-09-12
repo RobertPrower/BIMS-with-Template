@@ -44,7 +44,8 @@ try {
                         
                     <button class="btn btn-primary mx-1 viewDocumentsButton" id=vbutton
                         data-id="' . htmlspecialchars($row['request_id']) . '"
-                        data-date-requested="' . htmlspecialchars($row['date_requested'], ENT_QUOTES) . '"
+                        data-resident_id="' . htmlspecialchars($row['resident_id']) . '"
+                        data-date-requested="' . htmlspecialchars($row['date_issued'], ENT_QUOTES) . '"
                         data-first-name="' . htmlspecialchars($row['first_name'], ENT_QUOTES) . '"
                         data-middle-name="' . htmlspecialchars($row['middle_name'], ENT_QUOTES) . '"
                         data-last-name="' . htmlspecialchars($row['last_name'], ENT_QUOTES) . '"
@@ -54,8 +55,9 @@ try {
                         data-subdivision="' . htmlspecialchars($row['subdivision'], ENT_QUOTES) . '"
                         data-sex="' . htmlspecialchars($row['sex'], ENT_QUOTES) . '"
                         data-age="' . htmlspecialchars($row['age'], ENT_QUOTES) . '"
+                        data-docu-desc="' . htmlspecialchars($row['document_desc'], ENT_QUOTES) . '"
                         data-presented-id="' . htmlspecialchars($row['presented_id'], ENT_QUOTES) . '"
-                        data-ID-number="' . htmlspecialchars($row['ID_number'], ENT_QUOTES) . '"
+                        data-id_num="' . htmlspecialchars($row['ID_number'], ENT_QUOTES) . '"
                         data-purpose="' . htmlspecialchars($row['purpose'], ENT_QUOTES) . '"
                         data-status="' . htmlspecialchars($row['status'], ENT_QUOTES) . '"
                         data-bs-toggle="modal" data-bs-target="#DocumentDetailsModal">View</button>';

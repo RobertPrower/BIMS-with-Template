@@ -1,11 +1,12 @@
 <?php 
 
 foreach ($results as $row) {
+    $subd = (empty($row['subdivision'])) ? "" : ", " . htmlspecialchars($row['subdivision']) ;
     echo '<tr>';
     echo '<td hidden id="resident_id">' . htmlspecialchars($row['resident_id']) . '</td>';
     echo '<td>' . htmlspecialchars($row['date_recorded']) . '</td>';
     echo '<td>' . htmlspecialchars($row['last_name']) . ', ' . htmlspecialchars($row['first_name']) . ' ' . htmlspecialchars($row['middle_name']) . ' ' . htmlspecialchars($row['suffix']) . '</td>';
-    echo '<td>' . htmlspecialchars($row['house_num']) . ', ' . htmlspecialchars($row['street']) . ', ' . htmlspecialchars($row['subdivision']) . '</td>';
+    echo '<td>' . htmlspecialchars($row['house_num']) . ', ' . htmlspecialchars($row['street']) . $subd . '</td>';
     echo '<td class="text-center">' . htmlspecialchars($row['resident_since']) . '</td>';
     echo '<td>' . htmlspecialchars($row['sex']) . '</td>';
     echo '<td>' . htmlspecialchars($row['marital_status']) . '</td>';

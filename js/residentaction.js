@@ -242,7 +242,7 @@ $(document).ready(function () {
         title: "Are you sure?",
         text: "The record will be recovered.",
         icon: "warning",
-        buttons: ["Cancel", "Delete"],
+        buttons: ["Cancel", "Recovered"],
         dangerMode: true,
       }).then((willDelete) => {
         if (willDelete) {
