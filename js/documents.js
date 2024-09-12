@@ -43,7 +43,7 @@ $(document).ready (function(){
       $("#Fullname").html('<b>Fullname:  </b>'+first_name+' '+ middle_name+','+' '+ last_name+' '+suffix);
       $("#Address").html('<b>Address:</b> '+house_no+' '+street_name+' '+subdivision+' Camarin Caloocan City');
       $("#Sex").html('<b>Sex: </b>' +sex);
-      $("#Age").html('<b>Age: </b>' +age);
+      $("#Age").html('<b>Age (Upon Request): </b>' +age+" Years Old");
       $("#Document_Desc").html('<b>Document Description:  </b>' +docu_type);
       $("#Presented_ID").html('<b>Presented ID:  </b>' +presented_id);
       $("#ID_num").html('<b>ID Number:  </b>' +ID_number);
@@ -68,21 +68,51 @@ $(document).ready (function(){
 
     })
 
-    $(document).on("click","#viewResident", function(){
-      var resident_id = $("#resident_id").val();
+    $(document).on("click","#viewResidentfromDocu", function(){
+      var residentid = $("#resident_id").val();
+      $('#nav-home-tab').tab('show');
+
       $.ajax({
         url: "includes/fetchresidentdetails.php",
         type: "POST",
-        data: {id: resident_id},
+        data: {id: residentid},
         dataType: "JSON",
-        success: function (data) {
-          $("#DocumentsTableBody").html(data);
-          // updatePaginationControls(page);
+        success: function (response) {
+
+          var imagepath = "includes/img/resident_img/"+response.img_filename;
+
+          $("#viewResident_id").val(response.resident_id)
+          $("#fname").val(response.first_name);
+          $("#mname").val(response.middle_name);
+          $("#lname").val(response.last_name);
+          $("#house_no").val(response.house_num);
+          $("#street").val(response.street);
+          $("#subd").val(response.subdivision);
+          $("#sex").val(response.sex);
+          $("#marital_status").val(response.marital_status);
+          $("#birth_date").val(response.birth_date);
+          $("#birth_place").val(response.birth_place);
+          $("#cp_number").val(response.cellphone_num);
+          $("#is_a_voter").val(response.is_a_voter);
+          $("#rsince").val(response.resident_since);
+          $("#viewimagePreview").prop("src", imagepath);
+
+          $("#backbtntodocu").prop("hidden", false);
+
         },
         error: function (xhr, status, error) {
           console.error("Error fetching table data:", error);
         },
       });
     })
+
+    $(document).on("click","#backbtntodocu", function(){
+      $(this).prop("hidden", true);
+
+      $("#ViewResidentModal").modal("hide");
+      $("#DocumentDetailsModal").modal("show");
+
+    })
+    
     
 });

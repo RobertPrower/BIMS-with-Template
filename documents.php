@@ -53,7 +53,13 @@
                                   <label class="form-check-label" for="showdeletedentries">Show deleted entries</label>
                               </div>
 
-                                <?php require_once'includes/documentdetailsmodal.php'?>
+                                <?php 
+                                
+                                include_once'includes/residentviewform.php';
+                                require_once'includes/documentdetailsmodal.php';
+
+                                
+                                ?>
                           
                           </div>
                       </div>
@@ -134,7 +140,6 @@
                           
                       </ul>
                 </nav>
-                <?php include_once'includes/residentviewform.php'?>
               </div>
           </div>
         </main>

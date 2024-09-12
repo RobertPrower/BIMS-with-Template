@@ -162,29 +162,30 @@ CREATE TABLE `res_audit_trail` (
   CONSTRAINT `res_addedby_fk` FOREIGN KEY (`added_by_no`) REFERENCES `tbl_username` (`username_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `res_depart_fk` FOREIGN KEY (`added_depart_no`) REFERENCES `departments_list` (`department_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `res_edited_by` FOREIGN KEY (`last_edited_by`) REFERENCES `tbl_username` (`username_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `res_audit_trail` */
 
 insert  into `res_audit_trail`(`res_at_id`,`added_depart_no`,`added_by_no`,`date_added`,`time_added`,`edited_depart_no`,`last_edited_by`,`last_edited_dt`,`last_edited_tm`,`dept_del_no`,`del_by_no`,`del_date`,`del_time`,`dept_rec_no`,`rec_by_no`,`rec_date`,`rec_time`) values 
-(1,NULL,NULL,'2024-09-03','15:42:52',NULL,NULL,'2024-09-08','03:51:10',NULL,NULL,'2024-09-06','11:56:07',NULL,NULL,'2024-09-07','18:09:13'),
-(2,NULL,NULL,'2024-09-03','15:44:00',NULL,NULL,'2024-09-04','09:54:55',NULL,NULL,'2024-09-04','14:59:04',NULL,NULL,'2024-09-07','18:09:16'),
+(1,NULL,NULL,'2024-09-03','15:42:52',NULL,NULL,'2024-09-12','13:14:38',NULL,NULL,'2024-09-06','11:56:07',NULL,NULL,'2024-09-07','18:09:13'),
+(2,NULL,NULL,'2024-09-03','15:44:00',NULL,NULL,'2024-09-04','09:54:55',NULL,NULL,'2024-09-12','14:07:05',NULL,NULL,'2024-09-07','18:09:16'),
 (3,NULL,NULL,'2024-09-03','15:45:08',NULL,NULL,'2024-09-03','23:37:39',NULL,NULL,'2024-09-04','14:58:47',NULL,NULL,'2024-09-07','18:09:27'),
 (4,NULL,NULL,'2024-09-03','15:56:12',NULL,NULL,'2024-09-03','23:37:58',NULL,NULL,'2024-09-04','14:58:44',NULL,NULL,'2024-09-07','18:09:18'),
-(5,NULL,NULL,'2024-09-03','15:56:57',NULL,NULL,'2024-09-03','23:38:09',NULL,NULL,'2024-09-04','14:58:40',NULL,NULL,'2024-09-07','18:09:21'),
+(5,NULL,NULL,'2024-09-03','15:56:57',NULL,NULL,'2024-09-12','14:04:20',NULL,NULL,'2024-09-04','14:58:40',NULL,NULL,'2024-09-07','18:09:21'),
 (6,NULL,NULL,'2024-09-03','15:58:04',NULL,NULL,'2024-09-08','03:58:15',NULL,NULL,'2024-09-04','14:58:14',NULL,NULL,'2024-09-07','18:09:25'),
 (7,NULL,NULL,'2024-09-10','17:46:56',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(8,NULL,NULL,'2024-09-03','16:00:19',NULL,NULL,'2024-09-03','23:29:55',NULL,NULL,'2024-09-04','14:58:21',NULL,NULL,'2024-09-07','18:09:03'),
-(9,NULL,NULL,'2024-09-03','16:02:53',NULL,NULL,'2024-09-08','03:57:02',NULL,NULL,'2024-09-08','03:53:36',NULL,NULL,'2024-09-08','03:53:49'),
+(8,NULL,NULL,'2024-09-03','16:00:19',NULL,NULL,'2024-09-12','14:03:45',NULL,NULL,'2024-09-04','14:58:21',NULL,NULL,'2024-09-07','18:09:03'),
+(9,NULL,NULL,'2024-09-03','16:02:53',NULL,NULL,'2024-09-12','14:04:08',NULL,NULL,'2024-09-08','03:53:36',NULL,NULL,'2024-09-08','03:53:49'),
 (10,NULL,NULL,'2024-09-03','16:07:36',NULL,NULL,'2024-09-03','18:39:34',NULL,NULL,'2024-09-04','14:58:27',NULL,NULL,'2024-09-07','18:08:57'),
-(11,NULL,NULL,'2024-09-10','17:46:23',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(11,NULL,NULL,'2024-09-10','17:46:23',NULL,NULL,'2024-09-12','13:37:31',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
 (12,NULL,NULL,'2024-09-03','16:14:48',NULL,NULL,'2024-09-08','03:33:59',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
 (13,NULL,NULL,'2024-09-03','16:15:39',NULL,NULL,'2024-09-08','03:34:04',NULL,NULL,'2024-09-08','03:53:17',NULL,NULL,'2024-09-08','11:53:41'),
-(14,NULL,NULL,'2024-09-03','18:30:55',NULL,NULL,'2024-09-10','15:24:05',NULL,NULL,'2024-09-04','14:58:55',NULL,NULL,'2024-09-05','23:24:21'),
+(14,NULL,NULL,'2024-09-03','18:30:55',NULL,NULL,'2024-09-12','14:05:30',NULL,NULL,'2024-09-04','14:58:55',NULL,NULL,'2024-09-05','23:24:21'),
 (15,NULL,NULL,'2024-09-03','18:39:05',NULL,NULL,'2024-09-10','15:07:53',NULL,NULL,'2024-09-10','15:41:27',NULL,NULL,NULL,NULL),
 (16,NULL,NULL,'2024-09-07','23:54:29',NULL,NULL,'2024-09-10','14:58:50',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(17,NULL,NULL,'2024-09-07','23:54:41',NULL,NULL,'2024-09-10','15:32:31',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(18,NULL,NULL,'2024-09-07','23:57:51',NULL,NULL,'2024-09-10','15:39:53',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+(17,NULL,NULL,'2024-09-07','23:54:41',NULL,NULL,'2024-09-12','14:05:20',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(18,NULL,NULL,'2024-09-07','23:57:51',NULL,NULL,'2024-09-12','14:05:08',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(19,NULL,NULL,'2024-09-11','19:37:19',NULL,NULL,'2024-09-12','14:04:43',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 
 /*Table structure for table `resident` */
 
@@ -213,28 +214,29 @@ CREATE TABLE `resident` (
   KEY `res_at_fk` (`audit_trail`),
   FULLTEXT KEY `fullname_idx` (`last_name`,`first_name`,`middle_name`,`suffix`) COMMENT 'For fast res searching',
   CONSTRAINT `res_at_fk` FOREIGN KEY (`audit_trail`) REFERENCES `res_audit_trail` (`res_at_id`) ON DELETE CASCADE ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `resident` */
 
 insert  into `resident`(`resident_id`,`img_filename`,`last_name`,`first_name`,`middle_name`,`suffix`,`house_num`,`street`,`subdivision`,`resident_since`,`sex`,`marital_status`,`birth_date`,`birth_place`,`cellphone_num`,`is_a_voter`,`audit_trail`,`is_deleted`) values 
-(1,'reno (1).jpg','Tecson','Reno','Hofileña','','Blk 12 Lot 4','Isaiah st','Cielito Homes','2015','Male','Single','1992-01-18','Malolos Bulacan','09568989899',1,1,0),
-(2,'8406e341a7981729777f9dee8b55be99 (1).jpg','Tecson','Randy','Hofileña','','Blk 12 Lot 4','Isaiah st','Cielito Homes','2003','Male','Single','1992-01-08','Bulacan Bulacan','09656565655',0,2,0),
+(1,'capture_24-09-121726118078.jpg','Tecson','Reno','HofileÃ±a','','Blk 12 Lot 4','Isaiah st','Cielito Homes','2015','Male','Single','1992-01-18','Malolos Bulacan','09568989899',1,1,0),
+(2,'8406e341a7981729777f9dee8b55be99 (1).jpg','Tecson','Randy','Hofileña','','Blk 12 Lot 4','Isaiah st','Cielito Homes','2003','Male','Single','1992-01-08','Bulacan Bulacan','09656565655',0,2,1),
 (3,'Miranda_Hallow.png','Tecson','Miranda','Hofileña','','Blk 12 Lot 4','Isaiah st','Cielito Homes','2006','Female','Married','1994-01-15','Plaridel Bulacan','09656565655',1,3,0),
 (4,'Lavi_2006.png','Tecson','James','Hofileña','','Blk 12 Lot 4','Isaiah st','Cielito Homes','2007','Male','Single','1993-02-18','Pulilan Bulacan','09669898989',0,4,0),
-(5,'alingpuring.jpg','Tecson','Puring','Hofileña','','Blk 12 Lot 3','Isaiah st','Cielito Homes','2007','Female','Single','1993-02-18','Bustos Bulacan','09669898989',0,5,0),
+(5,'alingpuring.jpg','Tecson','Puring','Ulatan','','Blk 12 Lot 3','Isaiah st','Cielito Homes','2007','Female','Single','1993-02-18','Bustos Bulacan','09669898989',0,5,0),
 (6,'Shirou.png','Tecson','Gardo','Hofileña','','Blk 12 Lot 2','Isaiah st','Cielito Homes','2009','Male','Married','1988-02-27','San Miguel Bulacan','09064154588',1,6,0),
-(8,'black_star__soul_eater_by_retratosanime_dfvupqd-fullview.jpg','Tecson','Aaaron','Hofileña','','Blk 12 Lot 5','Isaiah st','Cielito Homes','2015','Male','Single','1986-03-21','Gapan Nueva Ecjia','09565656565',1,8,0),
-(9,'miano.jpg','Tecson','Franklin','Hofileña','','Blk 12 Lot 5','Isaiah st','Cielito Homes','2015','Male','Married','1986-03-21','Cabiao Nueva Ecjia','09565656564',1,9,0),
+(8,'images (1).jpg','Yalong','Aaaron','Armengol','','Blk 12 Lot 5','Isaiah st','Cielito Homes','2015','Male','Single','1986-03-21','Gapan Nueva Ecjia','09565656565',1,8,0),
+(9,'miano.jpg','Tecson','Franklin','Miano','','Blk 12 Lot 5','Isaiah st','Cielito Homes','2015','Male','Married','1986-03-21','Cabiao Nueva Ecjia','09565656564',1,9,0),
 (10,'Karen-Bennett-200x200px.jpg','Tecson','Kiana','Macabara','','Blk 8 lot 5B','Jeremiah st','Cielito Homes','2015','Female','Married','1988-09-13','Valenzuela City','09565656565',0,10,0),
-(11,NULL,'Salas','Norberto','Torres',NULL,'12','Zabarte rd','','2002','Male','Single','2002-08-23','Caloocan City','09565656566',1,11,0),
+(11,'a68e484c-b440-4b78-a742-e1cf18b9666c.png','Salas','Norberto','Torres','','12','Zabarte rd','','2002','Male','Single','2002-08-23','Caloocan City','09565656566',1,11,0),
 (12,'Shiroe_portal.jpg','Salas','Robert','Lumauig','','Blk 8 lot 4','Jeremiah st','Cielito Homes','2002','Male','Single','2002-10-16','Caloocan City','09064121066',0,12,0),
 (13,'Akatsuki_portal.png','Salas','Akatsuki','Lumauig','','Blk 8 lot 4','Jeremiah st','Cielito Homes','2004','Female','Single','2004-12-16','Caloocan City','09054321268',1,13,0),
-(14,'Touya_portal.png','Dayao','Hiro','Timbol','','Blk 8 lot 3','Jeremiah st','Cielito Homes','2012','Male','Married','1990-04-03','Palauig Quezon','09665656565',1,14,0),
+(14,'6c2e2762dc133ba55627875e9fa27f33.jpg','Dayao','Hiro','Timbol','','Blk 8 lot 3','Jeremiah st','Cielito Homes','2012','Male','Married','1990-04-03','Palauig Quezon','09665656565',1,14,0),
 (15,'Minori_portal.png','Atchico','Denise','Tamaro','','Blk 14 lot 13','Moises st','Cielito Homes','2019','Female','Single','1999-04-24','Palauig Quezon','09665656565',0,15,1),
 (16,'soul (1).jpg','Labancas','Danilo','Lim','','Blk 12 Lot 4','Kang kong st','Kassel Villas','2006','Male','Single','2002-10-16','Bulacan Bulacan','09056565656',1,16,0),
-(17,'capture_24-09-101725953551.jpg','Japerson','Henry','','','123','Virgo st','','2012','Male','Single','2002-10-16','Caloocan City','0906412066',0,17,0),
-(18,'capture_24-09-101725953993.jpg','Operacio','Tim','Lucarnas','','12','Virgo st Corner Aries st','Maria Luisa Subd','2002','Male','Single','2002-10-16','Malabon City','09545454544',1,18,0);
+(17,'capture_24-09-121726121120.jpg','Japerson','Henry','','','123','Zabarte Rd','','2012','Male','Single','2002-10-16','Caloocan City','0906412066',0,17,0),
+(18,'Naotsugu_portal.png','Operacio','Tim','Lucarnas','','12','Virgo st Corner Aries st','Maria Luisa Subd','2002','Male','Single','2002-10-16','Malabon City','09545454544',1,18,0),
+(19,'Allenwalkerimage.png','Salas','Roberto','Lumauig','','Blk 12 Lot 4','Isaiah st','Cielito Homes','2002','Male','Single','2001-10-16','Caloocan City','09064121066',1,19,0);
 
 /*Table structure for table `tbl_blotter_audit_trail` */
 
@@ -385,6 +387,7 @@ CREATE TABLE `tbl_docu_request` (
   KEY `toknowtheresident` (`resident_no`),
   KEY `toknowthenresident` (`nresident_no`),
   KEY `toknowdocument` (`document_no`),
+  CONSTRAINT `tbl_docu_request_ibfk_1` FOREIGN KEY (`resident_no`) REFERENCES `resident` (`resident_id`),
   CONSTRAINT `toknowdocument` FOREIGN KEY (`document_no`) REFERENCES `tbl_documents` (`docu_id`) ON DELETE CASCADE ON UPDATE NO ACTION,
   CONSTRAINT `toknowtheaudittrail` FOREIGN KEY (`audit_trail_no`) REFERENCES `tbl_cert_audit_trail` (`audit_trail_id`) ON DELETE CASCADE ON UPDATE NO ACTION,
   CONSTRAINT `toknowthenresident` FOREIGN KEY (`nresident_no`) REFERENCES `non_resident` (`nresident_id`) ON DELETE SET NULL ON UPDATE NO ACTION,
@@ -767,6 +770,35 @@ DROP TABLE IF EXISTS `vw_all_cresidency`;
  `is_deleted` tinyint(2) 
 )*/;
 
+/*Table structure for table `vw_all_documents` */
+
+DROP TABLE IF EXISTS `vw_all_documents`;
+
+/*!50001 DROP VIEW IF EXISTS `vw_all_documents` */;
+/*!50001 DROP TABLE IF EXISTS `vw_all_documents` */;
+
+/*!50001 CREATE TABLE  `vw_all_documents`(
+ `request_id` varchar(255) ,
+ `date_issued` date ,
+ `resident_id` int(55) ,
+ `last_name` varchar(255) ,
+ `first_name` varchar(255) ,
+ `middle_name` varchar(255) ,
+ `suffix` varchar(10) ,
+ `house_num` varchar(255) ,
+ `street` varchar(255) ,
+ `subdivision` varchar(255) ,
+ `city` varchar(14) ,
+ `document_desc` varchar(36) ,
+ `age` int(10) ,
+ `sex` varchar(255) ,
+ `presented_id` varchar(255) ,
+ `ID_number` varchar(255) ,
+ `purpose` varchar(255) ,
+ `status` tinyint(3) ,
+ `is_deleted` tinyint(2) 
+)*/;
+
 /*Table structure for table `vw_all_exca_permits` */
 
 DROP TABLE IF EXISTS `vw_all_exca_permits`;
@@ -973,6 +1005,13 @@ DROP TABLE IF EXISTS `vw_all_tprs`;
 /*!50001 DROP VIEW IF EXISTS `vw_all_cresidency` */;
 
 /*!50001 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vw_all_cresidency` AS (select `tbl_docu_request`.`request_id` AS `request_id`,`resident`.`last_name` AS `last_name`,`resident`.`first_name` AS `first_name`,`resident`.`middle_name` AS `middle_name`,`resident`.`suffix` AS `suffix`,`resident`.`house_num` AS `house_num`,`resident`.`street` AS `street`,`resident`.`subdivision` AS `subdivision`,`tbl_docu_request`.`age` AS `age`,`tbl_docu_request`.`presented_id` AS `presented_id`,`tbl_docu_request`.`ID_number` AS `ID_number`,`tbl_docu_request`.`purpose` AS `purpose`,`tbl_cert_audit_trail`.`date_issued` AS `date_issued`,`tbl_cert_audit_trail`.`expiration` AS `expires`,`departments_list`.`department_desc` AS `department_issued`,`tbl_username`.`username` AS `issued_by`,`tbl_docu_request`.`status` AS `status`,`tbl_docu_request`.`is_deleted` AS `is_deleted` from ((((((`tbl_docu_request` left join `resident` on((`tbl_docu_request`.`resident_no` = `resident`.`resident_id`))) left join `non_resident` on((`tbl_docu_request`.`nresident_no` = `non_resident`.`nresident_id`))) left join `tbl_documents` on((`tbl_docu_request`.`document_no` = `tbl_documents`.`docu_id`))) left join `tbl_cert_audit_trail` on((`tbl_docu_request`.`audit_trail_no` = `tbl_cert_audit_trail`.`audit_trail_id`))) left join `departments_list` on((`tbl_cert_audit_trail`.`issuing_dept_no` = `departments_list`.`department_id`))) left join `tbl_username` on((`tbl_cert_audit_trail`.`issued_by_no` = `tbl_username`.`username_id`))) where (`tbl_documents`.`Certificate_of_Residency` is not null)) */;
+
+/*View structure for view vw_all_documents */
+
+/*!50001 DROP TABLE IF EXISTS `vw_all_documents` */;
+/*!50001 DROP VIEW IF EXISTS `vw_all_documents` */;
+
+/*!50001 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vw_all_documents` AS (select `tbl_docu_request`.`request_id` AS `request_id`,`tbl_cert_audit_trail`.`date_issued` AS `date_issued`,`resident`.`resident_id` AS `resident_id`,`resident`.`last_name` AS `last_name`,`resident`.`first_name` AS `first_name`,`resident`.`middle_name` AS `middle_name`,`resident`.`suffix` AS `suffix`,`resident`.`house_num` AS `house_num`,`resident`.`street` AS `street`,`resident`.`subdivision` AS `subdivision`,' Caloocan City' AS `city`,(case when (`tbl_documents`.`Barangay_Clearance` is not null) then 'Barangay Clearance' when (`tbl_documents`.`Certificate_of_Residency` is not null) then 'Certificate of Residency' when (`tbl_documents`.`Certificate_of_Indigency` is not null) then 'Certificate of Indigency' when (`tbl_documents`.`Certificate_of_Good_Moral` is not null) then 'Certificate of Good Moral' when (`tbl_documents`.`Business_Permits` is not null) then 'Business Permits' when (`tbl_documents`.`Building_Permits` is not null) then 'Building Permits' when (`tbl_documents`.`Excavation_Permits` is not null) then 'Excavation Permits' when (`tbl_documents`.`Fencing_Permits` is not null) then 'Fencing Permits' when (`tbl_documents`.`FTJS` is not null) then 'First Time Job Seekers' when (`tbl_documents`.`Oath_of_Undertaking` is not null) then 'Oath of Undertaking' when (`tbl_documents`.`TPRS` is not null) then 'Tricycle Pedicab Regulatory Services' else 'Unknown Document Type' end) AS `document_desc`,`tbl_docu_request`.`age` AS `age`,`resident`.`sex` AS `sex`,`tbl_docu_request`.`presented_id` AS `presented_id`,`tbl_docu_request`.`ID_number` AS `ID_number`,`tbl_docu_request`.`purpose` AS `purpose`,`tbl_docu_request`.`status` AS `status`,`tbl_docu_request`.`is_deleted` AS `is_deleted` from (((`tbl_docu_request` join `resident` on((`tbl_docu_request`.`resident_no` = `resident`.`resident_id`))) join `tbl_documents` on((`tbl_docu_request`.`document_no` = `tbl_documents`.`docu_id`))) join `tbl_cert_audit_trail` on((`tbl_docu_request`.`audit_trail_no` = `tbl_cert_audit_trail`.`audit_trail_id`)))) */;
 
 /*View structure for view vw_all_exca_permits */
 

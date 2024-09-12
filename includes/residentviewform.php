@@ -121,22 +121,22 @@
 
 
                                             <div class="form-floating mt-3 mb-3 col-md-4">
-                                                <input type="Date" class="form-control" id="floatingInput" id="birth_date"name="birth_date" disabled>
+                                                <input type="Date" class="form-control" id="birth_date"name="birth_date" disabled>
                                                 <label for="floatingInput">Birth Date</label>
                                             </div> 
 
                                             <div class="form-floating mt-3 mb-3 col-md-4">
-                                                <input type="Text" class="form-control" id="floatingInput" id="birth_place" name="birth_place" disabled>
+                                                <input type="Text" class="form-control" id="birth_place" name="birth_place" disabled>
                                                 <label for="floatingInput">Birth Place</label>
                                             </div> 
 
                                             <div class="form-floating mt-3 mb-3 col-md-4">
-                                                <input type="text" class="form-control" id="floatingInput" id="cp_number" name="cellphone_number" disabled>
+                                                <input type="text" class="form-control" id="cp_number" name="cellphone_number" disabled>
                                                 <label for="floatingInput">Phone Number</label>
                                             </div> 
 
                                             <div class="form-floating mt-3 mb-3 col-md-2">
-                                                <select class="form-select" id="marital_status" name="is_a_voter" aria-label="Floating label select example" disabled>
+                                                <select class="form-select" id="is_a_voter" name="is_a_voter" aria-label="Floating label select example" disabled>
                                                     <option hidden selected>Select Option</option>
                                                     <option value="1">YES</option>
                                                     <option value="0">NO</option>
@@ -146,7 +146,7 @@
                                             </div>
 
                                             <div class="form-floating mt-3 mb-3 col-md-2">
-                                                <input type="text" class="form-control" id="resident_since" name="rsince" disabled>
+                                                <input type="text" class="form-control" id="rsince" name="rsince" disabled>
                                                 <label for="floatingInput">Resident Since</label>
                                             </div>
                                         </div>
@@ -223,9 +223,10 @@
                     
                    
                 </div>
-                    <div class="modal-footer">
+                <div class="modal-footer">
+                    <button hidden id="backbtntodocu" type="button" class="btn btn-primary" data-bs-target="#ViewDocumentModal">Back</button>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    
+
                 </div>
 
                 

@@ -32,8 +32,21 @@
         <input hidden id="resident_id" name="resident_id"/>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+
+        <form>
+
+            <input hidden id="first_name" name="first_name"/>
+            <input hidden id="middle_name" name="middle_name"/>
+            <input hidden id="last_name" name="last_name"/>
+            <input hidden id="suffix" name="suffix"/>
+            <input hidden id="house_no" name="house_no"/>
+            <input hidden id="first_name" name="street_name"/>
+
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-success">Generate the Certificate</button>
+            <button type="button" id="viewResidentfromDocu" class="btn btn-primary" data-bs-target="#ViewResidentModal" data-bs-toggle="modal" data-isfordocu="YES">View Resident Details</button>
+        </form>
+        
     </div>
     </div>
 </div>
