@@ -9,6 +9,12 @@ $stmt->execute();
 
 $results=$stmt->fetchAll(PDO::FETCH_ASSOC); 
 
+$nowdate= date("Y-m-d H:i:s"); //Get the date now
+$nowtime = time(); //Get the time now
+$expiration = $_POST['expiration'];
+$username = null;
+$dept = 2;
+
 $residentno=($_POST['resident_no']);
 $fname=utf8_decode($_POST['firstname']);
 $mname=utf8_decode($_POST['middlename']);
@@ -18,8 +24,6 @@ if(isset($_POST['suffix'])){
 }else{
     $suffix="";
 }
-$documentdesc='Certificate of Residency';
-$nowdate= date("Y-m-d H:i:s");
 $completeaddress=utf8_decode($_POST['address']);
 $presentedid=$_POST['presented_id'];
 $IDnumber=$_POST['IDnum'];
@@ -27,16 +31,15 @@ $purpose=$_POST['purpose'];
 $residentsince=$_POST['r_since'];
 $docurequestdata=[$residentno, ];
 
-$sqlquery2="INSERT INTO tbl_documents (document_desc) VALUES(?)";
+$sqlquery2="SELECT Certificate_of_Residency FROM tbl_documents ORDER BY Certificate_of_Residency DESC LIMIT 1";
 $stmt2=$pdo->prepare($sqlquery2);
-$stmt2->execute([$documentdesc]);
+$stmt2->execute();
+$last_id=$stmt2 -> fetchColumn();
 
-$sqlquery3 = "INSERT INTO tbl_docu_request (resident_no, document_no, date_requested, presented_id, IDnumber, purpose)
-              SELECT :residentno, MAX(document_id), :nowdate, :presentedid, :IDnumber, :purpose
-              FROM tbl_documents";
+$sqlquery3 = "INSERT INTO tbl_docu_request (resident_no, presented_id, ID_number, purpose) 
+            VALUES (:residentno, :presentedid, :IDnumber, :purpose);";
 $alldatatorequest = [
     ':residentno' => $residentno,
-    ':nowdate' => $nowdate,
     ':presentedid' => $presentedid,
     ':IDnumber' => $IDnumber,
     ':purpose' => $purpose
@@ -57,6 +60,11 @@ $stmt5=$pdo->prepare($sqlquery5);
 $stmt5->execute([$request_id]);
 $AgeResult= $stmt5->fetchAll();
 $Age=$AgeResult;
+
+$sqlquery6 = "INSERT INTO tbl_cert_audit_trail(issuing_dept_no, date_issued, expiration, time_issued)
+            VALUES (?,?,?,?)";
+$stmt6=$pdo->prepare($sqlquery6);
+$stmt6->execute([$issuingdeptno, $dateissued, $expiration, $timeissued]);
 
 //Close the Database Connection
 $pdo=null;

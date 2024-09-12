@@ -48,6 +48,7 @@ $('#editimagefile').on('change', function() {
             }
             // If the image is valid, update the preview image source
             $('#editimagePreview').attr('src', reader.result);
+            $('#isfromcamcheck').attr('disabled', true);
         }
         img.src = reader.result;
     }

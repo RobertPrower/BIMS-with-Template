@@ -7,13 +7,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Create Documents</title>
   <!-- Favicon -->
-  <link rel="shortcut icon" href="./img/svg/logo.svg" type="image/x-icon">
+  <link rel="shortcut icon" href="./img/Brgy177.png" type="image/x-icon">
   <!-- Custom styles -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" 
   integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
   <link rel="stylesheet" href="./css/create-documents.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
 
   <!--JavaScript-->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
@@ -82,6 +82,8 @@
           <form action="generate-residency.php" method="POST" id="certificatedetails">
             <div class="text-center row">
 
+            <input hidden type="text" class="form-control" id="res_id" name="resident_no">
+
               <div class="form-floating mt-3 mb-3 col-md-4">
                   <input type="text" class="form-control" id="fname" name="firstname" placeholder="Enter First Name Here" required >
                   <label for="fname">First Name</label>
@@ -90,8 +92,6 @@
               <div class="form-floating mt-3 mb-3 col-md-4">
                   <input type="text" class="form-control" id="mname" name="middlename" placeholder="Enter Middle Name Here" >
                   <label for="mname">Middle Name</label>
-                  <input type="text" class="form-control" id="resident_id" name="resident_no" required  hidden>
-
               </div>
 
               <div class="form-floating mt-3 mb-3 col-md-3">
@@ -184,65 +184,7 @@
 <!-- Icons library -->
 <script src="plugins/feather.min.js"></script>
 <!-- Custom scripts -->
-<!-- <script>
-$('#selectresident').on('shown.bs.modal', function () {
-    $('#ResidentTable').DataTable();     
-});
-</script> -->
-
-
-<script>
-    $(document).ready(function() {
-
-      var selectedRowId = null;
-      // Initialize DataTable when the modal is shown
-      $('#selectresident').on('shown.bs.modal', function() {
-        $('#ResidentTable').DataTable();
-      });
-
-      // Event listener for row click
-      $(document).on('click', '#ResidentTable tbody tr', function() {
-        $(this).toggleClass("selected").siblings().removeClass("selected");
-        var residentid = $(this).find(".resident_id").text();
-        selectedRowId = $(this).find(".resident_id").text();
-
-        if (residentid) {
-          // Make an AJAX request to fetch resident details
-          $.ajax({
-            url: 'includes/fetch_resident_details.php', // PHP script to fetch resident details
-            type: 'POST',
-            data:  { id: residentid },
-            success: function(response) {
-              // Parse the JSON response
-              var data = JSON.parse(response);
-
-              // Populate the form fields on the main page
-              $('#fname').val(data.first_name);
-              $('#mname').val(data.middle_name);
-              $('#lname').val(data.last_name);
-              $('#suffix').val(data.suffix);
-              $('#subd').val(data.address +" "+ "Caloocan City");
-              $('#resident_since').val(data.resident_since);
-              $('#resident_id').val(residentid);
-
-
-              // Close the modal
-              $('#selectresident').modal('hide');
-            },
-            error: function(xhr, status, error) {
-              console.error('Error fetching resident details:', error);
-            }
-          });
-        } else {
-          alert('Please select a resident.');
-        }
-      });
-
-    });
-  </script>
-
-
-
+<script src="js/create-cert-residency.js"></script>
 <script src="js/script.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>

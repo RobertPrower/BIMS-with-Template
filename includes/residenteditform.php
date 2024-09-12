@@ -22,6 +22,8 @@
                                     <!-- Hidden Text Box to Store the resident_id value and current page -->
                                         <input hidden type="text" id="resident_id" name="resident_id" />
                                         <input hidden type="text" id="pageno" name="pageno" />
+                                        <input hidden type="text" id="isfromcamcheck" name="isfromcamcheck" />
+
 
                                         <div id="editcameraFeedWrapper" class="camera-frame" style="width: 200px; height: 200px; display: none;">
                                             <div id="editcameraFeed"></div>
@@ -34,8 +36,19 @@
                                         </div>
 
                                     </div>
-                                        <button type="button" id="editopenCamera" class="btn btn-primary btn-lg col-md-12">Open Camera</button>
+                                        <button type="button" id="editopenCamera" class="btn btn-primary btn-lg col-md-12 editopenCamera" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Please capture a image.">Open Camera</button>
+                                        
+                                        <style>
+                                            /* Default tooltip styling */
+                                            .tooltip-inner {
+                                            background-color: #000; /* Default background color */
+                                            }
 
+                                            /* Custom class for red background */
+                                            .tooltip-red .tooltip-inner {
+                                            background-color: red !important; /* Force red background */
+                                            }
+                                        </style>
                                     <div class="form-floating mt-3 mb-3 col-md-13">
                                         <input type="file" class="form-control" id="editimagefile" name="image_file" placeholder="Upload Picture">
                                         <label for="floatingInput">Upload Image</label>

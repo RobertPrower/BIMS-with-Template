@@ -21,7 +21,7 @@
                     <a href="index.php"><span class="icon home" aria-hidden="true"></span>Dashboard</a>
                 </li>
                 <li>
-                    <a href="create-documents.php">
+                    <a href="documents.php">
                         <span class="icon document" aria-hidden="true"></span>Certificates
                     </a>
                     <button class="category__btn transparent-btn show-cat-btn" title="Open list">

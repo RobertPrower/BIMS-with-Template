@@ -3,7 +3,7 @@
 require_once('connecttodb.php');
 
 $limit = 10;
-$search = isset($_POST['search']) ? $_POST['search'] : '';
+$search = isset($_POST['search']) ? sanitizeData($_POST['search']): '';
 $page = isset($_POST['page']) ? $_POST['page'] : '1';
 $start_from = ($page - 1) * $limit;
 
@@ -108,8 +108,18 @@ if($_POST['operation']=="SEARCH_PAGINATION"){
     $current_page = isset($_POST['pageno']) ? (int)$_POST['pageno'] : 1;
     $current_page = max(1, min($current_page, $total_pages));
     $start_from = ($current_page - 1) * $limit;
-    
+        
     require_once'paginationtemplate.php';
+}
+
+function sanitizeData($input){
+    $removedSpecialChar = trim ($input, "!@#$%^&*()=[]{};:`~'<>,./\?| "); 
+    $removedSpecialCharinthemiddle= preg_replace('/[^a-zA-Z0-9\s\-ñÑ#]/u','', $removedSpecialChar);
+
+    $sanatizedData=htmlspecialchars($removedSpecialCharinthemiddle);
+
+    return $sanatizedData;
+
 }
 
 

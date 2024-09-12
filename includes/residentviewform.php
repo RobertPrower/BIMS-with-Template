@@ -44,7 +44,7 @@
                                     <div class="col-md-9 card mt-3 " style="border-radius: 10px;" style="padding: 10px;">
                                         <div class="text-center row">
 
-                                            <input hidden type="text" id="resident_id" name="resident_id" />
+                                            <input hidden type="text" id="viewresident_id" name="resident_id" />
 
 
                                             <div class="form-floating mt-3 mb-3 col-md-4">

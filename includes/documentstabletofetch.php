@@ -1,20 +1,25 @@
 <?php 
-
 foreach ($results as $row) {
     echo '<tr>';
-    echo '<td hidden id="resident_id">' . htmlspecialchars($row['resident_id']) . '</td>';
-    echo '<td>' . htmlspecialchars($row['date_recorded']) . '</td>';
+    echo '<td id="request_id">' . htmlspecialchars($row['request_id']) . '</td>';
+    echo '<td>' . htmlspecialchars($row['date_issued']) . '</td>';
     echo '<td>' . htmlspecialchars($row['last_name']) . ', ' . htmlspecialchars($row['first_name']) . ' ' . htmlspecialchars($row['middle_name']) . ' ' . htmlspecialchars($row['suffix']) . '</td>';
-    echo '<td>' . htmlspecialchars($row['house_num']) . ', ' . htmlspecialchars($row['street']) . ', ' . htmlspecialchars($row['subdivision']) . '</td>';
-    echo '<td class="text-center">' . htmlspecialchars($row['resident_since']) . '</td>';
-    echo '<td>' . htmlspecialchars($row['sex']) . '</td>';
-    echo '<td>' . htmlspecialchars($row['marital_status']) . '</td>';
-    echo '<td>' . htmlspecialchars($row['birth_date']) . '</td>';
-    echo '<td>' . htmlspecialchars($row['birth_place']) . '</td>';
-    echo '<td class="text-center">' . htmlspecialchars($row['cellphone_num']) . '</td>';
-    echo '<td>' . ($row['is_a_voter'] ? 'YES' : 'NO') . '</td>';
+    echo '<td>' . htmlspecialchars($row['house_num']) . ', ' . htmlspecialchars($row['street']) . ', ' . htmlspecialchars($row['subdivision']) . htmlspecialchars($row['city']) . '</td>';
+    echo '<td">' . htmlspecialchars($row['sex']) . '</td>';
+    echo '<td">' . htmlspecialchars($row['age']) . '</td>';
+    echo '<td>' . htmlspecialchars($row['document_desc']) . '</td>';
+    echo '<td>' . htmlspecialchars($row['presented_id']) . '</td>';
+    echo '<td>' . htmlspecialchars($row['ID_number']) . '</td>';
+    echo '<td>' . htmlspecialchars($row['purpose']) . '</td>';
 
-    if(!isset($Isforcert)){
+    switch ($row['status']){
+        case '0': echo "<td style='background-color: green; color: white'> ACTIVE </td>";
+        case '1': echo "<td style='background-color: grey; color: white'> EXPIRED </td>";
+        case '2': echo "<td style='background-color: red; color: white'> REVOKED </td>";
+        default: echo "<td> Unknown Status </td>";
+    } 
+
+   /* if(!isset($Isforcert)){
         echo '<td style="width: 35%;">
         <div class="btn-group text-center">
                 
@@ -68,7 +73,7 @@ foreach ($results as $row) {
                 data-pageno="'.$page.'"
                 data-resident_id = "' . htmlspecialchars($row['resident_id']) . '">Recover</button>';
             }
-    } 
+    }*/ 
 }      
     echo '</div>
     </td>

@@ -2,6 +2,16 @@ $(document).ready(function () {
 
   reloadTable();
 
+  //For the Bootstrap Tooltips to load
+  const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+  const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+
+  //For the tooltip to be triggered manually via Jquery
+  $('#editopenCamera').tooltip({
+    trigger: 'manual' 
+  });
+  
+  //To Reload the page
   function reloadTable(page) {
     $.ajax({
       url: "includes/residenttableautoreload.php",
@@ -298,7 +308,6 @@ $(document).ready(function () {
       });
     });
 
-
   //For Editing Resident Entry
   $("#EditResidentModalForm").submit(function (event) {
     // Prevent the default form submission behavior
@@ -306,62 +315,82 @@ $(document).ready(function () {
 
     // Collect form data using FormData
     var formData = new FormData(this);
+    var currentSearch = $("#searchbox").val();
+
     //For the PHP operation IF statement
     formData.append("operation","EDIT");
-    var currentSearch = $("#searchbox").val();
 
     const textbox = document.getElementById('pageno');
     const page = textbox.value;
 
+    var capturecameracheck = $("#editopenCamera").text();
+    console.log(capturecameracheck);
+
+
     console.log("Page Number: " + page);
 
-    // Send AJAX request
-    $.ajax({
-      url: "includes/residentoperation.php",
-      type: "POST",
-      data: formData,
-      dataType: "json",
-      contentType: false,
-      processData: false,
-      success: function (response) {
-        // Handle success response
-        console.log("Data saved successfully:", response);
 
-        if (response.success) {
-          $("#EditResidentModal").modal("hide");
-          swal({
-            title: "Edit Entry",
-            text: "Entry Edited Sucessfully!",
-            icon: "success",
-            button: "Close",
-          });
-          //If the modal was fired from a search make sure still the same page
-          if(currentSearch){
-            fetchResults(currentSearch, page)
-          }else{ //If not just reload the page
-            reloadTable(page);
-          }
+    switch(capturecameracheck){
+      case 'Capture' :
+        $("#editopenCamera").tooltip('toggle');
+
+        if ($('.editopenCamera').hasClass('show')) {
+          $('.editopenCamera').addClass('tooltip-red');
         } else {
-          $("#EditResidentModal").modal("hide");
-          swal({
-            icon: "error",
-            title: "Oops...",
-            text: "Something went wrong!",
-          });
-        } // END of if
-      },
-      error: function (xhr, status, error) {
-        // Handle error response
-        console.error("Error saving data:", error);
-        // Optionally, display an error message to the user
-        $("#EditResidentModal").modal("hide");
-        swal({
-          icon: "error",
-          title: "Oops...",
-          text: "Something went wrong!",
+          $('.editopenCamera').removeClass('tooltip-red');
+        }
+      break;
+      default:
+
+         // Send AJAX request
+         $.ajax({
+          url: "includes/residentoperation.php",
+          type: "POST",
+          data: formData,
+          dataType: "json",
+          contentType: false,
+          processData: false,
+          success: function (response) {
+            // Handle success response
+            console.log("Data saved successfully:", response);
+
+            if (response.success) {
+              $("#EditResidentModal").modal("hide");
+              swal({
+                title: "Edit Entry",
+                text: "Entry Edited Sucessfully!",
+                icon: "success",
+                button: "Close",
+              });
+              //If the modal was fired from a search make sure still the same page
+              if(currentSearch){
+                fetchResults(currentSearch, page)
+              }else{ //If not just reload the page
+                reloadTable(page);
+              }
+            } else {
+              $("#EditResidentModal").modal("hide");
+              swal({
+                icon: "error",
+                title: "Oops...",
+                text: "Something went wrong!",
+              });
+            } // END of if
+          },
+          error: function (xhr, status, error) {
+            // Handle error response
+            console.error("Error saving data:", error);
+            // Optionally, display an error message to the user
+            $("#EditResidentModal").modal("hide");
+            swal({
+              icon: "error",
+              title: "Oops...",
+              text: "Something went wrong!",
+            });
+          },
         });
-      },
-    });
+      
+    }
   });
 
   //For reseting the Add Resident Form everytime you click the close or X button
@@ -442,15 +471,14 @@ $(document).ready(function () {
 
     //AJAX request for the clearance tab and table of the modal
   $(document).on("click", "#nav-clearance-tab", function () {
-    var resident_id = document.getElementById('resident_id');
-    var resident_value = resident_id.value;
+    var resident_id = $('#viewresident_id').val();
 
-    console.log(resident_value);
+    console.log(resident_id);
     
       $.ajax({
         url: "includes/get-resident-docu-request.php",
         type: "POST",
-        data: {resident_id: resident_value},
+        data: {resident_id: resident_id},
         dataType: "HTML",
         success: function (data) {
           $("#ResidentRequestTable tbody").html(data);

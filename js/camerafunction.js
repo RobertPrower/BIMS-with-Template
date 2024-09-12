@@ -30,6 +30,7 @@ $(document).ready(function() {
                 isCameraOpen = true;
     
                 $("#editimagePreview").attr("disabled");
+                $("#isfromcamcheck").prop("disabled", true);
 
             }else{
                 Webcam.attach('#cameraFeed'); // Attach the webcam to the camera feed div
@@ -44,6 +45,7 @@ $(document).ready(function() {
                 isCameraOpen = true;
     
                 $("#imagePreview").attr("disabled");
+            
             }
 
         }else{
@@ -55,15 +57,20 @@ $(document).ready(function() {
     
                 // Display the captured image in the preview section
                 $('#editimagePreview').attr('src', data_uri);
-
+                                
                 // Show the preview image and hide the camera feed
                 $('#editimagePreviewWrapper').show();
                 $('#editcameraFeedWrapper').hide();
     
                 // Reset the button text and style
                 $('#editopenCamera').text('Open Camera').removeClass('btn-success').addClass('btn-primary');
+                $('#editimagefile').prop('disabled',false)
+                $("#editimagefile").val('');  
+                
+                $("#isfromcamcheck").prop("disabled", false);
+                $('#isfromcamcheck').val(data_uri);
                 isCameraOpen = false;
-            });
+                });
 
               
             }else{
@@ -81,6 +88,8 @@ $(document).ready(function() {
     
                 // Reset the button text and style
                 $('#openCamera').text('Open Camera').removeClass('btn-success').addClass('btn-primary');
+                $('#imagefile').prop('disabled',false)
+                $("#imagefile").val('');  
                 isCameraOpen = false;
                 });
             }

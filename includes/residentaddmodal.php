@@ -81,14 +81,14 @@
                                         <option value="Almar Subd">Almar Subd</option>
                                         <option value="Caritas">Caritas Subd</option>
                                         <option value="Capitol Parkland Subd">Capitol Parkland Subd</option>
-                                        <option value="Castel Spring Subd">Castle Spring Subd</option>
+                                        <option value="Cassel Spring Subd">Castle Spring Subd</option>
                                         <option value="Christina Homes">Christina Homes Subd</option>
                                         <option value="Cielito Homes">Cielito Homes Subd</option>
                                         <option value="Del Rey Ville 2">Del Rey Ville 2 Subd</option>
                                         <option value="Kassel Villas">Kassel Villas Subd</option>
                                         <option value="Lilleville Subd">Lilleville Subd</option>
                                         <option value="Maligay Park">Maligaya Park Subd</option>
-                                        <option value="Cassel Spring">Maria Luisa Subd</option>
+                                        <option value="Maria Luisa Subd">Maria Luisa Subd</option>
                                         <option value="North Matrix Villge 1">North Matrix Village 1 Subd</option>
                                         <option value="North Matrix Ville">North Matrix Ville Subd</option>
                                         <option value="North Triangle">North Triangle Subd</option>
@@ -117,7 +117,7 @@
                                 </div>
 
                                 <div class="form-floating mt-3 mb-3 col-md-4">
-                                    <input type="Date" class="form-control" id="birth_date" name="birth_date" required>
+                                    <input type="date" class="form-control" id="birth_date" name="birth_date" required>
                                     <label for="birth_date">Birth Date</label>
                                 </div> 
 
