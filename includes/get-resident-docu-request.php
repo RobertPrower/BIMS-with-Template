@@ -24,18 +24,15 @@ if(isset($id)){
                     <td>{$row['presented_id']}</td>
                     <td>{$row['ID_number']}</td>";
 
-                if($row['status']=='0'){
-
-                    echo "<td style='background-color: green; color: white'> ACTIVE </td>";
-
-                }elseif($row['status']=='1'){
-                    
-                    echo "<td style='background-color: grey; color: white'> EXPIRED </td>";
-
-                }else{
-                    echo "<td style='background-color: red; color: white'> REVOKED </td>";
-                    
-                }
+                    switch ($row['status']){
+                        case 0: echo "<td><span class='badge-success'> ACTIVE</span> </td>";
+                        break;
+                        case 1: echo "<td><span class='badge-disabled'> EXPIRED</span></td>";
+                        break;
+                        case 2: echo "<td <span class='badge-trashed'> REVOKED </td>";
+                        break;
+                        default: echo "<td> Unknown Status </td>";
+                    } 
                 
                         
         }

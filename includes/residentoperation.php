@@ -229,8 +229,6 @@ if($operation_check == "ADD"){ //For the add operation
         }elseif($_FILES['image_file']['error']==UPLOAD_ERR_NO_FILE){
 
             $imgopresponse = "UPLOAD_ERR_NO_FILE: No file is uploaded";
-            exit(json_encode(["success" => false, "message" => "Image Error: ". $imgopresponse]));
-
 
         }elseif($_FILES['image_file']['error']==UPLOAD_ERR_CANT_WRITE){
             $imgopresponse = "UPLOAD_ERR_CANT_WRITE: Unable to write file to disk.";
@@ -305,7 +303,7 @@ if($operation_check == "ADD"){ //For the add operation
         $imgopresponse = "Captured Picture recorded successfully";
         
     }else{
-        $imgopresponse = "No image was recevied";
+        $imgopresponse = "No image data was recevied";
     }
         
 

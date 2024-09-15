@@ -18,10 +18,10 @@
         <div class="sidebar-body">
             <ul class="sidebar-body-menu">
                 <li>
-                    <a href="index.php"><span class="icon home" aria-hidden="true"></span>Dashboard</a>
+                    <a id="dashboard_btn" href="index.php"><span class="icon home" aria-hidden="true"></span>Dashboard</a>
                 </li>
                 <li>
-                    <a href="documents.php">
+                    <a id="documents_btn" href="documents.php">
                         <span class="icon document" aria-hidden="true"></span>Certificates
                     </a>
                     <button class="category__btn transparent-btn show-cat-btn" title="Open list">
@@ -48,11 +48,11 @@
                 </li>
 
                 <li>
-                <a href="residents.php"><span class="icon home" aria-hidden="true"></span>Residents</a>
+                    <a id="resident_btn" id="resident_btn" href="residents.php"><span class="icon home" aria-hidden="true"></span>Residents</a>
                     
                 </li>
                 <li>
-                    <a href="blotters.php"><span class="icon edit" aria-hidden="true"></span>Blotters</a>
+                    <a id="blotter_btn" id="blotter_btn" href="blotters.php"><span class="icon edit" aria-hidden="true"></span>Blotters</a>
                    
                 </li>
                 <li>

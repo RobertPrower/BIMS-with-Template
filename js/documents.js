@@ -23,6 +23,7 @@ $(document).ready (function(){
       var request_id = $(this).data("id");
       var resident_id = $(this).data("resident_id");
       var date_requested = $(this).data("date-requested");
+      var expiration = $(this).data("expiration-date");
       var first_name = $(this).data("first-name");
       var middle_name = $(this).data("middle-name");
       var last_name = $(this).data("last-name");
@@ -40,6 +41,7 @@ $(document).ready (function(){
 
       $("#Request_ID").html('<b>Request ID:  </b>'+request_id);
       $("#Date_issued").html('<b>Date Issued:  </b>'+date_requested);
+      $("#Expiration_Date").html('<b>Expiration Date:  </b>'+expiration);
       $("#Fullname").html('<b>Fullname:  </b>'+first_name+' '+ middle_name+','+' '+ last_name+' '+suffix);
       $("#Address").html('<b>Address:</b> '+house_no+' '+street_name+' '+subdivision+' Camarin Caloocan City');
       $("#Sex").html('<b>Sex: </b>' +sex);
@@ -49,6 +51,7 @@ $(document).ready (function(){
       $("#ID_num").html('<b>ID Number:  </b>' +ID_number);
       $("#Purpose").html('<b>Purpose:  </b>' +purpose);
       $("#resident_id").val(resident_id);
+      $("#request_id").val(request_id)
 
 
       switch(status){
@@ -81,7 +84,7 @@ $(document).ready (function(){
 
           var imagepath = "includes/img/resident_img/"+response.img_filename;
 
-          $("#viewResident_id").val(response.resident_id)
+          $("#viewresident_id").val(response.resident_id)
           $("#fname").val(response.first_name);
           $("#mname").val(response.middle_name);
           $("#lname").val(response.last_name);
@@ -113,6 +116,67 @@ $(document).ready (function(){
       $("#DocumentDetailsModal").modal("show");
 
     })
+
+    //AJAX request for the clearance tab and table of the modal
+  $(document).on("click", "#nav-clearance-tab", function () {
+    var resident_id = $('#resident_id').val();
+
+    console.log(resident_id);
+    
+      $.ajax({
+        url: "includes/get-resident-docu-request.php",
+        type: "POST",
+        data: {resident_id: resident_id},
+        dataType: "HTML",
+        success: function (data) {
+          $("#ResidentRequestTable tbody").html(data);
+        },
+        error: function (xhr, status, error) {
+          console.error("Error fetching table data:", error);
+        },
+      });
+
+  });
+
+  $("#revokebtn").click(function (e) { 
+    e.preventDefault();
+
+    var request_id = $('#request_id').val();
+
+    swal({
+      title: "Are you sure?",
+      text: "Revoking the certificate VOIDS a certificate validity",
+      icon: "warning",
+      buttons: ["Cancel","Yes"],
+      dangerMode: true,
+    })
+    .then((willDelete) => {
+      if (willDelete) {
+        $.ajax({
+          url: "includes/documentsoperation.php",
+          type: "POST",
+          data: {OPERATION: "REVOKE", request_id: request_id},
+          success: function(){
+
+            swal("The certificate has been REVOKED!", {
+              icon: "success"
+            });
+
+            reloadTable();
+            
+          },
+          error: function(xhr,status,error){
+            swal("Error!", "Failed to delete the entry.", "error");
+          },
+        })
+   
+      } else {
+        swal("The certificate is not revoked");
+      }
+    });
+    
+  });
+ 
     
     
 });

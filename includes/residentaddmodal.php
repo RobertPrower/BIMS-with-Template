@@ -1,10 +1,10 @@
-<!-- Add Blotter Modal -->
+<!-- New Blotter Modal -->
                                
 <div class="modal fade" id="AddResidentModal" name="add" tabindex="-1" aria-labelledby="addBlotterModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="addBlotterModalLabel">Add Resident</h5>
+                <h5 class="modal-title" id="addBlotterModalLabel">New Resident</h5>
                 <button type="button" class="btn-close btnClose" data-bs-dismiss="modal" id="closeButton" aria-label="Close"></button>
             </div>
             <div class="modal-body">

@@ -19,21 +19,19 @@ try {
             echo '<tr>';
             echo '<td id="request_id">' . htmlspecialchars($row['request_id']) . '</td>';
             echo '<td>' . htmlspecialchars($row['date_issued']) . '</td>';
+            echo '<td>' . htmlspecialchars($row['expiration']) . '</td>';
+            echo '<td>' . htmlspecialchars($row['is_resident']) . '</td>';
             echo '<td>' . htmlspecialchars($row['last_name']) . ', ' . htmlspecialchars($row['first_name']) . ' ' . htmlspecialchars($row['middle_name']) . ' ' . htmlspecialchars($row['suffix']) . '</td>';
             echo '<td>' . htmlspecialchars($row['house_num']) . ', ' . htmlspecialchars($row['street']) . ', ' . htmlspecialchars($row['subdivision']) . htmlspecialchars($row['city']) . '</td>';
             echo '<td>' . htmlspecialchars($row['sex']) . '</td>';
-            echo '<td>' . htmlspecialchars($row['age']) . '</td>';
             echo '<td>' . htmlspecialchars($row['document_desc']) . '</td>';
-            echo '<td>' . htmlspecialchars($row['presented_id']) . '</td>';
-            echo '<td>' . htmlspecialchars($row['ID_number']) . '</td>';
             echo '<td>' . htmlspecialchars($row['purpose']) . '</td>';
-        
             switch ($row['status']){
-                case 0: echo "<td style='background-color: green; color: white'> ACTIVE </td>";
+                case 0: echo "<td><span class='badge-success'> ACTIVE</span> </td>";
                 break;
-                case 1: echo "<td style='background-color: grey; color: white'> EXPIRED </td>";
+                case 1: echo "<td><span class='badge-disabled'> EXPIRED</span></td>";
                 break;
-                case 2: echo "<td style='background-color: red; color: white'> REVOKED </td>";
+                case 2: echo "<td> <span class='badge-trashed'> REVOKED </span></td>";
                 break;
                 default: echo "<td> Unknown Status </td>";
             } 
@@ -44,8 +42,9 @@ try {
                         
                     <button class="btn btn-primary mx-1 viewDocumentsButton" id=vbutton
                         data-id="' . htmlspecialchars($row['request_id']) . '"
-                        data-resident_id="' . htmlspecialchars($row['resident_id']) . '"
+                        data-resident_id="' . htmlspecialchars($row['resident/nonres_id']) . '"
                         data-date-requested="' . htmlspecialchars($row['date_issued'], ENT_QUOTES) . '"
+                        data-expiration-date="' . htmlspecialchars($row['expiration'], ENT_QUOTES) . '"
                         data-first-name="' . htmlspecialchars($row['first_name'], ENT_QUOTES) . '"
                         data-middle-name="' . htmlspecialchars($row['middle_name'], ENT_QUOTES) . '"
                         data-last-name="' . htmlspecialchars($row['last_name'], ENT_QUOTES) . '"

@@ -1,5 +1,6 @@
 $(document).ready(function () {
 
+  //loads the table
   reloadTable();
 
   //For the Bootstrap Tooltips to load
@@ -408,6 +409,11 @@ $(document).ready(function () {
     }else{
       alert('This block of code should not be executed!!')
     }
+  })
+
+  //Prevent the captured image from being send incase the modal has been close and reopen
+  $("#AddResidentModal #EditResidentModal").hasClass("show", function(){
+    $("#isfromcamcheck").prop("disabled", true);
   })
 
   // //For populating the View and Edit Modal Combined into one event

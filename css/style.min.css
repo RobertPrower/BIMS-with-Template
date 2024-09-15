@@ -1054,6 +1054,11 @@ button.disabled:focus {
   line-height: 1.5;
   color: #5e77f5;
 }
+/* Disable animations initially */
+.sidebar.no-transition {
+  transition: none !important;
+}
+
 .sidebar-toggle {
   opacity: 0.6;
   -webkit-transition: 0.3s all;
@@ -1284,19 +1289,19 @@ button.disabled:focus {
   font-weight: 500;
   font-size: 12px;
   line-height: 1.67;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: center;
-  -ms-flex-pack: center;
+  /* display: -webkit-box;
+  display: -ms-flexbox; */
+  display: inline-flex;
+  /* -webkit-box-pack: center;
+  -ms-flex-pack: center; */
   justify-content: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
+  /* -webkit-box-align: center;
+  -ms-flex-align: center; */
   align-items: center;
-  -ms-flex-wrap: wrap;
-  flex-wrap: wrap;
+  /* -ms-flex-wrap: wrap;
+  flex-wrap: wrap; */
   border-radius: 100px;
-  text-align: center;
+  text-align: center !important;
 }
 .badge-active {
   color: #f3f7ff;
@@ -1306,10 +1311,11 @@ button.disabled:focus {
 .badge-pending {
   color: #f3f7ff;
   background-color: rgba(255, 173, 50, 0.822);
+  
 }
 .badge-disabled {
   color: #fff;
-  background-color: #ffb648;
+  background-color: #707070;
   align-items: center;
 }
 .badge-trashed {
@@ -1479,6 +1485,9 @@ label {
   border-bottom: 1px solid #eee;
   padding-top: 15px;
   padding-bottom: 15px;
+  text-align: center;
+  vertical-align: middle;
+  
 }
 .users-table td:first-child {
   padding-left: 5px;

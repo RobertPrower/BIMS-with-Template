@@ -4,6 +4,7 @@ $(document).ready(function() {
     $('#openCamera, #editopenCamera').click(function() {
         var isEdit = $("#EditResidentModal").hasClass("show");
 
+
         if (!isCameraOpen) {
             // Initialize the webcam feed using Webcam.js
             Webcam.set({
@@ -30,9 +31,8 @@ $(document).ready(function() {
                 isCameraOpen = true;
     
                 $("#editimagePreview").attr("disabled");
-                $("#isfromcamcheck").prop("disabled", true);
-
-            }else{
+                
+            }else{ //For adding resident
                 Webcam.attach('#cameraFeed'); // Attach the webcam to the camera feed div
   
                 // Show the camera feed and hide the preview image

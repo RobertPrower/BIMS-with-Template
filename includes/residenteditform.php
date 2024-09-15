@@ -22,7 +22,7 @@
                                     <!-- Hidden Text Box to Store the resident_id value and current page -->
                                         <input hidden type="text" id="resident_id" name="resident_id" />
                                         <input hidden type="text" id="pageno" name="pageno" />
-                                        <input hidden type="text" id="isfromcamcheck" name="isfromcamcheck" />
+                                        <input hidden type="text" id="isfromcamcheck" name="isfromcamcheck" disabled/>
 
 
                                         <div id="editcameraFeedWrapper" class="camera-frame" style="width: 200px; height: 200px; display: none;">

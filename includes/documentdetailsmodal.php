@@ -12,6 +12,8 @@
         <br>
         <p id="Date_issued"><b>Date Issued: </b> </p> 
         <br>
+        <p id="Expiration_Date"><b>Expiration Date </b> </p> 
+        <br>
         <p id="Fullname"><b>Name: </b> </p> 
         <br>
         <p id="Address"><b>Address: </b> </p> 
@@ -40,11 +42,12 @@
             <input hidden id="last_name" name="last_name"/>
             <input hidden id="suffix" name="suffix"/>
             <input hidden id="house_no" name="house_no"/>
-            <input hidden id="first_name" name="street_name"/>
+            <input hidden id="request_id" name="request_id"/>
 
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-success">Generate the Certificate</button>
             <button type="button" id="viewResidentfromDocu" class="btn btn-primary" data-bs-target="#ViewResidentModal" data-bs-toggle="modal" data-isfordocu="YES">View Resident Details</button>
+            <button type="submit" class="btn btn-success">Reprint</button>
+            <button type="button" class="btn btn-danger" id="revokebtn">Revoke</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
         </form>
         
     </div>

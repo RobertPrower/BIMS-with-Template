@@ -13,7 +13,7 @@ foreach ($results as $row) {
     echo '<td>' . htmlspecialchars($row['birth_date']) . '</td>';
     echo '<td>' . htmlspecialchars($row['birth_place']) . '</td>';
     echo '<td class="text-center">' . htmlspecialchars($row['cellphone_num']) . '</td>';
-    echo '<td>' . ($row['is_a_voter'] ? 'YES' : 'NO') . '</td>';
+    echo '<td>' . ($row['is_a_voter'] ? '<img src="./img/svg/check-solid.svg"></img>' : '<img src="./img/svg/xmark-solid.svg" style="opacity: 40%"></img>') . '</td>';
 
     if(!isset($Isforcert)){
         echo '<td style="width: 35%;">

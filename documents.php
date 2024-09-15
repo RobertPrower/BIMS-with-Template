@@ -88,16 +88,15 @@
                               <!--th style="width: 2%;"class="text-center"><input type="checkbox" class="check-all"></th--> 
                               <th style="width: 8%"class="text-center resident_id">Request ID</th> 
                               <th style="width: 8%;"class="text-center">Date Requested</th>
+                              <th style="width: 8%;"class="text-center">Expiration Date</th>
+                              <th style="width: 8%;"class="text-center">Residency Status</th>
                               <th style="width: 15%;" class="text-center">Full Name</th>
-                              <th style="width: 10%;" class="text-center">Address</th>
+                              <th style="width: 15%;" class="text-center">Address</th>
                               <th style="width: 5%;" class="text-center">Sex</th>
-                              <th style="width: 5%;" class="text-center">Age</th>
                               <th style="width: 10%;" class="text-center">Document Description</th>
-                              <th style="width: 5%;" class="text-center">Presented ID</th>
-                              <th style="width: 10%;" class="text-center">ID Number</th>
                               <th style="width: 10%;" class="text-center">Purpose</th>
                               <th style="width: 10%;" class="text-center">Status</th>
-                              <th style="width: 10%;" class="text-center">Action</th>
+                              <th style="width: 5%;" class="text-center">Action</th>
 
                           </tr>
                           </thead>
@@ -158,6 +157,8 @@
 <!-- Custom scripts -->
 <script src="js/script.js"></script>
 <script src="js/documents.js"></script>
+<script src="js/sidebar.js"></script>
+
 </body>
 
 </html>

@@ -42,6 +42,8 @@
   <!-- Custom styles -->
   <link rel="stylesheet" href="./css/style.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
 </head>
 
 <body>
@@ -167,6 +169,8 @@
 <script src="plugins/feather.min.js"></script>
 <!-- Custom scripts -->
 <script src="js/script.js"></script>
+<script src="js/sidebar.js"></script>
+
 </body>
 
 </html>

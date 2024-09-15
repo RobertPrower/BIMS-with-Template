@@ -20,6 +20,7 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
   <script src="js/webcam.min.js"></script>
 
+
 <body>
   <div class="layer"></div>
 <!-- ! Body -->
@@ -45,7 +46,7 @@
                             <div class="d-flex justify-content-start" style="padding-left: 15px;">
                             
                                 <!-- Button to trigger modal -->
-                                <button type="button" class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#AddResidentModal">Add Resident</button>
+                                <button type="button" class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#AddResidentModal">New Resident</button>
                                 
                                 <div class="form-check form-switch my-2">
                                     <input class="form-check-input" type="checkbox" id="showdeletedentries">
@@ -148,6 +149,7 @@
 </div>
         
 <script src="js/residentaction.js"> </script>
+<script src="js/sidebar.js"></script>
 <script src="js/camerafunction.js"></script>
 
 <!-- Chart library -->
