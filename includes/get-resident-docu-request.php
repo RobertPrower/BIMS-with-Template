@@ -29,7 +29,7 @@ if(isset($id)){
                         break;
                         case 1: echo "<td><span class='badge-disabled'> EXPIRED</span></td>";
                         break;
-                        case 2: echo "<td <span class='badge-trashed'> REVOKED </td>";
+                        case 2: echo "<td> <span class='badge-trashed'> REVOKED </span></td>";
                         break;
                         default: echo "<td> Unknown Status </td>";
                     } 
