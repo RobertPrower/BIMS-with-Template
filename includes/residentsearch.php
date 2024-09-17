@@ -7,7 +7,7 @@ $search = isset($_POST['search']) ? sanitizeData($_POST['search']): '';
 $page = isset($_POST['page']) ? $_POST['page'] : '1';
 $start_from = ($page - 1) * $limit;
 
-$stmt = $pdo->prepare("SELECT COUNT(*) FROM resident WHERE last_name LIKE :search");
+$stmt = $pdo->prepare("SELECT COUNT(*) FROM resident WHERE last_name LIKE :search OR first_name LIKE :search OR middle_name LIKE :search");
 $stmt->execute(['search' => "%$search%"]);
 $total_records = $stmt->fetchColumn();
 
@@ -40,7 +40,7 @@ if($_POST['operation']=="SEARCH"){
             FROM resident 
             JOIN res_audit_trail 
             ON resident.audit_trail = res_audit_trail.res_at_id
-            WHERE is_deleted=0 AND last_name LIKE :search
+            WHERE is_deleted=0 AND (last_name LIKE :search OR first_name LIKE :search OR middle_name LIKE :search)
             ORDER BY last_name  ASC LIMIT $start_from, $limit"); 
 
         $stmt->execute(['search' => "%$search%"]);
@@ -84,7 +84,7 @@ if($_POST['operation']=="SEARCH"){
             FROM resident 
             JOIN res_audit_trail 
             ON resident.audit_trail = res_audit_trail.res_at_id
-            WHERE last_name LIKE :search AND is_deleted=1
+            WHERE is_deleted=1 AND (last_name LIKE :search OR first_name LIKE :search OR middle_name LIKE :search)
             ORDER BY last_name  ASC LIMIT $start_from, $limit"); 
 
         $stmt->execute(['search' => "%$search%"]);

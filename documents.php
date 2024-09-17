@@ -16,7 +16,7 @@
   <link rel="stylesheet" href="./css/style.min.css">
 
     <!--JavaScript-->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script src="js/jquery-3.7.1.min.js"></script>
   <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </head>
@@ -46,7 +46,7 @@
                           <div class="d-flex justify-content-start" style="padding-left: 15px;">
                           
                               <!-- Button to trigger modal -->
-                              <a type="button" class="btn btn-primary me-2" href="create-documents.php">Add Certificate</a>
+                              <a type="button" class="btn btn-primary me-2" href="create-documents.php">New Certificate</a>
                               
                               <div class="form-check form-switch my-2">
                                   <input class="form-check-input" type="checkbox" id="showdeletedentries">
@@ -60,6 +60,65 @@
 
                                 
                                 ?>
+
+                                <!-- Modal For the edit-->
+                                <div class="modal fade" id="EditDocumentModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Document</h1>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <form id="EditDocumentModalForm">
+                                            <div class="modal-body">
+                                                <div class="container">
+
+                                                    <div class="form-floating mt-3 mb-3 col-md-12">
+                                                        <input type="text" hidden class="form-control" id="requestid" name="request_id"/>
+                                                        <input type="date" class="form-control" id="expiration" name="expiration"/>
+                                                        <label for="expiration">Expiration</label>
+                                                    </div>
+
+                                                    <div class="form-floating mt-3 mb-3 col-md-12">
+                                                        <select class="form-select" id="presented_id" name="presented_id" aria-label="Floating label select example" required aria-required="true">
+                                                            <option hidden value="">Select Option</option>
+                                                            <option value="National ID">National ID</option>
+                                                            <option value="Postal ID">Postal ID</option>
+                                                            <option value="Driver's License">Driver's License</option>
+                                                            <option value="PRC ID">PRC ID</option>
+                                                            <option value="SSS ID">SSS ID</option>
+                                                            <option value="GSIS ID">GSIS ID</option>
+                                                            <option value="UMID ID">UMID ID</option>
+                                                            <option value="Senior ID">Senior ID</option>
+                                                            <option value="PWD ID">PWD ID</option>
+                                                            <option value="Solo Parent ID">Solo Parent ID</option>
+                                                            <option value="Voter's ID">Voters ID/Certification</option>
+                                                            <option value="LTOPF ID">LTOPF License</option>
+                                                            <option value="Police ID">Barangay ID</option>
+                                                            <option value="Police ID">Police ID</option>
+                                                            <option value="School ID">School ID</option>
+                                                            <option value="Passport">Passport</option>
+                                                            <option value="NBI Clearance">NBI Clearance</option>
+                                                            <option value="Seafarers Record Book">Seafarers Record Book</option>
+                                                        </select>
+                                                        <label for="presented_id">Presented ID</label>
+                                                    </div>
+
+                                                    <div class="form-floating mt-3 mb-3 col-md-12">
+                                                        <input type="text" class="form-control" id="id_num" name="id_num"/>
+                                                        <label for="id_num">ID number</label>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-target="#DocumentDetailsModal" data-bs-toggle="modal" >Close</button>
+                                                <button id="submit" class="btn btn-primary">Save changes</button>
+                                            </div>
+                                        </form>
+                                        </div>
+                                    </div>
+                                </div>
                           
                           </div>
                       </div>

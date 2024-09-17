@@ -58,7 +58,9 @@ try {
                         data-presented-id="' . htmlspecialchars($row['presented_id'], ENT_QUOTES) . '"
                         data-id_num="' . htmlspecialchars($row['ID_number'], ENT_QUOTES) . '"
                         data-purpose="' . htmlspecialchars($row['purpose'], ENT_QUOTES) . '"
-                        data-status="' . htmlspecialchars($row['status'], ENT_QUOTES) . '"
+                        data-status="' . htmlspecialchars($row['status'], ENT_QUOTES) . '"                        
+                        data-last-edited="' . htmlspecialchars($row['date_edited'], ENT_QUOTES) . '"
+                        data-last-deleted="' . htmlspecialchars($row['date_deleted'], ENT_QUOTES) . '"
                         data-bs-toggle="modal" data-bs-target="#DocumentDetailsModal">View</button>';
         
                     if($row['is_deleted'] == "0"){ 

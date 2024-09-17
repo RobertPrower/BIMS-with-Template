@@ -26,6 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     `resident`.`cellphone_num`     AS `cellphone_num`,
     `resident`.`is_a_voter`        AS `is_a_voter`,
     `resident`.`is_deleted`        AS `is_deleted`
+
     FROM `resident`
     JOIN `res_audit_trail`
         ON `resident`.`audit_trail` = `res_audit_trail`.`res_at_id`
