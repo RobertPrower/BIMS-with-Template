@@ -121,21 +121,35 @@
                                 </div>
 
                                 <!-- Modal for the Certificate of residency -->
-                                 <!-- Modal -->
-                                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal fade" id="RegenerateResidencyModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                     <div class="modal-header">
                                         <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
-                                    <div class="modal-body">
-                                        <iframe id="generateresidencypdf"></iframe>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                        <button type="button" class="btn btn-primary">Save changes</button>
-                                    </div>
+                                    <form >
+                                        <div class="modal-body">
+                                            <input hidden id="fname" name="firstname">
+                                            <input hidden id="lname" name="lastname">
+                                            <input hidden id="mname" name="middlename">
+                                            <input hidden id="suffix" name="suffix">
+                                            <input hidden id="address" name="address">
+                                            <input hidden id="age" name="age">
+                                            <input hidden id="presentedid" name="presented_id">
+                                            <input hidden id="IDnum" name="IDnum">
+                                            <input hidden id="r_since" name="r_since">
+
+
+
+
+                                            <iframe id="generatepdf" src=""></iframe>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                            <button type="button" class="btn btn-primary">Save changes</button>
+                                        </div>
+                                    </form>
                                     </div>
                                 </div>
                                 </div>

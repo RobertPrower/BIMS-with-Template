@@ -14,26 +14,23 @@ $nowtime = time(); //Get the time now
 $expiration = $_POST['expiration'];
 $username = null;
 $dept = 2;
+$residentsince=$_POST['r_since'];
+$completeaddress=utf8_decode($_POST['address']);
+$residentno=($_POST['resident_no']);
+$fname=utf8_decode($_POST['firstname']);
+$mname=utf8_decode($_POST['middlename']);
+$lname=utf8_decode($_POST['lastname']);
+
+if(isset($_POST['suffix'])){
+    $suffix=$_POST['suffix'];
+}else{
+    $suffix="";
+}
 $presentedid=$_POST['presented_id'];
 $purpose=$_POST['purpose'];
-$residentsince=$_POST['r_since'];
+$IDnumber=$_POST['IDnum'];
 
-if(!isset($_POST['OPERATION_CHECK'])){
-
-    $residentno=($_POST['resident_no']);
-    $fname=utf8_decode($_POST['firstname']);
-    $mname=utf8_decode($_POST['middlename']);
-    $lname=utf8_decode($_POST['lastname']);
-
-    if(isset($_POST['suffix'])){
-        $suffix=$_POST['suffix'];
-    }else{
-        $suffix="";
-    }
-
-    $IDnumber=$_POST['IDnum'];
-
-
+if(isset($_POST['OPERATION_CHECK'])){
 
     $sqlquery2="SELECT Certificate_of_Residency FROM tbl_documents ORDER BY Certificate_of_Residency DESC LIMIT 1";
     $stmt2=$pdo->prepare($sqlquery2);
@@ -73,7 +70,6 @@ if(!isset($_POST['OPERATION_CHECK'])){
 }else{
 
     
-    $completeaddress=utf8_decode($_POST['address']);
 
 
 

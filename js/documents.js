@@ -73,6 +73,7 @@ $(document).ready(function () {
     $("#resident_id").val(resident_id);
     $("#request_id").val(request_id);
     $("#status").val(status);
+    $("#retrevePDF").attr("data-cert_type",docu_type);
 
     //For populating data attributes for edit
     $("#editDocumentbtn").attr("data-request_id", request_id);
@@ -214,57 +215,80 @@ $(document).ready(function () {
   });
 
   $("#retrevePDF").click(function () {
-    var request_id = $("#requestid").val();
+    var request_id = $("#request_id").val();
     var certificate = $(this).data("cert_type");
+
+    switch (certificate){
+      case "Certificate of Residency":
+        var cert= "1" 
+        console.log(cert);
+      break;
+      default:
+
+    }
+
+    if(cert =="1"){  
     $.ajax({
-      url: "includes/documentsoperation.php",
-      type: "POST",
-      dataType: "JSON",
-      data: {
-        OPERATION: "FETCH_RESIDENT_DATA",
-        document: certificate,
-        request_id: request_id,
-      },
-      success: function (response) {
-        // Assuming your PDF is being served inline
-        var pdfUrl =
-          "generate_pdf.php?first_name=" +
-          first_name +
-          "&last_name=" +
-          last_name;
-        $("#pdfFrame").attr("src", pdfUrl); // Set the iframe source to the PDF URL
+        url: "includes/documentsoperation.php",
+        type: "POST",
+        dataType: "JSON",
+        data: {
+          OPERATION: "FETCH_RESIDENT_DATA",
+          document: cert,
+          request_id: request_id,
+        },
+        success: function (response) {
+        
+          var fname = response.first_name;
+          var lname = response.last_name;
+          var mname = response.middle_name;
+          var suffix = response.suffix;
+          var house_no = response.house_num;
+          var street = response.street;
+          var subd = response.subdivision;
+          var address = house_no+" "+street+" "+subd+" "+"Camarin Caloocan City"; 
+          var r_since = response.resident_since;
+          var age = response.age;
+          var presented_id = response.presented_id;
+          var purpose = response.purpose;
 
-        // Show the modal
-        $("#pdfModal").modal("show");
-      },
-      error: function (xhr, status, error) {
-        console.error("Error generating PDF:", error);
-      },
-    });
+          // Show the modal
+          $("#RegenerateResidencyModal").modal("show");
 
-    $.ajax({
-      url: "generate_pdf.php",
-      type: "POST",
-      data: {
-        first_name: first_name,
-        last_name: last_name,
-      },
-      success: function (response) {
-        // Assuming your PDF is being served inline
-        var pdfUrl =
-          "generate_pdf.php?first_name=" +
-          first_name +
-          "&last_name=" +
-          last_name;
-        $("#pdfFrame").attr("src", pdfUrl); // Set the iframe source to the PDF URL
+          $.ajax({
+            url: "generate-residency.php",
+            type: "POST",
+            data: {
+              firstname: fname,
+              lastname: lname,
+              middlename: mname,
+              suffix: suffix,
+              address: address,
+              r_since: r_since,
+              age: age,
+              presented_id: presented_id,
+              purpose: purpose
+    
+            },
+            success: function (response) {
+              // Assuming your PDF is being served inline
+              
+              $("#generatepdf").attr("src", "generate-residency.php"); // Set the iframe source to the PDF URL
+    
+              // Show the modal
+              $("#pdfModal").modal("show");
+            },
+            error: function (xhr, status, error) {
+              console.error("Error generating PDF:", error);
+            },
+          });
+        },
+        error: function (xhr, status, error) {
+          console.error("Error generating PDF:", error);
+        },
+      });
 
-        // Show the modal
-        $("#pdfModal").modal("show");
-      },
-      error: function (xhr, status, error) {
-        console.error("Error generating PDF:", error);
-      },
-    });
+    }
   });
 
   //For populate the view resident from docu modal
