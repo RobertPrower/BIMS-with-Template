@@ -44,7 +44,7 @@
 
         <form>
             <button type="button" id="viewResidentfromDocu" class="btn btn-primary" data-bs-target="#ViewResidentModal" data-bs-toggle="modal" data-isfordocu="YES">View Resident Details</button>
-            <button type="submit" class="btn btn-info">Reprint</button>
+            <button type="button" id="retrevePDF" class="btn btn-info">Reprint</button>
             <button type="button" id="editDocumentbtn" class="btn btn-success" data-bs-target="#EditDocumentModal" data-bs-toggle="modal" data-expiration="" data-presentedid="" data-id_num="" data-request_id="">Edit</button>
             <button type="button" class="btn btn-danger" id="revokebtn">Revoke</button>
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

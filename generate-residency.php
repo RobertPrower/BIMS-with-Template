@@ -14,57 +14,70 @@ $nowtime = time(); //Get the time now
 $expiration = $_POST['expiration'];
 $username = null;
 $dept = 2;
-
-$residentno=($_POST['resident_no']);
-$fname=utf8_decode($_POST['firstname']);
-$mname=utf8_decode($_POST['middlename']);
-$lname=utf8_decode($_POST['lastname']);
-if(isset($_POST['suffix'])){
-    $suffix=$_POST['suffix'];
-}else{
-    $suffix="";
-}
-$completeaddress=utf8_decode($_POST['address']);
 $presentedid=$_POST['presented_id'];
-$IDnumber=$_POST['IDnum'];
 $purpose=$_POST['purpose'];
 $residentsince=$_POST['r_since'];
-$docurequestdata=[$residentno, ];
 
-$sqlquery2="SELECT Certificate_of_Residency FROM tbl_documents ORDER BY Certificate_of_Residency DESC LIMIT 1";
-$stmt2=$pdo->prepare($sqlquery2);
-$stmt2->execute();
-$last_id=$stmt2 -> fetchColumn();
+if(!isset($_POST['OPERATION_CHECK'])){
 
-$sqlquery3 = "INSERT INTO tbl_docu_request (resident_no, presented_id, ID_number, purpose) 
-            VALUES (:residentno, :presentedid, :IDnumber, :purpose);";
-$alldatatorequest = [
-    ':residentno' => $residentno,
-    ':presentedid' => $presentedid,
-    ':IDnumber' => $IDnumber,
-    ':purpose' => $purpose
-];
-$stmt3 = $pdo->prepare($sqlquery3);
-$stmt3->execute($alldatatorequest);
+    $residentno=($_POST['resident_no']);
+    $fname=utf8_decode($_POST['firstname']);
+    $mname=utf8_decode($_POST['middlename']);
+    $lname=utf8_decode($_POST['lastname']);
 
-$sqlquery4="SELECT * FROM `certificate-img`";
-$stmt4=$pdo->prepare($sqlquery4);
-$stmt4->execute();
+    if(isset($_POST['suffix'])){
+        $suffix=$_POST['suffix'];
+    }else{
+        $suffix="";
+    }
 
-$results4=$stmt4->fetchAll(PDO::FETCH_ASSOC); 
+    $IDnumber=$_POST['IDnum'];
 
-$request_id = $pdo->lastInsertId();
 
-$sqlquery5="SELECT age FROM tbl_docu_request WHERE request_id = ?";
-$stmt5=$pdo->prepare($sqlquery5);
-$stmt5->execute([$request_id]);
-$AgeResult= $stmt5->fetchAll();
-$Age=$AgeResult;
 
-$sqlquery6 = "INSERT INTO tbl_cert_audit_trail(issuing_dept_no, date_issued, expiration, time_issued)
-            VALUES (?,?,?,?)";
-$stmt6=$pdo->prepare($sqlquery6);
-$stmt6->execute([$issuingdeptno, $dateissued, $expiration, $timeissued]);
+    $sqlquery2="SELECT Certificate_of_Residency FROM tbl_documents ORDER BY Certificate_of_Residency DESC LIMIT 1";
+    $stmt2=$pdo->prepare($sqlquery2);
+    $stmt2->execute();
+    $last_id=$stmt2 -> fetchColumn();
+
+    $sqlquery3 = "INSERT INTO tbl_docu_request (resident_no, presented_id, ID_number, purpose) 
+                VALUES (:residentno, :presentedid, :IDnumber, :purpose);";
+    $alldatatorequest = [
+        ':residentno' => $residentno,
+        ':presentedid' => $presentedid,
+        ':IDnumber' => $IDnumber,
+        ':purpose' => $purpose
+    ];
+    $stmt3 = $pdo->prepare($sqlquery3);
+    $stmt3->execute($alldatatorequest);
+
+    $sqlquery4="SELECT * FROM `certificate-img`";
+    $stmt4=$pdo->prepare($sqlquery4);
+    $stmt4->execute();
+
+    $results4=$stmt4->fetchAll(PDO::FETCH_ASSOC); 
+
+    $request_id = $pdo->lastInsertId();
+
+    $sqlquery5="SELECT age FROM tbl_docu_request WHERE request_id = ?";
+    $stmt5=$pdo->prepare($sqlquery5);
+    $stmt5->execute([$request_id]);
+    $AgeResult= $stmt5->fetchAll();
+    $Age=$AgeResult;
+
+    $sqlquery6 = "INSERT INTO tbl_cert_audit_trail(issuing_dept_no, date_issued, expiration, time_issued)
+                VALUES (?,?,?,?)";
+    $stmt6=$pdo->prepare($sqlquery6);
+    $stmt6->execute([$issuingdeptno, $dateissued, $expiration, $timeissued]);
+
+}else{
+
+    
+    $completeaddress=utf8_decode($_POST['address']);
+
+
+
+}
 
 //Close the Database Connection
 $pdo=null;

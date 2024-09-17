@@ -23,7 +23,6 @@ try {
             echo '<td>' . htmlspecialchars($row['is_resident']) . '</td>';
             echo '<td>' . htmlspecialchars($row['last_name']) . ', ' . htmlspecialchars($row['first_name']) . ' ' . htmlspecialchars($row['middle_name']) . ' ' . htmlspecialchars($row['suffix']) . '</td>';
             echo '<td>' . htmlspecialchars($row['house_num']) . ', ' . htmlspecialchars($row['street']) . ', ' . htmlspecialchars($row['subdivision']) . htmlspecialchars($row['city']) . '</td>';
-            echo '<td>' . htmlspecialchars($row['sex']) . '</td>';
             echo '<td>' . htmlspecialchars($row['document_desc']) . '</td>';
             echo '<td>' . htmlspecialchars($row['purpose']) . '</td>';
             switch ($row['status']){
