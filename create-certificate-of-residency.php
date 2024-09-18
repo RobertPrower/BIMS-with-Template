@@ -7,11 +7,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Create Documents</title>
   <!-- Favicon -->
-  <link rel="shortcut icon" href="./img/Brgy177.png" type="image/x-icon">
+  <link rel="shortcut icon" href="img/Brgy177.png" type="image/x-icon">
   <!-- Custom styles -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" 
   integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-  <link rel="stylesheet" href="./css/create-documents.css">
+  <link rel="stylesheet" href="css/create-documents.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
 
@@ -44,9 +44,10 @@
 
     <?php 
     
-    require_once("includes/selectresidentmodal.php");
-    
+    require_once("includes/selectresidentmodal.php");    
     ?>
+
+
     <main class="main users chart-page" id="skip-target">
       <div class="container">
         <h2 class="main-title">Create Certificate of Residency</h2>
@@ -85,39 +86,41 @@
             <input hidden type="text" class="form-control" id="res_id" name="resident_no">
 
               <div class="form-floating mt-3 mb-3 col-md-4">
-                  <input type="text" class="form-control" id="fname" name="firstname" placeholder="Enter First Name Here" required >
+                  <input type="text" class="form-control" id="fname" name="firstname" placeholder="Enter First Name Here" required disabled/>
                   <label for="fname">First Name</label>
               </div>
 
               <div class="form-floating mt-3 mb-3 col-md-4">
-                  <input type="text" class="form-control" id="mname" name="middlename" placeholder="Enter Middle Name Here" >
+                  <input type="text" class="form-control" id="mname" name="middlename" placeholder="Enter Middle Name Here" disabled/>
                   <label for="mname">Middle Name</label>
               </div>
 
-              <div class="form-floating mt-3 mb-3 col-md-3">
-                  <input type="text" class="form-control" id="lname" name="lastname" placeholder="Enter Last Name Here" required >
+              <div class="form-floating mt-3 mb-3 col-md-2">
+                  <input type="text" class="form-control" id="lname" name="lastname" placeholder="Enter Last Name Here" required disabled/>
                   <label for="lname">Last Name</label>
               </div>
 
-              <div class="form-floating mt-3 mb-3 col-md-1">
-                  <input type="text" class="form-control" id="suffix" name="suffix" style="width:50px" placeholder="Enter Suffix Here" >
-                  <label for="suffix">Suffix</label>
+              <div class="form-floating mt-3 mb-3 col-md-2">
+                  <input type="text" class="form-control" id="suffix" name="lastname" placeholder="Enter Last Name Here" required disabled/>
+                  <label for="lname">Suffix</label>
               </div>
 
-              <div class="form-floating mt-3 mb-3 col-md-12">
-                  <input type="text" class="form-control" id="subd" name="address" placeholder="Enter Subdvision Here" >
+              
+
+              <div class="form-floating mt-3 mb-3 col-md-10">
+                  <input type="text" class="form-control" id="address" name="address" placeholder="Enter Subdvision Here" disabled/>
                   <label for="subd">Complete Address</label>
               </div>
 
               
               <div class="form-floating mt-3 mb-3 col-md-2">
-                  <input type="Text" class="form-control" id="resident_since" name="r_since" placeholder="Enter Birth Place Here" required>
+                  <input type="Text" class="form-control" id="resident_since" name="r_since" placeholder="Enter Resident Since Here" required disabled/>
                   <label for="birth_place">Resident Since</label>
               </div> 
 
                   
-              <div class="form-floating mt-3 mb-3 col-md-3">
-                  <select class="form-select" id="isavoter" name="presented_id" aria-label="Floating label select example" required aria-required="true">
+              <div class="form-floating mt-3 mb-3 col-md-4">
+                  <select class="form-select" id="presented_id" name="presented_id" aria-label="Floating label select example" required aria-required="true">
                       <option hidden value="">Select Option</option>
                       <option value="National ID">National ID</option>
                       <option value="Postal ID">Postal ID</option>
@@ -140,22 +143,32 @@
 
 
                   </select>
-                  <label for="isavoter">Presented ID</label>
+                  <label for="presented_id">Presented ID</label>
               </div>
 
-              <div class="form-floating mt-3 mb-3 col-md-2">
+              <div class="form-floating mt-3 mb-3 col-md-4">
                   <input type="text" class="form-control" id="IDnum" name="IDnum" placeholder="Enter Birth Place Here" required>
                   <label for="IDnum">ID Number</label>
               </div> 
 
-              <div class="form-floating mt-3 mb-3 col-md-3">
-                  <select class="form-select" id="isavoter" name="purpose" aria-label="Floating label select example" required>
+              <div class="form-floating mt-3 mb-3 col-md-2">
+                  <select class="form-select" id="purpose" name="purpose" aria-label="Floating label select example" required>
                       <option hidden value="">Select Option</option>
                       <option value="Verification Purposes">Verification Purposes</option>
+                      <option value="Maynilad Application">Maynilad Application</option>
+                      <option value="Meralco Application">Meralco Application</option>
+                      <option value="Verification Purposes">Job Application</option>
+                      <option value="To any legal purpose">To any legal purpose</option>
+                      <option value="Others">Others</option>
 
                   </select>
-                  <label for="isavoter">Purpose</label>
+                  <label for="purpose">Purpose</label>
               </div>
+
+              <div class="form-floating mt-3 mb-3 col-md-2">
+                  <input type="text" class="form-control" id="otherpurpose" name="IDnum" required disabled>
+                  <label for="otherpurpose">Please Type Other Purpose</label>
+              </div> 
               
             </div>
           </div>
@@ -164,7 +177,7 @@
 
           <br>
 
-          <button type="submit" class="btn btn-success float-right"> Generate Certificate </button> 
+          <button type="submit" id="generate_certificate" class="btn btn-success float-right"> Generate Certificate </button> 
           </div>
           </form>
 
@@ -180,7 +193,7 @@
   </div>
 </div>
 <!-- Chart library -->
-<script src="./plugins/chart.min.js"></script>
+<script src="plugins/chart.min.js"></script>
 <!-- Icons library -->
 <script src="plugins/feather.min.js"></script>
 <!-- Custom scripts -->

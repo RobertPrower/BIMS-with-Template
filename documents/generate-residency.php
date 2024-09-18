@@ -6,13 +6,13 @@ include_once('../includes/connecttodb.php');
 $sqlquery="SELECT * FROM brgy_officials";
 $stmt=$pdo->prepare($sqlquery);
 $stmt->execute();
-
 $results=$stmt->fetchAll(PDO::FETCH_ASSOC); 
 
 $nowdate= date("Y-m-d H:i:s"); //Get the date now
 $nowtime = time(); //Get the time now
+$fileName = "certificate_of_residency/"."generated_pdf_" . time() . ".pdf";
 $username = null;
-$dept = 2;
+$issuingdeptno = null;
 $residentsince=$_POST['r_since'];
 $completeaddress=utf8_decode($_POST['address']);
 $fname=utf8_decode($_POST['firstname']);
@@ -26,58 +26,42 @@ if(isset($_POST['suffix'])){
 }
 $presentedid=$_POST['presented_id'];
 $purpose=$_POST['purpose'];
+$residentno=($_POST['resident_no']);
+$IDnumber=$_POST['IDnum'];
+
+$sqlquery2 = "CALL determine_docu_type('Certificate_of_Residency'); 
+            INSERT INTO tbl_cert_audit_trail(issuing_dept_no, date_issued, expiration, time_issued)
+            VALUES (?,?,DATE_ADD(CURDATE(), INTERVAL 3 MONTH), CURTIME())";
+$stmt2=$pdo->prepare($sqlquery2);
+$stmt2->execute([$issuingdeptno, $nowdate]);
+// Close the cursor of the previous statement
+$stmt2->closeCursor();
+
+$sqlquery3="SELECT * FROM `certificate-img`";
+$stmt3=$pdo->prepare($sqlquery3);
+$stmt3->execute();
+$results3=$stmt3->fetchAll(PDO::FETCH_ASSOC); 
+
+$sqlquery4 = "INSERT INTO tbl_docu_request (resident_no ,presented_id, ID_number, purpose, pdffile) 
+            VALUES (:residentno,:presentedid, :IDnumber, :purpose, :filenames);";
+$alldatatorequest = [
+    ':residentno' => $residentno,
+    ':presentedid' => $presentedid,
+    ':IDnumber' => $IDnumber,
+    ':purpose' => $purpose,
+    ':filenames' => $fileName
+];
+$stmt3 = $pdo->prepare($sqlquery4);
+$stmt3->execute($alldatatorequest);
 
 
-if(!$_POST['OPERATION']=="RETRIVE"){
-    $residentno=($_POST['resident_no']);
-    $IDnumber=$_POST['IDnum'];
-    $expiration = $_POST['expiration'];
+$request_id = $pdo->lastInsertId();
 
-
-    $sqlquery2="SELECT Certificate_of_Residency FROM tbl_documents ORDER BY Certificate_of_Residency DESC LIMIT 1";
-    $stmt2=$pdo->prepare($sqlquery2);
-    $stmt2->execute();
-    $last_id=$stmt2 -> fetchColumn();
-
-    $sqlquery3 = "INSERT INTO tbl_docu_request (resident_no, presented_id, ID_number, purpose) 
-                VALUES (:residentno, :presentedid, :IDnumber, :purpose);";
-    $alldatatorequest = [
-        ':residentno' => $residentno,
-        ':presentedid' => $presentedid,
-        ':IDnumber' => $IDnumber,
-        ':purpose' => $purpose
-    ];
-    $stmt3 = $pdo->prepare($sqlquery3);
-    $stmt3->execute($alldatatorequest);
-
-
-    $request_id = $pdo->lastInsertId();
-
-    $sqlquery5="SELECT age FROM tbl_docu_request WHERE request_id = ?";
-    $stmt5=$pdo->prepare($sqlquery5);
-    $stmt5->execute([$request_id]);
-    $AgeResult= $stmt5->fetchAll();
-    $Age=$AgeResult;
-
-    $sqlquery6 = "INSERT INTO tbl_cert_audit_trail(issuing_dept_no, date_issued, expiration, time_issued)
-                VALUES (?,?,?,?)";
-    $stmt6=$pdo->prepare($sqlquery6);
-    $stmt6->execute([$issuingdeptno, $dateissued, $expiration, $timeissued]);
-
-}else{
-
-    
-
-
-
-}
-
-
-$sqlquery4="SELECT * FROM `certificate-img`";
-$stmt4=$pdo->prepare($sqlquery4);
-$stmt4->execute();
-
-$results4=$stmt4->fetchAll(PDO::FETCH_ASSOC); 
+$sqlquery5="SELECT age FROM tbl_docu_request WHERE request_id = ?";
+$stmt5=$pdo->prepare($sqlquery5);
+$stmt5->execute([$request_id]);
+$AgeResult= $stmt5->fetchAll();
+$Age=$AgeResult;
 
 //Close the Database Connection
 $pdo=null;
@@ -91,7 +75,7 @@ foreach($results as $officials){
 
 $logo=[];
 
-foreach($results4 as $filename){
+foreach($results3 as $filename){
     $logo[]=$filename['filename'];
 }
 
@@ -406,18 +390,14 @@ $pdf -> Cell($w, 22, wrapText($pdf,$text,160), 0, 'C');
 
 $pdf -> Cell(59, 10, '',0,1);
 
-if($_POST['OPERATION']=="RETRIVE"){
-    // Output the PDF (save it temporarily)
-    $fileName = "generated_pdf_" . time() . ".pdf";
-    $pdf->Output('F', 'temp/' . $fileName); // Save in 'temp' directory
+// Output the PDF (save it temporarily)
+$pdf->Output('F', 'certificate_of_residency/' . $fileName); 
 
-    // Return the file URL as a response
-    echo json_encode(['file' => 'temp/' . $fileName]);
-    exit();
+// Return the file URL as a response
+echo json_encode(['file' => 'certificate_of_residency/' . $fileName]);
+exit();
 
-}else{
-    $pdf -> Output();
-}
+
 function wrapText($pdf,$text,$maxWidth){
 
    $textWidth = $pdf->GetStringWidth($text);

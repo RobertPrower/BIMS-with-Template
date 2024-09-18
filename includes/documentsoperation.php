@@ -61,36 +61,10 @@ if($operation_check =="REVOKE"){
         exit(json_encode(value: ["success" => false, "No Request ID recieved"]));
     }
 
-}elseif($_POST['OPERATION'] == "FETCH_RESIDENT_DATA"){
-    if($_POST['document']=="1"){
+}elseif($_POST['OPERATION'] == "FETCH_FILENAME"){
+    if(isset($_POST['request_id'])){
 
-        $sqlquery="SELECT
-                    `tbl_docu_request`.`request_id` AS `request_id`,
-                    `tbl_cert_audit_trail`.`date_issued` AS `date_issued`,
-                    tbl_docu_request.`resident_no`,
-                    `resident`.`last_name`,
-                    `resident`.`first_name`,
-                    `resident`.`middle_name`,
-                    `resident`.`suffix`,
-                    `resident`.`house_num`,
-                    `resident`.`street`,
-                    `resident`.`subdivision`,
-                    `resident`.`resident_since` AS `resident_since`,
-                    `tbl_docu_request`.`age` AS `age`,
-                    `tbl_docu_request`.`presented_id` AS `presented_id`,
-                    `tbl_docu_request`.`ID_number` AS `ID_number`,
-                    `tbl_docu_request`.`purpose` AS `purpose`,
-                    `tbl_cert_audit_trail`.`expiration` AS `expiration`,
-                    `tbl_docu_request`.`status` AS `status`
-                FROM `tbl_docu_request`
-                JOIN `resident`
-                    ON `tbl_docu_request`.`resident_no` = `resident`.`resident_id`
-                JOIN `tbl_documents`
-                    ON `tbl_docu_request`.`document_no` = `tbl_documents`.`docu_id`
-                JOIN `tbl_cert_audit_trail`
-                    ON `tbl_docu_request`.`audit_trail_no` = `tbl_cert_audit_trail`.`audit_trail_id`
-                WHERE `tbl_docu_request`.`request_id` = ? 
-                AND `tbl_documents`.`Certificate_of_Residency` IS NOT NULL";
+        $sqlquery="SELECT pdffile FROM tbl_docu_request WHERE request_id=?";
 
         $stmt= $pdo -> prepare($sqlquery);
         $stmt->execute([$request_Id]);
@@ -100,8 +74,10 @@ if($operation_check =="REVOKE"){
 
     }else{
 
-        exit(json_encode(['error' => 'No certificate desc recieved']));
+        exit(json_encode(['error' => 'No certificate request_id recieved']));
     }
+}else{
+    echo "Nothing was reviced";
 }
 $pdo = null;
 ?>

@@ -216,81 +216,28 @@ $(document).ready(function () {
 
   $("#retrevePDF").click(function () {
     var request_id = $("#request_id").val();
-    var certificate = $(this).data("cert_type");
 
-    switch (certificate){
-      case "Certificate of Residency":
-        var cert= "1" 
-        console.log(cert);
-      break;
-      default:
-
-    }
-
-    if(cert =="1"){  
     $.ajax({
         url: "includes/documentsoperation.php",
         type: "POST",
         dataType: "json",
         data: {
-          OPERATION: "FETCH_RESIDENT_DATA",
-          document: cert,
-          request_id: request_id,
+          OPERATION: "FETCH_FILENAME",
+          request_id: request_id
         },
         success: function (response) {
-          var data = response[0]
-        
-          var fname = data.first_name;
-          var lname = data.last_name;
-          var mname = data.middle_name;
-          var suffix = data.suffix;
-          var address = data.house_num+" "+data.street+" "+data.subdivision+" "+"Camarin Caloocan City"; 
-          var r_since = data.resident_since;
-          var age = data.age;
-          var presented_id = data.presented_id;
-          var purpose = data.purpose;
-
-
+          var data = response[0];
+          var file = data.pdffile
+          var filename = "documents/"+file
           // Show the modal
-          $("#RegenerateResidencyModal").modal("show");
+          $("#pdfModal").modal("show");
+          $("#generatepdf").attr("src", filename); 
 
-          $.ajax({
-            url: "documents/generate-residency.php",
-            type: "POST",
-            data: {
-              firstname: fname,
-              lastname: lname,
-              middlename: mname,
-              suffix: suffix,
-              address: address,
-              r_since: r_since,
-              age: age,
-              presented_id: presented_id,
-              purpose: purpose,
-              OPERATION: "RETRIVE",
-    
-            },
-            success: function (response) {
-              var data = JSON.parse(response);
-              var filename = data.file;
-              console.log(filename);
-              
-              $("#generatepdf").attr("src", filename); 
-    
-              // Show the modal
-              $("#pdfModal").modal("show");
-            },
-            error: function (xhr, status, error) {
-              console.error("Error generating PDF:", error);
-            },
-          });
         },
         error: function (xhr, status, error) {
           console.error("Error generating PDF:", error);
         },
       });
-
-    }
   });
 
   //For populate the view resident from docu modal
