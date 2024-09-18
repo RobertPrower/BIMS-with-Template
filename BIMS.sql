@@ -171,12 +171,12 @@ CREATE TABLE `res_audit_trail` (
 /*Data for the table `res_audit_trail` */
 
 insert  into `res_audit_trail`(`res_at_id`,`added_depart_no`,`added_by_no`,`date_added`,`time_added`,`edited_depart_no`,`last_edited_by`,`last_edited_dt`,`last_edited_tm`,`dept_del_no`,`del_by_no`,`del_date`,`del_time`,`dept_rec_no`,`rec_by_no`,`rec_date`,`rec_time`) values 
-(1,NULL,NULL,'2024-09-03','15:42:52',NULL,NULL,'2024-09-13','09:32:06',NULL,NULL,'2024-09-13','15:30:23',NULL,NULL,'2024-09-13','15:31:47'),
+(1,NULL,NULL,'2024-09-03','15:42:52',NULL,NULL,'2024-09-18','21:33:41',NULL,NULL,'2024-09-13','15:30:23',NULL,NULL,'2024-09-13','15:31:47'),
 (2,NULL,NULL,'2024-09-03','15:44:00',NULL,NULL,'2024-09-04','09:54:55',NULL,NULL,'2024-09-12','14:07:05',NULL,NULL,'2024-09-07','18:09:16'),
-(3,NULL,NULL,'2024-09-03','15:45:08',NULL,NULL,'2024-09-03','23:37:39',NULL,NULL,'2024-09-04','14:58:47',NULL,NULL,'2024-09-07','18:09:27'),
-(4,NULL,NULL,'2024-09-03','15:56:12',NULL,NULL,'2024-09-03','23:37:58',NULL,NULL,'2024-09-04','14:58:44',NULL,NULL,'2024-09-07','18:09:18'),
+(3,NULL,NULL,'2024-09-03','15:45:08',NULL,NULL,'2024-09-18','21:33:47',NULL,NULL,'2024-09-04','14:58:47',NULL,NULL,'2024-09-07','18:09:27'),
+(4,NULL,NULL,'2024-09-03','15:56:12',NULL,NULL,'2024-09-18','21:33:54',NULL,NULL,'2024-09-04','14:58:44',NULL,NULL,'2024-09-07','18:09:18'),
 (5,NULL,NULL,'2024-09-03','15:56:57',NULL,NULL,'2024-09-12','14:04:20',NULL,NULL,'2024-09-04','14:58:40',NULL,NULL,'2024-09-07','18:09:21'),
-(6,NULL,NULL,'2024-09-03','15:58:04',NULL,NULL,'2024-09-08','03:58:15',NULL,NULL,'2024-09-04','14:58:14',NULL,NULL,'2024-09-07','18:09:25'),
+(6,NULL,NULL,'2024-09-03','15:58:04',NULL,NULL,'2024-09-18','21:34:05',NULL,NULL,'2024-09-04','14:58:14',NULL,NULL,'2024-09-07','18:09:25'),
 (7,NULL,NULL,'2024-09-10','17:46:56',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
 (8,NULL,NULL,'2024-09-03','16:00:19',NULL,NULL,'2024-09-12','14:03:45',NULL,NULL,'2024-09-04','14:58:21',NULL,NULL,'2024-09-07','18:09:03'),
 (9,NULL,NULL,'2024-09-03','16:02:53',NULL,NULL,'2024-09-12','14:04:08',NULL,NULL,'2024-09-08','03:53:36',NULL,NULL,'2024-09-08','03:53:49'),
@@ -223,12 +223,12 @@ CREATE TABLE `resident` (
 /*Data for the table `resident` */
 
 insert  into `resident`(`resident_id`,`img_filename`,`last_name`,`first_name`,`middle_name`,`suffix`,`house_num`,`street`,`subdivision`,`resident_since`,`sex`,`marital_status`,`birth_date`,`birth_place`,`cellphone_num`,`is_a_voter`,`audit_trail`,`is_deleted`) values 
-(1,'capture_24-09-131726191126.jpg','Tecson','Reno','Hofileña','','Blk 12 Lot 4','Isaiah st','Cielito Homes','2015','Male','Single','1992-01-18','Malolos Bulacan','09568989899',0,1,0),
+(1,'capture_24-09-131726191126.jpg','Tecson','Reno','HofileÃ±a','','Blk 12 Lot 4','Isaiah st','Cielito Homes','2015','Male','Single','1992-01-18','Malolos Bulacan','09568989899',0,1,0),
 (2,'8406e341a7981729777f9dee8b55be99 (1).jpg','Tecson','Randy','Hofileña','','Blk 12 Lot 4','Isaiah st','Cielito Homes','2003','Male','Single','1992-01-08','Bulacan Bulacan','09656565655',0,2,1),
-(3,'Miranda_Hallow.png','Tecson','Miranda','Hofileña','','Blk 12 Lot 4','Isaiah st','Cielito Homes','2006','Female','Married','1994-01-15','Plaridel Bulacan','09656565655',1,3,0),
-(4,'Lavi_2006.png','Tecson','James','Hofileña','','Blk 12 Lot 4','Isaiah st','Cielito Homes','2007','Male','Single','1993-02-18','Pulilan Bulacan','09669898989',0,4,0),
+(3,'Miranda_Hallow.png','Tecson','Miranda','HofileÃ±a','','Blk 12 Lot 4','Isaiah st','Cielito Homes','2006','Female','Married','1994-01-15','Plaridel Bulacan','09656565655',1,3,0),
+(4,'Lavi_2006.png','Tecson','James','HofileÃ±a','','Blk 12 Lot 4','Isaiah st','Cielito Homes','2007','Male','Single','1993-02-18','Pulilan Bulacan','09669898989',0,4,0),
 (5,'alingpuring.jpg','Tecson','Puring','Ulatan','','Blk 12 Lot 3','Isaiah st','Cielito Homes','2007','Female','Single','1993-02-18','Bustos Bulacan','09669898989',0,5,0),
-(6,'Shirou.png','Tecson','Gardo','Hofileña','','Blk 12 Lot 2','Isaiah st','Cielito Homes','2009','Male','Married','1988-02-27','San Miguel Bulacan','09064154588',1,6,0),
+(6,'Shirou.png','Tecson','Gardo','HofileÃ±a','','Blk 12 Lot 2','Isaiah st','Cielito Homes','2009','Male','Married','1988-02-27','San Miguel Bulacan','09064154588',1,6,0),
 (8,'images (1).jpg','Yalong','Aaaron','Armengol','','Blk 12 Lot 5','Isaiah st','Cielito Homes','2015','Male','Single','1986-03-21','Gapan Nueva Ecjia','09565656565',1,8,0),
 (9,'miano.jpg','Tecson','Franklin','Miano','','Blk 12 Lot 5','Isaiah st','Cielito Homes','2015','Male','Married','1986-03-21','Cabiao Nueva Ecjia','09565656564',1,9,0),
 (10,'Karen-Bennett-200x200px.jpg','Tecson','Kiana','Macabara','','Blk 8 lot 5B','Jeremiah st','Cielito Homes','2015','Female','Married','1988-09-13','Valenzuela City','09565656565',0,10,0),
@@ -363,12 +363,13 @@ CREATE TABLE `tbl_cert_audit_trail` (
   CONSTRAINT `edited_by_fk` FOREIGN KEY (`edited_by_no`) REFERENCES `tbl_username` (`username_id`),
   CONSTRAINT `issued_by_fk` FOREIGN KEY (`issued_by_no`) REFERENCES `tbl_username` (`username_id`),
   CONSTRAINT `recovered_by_fk` FOREIGN KEY (`recovered_by_no`) REFERENCES `tbl_username` (`username_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 /*Data for the table `tbl_cert_audit_trail` */
 
 insert  into `tbl_cert_audit_trail`(`audit_trail_id`,`issuing_dept_no`,`issued_by_no`,`date_issued`,`time_issued`,`expiration`,`edited_by_no`,`date_edited`,`time_edited`,`deleted_by_no`,`date_deleted`,`time_deleted`,`recovered_by_no`,`recovered_date`,`recovered_time`) values 
-(1,NULL,NULL,'2024-09-10','10:23:45','2024-09-25',NULL,'2024-09-17','08:14:40',NULL,NULL,NULL,NULL,NULL,NULL);
+(1,NULL,NULL,'2024-09-10','10:23:45','2024-09-25',NULL,'2024-09-17','08:14:40',NULL,NULL,NULL,NULL,NULL,NULL),
+(2,NULL,NULL,'2024-09-18','02:06:20','2024-12-19',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 
 /*Table structure for table `tbl_docu_request` */
 
@@ -393,7 +394,7 @@ CREATE TABLE `tbl_docu_request` (
   KEY `toknowthenresident` (`nresident_no`),
   KEY `toknowdocument` (`document_no`),
   CONSTRAINT `toknowdocument` FOREIGN KEY (`document_no`) REFERENCES `tbl_documents` (`docu_id`) ON DELETE CASCADE ON UPDATE NO ACTION,
-  CONSTRAINT `toknowtheaudittrail` FOREIGN KEY (`audit_trail_no`) REFERENCES `tbl_cert_audit_trail` (`audit_trail_id`) ON DELETE SET NULL ON UPDATE NO ACTION,
+  CONSTRAINT `toknowtheaudittrail` FOREIGN KEY (`audit_trail_no`) REFERENCES `tbl_cert_audit_trail` (`audit_trail_id`) ON DELETE CASCADE ON UPDATE NO ACTION,
   CONSTRAINT `toknowthenresident` FOREIGN KEY (`nresident_no`) REFERENCES `non_resident` (`nresident_id`) ON DELETE SET NULL ON UPDATE NO ACTION,
   CONSTRAINT `toknowtheresident` FOREIGN KEY (`resident_no`) REFERENCES `resident` (`resident_id`) ON DELETE SET NULL ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -401,7 +402,8 @@ CREATE TABLE `tbl_docu_request` (
 /*Data for the table `tbl_docu_request` */
 
 insert  into `tbl_docu_request`(`request_id`,`resident_no`,`nresident_no`,`document_no`,`age`,`presented_id`,`ID_number`,`purpose`,`audit_trail_no`,`pdffile`,`status`,`is_deleted`) values 
-('2024-000001',1,NULL,1,32,'National ID','TYO-12345612','Verification Purposes',1,NULL,0,0);
+('2024-000001',1,NULL,1,32,'National ID','TYO-12345612','Verification Purposes',1,NULL,0,0),
+('2024-000002',12,NULL,2,21,'Driver\'s License','N42-1234567890','Meralco Application',2,'certificate_of_residency/generated_pdf_1726682779.pdf',0,0);
 
 /*Table structure for table `tbl_documents` */
 
@@ -431,12 +433,13 @@ CREATE TABLE `tbl_documents` (
   CONSTRAINT `exca_fk` FOREIGN KEY (`Excavation_Permits`) REFERENCES `tbl_excavation_permits` (`exca_permit_id`),
   CONSTRAINT `f_permit_fk` FOREIGN KEY (`Fencing_Permits`) REFERENCES `tbl_fencing_permit` (`fencing_permit_id`),
   CONSTRAINT `tprs_fk` FOREIGN KEY (`TPRS`) REFERENCES `tbl_tprs` (`tprs_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 /*Data for the table `tbl_documents` */
 
 insert  into `tbl_documents`(`docu_id`,`Barangay_Clearance`,`Certificate_of_Residency`,`Certificate_of_Indigency`,`Certificate_of_Good_Moral`,`FTJS`,`Oath_of_Undertaking`,`Business_Permits`,`Building_Permits`,`Excavation_Permits`,`Fencing_Permits`,`TPRS`) values 
-(1,NULL,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+(1,NULL,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(2,NULL,2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 
 /*Table structure for table `tbl_excavation_permits` */
 
@@ -614,6 +617,44 @@ DELIMITER $$
     UPDATE vw_all_documents
     SET `status` = 1
     WHERE `expiration` <= NOW();
+END */$$
+DELIMITER ;
+
+/* Procedure structure for procedure `determine_docu_type` */
+
+/*!50003 DROP PROCEDURE IF EXISTS  `determine_docu_type` */;
+
+DELIMITER $$
+
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `determine_docu_type`(
+    IN certificate_type VARCHAR(255)
+)
+BEGIN
+    -- For Certificate of Residency
+    IF certificate_type = 'Certificate_of_Residency' THEN
+        INSERT INTO tbl_documents(certificate_of_residency)
+        SELECT IFNULL(MAX(certificate_of_residency), 0) + 1 FROM tbl_documents;
+        
+    -- For Certificate of Indigency
+    ELSEIF certificate_type = 'Certificate_of_Indigency' THEN
+        INSERT INTO tbl_documents(certificate_of_indigency)
+        SELECT IFNULL(MAX(certificate_of_indigency), 0) + 1 FROM tbl_documents;
+
+    -- For Certificate of Good Moral
+    ELSEIF certificate_type = 'Good_Moral' THEN
+        INSERT INTO tbl_documents(Certificate_of_Good_Moral)
+        SELECT IFNULL(MAX(Certificate_of_Good_Moral), 0) + 1 FROM tbl_documents;
+
+    -- For First Time Job Seeker Certificate
+    ELSEIF certificate_type = 'First_Time_Job_Seeker' THEN
+        INSERT INTO tbl_documents(FTJS)
+        SELECT IFNULL(MAX(FTJS), 0) + 1 FROM tbl_documents;
+
+    -- For Oath of Undertaking
+    ELSEIF certificate_type = 'Oath_of_Undertaking' THEN
+        INSERT INTO tbl_documents(Oath_of_Undertaking)
+        SELECT IFNULL(MAX(Oath_of_Undertaking), 0) + 1 FROM tbl_documents;
+    END IF;
 END */$$
 DELIMITER ;
 
