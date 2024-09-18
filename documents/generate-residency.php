@@ -1,7 +1,7 @@
 <?php
 
 require_once("fpdf186/fpdf.php");
-include_once('includes/connecttodb.php');
+include_once('../includes/connecttodb.php');
 
 $sqlquery="SELECT * FROM brgy_officials";
 $stmt=$pdo->prepare($sqlquery);
@@ -11,12 +11,10 @@ $results=$stmt->fetchAll(PDO::FETCH_ASSOC);
 
 $nowdate= date("Y-m-d H:i:s"); //Get the date now
 $nowtime = time(); //Get the time now
-$expiration = $_POST['expiration'];
 $username = null;
 $dept = 2;
 $residentsince=$_POST['r_since'];
 $completeaddress=utf8_decode($_POST['address']);
-$residentno=($_POST['resident_no']);
 $fname=utf8_decode($_POST['firstname']);
 $mname=utf8_decode($_POST['middlename']);
 $lname=utf8_decode($_POST['lastname']);
@@ -28,9 +26,13 @@ if(isset($_POST['suffix'])){
 }
 $presentedid=$_POST['presented_id'];
 $purpose=$_POST['purpose'];
-$IDnumber=$_POST['IDnum'];
 
-if(isset($_POST['OPERATION_CHECK'])){
+
+if(!$_POST['OPERATION']=="RETRIVE"){
+    $residentno=($_POST['resident_no']);
+    $IDnumber=$_POST['IDnum'];
+    $expiration = $_POST['expiration'];
+
 
     $sqlquery2="SELECT Certificate_of_Residency FROM tbl_documents ORDER BY Certificate_of_Residency DESC LIMIT 1";
     $stmt2=$pdo->prepare($sqlquery2);
@@ -48,11 +50,6 @@ if(isset($_POST['OPERATION_CHECK'])){
     $stmt3 = $pdo->prepare($sqlquery3);
     $stmt3->execute($alldatatorequest);
 
-    $sqlquery4="SELECT * FROM `certificate-img`";
-    $stmt4=$pdo->prepare($sqlquery4);
-    $stmt4->execute();
-
-    $results4=$stmt4->fetchAll(PDO::FETCH_ASSOC); 
 
     $request_id = $pdo->lastInsertId();
 
@@ -74,6 +71,13 @@ if(isset($_POST['OPERATION_CHECK'])){
 
 
 }
+
+
+$sqlquery4="SELECT * FROM `certificate-img`";
+$stmt4=$pdo->prepare($sqlquery4);
+$stmt4->execute();
+
+$results4=$stmt4->fetchAll(PDO::FETCH_ASSOC); 
 
 //Close the Database Connection
 $pdo=null;
@@ -114,13 +118,13 @@ $pdf = new MyPDF ('P', 'mm', "Letter");
 $pdf -> AddPage();
 
 //Include the Logos Here
-$pdf -> Image('img/'.$logo[2], 5,10,25,25);
+$pdf -> Image('../img/'.$logo[2], 5,10,25,25);
 
-$pdf -> Image('img/'.$logo[0], 29,12,23,23);
+$pdf -> Image('../img/'.$logo[0], 29,12,23,23);
 
-$pdf -> Image('img/'.$logo[1], 170,12,23,23);
+$pdf -> Image('../img/'.$logo[1], 170,12,23,23);
 
-$pdf -> Image('img/'.$logo[3], -33,5,280,297);
+$pdf -> Image('../img/'.$logo[3], -33,5,280,297);
 
 $pdf->AliasNbPages();
 $pdf->SetAutoPageBreak(true, 10); // set the margin bottom to 10 mm
@@ -402,8 +406,18 @@ $pdf -> Cell($w, 22, wrapText($pdf,$text,160), 0, 'C');
 
 $pdf -> Cell(59, 10, '',0,1);
 
-$pdf -> Output();
+if($_POST['OPERATION']=="RETRIVE"){
+    // Output the PDF (save it temporarily)
+    $fileName = "generated_pdf_" . time() . ".pdf";
+    $pdf->Output('F', 'temp/' . $fileName); // Save in 'temp' directory
 
+    // Return the file URL as a response
+    echo json_encode(['file' => 'temp/' . $fileName]);
+    exit();
+
+}else{
+    $pdf -> Output();
+}
 function wrapText($pdf,$text,$maxWidth){
 
    $textWidth = $pdf->GetStringWidth($text);

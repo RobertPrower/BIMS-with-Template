@@ -96,7 +96,7 @@ if($operation_check =="REVOKE"){
         $stmt->execute([$request_Id]);
         $result=$stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        exit(json_encode([$result]));
+        exit(json_encode($result));
 
     }else{
 

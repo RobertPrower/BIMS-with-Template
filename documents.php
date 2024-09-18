@@ -122,28 +122,16 @@
 
                                 <!-- Modal for the Certificate of residency -->
                                 <div class="modal fade" id="RegenerateResidencyModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <div class="modal-dialog">
+                                <div class="modal-dialog  modal-xl">
                                     <div class="modal-content">
                                     <div class="modal-header">
-                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Print Certificate</h1>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <form >
                                         <div class="modal-body">
-                                            <input hidden id="fname" name="firstname">
-                                            <input hidden id="lname" name="lastname">
-                                            <input hidden id="mname" name="middlename">
-                                            <input hidden id="suffix" name="suffix">
-                                            <input hidden id="address" name="address">
-                                            <input hidden id="age" name="age">
-                                            <input hidden id="presentedid" name="presented_id">
-                                            <input hidden id="IDnum" name="IDnum">
-                                            <input hidden id="r_since" name="r_since">
 
-
-
-
-                                            <iframe id="generatepdf" src=""></iframe>
+                                            <iframe id="generatepdf" src="" width="100%" height="500px"></iframe>
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

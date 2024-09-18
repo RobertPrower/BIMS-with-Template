@@ -231,32 +231,31 @@ $(document).ready(function () {
     $.ajax({
         url: "includes/documentsoperation.php",
         type: "POST",
-        dataType: "JSON",
+        dataType: "json",
         data: {
           OPERATION: "FETCH_RESIDENT_DATA",
           document: cert,
           request_id: request_id,
         },
         success: function (response) {
+          var data = response[0]
         
-          var fname = response.first_name;
-          var lname = response.last_name;
-          var mname = response.middle_name;
-          var suffix = response.suffix;
-          var house_no = response.house_num;
-          var street = response.street;
-          var subd = response.subdivision;
-          var address = house_no+" "+street+" "+subd+" "+"Camarin Caloocan City"; 
-          var r_since = response.resident_since;
-          var age = response.age;
-          var presented_id = response.presented_id;
-          var purpose = response.purpose;
+          var fname = data.first_name;
+          var lname = data.last_name;
+          var mname = data.middle_name;
+          var suffix = data.suffix;
+          var address = data.house_num+" "+data.street+" "+data.subdivision+" "+"Camarin Caloocan City"; 
+          var r_since = data.resident_since;
+          var age = data.age;
+          var presented_id = data.presented_id;
+          var purpose = data.purpose;
+
 
           // Show the modal
           $("#RegenerateResidencyModal").modal("show");
 
           $.ajax({
-            url: "generate-residency.php",
+            url: "documents/generate-residency.php",
             type: "POST",
             data: {
               firstname: fname,
@@ -267,13 +266,16 @@ $(document).ready(function () {
               r_since: r_since,
               age: age,
               presented_id: presented_id,
-              purpose: purpose
+              purpose: purpose,
+              OPERATION: "RETRIVE",
     
             },
             success: function (response) {
-              // Assuming your PDF is being served inline
+              var data = JSON.parse(response);
+              var filename = data.file;
+              console.log(filename);
               
-              $("#generatepdf").attr("src", "generate-residency.php"); // Set the iframe source to the PDF URL
+              $("#generatepdf").attr("src", filename); 
     
               // Show the modal
               $("#pdfModal").modal("show");

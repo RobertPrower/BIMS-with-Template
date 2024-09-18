@@ -45,7 +45,7 @@
                             <div class="d-flex justify-content-start" style="padding-left: 15px;">
                             
                                 <!-- Button to trigger modal -->
-                                <button type="button" class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#AddResidentModal">Add Resident</button>
+                                <button type="button" class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#AddResidentModal">New Record</button>    
                                 
                                 <div class="form-check form-switch my-2">
                                     <input class="form-check-input" type="checkbox" id="showdeletedentries">
@@ -86,7 +86,7 @@
                                 <th style="width: 15%;" class="text-center">Address</th>
                                 <th style="width: 5%;" class="text-center">Resident Since</th>
                                 <th style="width: 10%;" class="text-center">Sex</th>
-                                <th style="width: 10%;" class="text-center">Marital Status</th>
+                                <!-- <th style="width: 10%;" class="text-center">Marital Status</th> -->
                                 <th style="width: 10%;" class="text-center">Birth Date</th>
                                 <th style="width: 10%;" class="text-center">Birth Place</th>
                                 <th style="width: 10%;" class="text-center">Phone Number</th>
