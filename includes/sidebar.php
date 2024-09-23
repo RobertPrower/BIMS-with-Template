@@ -48,11 +48,15 @@
                 </li>
 
                 <li>
-                    <a id="resident_btn" id="resident_btn" href="residents.php"><span class="icon home" aria-hidden="true"></span>Residents</a>
+                    <a id="resident_btn" href="residents.php"><span class="icon home" aria-hidden="true"></span>Residents</a>
                     
                 </li>
                 <li>
-                    <a id="blotter_btn" id="blotter_btn" href="blotters.php"><span class="icon edit" aria-hidden="true"></span>Blotters</a>
+                    <a id="non_resident_btn" href="nonresidents.php"><span class="icon user-3" aria-hidden="true"></span>Non-Residents</a>
+                    
+                </li>
+                <li>
+                    <a id="blotter_btn" href="blotters.php"><span class="icon edit" aria-hidden="true"></span>Blotters</a>
                    
                 </li>
                 <li>

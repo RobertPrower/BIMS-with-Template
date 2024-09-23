@@ -372,4 +372,20 @@ $(document).ready(function () {
       });
     }
   });
+
+  //For the delete button
+  $(document).on("click",'#deletebutton',function () {
+    var request_id = $(this).data("request_id");
+    $.ajax({
+      type: "POST",
+      url: "includes/documentsoperation.php",
+      data: {request_id: request_id},
+      dataType: "JSON",
+      success: function (response) {
+        
+      },
+      error: function (xhr, status, error) {
+      },
+    });
+  });
 });

@@ -76,6 +76,16 @@ if($operation_check =="REVOKE"){
 
         exit(json_encode(['error' => 'No certificate request_id recieved']));
     }
+}elseif($_POST['OPERATION'] == "DELETE_ENTRY"){
+
+    if(isset($_POST['request_id'])){
+        $sqlquery = "UPDATE tbl_docu_request SET is_deleted =? WHERE request_id=?";
+        $stmt = $pdo->prepare($sqlquery);
+        $stmt->execute([1, $request_Id]);
+    }else{
+        exit(json_encode(['error' => 'No certificate request_id recieved']));
+    }
+
 }else{
     echo "Nothing was reviced";
 }

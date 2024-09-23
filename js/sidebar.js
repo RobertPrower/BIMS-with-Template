@@ -18,5 +18,8 @@ $(document).ready(function () {
     case "Dashboard":
         $("#dashboard_btn").addClass("active");
     break;
+    case "Manage Non-Residents":
+        $("#non_resident_btn").addClass("active");
+    break;
    }
 });

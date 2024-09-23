@@ -6,6 +6,19 @@ $(document).ready(function () {
   const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
   const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
 
+  //to Display Every Datepicker
+  $('input[name="birth_date"]').datepicker({
+    dateFormat: 'yy-mm-dd',  // Format the date
+    changeMonth: true,       // Show dropdown for month
+    changeYear: true,        // Show dropdown for year
+    yearRange: "1900:+0",    // Year range from 1900 to current year
+    maxDate: 0,              // Prevent future date
+    onSelect: function(dateText, inst) {
+        // Trigger floating label manually after date selection
+        $(this).trigger('input');
+    }
+  });
+
   //For the tooltip to be triggered manually via Jquery
   $('#editopenCamera').tooltip({
     trigger: 'manual' 
@@ -14,12 +27,12 @@ $(document).ready(function () {
   //To Reload the page
   function reloadTable(page) {
     $.ajax({
-      url: "includes/residenttableautoreload.php",
+      url: "includes/nonresidenttableautoreload.php",
       type: "POST",
       data: {pageno: page},
       dataType: "HTML",
       success: function (data) {
-        $("#ResidentTable tbody").html(data);
+        $("#NonResidentTable tbody").html(data);
         updatePaginationControls(page);
       },
       error: function (xhr, status, error) {
@@ -31,12 +44,12 @@ $(document).ready(function () {
   //Reload the table of the Deleted Entries
   function reloadDeletedEntries(page) {
     $.ajax({
-      url: "includes/nonresidents.php",
+      url: "includes/nonresidentoperation.php",
       type: "POST",
       data: {pageno: page, operation: "SHOW_DELETED"},
       dataType: "HTML",
       success: function (data) {
-        $("#ResidentTable tbody").html(data);
+        $("#NonResidentTable tbody").html(data);
         updateDeletedPaginationControls(page);
       },
       error: function (xhr, status, error) {
@@ -48,7 +61,7 @@ $(document).ready(function () {
   //Update the pagination controls every operation
   function updatePaginationControls(currentPage){
     $.ajax({
-      url: "includes/residentoperation.php",
+      url: "includes/nonresidentoperation.php",
       type: "POST",
       data: {pageno: currentPage, operation: "PAGINATION"},
       dataType: "HTML",
@@ -64,7 +77,7 @@ $(document).ready(function () {
   //Update the pagination controls every search
   function updateSearchPaginationControls(query, currentPage) {
     $.ajax({
-        url: "includes/residentsearch.php",
+        url: "includes/nonresidentsearch.php",
         type: "POST",
         data: { search: query, pageno: currentPage, operation: "SEARCH_PAGINATION" },
         success: function (data) {
@@ -79,7 +92,7 @@ $(document).ready(function () {
   //Update the pagination controls every flipped of the show deleted entries switch
   function updateDeletedPaginationControls(currentPage) {
     $.ajax({
-        url:"includes/residentoperation.php",
+        url:"includes/nonresidentoperation.php",
         type: "POST",
         data: {pageno: currentPage, operation: "PAGINATION_FOR_DEL_REC"},
         success: function (data){
@@ -96,11 +109,11 @@ $(document).ready(function () {
     if ($("#showdeletedentries").is(":checked")) {
         console.log("Deleted Entries switch has been on");
         $.ajax({
-            url: "includes/residentsearch.php",
+            url: "includes/nonresidentsearch.php",
             type: "POST",
             data: { search: query, page: page, operation: "DELETED_SEARCH" },
             success: function (data) {
-                $("#ResidentTableBody").html(data);
+                $("#NonResidentTableBody").html(data);
                 updateDeletedPaginationControls(page);
             },
             error: function (xhr, status, error) {
@@ -110,11 +123,11 @@ $(document).ready(function () {
     } else {
         console.log("Deleted Entries switch has been off");
         $.ajax({
-            url: "includes/residentsearch.php",
+            url: "includes/nonresidentsearch.php",
             type: "POST",
             data: { search: query, page: page, operation: "SEARCH" },
             success: function (data) {
-                $("#ResidentTableBody").html(data);
+                $("#NonResidentTableBody").html(data);
                 updateSearchPaginationControls(query, page);
             },
             error: function (xhr, status, error) {
@@ -175,7 +188,7 @@ $(document).ready(function () {
   });
 
   //For Adding Resident
-  $("#AddResidentModalForm").submit(function (event) {
+  $("#AddNonResidentModalForm").submit(function (event) {
     event.preventDefault();
 
     var captureImageData = $('#imagePreview').attr("src");
@@ -189,7 +202,7 @@ $(document).ready(function () {
     console.log(page);
 
     $.ajax({
-      url: "includes/residentoperation.php",
+      url: "includes/nonresidentoperation.php",
       type: "POST",
       data: formData,
       dataType: "JSON",
@@ -200,7 +213,7 @@ $(document).ready(function () {
         console.log("Data saved successfully:", response);
 
         if (response.success) {
-          $("#AddResidentModal").modal("hide");
+          $("#AddNonResidentModal").modal("hide");
           swal({
             title: "Add Entry",
             text: "Entry Added Sucessfully!",
@@ -209,7 +222,7 @@ $(document).ready(function () {
           });
             reloadTable(page);
         } else {
-          $("#AddResidentModal").modal("hide");
+          $("#AddNonResidentModal").modal("hide");
           swal({
             icon: "error",
             title: "Oops...",
@@ -221,7 +234,7 @@ $(document).ready(function () {
         // Handle error response
         console.error("Error saving data:", error);
         // Optionally, display an error message to the user
-        $("#AddResidentModal").modal("hide");
+        $("#AddNonResidentModal").modal("hide");
         swal({
           icon: "error",
           title: "Oops...",
@@ -232,11 +245,11 @@ $(document).ready(function () {
   });
 
   //For Recovering Resident entries
-    $("#ResidentTable").on("click", "#undodeletebutton", function (event) {
+    $("#NonResidentTable").on("click", "#undodeletebutton", function (event) {
       event.preventDefault();
 
-      var residentId = $(this).data("resident_id");
-      console.log(residentId);
+      var nresidentId = $(this).data("nresident_id");
+      console.log(nresidentId);
       var page = $(this).data("page");
       swal({
         title: "Are you sure?",
@@ -247,9 +260,9 @@ $(document).ready(function () {
       }).then((willDelete) => {
         if (willDelete) {
           $.ajax({
-            url: "includes/residentoperation.php",
+            url: "includes/nonresidentoperation.php",
             type: "POST",
-            data: { resident_id: residentId, operation: "UNDO_DELETE"},
+            data: { nresident_id: nresidentId, operation: "UNDO_DELETE"},
             dataType: "json",
             success: function (response) {
               console.log("Data recovered successfully:", response);
@@ -267,12 +280,12 @@ $(document).ready(function () {
       });
     });
 
-    $("#ResidentTable").on("click", "#deletebutton", function (event) {
+    $("#NonResidentTable").on("click", "#deletebutton", function (event) {
       event.preventDefault();
 
       var currentSearch = $("#searchbox").val();
-      var residentId = $(this).data("resident_id");
-      console.log(residentId);
+      var nresidentId = $(this).data("nresident_id");
+      console.log(nresidentId);
       var page = $(this).data("page");
       swal({
         title: "Are you sure?",
@@ -283,9 +296,9 @@ $(document).ready(function () {
       }).then((willDelete) => {
         if (willDelete) {
           $.ajax({
-            url: "includes/residentoperation.php",
+            url: "includes/nonresidentoperation.php",
             type: "POST",
-            data: { resident_id: residentId, operation: "DELETE"},
+            data: { nresident_id: nresidentId, operation: "DELETE"},
             dataType: "json",
             success: function (response) {
               console.log("Data deleted successfully:", response);
@@ -309,7 +322,7 @@ $(document).ready(function () {
     });
 
   //For Editing Resident Entry
-  $("#EditResidentModalForm").submit(function (event) {
+  $("#EditNonResidentModalForm").submit(function (event) {
     // Prevent the default form submission behavior
     event.preventDefault();
 
@@ -344,7 +357,7 @@ $(document).ready(function () {
 
          // Send AJAX request
          $.ajax({
-          url: "includes/residentoperation.php",
+          url: "includes/nonresidentoperation.php",
           type: "POST",
           data: formData,
           dataType: "json",
@@ -355,7 +368,7 @@ $(document).ready(function () {
             console.log("Data saved successfully:", response);
 
             if (response.success) {
-              $("#EditResidentModal").modal("hide");
+              $("#EditNonResidentModal").modal("hide");
               swal({
                 title: "Edit Entry",
                 text: "Entry Edited Sucessfully!",
@@ -369,7 +382,7 @@ $(document).ready(function () {
                 reloadTable(page);
               }
             } else {
-              $("#EditResidentModal").modal("hide");
+              $("#EditNonResidentModal").modal("hide");
               swal({
                 icon: "error",
                 title: "Oops...",
@@ -381,7 +394,7 @@ $(document).ready(function () {
             // Handle error response
             console.error("Error saving data:", error);
             // Optionally, display an error message to the user
-            $("#EditResidentModal").modal("hide");
+            $("#EditNonResidentModal").modal("hide");
             swal({
               icon: "error",
               title: "Oops...",
@@ -393,10 +406,10 @@ $(document).ready(function () {
     }
   });
 
-  //For reseting the Add Resident Form everytime you click the close or X button
+  //For reseting the Add Non Resident Form everytime you click the close or X button
   $(".btnClose, #clearButton").on("click", function(){
     console.log("Close Button is click")
-    var form = document.getElementById('AddResidentModalForm');
+    var form = document.getElementById('AddNonResidentModalForm');
     form.reset();
 
     var imagePreview = document.getElementById('imagePreview');
@@ -411,11 +424,13 @@ $(document).ready(function () {
   })
 
   // //For populating the View and Edit Modal Combined into one event
-  $(document).on("click", ".editResidentButton, .viewResidentButton", function (event) {
+  $(document).on("click", ".editNonResidentButton, .viewNonResidentButton", function (event) {
     event.preventDefault();
-    
+
+    console.log("Modal Event has been triggered");
+
     // Get common data attributes
-    var resident_id = $(this).data("id");
+    var nresident_id = $(this).data("id");
     var first_name = $(this).data("first-name");
     var middle_name = $(this).data("middle-name");
     var last_name = $(this).data("last-name");
@@ -423,36 +438,42 @@ $(document).ready(function () {
     var house_no = $(this).data("house-no");
     var street_name = $(this).data("street-name");
     var subdivision = $(this).data("subdivision");
+    var district_brgy = $(this).data("district-brgy");
+    var city = $(this).data("city");
+    var province = $(this).data("province");
+    var zipcode = $(this).data("zipcode");
     var sex = $(this).data("sex");
-    var marital_status = $(this).data("marital-status");
+    var marital_status = $(this).data("marital_status");
     var birth_date = $(this).data("birth-date");
     var birthplace = $(this).data("birth-place");
-    var phone_number = $(this).data("phone-number");
-    var is_a_voter = $(this).data("isa-voter");
-    var resident_since = $(this).data("rsince");
+    var phone_number = $(this).data("contact-num");
+
+    console.log(marital_status);
 
     // Determine if this is for 'edit' or 'view'
-    var isEdit = $(this).hasClass("editResidentButton");
+    var isEdit = $(this).hasClass("editNonResidentButton");
 
     // Modal ID based on the button clicked (Edit or View)
-    var modalId = isEdit ? "#EditResidentModal" : "#ViewResidentModal";
+    var modalId = isEdit ? "#EditNonResidentModal" : "#ViewNonResidentModal";
 
     // Populate the common fields in the modal
-    $(modalId + ' input[name="resident_id"]').val(resident_id);
+    $(modalId + ' input[name="nresident_id"]').val(nresident_id);
     $(modalId + ' input[name="fname"]').val(first_name);
     $(modalId + ' input[name="mname"]').val(middle_name);
     $(modalId + ' input[name="lname"]').val(last_name);
     $(modalId + ' input[name="suffix"]').val(suffix);
     $(modalId + ' input[name="house_no"]').val(house_no);
     $(modalId + ' input[name="street"]').val(street_name);
-    $(modalId + ' select[name="subd"]').val(subdivision);
+    $(modalId + ' input[name="subd"]').val(subdivision);
+    $(modalId + ' input[name="district_brgy"]').val(district_brgy);
+    $(modalId + ' input[name="city"]').val(city);
+    $(modalId + ' input[name="province"]').val(province);
+    $(modalId + ' input[name="zipcode"]').val(zipcode);
     $(modalId + ' select[name="sex"]').val(sex);
     $(modalId + ' select[name="marital_status"]').val(marital_status);
     $(modalId + ' input[name="birth_date"]').val(birth_date);
     $(modalId + ' input[name="birth_place"]').val(birthplace);
     $(modalId + ' input[name="cellphone_number"]').val(phone_number);
-    $(modalId + ' select[name="is_a_voter"]').val(is_a_voter);
-    $(modalId + ' input[name="rsince"]').val(resident_since);
 
     // Specific logic for editing
     if (isEdit) {
@@ -466,22 +487,22 @@ $(document).ready(function () {
         $('#nav-home-tab').tab('show');
         $(modalId).modal("show"); // Show the View modal
     }
-});
 
+  });
 
     //AJAX request for the clearance tab and table of the modal
   $(document).on("click", "#nav-clearance-tab", function () {
-    var resident_id = $('#viewresident_id').val();
+    var nresident_id = $('#viewnonresident_id').val();
 
-    console.log(resident_id);
+    console.log(nresident_id);
     
       $.ajax({
-        url: "includes/get-resident-docu-request.php",
+        url: "includes/get-nonresident-docu-request.php",
         type: "POST",
-        data: {resident_id: resident_id},
+        data: {nresident_id: resident_id},
         dataType: "HTML",
         success: function (data) {
-          $("#ResidentRequestTable tbody").html(data);
+          $("#NonResidentRequestTable tbody").html(data);
         },
         error: function (xhr, status, error) {
           console.error("Error fetching table data:", error);

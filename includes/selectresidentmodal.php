@@ -1,7 +1,7 @@
 <?php
         require_once("connecttodb.php");
         
-        $sqlquery = "SELECT * FROM vw_all_resident";
+        $sqlquery = "SELECT * FROM vw_resident";
 
 
         $stmt=$pdo->prepare($sqlquery);

@@ -6,7 +6,7 @@ $page = isset($_POST['pageno']) ? $_POST['pageno'] : 1;
 $start_from = ($page - 1) * $limit;
 
 try {
-        $sql = "SELECT * FROM vw_resident ORDER BY last_name ASC LIMIT $start_from, $limit"; 
+        $sql = "SELECT * FROM vw_nonresident ORDER BY last_name ASC LIMIT $start_from, $limit"; 
         $stmt = $pdo->prepare($sql);
         $stmt->execute();
         $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -14,7 +14,7 @@ try {
     // Check if there are any results
     if (count($results) > 0) {
         // Output each row as HTML
-        require_once'residenttabletofetch.php';
+        require_once'nonresidenttabletofetch.php';
     } else {
         echo '<tr><td colspan="12">No records found.</td></tr>';
     }

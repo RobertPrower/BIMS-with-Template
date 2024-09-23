@@ -389,7 +389,7 @@ if($operation_check == "ADD"){ //For the add operation
 }elseif($operation_check=="PAGINATION"){
     
    // Fetch the total number of records
-    $total_records = $pdo->query("SELECT COUNT(*) FROM vw_all_resident")->fetchColumn();
+    $total_records = $pdo->query("SELECT COUNT(*) FROM vw_resident")->fetchColumn();
     $limit = 10; //To limit the number of pages
     $total_pages = ceil($total_records / $limit);
 
@@ -399,7 +399,7 @@ if($operation_check == "ADD"){ //For the add operation
     $start_from = ($current_page - 1) * $limit;
 
     // Fetch the data for the current page
-    $query = $pdo->prepare("SELECT * FROM vw_all_resident ORDER BY last_name ASC LIMIT $start_from, $limit");
+    $query = $pdo->prepare("SELECT * FROM vw_resident ORDER BY last_name ASC LIMIT $start_from, $limit");
     $query->execute();
     $result = $query->fetchAll();
 

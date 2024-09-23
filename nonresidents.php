@@ -11,13 +11,12 @@
   <!-- Custom styles -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
   <link rel="stylesheet" href="./css/style.min.css">
-
+  <link rel="stylesheet" href="css/jquery-ui.min.css">
 
   <!--Scripts Must be Always On the Top -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js" integrity="sha256-xLD7nhI62fcsEZK2/v8LsBcb4lG7dgULkuXoXB/j91c=" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert"></script>
   <script src="js/webcam.min.js"></script>
 
 <body>
@@ -45,7 +44,7 @@
                             <div class="d-flex justify-content-start" style="padding-left: 15px;">
                             
                                 <!-- Button to trigger modal -->
-                                <button type="button" class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#AddResidentModal">New Record</button>    
+                                <button type="button" class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#AddNonResidentModal" id="AddNonResidentBtn">New Record</button>    
                                 
                                 <div class="form-check form-switch my-2">
                                     <input class="form-check-input" type="checkbox" id="showdeletedentries">
@@ -53,7 +52,7 @@
                                 </div>
 
                                 <!-- Modal on a spepare file -->
-                                <?php require_once('includes/residentaddmodal.php'); ?>
+                                <?php require_once('includes/nonresidentaddmodal.php'); ?>
                             
                             </div>
                         </div>
@@ -75,27 +74,23 @@
 
                     <div class="users-table table-wrapper">
                         <!-- users-table table-wrapper -->
-                        <table class="users-table table-striped" id="ResidentTable" style="width:100%">
+                        <table class="users-table table-striped" id="NonResidentTable" style="width:100%">
                             <thead>
                             <tr>
                 
                                 <!--th style="width: 2%;"class="text-center"><input type="checkbox" class="check-all"></th--> 
-                                <th style="width: 2%"class="text-center resident_id" hidden>ID</th> 
+                                <th style="width: 2%"class="text-center nresident_id" hidden>ID</th> 
                                 <th style="width: 10%;"class="text-center">Date Recorded</th>
-                                <th style="width: 15%;" class="text-center">Full Name</th>
-                                <th style="width: 15%;" class="text-center">Address</th>
-                                <th style="width: 5%;" class="text-center">Resident Since</th>
-                                <th style="width: 10%;" class="text-center">Sex</th>
-                                <!-- <th style="width: 10%;" class="text-center">Marital Status</th> -->
+                                <th style="width: 20%;" class="text-center">Full Name</th>
+                                <th style="width: 20%;" class="text-center">Address</th>
+                                <th style="width: 5%;" class="text-center">Sex</th>
                                 <th style="width: 10%;" class="text-center">Birth Date</th>
-                                <th style="width: 10%;" class="text-center">Birth Place</th>
                                 <th style="width: 10%;" class="text-center">Phone Number</th>
-                                <th style="width: 10%;" class="text-center">Is a Voter</th>
                                 <th style="width: 10%;" class="text-center">Action</th>
                             </tr>
                             </thead>
 
-                            <tbody id="ResidentTableBody">
+                            <tbody id="NonResidentTableBody">
                             <!-- Table Body -->
                             
                                 <!-- To be filled by the AJAX -->
@@ -135,8 +130,8 @@
                     </nav>
 
                     <?php 
-                    require_once("includes/residentviewform.php");
-                    require_once("includes/residenteditform.php");
+                    require_once("includes/nonresidentviewform.php");
+                    require_once("includes/nonresidenteditform.php");
                     ?>
                 </div>  
             </div>
@@ -147,6 +142,7 @@
     </div>
 </div>
         
+<script src="js/jquery-ui.min.js"></script>
 <script src="js/nonresidentaction.js"> </script>
 <script src="js/camerafunction.js"></script>
 
@@ -156,6 +152,7 @@
 <script src="plugins/feather.min.js"></script>
 <!-- Custom scripts -->
 <script src="js/script.js"></script>
+<script src="js/sidebar.js"></script>
 </body>
 
 </html>

@@ -1,6 +1,9 @@
 <?php
 require_once("connecttodb.php");
 
+//To Sanitize the Data to prevent SQL Injections and Cross site scripting and insertion of special characters
+require_once('anti-SQLInject.php');
+
 date_default_timezone_set('Asia/Hong_Kong'); //Set the default timezone
 
 $operation_check=$_POST['operation']; //Catches What operation to perform
@@ -26,7 +29,6 @@ $departno= null; // For the users depart currently using
  $birthplace = (isset($_POST['birth_place'])) ? sanitizeData($_POST['birth_place']): null;
  $cellphonenumber = (isset($_POST['cellphone_number'])) ? sanitizeData($_POST['cellphone_number']): null;
  $is_a_voter = (isset($_POST['is_a_voter'])) ? sanitizeData($_POST['is_a_voter']): null;
- $residentsince = (isset($_POST['rsince'])) ? sanitizeData($_POST['rsince']): null;
 
 if($operation_check == "ADD"){ //For the add operation
     try {
@@ -92,20 +94,18 @@ if($operation_check == "ADD"){ //For the add operation
         }
 
         //Record to Audit Trail
-        $audit_query = "INSERT INTO nres_audit_trail (added_depart_no, added_by_no, date_added, time_added)
-        VALUES (?, ?,?,?)";
+        $audit_query = "INSERT INTO nonres_audit_trail (dept_added_no, user_added_no, datetime_added)
+        VALUES (?, ?,CURRENT_TIMESTAMP())";
         $audit_stmt = $pdo->prepare($audit_query);
         $audit_stmt->execute
         ([
         $departno,
-        $userid,
-        $nowdate,
-        $time
+        $userid
         ]);
        
         // Insert data into the non resident table
         $insert_query = "INSERT INTO non_resident (img_filename, last_name, first_name, middle_name, suffix, house_num, street, subdivision, 
-                            districtorbrgy, city, province, sex, marital_status, birth_date, birth_place, cellphone_num, is_a_voter)
+                            district_brgy, city, province, sex, marital_status, birth_date, birth_place, cellphone_num, is_a_voter)
                         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?,?,?,?);";
         $insert_stmt = $pdo->prepare($insert_query);
         $insert_stmt->execute([
@@ -121,7 +121,6 @@ if($operation_check == "ADD"){ //For the add operation
             $districtbrgy,
             $city,
             $province,
-            $residentsince,
             $sex,
             $maritalstatus,
             $birthdate,
@@ -142,10 +141,10 @@ if($operation_check == "ADD"){ //For the add operation
 }elseif($operation_check == "EDIT"){
 
      // Retrieve data sent via POST
-     $residentId = sanitizeData($_POST['resident_id']);
+     $nresidentId = sanitizeData($_POST['nresident_id']);
      
      //Variable for the Name of the Folder which is img to be accessible to all if statements
-     $target_dir = "img/resident_img/";
+     $target_dir = "img/non_resident_img/";
  
     if(!isset($_POST['isfromcamcheck'])){
         
@@ -185,14 +184,14 @@ if($operation_check == "ADD"){ //For the add operation
     
             
             //MetaData Entering to the Database
-            $stmt = $pdo->prepare("UPDATE resident SET img_filename=? WHERE resident_id=?");
+            $stmt = $pdo->prepare("UPDATE non_resident SET img_filename=? WHERE nresident_id=?");
     
             $stmt -> execute([$fileName, $residentId]);
     
             //Checks the img/resident_img folder for any used images
     
                 // Fetch all filenames from the database
-            $stmt = $pdo->query("SELECT img_filename FROM resident");
+            $stmt = $pdo->query("SELECT img_filename FROM non_resident");
             $dbFiles = $stmt->fetchAll(PDO::FETCH_COLUMN);
     
             // Retrieve all filenames from the folder
@@ -235,6 +234,8 @@ if($operation_check == "ADD"){ //For the add operation
         }elseif($_FILES['image_file']['error']==UPLOAD_ERR_NO_FILE){
 
             $imgopresponse = "UPLOAD_ERR_NO_FILE: No file is uploaded";
+            exit(json_encode(["success" => false, "message" => "Image Error: ". $imgopresponse]));
+
 
         }elseif($_FILES['image_file']['error']==UPLOAD_ERR_CANT_WRITE){
             $imgopresponse = "UPLOAD_ERR_CANT_WRITE: Unable to write file to disk.";
@@ -277,14 +278,14 @@ if($operation_check == "ADD"){ //For the add operation
         file_put_contents($filePath, $decoded_image);
 
         //MetaData Entering to the Database
-        $stmt = $pdo->prepare("UPDATE resident SET img_filename=? WHERE resident_id=?");
+        $stmt = $pdo->prepare("UPDATE non_resident SET img_filename=? WHERE nresident_id=?");
     
         $stmt -> execute([$fileName, $residentId]);
 
         //Checks the img/resident_img folder for any used images
 
         // Fetch all filenames from the database
-        $stmt = $pdo->query("SELECT img_filename FROM resident");
+        $stmt = $pdo->query("SELECT img_filename FROM non_resident");
         $dbFiles = $stmt->fetchAll(PDO::FETCH_COLUMN);
 
         // Retrieve all filenames from the folder
@@ -314,18 +315,18 @@ if($operation_check == "ADD"){ //For the add operation
         
 
     try {
-        // Prepare SQL statement for updating resident data
-        $statement = $pdo->prepare("UPDATE resident SET first_name = ?, middle_name = ?, last_name = ?,suffix = ?, house_num = ?, street = ?, subdivision = ?, district_brgy=?, city=?, sex = ?, marital_status = ?, birth_date = ?, birth_place = ?, cellphone_num = ?, is_a_voter = ? WHERE resident_id = ?");
+        // Prepare SQL statement for updating non resident data
+        $statement = $pdo->prepare("UPDATE non_resident SET first_name = ?, middle_name = ?, last_name = ?,suffix = ?, house_num = ?, street = ?, subdivision = ?, district_brgy=?, city=?, province=?, sex = ?, marital_status = ?, birth_date = ?, birth_place = ?, cellphone_num = ?, is_a_voter = ? WHERE nresident_id = ?");
         
         // Bind parameters and execute the statement
-        $statement->execute([$fname, $mname, $lname, $suffix, $houseno, $street, $subd,$districtbrgy, $sex, $maritalstatus, $birthdate, $birthplace, $cellphonenumber, $is_a_voter, $residentId]);
+        $statement->execute([$fname, $mname, $lname, $suffix, $houseno, $street, $subd,$districtbrgy, $city, $province ,$sex, $maritalstatus, $birthdate, $birthplace, $cellphonenumber, $is_a_voter, $nresidentId]);
         
         // Send success response
         echo json_encode(["success" => true, "message" => "Data updated successfully". " ImageStatus: " . $imgopresponse]);
 
-        $update_audit_sql= "UPDATE res_audit_trail SET edited_depart_no=?, last_edited_by=?, last_edited_dt=?, last_edited_tm=? WHERE res_at_id=?";
+        $update_audit_sql= "UPDATE nonres_audit_trail SET dept_edited_no=?, user_edited_no=?, datetime_edited=CURRENT_TIMESTAMP() WHERE res_at_id=?";
          $atstmt= $pdo->prepare($update_audit_sql);
-         $atstmt -> execute([$departno, $userid, $nowdate, $time, $residentId]);
+         $atstmt -> execute([$departno, $userid, $residentId]);
 
         
     } catch (PDOException $e) {
@@ -340,19 +341,19 @@ if($operation_check == "ADD"){ //For the add operation
 
 }elseif($operation_check == "DELETE"){
     // Get the ID of the record to delete
-    $id_to_delete = $_POST['resident_id'];
+    $id_to_delete = sanitizeData($_POST['nresident_id']);
 
     if(isset($id_to_delete)){
         // Prepare an update statement to mark the record as deleted
         try{
         
-            $update_query = "UPDATE resident SET is_deleted = 1 WHERE resident_id = ?";
+            $update_query = "UPDATE non_resident SET is_deleted = 1 WHERE nresident_id = ?";
             $update_stmt = $pdo->prepare($update_query);
             $update_stmt->execute([$id_to_delete]);
 
-            $update_audit_sql= "UPDATE res_audit_trail SET dept_del_no=?, del_by_no=?, del_date=?, del_time=? WHERE res_at_id=?";
+            $update_audit_sql= "UPDATE nonres_audit_trail SET dept_deleted_no=?, user_deleted_no=?, datetime_deleted=CURRENT_TIMESTAMP() WHERE res_at_id=?";
             $atstmt= $pdo->prepare($update_audit_sql);
-            $atstmt -> execute([$departno, $userid, $nowdate, $time, $id_to_delete]);
+            $atstmt -> execute([$departno, $userid, $id_to_delete]);
             echo json_encode(["success" => true, "message" => "Record Soft deleted successfully."]);
 
         }catch(PDOException $e){
@@ -366,19 +367,19 @@ if($operation_check == "ADD"){ //For the add operation
     }
 }elseif($operation_check=="UNDO_DELETE"){
     //For Admin only
-    $id_to_delete = $_POST['resident_id'];
+    $id_to_delete = sanitizeData($_POST['nresident_id']);
 
     if(isset($id_to_delete)){
         // Prepare an update statement to mark the record as is_deleted=0
         try{
         
-            $update_query = "UPDATE resident SET is_deleted = 0 WHERE resident_id = ?";
+            $update_query = "UPDATE non_resident SET is_deleted = 0 WHERE nresident_id = ?";
             $update_stmt = $pdo->prepare($update_query);
             $update_stmt->execute([$id_to_delete]);
 
-            $update_audit_sql= "UPDATE res_audit_trail SET dept_rec_no=?, rec_by_no=?, rec_date=?, rec_time=? WHERE res_at_id=?";
+            $update_audit_sql= "UPDATE nonres_audit_trail SET dept_recovered_no=?, user_recovered_no=?, datetime_recovered=CURRENT_TIMESTAMP() WHERE res_at_id=?";
             $atstmt= $pdo->prepare($update_audit_sql);
-            $atstmt -> execute([$departno, $userid, $nowdate, $time, $id_to_delete]);
+            $atstmt -> execute([$departno, $userid, $id_to_delete]);
             echo json_encode(["success" => true, "message" => "Record recovered successfully."]);
 
         }catch(PDOException $e){
@@ -395,7 +396,7 @@ if($operation_check == "ADD"){ //For the add operation
 }elseif($operation_check=="PAGINATION"){
     
    // Fetch the total number of records
-    $total_records = $pdo->query("SELECT COUNT(*) FROM vw_all_resident")->fetchColumn();
+    $total_records = $pdo->query("SELECT COUNT(*) FROM vw_nonresident")->fetchColumn();
     $limit = 10; //To limit the number of pages
     $total_pages = ceil($total_records / $limit);
 
@@ -405,7 +406,7 @@ if($operation_check == "ADD"){ //For the add operation
     $start_from = ($current_page - 1) * $limit;
 
     // Fetch the data for the current page
-    $query = $pdo->prepare("SELECT * FROM vw_all_resident ORDER BY last_name ASC LIMIT $start_from, $limit");
+    $query = $pdo->prepare("SELECT * FROM vw_nonresident ORDER BY last_name ASC LIMIT $start_from, $limit");
     $query->execute();
     $result = $query->fetchAll();
 
@@ -414,7 +415,7 @@ if($operation_check == "ADD"){ //For the add operation
 }elseif($operation_check=="SHOW_DELETED"){
 
      // Fetch the total number of records
-     $total_records = $pdo->query("SELECT COUNT(*) FROM resident WHERE is_deleted=1")->fetchColumn();
+     $total_records = $pdo->query("SELECT COUNT(*) FROM non_resident WHERE is_deleted=1")->fetchColumn();
      $limit = 10; //To limit the number of pages
      $total_pages = ceil($total_records / $limit);
  
@@ -425,32 +426,30 @@ if($operation_check == "ADD"){ //For the add operation
  
      // Fetch the data for the current page
      $query = $pdo->prepare("SELECT 
-                                `resident`.`resident_id`       AS `resident_id`,
-                                `res_audit_trail`.`date_added` AS `date_recorded`,
-                                `resident`.`img_filename`      AS `img_filename`,
-                                `resident`.`last_name`         AS `last_name`,
-                                `resident`.`first_name`        AS `first_name`,
-                                `resident`.`middle_name`       AS `middle_name`,
-                                `resident`.`suffix`            AS `suffix`,
-                                `resident`.`house_num`         AS `house_num`,
-                                `resident`.`street`            AS `street`,
-                                `resident`.`subdivision`       AS `subdivision`,
-                                `resident`.`resident_since`    AS `resident_since`,
-                                `resident`.`sex`               AS `sex`,
-                                `resident`.`marital_status`    AS `marital_status`,
-                                `resident`.`birth_date`        AS `birth_date`,
-                                `resident`.`birth_place`       AS `birth_place`,
-                                `resident`.`cellphone_num`     AS `cellphone_num`,
-                                `resident`.`is_a_voter`        AS `is_a_voter`,
-                                `resident`.`is_deleted`        AS `is_deleted`
-                                FROM resident
-                                JOIN res_audit_trail ON resident.audit_trail = res_audit_trail.res_at_id      
+                                `non_resident`.`nresident_id`       AS `nresident_id`,
+                                `nonres_audit_trail`.`datetime_added`,
+                                `non_resident`.`img_filename`      AS `img_filename`,
+                                `non_resident`.`last_name`         AS `last_name`,
+                                `non_resident`.`first_name`        AS `first_name`,
+                                `non_resident`.`middle_name`       AS `middle_name`,
+                                `non_resident`.`suffix`            AS `suffix`,
+                                `non_resident`.`house_num`         AS `house_num`,
+                                `non_resident`.`street`            AS `street`,
+                                `non_resident`.`subdivision`       AS `subdivision`,
+                                `non_resident`.`sex`               AS `sex`,
+                                `non_resident`.`marital_status`    AS `marital_status`,
+                                `non_resident`.`birth_date`        AS `birth_date`,
+                                `non_resident`.`birth_place`       AS `birth_place`,
+                                `non_resident`.`cellphone_num`     AS `cellphone_num`,
+                                `non_resident`.`is_deleted`        AS `is_deleted`
+                                FROM non_resident
+                                JOIN nonres_audit_trail ON non_resident.audit_trail_no = nonres_audit_trail.`audit_trail_id`      
                                 WHERE is_deleted=1 ORDER BY last_name ASC LIMIT $start_from, $limit");
      $query->execute();
      $results = $query->fetchAll();
 
     if(!empty($results)){
-        require_once'residenttabletofetch.php';
+        require_once'nonresidenttabletofetch.php';
     }else{
         echo '<tr><td colspan="11"><b>No Deleted Records found</b></td></tr>';
     }
@@ -460,7 +459,7 @@ if($operation_check == "ADD"){ //For the add operation
 
 }elseif($operation_check=="PAGINATION_FOR_DEL_REC"){
     // Fetch the total number of records
-    $total_records = $pdo->query("SELECT COUNT(*) FROM resident WHERE is_deleted=1")->fetchColumn();
+    $total_records = $pdo->query("SELECT COUNT(*) FROM non_resident WHERE is_deleted=1")->fetchColumn();
     $limit = 10; //To limit the number of pages
     $total_pages = ceil($total_records / $limit);
 
@@ -473,7 +472,7 @@ if($operation_check == "ADD"){ //For the add operation
 }
     
 
-// Function to check if a file with the given name exists in the resident_img table
+// Function to check if a file with the given name exists in the non_resident_img table
 
 function generateUniqueFileName($target_dir, $originalFileName) {
     $imageFileType = strtolower(pathinfo($originalFileName, PATHINFO_EXTENSION));
@@ -489,17 +488,6 @@ function generateUniqueFileName($target_dir, $originalFileName) {
 
     return $fileName;
 }
-//To Sanitize the Data to prevent SQL Injections and Cross site scripting and insertion of special characters
-function sanitizeData($input){
-    $removedSpecialChar = trim ($input, "!@#$%^&*()=[]{};:`~'<>,./\?| "); 
-    $removedSpecialCharinthemiddle= preg_replace('/[^a-zA-Z0-9\s\-ñÑ#]/u','', $removedSpecialChar);
-
-    $sanatizedData=htmlspecialchars($removedSpecialCharinthemiddle);
-
-    return $sanatizedData;
-
-}
-
 // Close the database connection
 $pdo = null;
 ?>

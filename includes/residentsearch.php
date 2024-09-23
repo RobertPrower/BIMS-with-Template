@@ -1,6 +1,7 @@
 <?php 
 
 require_once('connecttodb.php');
+require('anti-SQLInject.php');
 
 $limit = 10;
 $search = isset($_POST['search']) ? sanitizeData($_POST['search']): '';
@@ -112,15 +113,7 @@ if($_POST['operation']=="SEARCH_PAGINATION"){
     require_once'paginationtemplate.php';
 }
 
-function sanitizeData($input){
-    $removedSpecialChar = trim ($input, "!@#$%^&*()=[]{};:`~'<>,./\?| "); 
-    $removedSpecialCharinthemiddle= preg_replace('/[^a-zA-Z0-9\s\-ñÑ#]/u','', $removedSpecialChar);
 
-    $sanatizedData=htmlspecialchars($removedSpecialCharinthemiddle);
-
-    return $sanatizedData;
-
-}
 
 
 ?>

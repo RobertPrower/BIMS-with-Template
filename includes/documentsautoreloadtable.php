@@ -65,7 +65,7 @@ try {
                     if($row['is_deleted'] == "0"){ 
                         echo '<button class="btn btn-danger mx-1 deleteResidentButton" id="deletebutton"
                             data-pageno="'.$page.'"
-                            data-resident_id = "' . htmlspecialchars($row['request_id']) . '">Delete</button>';
+                            data-request_id = "' . htmlspecialchars($row['request_id']) . '">Delete</button>';
                     }else{
                         echo '<button class="btn btn-warning mx-1 deleteResidentButton" id="undodeletebutton"
                         data-pageno="'.$page.'"
