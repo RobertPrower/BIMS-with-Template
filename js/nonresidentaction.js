@@ -6,24 +6,21 @@ $(document).ready(function () {
   const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
   const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
 
-  //to Display Every Datepicker
-  $('input[name="birth_date"]').datepicker({
-    dateFormat: 'yy-mm-dd',  // Format the date
-    changeMonth: true,       // Show dropdown for month
-    changeYear: true,        // Show dropdown for year
-    yearRange: "1900:+0",    // Year range from 1900 to current year
-    maxDate: 0,              // Prevent future date
-    onSelect: function(dateText, inst) {
-        // Trigger floating label manually after date selection
-        $(this).trigger('input');
-    }
-  });
-
   //For the tooltip to be triggered manually via Jquery
   $('#editopenCamera').tooltip({
     trigger: 'manual' 
   });
   
+  $('input[name="birth_date"]').datepicker({
+    format: 'yyyy-mm-dd',  
+    autoclose: true,       
+  });
+
+  // If required, re-initialize datepicker when modal is opened
+  $('.AddNonResidentModal').on('shown.bs.modal', function () {
+    $('#birth_date').datepicker('update');
+  });
+
   //To Reload the page
   function reloadTable(page) {
     $.ajax({

@@ -120,7 +120,7 @@
                                 </div>
 
                                 <div class="form-floating mt-3 mb-3 col-md-4">
-                                    <input type="text" class="form-control" id="birth_date" name="birth_date" required>
+                                    <input type="text" class="form-control" id="birth_date" name="birth_date" placeholder="mm/dd/yyyy" required>
                                     <label for="birth_date">Birth Date</label>
                                 </div> 
 

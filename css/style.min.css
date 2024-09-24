@@ -1329,18 +1329,6 @@ button.disabled:focus {
   align-items: center;
 }
 
-input[type="date"] {
-  -webkit-appearance: textfield;
-  appearance: textfield;
-  padding-right: 20px; /* Ensure enough space for the icon */
-}
-input[type="date"]::-webkit-calendar-picker-indicator {
-  -webkit-appearance: menulist-button;
-  display: block; /* Ensures the icon remains visible */
-}
-
-
-
 input,
 select {
   border-radius: 6px;
