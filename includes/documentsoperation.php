@@ -61,7 +61,7 @@ if($operation_check =="REVOKE"){
         exit(json_encode(value: ["success" => false, "No Request ID recieved"]));
     }
 
-}elseif($_POST['OPERATION'] == "FETCH_FILENAME"){
+}elseif($operation_check == "FETCH_FILENAME"){
     if(isset($_POST['request_id'])){
 
         $sqlquery="SELECT pdffile FROM tbl_docu_request WHERE request_id=?";
@@ -76,16 +76,34 @@ if($operation_check =="REVOKE"){
 
         exit(json_encode(['error' => 'No certificate request_id recieved']));
     }
-}elseif($_POST['OPERATION'] == "DELETE_ENTRY"){
+}elseif($operation_check == "DELETE_ENTRY"){
 
     if(isset($_POST['request_id'])){
         $sqlquery = "UPDATE tbl_docu_request SET is_deleted =? WHERE request_id=?";
         $stmt = $pdo->prepare($sqlquery);
         $stmt->execute([1, $request_Id]);
+
+        echo json_encode(['success' => true, 'message' => "Entry has been deleted"]);
+
     }else{
-        exit(json_encode(['error' => 'No certificate request_id recieved']));
+        echo json_encode(['error' => 'No certificate request_id recieved']);
     }
 
+}elseif($operation_check =="UNDO_DELETE"){
+    if(isset($request_Id)){
+        $sqlquery = "UPDATE tbl_docu_request SET `is_deleted`= 0 WHERE request_id=?";
+        $stmt = $pdo->prepare($sqlquery);
+        $stmt->execute([$request_Id]);
+
+        $response="Certificate has been restored!!";
+
+        echo json_encode(value: ["success" => true, $response]);
+    }else{
+        $response="No request ID recevied";
+        echo "RESTORE";
+        exit(json_encode(value: ["success" => false, $response]));
+
+    }
 }else{
     echo "Nothing was reviced";
 }

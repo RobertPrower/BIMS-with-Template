@@ -8,7 +8,7 @@
             </div>
 
             <!-- Edit form -->
-            <form action="#" id="EditResidentModalForm" method="POST" enctype="multipart/form-data">
+            <form action="" id="EditNonResidentModalForm" method="POST" enctype="multipart/form-data">
                 <div class="modal-body">
             
                     <div class="row">

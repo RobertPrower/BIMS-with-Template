@@ -109,12 +109,13 @@ CREATE TABLE `non_resident` (
   PRIMARY KEY (`nresident_id`),
   KEY `nres_audit_trail` (`audit_trail_no`),
   CONSTRAINT `nres_audit_trail` FOREIGN KEY (`audit_trail_no`) REFERENCES `nonres_audit_trail` (`audit_trail_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 /*Data for the table `non_resident` */
 
 insert  into `non_resident`(`nresident_id`,`img_filename`,`last_name`,`first_name`,`middle_name`,`suffix`,`house_num`,`street`,`subdivision`,`district_brgy`,`city`,`province`,`zipcode`,`sex`,`marital_status`,`birth_place`,`birth_date`,`cellphone_num`,`audit_trail_no`,`is_deleted`) values 
-(1,NULL,'Rabanes','Fernan','Jarito',NULL,'Blk 9 Lot 3','Kamatis st','Ramirez Subd','Novaliches ','Quezon City','Metro-Manila','1423','Male','Single','Tuguegarao','1998-06-16','090956565454',1,0);
+(1,'1images.jpg','Rabanes','Fernan','Jarito','','Blk 9 Lot 3','Kamatis st','Ramirez Subd','Novaliches','Quezon City','Metro-Manila','1423','Male','Single','Tuguegarao','1998-06-16','090956565454',1,0),
+(2,'capture_1727173934.jpg','Lim','Nicholas','Mahestro','','12','Zapote Rd','Cielito Homes','Camarin Brgy 175','Caloocan City','Metro Manila',NULL,'Male','Single','San Nicolas Pangasinan','1998-09-29','0966565666544',NULL,NULL);
 
 /*Table structure for table `nonres_audit_trail` */
 
@@ -136,12 +137,13 @@ CREATE TABLE `nonres_audit_trail` (
   `datetime_recovered` datetime DEFAULT NULL,
   PRIMARY KEY (`audit_trail_id`),
   KEY `nres_user_fk` (`user_added_no`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 /*Data for the table `nonres_audit_trail` */
 
 insert  into `nonres_audit_trail`(`audit_trail_id`,`dept_added_no`,`user_added_no`,`datetime_added`,`dept_edited_no`,`user_edited_no`,`last_edited_datetime`,`dept_deleted_no`,`user_deleted_no`,`datetime_deleted`,`dept_recovered_no`,`user_recovered_no`,`datetime_recovered`) values 
-(1,NULL,NULL,'2024-09-04 10:12:00',NULL,NULL,'2024-09-12 00:00:00',NULL,NULL,NULL,NULL,NULL,NULL);
+(1,NULL,NULL,'2024-09-04 10:12:00',NULL,NULL,'2024-09-24 18:04:40',NULL,NULL,NULL,NULL,NULL,NULL),
+(2,NULL,NULL,'2024-09-24 18:32:14',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 
 /*Table structure for table `res_audit_trail` */
 

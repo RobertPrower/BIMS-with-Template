@@ -9,7 +9,7 @@
             </div>
             <div class="modal-body">
                 <!-- Add Resident Form -->
-                <form action="includes/addresident.php" id="AddNonResidentModalForm" enctype="multipart/form-data" method="POST">    
+                <form action="#" id="AddNonResidentModalForm" enctype="multipart/form-data" method="POST">    
                     <div class="row">
                         <div class="mt-3" style="width: 270px">
                         

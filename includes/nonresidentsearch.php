@@ -20,7 +20,7 @@ if($_POST['operation']=="SEARCH"){
         // query to fetch records with pagination
         $stmt = $pdo->prepare("SELECT 
             `non_resident`.`nresident_id`       AS `nresident_id`,
-            `nonres_audit_trail`.`datetime_added` AS `date_recorded`,
+            date(`nonres_audit_trail`.`datetime_added`) as datetime_added,
             `non_resident`.`img_filename`      AS `img_filename`,
             `non_resident`.`last_name`         AS `last_name`,
             `non_resident`.`first_name`        AS `first_name`,
@@ -32,11 +32,12 @@ if($_POST['operation']=="SEARCH"){
             `non_resident`.`district_brgy`,
             `non_resident`.`city`, 
             `non_resident`.`province`,
+            non_resident.zipcode,
             `non_resident`.`sex`               AS `sex`,
             `non_resident`.`marital_status`    AS `marital_status`,
             `non_resident`.`birth_date`        AS `birth_date`,
             `non_resident`.`birth_place`       AS `birth_place`,
-            `non_resident`.`cellphone_num`     AS `cellphone_num`,
+            `non_resident`.`cellphone_num`     AS `contact_num`,
             `non_resident`.`is_deleted`
             FROM non_resident 
             JOIN nonres_audit_trail 
@@ -64,7 +65,7 @@ if($_POST['operation']=="SEARCH"){
         // query to fetch records with pagination
         $stmt = $pdo->prepare("SELECT 
             `non_resident`.`nresident_id`       AS `nresident_id`,
-            `nonres_audit_trail`.`datetime_added` AS `date_recorded`,
+            DATE(`nonres_audit_trail`.`datetime_added`) as datetime_added,
             `non_resident`.`img_filename`      AS `img_filename`,
             `non_resident`.`last_name`         AS `last_name`,
             `non_resident`.`first_name`        AS `first_name`,
@@ -76,11 +77,12 @@ if($_POST['operation']=="SEARCH"){
             `non_resident`.`district_brgy`,
             `non_resident`.`city`, 
             `non_resident`.`province`,
+            non_resident.zipcode,
             `non_resident`.`sex`               AS `sex`,
             `non_resident`.`marital_status`    AS `marital_status`,
             `non_resident`.`birth_date`        AS `birth_date`,
             `non_resident`.`birth_place`       AS `birth_place`,
-            `non_resident`.`cellphone_num`     AS `cellphone_num`,
+            `non_resident`.`cellphone_num`     AS `contact_num`,
             `non_resident`.`is_deleted`
             FROM non_resident 
             JOIN nonres_audit_trail 
@@ -94,7 +96,7 @@ if($_POST['operation']=="SEARCH"){
 
         if(!empty($results)){
             // Code for displaying the results
-            require_once'residenttabletofetch.php';
+            require_once'nonresidenttabletofetch.php';
             
         }else{
             echo '<tr><td colspan="11"><b>No results found</b></td></tr>';
@@ -103,9 +105,20 @@ if($_POST['operation']=="SEARCH"){
         echo '<tr><td colspan="11">No Query</td></tr>';
     }
 
-}
+}elseif($_POST['operation'] == "LOOK_FOR_ENTRY"){
+    $id = $_POST["id"];
+    if(isset($id)){
+        $stmt = $pdo->prepare("SELECT * FROM vw_nonresident WHERE nresident_id =?");
+        $stmt->execute([$id]);
+        $results = $stmt->fetchAll(mode:PDO::FETCH_ASSOC);
+    
+        echo json_encode($results);
 
-if($_POST['operation']=="SEARCH_PAGINATION"){
+    }else{
+        echo json_encode(["success" => false, "message" => "NO ID was recieved"]);
+    }
+    
+}elseif($_POST['operation']=="SEARCH_PAGINATION"){
     $current_page = isset($_POST['pageno']) ? (int)$_POST['pageno'] : 1;
     $current_page = max(1, min($current_page, $total_pages));
     $start_from = ($current_page - 1) * $limit;

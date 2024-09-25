@@ -464,6 +464,16 @@ if($operation_check == "ADD"){ //For the add operation
     $start_from = ($current_page - 1) * $limit;
 
     require_once('paginationtemplate.php');
+
+}elseif($_POST['operation'] == "COUNT_RES_CERT"){
+    $resident_no = $_POST['resident_id'];
+
+    $countquery = "SELECT COUNT(*) AS count FROM vw_all_res_cert WHERE resident_no = ?";
+    $stmt = $pdo->prepare($countquery);
+    $stmt->execute([$resident_no]);
+    $results = $stmt -> fetchColumn();
+
+    echo json_encode($results);
 }
     
 

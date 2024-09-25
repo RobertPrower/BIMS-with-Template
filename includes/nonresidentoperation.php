@@ -7,8 +7,7 @@ require_once('anti-SQLInject.php');
 date_default_timezone_set('Asia/Hong_Kong'); //Set the default timezone
 
 $operation_check=$_POST['operation']; //Catches What operation to perform
-$nowdate = date("y-m-d"); //Checks the current date
-$time = date('H:i:s'); //Checks the current time
+$nowdate = date("y-m-d H:i:s"); //Checks the current date
 $userid=null; // For the user currently using the system
 $departno= null; // For the users depart currently using
 
@@ -20,9 +19,10 @@ $departno= null; // For the users depart currently using
  $houseno = (isset($_POST['house_no'])) ? sanitizeData($_POST['house_no']): null;
  $street = (isset($_POST['street'])) ? sanitizeData($_POST['street']): null;
  $subd = (isset($_POST['subd'])) ? sanitizeData($_POST['subd']): null;
- $districtbrgy = (isset($_POST['districtbrgy'])) ? sanitizeData($_POST['districtbrgy']): null;
+ $districtbrgy = (isset($_POST['district_brgy'])) ? sanitizeData($_POST['district_brgy']): null;
  $city=(isset($_POST['city'])) ? sanitizeData($_POST['city']): null;
  $province=(isset($_POST['province'])) ? sanitizeData($_POST['province']): null;
+ $zipcode=(isset($_POST['zipcode'])) ? sanitizeData($_POST['zipcode']): null;
  $sex = (isset($_POST['sex'])) ? sanitizeData($_POST['sex']): null;
  $maritalstatus = (isset($_POST['marital_status'])) ? sanitizeData($_POST['marital_status']): null;
  $birthdate = (isset($_POST['birth_date'])) ? sanitizeData($_POST['birth_date']): null;
@@ -31,113 +31,163 @@ $departno= null; // For the users depart currently using
  $is_a_voter = (isset($_POST['is_a_voter'])) ? sanitizeData($_POST['is_a_voter']): null;
 
 if($operation_check == "ADD"){ //For the add operation
-    try {
 
-        if(isset($_POST['imagefile'])){
-             //Variable for the Name of the Folder which is img
-            $target_dir = "img/non_resident_img/";
+    //Check for any duplicates of the entered details
+    $check_query = "SELECT * FROM non_resident
+    WHERE last_name = ? 
+    AND first_name = ? 
+    AND middle_name = ? 
+    AND suffix = ? 
+    AND house_num = ? 
+    AND street = ? 
+    AND subdivision = ? 
+    AND district_brgy = ? 
+    AND city = ? 
+    AND province = ? 
+    AND zipcode = ? 
+    AND sex = ? 
+    AND marital_status = ? 
+    AND birth_date = ? 
+    AND birth_place = ? 
+    AND cellphone_num = ?";
+    
+    $check_stmt = $pdo->prepare($check_query);
+    $check_stmt->execute([
 
-            //Variable for the path
-            $target_file = $target_dir . basename($_FILES["image_file"]["name"]);
+    $lname,
+    $fname,
+    $mname,
+    $suffix,
+    $houseno,
+    $street,
+    $subd,
+    $districtbrgy,
+    $city,
+    $province,
+    $zipcode,
+    $sex,
+    $maritalstatus,
+    $birthdate,
+    $birthplace,
+    $cellphonenumber
 
-            // To get the file extension and converts it to lower case
-            $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
-
-            // Generate a Unique filename via the generateUniqueFileName user define function below
-            $fileName = generateUniqueFileName($target_dir, basename($_FILES["image_file"]["name"]));
-            $target_file = $target_dir . $fileName;
-
-            // Check if file is an image
-            $check = getimagesize($_FILES["image_file"]["tmp_name"]);
-            if ($check === false) {
-                throw new Exception("File is not an image.");
-            }
-
-            // Check file size
-            if ($_FILES["image_file"]["size"] > 500000) {
-                throw new Exception("Sorry, your file is too large.");
-            }
-
-            // Allow only specific file formats
-            if (!in_array($imageFileType, ["jpg", "jpeg", "png"])) {
-                throw new Exception("Sorry, only JPG, JPEG & PNG files are allowed.");
-            }
-
-            // Move uploaded file to target directory
-            if (!move_uploaded_file($_FILES["image_file"]["tmp_name"], $target_file)) {
-                throw new Exception("Sorry, there was an error uploading your file.");
-            }
-
-        }elseif(isset($_POST['captureImageData'])){ //Incase the image comes from the camera
-            //Capture the Data
-            $data_uri = $_POST['captureImageData'];
-
-            //Extract the base64 Data
-            $encoded_image = explode(",", $data_uri)[1];
-
-            //Decode the base64 string
-            $decoded_image = base64_decode($encoded_image);
-
-            //For the filename being entered in the Database
-            $fileName =  'capture_'.time().'.jpg';
-
-            $filePath = 'img/non_resident_img/'.$fileName;
-
-            //Save the image file
-            file_put_contents($filePath, $decoded_image);
-
+    ]);
+    $result = $check_stmt->fetch(mode: PDO::FETCH_ASSOC);
+        
+        if($result == true){
+            echo json_encode(["success" => false, "data" => $result]);
 
         }else{
+            try {
 
-            exit(json_encode(['success' => false, 'message' => 'No image was sent!'.$e->Message()])); 
-
-        }
-
-        //Record to Audit Trail
-        $audit_query = "INSERT INTO nonres_audit_trail (dept_added_no, user_added_no, datetime_added)
-        VALUES (?, ?,CURRENT_TIMESTAMP())";
-        $audit_stmt = $pdo->prepare($audit_query);
-        $audit_stmt->execute
-        ([
-        $departno,
-        $userid
-        ]);
-       
-        // Insert data into the non resident table
-        $insert_query = "INSERT INTO non_resident (img_filename, last_name, first_name, middle_name, suffix, house_num, street, subdivision, 
-                            district_brgy, city, province, sex, marital_status, birth_date, birth_place, cellphone_num, is_a_voter)
-                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?,?,?,?);";
-        $insert_stmt = $pdo->prepare($insert_query);
-        $insert_stmt->execute([
+                if(isset($_POST['imagefile'])){
+                    //Variable for the Name of the Folder which is img
+                    $target_dir = "img/non_resident_img/";
+        
+                    //Variable for the path
+                    $target_file = $target_dir . basename($_FILES["image_file"]["name"]);
+        
+                    // To get the file extension and converts it to lower case
+                    $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
+        
+                    // Generate a Unique filename via the generateUniqueFileName user define function below
+                    $fileName = generateUniqueFileName($target_dir, basename($_FILES["image_file"]["name"]));
+                    $target_file = $target_dir . $fileName;
+        
+                    // Check if file is an image
+                    $check = getimagesize($_FILES["image_file"]["tmp_name"]);
+                    if ($check === false) {
+                        throw new Exception("File is not an image.");
+                    }
+        
+                    // Check file size
+                    if ($_FILES["image_file"]["size"] > 500000) {
+                        throw new Exception("Sorry, your file is too large.");
+                    }
+        
+                    // Allow only specific file formats
+                    if (!in_array($imageFileType, ["jpg", "jpeg", "png"])) {
+                        throw new Exception("Sorry, only JPG, JPEG & PNG files are allowed.");
+                    }
+        
+                    // Move uploaded file to target directory
+                    if (!move_uploaded_file($_FILES["image_file"]["tmp_name"], $target_file)) {
+                        throw new Exception("Sorry, there was an error uploading your file.");
+                    }
+        
+                }elseif(isset($_POST['captureImageData'])){ //Incase the image comes from the camera
+                    //Capture the Data
+                    $data_uri = $_POST['captureImageData'];
+        
+                    //Extract the base64 Data
+                    $encoded_image = explode(",", $data_uri)[1];
+        
+                    //Decode the base64 string
+                    $decoded_image = base64_decode($encoded_image);
+        
+                    //For the filename being entered in the Database
+                    $fileName =  'capture_'.time().'.jpg';
+        
+                    $filePath = 'img/non_resident_img/'.$fileName;
+        
+                    //Save the image file
+                    file_put_contents($filePath, $decoded_image);
+        
+        
+                }else{
+        
+                    exit(json_encode(['success' => false, 'message' => 'No image was sent!'.$e->Message()])); 
+        
+                }
+        
+                //Record to Audit Trail
+                $audit_query = "INSERT INTO nonres_audit_trail (dept_added_no, user_added_no, datetime_added)
+                VALUES (?, ?,CURRENT_TIMESTAMP())";
+                $audit_stmt = $pdo->prepare($audit_query);
+                $audit_stmt->execute
+                ([
+                $departno,
+                $userid
+                ]);
             
-            $fileName,
-            $lname,
-            $fname,
-            $mname,
-            $suffix,
-            $houseno,
-            $street,
-            $subd,
-            $districtbrgy,
-            $city,
-            $province,
-            $sex,
-            $maritalstatus,
-            $birthdate,
-            $birthplace,
-            $cellphonenumber,
-            $is_a_voter,
-            
-        ]);
+                // Insert data into the non resident table
+                $insert_query = "INSERT INTO non_resident (img_filename, last_name, first_name, middle_name, suffix, house_num, street, subdivision, 
+                                    district_brgy, city, province, zipcode, sex, marital_status, birth_date, birth_place, cellphone_num)
+                                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?,?,?,?);";
+                $insert_stmt = $pdo->prepare($insert_query);
+                $insert_stmt->execute([
+                    
+                    $fileName,
+                    $lname,
+                    $fname,
+                    $mname,
+                    $suffix,
+                    $houseno,
+                    $street,
+                    $subd,
+                    $districtbrgy,
+                    $city,
+                    $province,
+                    $zipcode,
+                    $sex,
+                    $maritalstatus,
+                    $birthdate,
+                    $birthplace,
+                    $cellphonenumber,
+                    
+                ]);
+        
+                // Success response encodes it to JSON format for the AJAX to read
+                $response = ["success" => true, "message" => "Data Added successfully"];
+                echo json_encode($response);
+            } catch (Exception $e) {
+                // Error response
+                $response = ["success" => false, "message" => "Error updating data: " . $e->getMessage()];
+                echo json_encode($response);
+            }
 
-        // Success response encodes it to JSON format for the AJAX to read
-        $response = ["success" => true, "message" => "Data Added successfully"];
-        echo json_encode($response);
-    } catch (Exception $e) {
-        // Error response
-        $response = ["success" => false, "message" => "Error updating data: " . $e->getMessage()];
-        echo json_encode($response);
     }
+    
 }elseif($operation_check == "EDIT"){
 
      // Retrieve data sent via POST
@@ -186,7 +236,7 @@ if($operation_check == "ADD"){ //For the add operation
             //MetaData Entering to the Database
             $stmt = $pdo->prepare("UPDATE non_resident SET img_filename=? WHERE nresident_id=?");
     
-            $stmt -> execute([$fileName, $residentId]);
+            $stmt -> execute([$fileName, $nresidentId]);
     
             //Checks the img/resident_img folder for any used images
     
@@ -234,7 +284,6 @@ if($operation_check == "ADD"){ //For the add operation
         }elseif($_FILES['image_file']['error']==UPLOAD_ERR_NO_FILE){
 
             $imgopresponse = "UPLOAD_ERR_NO_FILE: No file is uploaded";
-            exit(json_encode(["success" => false, "message" => "Image Error: ". $imgopresponse]));
 
 
         }elseif($_FILES['image_file']['error']==UPLOAD_ERR_CANT_WRITE){
@@ -280,7 +329,7 @@ if($operation_check == "ADD"){ //For the add operation
         //MetaData Entering to the Database
         $stmt = $pdo->prepare("UPDATE non_resident SET img_filename=? WHERE nresident_id=?");
     
-        $stmt -> execute([$fileName, $residentId]);
+        $stmt -> execute([$fileName, $nresidentId]);
 
         //Checks the img/resident_img folder for any used images
 
@@ -316,17 +365,17 @@ if($operation_check == "ADD"){ //For the add operation
 
     try {
         // Prepare SQL statement for updating non resident data
-        $statement = $pdo->prepare("UPDATE non_resident SET first_name = ?, middle_name = ?, last_name = ?,suffix = ?, house_num = ?, street = ?, subdivision = ?, district_brgy=?, city=?, province=?, sex = ?, marital_status = ?, birth_date = ?, birth_place = ?, cellphone_num = ?, is_a_voter = ? WHERE nresident_id = ?");
+        $statement = $pdo->prepare("UPDATE non_resident SET first_name = ?, middle_name = ?, last_name = ?,suffix = ?, house_num = ?, street = ?, subdivision = ?, district_brgy=?, city=?, province=?, zipcode=? ,sex = ?, marital_status = ?, birth_date = ?, birth_place = ?, cellphone_num = ? WHERE nresident_id = ?");
         
         // Bind parameters and execute the statement
-        $statement->execute([$fname, $mname, $lname, $suffix, $houseno, $street, $subd,$districtbrgy, $city, $province ,$sex, $maritalstatus, $birthdate, $birthplace, $cellphonenumber, $is_a_voter, $nresidentId]);
+        $statement->execute([$fname, $mname, $lname, $suffix, $houseno, $street, $subd,$districtbrgy, $city, $province, $zipcode ,$sex, $maritalstatus, $birthdate, $birthplace, $cellphonenumber, $nresidentId]);
         
         // Send success response
         echo json_encode(["success" => true, "message" => "Data updated successfully". " ImageStatus: " . $imgopresponse]);
 
-        $update_audit_sql= "UPDATE nonres_audit_trail SET dept_edited_no=?, user_edited_no=?, datetime_edited=CURRENT_TIMESTAMP() WHERE res_at_id=?";
+        $update_audit_sql= "UPDATE nonres_audit_trail SET dept_edited_no=?, user_edited_no=?, last_edited_datetime=? WHERE audit_trail_id=?";
          $atstmt= $pdo->prepare($update_audit_sql);
-         $atstmt -> execute([$departno, $userid, $residentId]);
+         $atstmt -> execute([$departno, $userid, $nowdate, $nresidentId]);
 
         
     } catch (PDOException $e) {
@@ -351,9 +400,9 @@ if($operation_check == "ADD"){ //For the add operation
             $update_stmt = $pdo->prepare($update_query);
             $update_stmt->execute([$id_to_delete]);
 
-            $update_audit_sql= "UPDATE nonres_audit_trail SET dept_deleted_no=?, user_deleted_no=?, datetime_deleted=CURRENT_TIMESTAMP() WHERE res_at_id=?";
+            $update_audit_sql= "UPDATE nonres_audit_trail SET dept_deleted_no=?, user_deleted_no=?, datetime_deleted=? WHERE audit_trail_id=?";
             $atstmt= $pdo->prepare($update_audit_sql);
-            $atstmt -> execute([$departno, $userid, $id_to_delete]);
+            $atstmt -> execute([$departno, $userid, $nowdate, $id_to_delete]);
             echo json_encode(["success" => true, "message" => "Record Soft deleted successfully."]);
 
         }catch(PDOException $e){
@@ -427,7 +476,7 @@ if($operation_check == "ADD"){ //For the add operation
      // Fetch the data for the current page
      $query = $pdo->prepare("SELECT 
                                 `non_resident`.`nresident_id`       AS `nresident_id`,
-                                `nonres_audit_trail`.`datetime_added`,
+                                date(`nonres_audit_trail`.`datetime_added`) as datetime_added,
                                 `non_resident`.`img_filename`      AS `img_filename`,
                                 `non_resident`.`last_name`         AS `last_name`,
                                 `non_resident`.`first_name`        AS `first_name`,
@@ -440,7 +489,7 @@ if($operation_check == "ADD"){ //For the add operation
                                 `non_resident`.`marital_status`    AS `marital_status`,
                                 `non_resident`.`birth_date`        AS `birth_date`,
                                 `non_resident`.`birth_place`       AS `birth_place`,
-                                `non_resident`.`cellphone_num`     AS `cellphone_num`,
+                                `non_resident`.`cellphone_num`     AS `contact_num`,
                                 `non_resident`.`is_deleted`        AS `is_deleted`
                                 FROM non_resident
                                 JOIN nonres_audit_trail ON non_resident.audit_trail_no = nonres_audit_trail.`audit_trail_id`      
@@ -469,6 +518,30 @@ if($operation_check == "ADD"){ //For the add operation
     $start_from = ($current_page - 1) * $limit;
 
     require_once('paginationtemplate.php');
+}elseif($operation_check == "GET_IMAGE"){
+
+    $id = $_POST['id'];
+    $query = "SELECT img_filename FROM non_resident WHERE nresident_id = ?"; 
+    $statement = $pdo->prepare($query);
+    $statement->execute([$id]);
+    $result = $statement->fetch(mode: PDO::FETCH_ASSOC);
+
+    if ($result) {
+        // Prepare response
+        $response = array(
+        "imageData" => $result['img_filename']
+        
+        );
+    
+    } else {
+        $response = array("error" => "No data found for id: $id");
+    }
+
+    $pdo = null;
+
+    header('Content-Type: application/json');
+    echo json_encode($response);
+
 }
     
 

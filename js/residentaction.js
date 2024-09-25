@@ -6,11 +6,12 @@ $(document).ready(function () {
   const tooltipTriggerList = document.querySelectorAll(
     '[data-bs-toggle="tooltip"]'
   );
+
   const tooltipList = [...tooltipTriggerList].map(
     (tooltipTriggerEl) => new bootstrap.Tooltip(tooltipTriggerEl)
   );
 
-  $("#birth_date").datepicker({
+  $("input[name='birth_date']").datepicker({
     format: "mm/dd/yyyy",
     autoclose: true,
   });
@@ -432,7 +433,7 @@ $(document).ready(function () {
     $("#isfromcamcheck").prop("disabled", true);
   });
 
-  // //For populating the View and Edit Modal Combined into one event
+ //For populating the View and Edit Modal Combined into one event
   $(document).on(
     "click",
     ".editResidentButton, .viewResidentButton",
@@ -490,6 +491,19 @@ $(document).ready(function () {
         // Make the profile tab the default tab when the view button is clicked
         $("#nav-home-tab").tab("show");
         $(modalId).modal("show"); // Show the View modal
+        //For counting certificates requested
+        $.ajax({
+          type: "post",
+          url: "includes/residentoperation.php",
+          data: {operation: "COUNT_RES_CERT", resident_id: resident_id},
+          dataType: "json",
+          success: function (response) {
+            console.log(response)
+  
+            $("#noofcerts").text(response);
+            
+          }
+        });
       }
     }
   );

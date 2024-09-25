@@ -36,7 +36,10 @@
                                                 </div>
 
                                                 <div class= "mt-3 mb-4 text-center">
-                                                    <span class="label label-default">Default Label</span>
+                                                     <span class="badge text-bg-primary"><h4 id="noofcerts">10</h4><h5>No. of Requested <br> Certificates</h6></span>
+                                                     <br><br><br>
+                                                     <span class="badge text-bg-danger"><h4 id="">With Hit</h4><h5>Blotter Status</h6></span>
+
                                                 </div>
                             
                                             </div>

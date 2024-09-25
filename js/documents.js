@@ -17,6 +17,154 @@ $(document).ready(function () {
     });
   }
 
+    //Reload the table of the Deleted Entries
+    function reloadDeletedEntries(page) {
+      $.ajax({
+        url: "includes/documentsoperation.php",
+        type: "POST",
+        data: { pageno: page, OPERATION: "SHOW_DELETED" },
+        dataType: "HTML",
+        success: function (data) {
+          $("#ResidentTable tbody").html(data);
+          updateDeletedPaginationControls(page);
+        },
+        error: function (xhr, status, error) {
+          console.error("Error fetching table data:", error);
+        },
+      });
+    }
+  
+    //Update the pagination controls every operation
+    function updatePaginationControls(currentPage) {
+      $.ajax({
+        url: "includes/documentsoperation.php",
+        type: "POST",
+        data: { pageno: currentPage, OPERATION: "PAGINATION" },
+        dataType: "HTML",
+        success: function (data) {
+          $(".pagination").html(data);
+        },
+        error: function (xhr, status, error) {
+          console.error("Error updating pagination data:", error);
+        },
+      });
+    }
+  
+    //Update the pagination controls every search
+    function updateSearchPaginationControls(query, currentPage) {
+      $.ajax({
+        url: "includes/documentssearch.php",
+        type: "POST",
+        data: {
+          search: query,
+          pageno: currentPage,
+          OPERATION: "SEARCH_PAGINATION",
+        },
+        success: function (data) {
+          $(".pagination").html(data);
+        },
+        error: function (xhr, status, error) {
+          console.error("Error updating search pagination data:", error);
+        },
+      });
+    }
+  
+    //Update the pagination controls every flipped of the show deleted entries switch
+    function updateDeletedPaginationControls(currentPage) {
+      $.ajax({
+        url: "includes/documentsoperation.php",
+        type: "POST",
+        data: { pageno: currentPage, OPERATION: "PAGINATION_FOR_DEL_REC" },
+        success: function (data) {
+          $(".pagination").html(data);
+        },
+        error: function (xhr, status, error) {
+          console.error("Error updating pagination data:", error);
+        },
+      });
+    }
+  
+    //Function to search for entries
+    function fetchResults(query, page = 1) {
+      if ($("#showdeletedentries").is(":checked")) {
+        console.log("Deleted Entries switch has been on");
+        $.ajax({
+          url: "includes/documentssearch.php",
+          type: "POST",
+          data: { search: query, page: page, OPERATION: "DELETED_SEARCH" },
+          success: function (data) {
+            $("#DocumentsTableBody").html(data);
+            updateDeletedPaginationControls(page);
+          },
+          error: function (xhr, status, error) {
+            console.error("Error fetching search results:", error);
+          },
+        });
+      } else {
+        console.log("Deleted Entries switch has been off");
+        $.ajax({
+          url: "includes/documentssearch.php",
+          type: "POST",
+          data: { search: query, page: page, operation: "SEARCH" },
+          success: function (data) {
+            $("#DocumentsTableBody").html(data);
+            updateSearchPaginationControls(query, page);
+          },
+          error: function (xhr, status, error) {
+            console.error("Error fetching search results:", error);
+          },
+        });
+      }
+    }
+  
+    //For the search box
+    $("#searchbox").on("keyup", function () {
+      let query = $(this).val();
+  
+      if (query.length > 2) {
+        //Fetch the results by the fetchResults function above
+        fetchResults(query);
+      } else {
+        if ($("#showdeletedentries").is(":checked")) {
+          //If query is less than 2 character just reload the table
+          reloadDeletedEntries(1);
+        } else {
+          reloadTable();
+        }
+      }
+    });
+  
+    //Show the deleted records when the switch is flipped
+    $("#showdeletedentries").click(function () {
+      let query = $("#searchbox").val(); // Get the current search query
+      if ($(this).is(":checked")) {
+        console.log("Checkbox ON - Show Deleted Entries");
+        reloadDeletedEntries(1); // Reload deleted entries
+      } else {
+        console.log("Checkbox OFF - Hide Deleted Entries");
+        reloadTable(1); // Reload all entries
+      }
+    });
+  
+    //For pagination control function and make it dynamic
+    $(document).on("click", ".page-link", function (e) {
+      e.preventDefault();
+  
+      var page = $(this).data("page");
+      console.log("Page:", page);
+  
+      $(".pagination .page-item").removeClass("active");
+      $(this).parent().addClass("active");
+  
+      if ($("#showdeletedentries").is(":checked")) {
+        reloadDeletedEntries(page);
+        updateDeletedPaginationControls(page);
+      } else {
+        reloadTable(page);
+        updatePaginationControls(page);
+      }
+    });
+
   //For populating the DocumentsViewModal
   $(document).on("click", ".viewDocumentsButton", function (event) {
     event.preventDefault();
@@ -376,16 +524,75 @@ $(document).ready(function () {
   //For the delete button
   $(document).on("click",'#deletebutton',function () {
     var request_id = $(this).data("request_id");
-    $.ajax({
-      type: "POST",
-      url: "includes/documentsoperation.php",
-      data: {request_id: request_id},
-      dataType: "JSON",
-      success: function (response) {
-        
-      },
-      error: function (xhr, status, error) {
-      },
+    console.log("Delete button has been click")
+    swal({
+      title: "Are you sure?",
+      text: "Once deleted, you will not be able to recover this entry!",
+      icon: "warning",
+      buttons: ["Cancel", "Delete"],
+      dangerMode: true,
+    }).then((willDelete) => {
+      if (willDelete) {
+        $.ajax({
+          url: "includes/documentsoperation.php",
+          type: "POST",
+          data: { request_id: request_id, OPERATION: "DELETE_ENTRY" },
+          dataType: "json",
+          success: function (response) {
+            console.log("Data deleted successfully:", response);
+            swal("Record Has Been Deleted", { icon: "success" });
+            //If the modal was fired from a search make sure still the same page
+            if (currentSearch) {
+              fetchResults(currentSearch, page);
+            } else {
+              //If not just reload the page
+              reloadTable(page);
+            }
+          },
+          error: function (xhr, status, error) {
+            console.error("Error deleting data:", error);
+            swal("Error!", "Failed to delete the entry.", "error");
+          },
+        });
+      } else {
+        swal("Entry not deleted!", { icon: "info" });
+      }
     });
   });
+
+  $(document).on("click", "#undodeletebutton", function (event) {
+    event.preventDefault();
+
+    var request_id = $(this).data("request_id");
+    console.log(request_id);
+    var page = $(this).data("page");
+    swal({
+      title: "Are you sure?",
+      text: "The record will be recovered.",
+      icon: "warning",
+      buttons: ["Cancel", "Recovered"],
+      dangerMode: true,
+    }).then((willDelete) => {
+      if (willDelete) {
+        $.ajax({
+          url: "includes/documentsoperation.php",
+          type: "POST",
+          data: { request_id: request_id, OPERATION: "UNDO_DELETE" },
+          dataType: "json",
+          success: function (response) {
+            console.log("Data recovered successfully:", response);
+            swal("Record Has Been Restored", { icon: "success" });
+            reloadDeletedEntries(page);
+          },
+          error: function (xhr, status, error) {
+            console.error("Error deleting data:", error);
+            swal("Error!", "Failed to recovered the entry.", "error");
+          },
+        });
+      } else {
+        swal("Entry not recovered!", { icon: "info" });
+      }
+    });
+  });
+
 });

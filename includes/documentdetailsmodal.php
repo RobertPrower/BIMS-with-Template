@@ -17,7 +17,7 @@
         <p id="Date_issued"></p> 
         <br>
         <p id="Expiration_Date"></p> 
-        <br class="last_edited">
+        <br>
         <p class="last_edited" id="Last_Edited"></p> 
         <br class="last_edited">
         <p class="deleted_date" id="Deleted_Date"></p> 

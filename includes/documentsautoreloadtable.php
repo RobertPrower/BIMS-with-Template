@@ -69,7 +69,7 @@ try {
                     }else{
                         echo '<button class="btn btn-warning mx-1 deleteResidentButton" id="undodeletebutton"
                         data-pageno="'.$page.'"
-                        data-resident_id = "' . htmlspecialchars($row['request_id']) . '">Recover</button>';
+                        data-request_id = "' . htmlspecialchars($row['request_id']) . '">Recover</button>';
                     }
             }
         }      

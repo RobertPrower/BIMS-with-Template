@@ -192,54 +192,101 @@ $(document).ready(function () {
     console.log(captureImageData);
 
     var formData = new FormData(this);
-    formData.append("operation","ADD");
+    formData.append("operation", "ADD");
     formData.append("captureImageData", captureImageData);
 
     var page = $(this).data('pageno');
     console.log(page);
 
     $.ajax({
-      url: "includes/nonresidentoperation.php",
-      type: "POST",
-      data: formData,
-      dataType: "JSON",
-      contentType: false,
-      processData: false,
-      success: function (response) {
-        // Handle success response
-        console.log("Data saved successfully:", response);
+        url: "includes/nonresidentoperation.php",
+        type: "POST",
+        data: formData,
+        dataType: "JSON",
+        contentType: false,
+        processData: false,
+        success: function (response) {
+            // Handle success response
+            console.log("Data saved successfully:", response);
 
-        if (response.success) {
-          $("#AddNonResidentModal").modal("hide");
-          swal({
-            title: "Add Entry",
-            text: "Entry Added Sucessfully!",
-            icon: "success",
-            button: "Close",
-          });
-            reloadTable(page);
-        } else {
-          $("#AddNonResidentModal").modal("hide");
-          swal({
-            icon: "error",
-            title: "Oops...",
-            text: "Something went wrong!",
-          });
-        } // END of if
-      },
-      error: function (xhr, status, error) {
-        // Handle error response
-        console.error("Error saving data:", error);
-        // Optionally, display an error message to the user
-        $("#AddNonResidentModal").modal("hide");
-        swal({
-          icon: "error",
-          title: "Oops...",
-          text: "Something went wrong!",
-        });
-      },
+            if (response.success === true) {
+                $("#AddNonResidentModal").modal("hide");
+                swal({
+                    title: "Add Entry",
+                    text: "Entry Added Successfully!",
+                    icon: "success",
+                    button: "Close",
+                });
+                reloadTable(page);
+            }else if(response.success === false) {
+
+                $("#AddNonResidentModal").modal("hide");
+                swal("Duplicated Entry Detected", {
+                    icon: "warning",
+                    buttons: {
+                        close: "Close",
+                        view: {
+                            text: "View Details",
+                            value: "view",
+                        },
+                    },
+                }).then((value) => {
+                  console.log(value);
+                    if (value == "view") {
+                      console.log(response.data.nresident_id)
+                      if (response.success == false) {
+                        $("#ViewNonResidentModal").modal("show");
+
+                        var correctimagepath = "includes/img/non_resident_img/" + response.data.img_filename 
+
+                        $("#viewimagePreview").attr("src", correctimagepath);
+                        console.log("Existing Record View Pic has been loaded");
+                        console.log(correctimagepath);
+
+                        $('#nav-home-tab').tab('show');
+
+                        // Populate the fields in the modal
+                        $('#ViewNonResidentModal input[name="nresident_id"]').val(response.data.nresident_id);
+                        $('#ViewNonResidentModal input[name="fname"]').val(response.data.first_name);
+                        $('#ViewNonResidentModal input[name="mname"]').val(response.data.middle_name);
+                        $('#ViewNonResidentModal input[name="lname"]').val(response.data.last_name);
+                        $('#ViewNonResidentModal input[name="suffix"]').val(response.data.suffix);
+                        $('#ViewNonResidentModal input[name="house_no"]').val(response.data.house_num);
+                        $('#ViewNonResidentModal input[name="street"]').val(response.data.street);
+                        $('#ViewNonResidentModal input[name="subd"]').val(response.data.subdivision);
+                        $('#ViewNonResidentModal input[name="district_brgy"]').val(response.data.district_brgy);
+                        $('#ViewNonResidentModal input[name="city"]').val(response.data.city);
+                        $('#ViewNonResidentModal input[name="province"]').val(response.data.province);
+                        $('#ViewNonResidentModal input[name="zipcode"]').val(response.data.zipcode);
+                        $('#ViewNonResidentModal select[name="sex"]').val(response.data.sex);
+                        $('#ViewNonResidentModal select[name="marital_status"]').val(response.data.marital_status);
+                        $('#ViewNonResidentModal input[name="birth_date"]').val(response.data.birth_date);
+                        $('#ViewNonResidentModal input[name="birth_place"]').val(response.data.birth_place);
+                        $('#ViewNonResidentModal input[name="cellphone_number"]').val(response.data.cellphone_num);
+                      } else {
+                        swal({
+                            icon: "error",
+                            title: "Oops...",
+                            text: "Something went wrong!",
+                        });
+                      }
+                    }
+                });
+            } // End of if
+        },
+        error: function (xhr, status, error) {
+            // Handle error response
+            console.error("Error saving data:", error);
+            $("#AddNonResidentModal").modal("hide");
+            swal({
+                icon: "error",
+                title: "Oops...",
+                text: "Something went wrong!",
+            });
+        },
     });
-  });
+});
+
 
   //For Recovering Resident entries
     $("#NonResidentTable").on("click", "#undodeletebutton", function (event) {
@@ -322,6 +369,7 @@ $(document).ready(function () {
   $("#EditNonResidentModalForm").submit(function (event) {
     // Prevent the default form submission behavior
     event.preventDefault();
+    console.log("Edit modal has been triggered");
 
     // Collect form data using FormData
     var formData = new FormData(this);
@@ -484,6 +532,41 @@ $(document).ready(function () {
         $('#nav-home-tab').tab('show');
         $(modalId).modal("show"); // Show the View modal
     }
+
+    //To fetch the image from the database
+    var clickedButton = $(this);
+    $.ajax({
+      url: "includes/nonresidentoperation.php",
+      type: "POST",
+      data: { id: nresident_id, operation:"GET_IMAGE" },
+      dataType: "json",
+      success: function (response) {
+        // Variables to collect the response of the server
+        var imageFilename = response.imageData;
+        var match = imageFilename.match("capture");
+        var correctimagepath = "includes/img/non_resident_img/" + imageFilename;
+        
+        var isEdit = clickedButton.hasClass("editNonResidentButton");
+        console.log(isEdit);
+
+        if(isEdit){
+          // Display image
+          $("#editimagePreview").attr("src", correctimagepath);
+          console.log("Edit picture has been load");
+          console.log(correctimagepath);
+
+        }else{
+          // Display image
+          $("#viewimagePreview").attr("src", correctimagepath);
+          console.log("View image has been loaded");
+        }
+
+        
+      },
+      error: function (xhr, status, error) {
+        console.error("Error fetching metadata:", error);
+      },
+    });
 
   });
 
