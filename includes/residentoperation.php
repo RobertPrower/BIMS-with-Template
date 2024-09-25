@@ -26,112 +26,151 @@ $departno= null; // For the users depart currently using
  $residentsince = (isset($_POST['rsince'])) ? sanitizeData($_POST['rsince']): null;
 
 if($operation_check == "ADD"){ //For the add operation
-    try {
+    //Check for any duplicates of the entered details
+    $check_query = "SELECT * FROM resident
+    WHERE last_name = ? 
+    AND first_name = ? 
+    AND middle_name = ? 
+    AND suffix = ? 
+    AND house_num = ? 
+    AND street = ? 
+    AND subdivision = ? 
+    AND sex = ? 
+    AND marital_status = ? 
+    AND birth_date = ? 
+    AND birth_place = ? 
+    AND cellphone_num = ?
+    AND is_a_voter =?";
+    
+    $check_stmt = $pdo->prepare($check_query);
+    $check_stmt->execute([
 
-        if(isset($_POST['imagefile'])){
-             //Variable for the Name of the Folder which is img
-            $target_dir = "img/resident_img/";
+    $lname,
+    $fname,
+    $mname,
+    $suffix,
+    $houseno,
+    $street,
+    $subd,
+    $sex,
+    $maritalstatus,
+    $birthdate,
+    $birthplace,
+    $cellphonenumber,
+    $is_a_voter
+    ]);
+    $result = $check_stmt->fetch(mode: PDO::FETCH_ASSOC);
+        
+    if($result == true){
+        echo json_encode(["success" => false, "data" => $result]);
+    }else{
+        try {
 
-            //Variable for the path
-            $target_file = $target_dir . basename($_FILES["image_file"]["name"]);
+            if(isset($_POST['imagefile'])){
+                //Variable for the Name of the Folder which is img
+                $target_dir = "img/resident_img/";
 
-            // To get the file extension and converts it to lower case
-            $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
+                //Variable for the path
+                $target_file = $target_dir . basename($_FILES["image_file"]["name"]);
 
-            // Generate a Unique filename via the generateUniqueFileName user define function below
-            $fileName = generateUniqueFileName($target_dir, basename($_FILES["image_file"]["name"]));
-            $target_file = $target_dir . $fileName;
+                // To get the file extension and converts it to lower case
+                $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
 
-            // Check if file is an image
-            $check = getimagesize($_FILES["image_file"]["tmp_name"]);
-            if ($check === false) {
-                throw new Exception("File is not an image.");
+                // Generate a Unique filename via the generateUniqueFileName user define function below
+                $fileName = generateUniqueFileName($target_dir, basename($_FILES["image_file"]["name"]));
+                $target_file = $target_dir . $fileName;
+
+                // Check if file is an image
+                $check = getimagesize($_FILES["image_file"]["tmp_name"]);
+                if ($check === false) {
+                    throw new Exception("File is not an image.");
+                }
+
+                // Check file size
+                if ($_FILES["image_file"]["size"] > 500000) {
+                    throw new Exception("Sorry, your file is too large.");
+                }
+
+                // Allow only specific file formats
+                if (!in_array($imageFileType, ["jpg", "jpeg", "png"])) {
+                    throw new Exception("Sorry, only JPG, JPEG & PNG files are allowed.");
+                }
+
+                // Move uploaded file to target directory
+                if (!move_uploaded_file($_FILES["image_file"]["tmp_name"], $target_file)) {
+                    throw new Exception("Sorry, there was an error uploading your file.");
+                }
+
+            }elseif(isset($_POST['captureImageData'])){ //Incase the image comes from the camera
+                //Capture the Data
+                $data_uri = $_POST['captureImageData'];
+
+                //Extract the base64 Data
+                $encoded_image = explode(",", $data_uri)[1];
+
+                //Decode the base64 string
+                $decoded_image = base64_decode($encoded_image);
+
+                //For the filename being entered in the Database
+                $fileName =  'capture_'.time().'.jpg';
+
+                $filePath = 'img/resident_img/'.$fileName;
+
+                //Save the image file
+                file_put_contents($filePath, $decoded_image);
+
+
+            }else{
+
+                exit(json_encode(['success' => false, 'message' => 'No image was sent!'.$e->Message()])); 
+
             }
 
-            // Check file size
-            if ($_FILES["image_file"]["size"] > 500000) {
-                throw new Exception("Sorry, your file is too large.");
-            }
+            //Record to Audit Trail
+            $audit_query = "INSERT INTO res_audit_trail (added_depart_no, added_by_no, date_added, time_added)
+            VALUES (?, ?,?,?)";
+            $audit_stmt = $pdo->prepare($audit_query);
+            $audit_stmt->execute
+            ([
+            $departno,
+            $userid,
+            $nowdate,
+            $time
+            ]);
+        
+            // Insert data into the resident table
+            $insert_query = "INSERT INTO resident (img_filename, last_name, first_name, middle_name, suffix, house_num, street, subdivision, 
+                                resident_since, sex, marital_status, birth_date, birth_place, cellphone_num, is_a_voter)
+                            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?,?);";
+            $insert_stmt = $pdo->prepare($insert_query);
+            $insert_stmt->execute([
+                
+                $fileName,
+                $lname,
+                $fname,
+                $mname,
+                $suffix,
+                $houseno,
+                $street,
+                $subd,
+                $residentsince,
+                $sex,
+                $maritalstatus,
+                $birthdate,
+                $birthplace,
+                $cellphonenumber,
+                $is_a_voter,
+                
+            ]);
 
-            // Allow only specific file formats
-            if (!in_array($imageFileType, ["jpg", "jpeg", "png"])) {
-                throw new Exception("Sorry, only JPG, JPEG & PNG files are allowed.");
-            }
-
-            // Move uploaded file to target directory
-            if (!move_uploaded_file($_FILES["image_file"]["tmp_name"], $target_file)) {
-                throw new Exception("Sorry, there was an error uploading your file.");
-            }
-
-        }elseif(isset($_POST['captureImageData'])){ //Incase the image comes from the camera
-            //Capture the Data
-            $data_uri = $_POST['captureImageData'];
-
-            //Extract the base64 Data
-            $encoded_image = explode(",", $data_uri)[1];
-
-            //Decode the base64 string
-            $decoded_image = base64_decode($encoded_image);
-
-            //For the filename being entered in the Database
-            $fileName =  'capture_'.time().'.jpg';
-
-            $filePath = 'img/resident_img/'.$fileName;
-
-            //Save the image file
-            file_put_contents($filePath, $decoded_image);
-
-
-        }else{
-
-            exit(json_encode(['success' => false, 'message' => 'No image was sent!'.$e->Message()])); 
-
+            // Success response encodes it to JSON format for the AJAX to read
+            $response = ["success" => true, "message" => "Data Added successfully"];
+            echo json_encode($response);
+        } catch (Exception $e) {
+            // Error response
+            $response = ["success" => false, "message" => "Error updating data: " . $e->getMessage()];
+            echo json_encode($response);
         }
-
-        //Record to Audit Trail
-        $audit_query = "INSERT INTO res_audit_trail (added_depart_no, added_by_no, date_added, time_added)
-        VALUES (?, ?,?,?)";
-        $audit_stmt = $pdo->prepare($audit_query);
-        $audit_stmt->execute
-        ([
-        $departno,
-        $userid,
-        $nowdate,
-        $time
-        ]);
-       
-        // Insert data into the resident table
-        $insert_query = "INSERT INTO resident (img_filename, last_name, first_name, middle_name, suffix, house_num, street, subdivision, 
-                            resident_since, sex, marital_status, birth_date, birth_place, cellphone_num, is_a_voter)
-                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?,?);";
-        $insert_stmt = $pdo->prepare($insert_query);
-        $insert_stmt->execute([
-            
-            $fileName,
-            $lname,
-            $fname,
-            $mname,
-            $suffix,
-            $houseno,
-            $street,
-            $subd,
-            $residentsince,
-            $sex,
-            $maritalstatus,
-            $birthdate,
-            $birthplace,
-            $cellphonenumber,
-            $is_a_voter,
-            
-        ]);
-
-        // Success response encodes it to JSON format for the AJAX to read
-        $response = ["success" => true, "message" => "Data Added successfully"];
-        echo json_encode($response);
-    } catch (Exception $e) {
-        // Error response
-        $response = ["success" => false, "message" => "Error updating data: " . $e->getMessage()];
-        echo json_encode($response);
     }
 }elseif($operation_check == "EDIT"){
 

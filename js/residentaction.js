@@ -12,7 +12,7 @@ $(document).ready(function () {
   );
 
   $("input[name='birth_date']").datepicker({
-    format: "mm/dd/yyyy",
+    format: "yyyy-mm-dd",
     autoclose: true,
   });
 
@@ -219,7 +219,7 @@ $(document).ready(function () {
         // Handle success response
         console.log("Data saved successfully:", response);
 
-        if (response.success) {
+        if (response.success == true) {
           $("#AddResidentModal").modal("hide");
           swal({
             title: "Add Entry",
@@ -228,6 +228,71 @@ $(document).ready(function () {
             button: "Close",
           });
           reloadTable(page);
+        } else if (response.success == false) {
+
+           $("#AddResidentModal").modal("hide");
+                swal("Duplicated Entry Detected", {
+                    icon: "warning",
+                    buttons: {
+                        close: "Close",
+                        view: {
+                            text: "View Details",
+                            value: "view",
+                        },
+                    },
+                }).then((value) => {
+                  console.log(value);
+                    if (value == "view") {
+                      console.log(response.data.nresident_id)
+                      if (response.success == false) {
+                        $("#ViewResidentModal").modal("show");
+
+                        var correctimagepath = "includes/img/resident_img/" + response.data.img_filename 
+
+                        $("#viewimagePreview").attr("src", correctimagepath);
+                        console.log("Existing Record View Pic has been loaded");
+                        console.log(correctimagepath);
+
+                        $('#nav-home-tab').tab('show');
+
+                        // Populate the fields in the modal
+                        $('#ViewResidentModal input[name="resident_id"]').val(response.data.resident_id);
+                        $('#ViewResidentModal input[name="fname"]').val(response.data.first_name);
+                        $('#ViewResidentModal input[name="mname"]').val(response.data.middle_name);
+                        $('#ViewResidentModal input[name="lname"]').val(response.data.last_name);
+                        $('#ViewResidentModal input[name="suffix"]').val(response.data.suffix);
+                        $('#ViewResidentModal input[name="house_no"]').val(response.data.house_num);
+                        $('#ViewResidentModal input[name="street"]').val(response.data.street);
+                        $('#ViewResidentModal select[name="subd"]').val(response.data.subdivision);
+                        $('#ViewResidentModal select[name="sex"]').val(response.data.sex);
+                        $('#ViewResidentModal select[name="marital_status"]').val(response.data.marital_status);
+                        $('#ViewResidentModal input[name="birth_date"]').val(response.data.birth_date);
+                        $('#ViewResidentModal input[name="birth_place"]').val(response.data.birth_place);
+                        $('#ViewResidentModal input[name="cellphone_number"]').val(response.data.cellphone_num);
+                        $('#ViewResidentModal select[name="is_a_voter"]').val(response.data.is_a_voter);
+                        $('#ViewResidentModal input[name="rsince"]').val(response.data.resident_since);
+
+                         //For counting certificates requested
+                        $.ajax({
+                          type: "post",
+                          url: "includes/residentoperation.php",
+                          data: { operation: "COUNT_RES_CERT", resident_id: response.data.resident_id },
+                          dataType: "json",
+                          success: function (response) {
+                            console.log(response);
+
+                            $("#noofcerts").text(response);
+                          },
+                        });
+                      } else {
+                        swal({
+                            icon: "error",
+                            title: "Oops...",
+                            text: "Something went wrong!",
+                        });
+                      }
+                    }
+                });
         } else {
           $("#AddResidentModal").modal("hide");
           swal({
@@ -433,7 +498,7 @@ $(document).ready(function () {
     $("#isfromcamcheck").prop("disabled", true);
   });
 
- //For populating the View and Edit Modal Combined into one event
+  //For populating the View and Edit Modal Combined into one event
   $(document).on(
     "click",
     ".editResidentButton, .viewResidentButton",
@@ -495,14 +560,13 @@ $(document).ready(function () {
         $.ajax({
           type: "post",
           url: "includes/residentoperation.php",
-          data: {operation: "COUNT_RES_CERT", resident_id: resident_id},
+          data: { operation: "COUNT_RES_CERT", resident_id: resident_id },
           dataType: "json",
           success: function (response) {
-            console.log(response)
-  
+            console.log(response);
+
             $("#noofcerts").text(response);
-            
-          }
+          },
         });
       }
     }

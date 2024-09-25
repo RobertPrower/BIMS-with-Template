@@ -391,10 +391,10 @@ $pdf -> Cell($w, 22, wrapText($pdf,$text,160), 0, 'C');
 $pdf -> Cell(59, 10, '',0,1);
 
 // Output the PDF (save it temporarily)
-$pdf->Output('F', 'certificate_of_residency/' . $fileName); 
+$pdf->Output('F', $fileName); 
 
 // Return the file URL as a response
-echo json_encode(['file' => 'certificate_of_residency/' . $fileName]);
+echo json_encode(['file' => $fileName]);
 exit();
 
 

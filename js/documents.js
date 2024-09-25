@@ -417,6 +417,19 @@ $(document).ready(function () {
         $("#rsince").val(response.resident_since);
         $("#viewimagePreview").prop("src", imagepath);
         $("#backbtntodocu").prop("hidden", false);
+
+        //For counting certificates requested
+        $.ajax({
+          type: "post",
+          url: "includes/residentoperation.php",
+          data: { operation: "COUNT_RES_CERT", resident_id: response.resident_id },
+          dataType: "json",
+          success: function (response) {
+            console.log(response);
+
+            $("#noofcerts").text(response);
+          },
+        });
       },
       error: function (xhr, status, error) {
         console.error("Error fetching table data:", error);
