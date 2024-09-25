@@ -105,7 +105,7 @@ CREATE TABLE `non_resident` (
   `birth_date` date DEFAULT NULL,
   `cellphone_num` varchar(50) NOT NULL,
   `audit_trail_no` int(55) DEFAULT NULL,
-  `is_deleted` tinyint(2) DEFAULT NULL,
+  `is_deleted` tinyint(2) DEFAULT '0',
   PRIMARY KEY (`nresident_id`),
   KEY `nres_audit_trail` (`audit_trail_no`),
   CONSTRAINT `nres_audit_trail` FOREIGN KEY (`audit_trail_no`) REFERENCES `nonres_audit_trail` (`audit_trail_id`)
@@ -114,8 +114,8 @@ CREATE TABLE `non_resident` (
 /*Data for the table `non_resident` */
 
 insert  into `non_resident`(`nresident_id`,`img_filename`,`last_name`,`first_name`,`middle_name`,`suffix`,`house_num`,`street`,`subdivision`,`district_brgy`,`city`,`province`,`zipcode`,`sex`,`marital_status`,`birth_place`,`birth_date`,`cellphone_num`,`audit_trail_no`,`is_deleted`) values 
-(1,'1images.jpg','Rabanes','Fernan','Jarito','','Blk 9 Lot 3','Kamatis st','Ramirez Subd','Novaliches','Quezon City','Metro-Manila','1423','Male','Single','Tuguegarao','1998-06-16','090956565454',1,0),
-(2,'capture_1727173934.jpg','Lim','Nicholas','Mahestro','','12','Zapote Rd','Cielito Homes','Camarin Brgy 175','Caloocan City','Metro Manila',NULL,'Male','Single','San Nicolas Pangasinan','1998-09-29','0966565666544',NULL,NULL);
+(1,'1images.jpg','Rabanes','Fernan','Jarito','','Blk 9 Lot 3','Kamatis st','Ramirez Subd','Novaliches','Quezon City','Metro Manila','1423','Male','Single','Tuguegarao','1998-06-16','090956565454',1,0),
+(2,'capture_1727173934.jpg','Lim','Nicholas','Mahestro','','12','Zapote Rd','Cielito Homes','Camarin Brgy 175','Caloocan City','Metro Manila','1423','Male','Single','San Nicolas Pangasinan','1998-09-29','0966565666544',2,0);
 
 /*Table structure for table `nonres_audit_trail` */
 
@@ -142,8 +142,8 @@ CREATE TABLE `nonres_audit_trail` (
 /*Data for the table `nonres_audit_trail` */
 
 insert  into `nonres_audit_trail`(`audit_trail_id`,`dept_added_no`,`user_added_no`,`datetime_added`,`dept_edited_no`,`user_edited_no`,`last_edited_datetime`,`dept_deleted_no`,`user_deleted_no`,`datetime_deleted`,`dept_recovered_no`,`user_recovered_no`,`datetime_recovered`) values 
-(1,NULL,NULL,'2024-09-04 10:12:00',NULL,NULL,'2024-09-24 18:04:40',NULL,NULL,NULL,NULL,NULL,NULL),
-(2,NULL,NULL,'2024-09-24 18:32:14',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+(1,NULL,NULL,'2024-09-04 10:12:00',NULL,NULL,'2024-09-24 18:04:40',NULL,NULL,'2024-09-25 03:03:50',NULL,NULL,NULL),
+(2,NULL,NULL,'2024-09-24 18:32:14',NULL,NULL,'2024-09-25 03:03:22',NULL,NULL,'2024-09-25 02:46:31',NULL,NULL,NULL);
 
 /*Table structure for table `res_audit_trail` */
 
@@ -545,6 +545,27 @@ CREATE TABLE `tbl_users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `tbl_users` */
+
+/* Trigger structure for table `non_resident` */
+
+DELIMITER $$
+
+/*!50003 DROP TRIGGER*//*!50032 IF EXISTS */ /*!50003 `trig_ainc_nonres_at` */$$
+
+/*!50003 CREATE */ /*!50017 DEFINER = 'root'@'localhost' */ /*!50003 TRIGGER `trig_ainc_nonres_at` BEFORE INSERT ON `non_resident` FOR EACH ROW BEGIN
+    
+      DECLARE new_id INT;
+      
+     SET new_id = (SELECT MAX(audit_trail) FROM non_resident) + 1;
+    IF new_id IS NULL THEN
+        SET new_id = 1;
+    END IF;
+    SET NEW.audit_trail_no = new_id;
+   
+    END */$$
+
+
+DELIMITER ;
 
 /* Trigger structure for table `resident` */
 
@@ -1065,6 +1086,31 @@ DROP TABLE IF EXISTS `vw_resident`;
  `is_deleted` tinyint(2) 
 )*/;
 
+/*Table structure for table `vw_resonly_cert` */
+
+DROP TABLE IF EXISTS `vw_resonly_cert`;
+
+/*!50001 DROP VIEW IF EXISTS `vw_resonly_cert` */;
+/*!50001 DROP TABLE IF EXISTS `vw_resonly_cert` */;
+
+/*!50001 CREATE TABLE  `vw_resonly_cert`(
+ `request_id` varchar(255) ,
+ `date_issued` date ,
+ `resident_id` int(55) ,
+ `document_desc` varchar(36) ,
+ `age` int(10) ,
+ `sex` varchar(255) ,
+ `presented_id` varchar(255) ,
+ `ID_number` varchar(255) ,
+ `purpose` varchar(255) ,
+ `pdffile` varchar(255) ,
+ `expiration` date ,
+ `status` tinyint(3) ,
+ `is_deleted` tinyint(2) ,
+ `date_edited` date ,
+ `date_deleted` date 
+)*/;
+
 /*View structure for view vw_all_brgy_clearance */
 
 /*!50001 DROP TABLE IF EXISTS `vw_all_brgy_clearance` */;
@@ -1162,6 +1208,13 @@ DROP TABLE IF EXISTS `vw_resident`;
 /*!50001 DROP VIEW IF EXISTS `vw_resident` */;
 
 /*!50001 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vw_resident` AS (select `resident`.`resident_id` AS `resident_id`,`res_audit_trail`.`date_added` AS `date_recorded`,`resident`.`img_filename` AS `img_filename`,`resident`.`last_name` AS `last_name`,`resident`.`first_name` AS `first_name`,`resident`.`middle_name` AS `middle_name`,`resident`.`suffix` AS `suffix`,`resident`.`house_num` AS `house_num`,`resident`.`street` AS `street`,`resident`.`subdivision` AS `subdivision`,`resident`.`resident_since` AS `resident_since`,`resident`.`sex` AS `sex`,`resident`.`marital_status` AS `marital_status`,`resident`.`birth_date` AS `birth_date`,`resident`.`birth_place` AS `birth_place`,`resident`.`cellphone_num` AS `cellphone_num`,`resident`.`is_a_voter` AS `is_a_voter`,`resident`.`is_deleted` AS `is_deleted` from (`resident` join `res_audit_trail` on((`resident`.`audit_trail` = `res_audit_trail`.`res_at_id`))) where (`resident`.`is_deleted` = 0)) */;
+
+/*View structure for view vw_resonly_cert */
+
+/*!50001 DROP TABLE IF EXISTS `vw_resonly_cert` */;
+/*!50001 DROP VIEW IF EXISTS `vw_resonly_cert` */;
+
+/*!50001 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vw_resonly_cert` AS (select `tbl_docu_request`.`request_id` AS `request_id`,`tbl_cert_audit_trail`.`date_issued` AS `date_issued`,`resident`.`resident_id` AS `resident_id`,(case when (`tbl_documents`.`Barangay_Clearance` is not null) then 'Barangay Clearance' when (`tbl_documents`.`Certificate_of_Residency` is not null) then 'Certificate of Residency' when (`tbl_documents`.`Certificate_of_Indigency` is not null) then 'Certificate of Indigency' when (`tbl_documents`.`Certificate_of_Good_Moral` is not null) then 'Certificate of Good Moral' when (`tbl_documents`.`Business_Permits` is not null) then 'Business Permits' when (`tbl_documents`.`Building_Permits` is not null) then 'Building Permits' when (`tbl_documents`.`Excavation_Permits` is not null) then 'Excavation Permits' when (`tbl_documents`.`Fencing_Permits` is not null) then 'Fencing Permits' when (`tbl_documents`.`FTJS` is not null) then 'First Time Job Seekers' when (`tbl_documents`.`Oath_of_Undertaking` is not null) then 'Oath of Undertaking' when (`tbl_documents`.`TPRS` is not null) then 'Tricycle Pedicab Regulatory Services' else 'Unknown Document Type' end) AS `document_desc`,`tbl_docu_request`.`age` AS `age`,`resident`.`sex` AS `sex`,`tbl_docu_request`.`presented_id` AS `presented_id`,`tbl_docu_request`.`ID_number` AS `ID_number`,`tbl_docu_request`.`purpose` AS `purpose`,`tbl_docu_request`.`pdffile` AS `pdffile`,`tbl_cert_audit_trail`.`expiration` AS `expiration`,`tbl_docu_request`.`status` AS `status`,`tbl_docu_request`.`is_deleted` AS `is_deleted`,`tbl_cert_audit_trail`.`date_edited` AS `date_edited`,`tbl_cert_audit_trail`.`date_deleted` AS `date_deleted` from ((((`tbl_docu_request` left join `resident` on((`tbl_docu_request`.`resident_no` = `resident`.`resident_id`))) left join `non_resident` on((`tbl_docu_request`.`nresident_no` = `non_resident`.`nresident_id`))) join `tbl_documents` on((`tbl_docu_request`.`document_no` = `tbl_documents`.`docu_id`))) join `tbl_cert_audit_trail` on((`tbl_docu_request`.`audit_trail_no` = `tbl_cert_audit_trail`.`audit_trail_id`)))) */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
