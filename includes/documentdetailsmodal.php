@@ -38,6 +38,8 @@
         <br>
         <p id="Purpose"></p> 
         <br>
+        <p class="agency" hidden></p> 
+        <br class="agency" hidden>
         <p id="Status"></p> 
     </div>
     <div class="modal-footer">

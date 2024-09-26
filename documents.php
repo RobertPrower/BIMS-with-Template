@@ -94,7 +94,7 @@
                                                             <option value="Solo Parent ID">Solo Parent ID</option>
                                                             <option value="Voter's ID">Voters ID/Certification</option>
                                                             <option value="LTOPF ID">LTOPF License</option>
-                                                            <option value="Police ID">Barangay ID</option>
+                                                            <option value="Barangay ID">Barangay ID</option>
                                                             <option value="Police ID">Police ID</option>
                                                             <option value="School ID">School ID</option>
                                                             <option value="Passport">Passport</option>
@@ -173,7 +173,7 @@
                 
 
                 <!-- Pagination Controls -->
-                <nav aria-label="Page navigation">
+                <nav aria-label="Page navigation" id="pagenav">
                       <ul class="pagination justify-content-end">
                       
                       <!-- Previous Button -->

@@ -1,9 +1,9 @@
 <?php
 
 require_once("fpdf186/fpdf.php");
-require_once('includes/connecttodb.php');
+require_once('../includes/connecttodb.php');
 
-//global $pdo;
+date_default_timezone_set('Asia/Manila');
 
 $sqlquery="SELECT * FROM brgy_officials";
 $stmt=$pdo->prepare($sqlquery);
@@ -11,6 +11,7 @@ $stmt->execute();
 
 $results=$stmt->fetchAll(PDO::FETCH_ASSOC); 
 
+$issuingdeptno = null; // To be filled once the user module is finished
 $residentno=($_POST['resident_no']);
 $fname=utf8_decode($_POST['firstname']);
 $mname=utf8_decode($_POST['middlename']);
@@ -21,18 +22,34 @@ if(isset($_POST['suffix'])){
     $suffix="";
 }
 $documentdesc='Certificate of Indigency';
+$fileName = "certificate_of_indigency/"."generated_pdf_" . time() . ".pdf";
 $nowdate= date("Y-m-d H:i:s");
 $completeaddress=utf8_decode($_POST['address']);
 $presentedid=$_POST['presented_id'];
 $IDnumber=$_POST['IDnum'];
 $purpose=$_POST['purpose'];
 $agency=$_POST['agency'];
-$residentsince=$_POST['r_since'];
-$docurequestdata=[$residentno, ];
 
-$sqlquery2="INSERT INTO tbl_documents (document_desc) VALUES(?)";
+$sqlquery2="CALL determine_docu_type('Certificate_of_Indigency')";
 $stmt2=$pdo->prepare($sqlquery2);
-$stmt2->execute([$documentdesc]);
+$stmt2->execute();
+
+$auditquery = " INSERT INTO tbl_cert_audit_trail(issuing_dept_no, date_issued, expiration, time_issued)
+            VALUES (?,?,DATE_ADD(CURDATE(), INTERVAL 3 MONTH), CURTIME())";
+$auditstmt=$pdo->prepare($auditquery);
+$auditstmt->execute([$issuingdeptno, $nowdate]);
+
+$sqlquery3 = "INSERT INTO tbl_docu_request (resident_no ,presented_id, ID_number, purpose, pdffile) 
+            VALUES (:residentno,:presentedid, :IDnumber, :purpose, :filenames)";
+$alldatatorequest = [
+    ':residentno' => $residentno,
+    ':presentedid' => $presentedid,
+    ':IDnumber' => $IDnumber,
+    ':purpose' => $purpose,
+    ':filenames' => $fileName
+];
+$stmt3 = $pdo->prepare($sqlquery3);
+$stmt3->execute($alldatatorequest);
 
 $request_id = $pdo->lastInsertId();
 
@@ -42,27 +59,11 @@ $stmt->execute([$request_id]);
 $AgeResult= $stmt->fetchAll();
 $Age=$AgeResult;
 
-$sqlquery3 = "INSERT INTO tbl_docu_request (resident_no, document_no, date_requested, presented_id, IDnumber, purpose)
-              SELECT :residentno, MAX(document_id), :nowdate, :presentedid, :IDnumber, :purpose
-              FROM `tbl_documents`";
-$alldatatorequest = [
-    ':residentno' => $residentno,
-    ':nowdate' => $nowdate,
-    ':presentedid' => $presentedid,
-    ':IDnumber' => $IDnumber,
-    ':purpose' => $purpose
-];
-$stmt3 = $pdo->prepare($sqlquery3);
-$stmt3->execute($alldatatorequest);
-
-
 $sqlquery4="SELECT * FROM `certificate-img`";
 $stmt4=$pdo->prepare($sqlquery4);
 $stmt4->execute();
 
 $results4=$stmt4->fetchAll(PDO::FETCH_ASSOC); 
-
-
 
 $pdo=null;
 
@@ -103,13 +104,13 @@ $pdf -> AddPage();
 
 
 //Include the Logos Here
-$pdf -> Image('img/'.$logo[2], 5,10,25,25);
+$pdf -> Image('../img/'.$logo[2], 5,10,25,25);
 
-$pdf -> Image('img/'.$logo[0], 29,12,23,23);
+$pdf -> Image('../img/'.$logo[0], 29,12,23,23);
 
-$pdf -> Image('img/'.$logo[1], 170,12,23,23);
+$pdf -> Image('../img/'.$logo[1], 170,12,23,23);
 
-$pdf -> Image('img/'.$logo[3], -33,5,280,297);
+$pdf -> Image('../img/'.$logo[3], -33,5,280,297);
 
 $pdf->AliasNbPages();
 $pdf->SetAutoPageBreak(true, 10); // set the margin bottom to 10 mm
@@ -409,7 +410,10 @@ $pdf -> Cell($w, 22, wrapText($pdf,$text,160), 0, 'C');
 
 $pdf -> Cell(59, 10, '',0,1);
 
-$pdf -> Output();
+$pdf->Output('F', $fileName); 
+
+// Return the file URL as a response
+echo json_encode(['file' => $fileName]);
 
 function wrapText($pdf,$text,$maxWidth){
 

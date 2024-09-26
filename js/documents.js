@@ -1,5 +1,5 @@
 $(document).ready(function () {
-  reloadTable();
+  reloadTable(1);
 
   function reloadTable(page) {
     $.ajax({
@@ -9,7 +9,7 @@ $(document).ready(function () {
       dataType: "HTML",
       success: function (data) {
         $("#DocumentsTableBody").html(data);
-        // updatePaginationControls(page);
+        updatePaginationControls(page);
       },
       error: function (xhr, status, error) {
         console.error("Error fetching table data:", error);
@@ -43,6 +43,18 @@ $(document).ready(function () {
         dataType: "HTML",
         success: function (data) {
           $(".pagination").html(data);
+
+        //Prevent the pagination from showing when the entries is less than 10 entries
+        var noofpageitems = $(".page-item").length;
+        switch(noofpageitems){
+          case 1 :
+            $("#pagenav").prop("hidden", true);
+          break;
+          default:
+            $("#pagenav").prop("hidden", false);
+        }
+
+
         },
         error: function (xhr, status, error) {
           console.error("Error updating pagination data:", error);
@@ -62,6 +74,16 @@ $(document).ready(function () {
         },
         success: function (data) {
           $(".pagination").html(data);
+
+          //Prevent the pagination from showing when the entries is less than 10 entries
+          var noofpageitems = $(".page-item").length;
+          switch(noofpageitems){
+            case 1 :
+              $("#pagenav").prop("hidden", true);
+            break;
+            default:
+              $("#pagenav").prop("hidden", false);
+          }
         },
         error: function (xhr, status, error) {
           console.error("Error updating search pagination data:", error);
@@ -77,6 +99,15 @@ $(document).ready(function () {
         data: { pageno: currentPage, OPERATION: "PAGINATION_FOR_DEL_REC" },
         success: function (data) {
           $(".pagination").html(data);
+          //Prevent the pagination from showing when the entries is less than 10 entries
+        var noofpageitems = $(".page-item").length;
+        switch(noofpageitems){
+          case 1 :
+            $("#pagenav").prop("hidden", true);
+          break;
+          default:
+            $("#pagenav").prop("hidden", false);
+        }
         },
         error: function (xhr, status, error) {
           console.error("Error updating pagination data:", error);
@@ -186,6 +217,7 @@ $(document).ready(function () {
     var presented_id = $(this).data("presented-id");
     var ID_number = $(this).data("id_num");
     var purpose = $(this).data("purpose");
+    var agency = $(this).data("agency");
     var status = $(this).data("status");
     var date_edited = $(this).data("last-edited");
     var date_deleted = $(this).data("last-deleted");
@@ -245,6 +277,10 @@ $(document).ready(function () {
     } else {
       $(".last_edited").prop("hidden", false);
       $("#Last_Edited").html("<b>Last Edited Date:  </b>" + date_edited);
+    }
+
+    if(agency !== undefined || null){
+      $(".agency").prop("hidden", false);
     }
 
     //For the status display on the table

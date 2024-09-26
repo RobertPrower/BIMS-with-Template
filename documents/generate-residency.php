@@ -3,6 +3,8 @@
 require_once("fpdf186/fpdf.php");
 include_once('../includes/connecttodb.php');
 
+date_default_timezone_set('Asia/Manila');
+
 $sqlquery="SELECT * FROM brgy_officials";
 $stmt=$pdo->prepare($sqlquery);
 $stmt->execute();
@@ -390,13 +392,10 @@ $pdf -> Cell($w, 22, wrapText($pdf,$text,160), 0, 'C');
 
 $pdf -> Cell(59, 10, '',0,1);
 
-// Output the PDF (save it temporarily)
 $pdf->Output('F', $fileName); 
 
 // Return the file URL as a response
 echo json_encode(['file' => $fileName]);
-exit();
-
 
 function wrapText($pdf,$text,$maxWidth){
 

@@ -37,6 +37,7 @@
 
     <?php 
     require_once("includes/header.php");
+    require("includes/documentmodal.php");
     
     ?>
 
@@ -79,45 +80,39 @@
               <br><br>
             
           <div class="col-md-12 card m-4 px-3" style="border-radius: 10px;" style="padding: 10px;">
-          <form action="generate-indigency.php" method="POST" id="certificatedetails">
+          <form action="#" method="POST" id="certificatedetails">
             <div class="text-center row">
 
+              <input type="text" class="form-control" id="res_id" name="resident_no" hidden>
+
+
               <div class="form-floating mt-3 mb-3 col-md-4">
-                  <input type="text" class="form-control" id="fname" name="firstname" placeholder="Enter First Name Here" required >
+                  <input type="text" class="form-control" id="fname" name="firstname" placeholder="Enter First Name Here" required disabled>
                   <label for="fname">First Name</label>
               </div>
 
               <div class="form-floating mt-3 mb-3 col-md-4">
-                  <input type="text" class="form-control" id="mname" name="middlename" placeholder="Enter Middle Name Here" >
+                  <input type="text" class="form-control" id="mname" name="middlename" placeholder="Enter Middle Name Here" disabled>
                   <label for="mname">Middle Name</label>
-                  <input type="text" class="form-control" id="resident_id" name="resident_no" required  hidden>
-
               </div>
 
               <div class="form-floating mt-3 mb-3 col-md-3">
-                  <input type="text" class="form-control" id="lname" name="lastname" placeholder="Enter Last Name Here" required >
+                  <input type="text" class="form-control" id="lname" name="lastname" placeholder="Enter Last Name Here" required disabled>
                   <label for="lname">Last Name</label>
               </div>
 
               <div class="form-floating mt-3 mb-3 col-md-1">
-                  <input type="text" class="form-control" id="suffix" name="suffix" style="width:50px" placeholder="Enter Suffix Here" >
+                  <input type="text" class="form-control" id="suffix" name="suffix" style="width:50px" placeholder="Enter Suffix Here" disabled>
                   <label for="suffix">Suffix</label>
               </div>
 
               <div class="form-floating mt-3 mb-3 col-md-12">
-                  <input type="text" class="form-control" id="subd" name="address" placeholder="Enter Subdvision Here" >
-                  <label for="subd">Complete Address</label>
+                  <input type="text" class="form-control" id="address" name="address" placeholder="Enter Subdvision Here" disabled>
+                  <label for="address">Complete Address</label>
               </div>
-
-              
-              <div class="form-floating mt-3 mb-3 col-md-2">
-                  <input type="Text" class="form-control" id="resident_since" name="r_since" placeholder="Enter Birth Place Here" required>
-                  <label for="birth_place">Resident Since</label>
-              </div> 
-
                   
               <div class="form-floating mt-3 mb-3 col-md-3">
-                  <select class="form-select" id="isavoter" name="presented_id" aria-label="Floating label select example" required aria-required="true">
+                  <select class="form-select" id="presented_id" name="presented_id" aria-label="Floating label select example" required aria-required="true">
                       <option hidden value="">Select Option</option>
                       <option value="National ID">National ID</option>
                       <option value="Postal ID">Postal ID</option>
@@ -143,29 +138,48 @@
                   <label for="isavoter">Presented ID</label>
               </div>
 
-              <div class="form-floating mt-3 mb-3 col-md-2">
+              <div class="form-floating mt-3 mb-3 col-md-3">
                   <input type="text" class="form-control" id="IDnum" name="IDnum" placeholder="Enter Birth Place Here" required>
                   <label for="IDnum">ID Number</label>
               </div> 
 
               <div class="form-floating mt-3 mb-3 col-md-3">
-                  <select class="form-select" id="isavoter" name="purpose" aria-label="Floating label select example" required>
+                  <select class="form-select" id="purpose" name="purpose" aria-label="Floating label select example" required>
                       <option hidden value="">Select Option</option>
                       <option value="Medical Assistance">Medical Assistance</option>
-
+                      <option value="Meralco Application">Meralco Application</option>
+                      <option value="Maynilad Application">Maynilad Application</option>
+                      <option value="Scholarship Grants">Scholarship Grants</option>
+                      <option value="Aid Purposes">Aid Purposes</option>
+                      <option value="Legal Aid">Legal Aid</option>
+                      <option value="Others">Others</option>
                   </select>
-                  <label for="isavoter">Purpose</label>
+                  <label for="purpose">Purpose</label>
               </div>
 
-              <div class="form-floating mt-3 mb-3 col-md-2">
-                  <select class="form-select" id="isavoter" name="agency" aria-label="Floating label select example" required>
-                      <option hidden value="">Select Option</option>
-                      <option value="Malasakit Center">Malasakit Center</option>
-                      <option value="PCSO">PCSO</option>
-                      <option value="Foundation">Isang Foundation</option>
+              <div class="form-floating mt-3 mb-3 col-md-3">
+                  <input type="text" class="form-control" id="otherpurpose" name="IDnum" placeholder="" disabled>
+                  <label for="otherpurpose">Other Purpose</label>
+              </div> 
 
-                  </select>
-                  <label for="isavoter">Agency</label>
+              <div class="d-flex justify-content-center">
+                <div class="form-floating mt-3 mb-3 col-md-4">
+                    <select class="form-select" id="agency" name="agency" aria-label="Floating label select example" required>
+                        <option hidden value="">Select Option</option>
+                        <option value="Malasakit Center">Malasakit Center</option>
+                        <option value="PCSO">PCSO</option>
+                        <option value="Public Attorney's Office">Public Attorney's Office </option>
+                        <option value="Sa Isang Foundation">Isang Foundation</option>
+                        <option value="Others">Others</option>
+
+                    </select>
+                    <label for="agency">Agency</label>
+                </div>
+
+                <div class="form-floating mt-3 mb-3 col-md-4">
+                    <input type="text" class="form-control" id="otheragency" name="IDnum" placeholder="Enter Birth Place Here" required disabled>
+                    <label for="otheragency">Other Agency</label>
+                </div>
               </div>
               
             </div>
@@ -175,7 +189,7 @@
 
           <br>
 
-          <button type="submit" class="btn btn-success float-right"> Generate Certificate </button> 
+          <button type="submit" id="generate_certificate"class="btn btn-success float-right"> Generate Certificate </button> 
           </div>
           </form>
 
@@ -195,65 +209,8 @@
 <!-- Icons library -->
 <script src="plugins/feather.min.js"></script>
 <!-- Custom scripts -->
-<!-- <script>
-$('#selectresident').on('shown.bs.modal', function () {
-    $('#ResidentTable').DataTable();     
-});
-</script> -->
-
-
-<script>
-    $(document).ready(function() {
-
-      var selectedRowId = null;
-      // Initialize DataTable when the modal is shown
-      $('#selectresident').on('shown.bs.modal', function() {
-        $('#ResidentTable').DataTable();
-      });
-
-      // Event listener for row click
-      $(document).on('click', '#ResidentTable tbody tr', function() {
-        $(this).toggleClass("selected").siblings().removeClass("selected");
-        var residentid = $(this).find(".resident_id").text();
-        selectedRowId = $(this).find(".resident_id").text();
-
-        if (residentid) {
-          // Make an AJAX request to fetch resident details
-          $.ajax({
-            url: 'includes/fetch_resident_details.php', // PHP script to fetch resident details
-            type: 'POST',
-            data:  { id: residentid },
-            success: function(response) {
-              // Parse the JSON response
-              var data = JSON.parse(response);
-
-              // Populate the form fields on the main page
-              $('#fname').val(data.first_name);
-              $('#mname').val(data.middle_name);
-              $('#lname').val(data.last_name);
-              $('#suffix').val(data.suffix);
-              $('#subd').val(data.address +" "+ "Caloocan City");
-              $('#resident_since').val(data.resident_since);
-              $('#resident_id').val(residentid);
-
-
-              // Close the modal
-              $('#selectresident').modal('hide');
-            },
-            error: function(xhr, status, error) {
-              console.error('Error fetching resident details:', error);
-            }
-          });
-        } else {
-          alert('Please select a resident.');
-        }
-      });
-
-    });
-  </script>
-
-
-
+<!-- <script>-->
+<script src="js/create-document.js"></script>
 <script src="js/script.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
