@@ -174,30 +174,31 @@ CREATE TABLE `res_audit_trail` (
   CONSTRAINT `res_addedby_fk` FOREIGN KEY (`added_by_no`) REFERENCES `tbl_username` (`username_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `res_depart_fk` FOREIGN KEY (`added_depart_no`) REFERENCES `departments_list` (`department_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `res_edited_by` FOREIGN KEY (`last_edited_by`) REFERENCES `tbl_username` (`username_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `res_audit_trail` */
 
 insert  into `res_audit_trail`(`res_at_id`,`added_depart_no`,`added_by_no`,`date_added`,`time_added`,`edited_depart_no`,`last_edited_by`,`last_edited_dt`,`last_edited_tm`,`dept_del_no`,`del_by_no`,`del_date`,`del_time`,`dept_rec_no`,`rec_by_no`,`rec_date`,`rec_time`) values 
 (1,NULL,NULL,'2024-09-03','15:42:52',NULL,NULL,'2024-09-19','11:27:24',NULL,NULL,'2024-09-13','15:30:23',NULL,NULL,'2024-09-13','15:31:47'),
-(2,NULL,NULL,'2024-09-03','15:44:00',NULL,NULL,'2024-09-04','09:54:55',NULL,NULL,'2024-09-12','14:07:05',NULL,NULL,'2024-09-07','18:09:16'),
-(3,NULL,NULL,'2024-09-03','15:45:08',NULL,NULL,'2024-09-19','11:27:33',NULL,NULL,'2024-09-04','14:58:47',NULL,NULL,'2024-09-07','18:09:27'),
-(4,NULL,NULL,'2024-09-03','15:56:12',NULL,NULL,'2024-09-19','11:27:47',NULL,NULL,'2024-09-04','14:58:44',NULL,NULL,'2024-09-07','18:09:18'),
-(5,NULL,NULL,'2024-09-03','15:56:57',NULL,NULL,'2024-09-12','14:04:20',NULL,NULL,'2024-09-04','14:58:40',NULL,NULL,'2024-09-07','18:09:21'),
-(6,NULL,NULL,'2024-09-03','15:58:04',NULL,NULL,'2024-09-19','11:28:03',NULL,NULL,'2024-09-04','14:58:14',NULL,NULL,'2024-09-07','18:09:25'),
+(2,NULL,NULL,'2024-09-03','15:44:00',NULL,NULL,'2024-09-04','09:54:55',NULL,NULL,'2024-09-26','19:57:50',NULL,NULL,'2024-09-26','19:54:44'),
+(3,NULL,NULL,'2024-09-03','15:45:08',NULL,NULL,'2024-09-19','11:27:33',NULL,NULL,'2024-09-26','19:57:40',NULL,NULL,'2024-09-26','19:56:36'),
+(4,NULL,NULL,'2024-09-03','15:56:12',NULL,NULL,'2024-09-19','11:27:47',NULL,NULL,'2024-09-26','19:56:05',NULL,NULL,'2024-09-07','18:09:18'),
+(5,NULL,NULL,'2024-09-03','15:56:57',NULL,NULL,'2024-09-12','14:04:20',NULL,NULL,'2024-09-26','19:57:35',NULL,NULL,'2024-09-26','19:56:42'),
+(6,NULL,NULL,'2024-09-03','15:58:04',NULL,NULL,'2024-09-19','11:28:03',NULL,NULL,'2024-09-26','19:55:53',NULL,NULL,'2024-09-26','19:54:20'),
 (7,NULL,NULL,'2024-09-10','17:46:56',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(8,NULL,NULL,'2024-09-03','16:00:19',NULL,NULL,'2024-09-12','14:03:45',NULL,NULL,'2024-09-04','14:58:21',NULL,NULL,'2024-09-07','18:09:03'),
-(9,NULL,NULL,'2024-09-03','16:02:53',NULL,NULL,'2024-09-12','14:04:08',NULL,NULL,'2024-09-08','03:53:36',NULL,NULL,'2024-09-08','03:53:49'),
-(10,NULL,NULL,'2024-09-03','16:07:36',NULL,NULL,'2024-09-03','18:39:34',NULL,NULL,'2024-09-04','14:58:27',NULL,NULL,'2024-09-07','18:08:57'),
+(8,NULL,NULL,'2024-09-03','16:00:19',NULL,NULL,'2024-09-12','14:03:45',NULL,NULL,'2024-09-26','20:02:07',NULL,NULL,'2024-09-26','20:05:48'),
+(9,NULL,NULL,'2024-09-03','16:02:53',NULL,NULL,'2024-09-12','14:04:08',NULL,NULL,'2024-09-26','20:00:18',NULL,NULL,'2024-09-26','19:59:03'),
+(10,NULL,NULL,'2024-09-03','16:07:36',NULL,NULL,'2024-09-03','18:39:34',NULL,NULL,'2024-09-26','20:01:46',NULL,NULL,'2024-09-26','20:00:55'),
 (11,NULL,NULL,'2024-09-10','17:46:23',NULL,NULL,'2024-09-16','22:51:12',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
 (12,NULL,NULL,'2024-09-03','16:14:48',NULL,NULL,'2024-09-08','03:33:59',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
 (13,NULL,NULL,'2024-09-03','16:15:39',NULL,NULL,'2024-09-08','03:34:04',NULL,NULL,'2024-09-13','15:39:32',NULL,NULL,'2024-09-08','11:53:41'),
 (14,NULL,NULL,'2024-09-03','18:30:55',NULL,NULL,'2024-09-16','11:30:29',NULL,NULL,'2024-09-04','14:58:55',NULL,NULL,'2024-09-05','23:24:21'),
-(15,NULL,NULL,'2024-09-03','18:39:05',NULL,NULL,'2024-09-10','15:07:53',NULL,NULL,'2024-09-10','15:41:27',NULL,NULL,NULL,NULL),
+(15,NULL,NULL,'2024-09-03','18:39:05',NULL,NULL,'2024-09-10','15:07:53',NULL,NULL,'2024-09-10','15:41:27',NULL,NULL,'2024-09-26','19:53:34'),
 (16,NULL,NULL,'2024-09-07','23:54:29',NULL,NULL,'2024-09-10','14:58:50',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(17,NULL,NULL,'2024-09-07','23:54:41',NULL,NULL,'2024-09-12','14:05:20',NULL,NULL,'2024-09-17','16:27:52',NULL,NULL,NULL,NULL),
+(17,NULL,NULL,'2024-09-07','23:54:41',NULL,NULL,'2024-09-12','14:05:20',NULL,NULL,'2024-09-17','16:27:52',NULL,NULL,'2024-09-26','19:53:38'),
 (18,NULL,NULL,'2024-09-07','23:57:51',NULL,NULL,'2024-09-12','14:05:08',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(19,NULL,NULL,'2024-09-11','19:37:19',NULL,NULL,'2024-09-12','14:04:43',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+(19,NULL,NULL,'2024-09-11','19:37:19',NULL,NULL,'2024-09-12','14:04:43',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(20,NULL,NULL,'2024-09-25','18:41:01',NULL,NULL,NULL,NULL,NULL,NULL,'2024-09-25','18:41:53',NULL,NULL,'2024-09-26','19:56:29');
 
 /*Table structure for table `resident` */
 
@@ -226,29 +227,30 @@ CREATE TABLE `resident` (
   KEY `res_at_fk` (`audit_trail`),
   FULLTEXT KEY `fullname_idx` (`last_name`,`first_name`,`middle_name`,`suffix`) COMMENT 'For fast res searching',
   CONSTRAINT `res_at_fk` FOREIGN KEY (`audit_trail`) REFERENCES `res_audit_trail` (`res_at_id`) ON DELETE CASCADE ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `resident` */
 
 insert  into `resident`(`resident_id`,`img_filename`,`last_name`,`first_name`,`middle_name`,`suffix`,`house_num`,`street`,`subdivision`,`resident_since`,`sex`,`marital_status`,`birth_date`,`birth_place`,`cellphone_num`,`is_a_voter`,`audit_trail`,`is_deleted`) values 
 (1,'capture_24-09-131726191126.jpg','Tecson','Reno','Hofileña','','Blk 12 Lot 4','Isaiah st','Cielito Homes','2015','Male','Single','1992-01-18','Malolos Bulacan','09568989899',0,1,0),
 (2,'8406e341a7981729777f9dee8b55be99 (1).jpg','Tecson','Randy','Hofileña','','Blk 12 Lot 4','Isaiah st','Cielito Homes','2003','Male','Single','1992-01-08','Bulacan Bulacan','09656565655',0,2,1),
-(3,'Miranda_Hallow.png','Tecson','Miranda','Hofileña','','Blk 12 Lot 4','Isaiah st','Cielito Homes','2006','Female','Married','1994-01-15','Plaridel Bulacan','09656565655',1,3,0),
-(4,'Lavi_2006.png','Tecson','James','Hofileña','','Blk 12 Lot 4','Isaiah st','Cielito Homes','2007','Male','Single','1993-02-18','Pulilan Bulacan','09669898989',0,4,0),
-(5,'alingpuring.jpg','Tecson','Puring','Ulatan','','Blk 12 Lot 3','Isaiah st','Cielito Homes','2007','Female','Single','1993-02-18','Bustos Bulacan','09669898989',0,5,0),
-(6,'Shirou.png','Tecson','Gardo','Hofileña','','Blk 12 Lot 2','Isaiah st','Cielito Homes','2009','Male','Married','1988-02-27','San Miguel Bulacan','09064154588',1,6,0),
+(3,'Miranda_Hallow.png','Tecson','Miranda','Hofileña','','Blk 12 Lot 4','Isaiah st','Cielito Homes','2006','Female','Married','1994-01-15','Plaridel Bulacan','09656565655',1,3,1),
+(4,'Lavi_2006.png','Tecson','James','Hofileña','','Blk 12 Lot 4','Isaiah st','Cielito Homes','2007','Male','Single','1993-02-18','Pulilan Bulacan','09669898989',0,4,1),
+(5,'alingpuring.jpg','Tecson','Puring','Ulatan','','Blk 12 Lot 3','Isaiah st','Cielito Homes','2007','Female','Single','1993-02-18','Bustos Bulacan','09669898989',0,5,1),
+(6,'Shirou.png','Tecson','Gardo','Hofileña','','Blk 12 Lot 2','Isaiah st','Cielito Homes','2009','Male','Married','1988-02-27','San Miguel Bulacan','09064154588',1,6,1),
 (8,'images (1).jpg','Yalong','Aaaron','Armengol','','Blk 12 Lot 5','Isaiah st','Cielito Homes','2015','Male','Single','1986-03-21','Gapan Nueva Ecjia','09565656565',1,8,0),
-(9,'miano.jpg','Tecson','Franklin','Miano','','Blk 12 Lot 5','Isaiah st','Cielito Homes','2015','Male','Married','1986-03-21','Cabiao Nueva Ecjia','09565656564',1,9,0),
-(10,'Karen-Bennett-200x200px.jpg','Tecson','Kiana','Macabara','','Blk 8 lot 5B','Jeremiah st','Cielito Homes','2015','Female','Married','1988-09-13','Valenzuela City','09565656565',0,10,0),
+(9,'miano.jpg','Tecson','Franklin','Miano','','Blk 12 Lot 5','Isaiah st','Cielito Homes','2015','Male','Married','1986-03-21','Cabiao Nueva Ecjia','09565656564',1,9,1),
+(10,'Karen-Bennett-200x200px.jpg','Tecson','Kiana','Macabara','','Blk 8 lot 5B','Jeremiah st','Cielito Homes','2015','Female','Married','1988-09-13','Valenzuela City','09565656565',0,10,1),
 (11,'capture_24-09-161726498272.jpg','Salas','Norberto','Torres','','12','Zabarte rd','','2002','Male','Single','2002-08-23','Caloocan City','09565656566',0,11,0),
 (12,'Shiroe_portal.jpg','Salas','Robert','Lumauig','','Blk 8 lot 4','Jeremiah st','Cielito Homes','2002','Male','Single','2002-10-16','Caloocan City','09064121066',0,12,0),
 (13,'Akatsuki_portal.png','Salas','Akatsuki','Lumauig','','Blk 8 lot 4','Jeremiah st','Cielito Homes','2004','Female','Single','2004-12-16','Caloocan City','09054321268',1,13,1),
 (14,'6c2e2762dc133ba55627875e9fa27f33.jpg','Dayao','Hiro','Timbol','','Blk 8 lot 3','Jeremiah st','Cielito Homes','2013','Male','Married','1990-04-03','Palauig Quezon','09665656565',1,14,0),
-(15,'Minori_portal.png','Atchico','Denise','Tamaro','','Blk 14 lot 13','Moises st','Cielito Homes','2019','Female','Single','1999-04-24','Palauig Quezon','09665656565',0,15,1),
+(15,'Minori_portal.png','Atchico','Denise','Tamaro','','Blk 14 lot 13','Moises st','Cielito Homes','2019','Female','Single','1999-04-24','Palauig Quezon','09665656565',0,15,0),
 (16,'soul (1).jpg','Labancas','Danilo','Lim','','Blk 12 Lot 4','Kang kong st','Kassel Villas','2006','Male','Single','2002-10-16','Bulacan Bulacan','09056565656',1,16,0),
-(17,'capture_24-09-121726121120.jpg','Japerson','Henry','','','123','Zabarte Rd','','2012','Male','Single','2002-10-16','Caloocan City','0906412066',0,17,1),
+(17,'capture_24-09-121726121120.jpg','Japerson','Henry','','','123','Zabarte Rd','','2012','Male','Single','2002-10-16','Caloocan City','0906412066',0,17,0),
 (18,'Naotsugu_portal.png','Operacio','Tim','Lucarnas','','12','Virgo st Corner Aries st','Maria Luisa Subd','2002','Male','Single','2002-10-16','Malabon City','09545454544',1,18,0),
-(19,'Allenwalkerimage.png','Salas','Roberto','Lumauig','','Blk 12 Lot 4','Isaiah st','Cielito Homes','2002','Male','Single','2001-10-16','Caloocan City','09064121066',1,19,0);
+(19,'Allenwalkerimage.png','Salas','Roberto','Lumauig','','Blk 12 Lot 4','Isaiah st','Cielito Homes','2002','Male','Single','2001-10-16','Caloocan City','09064121066',1,19,0),
+(20,'capture_1727260861.jpg','Salas','Robert','Lumauig','','Blk 8 Lot 4','Jeremiah st','Select','2002','Male','Single','2002-10-16','Caloocan City','09064121066',0,20,0);
 
 /*Table structure for table `tbl_blotter_audit_trail` */
 
@@ -371,13 +373,19 @@ CREATE TABLE `tbl_cert_audit_trail` (
   CONSTRAINT `edited_by_fk` FOREIGN KEY (`edited_by_no`) REFERENCES `tbl_username` (`username_id`),
   CONSTRAINT `issued_by_fk` FOREIGN KEY (`issued_by_no`) REFERENCES `tbl_username` (`username_id`),
   CONSTRAINT `recovered_by_fk` FOREIGN KEY (`recovered_by_no`) REFERENCES `tbl_username` (`username_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
 /*Data for the table `tbl_cert_audit_trail` */
 
 insert  into `tbl_cert_audit_trail`(`audit_trail_id`,`issuing_dept_no`,`issued_by_no`,`date_issued`,`time_issued`,`expiration`,`edited_by_no`,`date_edited`,`time_edited`,`deleted_by_no`,`date_deleted`,`time_deleted`,`recovered_by_no`,`recovered_date`,`recovered_time`) values 
 (1,NULL,NULL,'2024-09-10','10:23:45','2024-09-25',NULL,'2024-09-17','08:14:40',NULL,NULL,NULL,NULL,NULL,NULL),
-(2,NULL,NULL,'2024-09-18','02:06:20','2024-12-19',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+(2,NULL,NULL,'2024-09-18','02:06:20','2024-12-19',NULL,'2024-09-25','12:36:39',NULL,NULL,NULL,NULL,NULL,NULL),
+(3,NULL,NULL,'2024-09-25','18:26:49','2024-12-25',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(4,NULL,NULL,'2024-09-25','02:03:05','2024-12-26',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(5,NULL,NULL,'2024-09-26','02:08:08','2024-12-26',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(6,NULL,NULL,'2024-09-26','17:10:44','2024-12-26',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(7,NULL,NULL,'2024-09-27','14:12:09','2024-12-27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(8,NULL,NULL,'2024-09-27','14:39:10','2024-12-27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 
 /*Table structure for table `tbl_docu_request` */
 
@@ -411,7 +419,13 @@ CREATE TABLE `tbl_docu_request` (
 
 insert  into `tbl_docu_request`(`request_id`,`resident_no`,`nresident_no`,`document_no`,`age`,`presented_id`,`ID_number`,`purpose`,`audit_trail_no`,`pdffile`,`status`,`is_deleted`) values 
 ('2024-000001',1,NULL,1,32,'National ID','TYO-12345612','Verification Purposes',1,'certificate_of_residency/generated_pdf_1726636854.pdf',0,0),
-('2024-000002',12,NULL,2,21,'Driver\'s License','N42-1234567890','Meralco Application',2,'certificate_of_residency/generated_pdf_1726682779.pdf',0,0);
+('2024-000002',12,NULL,2,21,'Postal ID','N42-1234567890','Meralco Application',2,'certificate_of_residency/generated_pdf_1726682779.pdf',0,0),
+('2024-000003',12,NULL,3,21,'National ID','PCR-1234567889012','Maynilad Application',3,'certificate_of_residency/generated_pdf_1727260009.pdf',0,0),
+('2024-000004',8,NULL,4,38,'SSS ID','SSS-1234567890','For Legal Purpose',4,'certificate_of_residency/generated_pdf_1727287385.pdf',0,0),
+('2024-000005',18,NULL,5,21,'National ID','PCN-1234567890','To any legal purpose',5,'certificate_of_residency/generated_pdf_1727287688.pdf',2,0),
+('2024-000006',16,NULL,6,21,'Police ID','POL-123456789','Legal Asisstance',6,'certificate_of_indigency/generated_pdf_1727341844.pdf',0,0),
+('2024-000007',18,NULL,7,21,'National ID','PCN-12345566789','Legal Aid',7,'certificate_of_indigency/generated_pdf_1727417529.pdf',0,0),
+('2024-000008',8,NULL,8,38,'UMID ID','UMI-11234567890','Meralco Application',8,'certificate_of_residency/generated_pdf_1727419150.pdf',0,0);
 
 /*Table structure for table `tbl_documents` */
 
@@ -441,13 +455,19 @@ CREATE TABLE `tbl_documents` (
   CONSTRAINT `exca_fk` FOREIGN KEY (`Excavation_Permits`) REFERENCES `tbl_excavation_permits` (`exca_permit_id`),
   CONSTRAINT `f_permit_fk` FOREIGN KEY (`Fencing_Permits`) REFERENCES `tbl_fencing_permit` (`fencing_permit_id`),
   CONSTRAINT `tprs_fk` FOREIGN KEY (`TPRS`) REFERENCES `tbl_tprs` (`tprs_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
 /*Data for the table `tbl_documents` */
 
 insert  into `tbl_documents`(`docu_id`,`Barangay_Clearance`,`Certificate_of_Residency`,`Certificate_of_Indigency`,`Certificate_of_Good_Moral`,`FTJS`,`Oath_of_Undertaking`,`Business_Permits`,`Building_Permits`,`Excavation_Permits`,`Fencing_Permits`,`TPRS`) values 
 (1,NULL,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(2,NULL,2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+(2,NULL,2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(3,NULL,3,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(4,NULL,4,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(5,NULL,5,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(6,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(7,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(8,NULL,6,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 
 /*Table structure for table `tbl_excavation_permits` */
 
@@ -642,7 +662,7 @@ DELIMITER ;
 
 DELIMITER $$
 
-/*!50106 CREATE DEFINER=`root`@`localhost` EVENT `evt_update_cert_status` ON SCHEDULE EVERY 1 DAY STARTS '2024-09-13 08:00:00' ON COMPLETION NOT PRESERVE ENABLE DO BEGIN
+/*!50106 CREATE DEFINER=`root`@`localhost` EVENT `evt_update_cert_status` ON SCHEDULE EVERY 1 DAY STARTS '2024-09-13 23:00:00' ON COMPLETION NOT PRESERVE ENABLE DO BEGIN
     UPDATE vw_all_documents
     SET `status` = 1
     WHERE `expiration` <= NOW();

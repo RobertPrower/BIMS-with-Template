@@ -72,6 +72,8 @@ $(document).ready(function () {
             $("#pagenav").prop("hidden", true);
           break;
           default:
+            $("#pagenav").prop("hidden", false);
+
         }
       },
       error: function (xhr, status, error) {
@@ -88,6 +90,16 @@ $(document).ready(function () {
         data: { search: query, pageno: currentPage, operation: "SEARCH_PAGINATION" },
         success: function (data) {
             $(".pagination").html(data);
+            //Prevent the pagination from showing when the entries is less than 10
+            var noofpageitems = $(".page-item").length;
+            switch(noofpageitems){
+              case 1 :
+                $("#pagenav").prop("hidden", true);
+              break;
+              default:
+                $("#pagenav").prop("hidden", false);
+
+            }
         },
         error: function (xhr, status, error) {
             console.error("Error updating search pagination data:", error);
@@ -103,6 +115,16 @@ $(document).ready(function () {
         data: {pageno: currentPage, operation: "PAGINATION_FOR_DEL_REC"},
         success: function (data){
           $(".pagination").html(data);
+          //Prevent the pagination from showing when the entries is less than 10
+          var noofpageitems = $(".page-item").length;
+          switch(noofpageitems){
+            case 1 :
+              $("#pagenav").prop("hidden", true);
+            break;
+            default:
+              $("#pagenav").prop("hidden", false);
+
+          }
         },
         error: function (xhr, status, error) {
           console.error("Error updating pagination data:", error);
