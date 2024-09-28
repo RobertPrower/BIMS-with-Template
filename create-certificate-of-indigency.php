@@ -37,7 +37,7 @@
 
     <?php 
     require_once("includes/header.php");
-    require("includes/documentmodal.php");
+    require("includes/documentdisplaymodal.php");
     
     ?>
 

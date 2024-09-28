@@ -3,9 +3,9 @@ $(document).ready(function () {
 
   function reloadTable(page) {
     $.ajax({
-      url: "includes/documentsautoreloadtable.php",
+      url: "includes/documentsoperation.php",
       type: "POST",
-      data: { pageno: page },
+      data: { pageno: page, OPERATION: "TABLE_LOAD"},
       dataType: "HTML",
       success: function (data) {
         $("#DocumentsTableBody").html(data);
@@ -25,7 +25,7 @@ $(document).ready(function () {
         data: { pageno: page, OPERATION: "SHOW_DELETED" },
         dataType: "HTML",
         success: function (data) {
-          $("#ResidentTable tbody").html(data);
+          $("#DocumentsTableBody").html(data);
           updateDeletedPaginationControls(page);
         },
         error: function (xhr, status, error) {

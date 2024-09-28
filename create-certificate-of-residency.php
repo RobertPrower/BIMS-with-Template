@@ -45,7 +45,7 @@
     <?php 
     
     require_once("includes/selectresidentmodal.php"); 
-    require_once("includes/documentmodal.php");   
+    require_once("includes/documentdisplaymodal.php");   
     ?>
 
 

@@ -134,7 +134,7 @@ $(document).ready(function() {
             });
         }else if(whatcert == "Create Certificate of Residency"){
             $.ajax({
-                url: "documents/generate-residency.php",
+                url: "documents/generate-residency-tcpdf.php",
                 type: "POST",
                 dataType:"JSON",
                 data:{

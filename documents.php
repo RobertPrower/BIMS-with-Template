@@ -120,7 +120,7 @@
                                     </div>
                                 </div>    
                                 
-                                <?php include_once'includes/documentmodal.php'; ?>
+                                <?php include_once'includes/documentdisplaymodal.php'; ?>
                           </div>
                       </div>
 

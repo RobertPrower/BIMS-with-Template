@@ -488,9 +488,6 @@ if($operation_check == "ADD"){ //For the add operation
         echo '<tr><td colspan="11"><b>No Deleted Records found</b></td></tr>';
     }
 
-
-    
-
 }elseif($operation_check=="PAGINATION_FOR_DEL_REC"){
     // Fetch the total number of records
     $total_records = $pdo->query("SELECT COUNT(*) FROM resident WHERE is_deleted=1")->fetchColumn();
