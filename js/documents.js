@@ -149,10 +149,10 @@ $(document).ready(function () {
     }
   
     //For the search box
-    $("#searchbox").on("keyup", function () {
+    $("#searchbox").on("keydown", function () {
       let query = $(this).val();
   
-      if (query.length > 2) {
+      if (query.length >= 2) {
         //Fetch the results by the fetchResults function above
         fetchResults(query);
       } else {
@@ -643,5 +643,56 @@ $(document).ready(function () {
       }
     });
   });
+
+  $('#ScanqrModal').on('shown.bs.modal', function () {
+    console.log('The modal is now fully shown.');
+    let barcodeBuffer = '';
+    let timeout = null;
+
+    $("#scannedcode").focus();
+
+    $("#scannedcode").on('keydown', function(e) {
+        // If Enter key is pressed, handle barcode input
+        if (e.key === 'Enter') {
+            e.preventDefault(); // Prevent default form submission or behavior
+            $('#searchbox').val(barcodeBuffer); 
+            $('#ScanqrModal').modal('hide');
+            $(this).val("");
+            fetchResults(barcodeBuffer);
+            barcodeBuffer = ''; // Clear the buffer after processing
+
+
+
+        } else {
+            // Append characters to the buffer, ignoring shift, control, etc.
+            if (e.key.length === 1) { // Check if it's a single character key
+                barcodeBuffer += e.key;
+            }
+        }
+
+        // Clear the timeout for the barcode buffer
+        clearTimeout(timeout);
+        timeout = setTimeout(function() {
+            barcodeBuffer = ''; // Clear buffer after timeout
+        }, 200);
+    });
+
+    const $input = $('#scannedcode');
+
+    // Keep the input focused when clicked away
+    $(document).on('click', function(e) {
+        // Check if the click target is not the input
+        if (!$(e.target).is($input)) {
+            // Re-focus the input
+            $input.focus();
+        }
+    });
+
+    // Focus on the scanned code input when the window is focused or clicked
+    $(window).on('focus click', function() {
+        $('#scannedcode').focus(); // Changed to the correct ID
+    });
+  });
+
 
 });

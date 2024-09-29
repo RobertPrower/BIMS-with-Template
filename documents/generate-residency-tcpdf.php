@@ -293,7 +293,7 @@ $html .=    '  </td>
 // print a block of text using Write()
 $pdf->writeHTML($html, true, false, true, false, '');
 
-$qrContent = 'https://example.com'; // Change this to whatever you want the QR code to link to
+$qrContent = '2004-0000001'; // Change this to whatever you want the QR code to link to
 
 // Set the QR code style
 $style = array(

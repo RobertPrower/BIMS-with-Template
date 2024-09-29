@@ -14,6 +14,8 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" 
   integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
   <link rel="stylesheet" href="./css/style.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+
 
     <!--JavaScript-->
   <script src="js/jquery-3.7.1.min.js"></script>
@@ -47,6 +49,7 @@
                           
                               <!-- Button to trigger modal -->
                               <a type="button" class="btn btn-primary me-2" href="create-documents.php">New Certificate</a>
+                              <button class="btn btn-warning me-2" data-bs-toggle="modal" data-bs-target="#ScanqrModal"><img src="img/svg/qr-code-scan.svg" alt="Bootstrap" width="25" height="25"> Scan QR Code</button>
                               
                               <div class="form-check form-switch my-2">
                                   <input class="form-check-input" type="checkbox" id="showdeletedentries">
@@ -60,6 +63,27 @@
 
                                 
                                 ?>
+
+                                <div class="modal fade" id="ScanqrModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h1 class="modal-title fs-5" id="exampleModalLabel">Scan QR Code</h1>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                               <img src="img/qr-code.gif"></img>
+                                               <h2 class="text-center">Scan QR Code</h2>
+
+                                               
+                                               <div class="form-floating mt-3 mb-3 col-md-12">
+                                                    <input type="text" class="form-control" id="scannedcode" name="middlename" placeholder="Enter Middle Name Here"/>
+                                                    <label for="scannedcode">Request ID</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
 
                                 <!-- Modal For the edit-->
                                 <div class="modal fade" id="EditDocumentModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -125,14 +149,15 @@
                       </div>
 
                       <div class="container col-md-3">
+
                           <div class="row">
                           <!-- Search Box -->
                               <div class="search-wrapper">
-                                                        
-                              <button type="submit" class="btn-sm btn-light" data-feather="search" aria-hidden="true" required></button>
-                              <input type="text" class="form-control me-2" id="searchbox" name="search" placeholder="Search...">
-                                  
-                              </div>
+                                       
+                              <input type="text" class="form-control me-2" id="searchbox" name="search" placeholder="Search..."> 
+                              <button type="submit" class="btn-sm btn-warning" data-feather="search" aria-hidden="true" required></button>
+                              
+                            </div>
                           </div>
                       </div>
                   
@@ -208,7 +233,7 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-
+<script src="js/html5-qrcode.min.js"></script>
 <!-- Chart library -->
 <script src="./plugins/chart.min.js"></script>
 <!-- Icons library -->
