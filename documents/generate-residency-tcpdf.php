@@ -9,12 +9,17 @@ date_default_timezone_set('Asia/Manila');
 $nowdate = date("Y-m-d H:i:s"); // Current date
 $nowtime = time(); // Timestamp to generate a unique filename
 
-date_default_timezone_set('Asia/Manila');
+//Get the Brgy Officials from the database
+$kagawadsquery="SELECT * FROM kagawad";
+$offstmt=$pdo->prepare($kagawadsquery);
+$offstmt->execute();
+$kagawad = $offstmt->fetchAll(PDO::FETCH_ASSOC);
 
-$sqlquery="SELECT * FROM brgy_officials";
-$stmt=$pdo->prepare($sqlquery);
-$stmt->execute();
-$results=$stmt->fetchAll(PDO::FETCH_ASSOC); 
+//Get the Brgy Officials from the database
+$offcialsquery="SELECT official_name, official_position FROM brgy_officials";
+$offstmt=$pdo->prepare($offcialsquery);
+$offstmt->execute();
+$brgyofficial=$offstmt->fetchAll(PDO::FETCH_ASSOC);
 
 $nowdate= date("Y-m-d H:i:s"); //Get the date now
 $nowtime = time(); //Get the time now
@@ -71,11 +76,6 @@ $issuingdeptno = null;
 // $AgeResult= $stmt5->fetchAll();
 // $Age=$AgeResult;
 
-foreach($results as $officials){    
-
-    $officialname[]=$officials['official_name'];
-}
-
 // $logo=[];
 
 // foreach($results3 as $filename){
@@ -98,7 +98,7 @@ class MYPDF extends TCPDF {
 
         $this->Image("images/Brgy177Logo.png", 30, 5, 155, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false);
 
-        $this->Image("images/Brgy177.png", 160, 8, 25, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false);
+        $this->Image("images/Brgy177.png", 160, 8, 23, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false);
 
         $this->SetLineWidth(0); 
 
@@ -124,7 +124,7 @@ class MYPDF extends TCPDF {
 
 $pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, 'Letter', true, 'UTF-8', false);
 
-$pdf = new MYPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
+$pdf = new MYPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, 'letter' , true, 'UTF-8', false);
 
 // set document information
 $pdf->SetCreator(PDF_CREATOR);
@@ -167,65 +167,66 @@ if (@file_exists(dirname(__FILE__).'/lang/eng.php')) {
 $pdf->AddPage();
 
 // Add image watermark (with transparency)
-$pdf->SetAlpha(50); // Set transparency
-$pdf->Image('images/watermark.png', 50, 100, 100, 0, '', '', '', false, 300, '', false, false, 0); // X, Y, Width, Height
+$pdf->SetAlpha(0.2); // Set transparency
+$pdf->Image('images/watermark.png', 10, 45, 400, '', '', '', '', false, 300, '', false, false, 0, false, false, true);
 $pdf->SetAlpha(1); // Reset transparenc
 
 $pdf->SetTopMargin(35);
+
+$pdf->SetLineWidth(0.5); 
+$pdf->Line(62, 35, 62, 280); // X1 = X2 = 50, varying Y1 = 30 and Y2 = 150
+
 $name = "Roberto Lumauig Salas Sr";
 $address="Blk 8 Lot 4 Jeremiah st Cielito Homes Camarin Caloocan City";
 $rsince="2002";
 // set some text to print
 $html =
-    '<table>
-        <tr>
-            <br>
-            <td class="brgyofficials">
-                <u>DONNA DE GANA - JARITO</u>
-                <br>
-                PUNONG BARANGAY
-                <br><br><br>
+    '    <table>
+            <tr>
+                <td class="brgyofficials"> 
+                    ';
+                    foreach ($brgyofficial as $official) {
+                        if ($official['official_position'] == 'Punong Barangay') {
+                            $html .= '<div class="official">
+                            <u>' . strtoupper($official['official_name']) . '</u>
+                            <h5>PUNONG BARANGAY</h5>  
+                            </div>';
 
-                BARANGAY KAGAWAD: 
-                <br><br><br>
+                        }
+                    }   
 
-                <u> KGD. DARWIN L. DELA CRUZ </u>
-                <br><br>
+                    $html .= '<div class="kagawad">
+                                <br>
+                                BARANGAY KAGAWAD
+                                <br>
+                              </div>';
 
-                <u> KGD.ELOISA MARIE T. ENCARNACION </u>
-                <br><br>
+                     // Insert PHP `foreach` loop outside the string for dynamic content
+                    foreach ($kagawad as $kagawad1) {
+                        $html .= '
+                                    <u>' .'KGD. '. strtoupper(htmlspecialchars($kagawad1['official_name'])) . '</u><br><br>
+                        ';
+                    }
 
-                <u>KGD. GINA T. ORTIZ</u>
-                <br><br>
-
-                <u>KGD. FRANCIS S. ACOSTA</u>
-                <br><br>
-
-                <u>KGD. RENATO C. BUSANTE.</u>
-                <br><br>
-
-                <u>KGD. CHRISTY JOY V. CALILUNG</u>
-                <br><br>
-
-                <u>KGD. LORETO D. DERRADA</u>
-                <br><br><br><br>
-
-                <u>VINCE B. SALVANI</u>
-                <h5>SK-CHAIRPERSON</h5>
-
-                <br><br>
-
-                <u>LOIDA M. FRANCISCO</u>
-                
-                <h5>BARANGAY SECRETARY</h5>
-                <br><br><br><br>
-
-                <u>DAVE A. RAMIREZ</u>
-                <h5>BARANGAY TREASURER</h5>
-                <br>
-
-            
-            </td>
+                    foreach ($brgyofficial as $official) {
+                        if ($official['official_position'] == 'SK Chairperson') {
+                            $html .= '<div class="official">
+                                        <u>' . strtoupper($official['official_name']) . '</u>
+                                        <h5>SK-CHAIRPERSON</h5>
+                                      </div>';
+                        } elseif ($official['official_position'] == 'Barangay Secretary') {
+                            $html .= '<div class="official">
+                                        <u>' . strtoupper($official['official_name']) . '</u>
+                                        <h5>BARANGAY SECRETARY</h5>
+                                      </div>';
+                        } elseif ($official['official_position'] == 'Barangay Treasurer') {
+                            $html .= '<div class="official">
+                                        <u>' . strtoupper($official['official_name']) . '</u>
+                                        <h5>BARANGAY TREASURER</h5>
+                                      </div>';
+                        }
+                    }
+$html .=    '  </td>
             <td class="certbody">
                 <h1 class="certi"><u>CERTIFICATION</u></h1>
 
@@ -237,7 +238,7 @@ $html =
 
                 <h1 class="certi"><U>PROOF OF RESIDENCY.</U></h1>
 
-                <p>Given this 29th day of February, 2024, at Barangay 177, Cielito Homes Subdivision, Camarin, Caloocan City.</p>
+                <p>Given this '.date("d").'th day of '.date('F Y').', at Barangay 177, Cielito Homes Subdivision, Camarin, Caloocan City.</p>
 
             </td>
         </tr>
@@ -251,8 +252,6 @@ $html =
             font-weight: bolder;
             text-align: center;
             width: 30%;
-            border-right-width: 2px;
-            border-right: 50px soild;
 
         }
 
@@ -279,6 +278,14 @@ $html =
         .bold{
             font-weight: bolder;
             font-size: 22px;
+        }
+
+         .official, .kagawad {
+            margin-bottom: 10px; /* Add space between each official */
+        }
+
+        .kagawad-title {
+            margin-bottom: 20px; /* Add space between the title and the list of Kagawads */
         }
 
     </style>';

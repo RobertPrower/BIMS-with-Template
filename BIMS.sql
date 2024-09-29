@@ -23,26 +23,19 @@ DROP TABLE IF EXISTS `brgy_officials`;
 CREATE TABLE `brgy_officials` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `official_name` varchar(255) NOT NULL,
-  `official_position` varchar(255) NOT NULL,
+  `official_position` varchar(55) NOT NULL,
   `date_last_edited` date DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4;
+  PRIMARY KEY (`id`),
+  KEY `official_position` (`official_position`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `brgy_officials` */
 
 insert  into `brgy_officials`(`id`,`official_name`,`official_position`,`date_last_edited`) values 
-(1,'Donna De Gana','Punong Barangay','2024-08-18'),
-(2,'Darwin L. Dela Cruz','Kagawad at Secretary','2024-04-22'),
-(3,'Eloisa Marie T. Encarnation','Kagawad','2024-04-30'),
-(4,'Gina T. Ortiz','Kagawad','2024-04-30'),
-(5,'Francis S. Acosta','Kagawad','2024-04-30'),
-(6,'Renato C. Busante','Kagawad','2024-04-30'),
-(7,'Christy Joy V. Calilung','Kagawad','2024-04-30'),
-(8,'Loreto D. Derrada','Kagawad','2024-04-30'),
-(9,'Vince B. Salvani','Kagawad','2024-04-30'),
-(10,'Loida M. Francisco','Barangay-Secretary','2024-04-30'),
-(11,'Dave A. Ramirez','Treasurer','2024-05-23'),
-(12,'Ginny Abiertas','Kagawad','2024-05-23');
+(1,'Donna De Gana-Jarito','Punong Barangay','2024-08-18'),
+(2,'Vince B. Salvani','SK Chairperson','2024-04-30'),
+(3,'Loida M. Francisco','Barangay Secretary','2024-04-30'),
+(4,'Dave A. Ramirez','Barangay Treasurer','2024-05-23');
 
 /*Table structure for table `certificate-img` */
 
@@ -80,6 +73,29 @@ insert  into `departments_list`(`department_id`,`department_desc`) values
 (2,'Secretariant Dept'),
 (3,'Lupon'),
 (4,'Admin');
+
+/*Table structure for table `kagawad` */
+
+DROP TABLE IF EXISTS `kagawad`;
+
+CREATE TABLE `kagawad` (
+  `kagawad_id` int(55) NOT NULL AUTO_INCREMENT,
+  `official_name` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`kagawad_id`),
+  KEY `kagawad_id` (`kagawad_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+
+/*Data for the table `kagawad` */
+
+insert  into `kagawad`(`kagawad_id`,`official_name`) values 
+(1,'Darwin Dela Cruz'),
+(2,'Eloisa Marie T. Encarnation'),
+(3,'Gina T. Ortiz'),
+(4,'Francis S. Acosta'),
+(5,'Renato C. Busante'),
+(6,'Christy Joy V. Calilung'),
+(7,'Loreto D. Derrada'),
+(8,'Ginny Abiertas');
 
 /*Table structure for table `non_resident` */
 
@@ -373,7 +389,7 @@ CREATE TABLE `tbl_cert_audit_trail` (
   CONSTRAINT `edited_by_fk` FOREIGN KEY (`edited_by_no`) REFERENCES `tbl_username` (`username_id`),
   CONSTRAINT `issued_by_fk` FOREIGN KEY (`issued_by_no`) REFERENCES `tbl_username` (`username_id`),
   CONSTRAINT `recovered_by_fk` FOREIGN KEY (`recovered_by_no`) REFERENCES `tbl_username` (`username_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 
 /*Data for the table `tbl_cert_audit_trail` */
 
@@ -385,7 +401,12 @@ insert  into `tbl_cert_audit_trail`(`audit_trail_id`,`issuing_dept_no`,`issued_b
 (5,NULL,NULL,'2024-09-26','02:08:08','2024-12-26',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
 (6,NULL,NULL,'2024-09-26','17:10:44','2024-12-26',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
 (7,NULL,NULL,'2024-09-27','14:12:09','2024-12-27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(8,NULL,NULL,'2024-09-27','14:39:10','2024-12-27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+(8,NULL,NULL,'2024-09-27','14:39:10','2024-12-27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(9,NULL,NULL,'2024-09-28','08:33:02','2024-12-28',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(10,NULL,NULL,'2024-09-28','08:33:08','2024-12-28',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(11,NULL,NULL,'2024-09-28','08:33:43','2024-12-28',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(12,NULL,NULL,'2024-09-28','08:41:11','2024-12-28',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(13,NULL,NULL,'2024-09-28','08:41:21','2024-12-28',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 
 /*Table structure for table `tbl_docu_request` */
 
@@ -425,7 +446,11 @@ insert  into `tbl_docu_request`(`request_id`,`resident_no`,`nresident_no`,`docum
 ('2024-000005',18,NULL,5,21,'National ID','PCN-1234567890','To any legal purpose',5,'certificate_of_residency/generated_pdf_1727287688.pdf',2,0),
 ('2024-000006',16,NULL,6,21,'Police ID','POL-123456789','Legal Asisstance',6,'certificate_of_indigency/generated_pdf_1727341844.pdf',0,0),
 ('2024-000007',18,NULL,7,21,'National ID','PCN-12345566789','Legal Aid',7,'certificate_of_indigency/generated_pdf_1727417529.pdf',0,0),
-('2024-000008',8,NULL,8,38,'UMID ID','UMI-11234567890','Meralco Application',8,'certificate_of_residency/generated_pdf_1727419150.pdf',0,0);
+('2024-000008',8,NULL,8,38,'UMID ID','UMI-11234567890','Meralco Application',8,'certificate_of_residency/generated_pdf_1727419150.pdf',0,0),
+('2024-000009',16,NULL,9,21,'PRC ID','PRC-1234567890','Verification Purposes',9,'certificate_of_residency/generated_pdf_1727483582.pdf',0,0),
+('2024-000010',16,NULL,10,21,'PRC ID','PRC-1234567890','Verification Purposes',10,'certificate_of_residency/generated_pdf_1727483588.pdf',0,0),
+('2024-000011',16,NULL,11,21,'PRC ID','PRC-1234567890','Verification Purposes',11,'certificate_of_residency/generated_pdf_1727483623.pdf',0,0),
+('2024-000012',16,NULL,12,21,'PRC ID','PRC-1234567890','Verification Purposes',12,'certificate_of_residency/generated_pdf_1727484081.pdf',0,0);
 
 /*Table structure for table `tbl_documents` */
 
@@ -455,7 +480,7 @@ CREATE TABLE `tbl_documents` (
   CONSTRAINT `exca_fk` FOREIGN KEY (`Excavation_Permits`) REFERENCES `tbl_excavation_permits` (`exca_permit_id`),
   CONSTRAINT `f_permit_fk` FOREIGN KEY (`Fencing_Permits`) REFERENCES `tbl_fencing_permit` (`fencing_permit_id`),
   CONSTRAINT `tprs_fk` FOREIGN KEY (`TPRS`) REFERENCES `tbl_tprs` (`tprs_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 
 /*Data for the table `tbl_documents` */
 
@@ -467,7 +492,12 @@ insert  into `tbl_documents`(`docu_id`,`Barangay_Clearance`,`Certificate_of_Resi
 (5,NULL,5,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
 (6,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
 (7,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(8,NULL,6,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+(8,NULL,6,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(9,NULL,7,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(10,NULL,8,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(11,NULL,9,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(12,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(13,NULL,11,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 
 /*Table structure for table `tbl_excavation_permits` */
 
