@@ -18,7 +18,7 @@ $results=$stmt->fetchAll(PDO::FETCH_ASSOC);
 
 $nowdate= date("Y-m-d H:i:s"); //Get the date now
 $nowtime = time(); //Get the time now
-$fileName = "certificate_of_residency/"."generated_pdf_" . time() . ".pdf";
+$fileName = "certificate_of_businesspermit/"."generated_pdf_" . time() . ".pdf";
 $username = null;
 $issuingdeptno = null;
 // $residentsince=$_POST['r_since'];
@@ -83,8 +83,8 @@ foreach($results as $officials){
 // }
 
 // Define directory for saving the PDF
-$directory = "certificate_of_residency/";
-$fileName = $_SERVER['DOCUMENT_ROOT'] . "/BIMS-with-Template/documents/certificate_of_residency/generated_pdf_" . $nowtime . ".pdf";
+$directory = "certificate_of_businesspermit/";
+$fileName = $_SERVER['DOCUMENT_ROOT'] . "/BIMS-with-Template/documents/certificate_of_businesspermit/generated_pdf_" . $nowtime . ".pdf";
 
 class MYPDF extends TCPDF {
     
@@ -129,7 +129,7 @@ $pdf = new MYPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8',
 // set document information
 $pdf->SetCreator(PDF_CREATOR);
 $pdf->SetAuthor('Nicola Asuni');
-$pdf->SetTitle('Generate Certificate of Residency');
+$pdf->SetTitle('Generate Certificate of Business Permit');
 $pdf->SetSubject('TCPDF Tutorial');
 $pdf->SetKeywords('TCPDF, PDF, example, test, guide');
 
@@ -168,76 +168,33 @@ $pdf->AddPage();
 
 // Add image watermark (with transparency)
 $pdf->SetAlpha(50); // Set transparency
-$pdf->Image('images/watermark.png', 50, 100, 100, 0, '', '', '', false, 300, '', false, false, 0); // X, Y, Width, Height
+$pdf->Image('images/watermark.png', 6, 20, 220, 240, '', '', '', false, 300, '', false, false, 0); // X, Y, Width, Height
 $pdf->SetAlpha(1); // Reset transparenc
 
 $pdf->SetTopMargin(35);
 $name = "Roberto Lumauig Salas Sr";
 $address="Blk 8 Lot 4 Jeremiah st Cielito Homes Camarin Caloocan City";
-$rsince="2002";
+$bpermit="Business Permit (Hardware Supplies)";
+$businessname="WENZEL HARDWARE";
+
 // set some text to print
 $html =
     '<table>
         <tr>
-            <br>
-            <td class="brgyofficials">
-                <u>DONNA DE GANA - JARITO</u>
-                <br>
-                PUNONG BARANGAY
-                <br><br><br>
+          <br>
 
-                BARANGAY KAGAWAD: 
-                <br><br><br>
-
-                <u> KGD. DARWIN L. DELA CRUZ </u>
-                <br><br>
-
-                <u> KGD.ELOISA MARIE T. ENCARNACION </u>
-                <br><br>
-
-                <u>KGD. GINA T. ORTIZ</u>
-                <br><br>
-
-                <u>KGD. FRANCIS S. ACOSTA</u>
-                <br><br>
-
-                <u>KGD. RENATO C. BUSANTE.</u>
-                <br><br>
-
-                <u>KGD. CHRISTY JOY V. CALILUNG</u>
-                <br><br>
-
-                <u>KGD. LORETO D. DERRADA</u>
-                <br><br><br><br>
-
-                <u>VINCE B. SALVANI</u>
-                <h5>SK-CHAIRPERSON</h5>
-
-                <br><br>
-
-                <u>LOIDA M. FRANCISCO</u>
-                
-                <h5>BARANGAY SECRETARY</h5>
-                <br><br><br><br>
-
-                <u>DAVE A. RAMIREZ</u>
-                <h5>BARANGAY TREASURER</h5>
-                <br>
-
-            
-            </td>
             <td class="certbody">
-                <h1 class="certi"><u>CERTIFICATION</u></h1>
+                <h3 class="certi"> TANGGAPAN NG PUNONG BARANGAY </h3>
+                <h1 class="bpermit"> SECURING BUSINESS PERMIT </h1>
 
-                <h3>  To whom it may concern: </h3>
+                <br><br>
 
-                <p class="parag">This is to certify that <b class="bold">'.'  '.$name. '  '.'</b>
-                 is bonafide resident of this barangay located at<b class="bold">'.'  '.$address.' '.'</b> SINCE <b class="bold">'.' '.$rsince.'</b>. UP TO PRESENT.
-                This certification is being issued upon the request of the above-mentioned name for</p>
-
-                <h1 class="certi"><U>PROOF OF RESIDENCY.</U></h1>
-
-                <p>Given this 29th day of February, 2024, at Barangay 177, Cielito Homes Subdivision, Camarin, Caloocan City.</p>
+                <p> Ang pagpapatunay na ito ipinagkaloob sa kahilingan ni <b class="bold">'.'  '.$name. '  '.'</b></p>
+                <p> upang magamit para sa kaniyang<b class="bold">'.'  '.$bpermit.' '.'</b> na may pangalang <b class="bold">'.' '.$businessname.'</b></p>
+                <p> na kasalukuyang matatagpuan sa <b class="bold">'.' '.$address.' '.'</b> na nasasakupan ng Barangay 177, Sona 15, Distrito 1, Lungsod ng Caloocan.</p>  
+                
+                <p class="p1"> Ipinagkaloob ngayong '.date("d").'th day of '.date('F Y').' sa tanggapan ng </p>
+                <p class="p2"> Barangay 177, Cielito Homes Subdivision, Camarin, Lungsod ng Caloocan. </p>
 
             </td>
         </tr>
@@ -245,19 +202,8 @@ $html =
     
     <style>
 
-        .brgyofficials{
-            color: #4F6228; 
-            font-family: Bookman Old Style Bold;
-            font-weight: bolder;
-            text-align: center;
-            width: 30%;
-            border-right-width: 2px;
-            border-right: 50px soild;
-
-        }
-
         .certbody{
-            text-align: left; 
+            text-align: center; 
             font-family: Cambria;
             width:70%;
             padding: 12px;
@@ -266,19 +212,24 @@ $html =
 
         .certi{
             text-align: center; 
-            font-size: 30px;
+            font-size: 18px;
             font-family: Cambria;
         }
 
-        p{
+        .bpermit {
             text-align: center;
-            font-size: 15px;
-            line-height: 30px;
+            font-weight: bolder;
+            font-size: 32px;
         }
 
-        .bold{
-            font-weight: bolder;
-            font-size: 22px;
+        .p1{
+            text-align: right;
+            font-size: 15px;
+        }
+
+        .p2{
+            text-align: left;
+            font-size: 15px;
         }
 
     </style>';
@@ -286,7 +237,7 @@ $html =
 // print a block of text using Write()
 $pdf->writeHTML($html, true, false, true, false, '');
 
-$qrContent = '2004-0000001'; // Change this to whatever you want the QR code to link to
+$qrContent = 'https://example.com'; // Change this to whatever you want the QR code to link to
 
 // Set the QR code style
 $style = array(
