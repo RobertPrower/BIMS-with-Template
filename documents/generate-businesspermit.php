@@ -27,30 +27,22 @@ $issuingdeptno = null;
 // $mname=utf8_decode($_POST['middlename']);
 // $lname=utf8_decode($_POST['lastname']);
 
-// if(isset($_POST['suffix'])){
-//     $suffix=$_POST['suffix'];
-// }else{
-//     $suffix="";
-// }
+// $suffix = (isset($_POST['suffix']))? $suffix=$_POST['suffix']: null ;
+
 // $presentedid=$_POST['presented_id'];
 // $purpose=$_POST['purpose'];
 // $residentno=($_POST['resident_no']);
 // $IDnumber=$_POST['IDnum'];
 
-// $sqlquery2 = "CALL determine_docu_type('Certificate_of_Residency'); 
+// $auditTrailquery= "CALL determine_docu_type('Certificate_of_Residency'); 
 //             INSERT INTO tbl_cert_audit_trail(issuing_dept_no, date_issued, expiration, time_issued)
 //             VALUES (?,?,DATE_ADD(CURDATE(), INTERVAL 3 MONTH), CURTIME())";
-// $stmt2=$pdo->prepare($sqlquery2);
-// $stmt2->execute([$issuingdeptno, $nowdate]);
+// $auditTrailstmt=$pdo->prepare($auditTrailquery);
+// $auditTrailstmt->execute([$issuingdeptno, $nowdate]);
 // // Close the cursor of the previous statement
-// $stmt2->closeCursor();
+// $auditTrailstmt->closeCursor();
 
-// $sqlquery3="SELECT * FROM `certificate-img`";
-// $stmt3=$pdo->prepare($sqlquery3);
-// $stmt3->execute();
-// $results3=$stmt3->fetchAll(PDO::FETCH_ASSOC); 
-
-// $sqlquery4 = "INSERT INTO tbl_docu_request (resident_no ,presented_id, ID_number, purpose, pdffile) 
+// $certDetailsquery4 = "INSERT INTO tbl_docu_request (resident_no ,presented_id, ID_number, purpose, pdffile) 
 //             VALUES (:residentno,:presentedid, :IDnumber, :purpose, :filenames);";
 // $alldatatorequest = [
 //     ':residentno' => $residentno,
@@ -59,8 +51,8 @@ $issuingdeptno = null;
 //     ':purpose' => $purpose,
 //     ':filenames' => $fileName
 // ];
-// $stmt3 = $pdo->prepare($sqlquery4);
-// $stmt3->execute($alldatatorequest);
+// $certDetailsstmt = $pdo->prepare($certDetailsquery);
+// $certDetailsstmt->execute($alldatatorequest);
 
 
 // $request_id = $pdo->lastInsertId();
@@ -71,34 +63,36 @@ $issuingdeptno = null;
 // $AgeResult= $stmt5->fetchAll();
 // $Age=$AgeResult;
 
-foreach($results as $officials){    
-
-    $officialname[]=$officials['official_name'];
-}
-
-// $logo=[];
-
-// foreach($results3 as $filename){
-//     $logo[]=$filename['filename'];
-// }
-
 // Define directory for saving the PDF
 $directory = "certificate_of_businesspermit/";
 $fileName = $_SERVER['DOCUMENT_ROOT'] . "/BIMS-with-Template/documents/certificate_of_businesspermit/generated_pdf_" . $nowtime . ".pdf";
 
+function connecttodb(){
+    global $pdo;
+    require_once('../includes/connecttodb.php');
+    return $pdo;
+}
 class MYPDF extends TCPDF {
     
     //Page header
     public function Header() {
+
+        $imgquery="SELECT * FROM `certificate-img`";
+        $imgstmt=connecttodb()->prepare($imgquery);
+        $imgstmt->execute();
+        $imglogo = $imgstmt->fetchAll(PDO::FETCH_ASSOC); 
         
         // Logo
-        $this->Image("images/BagongPinas.png", 10, 5, 25, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false);
+        foreach($imglogo as $logo){
+            $this->Image("images/". $logo['position'], 10, 5, 25, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false);
         
-        $this->Image("images/CaloocanCityLogo.png", 35, 8, 23, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false);
-
-        $this->Image("images/Brgy177Logo.png", 30, 5, 155, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false);
-
-        $this->Image("images/Brgy177.png", 160, 8, 25, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false);
+            $this->Image("images/".$logo['position'], 35, 8, 23, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false);
+    
+            $this->Image("images/".$logo['position'], 30, 5, 155, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false);
+    
+            $this->Image("images/".$logo['position'], 160, 8, 25, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false);
+        
+        }
 
         $this->SetLineWidth(0); 
 
@@ -120,7 +114,20 @@ class MYPDF extends TCPDF {
          // Draw a line above the footer
          $this->Line(10, 280, 200, 280);
     }
+
+
 }
+
+// function fetchwatermark(){
+//     include_once('../includes/connecttodb.php');
+
+//     $imgquery="SELECT * FROM `certificate-img` WHERE purpose='watermark'";
+//     $imgstmt=$pdo->prepare($imgquery);
+//     $imgstmt->execute();
+
+//     return $imgstmt->fetchColumn(); 
+
+// }
 
 $pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, 'Letter', true, 'UTF-8', false);
 
@@ -129,7 +136,7 @@ $pdf = new MYPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8',
 // set document information
 $pdf->SetCreator(PDF_CREATOR);
 $pdf->SetAuthor('Nicola Asuni');
-$pdf->SetTitle('Generate Certificate of Business Permit');
+$pdf->SetTitle('Generate Business Permit');
 $pdf->SetSubject('TCPDF Tutorial');
 $pdf->SetKeywords('TCPDF, PDF, example, test, guide');
 
