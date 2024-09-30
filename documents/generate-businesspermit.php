@@ -67,32 +67,53 @@ $issuingdeptno = null;
 $directory = "certificate_of_businesspermit/";
 $fileName = $_SERVER['DOCUMENT_ROOT'] . "/BIMS-with-Template/documents/certificate_of_businesspermit/generated_pdf_" . $nowtime . ".pdf";
 
-function connecttodb(){
-    global $pdo;
-    require_once('../includes/connecttodb.php');
-    return $pdo;
-}
+// function connecttodb(){
+//     global $pdo;
+//     require_once('../includes/connecttodb.php');
+//     return $pdo;
+// }
 class MYPDF extends TCPDF {
     
     //Page header
     public function Header() {
 
-        $imgquery="SELECT * FROM `certificate-img`";
-        $imgstmt=connecttodb()->prepare($imgquery);
+        global $pdo; 
+        require_once('../includes/connecttodb.php');
+
+        $imgquery="SELECT `filename` FROM `certificate-img`";
+        $imgstmt=$pdo->prepare($imgquery);
         $imgstmt->execute();
         $imglogo = $imgstmt->fetchAll(PDO::FETCH_ASSOC); 
-        
-        // Logo
-        foreach($imglogo as $logo){
-            $this->Image("images/". $logo['position'], 10, 5, 25, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false);
-        
-            $this->Image("images/".$logo['position'], 35, 8, 23, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false);
-    
-            $this->Image("images/".$logo['position'], 30, 5, 155, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false);
-    
-            $this->Image("images/".$logo['position'], 160, 8, 25, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false);
-        
+
+    // If images exist, handle them properly
+    if (!empty($imglogo)) {
+        // Collect filenames in an array (or process them directly)
+        global $logo;
+        $logo = [];
+        foreach($imglogo as $seallogo){
+            $logo[] = $seallogo['filename']; // Collecting each filename
         }
+
+        // Check if the required images are set in the $logo array before using them
+        if (isset($logo[0])) {
+            $this->Image("images/" . $logo[0], 10, 5, 25, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false); // First image
+        }
+        
+        if (isset($logo[1])) {
+            $this->Image("images/" . $logo[1], 35, 8, 23, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false); // Second image
+        }
+
+        if (isset($logo[2])) {
+            $this->Image("images/" . $logo[2], 30, 5, 155, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false); // Third image
+        }
+
+        if (isset($logo[3])) {
+            $this->Image("images/" . $logo[3], 160, 8, 25, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false); // Fourth image
+        }
+    } else {
+        // Handle the case when no images are returned by the query
+        echo "No logos found in the database.";
+    }
 
         $this->SetLineWidth(0); 
 
@@ -175,7 +196,7 @@ $pdf->AddPage();
 
 // Add image watermark (with transparency)
 $pdf->SetAlpha(0.3); // Set transparency
-$pdf->Image('images/watermark.png', -18, 20, 280, 0, 'PNG', '', '', false, 300, '', false, false, 0); // X, Y, Width, Height
+$pdf->Image('images/'.$logo[4], -18, 20, 280, 0, 'PNG', '', '', false, 300, '', false, false, 0); // X, Y, Width, Height
 $pdf->SetAlpha(1); // Reset transparenc
 
 $pdf->SetTopMargin(35);
