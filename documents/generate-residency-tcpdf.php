@@ -167,8 +167,8 @@ if (@file_exists(dirname(__FILE__).'/lang/eng.php')) {
 $pdf->AddPage();
 
 // Add image watermark (with transparency)
-$pdf->SetAlpha(50); // Set transparency
-$pdf->Image('images/watermark.png', 50, 100, 100, 0, '', '', '', false, 300, '', false, false, 0); // X, Y, Width, Height
+$pdf->SetAlpha(0.3); // Set transparency
+$pdf->Image('images/watermark.png', 0, 25, 220, 0, 'PNG', '', '', false, 300, '', false, false, 0); // X, Y, Width, Height
 $pdf->SetAlpha(1); // Reset transparenc
 
 $pdf->SetTopMargin(35);

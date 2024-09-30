@@ -144,7 +144,7 @@ $pdf->setFooterFont(Array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
 $pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
 
 // set margins
-$pdf->SetMargins(0, PDF_MARGIN_TOP, 5);
+$pdf->SetMargins(20, PDF_MARGIN_TOP, 20);
 $pdf->SetHeaderMargin(PDF_MARGIN_HEADER);
 $pdf->SetFooterMargin(PDF_MARGIN_FOOTER);
 
@@ -167,8 +167,8 @@ if (@file_exists(dirname(__FILE__).'/lang/eng.php')) {
 $pdf->AddPage();
 
 // Add image watermark (with transparency)
-$pdf->SetAlpha(50); // Set transparency
-$pdf->Image('images/watermark.png', 6, 20, 220, 240, '', '', '', false, 300, '', false, false, 0); // X, Y, Width, Height
+$pdf->SetAlpha(0.3); // Set transparency
+$pdf->Image('images/watermark.png', -18, 20, 280, 0, 'PNG', '', '', false, 300, '', false, false, 0); // X, Y, Width, Height
 $pdf->SetAlpha(1); // Reset transparenc
 
 $pdf->SetTopMargin(35);
@@ -179,26 +179,19 @@ $businessname="WENZEL HARDWARE";
 
 // set some text to print
 $html =
-    '<table>
-        <tr>
-          <br>
+    '<div>
+        <h3 class="certi"> TANGGAPAN NG PUNONG BARANGAY </h3>
+        <h1 class="bpermit"> SECURING BUSINESS PERMIT </h1>
 
-            <td class="certbody">
-                <h3 class="certi"> TANGGAPAN NG PUNONG BARANGAY </h3>
-                <h1 class="bpermit"> SECURING BUSINESS PERMIT </h1>
+        <br><br>
 
-                <br><br>
-
-                <p> Ang pagpapatunay na ito ipinagkaloob sa kahilingan ni <b class="bold">'.'  '.$name. '  '.'</b></p>
-                <p> upang magamit para sa kaniyang<b class="bold">'.'  '.$bpermit.' '.'</b> na may pangalang <b class="bold">'.' '.$businessname.'</b></p>
-                <p> na kasalukuyang matatagpuan sa <b class="bold">'.' '.$address.' '.'</b> na nasasakupan ng Barangay 177, Sona 15, Distrito 1, Lungsod ng Caloocan.</p>  
-                
-                <p class="p1"> Ipinagkaloob ngayong '.date("d").'th day of '.date('F Y').' sa tanggapan ng </p>
-                <p class="p2"> Barangay 177, Cielito Homes Subdivision, Camarin, Lungsod ng Caloocan. </p>
-
-            </td>
-        </tr>
-    </table>
+        <p> Ang pagpapatunay na ito ipinagkaloob sa kahilingan ni <b class="bold">'.'  '.$name. '  '.'</b></p>
+        <p> upang magamit para sa kaniyang<b class="bold">'.'  '.$bpermit.' '.'</b> na may pangalang <b class="bold">'.' '.$businessname.'</b></p>
+        <p> na kasalukuyang matatagpuan sa <b class="bold">'.' '.$address.' '.'</b> na nasasakupan ng Barangay 177, Sona 15, Distrito 1, Lungsod ng Caloocan.</p>  
+        
+        <p class="p1">Ipinagkaloob ngayong '.date("d").'th day of '.date('F Y').' sa tanggapan ng </p>
+        <p class="p2"> Barangay 177, Cielito Homes Subdivision, Camarin, Lungsod ng Caloocan. </p>
+    </div>
     
     <style>
 
@@ -223,7 +216,6 @@ $html =
         }
 
         .p1{
-            text-align: right;
             font-size: 15px;
         }
 
