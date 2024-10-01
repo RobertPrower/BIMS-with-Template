@@ -46,15 +46,16 @@ CREATE TABLE `certificate-img` (
   `purpose` varchar(255) NOT NULL,
   `filename` varchar(255) NOT NULL,
   PRIMARY KEY (`img_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `certificate-img` */
 
 insert  into `certificate-img`(`img_id`,`purpose`,`filename`) values 
-(1,'City Logo','CaloocanCityLogo.png'),
-(2,'Barangay Logo','Brgy177.png'),
-(3,'Government Logo','BagongPinas.png'),
-(4,'watermark','watermark.png');
+(1,'Government Logo','BagongPinas.png'),
+(2,'City Logo','CaloocanCityLogo.png'),
+(3,'Barangay Logo','Brgy177Logo.png'),
+(4,'Barangay Title','Brgy177.png'),
+(5,'Watermark','watermark.png');
 
 /*Table structure for table `departments_list` */
 
@@ -389,7 +390,7 @@ CREATE TABLE `tbl_cert_audit_trail` (
   CONSTRAINT `edited_by_fk` FOREIGN KEY (`edited_by_no`) REFERENCES `tbl_username` (`username_id`),
   CONSTRAINT `issued_by_fk` FOREIGN KEY (`issued_by_no`) REFERENCES `tbl_username` (`username_id`),
   CONSTRAINT `recovered_by_fk` FOREIGN KEY (`recovered_by_no`) REFERENCES `tbl_username` (`username_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
 
 /*Data for the table `tbl_cert_audit_trail` */
 
@@ -406,7 +407,8 @@ insert  into `tbl_cert_audit_trail`(`audit_trail_id`,`issuing_dept_no`,`issued_b
 (10,NULL,NULL,'2024-09-28','08:33:08','2024-12-28',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
 (11,NULL,NULL,'2024-09-28','08:33:43','2024-12-28',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
 (12,NULL,NULL,'2024-09-28','08:41:11','2024-12-28',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(13,NULL,NULL,'2024-09-28','08:41:21','2024-12-28',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+(13,NULL,NULL,'2024-09-28','08:41:21','2024-12-28',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(14,NULL,NULL,'2024-09-30','14:51:35','2024-12-30',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 
 /*Table structure for table `tbl_docu_request` */
 
@@ -480,7 +482,7 @@ CREATE TABLE `tbl_documents` (
   CONSTRAINT `exca_fk` FOREIGN KEY (`Excavation_Permits`) REFERENCES `tbl_excavation_permits` (`exca_permit_id`),
   CONSTRAINT `f_permit_fk` FOREIGN KEY (`Fencing_Permits`) REFERENCES `tbl_fencing_permit` (`fencing_permit_id`),
   CONSTRAINT `tprs_fk` FOREIGN KEY (`TPRS`) REFERENCES `tbl_tprs` (`tprs_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
 
 /*Data for the table `tbl_documents` */
 
@@ -497,7 +499,8 @@ insert  into `tbl_documents`(`docu_id`,`Barangay_Clearance`,`Certificate_of_Resi
 (10,NULL,8,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
 (11,NULL,9,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
 (12,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(13,NULL,11,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+(13,NULL,11,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(14,NULL,12,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 
 /*Table structure for table `tbl_excavation_permits` */
 
