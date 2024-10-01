@@ -24,7 +24,7 @@ foreach($brgyofficials as $officialname){
 
 $nowdate= date("Y-m-d H:i:s"); //Get the date now
 $nowtime = time(); //Get the time now
-$fileName = "certificate_of_businesspermit/"."generated_pdf_" . time() . ".pdf";
+$fileName = "certificate_of_buildingpermit/"."generated_pdf_" . time() . ".pdf";
 $username = null;
 $issuingdeptno = null;
 // $residentsince=$_POST['r_since'];
@@ -70,8 +70,8 @@ $issuingdeptno = null;
 // $Age=$AgeResult;
 
 // Define directory for saving the PDF
-$directory = "certificate_of_businesspermit/";
-$fileName = $_SERVER['DOCUMENT_ROOT'] . "/BIMS-with-Template/documents/certificate_of_businesspermit/generated_pdf_" . $nowtime . ".pdf";
+$directory = "certificate_of_buildingpermit/";
+$fileName = $_SERVER['DOCUMENT_ROOT'] . "/BIMS-with-Template/documents/certificate_of_buildingpermit/generated_pdf_" . $nowtime . ".pdf";
 
 // function connecttodb(){
 //     global $pdo;
@@ -200,7 +200,6 @@ class MYPDF extends TCPDF {
         
         $this->Image("images/CaloocanCityLogo.png", 175, 258, 15, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false);
 
-
         $this->Image("images/watermark.png", 188, 256, 20, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false);
 
    
@@ -211,7 +210,6 @@ class MYPDF extends TCPDF {
          $this->Line(10, 280, 200, 280);
     }
 
-
 }
 
 $pdf = new MYPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, 'LETTER', true, 'UTF-8', false);
@@ -219,7 +217,7 @@ $pdf = new MYPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, 'LETTER', true, 'UTF-8', false)
 // set document information
 $pdf->SetCreator(PDF_CREATOR);
 $pdf->SetAuthor('Nicola Asuni');
-$pdf->SetTitle('Generate Business Permit');
+$pdf->SetTitle('Generate Building Permit');
 $pdf->SetSubject('TCPDF Tutorial');
 $pdf->SetKeywords('TCPDF, PDF, example, test, guide');
 
@@ -293,30 +291,29 @@ if (date('m') == "01") {
 
 $name = "Roberto Lumauig Salas Sr";
 $address="Blk 8 Lot 4 Jeremiah st Cielito Homes Camarin Caloocan City";
-$bpermit="Business Permit (Hardware Supplies)";
+$bpermit="Building Permit (Hardware Supplies)";
 $storetype = "Sari-Sari Store";
-$businessname="WENZEL HARDWARE";
+$binfo="Securing Building Permit (Renovation/Extension)";
 
 // set some text to print
 $html =
     '<div class="body">
         <br><br>
         <h1 class="certi"> TANGGAPAN NG PUNONG BARANGAY </h1>
-        <h1 class="bpermit"> SECURING BUSINESS PERMIT </h1>
+        <h1 class="bpermit"> SECURING BUILDING PERMIT </h1>
 
         <br><br>
 
-        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Ito ay nagpapatunay na ang  <b class="bold">'.'  '.$businessname. '  '.'</b> na pag-aari ni <b class="bold">'.'  '.$name. '  '.'</b> na matatagpuan sa 
-        Blk 8 Lot 4 Jeremiah st Cielito Homes Camarin Caloocan City na sasakopan ng Barangay na ito ay pinahihintulutan namagbukas/magpatuloy ng 
-        kanilang negosyong  <b class="bold">'.'  '.$storetype. '  '.'</b> at pagkilos nangangailangan ng pahintulot.</p>
+        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Sa pamamagitan nito ay pinatutunayan na si <b class="bold">'.'  '.$name. '  '.'</b>
+         na kasulukuyang naninirahan sa <b class="bold">'.' '.$address. ' '.'</b> na nasasakupan ng Barangay 177, Sona 15, Distrito 1, Lungsod ng Caloocan.
+        </p>
 
-        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Ang pagpapatunay na ito ay ipinagkaloob sa kahilingan ni <b class="bold">'.'  '.$name. '  '.'</b> upang magamit sa kanilang inilahad na negosyo/hanapbuhay,
-         ayon sa itinadhana ng seksyon Bilang 17 ng Bagong Kodigo ng Pamahalaang Lokal.</p>
+        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Ang pagpapatunay na ito ay ipinagkaloob sa kahilingan ni <b class="bold">'.'  '.$name. '  '.'</b> upang magamit sa kaniyang <b class="bold">'.' '.$binfo.' '.'</b>
+         na matatagpuan sa <b class="bold">'.' '.$address.' '.'</b>. na nasasakupan ng Barangay 177, Sona 15, Distrito 1, Lungsod ng Caloocan.
+         </p>
 
-         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Mapapawalang bisa ito sa oras na mapatunayang lumabag sa panuntunan ng Revenue Code, gayundin ang hindi pagcomplay/pagtugon sa hinihinging requirements ng Tanggapan ng Baranagy</p>
-         
-        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ipinagkaloob ngayong <b>ika-'.date("j").' ng '.$month.', '.date('Y').'</b> sa tanggapan ng Barangay 177, Cielito Homes Subdivision, Camarin, Lungsod ng Caloocan.</p>
-        
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ipinagkaloob ngayong <b>ika-'.date("j").' ng '.$month.', '.date('Y').'</b> sa tanggapan ng Barangay 177, Cielito Homes Subdivision, Camarin, Lungsod ng Caloocan.</p>
+                
     </div>
     
     <style>
