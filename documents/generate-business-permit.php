@@ -1,7 +1,9 @@
 <?php
 
 require_once('tcpdf/tcpdf.php');
+global $pdo;
 include_once('../includes/connecttodb.php');
+include_once('../includes/anti-SQLInject.php');
 
 date_default_timezone_set('Asia/Manila');
 
@@ -11,73 +13,129 @@ $nowtime = time(); // Timestamp to generate a unique filename
 
 date_default_timezone_set('Asia/Manila');
 
-$brgyquery="SELECT * FROM brgy_officials";
-$brgystmt=$pdo->prepare($brgyquery);
-$brgystmt->execute();
-$brgyofficials=$brgystmt->fetchAll(PDO::FETCH_ASSOC); 
+if($_SERVER['REQUEST_METHOD'] === 'POST'){
+    $brgyquery="SELECT * FROM brgy_officials";
+    $brgystmt=$pdo->prepare($brgyquery);
+    $brgystmt->execute();
+    $brgyofficials=$brgystmt->fetchAll(PDO::FETCH_ASSOC); 
 
-foreach($brgyofficials as $officialname){
+    foreach($brgyofficials as $officialname){
 
-    $official[] = $officialname['official_name'];
+        $official[] = $officialname['official_name'];
 
+    }
+
+    $nowdate= date("Y-m-d H:i:s"); //Get the date now
+    $nowtime = time(); //Get the time now
+    $fileName = "generated_pdf_" . time() . ".pdf";
+    $username = null;
+    $issuingdeptno = null;
+
+    $ID = $_POST['id_to_record'];
+    $isResident = ($_POST['res_sta']=="RESIDENT")? "RESIDENT" : "NON_RESIDENT" ; 
+
+    $fname=sanitizeData(utf8_decode($_POST['first_name']));
+    $mname=sanitizeData(utf8_decode($_POST['middle_name']));
+    $lname=sanitizeData(utf8_decode($_POST['last_name']));
+    $suffix = (isset($_POST['suffix']))? $suffix=$_POST['suffix']: null ;
+
+    $fullname = $fname .' '. $mname .' '. $lname.' '. $suffix;
+
+
+    $presentedid=sanitizeData($_POST['presented_id']);
+    $IDnumber=sanitizeData($_POST['id_num']);
+
+    $business_name = sanitizeData($_POST['business_name']);
+    $business_hnum= sanitizeData($_POST['business_hnum']);
+    $business_street= sanitizeData($_POST['business_street']);
+    $business_subd = sanitizeData($_POST['business_subd']);
+    $businessaddress = $business_hnum .' '. $business_street. ' '. $business_subd;
+    $business_type= sanitizeData($_POST['business_type']);
+
+    $bussquery = "SET @quarter = get_quarter(CURDATE());
+
+                INSERT INTO tbl_business_permits (year_quarter, store_name, blg_house_no, street, subdivision, type_of_buss)
+                VALUES (@quarter, ?, ?, ?, ?, ?);";
+    $bussstmt = $pdo->prepare($bussquery);
+    $bussstmt->execute([$business_name, $business_hnum, $business_street, $business_subd, $business_type]);
+    $bussstmt->closeCursor(); 
+
+    $determinedocuquery = "CALL determine_docu_type('Business_Permits');";
+    $determinedocustmt = $pdo->prepare($determinedocuquery);
+    $determinedocustmt->execute();
+    $determinedocustmt->closeCursor(); // Ensures all results are fetched or skipped
+
+    $last_id = $pdo->lastInsertId();
+
+    $quarterquery="SELECT year_quarter FROM tbl_business_permits WHERE business_id = ?";
+    $quarterstmt=$pdo->prepare($quarterquery);
+    $quarterstmt->execute([$last_id]);
+    $year_quarter= $quarterstmt->fetchColumn();
+
+    $auditTrailquery= "
+                INSERT INTO tbl_cert_audit_trail(issuing_dept_no, datetime_issued, expiration)
+                VALUES (?, ?, DATE_ADD(CURDATE(), INTERVAL 1 YEAR));
+                ";
+    $auditTrailstmt=$pdo->prepare($auditTrailquery);
+    $auditTrailstmt->execute([$issuingdeptno, $nowdate]);
+
+
+
+    if($isResident =="RESIDENT"){
+        $certDetailsquery = "INSERT INTO tbl_docu_request (resident_no ,presented_id, ID_number, purpose, pdffile) 
+                    VALUES (:residentno,:presentedid, :IDnumber, :purpose, :filenames);";
+        $alldatatorequest = [
+            ':residentno' => $ID,
+            ':presentedid' => $presentedid,
+            ':IDnumber' => $IDnumber,
+            ':purpose' => "Getting Business Permit",
+            ':filenames' => $fileName
+        ];
+        $certDetailsstmt = $pdo->prepare($certDetailsquery);
+        $certDetailsstmt->execute($alldatatorequest);
+
+        $getimagequery = "SELECT img_filename FROM resident where resident_id = ?";
+        $getimagestmt = $pdo->prepare($getimagequery);
+        $getimagestmt->execute([$ID]);
+        $image = $getimagestmt->fetchColumn();
+
+    }else{
+        $certDetailsquery = "INSERT INTO tbl_docu_request (nresident_no ,presented_id, ID_number, purpose, pdffile) 
+                    VALUES (:residentno,:presentedid, :IDnumber, :purpose, :filenames);";
+        $alldatatorequest = [
+            ':residentno' => $ID,
+            ':presentedid' => $presentedid,
+            ':IDnumber' => $IDnumber,
+            ':purpose' => "Getting Business Permit",
+            ':filenames' => $fileName
+        ];
+        $certDetailsstmt = $pdo->prepare($certDetailsquery);
+        $certDetailsstmt->execute($alldatatorequest);
+
+        $getimagequery = "SELECT img_filename FROM non_resident where nresident_id = ?";
+        $getimagestmt = $pdo->prepare($getimagequery);
+        $getimagestmt->execute([$ID]);
+        $image = $getimagestmt->fetchColumn();
+
+    }    
+
+    $requestquery = "SELECT get_max_request_id() AS request_id";
+    $requeststmt = $pdo->prepare($requestquery);
+    $requeststmt -> execute();        
+    $last_requestid= $requeststmt->fetchColumn();
+ 
+
+
+}else{
+    exit("Access Denied");
 }
 
-$nowdate= date("Y-m-d H:i:s"); //Get the date now
-$nowtime = time(); //Get the time now
-$fileName = "certificate_of_businesspermit/"."generated_pdf_" . time() . ".pdf";
-$username = null;
-$issuingdeptno = null;
-// $residentsince=$_POST['r_since'];
-// $completeaddress=utf8_decode($_POST['address']);
-// $fname=utf8_decode($_POST['firstname']);
-// $mname=utf8_decode($_POST['middlename']);
-// $lname=utf8_decode($_POST['lastname']);
 
-// $suffix = (isset($_POST['suffix']))? $suffix=$_POST['suffix']: null ;
-
-// $presentedid=$_POST['presented_id'];
-// $purpose=$_POST['purpose'];
-// $residentno=($_POST['resident_no']);
-// $IDnumber=$_POST['IDnum'];
-
-// $auditTrailquery= "CALL determine_docu_type('Certificate_of_Residency'); 
-//             INSERT INTO tbl_cert_audit_trail(issuing_dept_no, date_issued, expiration, time_issued)
-//             VALUES (?,?,DATE_ADD(CURDATE(), INTERVAL 3 MONTH), CURTIME())";
-// $auditTrailstmt=$pdo->prepare($auditTrailquery);
-// $auditTrailstmt->execute([$issuingdeptno, $nowdate]);
-// // Close the cursor of the previous statement
-// $auditTrailstmt->closeCursor();
-
-// $certDetailsquery4 = "INSERT INTO tbl_docu_request (resident_no ,presented_id, ID_number, purpose, pdffile) 
-//             VALUES (:residentno,:presentedid, :IDnumber, :purpose, :filenames);";
-// $alldatatorequest = [
-//     ':residentno' => $residentno,
-//     ':presentedid' => $presentedid,
-//     ':IDnumber' => $IDnumber,
-//     ':purpose' => $purpose,
-//     ':filenames' => $fileName
-// ];
-// $certDetailsstmt = $pdo->prepare($certDetailsquery);
-// $certDetailsstmt->execute($alldatatorequest);
-
-
-// $request_id = $pdo->lastInsertId();
-
-// $sqlquery5="SELECT age FROM tbl_docu_request WHERE request_id = ?";
-// $stmt5=$pdo->prepare($sqlquery5);
-// $stmt5->execute([$request_id]);
-// $AgeResult= $stmt5->fetchAll();
-// $Age=$AgeResult;
 
 // Define directory for saving the PDF
-$directory = "certificate_of_businesspermit/";
-$fileName = $_SERVER['DOCUMENT_ROOT'] . "/BIMS-with-Template/documents/certificate_of_businesspermit/generated_pdf_" . $nowtime . ".pdf";
-
-// function connecttodb(){
-//     global $pdo;
-//     require_once('../includes/connecttodb.php');
-//     return $pdo;
-// }
+$directory = "business_permits/";
+$fileName = $_SERVER['DOCUMENT_ROOT'] . "/BIMS-with-Template/documents/business_permits/generated_pdf_" . $nowtime . ".pdf";
+$filename= "generated_pdf_" . $nowtime . ".pdf";
 class MYPDF extends TCPDF {
 
     public function DrawGradient($x, $y, $w, $h, $color1, $color2) {
@@ -111,6 +169,7 @@ class MYPDF extends TCPDF {
         $imgstmt->execute();
         $imglogo = $imgstmt->fetchAll(PDO::FETCH_ASSOC); 
 
+        $pdo=null;
         // If images exist, handle them properly
         if (!empty($imglogo)) {
             // Collect filenames in an array (or process them directly)
@@ -180,8 +239,10 @@ class MYPDF extends TCPDF {
         $this->SetXY(25, 263); 
         $this->Cell(5, 10, "Wenzel", 0, 0, 'C', false, '', 0, false, 'T', 'M');
 
+        global $year_quarter;
+
         $this->SetXY(25, 266); 
-        $this->Cell(5, 10, "Q1-Q2", 0, 0, 'C', false, '', 0, false, 'T', 'M');
+        $this->Cell(5, 10, $year_quarter, 0, 0, 'C', false, '', 0, false, 'T', 'M');
 
         $this->SetXY(25, 269); 
         $this->Cell(5, 10, "May Bisa Hanggang ika-Hunyo 2024", 0, 0, 'C', false, '', 0, false, 'T', 'M');
@@ -194,14 +255,14 @@ class MYPDF extends TCPDF {
         // Add bottom-right aligned text (default color)
         $this->MultiCell(0, 5, "NOT VALID WITHOUT \n DRY SEAL", 0, 'C', 0, 1, '', '', true);
 
-        $this->Image("images/Brgy177.png", 145, 258, 15, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false);
+        global $logo; 
+        $this->Image("images/".$logo[3], 145, 258, 15, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false);
 
-        $this->Image("images/BagongPinas.png", 160, 258, 15, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false);
+        $this->Image("images/".$logo[0], 160, 258, 15, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false);
         
-        $this->Image("images/CaloocanCityLogo.png", 175, 258, 15, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false);
+        $this->Image("images/".$logo[1], 175, 258, 15, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false);
 
-
-        $this->Image("images/watermark.png", 188, 256, 20, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false);
+        $this->Image("images/".$logo[4], 188, 256, 20, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false);
 
    
 
@@ -263,54 +324,20 @@ $pdf->SetAlpha(1); // Reset transparenc
 
 $pdf->SetTopMargin(35);
 
-if (date('m') == "01") {
-    $month = "Inero";
-} elseif (date('m') == "02") {
-    $month = "Pebrero";
-} elseif (date('m') == "03") {
-    $month = "Marso";
-} elseif (date('m') == "04") {
-    $month = "Abril";
-} elseif (date('m') == "05") {
-    $month = "Mayo";
-} elseif (date('m') == "06") {
-    $month = "Hunyo";
-} elseif (date('m') == "07") {
-    $month = "Hulyo";
-} elseif (date('m') == "08") {
-    $month = "Agosto";
-} elseif (date('m') == "09") {
-    $month = "Setyembre";
-} elseif (date('m') == "10") {
-    $month = "Oktubre";
-} elseif (date('m') == "11") {
-    $month = "Nobyembre";
-} elseif (date('m') == "12") {
-    $month = "Disyembre";
-} else {
-    $month = "Invalid month";
-}
-
-$name = "Roberto Lumauig Salas Sr";
-$address="Blk 8 Lot 4 Jeremiah st Cielito Homes Camarin Caloocan City";
-$bpermit="Business Permit (Hardware Supplies)";
-$storetype = "Sari-Sari Store";
-$businessname="WENZEL HARDWARE";
+require_once('includes/tagalogmonth.php');
 
 // set some text to print
 $html =
     '<div class="body">
-        <br><br>
+        <br>
         <h1 class="certi"> TANGGAPAN NG PUNONG BARANGAY </h1>
         <h1 class="bpermit"> SECURING BUSINESS PERMIT </h1>
+        <br>    
+        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Ito ay nagpapatunay na ang  <b class="bold">'.'  '.$business_name. '  '.'</b> na pag-aari ni <b class="bold">'.'  '.$fullname. '  '.'</b> na matatagpuan sa 
+        <b class="bold">'.'  '.$businessaddress. '  '.'</b> na sasakopan ng Barangay na ito ay pinahihintulutan namagbukas/magpatuloy ng 
+        kanilang negosyong  <b class="bold">'.'  '.$business_type. '  '.'</b> at pagkilos nangangailangan ng pahintulot.</p>
 
-        <br><br>
-
-        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Ito ay nagpapatunay na ang  <b class="bold">'.'  '.$businessname. '  '.'</b> na pag-aari ni <b class="bold">'.'  '.$name. '  '.'</b> na matatagpuan sa 
-        Blk 8 Lot 4 Jeremiah st Cielito Homes Camarin Caloocan City na sasakopan ng Barangay na ito ay pinahihintulutan namagbukas/magpatuloy ng 
-        kanilang negosyong  <b class="bold">'.'  '.$storetype. '  '.'</b> at pagkilos nangangailangan ng pahintulot.</p>
-
-        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Ang pagpapatunay na ito ay ipinagkaloob sa kahilingan ni <b class="bold">'.'  '.$name. '  '.'</b> upang magamit sa kanilang inilahad na negosyo/hanapbuhay,
+        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Ang pagpapatunay na ito ay ipinagkaloob sa kahilingan ni <b class="bold">'.'  '.$fullname. '  '.'</b> upang magamit sa kanilang inilahad na negosyo/hanapbuhay,
          ayon sa itinadhana ng seksyon Bilang 17 ng Bagong Kodigo ng Pamahalaang Lokal.</p>
 
          <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Mapapawalang bisa ito sa oras na mapatunayang lumabag sa panuntunan ng Revenue Code, gayundin ang hindi pagcomplay/pagtugon sa hinihinging requirements ng Tanggapan ng Baranagy</p>
@@ -353,7 +380,7 @@ $html =
 // print a block of text using Write()
 $pdf->writeHTML($html, true, false, true, false, '');
 
-$qrContent = 'https://example.com'; // Change this to whatever you want the QR code to link to
+$qrContent = $last_requestid; // Change this to whatever you want the QR code to link to
 
 // Set the QR code style
 $style = array(
@@ -379,7 +406,27 @@ $pdf->SetX(-60);
 
 $pdf->SetDrawColor(0, 0, 0); // Black color
 
-$pdf->Rect(170, 180, 20, 20, 'D');
+$pdf->Rect(170, 180, 30, 30, 'D');
+
+$extension = strtolower(pathinfo($image, PATHINFO_EXTENSION));
+
+if ($extension == "png") {
+    $imagetype = "PNG";
+} elseif ($extension == "jpg") {
+    $imagetype = "JPG";
+} elseif ($extension == "jpeg") {
+    $imagetype = "JPEG";
+} else {
+    $imagetype = "Unknown";
+}
+
+if($isResident){
+    $imagepath = "../includes/img/resident_img/".$image;
+}else{
+    $imagepath = "../includes/img/non_resident_img/".$image;
+}
+  
+$pdf->Image($imagepath, 170, 180, 30, 30, $imagetype, '', '', false, 300, '', false, false, 0); // X, Y, Width, Height
 
 $pdf->Rect(20, 180, 20, 20, 'D');
 
@@ -428,13 +475,13 @@ $pdf->SetFont('cambria', 'B', 14);
 
 $pdf->SetTextColor(0, 0, 0); 
 
-$pdf->SetXY(160, 220); // Position for the tex
+$pdf->SetXY(180, 220); // Position for the tex
 $pdf->Cell(5, 10, "Pinatunayan ni:", 0, 0, 'C', false, '', 0, false, 'T', 'M');
 
 $pdf->SetFont('cambria', 'BU', 12);
 
 $pdf->SetXY(180, 235); 
-$pdf->Cell(5, 10, "KGG. ".strtoupper($official[2]), 0, 0, 'C', false, '', 0, false, 'T', 'M');
+$pdf->Cell(5, 10, strtoupper($official[2]), 0, 0, 'C', false, '', 0, false, 'T', 'M');
 
 $pdf->SetFont('cambria', 'B', 12);
 
@@ -442,8 +489,11 @@ $pdf->SetXY(180, 240);
 $pdf->Cell(5, 10, "KALIHIM BARANGAY", 0, 0, 'C', false, '', 0, false, 'T', 'M');
 
 // ---------------------------------------------------------
-
+$pdo=null;
 //Close and output PDF document
-$pdf->Output('example_003.pdf', 'I');
+$pdf->Output($fileName, 'F');
+
+echo json_encode(["file" => $filename]);
+
 
 ?>

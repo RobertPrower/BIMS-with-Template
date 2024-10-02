@@ -26,6 +26,7 @@ foreach ($results as $row) {
             <button class="btn btn-primary mx-1 viewDocumentsButton" id=vbutton
                 data-id="' . htmlspecialchars($row['request_id']) . '"
                 data-resident_id="' . htmlspecialchars($row['resident/nonres_id']) . '"
+                data-resident-status="' . htmlspecialchars($row['is_resident']) . '"
                 data-date-requested="' . htmlspecialchars($row['date_issued'], ENT_QUOTES) . '"
                 data-expiration-date="' . htmlspecialchars($row['expiration'], ENT_QUOTES) . '"
                 data-first-name="' . htmlspecialchars($row['first_name'], ENT_QUOTES) . '"

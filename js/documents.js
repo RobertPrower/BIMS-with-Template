@@ -152,7 +152,7 @@ $(document).ready(function () {
     $("#searchbox").on("keydown", function () {
       let query = $(this).val();
   
-      if (query.length >= 2) {
+      if (query.length >= 1) {
         //Fetch the results by the fetchResults function above
         fetchResults(query);
       } else {
@@ -283,6 +283,14 @@ $(document).ready(function () {
       $(".agency").prop("hidden", false);
     }
 
+    if(docu_type == "Business Permits"){
+      $(".Business_name,  .Business_address, .Business_type").prop("hidden", false);
+      $("#Business_name").html("<b>Business Name:  </b>" + business_name);
+      $("#Business_address").html("<b>Business Address:  </b>" + business_address);
+      $("#Business_type").html("<b>Business Type:  </b>" + business_type);
+
+    }
+
     //For the status display on the table
     switch (status) {
       case 0:
@@ -400,6 +408,7 @@ $(document).ready(function () {
 
   $("#retrevePDF").click(function () {
     var request_id = $("#request_id").val();
+    var certificate_type = $("#certificate_type").val();
 
     $.ajax({
         url: "includes/documentsoperation.php",
@@ -411,8 +420,18 @@ $(document).ready(function () {
         },
         success: function (response) {
           var data = response[0];
-          var file = data.pdffile
-          var filename = "documents/"+file
+          var file = data.pdffile;
+          
+          switch(certificate_type){
+            case "Business Permits":
+              var filename = "documents/business_permits/"+file;
+            break;
+            case "Certificate of Residency":
+              var filename = "documents/certificate_of_residency/"+file;
+            break;  
+            default:
+              var filename = "unknown file name";
+          }
           // Show the modal
           $("#pdfModal").modal("show");
           $("#generatepdf").attr("src", filename); 

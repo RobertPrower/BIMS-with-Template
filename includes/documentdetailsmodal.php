@@ -8,8 +8,13 @@
     </div>
     <div class="modal-body">
 
+        <!-- Checker for the revoke button -->
         <input hidden id="status" name="status"/> 
+        <!-- Checker for the certiticate_type -->
+        <input hidden id="certiticate_type"/>
+        <!-- Placeholder for the Request ID To be used for AJAX request-->
         <input type="text" hidden id="request_id" name="request_id"/>
+        <!-- Placeholder for the resident or Non resident ID -->
         <input hidden id="resident_id" name="resident_id"/>
 
         <p id="Request_ID"></p>
@@ -38,6 +43,12 @@
         <br>
         <p id="Purpose"></p> 
         <br>
+        <p class="Business_name" id="Business_name" hidden></p> 
+        <br class="Business_name" hidden>
+        <p class="Business_address" id="Business_address" hidden></p> 
+        <br class="Business_address" hidden>
+        <p class="Business_type" id="Business_type" hidden></p> 
+        <br class="Business_type" hidden>
         <p class="agency" hidden></p> 
         <br class="agency" hidden>
         <p id="Status"></p> 

@@ -143,7 +143,9 @@
                                         </div>
                                     </div>
                                 </div>    
+
                                 
+                                <!-- Modal to Display The Document -->
                                 <?php include_once'includes/documentdisplaymodal.php'; ?>
                           </div>
                       </div>
