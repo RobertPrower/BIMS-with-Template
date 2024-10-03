@@ -284,11 +284,31 @@ $(document).ready(function () {
     }
 
     if(docu_type == "Business Permits"){
-      $(".Business_name,  .Business_address, .Business_type").prop("hidden", false);
-      $("#Business_name").html("<b>Business Name:  </b>" + business_name);
-      $("#Business_address").html("<b>Business Address:  </b>" + business_address);
-      $("#Business_type").html("<b>Business Type:  </b>" + business_type);
 
+      $.ajax({
+        type: "POST",
+        url: "includes/documentsoperation.php",
+        data: {OPERATION: "FETCH_BUSINESS_PERMIT", request_id: request_id },
+        dataType: "JSON",
+        success: function (response) {
+
+          var data = response[0];
+          var business_name = data.store_name;
+          var business_address = data.address;
+          var business_type = data.type_of_buss;
+
+          $(".Business_name,  .Business_address, .Business_type").prop("hidden", false);
+          $("#Business_name").html("<b>Business Name:  </b>" + business_name);
+          $("#Business_address").html("<b>Business Address:  </b>" + business_address);
+          $("#Business_type").html("<b>Business Type:  </b>" + business_type);
+    
+          
+        }, error: function (xhr, status, error) {
+          alert("Business Details Not Fetch!! Check your code.");
+        }
+      });
+
+    
     }
 
     //For the status display on the table
@@ -408,7 +428,7 @@ $(document).ready(function () {
 
   $("#retrevePDF").click(function () {
     var request_id = $("#request_id").val();
-    var certificate_type = $("#certificate_type").val();
+    var certificate_type = $(this).data("cert_type");
 
     $.ajax({
         url: "includes/documentsoperation.php",
@@ -432,6 +452,8 @@ $(document).ready(function () {
             default:
               var filename = "unknown file name";
           }
+
+          console.log(filename);
           // Show the modal
           $("#pdfModal").modal("show");
           $("#generatepdf").attr("src", filename); 

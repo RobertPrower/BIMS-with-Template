@@ -5,15 +5,44 @@ global $pdo;
 include_once('../includes/connecttodb.php');
 include_once('../includes/anti-SQLInject.php');
 
-date_default_timezone_set('Asia/Manila');
-
 // Get the current date and time
 $nowdate = date("Y-m-d H:i:s"); // Current date
 $nowtime = time(); // Timestamp to generate a unique filename
+$expirationmonth = date('m', strtotime('+1 year'));
+if ($expirationmonth == "01") {
+    $tagalogexpiremonth = "Inero";
+} elseif ($expirationmonth == "02") {
+    $tagalogexpiremonth = "Pebrero";
+} elseif ($expirationmonth == "03") {
+    $tagalogexpiremonth = "Marso";
+} elseif ($expirationmonth == "04") {
+    $tagalogexpiremonth = "Abril";
+} elseif ($expirationmonth == "05") {
+    $tagalogexpiremonth = "Mayo";
+} elseif ($expirationmonth == "06") {
+    $tagalogexpiremonth = "Hunyo";
+} elseif ($expirationmonth == "07") {
+    $tagalogexpiremonth = "Hulyo";
+} elseif ($expirationmonth == "08") {
+    $tagalogexpiremonth = "Agosto";
+} elseif ($expirationmonth == "09") {
+    $tagalogexpiremonth = "Setyembre";
+} elseif ($expirationmonth == "10") {
+    $tagalogexpiremonth = "Oktubre";
+} elseif ($expirationmonth == "11") {
+    $tagalogexpiremonth = "Nobyembre";
+} elseif ($expirationmonth == "12") {
+    $tagalogexpiremonth = "Disyembre";
+} else {
+    $tagalogexpiremonth = "Invalid month";
+}
 
-date_default_timezone_set('Asia/Manila');
+$expirationday = date('d', strtotime('+1 year'));
+$expirationyear = date('Y', strtotime('+1 year'));
+$expirationdate =$expirationday.' '. $tagalogexpiremonth .' '. $expirationyear;
 
 if($_SERVER['REQUEST_METHOD'] === 'POST'){
+
     $brgyquery="SELECT * FROM brgy_officials";
     $brgystmt=$pdo->prepare($brgyquery);
     $brgystmt->execute();
@@ -65,11 +94,9 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     $determinedocustmt->execute();
     $determinedocustmt->closeCursor(); // Ensures all results are fetched or skipped
 
-    $last_id = $pdo->lastInsertId();
-
-    $quarterquery="SELECT year_quarter FROM tbl_business_permits WHERE business_id = ?";
+    $quarterquery="SELECT year_quarter FROM tbl_business_permits WHERE business_id = (SELECT MAX(business_id) FROM tbl_business_permits)";
     $quarterstmt=$pdo->prepare($quarterquery);
-    $quarterstmt->execute([$last_id]);
+    $quarterstmt->execute();
     $year_quarter= $quarterstmt->fetchColumn();
 
     $auditTrailquery= "
@@ -78,8 +105,6 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
                 ";
     $auditTrailstmt=$pdo->prepare($auditTrailquery);
     $auditTrailstmt->execute([$issuingdeptno, $nowdate]);
-
-
 
     if($isResident =="RESIDENT"){
         $certDetailsquery = "INSERT INTO tbl_docu_request (resident_no ,presented_id, ID_number, purpose, pdffile) 
@@ -123,8 +148,6 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     $requeststmt = $pdo->prepare($requestquery);
     $requeststmt -> execute();        
     $last_requestid= $requeststmt->fetchColumn();
- 
-
 
 }else{
     exit("Access Denied");
@@ -195,7 +218,7 @@ class MYPDF extends TCPDF {
             }
         } else {
             // Handle the case when no images are returned by the query
-            // echo "No logos found in the database.";
+             echo "No logos found in the database.";
         }
 
         
@@ -233,49 +256,46 @@ class MYPDF extends TCPDF {
 
         $this->SetFont('cambria', 'B', 7);
 
-        $this->SetXY(25, 260); 
+        $this->SetXY(25, 276); 
         $this->Cell(5, 10, "Print Issued By", 0, 0, 'C', false, '', 0, false, 'T', 'M');
 
-        $this->SetXY(25, 263); 
+        $this->SetXY(25, 279); 
         $this->Cell(5, 10, "Wenzel", 0, 0, 'C', false, '', 0, false, 'T', 'M');
 
         global $year_quarter;
 
-        $this->SetXY(25, 266); 
+        $this->SetXY(25, 282); 
         $this->Cell(5, 10, $year_quarter, 0, 0, 'C', false, '', 0, false, 'T', 'M');
 
-        $this->SetXY(25, 269); 
-        $this->Cell(5, 10, "May Bisa Hanggang ika-Hunyo 2024", 0, 0, 'C', false, '', 0, false, 'T', 'M');
+        global $expirationdate;
+        $this->SetXY(25, 285); 
+        $this->Cell(5, 10, "May Bisa Hanggang ika-".$expirationdate, 0, 0, 'C', false, '', 0, false, 'T', 'M');
 
         // Position at 15 mm from bottom
         $this->SetY(-15);
         // Set font
         $this->SetFont('Cambria', 'I', 8);
     
+        $this->SetXY(160 ,271 );
         // Add bottom-right aligned text (default color)
         $this->MultiCell(0, 5, "NOT VALID WITHOUT \n DRY SEAL", 0, 'C', 0, 1, '', '', true);
 
         global $logo; 
-        $this->Image("images/".$logo[3], 145, 258, 15, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false);
+        $this->Image("images/".$logo[3], 145, 277, 15, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false);
 
-        $this->Image("images/".$logo[0], 160, 258, 15, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false);
+        $this->Image("images/".$logo[0], 160, 277, 15, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false);
         
-        $this->Image("images/".$logo[1], 175, 258, 15, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false);
+        $this->Image("images/".$logo[1], 175, 277, 15, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false);
 
-        $this->Image("images/".$logo[4], 188, 256, 20, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false);
+        $this->Image("images/".$logo[4], 188, 275, 20, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false);
 
    
-
-        $this->SetLineWidth(0.5); 
-
-         // Draw a line above the footer
-         $this->Line(10, 280, 200, 280);
     }
 
 
 }
 
-$pdf = new MYPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, 'LETTER', true, 'UTF-8', false);
+$pdf = new MYPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, 'A4', true, 'UTF-8', false);
 
 // set document information
 $pdf->SetCreator(PDF_CREATOR);
@@ -319,7 +339,7 @@ $pdf->AddPage();
 
 // Add image watermark (with transparency)
 $pdf->SetAlpha(0.3); // Set transparency
-$pdf->Image('images/'.$logo[4], -10, 20, 280, 0, 'PNG', '', '', false, 300, '', false, false, 0); // X, Y, Width, Height
+$pdf->Image('images/'.$logo[4], -20, 20, 280, 0, 'PNG', '', '', false, 300, '', false, false, 0); // X, Y, Width, Height
 $pdf->SetAlpha(1); // Reset transparenc
 
 $pdf->SetTopMargin(35);
@@ -420,7 +440,7 @@ if ($extension == "png") {
     $imagetype = "Unknown";
 }
 
-if($isResident){
+if($isResident == "RESIDENT"){
     $imagepath = "../includes/img/resident_img/".$image;
 }else{
     $imagepath = "../includes/img/non_resident_img/".$image;

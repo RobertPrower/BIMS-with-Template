@@ -127,13 +127,14 @@ CREATE TABLE `non_resident` (
   PRIMARY KEY (`nresident_id`),
   KEY `nres_audit_trail` (`audit_trail_no`),
   CONSTRAINT `nres_audit_trail` FOREIGN KEY (`audit_trail_no`) REFERENCES `nonres_audit_trail` (`audit_trail_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 /*Data for the table `non_resident` */
 
 insert  into `non_resident`(`nresident_id`,`img_filename`,`last_name`,`first_name`,`middle_name`,`suffix`,`house_num`,`street`,`subdivision`,`district_brgy`,`city`,`province`,`zipcode`,`sex`,`marital_status`,`birth_place`,`birth_date`,`cellphone_num`,`audit_trail_no`,`is_deleted`) values 
 (1,'1images.jpg','Rabanes','Fernan','Jarito','','Blk 9 Lot 3','Kamatis st','Ramirez Subd','Novaliches','Quezon City','Metro Manila','1423','Male','Single','Tuguegarao','1998-06-16','090956565454',1,0),
-(2,'capture_1727173934.jpg','Lim','Nicholas','Mahestro','','12','Zapote Rd','Cielito Homes','Camarin Brgy 175','Caloocan City','Metro Manila','1423','Male','Single','San Nicolas Pangasinan','1998-09-29','0966565666544',2,0);
+(2,'capture_1727173934.jpg','Lim','Nicholas','Mahestro','','12','Zapote Rd','Cielito Homes','Camarin Brgy 175','Caloocan City','Metro Manila','1423','Male','Single','San Nicolas Pangasinan','1998-09-29','0966565666544',2,0),
+(3,'2f070627687d52995cfabf5c1bbde057.jpg','Lim','Mario','Jaen','III','Blk 12 Lot 4','Hillcrest st','Rolling Stone Subd','Novaliches','Quezon City','Metro Manila','1420','Male','Married','Madella Quirino','1990-05-02','090913457854',3,0);
 
 /*Table structure for table `nonres_audit_trail` */
 
@@ -155,13 +156,24 @@ CREATE TABLE `nonres_audit_trail` (
   `datetime_recovered` datetime DEFAULT NULL,
   PRIMARY KEY (`audit_trail_id`),
   KEY `nres_user_fk` (`user_added_no`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 
 /*Data for the table `nonres_audit_trail` */
 
 insert  into `nonres_audit_trail`(`audit_trail_id`,`dept_added_no`,`user_added_no`,`datetime_added`,`dept_edited_no`,`user_edited_no`,`last_edited_datetime`,`dept_deleted_no`,`user_deleted_no`,`datetime_deleted`,`dept_recovered_no`,`user_recovered_no`,`datetime_recovered`) values 
 (1,NULL,NULL,'2024-09-04 10:12:00',NULL,NULL,'2024-09-24 18:04:40',NULL,NULL,'2024-09-25 03:03:50',NULL,NULL,NULL),
-(2,NULL,NULL,'2024-09-24 18:32:14',NULL,NULL,'2024-09-25 03:03:22',NULL,NULL,'2024-09-25 02:46:31',NULL,NULL,NULL);
+(2,NULL,NULL,'2024-09-24 18:32:14',NULL,NULL,'2024-09-25 03:03:22',NULL,NULL,'2024-09-25 02:46:31',NULL,NULL,NULL),
+(3,NULL,NULL,'2024-10-03 00:48:06',NULL,NULL,'2024-10-03 01:46:56',NULL,NULL,NULL,NULL,NULL,NULL),
+(4,NULL,NULL,'2024-10-03 00:48:33',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(5,NULL,NULL,'2024-10-03 00:59:05',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(6,NULL,NULL,'2024-10-03 00:59:35',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(7,NULL,NULL,'2024-10-03 01:02:24',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(8,NULL,NULL,'2024-10-03 01:04:17',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(9,NULL,NULL,'2024-10-03 01:04:34',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(10,NULL,NULL,'2024-10-03 01:07:54',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(11,NULL,NULL,'2024-10-03 01:09:31',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(12,NULL,NULL,'2024-10-03 01:18:04',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(13,NULL,NULL,'2024-10-03 01:18:46',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 
 /*Table structure for table `res_audit_trail` */
 
@@ -357,7 +369,7 @@ CREATE TABLE `tbl_business_permits` (
 /*Data for the table `tbl_business_permits` */
 
 insert  into `tbl_business_permits`(`business_id`,`year_quarter`,`store_name`,`blg_house_no`,`street`,`subdivision`,`type_of_buss`) values 
-(1,'Q3-Q4','Icefrost Water RefillingStation','Blk 8 Lot 19','Genesis st','Cielito Homes','Water Refilling Station');
+(1,'Q3-Q4','Reynaldo Meat Shop','Blk 8 Lot 12','Exodus st','Cielito Homes','Meat Shop');
 
 /*Table structure for table `tbl_cert_audit_trail` */
 
@@ -387,12 +399,14 @@ CREATE TABLE `tbl_cert_audit_trail` (
   CONSTRAINT `edited_by_fk` FOREIGN KEY (`edited_by_no`) REFERENCES `tbl_username` (`username_id`),
   CONSTRAINT `issued_by_fk` FOREIGN KEY (`issued_by_no`) REFERENCES `tbl_username` (`username_id`),
   CONSTRAINT `recovered_by_fk` FOREIGN KEY (`recovered_by_no`) REFERENCES `tbl_username` (`username_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 /*Data for the table `tbl_cert_audit_trail` */
 
 insert  into `tbl_cert_audit_trail`(`audit_trail_id`,`issuing_dept_no`,`issued_by_no`,`datetime_issued`,`expiration`,`edited_by_no`,`datetime_edited`,`deleted_by_no`,`datetime_deleted`,`recovered_by_no`,`datetime_recovered`,`recovered_time`) values 
-(1,NULL,NULL,'2024-10-02 13:15:37','2025-10-02',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+(1,NULL,NULL,'2024-10-03 15:10:14','2025-10-03',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(2,NULL,NULL,'2024-10-03 15:11:39','2025-01-03',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(3,NULL,NULL,'2024-10-03 15:21:39','2025-01-03',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 
 /*Table structure for table `tbl_docu_request` */
 
@@ -425,7 +439,9 @@ CREATE TABLE `tbl_docu_request` (
 /*Data for the table `tbl_docu_request` */
 
 insert  into `tbl_docu_request`(`request_id`,`resident_no`,`nresident_no`,`document_no`,`age`,`presented_id`,`ID_number`,`purpose`,`audit_trail_no`,`pdffile`,`status`,`is_deleted`) values 
-('2024-000001',12,NULL,1,21,'National ID','PCN-1234567890','Getting Business Permit',1,'generated_pdf_1727846137.pdf',0,0);
+('2024-000001',NULL,3,1,34,'National ID','PNC-1234567890','Getting Business Permit',1,'generated_pdf_1727939414.pdf',0,0),
+('2024-000002',8,NULL,2,38,'Passport','PSN-123456788','Meralco Application',2,'certificate_of_residency/generated_pdf_1727939499.pdf',0,0),
+('2024-000003',12,NULL,3,21,'SSS ID','SSS-1233456677','Maynilad Application',3,'certificate_of_residency/generated_pdf_1727940099.pdf',0,0);
 
 /*Table structure for table `tbl_documents` */
 
@@ -450,17 +466,21 @@ CREATE TABLE `tbl_documents` (
   KEY `build_permit_fk` (`Building_Permits`),
   KEY `tprs_fk` (`TPRS`),
   KEY `exca_fk` (`Excavation_Permits`),
+  KEY `indigency_fk` (`Certificate_of_Indigency`),
   CONSTRAINT `bpermit_fk` FOREIGN KEY (`Business_Permits`) REFERENCES `tbl_business_permits` (`business_id`) ON DELETE CASCADE,
   CONSTRAINT `build_permit_fk` FOREIGN KEY (`Building_Permits`) REFERENCES `tbl_building_permits` (`building_permit_id`) ON DELETE CASCADE,
   CONSTRAINT `exca_fk` FOREIGN KEY (`Excavation_Permits`) REFERENCES `tbl_excavation_permits` (`exca_permit_id`) ON DELETE CASCADE,
   CONSTRAINT `f_permit_fk` FOREIGN KEY (`Fencing_Permits`) REFERENCES `tbl_fencing_permit` (`fencing_permit_id`) ON DELETE CASCADE,
+  CONSTRAINT `indigency_fk` FOREIGN KEY (`Certificate_of_Indigency`) REFERENCES `tbl_indigency` (`indigency_id`) ON DELETE CASCADE,
   CONSTRAINT `tprs_fk` FOREIGN KEY (`TPRS`) REFERENCES `tbl_tprs` (`tprs_id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 /*Data for the table `tbl_documents` */
 
 insert  into `tbl_documents`(`docu_id`,`Barangay_Clearance`,`Certificate_of_Residency`,`Certificate_of_Indigency`,`Certificate_of_Good_Moral`,`FTJS`,`Oath_of_Undertaking`,`Business_Permits`,`Building_Permits`,`Excavation_Permits`,`Fencing_Permits`,`TPRS`) values 
-(1,NULL,NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL);
+(1,NULL,NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL),
+(2,NULL,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(3,NULL,2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 
 /*Table structure for table `tbl_excavation_permits` */
 
@@ -490,6 +510,18 @@ CREATE TABLE `tbl_fencing_permit` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Data for the table `tbl_fencing_permit` */
+
+/*Table structure for table `tbl_indigency` */
+
+DROP TABLE IF EXISTS `tbl_indigency`;
+
+CREATE TABLE `tbl_indigency` (
+  `indigency_id` int(55) NOT NULL AUTO_INCREMENT,
+  `agency` varchar(55) DEFAULT NULL,
+  PRIMARY KEY (`indigency_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*Data for the table `tbl_indigency` */
 
 /*Table structure for table `tbl_persons_involved` */
 
@@ -569,7 +601,7 @@ DELIMITER $$
     
       DECLARE new_id INT;
       
-     SET new_id = (SELECT MAX(audit_trail) FROM non_resident) + 1;
+     SET new_id = (SELECT MAX(audit_trail_no) FROM non_resident) + 1;
     IF new_id IS NULL THEN
         SET new_id = 1;
     END IF;

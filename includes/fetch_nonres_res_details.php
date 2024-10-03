@@ -41,6 +41,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         echo json_encode(['error' => 'No resident found']);
         }
 
+    }else{
+        echo json_encode(['error' => 'NO operation recieved']);
     }
         
     $pdo=null;

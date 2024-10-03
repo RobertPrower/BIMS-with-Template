@@ -2,95 +2,63 @@
 
 require_once('tcpdf/tcpdf.php');
 include_once('../includes/connecttodb.php');
-require_once('../includes/anti-SQLInject.php');
-require_once('includes/tagalogmonth.php');
 
+date_default_timezone_set('Asia/Manila');
 
 // Get the current date and time
 $nowdate = date("Y-m-d H:i:s"); // Current date
+$nowtime = time(); // Timestamp to generate a unique filename
 
-if($_SERVER['REQUEST_METHOD']== "POST"){
+date_default_timezone_set('Asia/Manila');
 
-    $nowdate= date("Y-m-d H:i:s"); //Get the date now
-    $nowtime = time(); //Get the time now
-    $fileName = "certificate_of_residency/"."generated_pdf_" . time() . ".pdf";
+$nowdate= date("Y-m-d H:i:s"); //Get the date now
+$nowtime = time(); //Get the time now
+$username = null;
+$issuingdeptno = null;
+// $residentsince=$_POST['r_since'];
+// $completeaddress=utf8_decode($_POST['address']);
+// $fname=utf8_decode($_POST['firstname']);
+// $mname=utf8_decode($_POST['middlename']);
+// $lname=utf8_decode($_POST['lastname']);
 
-    $username = null;
-    $issuingdeptno = null;
-    
-    $residentno = (isset($_POST['residentno']))? $_POST['residentno']:null;
-    $rsince=(isset($_POST['r_since']))? sanitizeData($_POST['r_since']): null;
-    $completeaddress=(isset($_POST['address']))? sanitizeData(utf8_decode($_POST['address'])) : null;
-    $fname=sanitizeData(utf8_decode($_POST['first_name']));
-    $mname=sanitizeData(utf8_decode($_POST['middle_name']));
-    $lname=sanitizeData(utf8_decode($_POST['last_name']));
-    $suffix = (isset($_POST['suffix']))? $suffix=$_POST['suffix']: null ;
+// $presentedid=$_POST['presented_id'];
+// $purpose=$_POST['purpose'];
+// $residentno=($_POST['resident_no']);
+// $IDnumber=$_POST['IDnum'];
 
-    $fullname = $fname .' '. $mname .' '. $lname.' '. $suffix;
+//Fetch the Brgy Officials
+$brgyquery="SELECT * FROM brgy_officials";
+$brgystmt=$pdo->prepare($brgyquery);
+$brgystmt->execute();
+$brgyofficials=$brgystmt->fetchAll(PDO::FETCH_ASSOC); 
 
-    $presentedid=sanitizeData($_POST['presented_id']);
-    $IDnumber=sanitizeData($_POST['id_num']);
-    $purpose = sanitizeData($_POST['purpose']);
+foreach($brgyofficials as $officialname){
 
-    $brgyquery="SELECT * FROM brgy_officials";
-    $brgystmt=$pdo->prepare($brgyquery);
-    $brgystmt->execute();
-    $brgyofficials=$brgystmt->fetchAll(PDO::FETCH_ASSOC); 
+    $official[] = $officialname['official_name'];
 
-    foreach($brgyofficials as $officialname){
-
-        $official[] = $officialname['official_name'];
-
-    }
-
-    //To fetch the logo from the databse
-    $imgquery="SELECT `filename` FROM `certificate-img`";
-    $imgstmt=$pdo->prepare($imgquery);
-    $imgstmt->execute();
-    $imglogo = $imgstmt->fetchAll(PDO::FETCH_ASSOC); 
-
-    $callkagawadquery = "SELECT official_name FROM kagawad";
-    $kagawadstmt=$pdo->prepare($callkagawadquery);
-    $kagawadstmt->execute();
-    $kagawad=$kagawadstmt->fetchAll(PDO::FETCH_ASSOC);
-
-    $docudetailsquery = "CALL determine_docu_type('Certificate_of_Residency')";
-    $docudetailstmt = $pdo->prepare($docudetailsquery);
-    $docudetailstmt->execute();
-    $docudetailstmt->closeCursor();
-
-    // Insert into tbl_cert_audit_trail
-    $auditTrailQuery = "INSERT INTO tbl_cert_audit_trail(issuing_dept_no, datetime_issued, expiration)
-                        VALUES (?, ?, DATE_ADD(CURDATE(), INTERVAL 3 MONTH))";
-    $auditTrailStmt = $pdo->prepare($auditTrailQuery);
-    $auditTrailStmt->execute([$issuingdeptno, $nowdate]);
-
-    // Insert into tbl_docu_request
-    $docuRequestQuery = "INSERT INTO tbl_docu_request (resident_no ,presented_id, ID_number, purpose, pdffile)
-                            VALUES (?, ?, ?, ?, ?)";
-    $docuRequestStmt = $pdo->prepare($docuRequestQuery);
-    $docuRequestStmt->execute([$residentno, $presentedid, $IDnumber, $purpose, $fileName]);
-
-    // Fetch the age and request_id
-    $idquery = "SELECT request_id FROM tbl_docu_request WHERE request_id =(SELECT MAX(request_id) FROM tbl_docu_request)";
-    $idstmt = $pdo->prepare($idquery);
-    $idstmt->execute();
-    $requestid=$idstmt->fetchColumn();
-
-    $pdo=null;
-
-}else{
-    exit("Access Denied");
 }
+
+//Fetch the govenment Seals
+$imgquery="SELECT `filename` FROM `certificate-img`";
+$imgstmt=$pdo->prepare($imgquery);
+$imgstmt->execute();
+$imglogo = $imgstmt->fetchAll(PDO::FETCH_ASSOC); 
+
+//Fetch the kagawad
+$callkagawadquery = "SELECT official_name FROM kagawad";
+$kagawadstmt=$pdo->prepare($callkagawadquery);
+$kagawadstmt->execute();
+$kagawad=$kagawadstmt->fetchAll(PDO::FETCH_ASSOC);
+
 // Define directory for saving the PDF
 $directory = "certificate_of_residency/";
-$fileName = $_SERVER['DOCUMENT_ROOT'] . "/BIMS-with-Template/documents/".$directory."generated_pdf_" . $nowtime . ".pdf";
-$filename= "generated_pdf_" . $nowtime . ".pdf";
+$fileName = $_SERVER['DOCUMENT_ROOT'] . "/BIMS-with-Template/documents/certificate_of_indigency/generated_pdf_" . $nowtime . ".pdf";
+
 class MYPDF extends TCPDF {
     
-    //Page header
+    //Page header public function Header() {
     public function Header() {
-        
+    
         // Logo
         global $imglogo;
         foreach($imglogo as $seallogo){
@@ -112,8 +80,8 @@ class MYPDF extends TCPDF {
         
         $this->SetLineWidth(0); 
 
-         // Draw a line below the header
-         $this->Line(0, 35, 220, 35); 
+            // Draw a line below the header
+            $this->Line(0, 35, 220, 35); 
     }
 
     // Page footer
@@ -181,10 +149,9 @@ $pdf->SetAlpha(0.3); // Set transparency
 $pdf->Image('images/watermark.png', 0, 25, 220, 0, 'PNG', '', '', false, 300, '', false, false, 0); // X, Y, Width, Height
 $pdf->SetAlpha(1); // Reset transparenc
 
-//Set Line in between brgy officials
-$pdf->Line( 61, 35, 61, 280);
-
 $pdf->SetTopMargin(35);
+
+$pdf->Line( 61, 35, 61, 280);
 // set some text to print
 $html =
     '<table>
@@ -234,20 +201,14 @@ $html =
             }
 
             
-    $html .=    '   </td>
+      $html .='</td>
             <td class="certbody">
-                <h1 class="certi"><u>CERTIFICATION</u></h1>
-
-                <h3>  To whom it may concern: </h3>
-
-                <p class="parag">This is to certify that <b class="bold">'.'  '.$fullname. '  '.'</b>
-                 is bonafide resident of this barangay located at<b class="bold">'.'  '.$completeaddress.' '.'</b> SINCE <b class="bold">'.' '.$rsince.' UP TO PRESENT</b>.
-                This certification is being issued upon the request of the above-mentioned name for</p>
-
-                <h1 class="certi"><U>PROOF OF RESIDENCY.</U></h1>
-
-                <p>Given this <b>'.date("d").'th day of  '.date("F").', '.date('Y').'</b>, at Barangay 177, Cielito Homes Subdivision, Camarin, Caloocan City.</p>
-
+                <div style="text-align:center; font-family:\'Cambria\',serif;">
+                    <h2 style="font-size:22px;">PAGPAPATUNAY NA MAHIRAP</h2>
+                    <p style="font-size:16px;">Sa pamamagitan nito ay pinatutunayan ng tanggapang ito na si <b class="bold">ROSADEL T. SANTOME</b>, nakatira sa <strong class="bold">4779 Genesis St., Cielito Homes, Camarin, Caloocan City</strong> ay nabibilang sa mahihirap na mamamayan dito sa aming nasasakupan.</p>
+                    <p style="font-size:16px;">Ang pagpapatunay na ito ay ipinagkaloob upang magamit na basehan upang siya ay makahingi ng tulong na <strong class="bold"><u>MEDICAL ASSISTANCE</u></strong> mula sa tanggapan ng <strong class="bold"><u>MALASAKIT CENTER</u></strong>.</p>
+                    <p style="font-size:16px;">Ipinagkaloob ngayong <strong class="bold">ika-29 ng Pebrero, 2024</strong> sa tanggapan ng <strong class="bold2">Barangay 177, Cielito Homes Subdivision, Camarin, Lungsod ng Caloocan.</strong></p>
+                </div>
             </td>
         </tr>
     </table>
@@ -288,12 +249,17 @@ $html =
             font-size: 22px;
         }
 
+         .bold2{
+            font-weight: bolder;
+            font-size: 18px;
+        }
+
     </style>';
 
 // print a block of text using Write()
 $pdf->writeHTML($html, true, false, true, false, '');
 
-$qrContent = $requestid; 
+$qrContent = '2004-0000001'; // Change this to whatever you want the QR code to link to
 
 // Set the QR code style
 $style = array(
@@ -307,10 +273,6 @@ $style = array(
 
 // Generate the QR code
 $pdf->write2DBarcode($qrContent, 'QRCODE,H', 20, 235, 30, 30, $style, 'N');
-
-$pdf->SetXY(22, 266);
-$pdf->Cell(0, 5, $qrContent, 0, 1, 'L', false, '', 0, false, 'T', 'M');
-
 
 // Move 30 units above the bottom
 $pdf->SetY(230); 
@@ -337,8 +299,6 @@ $pdf->MultiCell(0, 5, "FROM THE DATE ISSUED", 0, 'C', 0, 1, '160', '', true);
 // ---------------------------------------------------------
 
 //Close and output PDF document
-$pdf->Output($fileName, 'F');
-
-echo json_encode(["file" => $filename]);
+$pdf->Output('example_003.pdf', 'I');
 
 ?>

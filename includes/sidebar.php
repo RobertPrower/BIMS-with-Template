@@ -44,6 +44,9 @@
                         <li>
                             <a href="create-certificate-of-FTJS.php">First-Time-Job-Seeker</a>
                         </li>
+                        <li>
+                            <a href="create-business-permits.php">Business Permits</a>
+                        </li>
                     </ul>
                 </li>
 

@@ -1,4 +1,10 @@
 <?php 
+if($_SERVER['REQUEST_METHOD']=="POST"){
+
+}else{
+    exit("Access Denied");
+}
+
 require_once'connecttodb.php';
 $operation_check = (isset($_POST['OPERATION']))? $_POST['OPERATION'] : null ;
 $request_Id = (isset($_POST['request_id']))? $_POST['request_id']: null ;
@@ -180,6 +186,21 @@ if($operation_check =="REVOKE"){
     $start_from = ($current_page - 1) * $limit;
 
     require_once('paginationtemplate.php');
+}elseif($operation_check == "FETCH_BUSINESS_PERMIT"){
+
+    if(isset($request_Id)){
+        $searchquery = "CALL search_business_permit(?)";
+        $searchstmt = $pdo->prepare($searchquery);
+        $searchstmt->execute([$request_Id]);
+        $results= $searchstmt->fetchAll(PDO::FETCH_ASSOC);
+        $searchstmt->closeCursor();
+
+        echo json_encode($results);
+    }else{
+        echo json_encode(["error", "message" => "No ID was recieved"]);
+    }
+
+
 }else{
     echo "Nothing was reviced";
 }

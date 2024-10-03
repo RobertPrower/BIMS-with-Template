@@ -18,9 +18,9 @@ $(document).ready(function() {
         if (residentid) {
             // Make an AJAX request to fetch resident details
             $.ajax({
-            url: 'includes/fetch_resident_details.php', // PHP script to fetch resident details
+            url: 'includes/fetch_nonres_res_details.php', // PHP script to fetch resident details
             type: 'POST',
-            data:  { id: residentid },
+            data:  { resident_id: residentid, OPERATION:"RESIDENT" },
             success: function(response) {
                 // Parse the JSON response
                 var data = JSON.parse(response);
@@ -138,19 +138,19 @@ $(document).ready(function() {
                 type: "POST",
                 dataType:"JSON",
                 data:{
-                    resident_no : res_id,
-                    firstname : first_name,
-                    middlename : middle_name,
-                    lastname : last_name,
+                    residentno : res_id,
+                    first_name : first_name,
+                    middle_name : middle_name,
+                    last_name : last_name,
                     suffix : suffix,
                     address : address,
                     r_since: r_since,
                     presented_id : presented_id,
-                    IDnum : id_num,
+                    id_num : id_num,
                     purpose: purpose
                 },
                 success: function(response){
-                    var filename = "documents/"+response.file;
+                    var filename = "documents/certificate_of_residency/"+response.file;
                     console.log(filename);
                     
                     $("#generatepdf").attr("src", filename); 
@@ -179,7 +179,7 @@ $(document).ready(function() {
                     purpose: purpose
                 },
                 success: function(response){
-                    var filename = "documents/"+response.file;
+                    var filename = "documents/certificate_of_good_moral/"+response.file;
                     console.log(filename);
                     
                     $("#generatepdf").attr("src", filename); 
