@@ -105,23 +105,24 @@ $(document).ready(function() {
 
         if(whatcert == "Create Certificate of Indigency"){
             $.ajax({
-                url: "documents/generate-indigency.php",
+                url: "documents/generate-indigency-tcpdf.php",
                 type: "POST",
                 dataType:"JSON",
                 data:{
-                    resident_no : res_id,
-                    firstname : first_name,
-                    middlename : middle_name,
-                    lastname : last_name,
+                    residentno : res_id,
+                    first_name : first_name,
+                    middle_name : middle_name,
+                    last_name : last_name,
                     suffix : suffix,
                     address : address,
-                    agency: agency,
+                    r_since: r_since,
                     presented_id : presented_id,
-                    IDnum : id_num,
-                    purpose: purpose
+                    id_num : id_num,
+                    purpose: purpose,
+                    agency: agency
                 },
                 success: function(response){
-                    var filename = "documents/"+response.file;
+                    var filename = "documents/certificate_of_indigency/"+response.file;
                     console.log(filename);
                     
                     $("#generatepdf").attr("src", filename); 
@@ -163,19 +164,18 @@ $(document).ready(function() {
             });
         }else if(whatcert == "Create Certificate of Good Moral"){
             $.ajax({
-                url: "documents/generate-goodmoral.php",
+                url: "documents/generate-good-moral-tcpdf.php",
                 type: "POST",
                 dataType:"JSON",
                 data:{
-                    resident_no : res_id,
-                    firstname : first_name,
-                    middlename : middle_name,
-                    lastname : last_name,
+                    residentno : res_id,
+                    first_name : first_name,
+                    middle_name : middle_name,
+                    last_name : last_name,
                     suffix : suffix,
                     address : address,
-                    r_since: r_since,
                     presented_id : presented_id,
-                    IDnum : id_num,
+                    id_num : id_num,
                     purpose: purpose
                 },
                 success: function(response){

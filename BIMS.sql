@@ -85,7 +85,7 @@ CREATE TABLE `kagawad` (
   `official_name` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`kagawad_id`),
   KEY `kagawad_id` (`kagawad_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 
 /*Data for the table `kagawad` */
 
@@ -97,7 +97,8 @@ insert  into `kagawad`(`kagawad_id`,`official_name`) values
 (5,'Renato C. Busante'),
 (6,'Christy Joy V. Calilung'),
 (7,'Loreto D. Derrada'),
-(8,'Ginny Abiertas');
+(8,'Ginny Abiertas'),
+(9,'Benny G. Abante');
 
 /*Table structure for table `non_resident` */
 
@@ -344,12 +345,9 @@ CREATE TABLE `tbl_building_permits` (
   `street` varchar(255) DEFAULT NULL,
   `subd` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`building_permit_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Data for the table `tbl_building_permits` */
-
-insert  into `tbl_building_permits`(`building_permit_id`,`blg_house_no`,`street`,`subd`) values 
-(1,'723','Virgo st','Maria Lusisa');
 
 /*Table structure for table `tbl_business_permits` */
 
@@ -369,7 +367,7 @@ CREATE TABLE `tbl_business_permits` (
 /*Data for the table `tbl_business_permits` */
 
 insert  into `tbl_business_permits`(`business_id`,`year_quarter`,`store_name`,`blg_house_no`,`street`,`subdivision`,`type_of_buss`) values 
-(1,'Q3-Q4','Reynaldo Meat Shop','Blk 8 Lot 12','Exodus st','Cielito Homes','Meat Shop');
+(1,'Q3-Q4','Ice Frost Water Refilling Station','Blk 8 Lot 12','Genesis st','Cielito Homes','Water Refilling Station');
 
 /*Table structure for table `tbl_cert_audit_trail` */
 
@@ -399,14 +397,12 @@ CREATE TABLE `tbl_cert_audit_trail` (
   CONSTRAINT `edited_by_fk` FOREIGN KEY (`edited_by_no`) REFERENCES `tbl_username` (`username_id`),
   CONSTRAINT `issued_by_fk` FOREIGN KEY (`issued_by_no`) REFERENCES `tbl_username` (`username_id`),
   CONSTRAINT `recovered_by_fk` FOREIGN KEY (`recovered_by_no`) REFERENCES `tbl_username` (`username_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 /*Data for the table `tbl_cert_audit_trail` */
 
 insert  into `tbl_cert_audit_trail`(`audit_trail_id`,`issuing_dept_no`,`issued_by_no`,`datetime_issued`,`expiration`,`edited_by_no`,`datetime_edited`,`deleted_by_no`,`datetime_deleted`,`recovered_by_no`,`datetime_recovered`,`recovered_time`) values 
-(1,NULL,NULL,'2024-10-03 15:10:14','2025-10-03',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(2,NULL,NULL,'2024-10-03 15:11:39','2025-01-03',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(3,NULL,NULL,'2024-10-03 15:21:39','2025-01-03',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+(1,NULL,NULL,'2024-10-04 15:27:41','2025-10-04',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 
 /*Table structure for table `tbl_docu_request` */
 
@@ -439,9 +435,7 @@ CREATE TABLE `tbl_docu_request` (
 /*Data for the table `tbl_docu_request` */
 
 insert  into `tbl_docu_request`(`request_id`,`resident_no`,`nresident_no`,`document_no`,`age`,`presented_id`,`ID_number`,`purpose`,`audit_trail_no`,`pdffile`,`status`,`is_deleted`) values 
-('2024-000001',NULL,3,1,34,'National ID','PNC-1234567890','Getting Business Permit',1,'generated_pdf_1727939414.pdf',0,0),
-('2024-000002',8,NULL,2,38,'Passport','PSN-123456788','Meralco Application',2,'certificate_of_residency/generated_pdf_1727939499.pdf',0,0),
-('2024-000003',12,NULL,3,21,'SSS ID','SSS-1233456677','Maynilad Application',3,'certificate_of_residency/generated_pdf_1727940099.pdf',0,0);
+('2024-000001',12,NULL,1,21,'SSS ID','SSS-12344567788','Getting Business Permit',1,'generated_pdf_1728026861.pdf',0,0);
 
 /*Table structure for table `tbl_documents` */
 
@@ -473,14 +467,12 @@ CREATE TABLE `tbl_documents` (
   CONSTRAINT `f_permit_fk` FOREIGN KEY (`Fencing_Permits`) REFERENCES `tbl_fencing_permit` (`fencing_permit_id`) ON DELETE CASCADE,
   CONSTRAINT `indigency_fk` FOREIGN KEY (`Certificate_of_Indigency`) REFERENCES `tbl_indigency` (`indigency_id`) ON DELETE CASCADE,
   CONSTRAINT `tprs_fk` FOREIGN KEY (`TPRS`) REFERENCES `tbl_tprs` (`tprs_id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 /*Data for the table `tbl_documents` */
 
 insert  into `tbl_documents`(`docu_id`,`Barangay_Clearance`,`Certificate_of_Residency`,`Certificate_of_Indigency`,`Certificate_of_Good_Moral`,`FTJS`,`Oath_of_Undertaking`,`Business_Permits`,`Building_Permits`,`Excavation_Permits`,`Fencing_Permits`,`TPRS`) values 
-(1,NULL,NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL),
-(2,NULL,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(3,NULL,2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+(1,NULL,NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL);
 
 /*Table structure for table `tbl_excavation_permits` */
 

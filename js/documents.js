@@ -448,7 +448,13 @@ $(document).ready(function () {
             break;
             case "Certificate of Residency":
               var filename = "documents/certificate_of_residency/"+file;
+            break;
+            case "Certificate of Good Moral":
+              var filename = "documents/certificate_of_good_moral/"+file;
             break;  
+            case "Certificate of Indigency":
+              var filename = "documents/certificate_of_indigency/"+file;
+            break;
             default:
               var filename = "unknown file name";
           }

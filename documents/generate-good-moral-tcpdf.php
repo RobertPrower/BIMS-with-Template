@@ -13,13 +13,11 @@ if($_SERVER['REQUEST_METHOD']== "POST"){
 
     $nowdate= date("Y-m-d H:i:s"); //Get the date now
     $nowtime = time(); //Get the time now
-    $fileName = "certificate_of_residency/"."generated_pdf_" . time() . ".pdf";
 
     $username = null;
     $issuingdeptno = null;
     
     $residentno = (isset($_POST['residentno']))? $_POST['residentno']:null;
-    $rsince=(isset($_POST['r_since']))? sanitizeData($_POST['r_since']): null;
     $completeaddress=(isset($_POST['address']))? sanitizeData(utf8_decode($_POST['address'])) : null;
     $fname=sanitizeData(utf8_decode($_POST['first_name']));
     $mname=sanitizeData(utf8_decode($_POST['middle_name']));
@@ -31,6 +29,11 @@ if($_SERVER['REQUEST_METHOD']== "POST"){
     $presentedid=sanitizeData($_POST['presented_id']);
     $IDnumber=sanitizeData($_POST['id_num']);
     $purpose = sanitizeData($_POST['purpose']);
+
+    // Define directory for saving the PDF
+    $directory = "certificate_of_good_moral/";
+    $fileName = $_SERVER['DOCUMENT_ROOT'] . "/BIMS-with-Template/documents/".$directory."generated_pdf_" . $nowtime . ".pdf";
+    $filename= "generated_pdf_" . $nowtime . ".pdf";
 
     try{
         $pdo->beginTransaction();
@@ -57,11 +60,11 @@ if($_SERVER['REQUEST_METHOD']== "POST"){
         $kagawadstmt->execute();
         $kagawad=$kagawadstmt->fetchAll(PDO::FETCH_ASSOC);
     
-        $docudetailsquery = "CALL determine_docu_type('Certificate_of_Residency')";
+        $docudetailsquery = "CALL determine_docu_type('Good_Moral')";
         $docudetailstmt = $pdo->prepare($docudetailsquery);
         $docudetailstmt->execute();
         $docudetailstmt->closeCursor();
-    
+
         // Insert into tbl_cert_audit_trail
         $auditTrailQuery = "INSERT INTO tbl_cert_audit_trail(issuing_dept_no, datetime_issued, expiration)
                             VALUES (?, ?, DATE_ADD(CURDATE(), INTERVAL 3 MONTH))";
@@ -72,7 +75,7 @@ if($_SERVER['REQUEST_METHOD']== "POST"){
         $docuRequestQuery = "INSERT INTO tbl_docu_request (resident_no ,presented_id, ID_number, purpose, pdffile)
                                 VALUES (?, ?, ?, ?, ?)";
         $docuRequestStmt = $pdo->prepare($docuRequestQuery);
-        $docuRequestStmt->execute([$residentno, $presentedid, $IDnumber, $purpose, $fileName]);
+        $docuRequestStmt->execute([$residentno, $presentedid, $IDnumber, $purpose, $filename]);
     
         // Fetch the age and request_id
         $idquery = "SELECT request_id FROM tbl_docu_request WHERE request_id =(SELECT MAX(request_id) FROM tbl_docu_request)";
@@ -92,10 +95,7 @@ if($_SERVER['REQUEST_METHOD']== "POST"){
 }else{
     exit("Access Denied");
 }
-// Define directory for saving the PDF
-$directory = "certificate_of_residency/";
-$fileName = $_SERVER['DOCUMENT_ROOT'] . "/BIMS-with-Template/documents/".$directory."generated_pdf_" . $nowtime . ".pdf";
-$filename= "generated_pdf_" . $nowtime . ".pdf";
+
 class MYPDF extends TCPDF {
     
     //Page header
@@ -238,17 +238,17 @@ $html =
             
     $html .=    '   </td>
             <td class="certbody">
-                <h1 class="certi"><u>CERTIFICATION</u></h1>
-
-                <h3>  To whom it may concern: </h3>
+                <h1 class="certi"><b><u>CERTIFICATE OF GOOD MORAL</u></b></h1>
 
                 <p class="parag">This is to certify that <b class="bold">'.'  '.$fullname. '  '.'</b>
-                 is bonafide resident of this barangay located at<b class="bold">'.'  '.$completeaddress.' '.'</b> SINCE <b class="bold">'.' '.$rsince.' UP TO PRESENT</b>.
+                 is bonafide resident of this barangay located at<b class="bold">'.'  '.$completeaddress.' '.'</b>
                 This certification is being issued upon the request of the above-mentioned name for</p>
 
-                <h1 class="certi"><U>PROOF OF RESIDENCY.</U></h1>
+                <p class="parag">This is to certify that <b class="bold">'.'  '.$fullname. '  '.'</b> is known to me to be of good moral character, a law-abiding citizen and has no derogatory record in our barangay. </p>
 
-                <p>Given this <b>'.date("d").'th day of  '.date("F").', '.date('Y').'</b>, at Barangay 177, Cielito Homes Subdivision, Camarin, Caloocan City.</p>
+                <p>This certification is being issued upon the request of the above-mentioned name for '.$purpose.'</p>
+
+                <p>Issued this '.date("d").'th day of  <b class="bold">'.date("F").' '.date('Y').'</b>, at Barangay 177, Cielito Homes Subdivision, Camarin, Caloocan City.</p>
 
             </td>
         </tr>
@@ -287,7 +287,7 @@ $html =
 
         .bold{
             font-weight: bolder;
-            font-size: 22px;
+            font-size: 20px;
         }
 
     </style>';

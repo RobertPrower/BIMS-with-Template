@@ -81,32 +81,33 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     $businessaddress = $business_hnum .' '. $business_street. ' '. $business_subd;
     $business_type= sanitizeData($_POST['business_type']);
 
-    $bussquery = "SET @quarter = get_quarter(CURDATE());
+    try{
+        $bussquery = "SET @quarter = get_quarter(CURDATE());
 
-                INSERT INTO tbl_business_permits (year_quarter, store_name, blg_house_no, street, subdivision, type_of_buss)
-                VALUES (@quarter, ?, ?, ?, ?, ?);";
-    $bussstmt = $pdo->prepare($bussquery);
-    $bussstmt->execute([$business_name, $business_hnum, $business_street, $business_subd, $business_type]);
-    $bussstmt->closeCursor(); 
+        INSERT INTO tbl_business_permits (year_quarter, store_name, blg_house_no, street, subdivision, type_of_buss)
+        VALUES (@quarter, ?, ?, ?, ?, ?);";
+        $bussstmt = $pdo->prepare($bussquery);
+        $bussstmt->execute([$business_name, $business_hnum, $business_street, $business_subd, $business_type]);
+        $bussstmt->closeCursor(); 
 
-    $determinedocuquery = "CALL determine_docu_type('Business_Permits');";
-    $determinedocustmt = $pdo->prepare($determinedocuquery);
-    $determinedocustmt->execute();
-    $determinedocustmt->closeCursor(); // Ensures all results are fetched or skipped
+        $determinedocuquery = "CALL determine_docu_type('Business_Permits');";
+        $determinedocustmt = $pdo->prepare($determinedocuquery);
+        $determinedocustmt->execute();
+        $determinedocustmt->closeCursor(); // Ensures all results are fetched or skipped
 
-    $quarterquery="SELECT year_quarter FROM tbl_business_permits WHERE business_id = (SELECT MAX(business_id) FROM tbl_business_permits)";
-    $quarterstmt=$pdo->prepare($quarterquery);
-    $quarterstmt->execute();
-    $year_quarter= $quarterstmt->fetchColumn();
+        $quarterquery="SELECT year_quarter FROM tbl_business_permits WHERE business_id = (SELECT MAX(business_id) FROM tbl_business_permits)";
+        $quarterstmt=$pdo->prepare($quarterquery);
+        $quarterstmt->execute();
+        $year_quarter= $quarterstmt->fetchColumn();
 
-    $auditTrailquery= "
+        $auditTrailquery= "
                 INSERT INTO tbl_cert_audit_trail(issuing_dept_no, datetime_issued, expiration)
                 VALUES (?, ?, DATE_ADD(CURDATE(), INTERVAL 1 YEAR));
                 ";
-    $auditTrailstmt=$pdo->prepare($auditTrailquery);
-    $auditTrailstmt->execute([$issuingdeptno, $nowdate]);
+        $auditTrailstmt=$pdo->prepare($auditTrailquery);
+        $auditTrailstmt->execute([$issuingdeptno, $nowdate]);
 
-    if($isResident =="RESIDENT"){
+        if($isResident =="RESIDENT"){
         $certDetailsquery = "INSERT INTO tbl_docu_request (resident_no ,presented_id, ID_number, purpose, pdffile) 
                     VALUES (:residentno,:presentedid, :IDnumber, :purpose, :filenames);";
         $alldatatorequest = [
@@ -124,7 +125,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
         $getimagestmt->execute([$ID]);
         $image = $getimagestmt->fetchColumn();
 
-    }else{
+        }else{
         $certDetailsquery = "INSERT INTO tbl_docu_request (nresident_no ,presented_id, ID_number, purpose, pdffile) 
                     VALUES (:residentno,:presentedid, :IDnumber, :purpose, :filenames);";
         $alldatatorequest = [
@@ -142,12 +143,17 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
         $getimagestmt->execute([$ID]);
         $image = $getimagestmt->fetchColumn();
 
-    }    
+        }    
 
-    $requestquery = "SELECT get_max_request_id() AS request_id";
-    $requeststmt = $pdo->prepare($requestquery);
-    $requeststmt -> execute();        
-    $last_requestid= $requeststmt->fetchColumn();
+        $requestquery = "SELECT get_max_request_id() AS request_id";
+        $requeststmt = $pdo->prepare($requestquery);
+        $requeststmt -> execute();        
+        $last_requestid= $requeststmt->fetchColumn();
+
+    }catch(Exception $errors){
+        $pdo->rollBack();
+        exit(json_encode(["error", $errors]));
+    }
 
 }else{
     exit("Access Denied");
