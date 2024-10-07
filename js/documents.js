@@ -254,6 +254,7 @@ $(document).ready(function () {
     $("#request_id").val(request_id);
     $("#status").val(status);
     $("#retrevePDF").attr("data-cert_type",docu_type);
+    $("#certiticate_type").val(docu_type);
 
     //For populating data attributes for edit
     $("#editDocumentbtn").attr("data-request_id", request_id);
@@ -428,7 +429,7 @@ $(document).ready(function () {
 
   $("#retrevePDF").click(function () {
     var request_id = $("#request_id").val();
-    var certificate_type = $(this).data("cert_type");
+    var certificate_type = $("#certiticate_type").val();
 
     $.ajax({
         url: "includes/documentsoperation.php",
@@ -459,11 +460,13 @@ $(document).ready(function () {
               var filename = "unknown file name";
           }
 
-          console.log(filename);
           // Show the modal
-          $("#pdfModal").modal("show");
-          $("#generatepdf").attr("src", filename); 
+          console.log("Fetching file from:", filename); // Log the filename
 
+          // Clear and set the new src for iframe
+          $("#generatepdf").attr("src", ""); // Clear the previous source
+          $("#generatepdf").attr("src", filename + "?t=" + new Date().getTime()); // Append timestamp
+          $("#pdfModal").modal("show"); // Show the modal after setting the src
         },
         error: function (xhr, status, error) {
           console.error("Error generating PDF:", error);

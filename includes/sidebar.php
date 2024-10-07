@@ -47,6 +47,9 @@
                         <li>
                             <a href="create-business-permits.php">Business Permits</a>
                         </li>
+                        <li>
+                            <a href="create-building-permits.php">Building Permits</a>
+                        </li>
                     </ul>
                 </li>
 

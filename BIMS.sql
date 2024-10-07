@@ -85,7 +85,7 @@ CREATE TABLE `kagawad` (
   `official_name` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`kagawad_id`),
   KEY `kagawad_id` (`kagawad_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
 /*Data for the table `kagawad` */
 
@@ -96,9 +96,7 @@ insert  into `kagawad`(`kagawad_id`,`official_name`) values
 (4,'Francis S. Acosta'),
 (5,'Renato C. Busante'),
 (6,'Christy Joy V. Calilung'),
-(7,'Loreto D. Derrada'),
-(8,'Ginny Abiertas'),
-(9,'Benny G. Abante');
+(7,'Loreto D. Derrada');
 
 /*Table structure for table `non_resident` */
 
@@ -344,10 +342,21 @@ CREATE TABLE `tbl_building_permits` (
   `blg_house_no` varchar(255) DEFAULT NULL,
   `street` varchar(255) DEFAULT NULL,
   `subd` varchar(255) DEFAULT NULL,
+  `permit_type` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`building_permit_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
 /*Data for the table `tbl_building_permits` */
+
+insert  into `tbl_building_permits`(`building_permit_id`,`blg_house_no`,`street`,`subd`,`permit_type`) values 
+(1,'Blk 7 Lot 4','Virgo st Corner Aries st','Maria Luisa Subd',NULL),
+(2,'Blk 7 Lot 4','Virgo st Corner Aries st','Maria Luisa Subd',NULL),
+(3,'Blk 7 Lot 4','Virgo st Corner Aries st','Maria Luisa Subd','Renovaton'),
+(4,'Blk 7 Lot 4','Virgo st Corner Aries st','Maria Luisa Subd','Renovaton'),
+(5,'Blk 7 Lot 4','Virgo st Corner Aries st','Maria Luisa Subd','Securing Building Permit (Renovaton'),
+(6,'Blk 7 Lot 4','Virgo st Corner Aries st','Maria Luisa Subd','Renovaton'),
+(7,'Blk 7 Lot 4','Virgo st Corner Aries st','Maria Luisa Subd','Renovaton'),
+(8,'Blk 7 Lot 4','Virgo st Corner Aries st','Maria Luisa Subd','Renovaton');
 
 /*Table structure for table `tbl_business_permits` */
 
@@ -362,12 +371,9 @@ CREATE TABLE `tbl_business_permits` (
   `subdivision` varchar(255) DEFAULT NULL,
   `type_of_buss` varchar(255) NOT NULL,
   PRIMARY KEY (`business_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Data for the table `tbl_business_permits` */
-
-insert  into `tbl_business_permits`(`business_id`,`year_quarter`,`store_name`,`blg_house_no`,`street`,`subdivision`,`type_of_buss`) values 
-(1,'Q3-Q4','Ice Frost Water Refilling Station','Blk 8 Lot 12','Genesis st','Cielito Homes','Water Refilling Station');
 
 /*Table structure for table `tbl_cert_audit_trail` */
 
@@ -397,12 +403,19 @@ CREATE TABLE `tbl_cert_audit_trail` (
   CONSTRAINT `edited_by_fk` FOREIGN KEY (`edited_by_no`) REFERENCES `tbl_username` (`username_id`),
   CONSTRAINT `issued_by_fk` FOREIGN KEY (`issued_by_no`) REFERENCES `tbl_username` (`username_id`),
   CONSTRAINT `recovered_by_fk` FOREIGN KEY (`recovered_by_no`) REFERENCES `tbl_username` (`username_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
 /*Data for the table `tbl_cert_audit_trail` */
 
 insert  into `tbl_cert_audit_trail`(`audit_trail_id`,`issuing_dept_no`,`issued_by_no`,`datetime_issued`,`expiration`,`edited_by_no`,`datetime_edited`,`deleted_by_no`,`datetime_deleted`,`recovered_by_no`,`datetime_recovered`,`recovered_time`) values 
-(1,NULL,NULL,'2024-10-04 15:27:41','2025-10-04',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+(1,NULL,NULL,'2024-10-07 11:24:26','2025-10-07',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(2,NULL,NULL,'2024-10-07 11:29:00','2025-10-07',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(3,NULL,NULL,'2024-10-07 11:37:59','2025-10-07',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(4,NULL,NULL,'2024-10-07 11:38:34','2025-10-07',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(5,NULL,NULL,'2024-10-07 11:41:35','2025-10-07',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(6,NULL,NULL,'2024-10-07 11:47:49','2025-10-07',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(7,NULL,NULL,'2024-10-07 11:50:17','2025-10-07',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(8,NULL,NULL,'2024-10-07 11:50:49','2025-10-07',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 
 /*Table structure for table `tbl_docu_request` */
 
@@ -435,7 +448,14 @@ CREATE TABLE `tbl_docu_request` (
 /*Data for the table `tbl_docu_request` */
 
 insert  into `tbl_docu_request`(`request_id`,`resident_no`,`nresident_no`,`document_no`,`age`,`presented_id`,`ID_number`,`purpose`,`audit_trail_no`,`pdffile`,`status`,`is_deleted`) values 
-('2024-000001',12,NULL,1,21,'SSS ID','SSS-12344567788','Getting Business Permit',1,'generated_pdf_1728026861.pdf',0,0);
+('2024-000001',NULL,3,1,34,'National ID','PCN-2121212121','Getting Business Permit',1,'C:/xampp/htdocs//BIMS-with-Template/documents/building_permits//generated_pdf_1728271466.pdf',0,0),
+('2024-000002',NULL,3,2,34,'National ID','PCN-2121212121','Getting Business Permit',2,'C:/xampp/htdocs//BIMS-with-Template/documents/building_permits//generated_pdf_1728271740.pdf',0,0),
+('2024-000003',NULL,3,3,34,'National ID','PCN-2121212121','Getting Business Permit',3,'C:/xampp/htdocs//BIMS-with-Template/documents/building_permits//generated_pdf_1728272279.pdf',0,0),
+('2024-000004',NULL,3,4,34,'National ID','PCN-2121212121','Getting Business Permit',4,'C:/xampp/htdocs//BIMS-with-Template/documents/building_permits//generated_pdf_1728272314.pdf',0,0),
+('2024-000005',NULL,3,5,34,'National ID','PCN-2121212121','Getting Business Permit',5,'C:/xampp/htdocs//BIMS-with-Template/documents/building_permits//generated_pdf_1728272495.pdf',0,0),
+('2024-000006',NULL,3,6,34,'National ID','PCN-2121212121','Getting Business Permit',6,'C:/xampp/htdocs//BIMS-with-Template/documents/building_permits//generated_pdf_1728272869.pdf',0,0),
+('2024-000007',NULL,3,7,34,'National ID','PCN-2121212121','Getting Business Permit',7,'C:/xampp/htdocs//BIMS-with-Template/documents/building_permits//generated_pdf_1728273017.pdf',0,0),
+('2024-000008',NULL,3,8,34,'National ID','PCN-2121212121','Getting Business Permit',8,'C:/xampp/htdocs//BIMS-with-Template/documents/building_permits//generated_pdf_1728273049.pdf',0,0);
 
 /*Table structure for table `tbl_documents` */
 
@@ -467,12 +487,19 @@ CREATE TABLE `tbl_documents` (
   CONSTRAINT `f_permit_fk` FOREIGN KEY (`Fencing_Permits`) REFERENCES `tbl_fencing_permit` (`fencing_permit_id`) ON DELETE CASCADE,
   CONSTRAINT `indigency_fk` FOREIGN KEY (`Certificate_of_Indigency`) REFERENCES `tbl_indigency` (`indigency_id`) ON DELETE CASCADE,
   CONSTRAINT `tprs_fk` FOREIGN KEY (`TPRS`) REFERENCES `tbl_tprs` (`tprs_id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
 /*Data for the table `tbl_documents` */
 
 insert  into `tbl_documents`(`docu_id`,`Barangay_Clearance`,`Certificate_of_Residency`,`Certificate_of_Indigency`,`Certificate_of_Good_Moral`,`FTJS`,`Oath_of_Undertaking`,`Business_Permits`,`Building_Permits`,`Excavation_Permits`,`Fencing_Permits`,`TPRS`) values 
-(1,NULL,NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL);
+(1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL),
+(2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL),
+(3,NULL,NULL,NULL,NULL,NULL,NULL,NULL,3,NULL,NULL,NULL),
+(4,NULL,NULL,NULL,NULL,NULL,NULL,NULL,4,NULL,NULL,NULL),
+(5,NULL,NULL,NULL,NULL,NULL,NULL,NULL,5,NULL,NULL,NULL),
+(6,NULL,NULL,NULL,NULL,NULL,NULL,NULL,6,NULL,NULL,NULL),
+(7,NULL,NULL,NULL,NULL,NULL,NULL,NULL,7,NULL,NULL,NULL),
+(8,NULL,NULL,NULL,NULL,NULL,NULL,NULL,8,NULL,NULL,NULL);
 
 /*Table structure for table `tbl_excavation_permits` */
 
@@ -511,9 +538,13 @@ CREATE TABLE `tbl_indigency` (
   `indigency_id` int(55) NOT NULL AUTO_INCREMENT,
   `agency` varchar(55) DEFAULT NULL,
   PRIMARY KEY (`indigency_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 /*Data for the table `tbl_indigency` */
+
+insert  into `tbl_indigency`(`indigency_id`,`agency`) values 
+(1,'PCSO'),
+(2,'Malasakit Center');
 
 /*Table structure for table `tbl_persons_involved` */
 
@@ -745,7 +776,7 @@ BEGIN
         INSERT INTO tbl_documents(FTJS)
         SELECT IFNULL(MAX(FTJS), 0) + 1 FROM tbl_documents;
         
-    -- For Oath of Undertaking
+    -- For Oath of Undertaking/FTJS
     ELSEIF certificate_type = 'Oath_of_Undertaking' THEN
         INSERT INTO tbl_documents(Oath_of_Undertaking)
         SELECT IFNULL(MAX(Oath_of_Undertaking), 0) + 1 FROM tbl_documents;
@@ -754,6 +785,28 @@ BEGIN
     ELSEIF certificate_type = 'Business_Permits' THEN
         INSERT INTO tbl_documents(Business_Permits)
         SELECT IFNULL(MAX(Business_Permits), 0) + 1 FROM tbl_documents;
+        
+      -- For Building Permits
+    ELSEIF certificate_type = 'Building_Permits' THEN
+        INSERT INTO tbl_documents(Building_Permits)
+        SELECT IFNULL(MAX(Building_Permits), 0) + 1 FROM tbl_documents;
+            
+        -- For Excavation Permits
+    ELSEIF certificate_type = 'Excavation_Permits' THEN
+        INSERT INTO tbl_documents(Excavation_Permits)
+        SELECT IFNULL(MAX(Excavation_Permits), 0) + 1 FROM tbl_documents;
+        
+    
+        -- For Fencing Permits
+    ELSEIF certificate_type = 'Fencing_Permits' THEN
+        INSERT INTO tbl_documents(Fencing_Permits)
+        SELECT IFNULL(MAX(Fencing_Permits), 0) + 1 FROM tbl_documents;
+        
+    
+        -- For TPRS
+    ELSEIF certificate_type = 'TPRS' THEN
+        INSERT INTO tbl_documents(TPRS)
+        SELECT IFNULL(MAX(TPRS), 0) + 1 FROM tbl_documents;
         
     END IF;
 END */$$

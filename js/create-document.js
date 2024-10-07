@@ -103,6 +103,16 @@ $(document).ready(function() {
                 var agency = $("#agency").val();   
         }
 
+        Swal.fire({
+            title: 'Loading...',
+            html: '<p>Generating Document, Please Wait.</p>',
+            imageUrl: 'img/loading.gif', 
+            imageWidth: 100, 
+            imageHeight: 100, 
+            showConfirmButton: false,
+            allowOutsideClick: false 
+        });
+
         if(whatcert == "Create Certificate of Indigency"){
             $.ajax({
                 url: "documents/generate-indigency-tcpdf.php",
@@ -128,6 +138,10 @@ $(document).ready(function() {
                     $("#generatepdf").attr("src", filename); 
           
                     $("#pdfModal").modal("show");
+
+                    $('#pdfModal').on('shown.bs.modal', function () {
+                        Swal.close(); 
+                    });   
                 },
                 error: function (xhr, status, error) {
                     console.error("Error generating PDF:", error);
@@ -153,10 +167,15 @@ $(document).ready(function() {
                 success: function(response){
                     var filename = "documents/certificate_of_residency/"+response.file;
                     console.log(filename);
-                    
+
                     $("#generatepdf").attr("src", filename); 
-          
+
                     $("#pdfModal").modal("show");
+
+                    $('#pdfModal').on('shown.bs.modal', function () {
+                        Swal.close(); 
+                    });                    
+                          
                 },
                 error: function (xhr, status, error) {
                     console.error("Error generating PDF:", error);
@@ -181,10 +200,48 @@ $(document).ready(function() {
                 success: function(response){
                     var filename = "documents/certificate_of_good_moral/"+response.file;
                     console.log(filename);
-                    
+
                     $("#generatepdf").attr("src", filename); 
           
                     $("#pdfModal").modal("show");
+
+                    $('#pdfModal').on('shown.bs.modal', function () {
+                        Swal.close(); 
+                    });   
+                    
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error generating PDF:", error);
+                },
+            });
+        }else if(whatcert == "Create Certificate of First Time Job Seeker"){
+            $.ajax({
+                url: "documents/generate-FTJS-tcpdf.php",
+                type: "POST",
+                dataType:"JSON",
+                data:{
+                    residentno : res_id,
+                    first_name : first_name,
+                    middle_name : middle_name,
+                    last_name : last_name,
+                    suffix : suffix,
+                    address : address,
+                    r_since: r_since,
+                    presented_id : presented_id,
+                    id_num : id_num,
+                },
+                success: function(response){
+                    var filename = "documents/first_time_job_seeker/"+response.file;
+                    console.log(filename);
+
+                    $("#generatepdf").attr("src", filename); 
+          
+                    $("#pdfModal").modal("show");
+
+                    $('#pdfModal').on('shown.bs.modal', function () {
+                        Swal.close(); 
+                    });   
+                    
                 },
                 error: function (xhr, status, error) {
                     console.error("Error generating PDF:", error);

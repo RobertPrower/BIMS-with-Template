@@ -81,7 +81,7 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
         $docuRequestQuery = "INSERT INTO tbl_docu_request (resident_no ,presented_id, ID_number, purpose, pdffile)
                                 VALUES (?, ?, ?, ?, ?)";
         $docuRequestStmt = $pdo->prepare($docuRequestQuery);
-        $docuRequestStmt->execute([$residentno, $presentedid, $IDnumber, $purpose, $fileName]);
+        $docuRequestStmt->execute([$residentno, $presentedid, $IDnumber, $purpose, $filename]);
 
 
         // Fetch and request_id
@@ -341,7 +341,6 @@ $pdf->MultiCell(0, 5, "FROM THE DATE ISSUED", 0, 'C', 0, 1, '160', '', true);
 
 // ---------------------------------------------------------
 
-//Close and output PDF document
 //Close and output PDF document
 $pdf->Output($fileName, 'F');
 

@@ -13,11 +13,14 @@ if($_SERVER['REQUEST_METHOD']== "POST"){
 
     $nowdate= date("Y-m-d H:i:s"); //Get the date now
     $nowtime = time(); //Get the time now
-    $fileName = "certificate_of_residency/"."generated_pdf_" . time() . ".pdf";
-
     $username = null;
     $issuingdeptno = null;
-    
+
+    // Define directory for saving the PDF
+    $directory = "certificate_of_residency/";
+    $fileName = $_SERVER['DOCUMENT_ROOT'] . "/BIMS-with-Template/documents/".$directory."generated_pdf_" . $nowtime . ".pdf";
+    $filename= "generated_pdf_" . $nowtime . ".pdf";
+
     $residentno = (isset($_POST['residentno']))? $_POST['residentno']:null;
     $rsince=(isset($_POST['r_since']))? sanitizeData($_POST['r_since']): null;
     $completeaddress=(isset($_POST['address']))? sanitizeData(utf8_decode($_POST['address'])) : null;
@@ -72,7 +75,7 @@ if($_SERVER['REQUEST_METHOD']== "POST"){
         $docuRequestQuery = "INSERT INTO tbl_docu_request (resident_no ,presented_id, ID_number, purpose, pdffile)
                                 VALUES (?, ?, ?, ?, ?)";
         $docuRequestStmt = $pdo->prepare($docuRequestQuery);
-        $docuRequestStmt->execute([$residentno, $presentedid, $IDnumber, $purpose, $fileName]);
+        $docuRequestStmt->execute([$residentno, $presentedid, $IDnumber, $purpose, $filename]);
     
         // Fetch the age and request_id
         $idquery = "SELECT request_id FROM tbl_docu_request WHERE request_id =(SELECT MAX(request_id) FROM tbl_docu_request)";
@@ -92,10 +95,7 @@ if($_SERVER['REQUEST_METHOD']== "POST"){
 }else{
     exit("Access Denied");
 }
-// Define directory for saving the PDF
-$directory = "certificate_of_residency/";
-$fileName = $_SERVER['DOCUMENT_ROOT'] . "/BIMS-with-Template/documents/".$directory."generated_pdf_" . $nowtime . ".pdf";
-$filename= "generated_pdf_" . $nowtime . ".pdf";
+
 class MYPDF extends TCPDF {
     
     //Page header
