@@ -39,9 +39,6 @@
                             <a href="create-certificate-of-good-moral.php">Good Moral</a>
                         </li>
                         <li>
-                            <a href="create-certificate-of-oath-of-undertaking.php">Oath of Undertaking</a>
-                        </li>
-                        <li>
                             <a href="create-certificate-of-FTJS.php">First-Time-Job-Seeker</a>
                         </li>
                         <li>
@@ -49,6 +46,15 @@
                         </li>
                         <li>
                             <a href="create-building-permits.php">Building Permits</a>
+                        </li>
+                        <li>
+                            <a href="create-excavation-permits.php">Excavation Permits</a>
+                        </li>
+                        <li>
+                            <a href="create-fencing-permits.php">Fencing Permits</a>
+                        </li>
+                        <li>
+                            <a href="create-tprs.php">TPRS</a>
                         </li>
                     </ul>
                 </li>

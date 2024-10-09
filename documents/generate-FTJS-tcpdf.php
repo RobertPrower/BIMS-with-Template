@@ -275,7 +275,7 @@ $pdf->SetAlpha(1); // Reset transparenc
 
 $expirationday = date('d', strtotime('+1 year'));
 $expirationyear = date('Y', strtotime('+1 year'));
-$expirationdate =$expirationday.'th day of'. date('F', strtotime('+1 year')) .' '. $expirationyear;
+$expirationdate =$expirationday.'th day of '. date('F', strtotime('+1 year')) .' '. $expirationyear;
 
 $html = '
 

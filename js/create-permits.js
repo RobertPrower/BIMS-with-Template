@@ -98,6 +98,19 @@ $(document).ready(function() {
         }
     })
 
+    $("#maker").change(function(){
+        var selected_option = $(this).val();
+        console.log("Event has been triggered");
+
+        switch(selected_option){
+            case "Others":
+                $("#others").prop("disabled", false);
+            break;
+            default:
+                $("#others").prop("disabled", true);
+        }
+    })
+
     $("#generate_certificate").click(function(event){
         event.preventDefault();
 
@@ -192,6 +205,151 @@ $(document).ready(function() {
                 },
                 success: function(response){
                     var filename = "documents/building_permits/"+response.file;
+                    console.log(filename);
+
+                    $("#generatepdf").attr("src", filename); 
+            
+                    $("#pdfModal").modal("show");
+
+                    $('#pdfModal').on('shown.bs.modal', function () {
+                        Swal.close(); 
+                    });   
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error generating PDF:", error);
+                },
+            });
+            
+        }else if(whatcert == "Create Excavation Permits"){
+
+            var house_num = $("#house_no").val();
+            var street = $("#street").val();
+            var subd = $("#subd").val();
+            var purpose = $("#purpose").val();
+            var address = $("#address").val();
+
+
+            $.ajax({
+                url: "documents/generate-excavation-permit.php",
+                type: "POST",
+                dataType:"JSON",
+                data:{
+                    id_to_record : id_to_record,
+                    res_sta: res_status,
+                    first_name : first_name,
+                    middle_name : middle_name,
+                    last_name : last_name,
+                    suffix : suffix,
+                    address : address,
+                    presented_id : presented_id,
+                    id_num : id_num,
+                    house_num: house_num,
+                    street: street,
+                    subd: subd,
+                    purpose: purpose
+                },
+                success: function(response){
+                    var filename = "documents/excavation_permits/"+response.file;
+                    console.log(filename);
+
+                    $("#generatepdf").attr("src", filename); 
+            
+                    $("#pdfModal").modal("show");
+
+                    $('#pdfModal').on('shown.bs.modal', function () {
+                        Swal.close(); 
+                    });   
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error generating PDF:", error);
+                },
+            });
+            
+        }else if(whatcert == "Create Fencing Permits"){
+
+            var house_num = $("#house_no").val();
+            var street = $("#street").val();
+            var subd = $("#subd").val();
+            var purpose = $("#purpose").val();
+            var address = $("#address").val();
+
+
+            $.ajax({
+                url: "documents/generate-fencing-permit.php",
+                type: "POST",
+                dataType:"JSON",
+                data:{
+                    id_to_record : id_to_record,
+                    res_sta: res_status,
+                    first_name : first_name,
+                    middle_name : middle_name,
+                    last_name : last_name,
+                    suffix : suffix,
+                    address : address,
+                    presented_id : presented_id,
+                    id_num : id_num,
+                    house_num: house_num,
+                    street: street,
+                    subd: subd,
+                    purpose: purpose
+                },
+                success: function(response){
+                    var filename = "documents/fencing_permits/"+response.file;
+                    console.log(filename);
+
+                    $("#generatepdf").attr("src", filename); 
+            
+                    $("#pdfModal").modal("show");
+
+                    $('#pdfModal').on('shown.bs.modal', function () {
+                        Swal.close(); 
+                    });   
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error generating PDF:", error);
+                },
+            });
+            
+        }else if(whatcert == "Create Tricycle Pedicab Regulatory Services"){
+
+            var toda = $("#toda").val();
+            var route =$("#route").val();
+            var plate_no = $("#plate_no").val();
+            var chasis_no = $("#chasis_no").val();
+            var engine_no = $("#engine_no").val();
+
+            switch($("#maker").val()){
+                case "Others":
+                    var maker = $("#other").val();
+                break;
+                default:
+                    var maker = $("#maker").val(); 
+            }
+
+
+            $.ajax({
+                url: "documents/generate-tprs-tcpdf.php",
+                type: "POST",
+                dataType:"JSON",
+                data:{
+                    id_to_record : id_to_record,
+                    res_sta: res_status,
+                    first_name : first_name,
+                    middle_name : middle_name,
+                    last_name : last_name,
+                    suffix : suffix,
+                    address : address,
+                    presented_id : presented_id,
+                    id_num : id_num,
+                    toda: toda,
+                    route: route,
+                    plate_no: plate_no,
+                    chasis_no: chasis_no,
+                    maker: maker,
+                    engine_no: engine_no
+                },
+                success: function(response){
+                    var filename = "documents/tprs/"+response.file;
                     console.log(filename);
 
                     $("#generatepdf").attr("src", filename); 

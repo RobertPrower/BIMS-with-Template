@@ -9,81 +9,7 @@ date_default_timezone_set('Asia/Manila');
 $nowdate = date("Y-m-d H:i:s"); // Current date
 $nowtime = time(); // Timestamp to generate a unique filename
 
-date_default_timezone_set('Asia/Manila');
-
-$sqlquery="SELECT * FROM brgy_officials";
-$stmt=$pdo->prepare($sqlquery);
-$stmt->execute();
-$results=$stmt->fetchAll(PDO::FETCH_ASSOC); 
-
-$nowdate= date("Y-m-d H:i:s"); //Get the date now
-$nowtime = time(); //Get the time now
-$fileName = "certificate_of_tprs/"."generated_pdf_" . time() . ".pdf";
-$username = null;
-$issuingdeptno = null;
-// $residentsince=$_POST['r_since'];
-// $completeaddress=utf8_decode($_POST['address']);
-// $fname=utf8_decode($_POST['firstname']);
-// $mname=utf8_decode($_POST['middlename']);
-// $lname=utf8_decode($_POST['lastname']);
-
-// if(isset($_POST['suffix'])){
-//     $suffix=$_POST['suffix'];
-// }else{
-//     $suffix="";
-// }
-// $presentedid=$_POST['presented_id'];
-// $purpose=$_POST['purpose'];
-// $residentno=($_POST['resident_no']);
-// $IDnumber=$_POST['IDnum'];
-
-// $sqlquery2 = "CALL determine_docu_type('Certificate_of_Residency'); 
-//             INSERT INTO tbl_cert_audit_trail(issuing_dept_no, date_issued, expiration, time_issued)
-//             VALUES (?,?,DATE_ADD(CURDATE(), INTERVAL 3 MONTH), CURTIME())";
-// $stmt2=$pdo->prepare($sqlquery2);
-// $stmt2->execute([$issuingdeptno, $nowdate]);
-// // Close the cursor of the previous statement
-// $stmt2->closeCursor();
-
-// $sqlquery3="SELECT * FROM `certificate-img`";
-// $stmt3=$pdo->prepare($sqlquery3);
-// $stmt3->execute();
-// $results3=$stmt3->fetchAll(PDO::FETCH_ASSOC); 
-
-// $sqlquery4 = "INSERT INTO tbl_docu_request (resident_no ,presented_id, ID_number, purpose, pdffile) 
-//             VALUES (:residentno,:presentedid, :IDnumber, :purpose, :filenames);";
-// $alldatatorequest = [
-//     ':residentno' => $residentno,
-//     ':presentedid' => $presentedid,
-//     ':IDnumber' => $IDnumber,
-//     ':purpose' => $purpose,
-//     ':filenames' => $fileName
-// ];
-// $stmt3 = $pdo->prepare($sqlquery4);
-// $stmt3->execute($alldatatorequest);
-
-
-// $request_id = $pdo->lastInsertId();
-
-// $sqlquery5="SELECT age FROM tbl_docu_request WHERE request_id = ?";
-// $stmt5=$pdo->prepare($sqlquery5);
-// $stmt5->execute([$request_id]);
-// $AgeResult= $stmt5->fetchAll();
-// $Age=$AgeResult;
-
-foreach($results as $officials){    
-
-    $officialname[]=$officials['official_name'];
-}
-
-// $logo=[];
-
-// foreach($results3 as $filename){
-//     $logo[]=$filename['filename'];
-// }
-
 // Define directory for saving the PDF
-$directory = "certificate_of_tprs/";
 $fileName = $_SERVER['DOCUMENT_ROOT'] . "/BIMS-with-Template/documents/certificate_of_tprs/generated_pdf_" . $nowtime . ".pdf";
 
 class MYPDF extends TCPDF {
@@ -94,11 +20,9 @@ class MYPDF extends TCPDF {
         // Logo
         $this->Image("images/BagongPinas.png", 10, 5, 25, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false);
         
-        $this->Image("images/CaloocanCityLogo.png", 35, 8, 23, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false);
+        $this->Image("images/Brgy177(2).png", 30, 5, 155, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false);
 
-        $this->Image("images/Brgy177Logo.png", 30, 5, 155, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false);
-
-        $this->Image("images/Brgy177.png", 160, 8, 25, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false);
+        $this->Image("images/CaloocanCityLogo.png", 180, 8, 23, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false);
 
         $this->SetLineWidth(0); 
 
@@ -122,9 +46,7 @@ class MYPDF extends TCPDF {
     }
 }
 
-$pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, 'Letter', true, 'UTF-8', false);
-
-$pdf = new MYPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
+$pdf = new MyPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, '', true, 'UTF-8', false);
 
 // set document information
 $pdf->SetCreator(PDF_CREATOR);
@@ -132,16 +54,6 @@ $pdf->SetAuthor('Nicola Asuni');
 $pdf->SetTitle('Generate Certificate of TPRS');
 $pdf->SetSubject('TCPDF Tutorial');
 $pdf->SetKeywords('TCPDF, PDF, example, test, guide');
-
-// set default header data
-$pdf->SetHeaderData(PDF_HEADER_LOGO, PDF_HEADER_LOGO_WIDTH, PDF_HEADER_TITLE, PDF_HEADER_STRING);
-
-// set header and footer fonts
-$pdf->setHeaderFont(Array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
-$pdf->setFooterFont(Array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
-
-// set default monospaced font
-$pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
 
 // set margins
 $pdf->SetMargins(0, PDF_MARGIN_TOP, 5);
@@ -168,7 +80,7 @@ $pdf->AddPage();
 
 // Add image watermark (with transparency)
 $pdf->SetAlpha(0.3); // Set transparency
-$pdf->Image('images/watermark.png', 0, 25, 220, 0, 'PNG', '', '', false, 300, '', false, false, 0); // X, Y, Width, Height
+$pdf->Image('images/watermark.png', 35, 35, 200, 0, 'PNG', '', '', false, 300, '', false, false, 0); // X, Y, Width, Height
 $pdf->SetAlpha(1); // Reset transparenc
 
 $pdf->SetTopMargin(35);

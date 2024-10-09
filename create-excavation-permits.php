@@ -15,10 +15,9 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.14.1/dist/sweetalert2.min.css">
-
-
-</head>
-
+  <!--JavaScript-->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+ 
 <body>
   <div class="layer"></div>
 <!-- ! Body -->
@@ -43,13 +42,14 @@
     <?php 
     
     require_once("includes/selectresidentmodal.php"); 
+    require_once("includes/selectnonresidentmodal.php");
     require_once("includes/documentdisplaymodal.php");   
     ?>
 
 
     <main class="main users chart-page" id="skip-target">
       <div class="container">
-        <h2 class="main-title">Create Certificate of First Time Job Seeker</h2>
+        <h2 class="main-title">Create Excavation Permits</h2>
         <div class="row container">
           <style>
 
@@ -72,17 +72,23 @@
 
             <br>
 
-            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#selectresident"> Select Resident </button> 
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#selectresident"> Select Resident </button>
+            <button class="btn btn-warning me-2" data-bs-toggle="modal" data-bs-target="#selectnonresident"> Select Non-Resident </button> 
+ 
 
           </div>
 
               <br><br>
             
           <div class="col-md-12 card m-4 px-3" style="border-radius: 10px;" style="padding: 10px;">
-          <form action="generate-residency.php" method="POST" id="certificatedetails">
+          <form action="#" method="POST" id="certificatedetails">
             <div class="text-center row">
 
-            <input hidden type="text" class="form-control" id="res_id" name="resident_no">
+              <input type="text" class="form-control" id="checkresident" name="resident_no" hidden>
+              <input type="text" class="form-control" id="id_to_record" name="resident_no" hidden>
+
+              <br>
+              <label style="text-align: left;">Personal Details of the Requestee</label>
 
               <div class="form-floating mt-3 mb-3 col-md-4">
                   <input type="text" class="form-control" id="fname" name="firstname" placeholder="Enter First Name Here" required disabled/>
@@ -104,20 +110,11 @@
                   <label for="lname">Suffix</label>
               </div>
 
-              
-
-              <div class="form-floating mt-3 mb-3 col-md-10">
+              <div class="form-floating mt-3 mb-3 col-md-12">
                   <input type="text" class="form-control" id="address" name="address" placeholder="Enter Subdvision Here" disabled/>
                   <label for="subd">Complete Address</label>
               </div>
 
-              
-              <div class="form-floating mt-3 mb-3 col-md-2">
-                  <input type="Text" class="form-control" id="resident_since" name="r_since" placeholder="Enter Resident Since Here" required disabled/>
-                  <label for="birth_place">Resident Since</label>
-              </div> 
-
-                  
               <div class="form-floating mt-3 mb-3 col-md-6">
                   <select class="form-select" id="presented_id" name="presented_id" aria-label="Floating label select example" required aria-required="true">
                       <option hidden value="">Select Option</option>
@@ -139,8 +136,6 @@
                       <option value="Passport">Passport</option>
                       <option value="NBI Clearance">NBI Clearance</option>
                       <option value="Seafarers Record Book">Seafarers Record Book</option>
-
-
                   </select>
                   <label for="presented_id">Presented ID</label>
               </div>
@@ -150,6 +145,38 @@
                   <label for="IDnum">ID Number</label>
               </div> 
 
+              <label style="text-align: left;">Address For The Excavation</label>
+
+              <div class="form-floating mt-3 mb-3 col-md-4">
+                  <input type="text" class="form-control" id="house_no" name="house_no" placeholder="Enter Subdvision Here"/>
+                  <label for="street">House No</label>
+              </div>
+
+              <div class="form-floating mt-3 mb-3 col-md-4">
+                  <input type="text" class="form-control" id="street" name="street" placeholder="Enter Subdvision Here"/>
+                  <label for="street">Street</label>
+              </div>
+
+              <div class="form-floating mt-3 mb-3 col-md-4">
+                  <select class="form-select" id="subd" name="subd" aria-label="Floating label select example">
+                      <option value="">Not Applicable</option>
+                      <option value="Almar Subd">Almar Subd</option>
+                      <option value="Caritas Village">Caritas Village</option>
+                      <option value="Capitol Parkland">Capitol Parkland</option>
+                      <option value="Cassel Spring Subd">Cassel Spring Subd</option>
+                      <option value="Christina Homes">Christina Homes</option>
+                      <option value="Cielito Homes">Cielito Homes</option>
+                      <option value="Del Rey Ville 2 Subd">Del Rey Ville 2</option>
+                      <option value="Kassel Villas">Kassel Villas</option>
+                      <option value="Lilleville Subd">Lilleville Subd</option>
+                      <option value="Maligay Park">Maligaya Park</option>
+                      <option value="Maria Luisa Subd">Maria Luisa Subd</option>
+                      <option value="North Matrix Villge 1">North Matrix Village 1</option>
+                      <option value="North Matrix Ville">North Matrix Ville</option>
+                      <option value="North Triangle">North Triangle</option>
+                  </select>
+                  <label for="subd">Subdivision</label>
+              </div>
               
             </div>
           </div>
@@ -173,19 +200,17 @@
   <?php require_once("includes/footer.php")?>
   </div>
 </div>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-<!--JavaScript-->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-<script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.14.1/dist/sweetalert2.all.min.js"></script>
 <!-- Chart library -->
 <script src="plugins/chart.min.js"></script>
 <!-- Icons library -->
 <script src="plugins/feather.min.js"></script>
 <!-- Custom scripts -->
-<script src="js/create-document.js"></script>
+<script src="js/create-permits.js"></script>
 <script src="js/script.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.14.1/dist/sweetalert2.all.min.js"></script></head>
+
 </body>
 
 </html>

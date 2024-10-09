@@ -28,8 +28,9 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     $nowdate= date("Y-m-d H:i:s"); //Get the date now
     $nowtime = time(); //Get the time now
     $directory = "building_permits/";
-    $fileName = $_SERVER['DOCUMENT_ROOT'] . "/BIMS-with-Template/documents/".$directory."/generated_pdf_" . $nowtime . ".pdf";
+    $filePath = $_SERVER['DOCUMENT_ROOT'] . "/BIMS-with-Template/documents/".$directory."/generated_pdf_" . $nowtime . ".pdf";
     $filename = "generated_pdf_" . $nowtime . ".pdf";
+
     $username = null;
     $issuingdeptno = null;
 
@@ -84,7 +85,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
                 ':presentedid' => $presentedid,
                 ':IDnumber' => $IDnumber,
                 ':purpose' => "Securing Building Permit",
-                ':filenames' => $fileName
+                ':filenames' => $filename
             ];
             $certDetailsstmt = $pdo->prepare($certDetailsquery);
             $certDetailsstmt->execute($alldatatorequest);
@@ -102,8 +103,8 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
                 ':residentno' => $ID,
                 ':presentedid' => $presentedid,
                 ':IDnumber' => $IDnumber,
-                ':purpose' => "Getting Business Permit",
-                ':filenames' => $fileName
+                ':purpose' => "Securing Building Permit",
+                ':filenames' => $filename
             ];
             $certDetailsstmt = $pdo->prepare($certDetailsquery);
             $certDetailsstmt->execute($alldatatorequest);
@@ -201,7 +202,7 @@ class MYPDF extends TCPDF {
     // Page footer
     public function Footer() {
 
-              // Get the width and height of the page
+        // Get the width and height of the page
         $pageWidth = $this->getPageWidth();
         $pageHeight = $this->getPageHeight();
 
@@ -237,9 +238,9 @@ class MYPDF extends TCPDF {
         // $this->SetXY(25, 282); 
         // $this->Cell(5, 10, $year_quarter, 0, 0, 'C', false, '', 0, false, 'T', 'M');
 
-        global $expirationdate;
-        $this->SetXY(25, 285); 
-        $this->Cell(5, 10, "May Bisa Hanggang ika-".$expirationdate, 0, 0, 'C', false, '', 0, false, 'T', 'M');
+        // global $expirationdate;
+        // $this->SetXY(25, 285); 
+        // $this->Cell(5, 10, "May Bisa Hanggang ika-".$expirationdate, 0, 0, 'C', false, '', 0, false, 'T', 'M');
 
         // Position at 15 mm from bottom
         $this->SetY(-15);
@@ -494,11 +495,10 @@ $pdf->SetFont('cambria', 'B', 12);
 $pdf->SetXY(180, 240); 
 $pdf->Cell(5, 10, "KALIHIM BARANGAY", 0, 0, 'C', false, '', 0, false, 'T', 'M');
 
-
 // ---------------------------------------------------------
 
 //Close and output PDF document
-$pdf->Output($fileName, 'F');
+$pdf->Output($filePath, 'F');
 echo json_encode(["file" => $filename]);
 
 

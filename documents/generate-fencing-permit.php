@@ -12,28 +12,27 @@ $nowtime = time(); // Timestamp to generate a unique filename
 
 date_default_timezone_set('Asia/Manila');
 
-$brgyquery="SELECT * FROM brgy_officials";
-$brgystmt=$pdo->prepare($brgyquery);
-$brgystmt->execute();
-$brgyofficials=$brgystmt->fetchAll(PDO::FETCH_ASSOC); 
-
-foreach($brgyofficials as $officialname){
-
-    $official[] = $officialname['official_name'];
-
-}
-
-$nowdate= date("Y-m-d H:i:s"); //Get the date now
-$nowtime = time(); //Get the time now
-
-$directory = "excavation_permits";
-$filePath = $_SERVER['DOCUMENT_ROOT'] . "/BIMS-with-Template/documents/".$directory."/generated_pdf_" . $nowtime . ".pdf";
-$filename = "generated_pdf_" . $nowtime . ".pdf";
-
-$username = null;
-$issuingdeptno = null;
-
 if($_SERVER['REQUEST_METHOD'] === 'POST'){
+
+    $brgyquery="SELECT * FROM brgy_officials";
+    $brgystmt=$pdo->prepare($brgyquery);
+    $brgystmt->execute();
+    $brgyofficials=$brgystmt->fetchAll(PDO::FETCH_ASSOC); 
+
+    foreach($brgyofficials as $officialname){
+
+        $official[] = $officialname['official_name'];
+
+    }
+
+    $nowdate= date("Y-m-d H:i:s"); //Get the date now
+    $nowtime = time(); //Get the time now
+    $filePath = $_SERVER['DOCUMENT_ROOT'] . "/BIMS-with-Template/documents/fencing_permits/generated_pdf_" . $nowtime . ".pdf";
+    $filename = "generated_pdf_" . $nowtime . ".pdf";
+
+    $username = null;
+    $issuingdeptno = null;
+
     $ID = $_POST['id_to_record'];
     $isResident = ($_POST['res_sta']=="RESIDENT")? "RESIDENT" : "NON_RESIDENT" ; 
 
@@ -49,87 +48,88 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     $presentedid=sanitizeData($_POST['presented_id']);
     $IDnumber=sanitizeData($_POST['id_num']);
 
-    $excavation_hnum= sanitizeData($_POST['house_num']);
-    $excavation_street= sanitizeData($_POST['street']);
-    $excavation_subd = sanitizeData($_POST['subd']);
-    $excavationaddress = utf8_decode($excavation_hnum .' '. $excavation_street. ' '. $excavation_subd);
-    $purpose = "Securing Excavation Permit";
+    $building_hnum= sanitizeData($_POST['house_num']);
+    $building_street= sanitizeData($_POST['street']);
+    $building_subd = sanitizeData($_POST['subd']);
+    $buildingaddress = utf8_decode($building_hnum .' '. $building_street. ' '. $building_subd);
+    $permit_type= sanitizeData($_POST['purpose']);
+    $purpose = "Securing Fencing Permit "."(".$permit_type.")";
 
     try{
 
         $pdo->beginTransaction();
     
-        $buildingquery = "INSERT INTO tbl_excavation_permits(blg_house_no, street, subd) VALUES (?,?,?)";
+        $buildingquery = "INSERT INTO tbl_fencing_permit(blg_house_no, street, subd, estate_type) VALUES (?,?,?,?)";
         $buildingstmt = $pdo->prepare($buildingquery);
-        $buildingstmt->execute([$excavation_hnum, $excavation_street, $excavation_subd]);
-    
-        $determinedocuquery = "CALL determine_docu_type('Excavation_Permits');";
+        $buildingstmt->execute([$building_hnum, $building_street, $building_subd, $permit_type]);
+
+        $determinedocuquery = "CALL determine_docu_type('Fencing_Permits');";
         $determinedocustmt = $pdo->prepare($determinedocuquery);
         $determinedocustmt->execute();
         $determinedocustmt->closeCursor(); 
-    
+
         $auditTrailquery= "
                 INSERT INTO tbl_cert_audit_trail(issuing_dept_no, datetime_issued, expiration)
                 VALUES (?, ?, DATE_ADD(CURDATE(), INTERVAL 1 YEAR));
                 ";
         $auditTrailstmt=$pdo->prepare($auditTrailquery);
         $auditTrailstmt->execute([$issuingdeptno, $nowdate]);
-    
+
         if ($isResident =="RESIDENT"){
-    
+
             $certDetailsquery = "INSERT INTO tbl_docu_request (resident_no ,presented_id, ID_number, purpose, pdffile) 
                         VALUES (:residentno,:presentedid, :IDnumber, :purpose, :filenames);";
             $alldatatorequest = [
                 ':residentno' => $ID,
                 ':presentedid' => $presentedid,
                 ':IDnumber' => $IDnumber,
-                ':purpose' => "Securing Excavation Permit",
+                ':purpose' => "Securing Fencing Permit",
                 ':filenames' => $filename
             ];
             $certDetailsstmt = $pdo->prepare($certDetailsquery);
             $certDetailsstmt->execute($alldatatorequest);
-    
+
             $getimagequery = "SELECT img_filename FROM resident where resident_id = ?";
             $getimagestmt = $pdo->prepare($getimagequery);
             $getimagestmt->execute([$ID]);
             $image = $getimagestmt->fetchColumn();
-    
+
         }else{
-    
+
             $certDetailsquery = "INSERT INTO tbl_docu_request (nresident_no ,presented_id, ID_number, purpose, pdffile) 
                         VALUES (:residentno,:presentedid, :IDnumber, :purpose, :filenames);";
             $alldatatorequest = [
                 ':residentno' => $ID,
                 ':presentedid' => $presentedid,
                 ':IDnumber' => $IDnumber,
-                ':purpose' => "Securing Building Permit",
+                ':purpose' => "Securing Fencing Permit",
                 ':filenames' => $filename
             ];
             $certDetailsstmt = $pdo->prepare($certDetailsquery);
             $certDetailsstmt->execute($alldatatorequest);
-    
+
             $getimagequery = "SELECT img_filename FROM non_resident where nresident_id = ?";
             $getimagestmt = $pdo->prepare($getimagequery);
             $getimagestmt->execute([$ID]);
             $image = $getimagestmt->fetchColumn();
-    
+
             }    
-    
+
             $requestquery = "SELECT get_max_request_id() AS request_id";
             $requeststmt = $pdo->prepare($requestquery);
             $requeststmt -> execute();        
             $requestid= $requeststmt->fetchColumn();
-    
+
             $pdo->commit();
-    
+
     }catch(Exception $errors){
         $pdo->rollBack();
         exit(json_encode(["error", $errors->getMessage()]));
     }
-}else{
-    exit('Access denied');
-}
 
+}else{
+    exit("Access Denied");
+}
 class MYPDF extends TCPDF {
 
     public function DrawGradient($x, $y, $w, $h, $color1, $color2) {
@@ -184,7 +184,7 @@ class MYPDF extends TCPDF {
             }
 
             if (isset($logo[3])) {
-                $this->Image("images/" . $logo[3], 175, 8, 25, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false); // Fourth image
+                $this->Image("images/" . $logo[3], 175, 8, 23, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false); // Fourth image
             }
         } else {
             // Handle the case when no images are returned by the query
@@ -199,69 +199,69 @@ class MYPDF extends TCPDF {
     }
 
     // Page footer
-    
     public function Footer() {
 
-        // Get the width and height of the page
-    $pageWidth = $this->getPageWidth();
-    $pageHeight = $this->getPageHeight();
+              // Get the width and height of the page
+        $pageWidth = $this->getPageWidth();
+        $pageHeight = $this->getPageHeight();
 
-    // Set the starting point for the footer (15mm from the bottom)
-    $footerHeight = 20; // Height of the footer
-    $footerY = $pageHeight - $footerHeight;
+        // Set the starting point for the footer (15mm from the bottom)
+        $footerHeight = 20; // Height of the footer
+        $footerY = $pageHeight - $footerHeight;
 
-    // Define the points of the polygon (rectangle with an uphill angle on the right side)
-    // Bottom-left, top-left (flat), top-right (slanted upwards), bottom-right
-    $points = array(
-        0, $footerY + $footerHeight,        // Bottom-left corner
-        0, $footerY,                        // Top-left corner (flat)
-        $pageWidth, $footerY - 8,         // Top-right corner (slanted downwards by 10 units)
-        $pageWidth, $footerY + $footerHeight // Bottom-right corner
-    );
+        // Define the points of the polygon (rectangle with an uphill angle on the right side)
+        // Bottom-left, top-left (flat), top-right (slanted upwards), bottom-right
+        $points = array(
+            0, $footerY + $footerHeight,        // Bottom-left corner
+            0, $footerY,                        // Top-left corner (flat)
+            $pageWidth, $footerY - 8,         // Top-right corner (slanted downwards by 10 units)
+            $pageWidth, $footerY + $footerHeight // Bottom-right corner
+        );
 
-    // Set the fill color (light gray) for the rectangle
-    $this->SetFillColor(4, 238, 9); 
+        // Set the fill color (light gray) for the rectangle
+        $this->SetFillColor(4, 238, 9); 
 
-    // Draw the polygon (angled rectangle)
-    $this->Polygon($points, 'F'); 
+        // Draw the polygon (angled rectangle)
+        $this->Polygon($points, 'F'); 
 
-    $this->SetFont('cambria', 'B', 7);
+        $this->SetFont('cambria', 'B', 7);
 
-    $this->SetXY(25, 276); 
-    $this->Cell(5, 10, "Print Issued By", 0, 0, 'C', false, '', 0, false, 'T', 'M');
+        $this->SetXY(25, 276); 
+        $this->Cell(5, 10, "Print Issued By", 0, 0, 'C', false, '', 0, false, 'T', 'M');
 
-    $this->SetXY(25, 279); 
-    $this->Cell(5, 10, "Wenzel", 0, 0, 'C', false, '', 0, false, 'T', 'M');
+        $this->SetXY(25, 279); 
+        $this->Cell(5, 10, "Wenzel", 0, 0, 'C', false, '', 0, false, 'T', 'M');
 
-    // global $year_quarter;
+        // global $year_quarter;
 
-    // $this->SetXY(25, 282); 
-    // $this->Cell(5, 10, $year_quarter, 0, 0, 'C', false, '', 0, false, 'T', 'M');
+        // $this->SetXY(25, 282); 
+        // $this->Cell(5, 10, $year_quarter, 0, 0, 'C', false, '', 0, false, 'T', 'M');
 
-    // global $expirationdate;
-    // $this->SetXY(25, 285); 
-    // $this->Cell(5, 10, "May Bisa Hanggang ika-".$expirationdate, 0, 0, 'C', false, '', 0, false, 'T', 'M');
+        // global $expirationdate;
+        // $this->SetXY(25, 285); 
+        // $this->Cell(5, 10, "May Bisa Hanggang ika-".$expirationdate, 0, 0, 'C', false, '', 0, false, 'T', 'M');
 
-    // Position at 15 mm from bottom
-    $this->SetY(-15);
-    // Set font
-    $this->SetFont('Cambria', 'I', 8);
-
-    $this->SetXY(160 ,271 );
-    // Add bottom-right aligned text (default color)
-    $this->MultiCell(0, 5, "NOT VALID WITHOUT \n DRY SEAL", 0, 'C', 0, 1, '', '', true);
-
-    global $logo; 
-    $this->Image("images/".$logo[3], 145, 277, 15, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false);
-
-    $this->Image("images/".$logo[0], 160, 277, 15, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false);
+        // Position at 15 mm from bottom
+        $this->SetY(-15);
+        // Set font
+        $this->SetFont('Cambria', 'I', 8);
     
-    $this->Image("images/".$logo[1], 175, 277, 15, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false);
+        $this->SetXY(160 ,271 );
+        // Add bottom-right aligned text (default color)
+        $this->MultiCell(0, 5, "NOT VALID WITHOUT \n DRY SEAL", 0, 'C', 0, 1, '', '', true);
 
-    $this->Image("images/".$logo[4], 188, 275, 20, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false);
+        global $logo; 
+        $this->Image("images/".$logo[3], 145, 277, 15, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false);
 
+        $this->Image("images/".$logo[0], 160, 277, 15, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false);
+        
+        $this->Image("images/".$logo[1], 175, 277, 15, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false);
 
+        $this->Image("images/".$logo[4], 188, 275, 20, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false);
+
+   
     }
+
 }
 
 $pdf = new MYPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, 'A4', true, 'UTF-8', false);
@@ -269,22 +269,12 @@ $pdf = new MYPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, 'A4', true, 'UTF-8', false);
 // set document information
 $pdf->SetCreator(PDF_CREATOR);
 $pdf->SetAuthor('Nicola Asuni');
-$pdf->SetTitle('Generate Excavation Permit');
+$pdf->SetTitle('Generate Building Permit');
 $pdf->SetSubject('TCPDF Tutorial');
 $pdf->SetKeywords('TCPDF, PDF, example, test, guide');
 
-// set default header data
-$pdf->SetHeaderData(PDF_HEADER_LOGO, PDF_HEADER_LOGO_WIDTH, PDF_HEADER_TITLE, PDF_HEADER_STRING);
-
-// set header and footer fonts
-$pdf->setHeaderFont(Array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
-$pdf->setFooterFont(Array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
-
-// set default monospaced font
-$pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
-
 // set margins
-$pdf->SetMargins(20, 20, 20);
+$pdf->SetMargins(20, 30, 20);
 $pdf->SetHeaderMargin(PDF_MARGIN_HEADER);
 $pdf->SetFooterMargin(PDF_MARGIN_FOOTER);
 $pdf->SetAutoPageBreak(TRUE, 20); 
@@ -308,7 +298,7 @@ $pdf->AddPage();
 
 // Add image watermark (with transparency)
 $pdf->SetAlpha(0.3); // Set transparency
-$pdf->Image('images/'.$logo[4], -20, 20, 280, 0, 'PNG', '', '', false, 300, '', false, false, 0); // X, Y, Width, Height
+$pdf->Image('images/'.$logo[4], -15, 20, 280, 0, 'PNG', '', '', false, 300, '', false, false, 0); // X, Y, Width, Height
 $pdf->SetAlpha(1); // Reset transparenc
 
 $pdf->SetTopMargin(35);
@@ -346,18 +336,19 @@ $html =
     '<div class="body">
         <br><br>
         <h1 class="certi"> TANGGAPAN NG PUNONG BARANGAY </h1>
-        <h1 class="bpermit"> SECURING EXCAVATION PERMIT </h1>
+        <h1 class="bpermit"> SECURING FENCING PERMIT </h1>
 
         <br><br>
 
-        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Ang pagpapatunay na ito ipinagkaloob sa kahilingan ni
-         <b class="bold">'.'  '.$fullname. '  '.'</b> upang magamit para sa kaniyang 
-         <b class="bold">'.' '.$purpose. ' '.'</b> na matatagpuan sa <b class="bold">'.' '.$excavationaddress. ' '.'</b>
-            na nasasakupan ng Barangay 177, Sona 15, Distrito 1, Lungsod ng Caloocan.
+        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Sa pamamagitan nito ay pinatutunayan na si <b class="bold">'.'  '.$fullname. '  '.'</b>
+         na kasulukuyang naninirahan sa <b class="bold">'.' '.$address. ' '.'</b> na nasasakupan ng Barangay 177, Sona 15, Distrito 1, Lungsod ng Caloocan.
         </p>
 
-         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ipinagkaloob ngayong <b>ika-'.date("j").' ng '.$month.', '.date('Y').'</b>
-          sa tanggapan ng Barangay 177, Cielito Homes Subdivision, Camarin, Lungsod ng Caloocan.</p>
+        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Ang pagpapatunay na ito ay ipinagkaloob sa kahilingan ni <b class="bold">'.'  '.$fullname. '  '.'</b> upang magamit sa kaniyang <b class="bold">'.' '.$purpose.' '.'</b>
+         na matatagpuan sa <b class="bold">'.' '.$buildingaddress.' '.'</b> na nasasakupan ng Barangay 177, Sona 15, Distrito 1, Lungsod ng Caloocan.
+         </p>
+
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ipinagkaloob ngayong <b>ika-'.date("j").' ng '.$month.', '.date('Y').'</b> sa tanggapan ng Barangay 177, Cielito Homes Subdivision, Camarin, Lungsod ng Caloocan.</p>
                 
     </div>
     
@@ -368,16 +359,24 @@ $html =
         font-size: 12;
         }
 
+        .certbody{
+            text-align: center; 
+            font-family: Cambria;
+            width:70%;
+            padding: 12px;
+            position: relative;
+        }
+
         .certi{
             text-align: center; 
-            font-size: 25px;
+            font-size: 20px;
             font-family: Cambria;
         }
 
         .bpermit {
             text-align: center;
             font-weight: bolder;
-            font-size: 35px;
+            font-size: 32px;
         }
 
 
@@ -424,6 +423,7 @@ if($isResident == "RESIDENT"){
 }
   
 $pdf->Image($imagepath, 170, 180, 30, 30, $imagetype, '', '', false, 300, '', false, false, 0); // X, Y, Width, Height
+
 
 // Move 30 units above the bottom
 $pdf->SetY(230); 
@@ -498,7 +498,7 @@ $pdf->Cell(5, 10, "KALIHIM BARANGAY", 0, 0, 'C', false, '', 0, false, 'T', 'M');
 
 //Close and output PDF document
 $pdf->Output($filePath, 'F');
+echo json_encode(["file" => $filename]);
 
-echo json_encode(["file" => $filename ]);
 
 ?>

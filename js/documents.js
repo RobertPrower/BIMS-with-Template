@@ -429,7 +429,8 @@ $(document).ready(function () {
 
   $("#retrevePDF").click(function () {
     var request_id = $("#request_id").val();
-    var certificate_type = $("#certiticate_type").val();
+    var certificate_type = $("#DocumentDetailsModal [id='certiticate_type']").val();
+    console.log(certificate_type);
 
     $.ajax({
         url: "includes/documentsoperation.php",
@@ -447,6 +448,15 @@ $(document).ready(function () {
             case "Business Permits":
               var filename = "documents/business_permits/"+file;
             break;
+            case "Building Permits":
+              var filename = "documents/building_permits/"+file;
+            break;
+            case "Excavation Permits":
+              var filename = "documents/excavation_permits/"+file;
+            break;
+            case "Tricycle Pedicab Regulatory Services":
+              var filename = "documents/tprs/"+file;
+            break;
             case "Certificate of Residency":
               var filename = "documents/certificate_of_residency/"+file;
             break;
@@ -458,6 +468,7 @@ $(document).ready(function () {
             break;
             default:
               var filename = "unknown file name";
+              alert("Certificate File Failed");
           }
 
           // Show the modal

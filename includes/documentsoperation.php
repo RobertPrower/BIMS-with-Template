@@ -135,7 +135,7 @@ if($operation_check =="REVOKE"){
     $start_from = ($page - 1) * $limit;
 
     try {
-            $sql = "SELECT * FROM vw_all_documents ORDER BY date_issued DESC"; 
+            $sql = "SELECT * FROM vw_all_documents WHERE is_deleted = 0 ORDER BY date_issued DESC "; 
             $stmt = $pdo->prepare($sql);
             $stmt->execute();
             $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
