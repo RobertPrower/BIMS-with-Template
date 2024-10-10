@@ -613,7 +613,7 @@ $(document).ready(function () {
     $.ajax({
       url: "includes/get-resident-docu-request.php",
       type: "POST",
-      data: { resident_id: resident_id },
+      data: { resident_id: resident_id, OPERATION: "FETCH TABLE" },
       dataType: "HTML",
       success: function (data) {
         $("#ResidentRequestTable tbody").html(data);

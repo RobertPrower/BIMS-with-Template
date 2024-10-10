@@ -217,6 +217,33 @@
                                         
                                     </table>
 
+                                        <!-- Pagination Controls -->
+                                    <nav aria-label="Page navigation" id="pagenav2">
+                                        <ul class="pagination pagination_2 justify-content-end">
+                                        
+                                        <!-- Previous Button -->
+                                        
+                                            <li class="page-item page_modal_item">
+                                                <a class="page-link_modal" href="#">Previous</a>
+                                            </li>
+                                        
+
+                                            <!-- Page Numbers -->
+                                            
+                                                <li class="page-item page_modal_item">
+                                                    <a class="page-link" href="#" data-page=""></a>
+                                                </li>
+                                            
+
+                                            <!-- Next Button -->
+                                            
+                                                <li class="page-item page_modal_item">
+                                                    <a class="page-link" href="#">Next</a>
+                                                </li>
+                                            
+                                        </ul>
+                                    </nav>
+
                                 </div>
 
                             </div>

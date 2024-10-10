@@ -178,7 +178,7 @@ $(document).ready(function () {
     });
   
     //For pagination control function and make it dynamic
-    $(document).on("click", ".page-link", function (e) {
+    $(document).on("click", ".page-link_main", function (e) {
       e.preventDefault();
   
       var page = $(this).data("page");
@@ -542,6 +542,44 @@ $(document).ready(function () {
     $("#DocumentDetailsModal").modal("show");
   });
 
+  function PagControlsForRequestedDocs(residentid, currentPage) {
+    $.ajax({
+      url: "includes/get-resident-docu-request.php",
+      type: "POST",
+      data: { pageno: currentPage, OPERATION: "PAGINATION", resident_id: residentid },
+      dataType: "HTML",
+      success: function (data) {
+        $(".pagination_2").html(data);
+
+      //Prevent the pagination from showing when the entries is less than 10 entries
+      var noofpageitems = $(".page_modal_item").length;
+      switch(noofpageitems){
+        case 1 :
+          $("#pagenav2").prop("hidden", true);
+        break;
+        default:
+          $("#pagenav2").prop("hidden", false);
+      }
+
+
+      },
+      error: function (xhr, status, error) {
+        console.error("Error updating pagination data:", error);
+      },
+    });
+  }
+
+  $(document).on("click", ".page-link_modal", function (e) {
+    e.preventDefault();
+
+    var page = $(this).data("page");
+    console.log("Page:", page);
+
+    $(".pagination_2 .page_mditem").removeClass("active");
+    $(this).parent().addClass("active");
+
+  });
+
   //AJAX request for the clearance tab and table of the modal
   $(document).on("click", "#nav-clearance-tab", function () {
     var resident_id = $("#resident_id").val();
@@ -551,10 +589,11 @@ $(document).ready(function () {
     $.ajax({
       url: "includes/get-resident-docu-request.php",
       type: "POST",
-      data: { resident_id: resident_id },
+      data: { resident_id: resident_id, OPERATION: "FETCH_TABLE" },
       dataType: "HTML",
       success: function (data) {
         $("#ResidentRequestTable tbody").html(data);
+        PagControlsForRequestedDocs(resident_id, "1");
       },
       error: function (xhr, status, error) {
         console.error("Error fetching table data:", error);
