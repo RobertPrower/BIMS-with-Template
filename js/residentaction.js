@@ -32,9 +32,9 @@ $(document).ready(function () {
   //To Reload the page
   function reloadTable(page) {
     $.ajax({
-      url: "includes/residenttableautoreload.php",
+      url: "includes/residentoperation.php",
       type: "POST",
-      data: { pageno: page },
+      data: { pageno: page, operation: "FETCH_TABLE"  },
       dataType: "HTML",
       success: function (data) {
         $("#ResidentTable tbody").html(data);
@@ -71,8 +71,8 @@ $(document).ready(function () {
       data: { pageno: currentPage, operation: "PAGINATION" },
       dataType: "HTML",
       success: function (data) {
-        $(".pagination").html(data);
-        var noofpageitems = $(".page-item").length;
+        $(".main-pagination").html(data);
+        var noofpageitems = $(".pagination-control").length;
         console.log(noofpageitems);
         //Prevent the pagination from showing when the entries is less than 10
         switch(noofpageitems){
@@ -93,7 +93,7 @@ $(document).ready(function () {
   //Update the pagination controls every search
   function updateSearchPaginationControls(query, currentPage) {
     $.ajax({
-      url: "includes/residentsearch.php",
+      url: "includes/residentoperation.php",
       type: "POST",
       data: {
         search: query,
@@ -101,10 +101,10 @@ $(document).ready(function () {
         operation: "SEARCH_PAGINATION",
       },
       success: function (data) {
-        $(".pagination").html(data);
+        $(".main-pagination").html(data);
 
         //Prevent the pagination from showing when the entries is less than 10 entries
-        var noofpageitems = $(".page-item").length;
+        var noofpageitems = $(".pagination-control").length;
         switch(noofpageitems){
           case 1 :
             $("#pagenav").prop("hidden", true);
@@ -129,7 +129,7 @@ $(document).ready(function () {
       success: function (data) {
         $(".pagination").html(data);
         //Prevent the pagination from showing when the entries is less than 10 entries
-        var noofpageitems = $(".page-item").length;
+        var noofpageitems = $(".pagination-control").length;
         switch(noofpageitems){
           case 1 :
             $("#pagenav").prop("hidden", true);
@@ -150,7 +150,7 @@ $(document).ready(function () {
     if ($("#showdeletedentries").is(":checked")) {
       console.log("Deleted Entries switch has been on");
       $.ajax({
-        url: "includes/residentsearch.php",
+        url: "includes/residentoperation.php",
         type: "POST",
         data: { search: query, page: page, operation: "DELETED_SEARCH" },
         success: function (data) {
@@ -164,7 +164,7 @@ $(document).ready(function () {
     } else {
       console.log("Deleted Entries switch has been off");
       $.ajax({
-        url: "includes/residentsearch.php",
+        url: "includes/residentoperation.php",
         type: "POST",
         data: { search: query, page: page, operation: "SEARCH" },
         success: function (data) {
@@ -208,13 +208,13 @@ $(document).ready(function () {
   });
 
   //For pagination control function and make it dynamic
-  $(document).on("click", ".page-link", function (e) {
+  $(document).on("click", ".pagination-control", function (e) {
     e.preventDefault();
 
     var page = $(this).data("page");
     console.log("Page:", page);
 
-    $(".pagination .page-item").removeClass("active");
+    $(".main-pagination .pagination-control").removeClass("active");
     $(this).parent().addClass("active");
 
     if ($("#showdeletedentries").is(":checked")) {
@@ -531,10 +531,7 @@ $(document).ready(function () {
   });
 
   //For populating the View and Edit Modal Combined into one event
-  $(document).on(
-    "click",
-    ".editResidentButton, .viewResidentButton",
-    function (event) {
+  $(document).on("click",".editResidentButton, .viewResidentButton",function (event) {
       event.preventDefault();
 
       // Get common data attributes
@@ -604,23 +601,4 @@ $(document).ready(function () {
     }
   );
 
-  //AJAX request for the clearance tab and table of the modal
-  $(document).on("click", "#nav-clearance-tab", function () {
-    var resident_id = $("#viewresident_id").val();
-
-    console.log(resident_id);
-
-    $.ajax({
-      url: "includes/get-resident-docu-request.php",
-      type: "POST",
-      data: { resident_id: resident_id, OPERATION: "FETCH TABLE" },
-      dataType: "HTML",
-      success: function (data) {
-        $("#ResidentRequestTable tbody").html(data);
-      },
-      error: function (xhr, status, error) {
-        console.error("Error fetching table data:", error);
-      },
-    });
-  });
 });

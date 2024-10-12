@@ -24,9 +24,9 @@ $(document).ready(function () {
   //To Reload the page
   function reloadTable(page) {
     $.ajax({
-      url: "includes/nonresidenttableautoreload.php",
+      url: "includes/nonresidentoperation.php",
       type: "POST",
-      data: {pageno: page},
+      data: {pageno: page, operation: "FETCH_TABLE"},
       dataType: "HTML",
       success: function (data) {
         $("#NonResidentTable tbody").html(data);
@@ -63,10 +63,10 @@ $(document).ready(function () {
       data: {pageno: currentPage, operation: "PAGINATION"},
       dataType: "HTML",
       success: function (data) {
-        $(".pagination").html(data);
+        $(".main-pagination").html(data);
                 
         //Prevent the pagination from showing when the entries is less than 10
-        var noofpageitems = $(".page-item").length;
+        var noofpageitems = $(".pagination-control").length;
         switch(noofpageitems){
           case 1 :
             $("#pagenav").prop("hidden", true);
@@ -85,13 +85,13 @@ $(document).ready(function () {
   //Update the pagination controls every search
   function updateSearchPaginationControls(query, currentPage) {
     $.ajax({
-        url: "includes/nonresidentsearch.php",
+        url: "includes/nonresidentoperation.php",
         type: "POST",
         data: { search: query, pageno: currentPage, operation: "SEARCH_PAGINATION" },
         success: function (data) {
             $(".pagination").html(data);
             //Prevent the pagination from showing when the entries is less than 10
-            var noofpageitems = $(".page-item").length;
+            var noofpageitems = $(".pagination-control").length;
             switch(noofpageitems){
               case 1 :
                 $("#pagenav").prop("hidden", true);
@@ -116,7 +116,7 @@ $(document).ready(function () {
         success: function (data){
           $(".pagination").html(data);
           //Prevent the pagination from showing when the entries is less than 10
-          var noofpageitems = $(".page-item").length;
+          var noofpageitems = $(".pagination-control").length;
           switch(noofpageitems){
             case 1 :
               $("#pagenav").prop("hidden", true);
@@ -137,7 +137,7 @@ $(document).ready(function () {
     if ($("#showdeletedentries").is(":checked")) {
         console.log("Deleted Entries switch has been on");
         $.ajax({
-            url: "includes/nonresidentsearch.php",
+            url: "includes/nonresidentoperation.php",
             type: "POST",
             data: { search: query, page: page, operation: "DELETED_SEARCH" },
             success: function (data) {
@@ -151,7 +151,7 @@ $(document).ready(function () {
     } else {
         console.log("Deleted Entries switch has been off");
         $.ajax({
-            url: "includes/nonresidentsearch.php",
+            url: "includes/nonresidentoperation.php",
             type: "POST",
             data: { search: query, page: page, operation: "SEARCH" },
             success: function (data) {
@@ -197,13 +197,13 @@ $(document).ready(function () {
 });
 
   //For pagination control function and make it dynamic
-  $(document).on('click', '.page-link', function(e) {
+  $(document).on('click', '.pagination-control', function(e) {
     e.preventDefault();
     
     var page = $(this).data('page');     
     console.log('Page:', page);
 
-    $('.pagination .page-item').removeClass('active');
+    $('.main-pagination .pagination-control').removeClass('active');
     $(this).parent().addClass('active');
     
     if ($("#showdeletedentries").is(":checked")){
@@ -294,6 +294,7 @@ $(document).ready(function () {
                         $('#ViewNonResidentModal input[name="birth_date"]').val(response.data.birth_date);
                         $('#ViewNonResidentModal input[name="birth_place"]').val(response.data.birth_place);
                         $('#ViewNonResidentModal input[name="cellphone_number"]').val(response.data.cellphone_num);
+
                       } else {
                         swal({
                             icon: "error",
@@ -503,7 +504,7 @@ $(document).ready(function () {
   $(document).on("click", ".editNonResidentButton, .viewNonResidentButton", function (event) {
     event.preventDefault();
 
-    console.log("Modal Event has been triggered");
+    console.log("View or Edit Modal has been triggered");
 
     // Get common data attributes
     var nresident_id = $(this).data("id");
@@ -533,7 +534,7 @@ $(document).ready(function () {
     var modalId = isEdit ? "#EditNonResidentModal" : "#ViewNonResidentModal";
 
     // Populate the common fields in the modal
-    $(modalId + ' input[name="nresident_id"]').val(nresident_id);
+    $(modalId + ' input[id="viewnonresident_id"]').val(nresident_id);
     $(modalId + ' input[name="fname"]').val(first_name);
     $(modalId + ' input[name="mname"]').val(middle_name);
     $(modalId + ' input[name="lname"]').val(last_name);
@@ -562,6 +563,19 @@ $(document).ready(function () {
         // Make the profile tab the default tab when the view button is clicked
         $('#nav-home-tab').tab('show');
         $(modalId).modal("show"); // Show the View modal
+
+        //For counting certificates requested
+        $.ajax({
+          type: "post",
+          url: "includes/nonresidentoperation.php",
+          data: { operation: "COUNT_RES_CERT", nresident_id: nresident_id },
+          dataType: "json",
+          success: function (response) {
+            console.log(response);
+
+            $("#noofcerts").text(response);
+          },
+        });
     }
 
     //To fetch the image from the database
@@ -598,28 +612,6 @@ $(document).ready(function () {
         console.error("Error fetching metadata:", error);
       },
     });
-
-  });
-
-    //AJAX request for the clearance tab and table of the modal
-  $(document).on("click", "#nav-clearance-tab", function () {
-    var nresident_id = $('#viewnonresident_id').val();
-
-    console.log(nresident_id);
-    
-      $.ajax({
-        url: "includes/get-nonresident-docu-request.php",
-        type: "POST",
-        data: {nresident_id: resident_id},
-        dataType: "HTML",
-        success: function (data) {
-          $("#NonResidentRequestTable tbody").html(data);
-        },
-        error: function (xhr, status, error) {
-          console.error("Error fetching table data:", error);
-        },
-      });
-
 
   });
  

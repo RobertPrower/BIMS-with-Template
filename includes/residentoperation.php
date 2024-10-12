@@ -1,7 +1,6 @@
 <?php
 require_once("connecttodb.php");
-
-date_default_timezone_set('Asia/Hong_Kong'); //Set the default timezone
+require_once("anti-SQLInject.php");
 
 $operation_check=$_POST['operation']; //Catches What operation to perform
 $nowdate = date("y-m-d"); //Checks the current date
@@ -501,15 +500,108 @@ if($operation_check == "ADD"){ //For the add operation
 
     require_once('paginationtemplate.php');
 
-}elseif($_POST['operation'] == "COUNT_RES_CERT"){
+}elseif($operation_check == "COUNT_RES_CERT"){
     $resident_no = $_POST['resident_id'];
 
-    $countquery = "SELECT COUNT(*) AS count FROM vw_all_res_cert WHERE resident_no = ?";
+    $countquery = "SELECT COUNT(*) AS count FROM tbl_docu_request WHERE resident_no = ?";
     $stmt = $pdo->prepare($countquery);
     $stmt->execute([$resident_no]);
     $results = $stmt -> fetchColumn();
 
     echo json_encode($results);
+}elseif($operation_check == "FETCH_TABLE"){
+
+    $limit = 10;
+    $page = isset($_POST['pageno']) ? $_POST['pageno'] : 1;
+    $start_from = ($page - 1) * $limit;
+
+    try {
+            $sql = "SELECT * FROM vw_resident ORDER BY last_name ASC LIMIT $start_from, $limit"; 
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute();
+            $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        // Check if there are any results
+        if (count($results) > 0) {
+            // Output each row as HTML
+            require_once'residenttabletofetch.php';
+        } else {
+            echo '<tr><td colspan="12">No records found.</td></tr>';
+        }
+    } catch (PDOException $e) {
+        echo 'Error: ' . htmlspecialchars($e->getMessage());
+    }
+    
+}elseif($operation_check=="SEARCH"){
+    $search = isset($_POST['search']) ? sanitizeData($_POST['search']): '';
+    if(!empty($search)){
+        $limit = 10;
+        $page = isset($_POST['page']) ? $_POST['page'] : '1';
+        $start_from = ($page - 1) * $limit;
+
+        // query to fetch records with pagination
+        $stmt = $pdo->prepare("CALL SearchResident(:search, :start_from, $limit)"); 
+
+        $stmt->execute(['search' => "%$search%", 'start_from' => "$start_from"]);
+
+        $results = $stmt->fetchAll();
+
+        if(!empty($results)){
+            // Code for displaying the results
+           require_once'residenttabletofetch.php';
+            
+        }else{
+            echo '<tr><td colspan="11"><b>No results found</b></td></tr>';
+        }
+    }else{
+        echo '<tr><td colspan="11">No Query</td></tr>';
+    }
+}elseif($operation_check=="DELETED_SEARCH"){
+    $search = isset($_POST['search']) ? sanitizeData($_POST['search']): '';
+    if(!empty($search)){
+        $page = isset($_POST['page']) ? $_POST['page'] : '1';
+        $start_from = ($page - 1) * $limit;
+
+        // query to fetch records with pagination
+        $stmt = $pdo->prepare("CALL SearchResidentDeleted(:search, :start_from, $limit)"); 
+
+        $stmt->execute(['search' => "%$search%", 'start_from' => "$start_from"]);
+
+        $results = $stmt->fetchAll();
+
+        if(!empty($results)){
+            // Code for displaying the results
+            require_once'residenttabletofetch.php';
+            
+        }else{
+            echo '<tr><td colspan="11"><b>No results found</b></td></tr>';
+        }
+    }else{
+        echo '<tr><td colspan="11">No Query</td></tr>';
+    }
+
+}elseif($operation_check=="SEARCH_PAGINATION"){
+    $search = isset($_POST['search']) ? sanitizeData($_POST['search']): '';
+    $limit = 10;
+    $stmt = $pdo->prepare("SELECT COUNT(*) FROM resident WHERE last_name LIKE :search OR first_name LIKE :search OR middle_name LIKE :search");
+    $stmt->execute(['search' => "%$search%"]);
+    $total_records = $stmt->fetchColumn();
+
+    switch($total_records){
+        case 0:
+            $total_pages = 0;
+        break;
+        default:
+            $total_pages = ceil($total_records / $limit);
+    }
+
+    $current_page = isset($_POST['pageno']) ? (int)$_POST['pageno'] : 1;
+    $current_page = max(1, min($current_page, $total_pages));
+    $start_from = ($current_page - 1) * $limit;
+        
+    require_once'paginationtemplate.php';
+}else{
+    echo '<tr><td colspan="11">Unknown Operation. Please Call IT Deptparment for troubleshooting</td></tr>';
 }
     
 
@@ -528,16 +620,6 @@ function generateUniqueFileName($target_dir, $originalFileName) {
     }
 
     return $fileName;
-}
-//To Sanitize the Data to prevent SQL Injections and Cross site scripting and insertion of special characters
-function sanitizeData($input){
-    $removedSpecialChar = trim ($input, "!@#$%^&*()=[]{};:`~'<>,./\?| "); 
-    $removedSpecialCharinthemiddle= preg_replace('/[^a-zA-Z0-9\s\-ñÑ#]/u','', $removedSpecialChar);
-
-    $sanatizedData=htmlspecialchars($removedSpecialCharinthemiddle);
-
-    return $sanatizedData;
-
 }
 
 // Close the database connection

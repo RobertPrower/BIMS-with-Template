@@ -112,28 +112,10 @@
 
                 <!-- Pagination Controls -->
                 <nav aria-label="Page navigation" id="pagenav">
-                        <ul class="pagination justify-content-end">
+                        <ul class="pagination main-pagination justify-content-end">
                         
-                        <!-- Previous Button -->
+                        <!-- To be filled by AJAX -->
                         
-                            <li class="page-item">
-                                <a class="page-link" href="#">Previous</a>
-                            </li>
-                        
-
-                            <!-- Page Numbers -->
-                            
-                                <li class="page-item">
-                                    <a class="page-link" href="#" data-page=""></a>
-                                </li>
-                        
-
-                            <!-- Next Button -->
-                        
-                                <li class="page-item">
-                                    <a class="page-link" href="#">Next</a>
-                                </li>
-                            
                         </ul>
                     </nav>
 
@@ -149,7 +131,7 @@
   <?php require_once("includes/footer.php")?>
     </div>
 </div>
-        
+<script src="js/residentviewmodal.js"></script>
 <script src="js/residentaction.js"> </script>
 <script src="js/sidebar.js"></script>
 <script src="js/camerafunction.js"></script>

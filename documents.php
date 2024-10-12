@@ -201,27 +201,10 @@
 
                 <!-- Pagination Controls -->
                 <nav aria-label="Page navigation" id="pagenav">
-                      <ul class="pagination justify-content-end">
+                      <ul class="pagination main-pagination justify-content-end">
                       
-                      <!-- Previous Button -->
-                      
-                          <li class="page-item">
-                              <a class="page-link" href="#">Previous</a>
-                          </li>
-                      
+                        <!-- To be filled by AJAX -->
 
-                          <!-- Page Numbers -->
-                          
-                              <li class="page-item">
-                                  <a class="page-link" href="#" data-page=""></a>
-                              </li>
-                        
-
-                          <!-- Next Button -->
-                        
-                              <li class="page-item">
-                                  <a class="page-link" href="#">Next</a>
-                              </li>
                           
                       </ul>
                 </nav>
@@ -233,7 +216,7 @@
   <?php require_once("includes/footer.php")?>
     </div>
 </div>
-
+<script src="js/residentviewmodal.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 <script src="js/html5-qrcode.min.js"></script>
 <!-- Chart library -->

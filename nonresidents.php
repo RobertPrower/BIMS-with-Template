@@ -45,7 +45,7 @@
                             <div class="d-flex justify-content-start" style="padding-left: 15px;">
                             
                                 <!-- Button to trigger modal -->
-                                <button type="button" class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#AddNonResidentModal" id="AddNonResidentBtn">New Record</button>    
+                                <button type="button" class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#AddNonResidentModal" id="AddNonResidentBtn">New Non Resident</button>    
                                 
                                 <div class="form-check form-switch my-2">
                                     <input class="form-check-input" type="checkbox" id="showdeletedentries">
@@ -105,28 +105,10 @@
 
                 <!-- Pagination Controls -->
                 <nav aria-label="Page navigation" id="pagenav">
-                        <ul class="pagination justify-content-end">
+                        <ul class="main-pagination justify-content-end">
                         
-                        <!-- Previous Button -->
+                        <!-- To be filled by AJAX -->
                         
-                            <li class="page-item">
-                                <a class="page-link" href="#">Previous</a>
-                            </li>
-                        
-
-                            <!-- Page Numbers -->
-                            
-                                <li class="page-item">
-                                    <a class="page-link" href="#" data-page=""></a>
-                                </li>
-                        
-
-                            <!-- Next Button -->
-                        
-                                <li class="page-item">
-                                    <a class="page-link" href="#">Next</a>
-                                </li>
-                            
                         </ul>
                     </nav>
 
@@ -146,6 +128,7 @@
 <!-- <script src="js/jquery-ui.min.js"></script> -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/js/bootstrap-datepicker.min.js" integrity="sha512-LsnSViqQyaXpD4mBBdRYeP6sRwJiJveh2ZIbW41EBrNmKxgr/LFZIiWT6yr+nycvhvauz8c2nYMhrP80YhG7Cw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="js/nonresidentaction.js"> </script>
+<script src="js/nonresidentviewmodal.js"> </script>
 <script src="js/camerafunction.js"></script>
 
 <!-- Chart library -->

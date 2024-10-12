@@ -4,7 +4,11 @@ foreach ($results as $row) {
     echo '<td id="request_id">' . htmlspecialchars($row['request_id']) . '</td>';
     echo '<td>' . htmlspecialchars($row['date_issued']) . '</td>';
     echo '<td>' . htmlspecialchars($row['expiration']) . '</td>';
-    echo '<td>' . htmlspecialchars($row['is_resident']) . '</td>';
+    switch ($row['is_resident']){
+        case 1: echo "<td> Resident </td>";
+        break;
+        default: echo "<td> Non-Resident</td>";
+    }
     echo '<td>' . htmlspecialchars($row['last_name']) . ', ' . htmlspecialchars($row['first_name']) . ' ' . htmlspecialchars($row['middle_name']) . ' ' . htmlspecialchars($row['suffix']) . '</td>';
     echo '<td>' . htmlspecialchars($row['house_num']) . ', ' . htmlspecialchars($row['street']) . ', ' . htmlspecialchars($row['subdivision']) .' '. htmlspecialchars($row['city']) . '</td>';
     echo '<td>' . htmlspecialchars($row['document_desc']) . '</td>';

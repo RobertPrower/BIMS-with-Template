@@ -54,7 +54,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     $building_subd = sanitizeData($_POST['subd']);
     $buildingaddress = utf8_decode($building_hnum .' '. $building_street. ' '. $building_subd);
     $permit_type= sanitizeData($_POST['purpose']);
-    $purpose = "Securing Business Permit "."(".$permit_type.")";
+    $purpose = "Securing Building Permit "."(".$permit_type.")";
 
     try{
 

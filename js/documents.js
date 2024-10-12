@@ -178,13 +178,13 @@ $(document).ready(function () {
     });
   
     //For pagination control function and make it dynamic
-    $(document).on("click", ".page-link_main", function (e) {
+    $(document).on("click", ".pagination-control", function (e) {
       e.preventDefault();
   
       var page = $(this).data("page");
       console.log("Page:", page);
   
-      $(".pagination .page-item").removeClass("active");
+      $(".main-pagination .pagination-control").removeClass("active");
       $(this).parent().addClass("active");
   
       if ($("#showdeletedentries").is(":checked")) {
@@ -451,6 +451,9 @@ $(document).ready(function () {
             case "Building Permits":
               var filename = "documents/building_permits/"+file;
             break;
+            case "Fencing Permits":
+              var filename = "documents/fencing_permits/"+file;
+            break;
             case "Excavation Permits":
               var filename = "documents/excavation_permits/"+file;
             break;
@@ -540,65 +543,6 @@ $(document).ready(function () {
 
     $("#ViewResidentModal").modal("hide");
     $("#DocumentDetailsModal").modal("show");
-  });
-
-  function PagControlsForRequestedDocs(residentid, currentPage) {
-    $.ajax({
-      url: "includes/get-resident-docu-request.php",
-      type: "POST",
-      data: { pageno: currentPage, OPERATION: "PAGINATION", resident_id: residentid },
-      dataType: "HTML",
-      success: function (data) {
-        $(".pagination_2").html(data);
-
-      //Prevent the pagination from showing when the entries is less than 10 entries
-      var noofpageitems = $(".page_modal_item").length;
-      switch(noofpageitems){
-        case 1 :
-          $("#pagenav2").prop("hidden", true);
-        break;
-        default:
-          $("#pagenav2").prop("hidden", false);
-      }
-
-
-      },
-      error: function (xhr, status, error) {
-        console.error("Error updating pagination data:", error);
-      },
-    });
-  }
-
-  $(document).on("click", ".page-link_modal", function (e) {
-    e.preventDefault();
-
-    var page = $(this).data("page");
-    console.log("Page:", page);
-
-    $(".pagination_2 .page_mditem").removeClass("active");
-    $(this).parent().addClass("active");
-
-  });
-
-  //AJAX request for the clearance tab and table of the modal
-  $(document).on("click", "#nav-clearance-tab", function () {
-    var resident_id = $("#resident_id").val();
-
-    console.log(resident_id);
-
-    $.ajax({
-      url: "includes/get-resident-docu-request.php",
-      type: "POST",
-      data: { resident_id: resident_id, OPERATION: "FETCH_TABLE" },
-      dataType: "HTML",
-      success: function (data) {
-        $("#ResidentRequestTable tbody").html(data);
-        PagControlsForRequestedDocs(resident_id, "1");
-      },
-      error: function (xhr, status, error) {
-        console.error("Error fetching table data:", error);
-      },
-    });
   });
 
   //For the function of the revoke or restore button

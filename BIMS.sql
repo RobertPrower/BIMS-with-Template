@@ -162,7 +162,7 @@ CREATE TABLE `nonres_audit_trail` (
 insert  into `nonres_audit_trail`(`audit_trail_id`,`dept_added_no`,`user_added_no`,`datetime_added`,`dept_edited_no`,`user_edited_no`,`last_edited_datetime`,`dept_deleted_no`,`user_deleted_no`,`datetime_deleted`,`dept_recovered_no`,`user_recovered_no`,`datetime_recovered`) values 
 (1,NULL,NULL,'2024-09-04 10:12:00',NULL,NULL,'2024-09-24 18:04:40',NULL,NULL,'2024-09-25 03:03:50',NULL,NULL,NULL),
 (2,NULL,NULL,'2024-09-24 18:32:14',NULL,NULL,'2024-09-25 03:03:22',NULL,NULL,'2024-09-25 02:46:31',NULL,NULL,NULL),
-(3,NULL,NULL,'2024-10-03 00:48:06',NULL,NULL,'2024-10-03 01:46:56',NULL,NULL,NULL,NULL,NULL,NULL),
+(3,NULL,NULL,'2024-10-03 00:48:06',NULL,NULL,'2024-10-03 01:46:56',NULL,NULL,'2024-10-12 12:30:24',NULL,NULL,NULL),
 (4,NULL,NULL,'2024-10-03 00:48:33',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
 (5,NULL,NULL,'2024-10-03 00:59:05',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
 (6,NULL,NULL,'2024-10-03 00:59:35',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
@@ -344,12 +344,13 @@ CREATE TABLE `tbl_building_permits` (
   `subd` varchar(255) DEFAULT NULL,
   `permit_type` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`building_permit_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 /*Data for the table `tbl_building_permits` */
 
 insert  into `tbl_building_permits`(`building_permit_id`,`blg_house_no`,`street`,`subd`,`permit_type`) values 
-(1,'Blk 12 Lot 12','Ping-Ping st','Lilleville Subd','Renovaton');
+(1,'Blk 12 Lot 12','Ping-Ping st','Lilleville Subd','Renovaton'),
+(2,'Blk 8 Lot 4','Jeremiah st','Cielito Homes','Renovaton');
 
 /*Table structure for table `tbl_business_permits` */
 
@@ -364,9 +365,13 @@ CREATE TABLE `tbl_business_permits` (
   `subdivision` varchar(255) DEFAULT NULL,
   `type_of_buss` varchar(255) NOT NULL,
   PRIMARY KEY (`business_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 /*Data for the table `tbl_business_permits` */
+
+insert  into `tbl_business_permits`(`business_id`,`year_quarter`,`store_name`,`blg_house_no`,`street`,`subdivision`,`type_of_buss`) values 
+(1,'Q3-Q4','Ice Frost Water Refilling Station','Blk 8 Lot 12','Genesis st','Cielito Homes','Water Refilling Station'),
+(2,'Q3-Q4','Twin Spring Purified Water','Blk 12 Lot 14','Exodus st','Cielito Homes','Water Refilling Station');
 
 /*Table structure for table `tbl_cert_audit_trail` */
 
@@ -396,7 +401,7 @@ CREATE TABLE `tbl_cert_audit_trail` (
   CONSTRAINT `edited_by_fk` FOREIGN KEY (`edited_by_no`) REFERENCES `tbl_username` (`username_id`),
   CONSTRAINT `issued_by_fk` FOREIGN KEY (`issued_by_no`) REFERENCES `tbl_username` (`username_id`),
   CONSTRAINT `recovered_by_fk` FOREIGN KEY (`recovered_by_no`) REFERENCES `tbl_username` (`username_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 
 /*Data for the table `tbl_cert_audit_trail` */
 
@@ -406,7 +411,13 @@ insert  into `tbl_cert_audit_trail`(`audit_trail_id`,`issuing_dept_no`,`issued_b
 (3,NULL,NULL,'2024-10-10 01:28:07','2025-10-10',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
 (4,NULL,NULL,'2024-10-10 01:28:36','2025-10-10',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
 (5,NULL,NULL,'2024-10-10 01:30:03','2025-01-10',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(6,NULL,NULL,'2024-10-10 01:30:27','2025-01-10',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+(6,NULL,NULL,'2024-10-10 01:30:27','2025-01-10',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(7,NULL,NULL,'2024-10-10 15:29:08','2025-10-10',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(8,NULL,NULL,'2024-10-10 15:29:54','2025-01-10',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(9,NULL,NULL,'2024-10-10 15:30:52','2025-01-10',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(10,NULL,NULL,'2024-10-10 15:32:19','2025-10-10',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(11,NULL,NULL,'2024-10-10 15:33:07','2025-10-10',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(12,NULL,NULL,'2024-10-12 02:38:20','2025-10-12',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 
 /*Table structure for table `tbl_docu_request` */
 
@@ -444,7 +455,13 @@ insert  into `tbl_docu_request`(`request_id`,`resident_no`,`nresident_no`,`docum
 ('2024-000003',8,NULL,3,38,'Solo Parent ID','SOL-4343434354545','Securing Building Permit',3,'generated_pdf_1728494887.pdf',0,0),
 ('2024-000004',8,NULL,4,38,'Voters ID','COM-15545565767678787','Employment',4,'C:/xampp/htdocs//BIMS-with-Template/documents/first_time_job_seeker/generated_pdf_1728494916.pdf',0,0),
 ('2024-000005',8,NULL,5,38,'PWD ID','PWD-1234567890','Medical Assistance',5,'generated_pdf_1728495003.pdf',0,0),
-('2024-000006',8,NULL,6,38,'PWD ID','PWD-1234567890','Legal Aid',6,'generated_pdf_1728495027.pdf',0,0);
+('2024-000006',8,NULL,6,38,'PWD ID','PWD-1234567890','Legal Aid',6,'generated_pdf_1728495027.pdf',0,0),
+('2024-000007',12,NULL,7,21,'Drivers License','N42-12121212121212','Securing Fencing Permit',7,'generated_pdf_1728545348.pdf',0,0),
+('2024-000008',12,NULL,8,21,'Drivers License','N42-20104312','Maynilad Application',8,'generated_pdf_1728545394.pdf',0,0),
+('2024-000009',12,NULL,9,21,'Drivers License','N42-2010353','Verification Purposes',9,'generated_pdf_1728545452.pdf',0,0),
+('2024-000010',12,NULL,10,21,'Drivers License','N42-2010351','Getting Business Permit',10,'generated_pdf_1728545539.pdf',0,0),
+('2024-000011',12,NULL,11,21,'Drivers License','N43-2010631','Securing Building Permit',11,'generated_pdf_1728545587.pdf',0,0),
+('2024-000012',NULL,1,12,26,'Police ID','POL-1234567890','Getting Business Permit',12,'generated_pdf_1728671900.pdf',0,0);
 
 /*Table structure for table `tbl_documents` */
 
@@ -476,7 +493,7 @@ CREATE TABLE `tbl_documents` (
   CONSTRAINT `f_permit_fk` FOREIGN KEY (`Fencing_Permits`) REFERENCES `tbl_fencing_permit` (`fencing_permit_id`) ON DELETE CASCADE,
   CONSTRAINT `indigency_fk` FOREIGN KEY (`Certificate_of_Indigency`) REFERENCES `tbl_indigency` (`indigency_id`) ON DELETE CASCADE,
   CONSTRAINT `tprs_fk` FOREIGN KEY (`TPRS`) REFERENCES `tbl_tprs` (`tprs_id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 
 /*Data for the table `tbl_documents` */
 
@@ -486,7 +503,13 @@ insert  into `tbl_documents`(`docu_id`,`Barangay_Clearance`,`Certificate_of_Resi
 (3,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL),
 (4,NULL,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
 (5,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(6,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+(6,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(7,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,2,NULL),
+(8,NULL,2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(9,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(10,NULL,NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL),
+(11,NULL,NULL,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL),
+(12,NULL,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL);
 
 /*Table structure for table `tbl_excavation_permits` */
 
@@ -513,12 +536,13 @@ CREATE TABLE `tbl_fencing_permit` (
   `subd` varchar(255) DEFAULT NULL,
   `estate_type` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`fencing_permit_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 /*Data for the table `tbl_fencing_permit` */
 
 insert  into `tbl_fencing_permit`(`fencing_permit_id`,`blg_house_no`,`street`,`subd`,`estate_type`) values 
-(1,'Blk 12 Lot 14','Galileo st','Lilleville Subd','Residencial');
+(1,'Blk 12 Lot 14','Galileo st','Lilleville Subd','Residencial'),
+(2,'Blk 8 Lot 4','Jeremiah st','Cielito Homes','Residencial');
 
 /*Table structure for table `tbl_indigency` */
 
@@ -703,11 +727,10 @@ DELIMITER ;
 
 DELIMITER $$
 
-/*!50106 CREATE DEFINER=`root`@`localhost` EVENT `evt_update_cert_status` ON SCHEDULE EVERY 1 DAY STARTS '2024-09-13 23:00:00' ON COMPLETION NOT PRESERVE ENABLE DO BEGIN
-    UPDATE vw_all_documents
-    SET `status` = 1
-    WHERE `expiration` <= NOW();
-END */$$
+/*!50106 CREATE DEFINER=`root`@`localhost` EVENT `evt_update_cert_status` ON SCHEDULE EVERY 1 DAY STARTS '2024-10-10 16:56:12' ON COMPLETION NOT PRESERVE ENABLE DO UPDATE tbl_docu_request d
+  JOIN tbl_cert_audit_trail c ON d.audit_trail_no = c.audit_trail_id
+  SET d.status = 2
+  WHERE c.expiration < NOW() */$$
 DELIMITER ;
 
 /* Function  structure for function  `get_max_request_id` */
@@ -805,24 +828,266 @@ BEGIN
 END */$$
 DELIMITER ;
 
-/* Procedure structure for procedure `search_business_permit` */
+/* Procedure structure for procedure `SearchNonResident` */
 
-/*!50003 DROP PROCEDURE IF EXISTS  `search_business_permit` */;
+/*!50003 DROP PROCEDURE IF EXISTS  `SearchNonResident` */;
 
 DELIMITER $$
 
-/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `search_business_permit`(IN req_no varchar(55))
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `SearchNonResident`(IN search_query VARCHAR(255), IN start_from INT, IN lim INT)
 BEGIN
-    SELECT tbl_docu_request.`request_id`, tbl_business_permits.`year_quarter`, tbl_business_permits.`store_name`, 
-    CONCAT(tbl_business_permits.`blg_house_no` ,' ', tbl_business_permits.`street` ,' ',
-     tbl_business_permits.`subdivision`) AS address, tbl_business_permits.`type_of_buss`
-    FROM tbl_business_permits 
-    JOIN tbl_documents 
-    ON tbl_documents.`docu_id` = tbl_business_permits.`business_id`
-    JOIN tbl_docu_request
-    ON tbl_documents.`docu_id` = tbl_docu_request.`document_no`
-    where tbl_docu_request.request_id = req_no;
+  SELECT
+    `non_resident`.`nresident_id` AS `nresident_id`,
+    DATE(`nonres_audit_trail`.`datetime_added`) AS datetime_added,
+    `non_resident`.`img_filename` AS `img_filename`,
+    `non_resident`.`last_name` AS `last_name`,
+    `non_resident`.`first_name` AS `first_name`,
+    `non_resident`.`middle_name` AS `middle_name`,
+    `non_resident`.`suffix` AS `suffix`,
+    `non_resident`.`house_num` AS `house_num`,
+    `non_resident`.`street` AS `street`,
+    `non_resident`.`subdivision` AS `subdivision`,
+    `non_resident`.`district_brgy`,
+    `non_resident`.`city`,
+    `non_resident`.`province`,
+    `non_resident`.`zipcode`,
+    `non_resident`.`sex` AS `sex`,
+    `non_resident`.`marital_status` AS `marital_status`,
+    `non_resident`.`birth_date` AS `birth_date`,
+    `non_resident`.`birth_place` AS `birth_place`,
+    `non_resident`.`cellphone_num` AS `contact_num`,
+    `non_resident`.`is_deleted`
+  FROM `non_resident`
+  JOIN `nonres_audit_trail` ON `non_resident`.`audit_trail_no` = `nonres_audit_trail`.`audit_trail_id`
+  WHERE `is_deleted` = 0
+    AND (`last_name` LIKE CONCAT('%', search_query, '%')
+      OR `first_name` LIKE CONCAT('%', search_query, '%')
+      OR `middle_name` LIKE CONCAT('%', search_query, '%'))
+  ORDER BY `last_name` ASC
+  LIMIT start_from, lim;
 END */$$
+DELIMITER ;
+
+/* Procedure structure for procedure `SearchNonResidentDeleted` */
+
+/*!50003 DROP PROCEDURE IF EXISTS  `SearchNonResidentDeleted` */;
+
+DELIMITER $$
+
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `SearchNonResidentDeleted`(IN search_query VARCHAR(255), IN start_from INT, IN lim INT)
+BEGIN
+  SELECT
+    `non_resident`.`nresident_id` AS `nresident_id`,
+    DATE(`nonres_audit_trail`.`datetime_added`) AS datetime_added,
+    `non_resident`.`img_filename` AS `img_filename`,
+    `non_resident`.`last_name` AS `last_name`,
+    `non_resident`.`first_name` AS `first_name`,
+    `non_resident`.`middle_name` AS `middle_name`,
+    `non_resident`.`suffix` AS `suffix`,
+    `non_resident`.`house_num` AS `house_num`,
+    `non_resident`.`street` AS `street`,
+    `non_resident`.`subdivision` AS `subdivision`,
+    `non_resident`.`district_brgy`,
+    `non_resident`.`city`,
+    `non_resident`.`province`,
+    `non_resident`.`zipcode`,
+    `non_resident`.`sex` AS `sex`,
+    `non_resident`.`marital_status` AS `marital_status`,
+    `non_resident`.`birth_date` AS `birth_date`,
+    `non_resident`.`birth_place` AS `birth_place`,
+    `non_resident`.`cellphone_num` AS `contact_num`,
+    `non_resident`.`is_deleted`
+  FROM `non_resident`
+  JOIN `nonres_audit_trail` ON `non_resident`.`audit_trail_no` = `nonres_audit_trail`.`audit_trail_id`
+  WHERE `is_deleted` = 1
+    AND (`last_name` LIKE CONCAT('%', search_query, '%')
+      OR `first_name` LIKE CONCAT('%', search_query, '%')
+      OR `middle_name` LIKE CONCAT('%', search_query, '%'))
+  ORDER BY `last_name` ASC
+  LIMIT start_from, lim;
+END */$$
+DELIMITER ;
+
+/* Procedure structure for procedure `SearchNonResidentDocu` */
+
+/*!50003 DROP PROCEDURE IF EXISTS  `SearchNonResidentDocu` */;
+
+DELIMITER $$
+
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `SearchNonResidentDocu`(IN id INT, IN start_from int, in lim int)
+BEGIN
+  SELECT
+    `tbl_docu_request`.`request_id` AS `request_id`,
+    `tbl_cert_audit_trail`.`datetime_issued` AS `date_issued`,
+    `non_resident`.`nresident_id` AS `nonres_id`,
+    CONVERT(`non_resident`.`last_name` USING utf8mb4) AS `last_name`,
+    CONVERT(`non_resident`.`first_name` USING utf8mb4) AS `first_name`,
+    CONVERT(`non_resident`.`middle_name` USING utf8mb4) AS `middle_name`,
+    CONVERT(`non_resident`.`suffix` USING utf8mb4) AS `suffix`,
+    CONVERT(`non_resident`.`house_num` USING utf8mb4) AS `house_num`,
+    CONVERT(`non_resident`.`street` USING utf8mb4) AS `street`,
+    CONVERT(`non_resident`.`subdivision` USING utf8mb4) AS `subdivision`,
+    'Caloocan City' AS `city`, -- Assuming city is always 'Caloocan City' for non-residents
+    (CASE WHEN (`tbl_documents`.`Barangay_Clearance` IS NOT NULL) THEN 'Barangay Clearance' 
+          WHEN (`tbl_documents`.`Certificate_of_Residency` IS NOT NULL) THEN 'Certificate of Residency' 
+          WHEN (`tbl_documents`.`Certificate_of_Indigency` IS NOT NULL) THEN 'Certificate of Indigency' 
+          WHEN (`tbl_documents`.`Certificate_of_Good_Moral` IS NOT NULL) THEN 'Certificate of Good Moral' 
+          WHEN (`tbl_documents`.`Business_Permits` IS NOT NULL) THEN 'Business Permits' 
+          WHEN (`tbl_documents`.`Building_Permits` IS NOT NULL) THEN 'Building Permits' 
+          WHEN (`tbl_documents`.`Excavation_Permits` IS NOT NULL) THEN 'Excavation Permits' 
+          WHEN (`tbl_documents`.`Fencing_Permits` IS NOT NULL) THEN 'Fencing Permits' 
+          WHEN (`tbl_documents`.`FTJS` IS NOT NULL) THEN 'First Time Job Seekers' 
+          WHEN (`tbl_documents`.`Oath_of_Undertaking` IS NOT NULL) THEN 'Oath of Undertaking' 
+          WHEN (`tbl_documents`.`TPRS` IS NOT NULL) THEN 'Tricycle Pedicab Regulatory Services' 
+          ELSE 'Unknown Document Type' END) AS `document_desc`,
+    `tbl_docu_request`.`age` AS `age`,
+    CONVERT(`non_resident`.`sex` USING utf8mb4) AS `sex`,
+    `tbl_docu_request`.`presented_id` AS `presented_id`,
+    `tbl_docu_request`.`ID_number` AS `ID_number`,
+    `tbl_docu_request`.`purpose` AS `purpose`,
+    `tbl_docu_request`.`pdffile` AS `pdffile`,
+    `tbl_cert_audit_trail`.`expiration` AS `expiration`,
+    `tbl_docu_request`.`status` AS `status`,
+    `tbl_docu_request`.`is_deleted` AS `is_deleted`,
+    `tbl_cert_audit_trail`.`datetime_edited` AS `date_edited`,
+    `tbl_cert_audit_trail`.`datetime_deleted` AS `date_deleted`
+  FROM (((`tbl_docu_request`
+        LEFT JOIN `non_resident` ON (`tbl_docu_request`.`nresident_no` = `non_resident`.`nresident_id`))
+       JOIN `tbl_documents` ON (`tbl_docu_request`.`document_no` = `tbl_documents`.`docu_id`))
+     JOIN `tbl_cert_audit_trail` ON (`tbl_docu_request`.`audit_trail_no` = `tbl_cert_audit_trail`.`audit_trail_id`))
+  WHERE `tbl_docu_request`.`is_deleted` = 0 
+    AND `tbl_docu_request`.`resident_no` IS NULL
+    AND non_resident.`nresident_id` = id ORDER BY tbl_docu_request.request_id DESC LIMIT start_from, lim;
+END */$$
+DELIMITER ;
+
+/* Procedure structure for procedure `SearchResident` */
+
+/*!50003 DROP PROCEDURE IF EXISTS  `SearchResident` */;
+
+DELIMITER $$
+
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `SearchResident`(in search varchar(255), in start_from int, in lim int)
+BEGIN
+	
+	SELECT 
+            `resident`.`resident_id`       AS `resident_id`,
+            `res_audit_trail`.`date_added` AS `date_recorded`,
+            `resident`.`img_filename`      AS `img_filename`,
+            `resident`.`last_name`         AS `last_name`,
+            `resident`.`first_name`        AS `first_name`,
+            `resident`.`middle_name`       AS `middle_name`,
+            `resident`.`suffix`            AS `suffix`,
+            `resident`.`house_num`         AS `house_num`,
+            `resident`.`street`            AS `street`,
+            `resident`.`subdivision`       AS `subdivision`,
+            `resident`.`resident_since`    AS `resident_since`,
+            `resident`.`sex`               AS `sex`,
+            `resident`.`marital_status`    AS `marital_status`,
+            `resident`.`birth_date`        AS `birth_date`,
+            `resident`.`birth_place`       AS `birth_place`,
+            `resident`.`cellphone_num`     AS `cellphone_num`,
+            `resident`.`is_a_voter`        AS `is_a_voter` ,
+            `resident`.`is_deleted`
+            FROM resident 
+            JOIN res_audit_trail 
+            ON resident.audit_trail = res_audit_trail.res_at_id
+            WHERE is_deleted=0 AND (last_name LIKE search OR first_name LIKE search OR middle_name LIKE search)
+            ORDER BY last_name  ASC LIMIT start_from, lim;
+
+	END */$$
+DELIMITER ;
+
+/* Procedure structure for procedure `SearchResidentDeleted` */
+
+/*!50003 DROP PROCEDURE IF EXISTS  `SearchResidentDeleted` */;
+
+DELIMITER $$
+
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `SearchResidentDeleted`(in search varchar(255), in start_from int, in lim int)
+BEGIN
+	
+	SELECT 
+            `resident`.`resident_id`       AS `resident_id`,
+            `res_audit_trail`.`date_added` AS `date_recorded`,
+            `resident`.`img_filename`      AS `img_filename`,
+            `resident`.`last_name`         AS `last_name`,
+            `resident`.`first_name`        AS `first_name`,
+            `resident`.`middle_name`       AS `middle_name`,
+            `resident`.`suffix`            AS `suffix`,
+            `resident`.`house_num`         AS `house_num`,
+            `resident`.`street`            AS `street`,
+            `resident`.`subdivision`       AS `subdivision`,
+            `resident`.`resident_since`    AS `resident_since`,
+            `resident`.`sex`               AS `sex`,
+            `resident`.`marital_status`    AS `marital_status`,
+            `resident`.`birth_date`        AS `birth_date`,
+            `resident`.`birth_place`       AS `birth_place`,
+            `resident`.`cellphone_num`     AS `cellphone_num`,
+            `resident`.`is_a_voter`        AS `is_a_voter` ,
+            `resident`.`is_deleted`
+            FROM resident 
+            JOIN res_audit_trail 
+            ON resident.audit_trail = res_audit_trail.res_at_id
+            WHERE is_deleted=1 AND (last_name LIKE search OR first_name LIKE search OR middle_name LIKE search)
+            ORDER BY last_name  ASC LIMIT start_from, lim;
+
+	END */$$
+DELIMITER ;
+
+/* Procedure structure for procedure `SearchResidentDocu` */
+
+/*!50003 DROP PROCEDURE IF EXISTS  `SearchResidentDocu` */;
+
+DELIMITER $$
+
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `SearchResidentDocu`(IN id INT, IN start_from INT, IN lim INT)
+BEGIN
+  SELECT
+    `tbl_docu_request`.`request_id` AS `request_id`,
+    `tbl_cert_audit_trail`.`datetime_issued` AS `date_issued`,
+    `resident`.`resident_id` AS `res_id`,
+    CONVERT(`resident`.`last_name` USING utf8mb4) AS `last_name`,
+    CONVERT(`resident`.`first_name` USING utf8mb4) AS `first_name`,
+    CONVERT(`resident`.`middle_name` USING utf8mb4) AS `middle_name`,
+    CONVERT(`resident`.`suffix` USING utf8mb4) AS `suffix`,
+    CONVERT(`resident`.`house_num` USING utf8mb4) AS `house_num`,
+    CONVERT(`resident`.`street` USING utf8mb4) AS `street`,
+    CONVERT(`resident`.`subdivision` USING utf8mb4) AS `subdivision`,
+    'Caloocan City' AS `city`, -- Assuming city is always 'Caloocan City' for non-residents
+    (CASE WHEN (`tbl_documents`.`Barangay_Clearance` IS NOT NULL) THEN 'Barangay Clearance' 
+          WHEN (`tbl_documents`.`Certificate_of_Residency` IS NOT NULL) THEN 'Certificate of Residency' 
+          WHEN (`tbl_documents`.`Certificate_of_Indigency` IS NOT NULL) THEN 'Certificate of Indigency' 
+          WHEN (`tbl_documents`.`Certificate_of_Good_Moral` IS NOT NULL) THEN 'Certificate of Good Moral' 
+          WHEN (`tbl_documents`.`Business_Permits` IS NOT NULL) THEN 'Business Permits' 
+          WHEN (`tbl_documents`.`Building_Permits` IS NOT NULL) THEN 'Building Permits' 
+          WHEN (`tbl_documents`.`Excavation_Permits` IS NOT NULL) THEN 'Excavation Permits' 
+          WHEN (`tbl_documents`.`Fencing_Permits` IS NOT NULL) THEN 'Fencing Permits' 
+          WHEN (`tbl_documents`.`FTJS` IS NOT NULL) THEN 'First Time Job Seekers' 
+          WHEN (`tbl_documents`.`Oath_of_Undertaking` IS NOT NULL) THEN 'Oath of Undertaking' 
+          WHEN (`tbl_documents`.`TPRS` IS NOT NULL) THEN 'Tricycle Pedicab Regulatory Services' 
+          ELSE 'Unknown Document Type' END) AS `document_desc`,
+    `tbl_docu_request`.`age` AS `age`,
+    CONVERT(`resident`.`sex` USING utf8mb4) AS `sex`,
+    `tbl_docu_request`.`presented_id` AS `presented_id`,
+    `tbl_docu_request`.`ID_number` AS `ID_number`,
+    `tbl_docu_request`.`purpose` AS `purpose`,
+    `tbl_docu_request`.`pdffile` AS `pdffile`,
+    `tbl_cert_audit_trail`.`expiration` AS `expiration`,
+    `tbl_docu_request`.`status` AS `status`,
+    `tbl_docu_request`.`is_deleted` AS `is_deleted`,
+    `tbl_cert_audit_trail`.`datetime_edited` AS `date_edited`,
+    `tbl_cert_audit_trail`.`datetime_deleted` AS `date_deleted`
+  FROM (((`tbl_docu_request`
+        LEFT JOIN `resident` ON (`tbl_docu_request`.`resident_no` = `resident`.`resident_id`))
+       JOIN `tbl_documents` ON (`tbl_docu_request`.`document_no` = `tbl_documents`.`docu_id`))
+     JOIN `tbl_cert_audit_trail` ON (`tbl_docu_request`.`audit_trail_no` = `tbl_cert_audit_trail`.`audit_trail_id`))
+ WHERE `tbl_docu_request`.`is_deleted` = 0 
+  AND `tbl_docu_request`.`resident_no` = id 
+ORDER BY `tbl_docu_request`.`request_id` DESC 
+LIMIT start_from, lim;
+
+	END */$$
 DELIMITER ;
 
 /*Table structure for table `vw_all_brgy_clearance` */
@@ -1007,7 +1272,7 @@ DROP TABLE IF EXISTS `vw_all_documents`;
 /*!50001 CREATE TABLE  `vw_all_documents`(
  `request_id` varchar(255) ,
  `date_issued` datetime ,
- `is_resident` varchar(12) ,
+ `is_resident` varchar(1) ,
  `resident/nonres_id` bigint(55) ,
  `last_name` varchar(255) ,
  `first_name` varchar(255) ,
@@ -1299,7 +1564,7 @@ DROP TABLE IF EXISTS `vw_resonly_cert`;
 /*!50001 DROP TABLE IF EXISTS `vw_all_documents` */;
 /*!50001 DROP VIEW IF EXISTS `vw_all_documents` */;
 
-/*!50001 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vw_all_documents` AS (select `tbl_docu_request`.`request_id` AS `request_id`,`tbl_cert_audit_trail`.`datetime_issued` AS `date_issued`,(case when (`tbl_docu_request`.`resident_no` is not null) then 'Resident' else 'Non-Resident' end) AS `is_resident`,(case when (`tbl_docu_request`.`resident_no` is not null) then `resident`.`resident_id` else `non_resident`.`nresident_id` end) AS `resident/nonres_id`,(case when (`tbl_docu_request`.`resident_no` is not null) then `resident`.`last_name` else convert(`non_resident`.`last_name` using utf8mb4) end) AS `last_name`,(case when (`tbl_docu_request`.`resident_no` is not null) then `resident`.`first_name` else convert(`non_resident`.`first_name` using utf8mb4) end) AS `first_name`,(case when (`tbl_docu_request`.`resident_no` is not null) then `resident`.`middle_name` else convert(`non_resident`.`middle_name` using utf8mb4) end) AS `middle_name`,(case when (`tbl_docu_request`.`resident_no` is not null) then `resident`.`suffix` else convert(`non_resident`.`suffix` using utf8mb4) end) AS `suffix`,(case when (`tbl_docu_request`.`resident_no` is not null) then `resident`.`house_num` else convert(`non_resident`.`house_num` using utf8mb4) end) AS `house_num`,(case when (`tbl_docu_request`.`resident_no` is not null) then `resident`.`street` else convert(`non_resident`.`street` using utf8mb4) end) AS `street`,(case when (`tbl_docu_request`.`resident_no` is not null) then `resident`.`subdivision` else convert(`non_resident`.`subdivision` using utf8mb4) end) AS `subdivision`,(case when (`tbl_docu_request`.`nresident_no` is not null) then `non_resident`.`city` else 'Caloocan City' end) AS `city`,(case when (`tbl_documents`.`Barangay_Clearance` is not null) then 'Barangay Clearance' when (`tbl_documents`.`Certificate_of_Residency` is not null) then 'Certificate of Residency' when (`tbl_documents`.`Certificate_of_Indigency` is not null) then 'Certificate of Indigency' when (`tbl_documents`.`Certificate_of_Good_Moral` is not null) then 'Certificate of Good Moral' when (`tbl_documents`.`Business_Permits` is not null) then 'Business Permits' when (`tbl_documents`.`Building_Permits` is not null) then 'Building Permits' when (`tbl_documents`.`Excavation_Permits` is not null) then 'Excavation Permits' when (`tbl_documents`.`Fencing_Permits` is not null) then 'Fencing Permits' when (`tbl_documents`.`FTJS` is not null) then 'First Time Job Seekers' when (`tbl_documents`.`Oath_of_Undertaking` is not null) then 'Oath of Undertaking' when (`tbl_documents`.`TPRS` is not null) then 'Tricycle Pedicab Regulatory Services' else 'Unknown Document Type' end) AS `document_desc`,`tbl_docu_request`.`age` AS `age`,(case when (`tbl_docu_request`.`resident_no` is not null) then `resident`.`sex` else convert(`non_resident`.`sex` using utf8mb4) end) AS `sex`,`tbl_docu_request`.`presented_id` AS `presented_id`,`tbl_docu_request`.`ID_number` AS `ID_number`,`tbl_docu_request`.`purpose` AS `purpose`,`tbl_docu_request`.`pdffile` AS `pdffile`,`tbl_cert_audit_trail`.`expiration` AS `expiration`,`tbl_docu_request`.`status` AS `status`,`tbl_docu_request`.`is_deleted` AS `is_deleted`,`tbl_cert_audit_trail`.`datetime_edited` AS `date_edited`,`tbl_cert_audit_trail`.`datetime_deleted` AS `date_deleted` from ((((`tbl_docu_request` left join `resident` on((`tbl_docu_request`.`resident_no` = `resident`.`resident_id`))) left join `non_resident` on((`tbl_docu_request`.`nresident_no` = `non_resident`.`nresident_id`))) join `tbl_documents` on((`tbl_docu_request`.`document_no` = `tbl_documents`.`docu_id`))) join `tbl_cert_audit_trail` on((`tbl_docu_request`.`audit_trail_no` = `tbl_cert_audit_trail`.`audit_trail_id`)))) */;
+/*!50001 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vw_all_documents` AS (select `tbl_docu_request`.`request_id` AS `request_id`,`tbl_cert_audit_trail`.`datetime_issued` AS `date_issued`,(case when (`tbl_docu_request`.`resident_no` is not null) then '1' else '0' end) AS `is_resident`,(case when (`tbl_docu_request`.`resident_no` is not null) then `resident`.`resident_id` else `non_resident`.`nresident_id` end) AS `resident/nonres_id`,(case when (`tbl_docu_request`.`resident_no` is not null) then `resident`.`last_name` else convert(`non_resident`.`last_name` using utf8mb4) end) AS `last_name`,(case when (`tbl_docu_request`.`resident_no` is not null) then `resident`.`first_name` else convert(`non_resident`.`first_name` using utf8mb4) end) AS `first_name`,(case when (`tbl_docu_request`.`resident_no` is not null) then `resident`.`middle_name` else convert(`non_resident`.`middle_name` using utf8mb4) end) AS `middle_name`,(case when (`tbl_docu_request`.`resident_no` is not null) then `resident`.`suffix` else convert(`non_resident`.`suffix` using utf8mb4) end) AS `suffix`,(case when (`tbl_docu_request`.`resident_no` is not null) then `resident`.`house_num` else convert(`non_resident`.`house_num` using utf8mb4) end) AS `house_num`,(case when (`tbl_docu_request`.`resident_no` is not null) then `resident`.`street` else convert(`non_resident`.`street` using utf8mb4) end) AS `street`,(case when (`tbl_docu_request`.`resident_no` is not null) then `resident`.`subdivision` else convert(`non_resident`.`subdivision` using utf8mb4) end) AS `subdivision`,(case when (`tbl_docu_request`.`nresident_no` is not null) then `non_resident`.`city` else 'Caloocan City' end) AS `city`,(case when (`tbl_documents`.`Barangay_Clearance` is not null) then 'Barangay Clearance' when (`tbl_documents`.`Certificate_of_Residency` is not null) then 'Certificate of Residency' when (`tbl_documents`.`Certificate_of_Indigency` is not null) then 'Certificate of Indigency' when (`tbl_documents`.`Certificate_of_Good_Moral` is not null) then 'Certificate of Good Moral' when (`tbl_documents`.`Business_Permits` is not null) then 'Business Permits' when (`tbl_documents`.`Building_Permits` is not null) then 'Building Permits' when (`tbl_documents`.`Excavation_Permits` is not null) then 'Excavation Permits' when (`tbl_documents`.`Fencing_Permits` is not null) then 'Fencing Permits' when (`tbl_documents`.`FTJS` is not null) then 'First Time Job Seekers' when (`tbl_documents`.`Oath_of_Undertaking` is not null) then 'Oath of Undertaking' when (`tbl_documents`.`TPRS` is not null) then 'Tricycle Pedicab Regulatory Services' else 'Unknown Document Type' end) AS `document_desc`,`tbl_docu_request`.`age` AS `age`,(case when (`tbl_docu_request`.`resident_no` is not null) then `resident`.`sex` else convert(`non_resident`.`sex` using utf8mb4) end) AS `sex`,`tbl_docu_request`.`presented_id` AS `presented_id`,`tbl_docu_request`.`ID_number` AS `ID_number`,`tbl_docu_request`.`purpose` AS `purpose`,`tbl_docu_request`.`pdffile` AS `pdffile`,`tbl_cert_audit_trail`.`expiration` AS `expiration`,`tbl_docu_request`.`status` AS `status`,`tbl_docu_request`.`is_deleted` AS `is_deleted`,`tbl_cert_audit_trail`.`datetime_edited` AS `date_edited`,`tbl_cert_audit_trail`.`datetime_deleted` AS `date_deleted` from ((((`tbl_docu_request` left join `resident` on((`tbl_docu_request`.`resident_no` = `resident`.`resident_id`))) left join `non_resident` on((`tbl_docu_request`.`nresident_no` = `non_resident`.`nresident_id`))) join `tbl_documents` on((`tbl_docu_request`.`document_no` = `tbl_documents`.`docu_id`))) join `tbl_cert_audit_trail` on((`tbl_docu_request`.`audit_trail_no` = `tbl_cert_audit_trail`.`audit_trail_id`))) where (`tbl_docu_request`.`is_deleted` = 0)) */;
 
 /*View structure for view vw_all_exca_permits */
 

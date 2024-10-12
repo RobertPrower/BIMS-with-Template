@@ -6,6 +6,8 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
 }
 
 require_once'connecttodb.php';
+require_once'anti-SQLInject.php';
+
 $operation_check = (isset($_POST['OPERATION']))? $_POST['OPERATION'] : null ;
 $request_Id = (isset($_POST['request_id']))? $_POST['request_id']: null ;
 $nowdate = date("y-m-d"); //Checks the current date
@@ -131,11 +133,11 @@ if($operation_check =="REVOKE"){
     
 }elseif($operation_check == "TABLE_LOAD"){
     $limit = 10;
-    $page = isset($_POST['pageno']) ? $_POST['pageno'] : 1;
+    $page = isset($_POST['pageno']) ? sanitizeData($_POST['pageno']) : 1;
     $start_from = ($page - 1) * $limit;
 
     try {
-            $sql = "SELECT * FROM vw_all_documents WHERE is_deleted = 0 ORDER BY date_issued DESC "; 
+            $sql = "SELECT * FROM vw_all_documents WHERE is_deleted = 0 ORDER BY date_issued DESC LIMIT $start_from, $limit"; 
             $stmt = $pdo->prepare($sql);
             $stmt->execute();
             $results = $stmt->fetchAll(PDO::FETCH_ASSOC);

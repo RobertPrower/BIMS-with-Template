@@ -542,7 +542,125 @@ if($operation_check == "ADD"){ //For the add operation
     header('Content-Type: application/json');
     echo json_encode($response);
 
+}elseif($operation_check == "FETCH_TABLE"){
+    $limit = 10;
+    $page = isset($_POST['pageno']) ? sanitizeData($_POST['pageno']) : 1;
+    $start_from = ($page - 1) * $limit;
+
+    try {
+            $sql = "SELECT * FROM vw_nonresident ORDER BY last_name ASC LIMIT $start_from, $limit"; 
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute();
+            $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        // Check if there are any results
+        if (count($results) > 0) {
+            // Output each row as HTML
+            require_once'nonresidenttabletofetch.php';
+        } else {
+            echo '<tr><td colspan="12">No records found.</td></tr>';
+        }
+    } catch (PDOException $e) {
+        echo 'Error: ' . htmlspecialchars($e->getMessage());
+    }
+
+}elseif($operation_check == "COUNT_RES_CERT"){
+    $nresident_no = $_POST['nresident_id'];
+
+    $countquery = "SELECT COUNT(*) AS count FROM tbl_docu_request WHERE nresident_no = ?";
+    $stmt = $pdo->prepare($countquery);
+    $stmt->execute([$nresident_no]);
+    $results = $stmt -> fetchColumn();
+
+    echo json_encode($results);
+}elseif($operation_check=="SEARCH"){
+    $search = isset($_POST['search']) ? sanitizeData($_POST['search']): '';
+    if(!empty($search)){
+        $limit = 10;
+        $page = isset($_POST['page']) ? sanitizeData($_POST['page']) : '1';
+        $start_from = ($page - 1) * $limit;
+
+        // query to fetch records with pagination
+        $stmt = $pdo->prepare("CALL SearchNonResident(:search, :start_from ,$limit)"); 
+
+        $stmt->execute(['search' => "%$search%",
+                                 'start_from' => "$start_from"]);
+
+        $results = $stmt->fetchAll();
+
+        if(!empty($results)){
+            // Code for displaying the results
+           require_once'nonresidenttabletofetch.php';
+            
+        }else{
+            echo '<tr><td colspan="11"><b>No results found</b></td></tr>';
+        }
+    }else{
+        echo '<tr><td colspan="11">No Query</td></tr>';
+    }
+}elseif($operation_check=="DELETED_SEARCH"){
+    $search = isset($_POST['search']) ? sanitizeData($_POST['search']): '';
+    if(!empty($search)){
+        $limit = 10;
+        $page = isset($_POST['page']) ? sanitizeData($_POST['page']) : '1';
+        $start_from = ($page - 1) * $limit;
+
+        // query to fetch records with pagination
+        $stmt = $pdo->prepare("CALL SearchNonResident(:search,:start_from,$limit)"); 
+
+        $stmt->execute(['search' => "%$search%", 'start_from' => "$start_from"] );
+
+        $results = $stmt->fetchAll();
+
+        if(!empty($results)){
+            // Code for displaying the results
+            require_once'nonresidenttabletofetch.php';
+            
+        }else{
+            echo '<tr><td colspan="11"><b>No results found</b></td></tr>';
+        }
+    }else{
+        echo '<tr><td colspan="11">No Query</td></tr>';
+    }
+
+}elseif($operation_check == "LOOK_FOR_ENTRY"){
+    $id = $_POST["id"];
+    if(isset($id)){
+        $stmt = $pdo->prepare("SELECT * FROM vw_nonresident WHERE nresident_id =?");
+        $stmt->execute([$id]);
+        $results = $stmt->fetchAll(mode:PDO::FETCH_ASSOC);
+    
+        echo json_encode($results);
+
+    }else{
+        echo json_encode(["success" => false, "message" => "NO ID was recieved"]);
+    }
+    
+}elseif($operation_check=="SEARCH_PAGINATION"){
+    $search = isset($_POST['search']) ? sanitizeData($_POST['search']): '';
+    $limit = 10;
+    $stmt = $pdo->prepare("SELECT COUNT(*) FROM non_resident WHERE last_name LIKE :search OR first_name LIKE :search OR middle_name LIKE :search");
+    $stmt->execute(['search' => "%$search%"]);
+    $total_records = $stmt->fetchColumn();
+
+    switch($total_records){
+        case 0:
+            $total_pages = 0;
+        break;
+        default:
+            $total_pages = ceil($total_records / $limit);
+    }
+
+
+    $current_page = isset($_POST['pageno']) ? (int)$_POST['pageno'] : 1;
+    $current_page = max(1, min($current_page, $total_pages));
+    $start_from = ($current_page - 1) * $limit;
+        
+    require_once'paginationtemplate.php';
+}else{
+    echo "Invalid operation";
 }
+
     
 
 // Function to check if a file with the given name exists in the non_resident_img table
