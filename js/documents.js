@@ -310,7 +310,128 @@ $(document).ready(function () {
       });
 
     
+    } else if(docu_type == "Building Permits"){
+
+        $.ajax({
+        type: "POST",
+        url: "includes/documentsoperation.php",
+        data: {OPERATION: "FETCH_BUILDING_PERMIT", request_id: request_id },
+        dataType: "JSON",
+        success: function (response) {
+
+          var data = response[0];
+          var Building_address = data.address;
+          var Building_type = data.permit_type;
+
+          $(".Building_address, .Building_type").prop("hidden", false);
+          $("#Building_address").html("<b>Building Address:  </b>" + Building_address);
+          $("#Building_type").html("<b>Permit Type:  </b>" + Building_type);
+    
+          
+        }, error: function (xhr, status, error) {
+          alert("Building Details Not Fetch!! Check your code.");
+        }
+      });
+      
+    }else if(docu_type == "Excavation Permits"){
+
+        $.ajax({
+        type: "POST",
+        url: "includes/documentsoperation.php",
+        data: {OPERATION: "FETCH_EXCAVATION_PERMIT", request_id: request_id },
+        dataType: "JSON",
+        success: function (response) {
+
+          var data = response[0];
+          var Building_address = data.address;
+          var Building_type = data.permit_type;
+
+          $(".Building_address").prop("hidden", false);
+          $("#Building_address").html("<b>Excavation Address:  </b>" + Building_address);
+    
+          
+        }, error: function (xhr, status, error) {
+          alert("Excavation Details Not Fetch!! Check your code.");
+        }
+      });
+      
+    }else if(docu_type == "Fencing Permits"){
+
+        $.ajax({
+        type: "POST",
+        url: "includes/documentsoperation.php",
+        data: {OPERATION: "FETCH_FENCING_PERMIT", request_id: request_id },
+        dataType: "JSON",
+        success: function (response) {
+
+          var data = response[0];
+          var Building_address = data.address;
+          var Building_type = data.estate_type;
+
+          $(".Building_address, .Building_type").prop("hidden", false);
+          $("#Building_address").html("<b>Fence Address:  </b>" + Building_address);
+          $("#Building_type").html("<b>Permit Type:  </b>" + Building_type);
+    
+          
+        }, error: function (xhr, status, error) {
+          alert("Fencing Details Not Fetch!! Check your code.");
+        }
+      });
+      
+    }else if(docu_type == "Tricycle Pedicab Regulatory Services"){
+
+        $.ajax({
+        type: "POST",
+        url: "includes/documentsoperation.php",
+        data: {OPERATION: "FETCH_TPRS", request_id: request_id },
+        dataType: "JSON",
+        success: function (response) {
+
+          var data = response[0];
+          var toda = data.toda;
+          var route = data.route;
+          var plate_num = data.platenum;
+          var chasisnum = data.chasisnum;
+          var maker = data.makertype;
+          var enginenum = data.enginenum;
+
+          console.log(chasisnum)
+
+          $(".Business_name, .Business_address, .Business_type, .agency, .Building_address, #Building_type").prop("hidden", false);
+          $("#Business_name").html("<b>TODA:  </b>" + toda);
+          $("#Business_address").html("<b>Route:  </b>" + route);
+          $("#Business_type").html("<b>Plate Number:  </b>" + plate_num);
+          $("#agency").html("<b>Chasis Number:  </b>" + chasisnum);
+          $("#Building_address").html("<b>Maker:  </b>" + maker);
+          $("#Building_type").html("<b>Engine Number:  </b>" + enginenum);
+          
+        }, error: function (xhr, status, error) {
+          alert("TPRS Details Not Fetch!! Check your code.");
+        }
+      });
+      
+    }else if(docu_type == "Certificate of Indigency"){
+
+        $.ajax({
+        type: "POST",
+        url: "includes/documentsoperation.php",
+        data: {OPERATION: "FETCH_INDIGENCY", request_id: request_id },
+        dataType: "JSON",
+        success: function (response) {
+
+          var data = response[0];
+          var agency = data.agency;
+
+          $(".agency").prop("hidden", false);
+          $("#agency").html("<b>Agency:  </b>" + agency);
+        
+        }, error: function (xhr, status, error) {
+          alert("Indigency Details Not Fetch!! Check your code.");
+        }
+      });
+      
     }
+
 
     //For the status display on the table
     switch (status) {

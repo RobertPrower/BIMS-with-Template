@@ -71,10 +71,10 @@
                     <a id="blotter_btn" href="blotters.php"><span class="icon edit" aria-hidden="true"></span>Blotters</a>
                    
                 </li>
-                <li>
+                <!-- <li>
                     <a href="brgyofficials.php"><span class="icon user-3" aria-hidden="true"></span>Brgy Offcials</a>
                    
-                </li>
+                </li> -->
                 <!-- <li>
                     <a class="show-cat-btn" href="##">
                         <span class="icon paper" aria-hidden="true"></span>Pages

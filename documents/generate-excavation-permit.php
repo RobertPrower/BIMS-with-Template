@@ -58,6 +58,11 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     try{
 
         $pdo->beginTransaction();
+
+        $brgydetailsquery = "SELECT * FROM brgy_details";
+        $brgydetailstmt = $pdo->prepare($brgydetailsquery);
+        $brgydetailstmt->execute();
+        $brgydetailsraw = $brgydetailstmt->fetchAll(PDO::FETCH_ASSOC);
     
         $buildingquery = "INSERT INTO tbl_excavation_permits(blg_house_no, street, subd) VALUES (?,?,?)";
         $buildingstmt = $pdo->prepare($buildingquery);
@@ -102,7 +107,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
                 ':residentno' => $ID,
                 ':presentedid' => $presentedid,
                 ':IDnumber' => $IDnumber,
-                ':purpose' => "Securing Building Permit",
+                ':purpose' => "Securing Excavation Permit",
                 ':filenames' => $filename
             ];
             $certDetailsstmt = $pdo->prepare($certDetailsquery);
@@ -154,6 +159,51 @@ class MYPDF extends TCPDF {
         // Draw a linear gradient in the header area
         $this->DrawGradient(0, 0, $this->getPageWidth(), ($headerY + 40) * 0.75, [4, 238, 9], [255, 255, 255]);
         
+        global $brgydetailsraw;
+        foreach($brgydetailsraw as $brgydetails){
+    
+            $this->setXY(17,16);
+
+            $title = '
+            <style>
+                .title{
+                font-family: Rockwell;
+                font-size: 18px;
+                line-height: 0.6;
+
+                }
+
+                .body{
+                line-height: 0.6;
+                }
+
+                .brgyname{
+                font-family: Cambria;
+                font-size: 16px;
+                line-height: 0.6;
+                }
+
+                .brgyname2{
+                font-family: Cambria
+                font-size: 12px
+                line-height: 0.6;
+
+                }
+            </style>
+            
+            <p class="body"> 
+            <strong class="title">'.strtoupper($brgydetails['brgy_name'].' '. $brgydetails['sona'].' '.$brgydetails['district']).'</strong>
+            <p class="brgyname">'.strtoupper($brgydetails['address']).'</p>
+            <p class="brgyname2"> Tel No: '.$brgydetails['tel_num'].' Cell No: '.$brgydetails['cp_num'].' Email: '.$brgydetails['email'].'</p>
+            </p>
+
+            
+            '
+            ;
+            $this->writeHTML($title, true, false, true, false, 'C');
+    
+        }
+
 
         global $pdo; 
         require_once('../includes/connecttodb.php');

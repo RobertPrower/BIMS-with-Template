@@ -52,6 +52,11 @@ if($_SERVER['REQUEST_METHOD']== "POST"){
     try{
         $pdo->beginTransaction();
 
+        $brgydetailsquery = "SELECT * FROM brgy_details";
+        $brgydetailstmt = $pdo->prepare($brgydetailsquery);
+        $brgydetailstmt->execute();
+        $brgydetailsraw = $brgydetailstmt->fetchAll(PDO::FETCH_ASSOC);
+
         $brgyquery="SELECT * FROM brgy_officials";
         $brgystmt=$pdo->prepare($brgyquery);
         $brgystmt->execute();
@@ -156,6 +161,51 @@ class MYPDF extends TCPDF {
     
     //Page header
     public function Header() {
+
+       global $brgydetailsraw;
+        foreach($brgydetailsraw as $brgydetails){
+    
+            $this->setXY(5,16);
+
+            $title = '
+            <style>
+                .title{
+                font-family: Rockwell;
+                font-size: 18px;
+                line-height: 0.6;
+
+                }
+
+                .body{
+                line-height: 0.6;
+                }
+
+                .brgyname{
+                font-family: Cambria;
+                font-size: 16px;
+                line-height: 0.6;
+                }
+
+                .brgyname2{
+                font-family: Cambria
+                font-size: 12px
+                line-height: 0.6;
+
+                }
+            </style>
+            
+            <p class="body"> 
+            <strong class="title">'.strtoupper($brgydetails['brgy_name'].' '. $brgydetails['sona'].' '.$brgydetails['district']).'</strong>
+            <p class="brgyname">'.strtoupper($brgydetails['address']).'</p>
+            <p class="brgyname2"> Tel No: '.$brgydetails['tel_num'].' Cell No: '.$brgydetails['cp_num'].' Email: '.$brgydetails['email'].'</p>
+            </p>
+
+            
+            '
+            ;
+            $this->writeHTML($title, true, false, true, false, 'C');
+    
+        }
         
         // Logo
         global $logo;

@@ -125,8 +125,6 @@ class MYPDF extends TCPDF {
             
             <strong class="title">'.strtoupper($brgydetails['brgy_name'].' '. $brgydetails['sona'].' '.$brgydetails['district']).'</strong>';
             $this->writeHTML($title, true, false, true, false, 'C');
-
-            
     
         }
 

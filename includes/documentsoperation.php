@@ -203,6 +203,81 @@ if($operation_check =="REVOKE"){
     }
 
 
+}elseif($operation_check == "FETCH_BUILDING_PERMIT"){
+
+    if(isset($request_Id)){
+        $searchquery = "CALL SearchBuildingPermits(?)";
+        $searchstmt = $pdo->prepare($searchquery);
+        $searchstmt->execute([$request_Id]);
+        $results= $searchstmt->fetchAll(PDO::FETCH_ASSOC);
+        $searchstmt->closeCursor();
+
+        echo json_encode($results);
+    }else{
+        echo json_encode(["error", "message" => "No ID was recieved"]);
+    }
+
+
+}elseif($operation_check == "FETCH_EXCAVATION_PERMIT"){
+
+    if(isset($request_Id)){
+        $searchquery = "CALL SearchExcavationPermits(?)";
+        $searchstmt = $pdo->prepare($searchquery);
+        $searchstmt->execute([$request_Id]);
+        $results= $searchstmt->fetchAll(PDO::FETCH_ASSOC);
+        $searchstmt->closeCursor();
+
+        echo json_encode($results);
+    }else{
+        echo json_encode(["error", "message" => "No ID was recieved"]);
+    }
+
+
+}elseif($operation_check == "FETCH_FENCING_PERMIT"){
+
+    if(isset($request_Id)){
+        $searchquery = "CALL SearchFencingPermits(?)";
+        $searchstmt = $pdo->prepare($searchquery);
+        $searchstmt->execute([$request_Id]);
+        $results= $searchstmt->fetchAll(PDO::FETCH_ASSOC);
+        $searchstmt->closeCursor();
+
+        echo json_encode($results);
+    }else{
+        echo json_encode(["error", "message" => "No ID was recieved"]);
+    }
+
+
+}elseif($operation_check == "FETCH_TPRS"){
+
+    if(isset($request_Id)){
+        $searchquery = "CALL SearchTPRS(?)";
+        $searchstmt = $pdo->prepare($searchquery);
+        $searchstmt->execute([$request_Id]);
+        $results= $searchstmt->fetchAll(PDO::FETCH_ASSOC);
+        $searchstmt->closeCursor();
+
+        echo json_encode($results);
+    }else{
+        echo json_encode(["error", "message" => "No ID was recieved"]);
+    }
+
+
+}elseif($operation_check == "FETCH_INDIGENCY"){
+
+    if(isset($request_Id)){
+        $searchquery = "CALL SearchIndigency(?)";
+        $searchstmt = $pdo->prepare($searchquery);
+        $searchstmt->execute([$request_Id]);
+        $results= $searchstmt->fetchAll(PDO::FETCH_ASSOC);
+        $searchstmt->closeCursor();
+
+        echo json_encode($results);
+    }else{
+        echo json_encode(["error", "message" => "No ID was recieved"]);
+    }
+
+
 }else{
     echo "Nothing was reviced";
 }

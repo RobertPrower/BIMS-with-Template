@@ -82,8 +82,14 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     $business_type= sanitizeData($_POST['business_type']);
 
     try{
-        $bussquery = "SET @quarter = get_quarter(CURDATE());
+        $pdo->beginTransaction();
+        
+        $brgydetailsquery = "SELECT * FROM brgy_details";
+        $brgydetailstmt = $pdo->prepare($brgydetailsquery);
+        $brgydetailstmt->execute();
+        $brgydetailsraw = $brgydetailstmt->fetchAll(PDO::FETCH_ASSOC); 
 
+        $bussquery = "SET @quarter = get_quarter(CURDATE());
         INSERT INTO tbl_business_permits (year_quarter, store_name, blg_house_no, street, subdivision, type_of_buss)
         VALUES (@quarter, ?, ?, ?, ?, ?);";
         $bussstmt = $pdo->prepare($bussquery);
@@ -150,6 +156,8 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
         $requeststmt -> execute();        
         $last_requestid= $requeststmt->fetchColumn();
 
+        $pdo->commit();
+
     }catch(Exception $errors){
         $pdo->rollBack();
         exit(json_encode(["error", $errors]));
@@ -188,6 +196,52 @@ class MYPDF extends TCPDF {
         
         // Draw a linear gradient in the header area
         $this->DrawGradient(0, 0, $this->getPageWidth(), ($headerY + 40) * 0.75, [4, 238, 9], [255, 255, 255]);
+
+        global $brgydetailsraw;
+        foreach($brgydetailsraw as $brgydetails){
+    
+            $this->setXY(17,16);
+
+            $title = '
+            <style>
+                .title{
+                font-family: Rockwell;
+                font-size: 18px;
+                line-height: 0.6;
+
+                }
+
+                .body{
+                line-height: 0.6;
+                }
+
+                .brgyname{
+                font-family: Cambria;
+                font-size: 16px;
+                line-height: 0.6;
+                }
+
+                .brgyname2{
+                font-family: Cambria
+                font-size: 12px
+                line-height: 0.6;
+
+                }
+            </style>
+            
+            <p class="body"> 
+            <strong class="title">'.strtoupper($brgydetails['brgy_name'].' '. $brgydetails['sona'].' '.$brgydetails['district']).'</strong>
+            <p class="brgyname">'.strtoupper($brgydetails['address']).'</p>
+            <p class="brgyname2"> Tel No: '.$brgydetails['tel_num'].' Cell No: '.$brgydetails['cp_num'].' Email: '.$brgydetails['email'].'</p>
+            </p>
+
+            
+            '
+            ;
+            $this->writeHTML($title, true, false, true, false, 'C');
+    
+        }
+
         
 
         global $pdo; 

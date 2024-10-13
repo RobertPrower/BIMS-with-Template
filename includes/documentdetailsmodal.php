@@ -49,16 +49,13 @@
         <br class="Business_address" hidden>
         <p class="Business_type" id="Business_type" hidden></p> 
         <br class="Business_type" hidden>
-        <p class="agency" hidden></p> 
+        <p class="agency" id="agency" hidden></p> 
         <br class="agency" hidden>
-        <p class="BlgHouseNo" id="blg_num" hidden></p> 
-        <br class="BlgHouseNo" hidden>
-        <p class="Building_Address" id="blg_street" hidden></p> 
-        <br class="Building_Address" hidden>
-        <p class="Building_type" id="bld_type" hidden></p> 
-        <br class="" hidden>
+        <p class="Building_address" id="Building_address" hidden></p> 
+        <br class="Building_address" hidden>
+        <p class="Building_type" id="Building_type" hidden></p> 
+        <br class="Building_type" hidden>
         <p class="agency" hidden></p> 
-        <br class="agency" hidden>
         <p id="Status"></p> 
     </div>
     <div class="modal-footer">

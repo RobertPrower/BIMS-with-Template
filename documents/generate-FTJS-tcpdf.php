@@ -51,8 +51,13 @@ if($_SERVER['REQUEST_METHOD']== "POST"){
         $imgstmt=$pdo->prepare($imgquery);
         $imgstmt->execute();
         $imglogo = $imgstmt->fetchAll(PDO::FETCH_ASSOC); 
+
+        $brgydetailsquery = "SELECT * FROM brgy_details";
+        $brgydetailstmt = $pdo->prepare($brgydetailsquery);
+        $brgydetailstmt->execute();
+        $brgydetailsraw = $brgydetailstmt->fetchAll(PDO::FETCH_ASSOC); 
     
-        $docudetailsquery = "CALL determine_docu_type('Certificate_of_Residency')";
+        $docudetailsquery = "CALL determine_docu_type('FTJS')";
         $docudetailstmt = $pdo->prepare($docudetailsquery);
         $docudetailstmt->execute();
         $docudetailstmt->closeCursor();
@@ -105,6 +110,24 @@ class MYPDF extends TCPDF {
     //Page header
     public function Header() {
         
+       global $brgydetailsraw;
+       foreach($brgydetailsraw as $brgydetails){
+    
+            $this->setXY(30,16);
+
+            $title = '
+            <style>
+                .title{
+                font-family: Rockwell;
+                font-size: 16px;
+                }
+            </style>
+            
+            <strong class="title">'.strtoupper($brgydetails['brgy_name'].' '. $brgydetails['sona'].' '.$brgydetails['district']).'</strong>';
+            $this->writeHTML($title, true, false, true, false, 'C');
+    
+        }
+
         // Logo
         global $imglogo;
         foreach($imglogo as $seallogo){
@@ -135,10 +158,17 @@ class MYPDF extends TCPDF {
         // Position at 15 mm from bottom
         $this->SetY(-15);
         // Set font
-        $this->SetFont('Cambria', 'I', 8);
+       global $brgydetailsraw;
+       foreach($brgydetailsraw as $brgydetails){
     
-        $this->MultiCell(0, 10, "Cielito Homes Subd., Camarin, Lungsod ng Caloocan, M.M.\nTel. No. 8364-7073 / Mobile No. 0999-403-1692 E-mail: 177Barangay@gmail.com", 0, 'C', 0, 1);
-
+             // Set font
+            $this->SetFont('Cambria', 'B', 8);
+            
+            // Add the address text
+            $this->MultiCell(0, 10, $brgydetails['address']."\nTel. No. ".$brgydetails['tel_num']." / Mobile No. ".$brgydetails['cp_num']." E-mail: ".$brgydetails['email'], 0, 'C', 0, 1);
+            
+    
+        }
         $this->SetLineWidth(0.5); 
 
          // Draw a line above the footer
