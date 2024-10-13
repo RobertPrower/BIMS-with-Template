@@ -16,6 +16,8 @@
         <input type="text" hidden id="request_id" name="request_id"/>
         <!-- Placeholder for the resident or Non resident ID -->
         <input hidden id="resident_id" name="resident_id"/>
+        <input hidden id="resident_status" name="resident_status"/>
+
 
         <p id="Request_ID"></p>
         <br>
@@ -61,7 +63,7 @@
     <div class="modal-footer">
 
         <form>
-            <button type="button" id="viewResidentfromDocu" class="btn btn-primary" data-bs-target="#ViewResidentModal" data-bs-toggle="modal" data-isfordocu="YES">View Resident Details</button>
+            <button type="button" id="viewResorNonResfromDocu" class="btn btn-primary" data-bs-toggle="modal" data-isfordocu="YES">View Resident Details</button>
             <button type="button" id="retrevePDF" data-cert_type="" class="btn btn-info">Reprint</button>
             <button type="button" id="editDocumentbtn" class="btn btn-success" data-bs-target="#EditDocumentModal" data-bs-toggle="modal" data-expiration="" data-presentedid="" data-id_num="" data-request_id="">Edit</button>
             <button type="button" class="btn btn-danger" id="revokebtn">Revoke</button>

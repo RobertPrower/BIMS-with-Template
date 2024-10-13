@@ -59,6 +59,7 @@
                                 <?php 
                                 
                                 include_once'includes/residentviewform.php';
+                                include_once'includes/nonresidentviewform.php';
                                 require_once'includes/documentdetailsmodal.php';
 
                                 

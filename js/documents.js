@@ -202,6 +202,7 @@ $(document).ready(function () {
 
     var request_id = $(this).data("id");
     var resident_id = $(this).data("resident_id");
+    var resident_status = $(this).data("resident_status");
     var date_requested = $(this).data("date-requested");
     var expiration = $(this).data("expiration-date");
     var first_name = $(this).data("first-name");
@@ -252,6 +253,7 @@ $(document).ready(function () {
     $("#Purpose").html("<b>Purpose:  </b>" + purpose);
     $("#resident_id").val(resident_id);
     $("#request_id").val(request_id);
+    $("#resident_status").val(resident_status);
     $("#status").val(status);
     $("#retrevePDF").attr("data-cert_type",docu_type);
     $("#certiticate_type").val(docu_type);
@@ -610,52 +612,99 @@ $(document).ready(function () {
   });
 
   //For populate the view resident from docu modal
-  $(document).on("click", "#viewResidentfromDocu", function () {
+  $(document).on("click", "#viewResorNonResfromDocu", function () {
     var residentid = $("#resident_id").val();
+    var resident_status = $("#resident_status").val();
+
     $("#nav-home-tab").tab("show");
 
-    $.ajax({
-      url: "includes/fetchresidentdetails.php",
-      type: "POST",
-      data: { id: residentid },
-      dataType: "JSON",
-      success: function (response) {
-        var imagepath = "includes/img/resident_img/" + response.img_filename;
+    if(resident_status == "Resident"){
+      $.ajax({
+        url: "includes/fetchresidentdetails.php",
+        type: "POST",
+        data: { id: residentid },
+        dataType: "JSON",
+        success: function (response) {
+          var imagepath = "includes/img/resident_img/" + response.img_filename;
 
-        $("#viewresident_id").val(response.resident_id);
-        $("#fname").val(response.first_name);
-        $("#mname").val(response.middle_name);
-        $("#lname").val(response.last_name);
-        $("#house_no").val(response.house_num);
-        $("#street").val(response.street);
-        $("#subd").val(response.subdivision);
-        $("#sex").val(response.sex);
-        $("#marital_status").val(response.marital_status);
-        $("#birth_date").val(response.birth_date);
-        $("#birth_place").val(response.birth_place);
-        $("#cp_number").val(response.cellphone_num);
-        $("#is_a_voter").val(response.is_a_voter);
-        $("#rsince").val(response.resident_since);
-        $("#viewimagePreview").prop("src", imagepath);
-        $("#backbtntodocu").prop("hidden", false);
+          $("#viewresident_id").val(response.resident_id);
+          $("#fname").val(response.first_name);
+          $("#mname").val(response.middle_name);
+          $("#lname").val(response.last_name);
+          $("#house_no").val(response.house_num);
+          $("#street").val(response.street);
+          $("#subd").val(response.subdivision);
+          $("#sex").val(response.sex);
+          $("#marital_status").val(response.marital_status);
+          $("#birth_date").val(response.birth_date);
+          $("#birth_place").val(response.birth_place);
+          $("#cp_number").val(response.cellphone_num);
+          $("#is_a_voter").val(response.is_a_voter);
+          $("#rsince").val(response.resident_since);
+          $("#viewimagePreview").prop("src", imagepath);
+          $("#backbtntodocu").prop("hidden", false);
 
-        //For counting certificates requested
-        $.ajax({
-          type: "post",
-          url: "includes/residentoperation.php",
-          data: { operation: "COUNT_RES_CERT", resident_id: response.resident_id },
-          dataType: "json",
-          success: function (response) {
-            console.log(response);
+          //For counting certificates requested
+          $.ajax({
+            type: "post",
+            url: "includes/residentoperation.php",
+            data: { operation: "COUNT_RES_CERT", resident_id: response.resident_id },
+            dataType: "json",
+            success: function (response) {
+              console.log(response);
 
-            $("#noofcerts").text(response);
-          },
-        });
-      },
-      error: function (xhr, status, error) {
-        console.error("Error fetching table data:", error);
-      },
-    });
+              $("#noofcerts").text(response);
+            },
+          });
+        },
+        error: function (xhr, status, error) {
+          console.error("Error fetching table data:", error);
+        },
+      });
+    }else if(resident_status == "Non Resident"){
+      $.ajax({
+        url: "includes/fetchnonresdetails.php",
+        type: "POST",
+        data: { id: residentid },
+        dataType: "JSON",
+        success: function (response) {
+          var imagepath = "includes/img/non_resident_img/" + response.img_filename;
+
+          $("#viewresident_id").val(response.resident_id);
+          $("#fname").val(response.first_name);
+          $("#mname").val(response.middle_name);
+          $("#lname").val(response.last_name);
+          $("#house_no").val(response.house_num);
+          $("#street").val(response.street);
+          $("#subd").val(response.subdivision);
+          $("#sex").val(response.sex);
+          $("#marital_status").val(response.marital_status);
+          $("#birth_date").val(response.birth_date);
+          $("#birth_place").val(response.birth_place);
+          $("#cp_number").val(response.cellphone_num);
+          $("#is_a_voter").val(response.is_a_voter);
+          $("#rsince").val(response.resident_since);
+          $("#viewimagePreview").prop("src", imagepath);
+          $("#backbtntodocu").prop("hidden", false);
+
+          //For counting certificates requested
+          $.ajax({
+            type: "post",
+            url: "includes/residentoperation.php",
+            data: { operation: "COUNT_RES_CERT", resident_id: response.resident_id },
+            dataType: "json",
+            success: function (response) {
+              console.log(response);
+
+              $("#noofcerts").text(response);
+            },
+          });
+        },
+        error: function (xhr, status, error) {
+          console.error("Error fetching table data:", error);
+        },
+      });
+    }
   });
 
   //For the back button on the resident view modal
