@@ -16,6 +16,27 @@ CREATE DATABASE /*!32312 IF NOT EXISTS*/`bims` /*!40100 DEFAULT CHARACTER SET ut
 
 USE `bims`;
 
+/*Table structure for table `brgy_details` */
+
+DROP TABLE IF EXISTS `brgy_details`;
+
+CREATE TABLE `brgy_details` (
+  `brgy_details_id` int(55) NOT NULL AUTO_INCREMENT,
+  `brgy_name` varchar(55) DEFAULT NULL,
+  `sona` varchar(55) DEFAULT NULL,
+  `district` varchar(55) DEFAULT NULL,
+  `tel_num` varchar(55) DEFAULT NULL,
+  `cp_num` varchar(55) DEFAULT NULL,
+  `email` varchar(55) DEFAULT NULL,
+  `address` varchar(55) DEFAULT NULL,
+  PRIMARY KEY (`brgy_details_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+/*Data for the table `brgy_details` */
+
+insert  into `brgy_details`(`brgy_details_id`,`brgy_name`,`sona`,`district`,`tel_num`,`cp_num`,`email`,`address`) values 
+(1,'Barangay 177','Sona','Distrito 1','8364-7073','0999-4031692','177Barangay@gmail.com','Cielito Homes Subd., Camarin, Lungsod ng Caloocan, M.M');
+
 /*Table structure for table `brgy_officials` */
 
 DROP TABLE IF EXISTS `brgy_officials`;
@@ -401,7 +422,7 @@ CREATE TABLE `tbl_cert_audit_trail` (
   CONSTRAINT `edited_by_fk` FOREIGN KEY (`edited_by_no`) REFERENCES `tbl_username` (`username_id`),
   CONSTRAINT `issued_by_fk` FOREIGN KEY (`issued_by_no`) REFERENCES `tbl_username` (`username_id`),
   CONSTRAINT `recovered_by_fk` FOREIGN KEY (`recovered_by_no`) REFERENCES `tbl_username` (`username_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
 
 /*Data for the table `tbl_cert_audit_trail` */
 
@@ -417,7 +438,16 @@ insert  into `tbl_cert_audit_trail`(`audit_trail_id`,`issuing_dept_no`,`issued_b
 (9,NULL,NULL,'2024-10-10 15:30:52','2025-01-10',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
 (10,NULL,NULL,'2024-10-10 15:32:19','2025-10-10',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
 (11,NULL,NULL,'2024-10-10 15:33:07','2025-10-10',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(12,NULL,NULL,'2024-10-12 02:38:20','2025-10-12',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+(12,NULL,NULL,'2024-10-12 02:38:20','2025-10-12',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(13,NULL,NULL,'2024-10-12 22:18:56','2025-01-12',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(14,NULL,NULL,'2024-10-12 22:19:38','2025-01-12',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(15,NULL,NULL,'2024-10-12 22:22:54','2025-01-12',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(16,NULL,NULL,'2024-10-12 22:23:26','2025-01-12',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(17,NULL,NULL,'2024-10-12 22:24:34','2025-01-12',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(18,NULL,NULL,'2024-10-12 22:25:44','2025-01-12',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(19,NULL,NULL,'2024-10-12 22:26:17','2025-01-12',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(20,NULL,NULL,'2024-10-12 22:26:49','2025-01-12',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(21,NULL,NULL,'2024-10-12 22:27:04','2025-01-12',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 
 /*Table structure for table `tbl_docu_request` */
 
@@ -461,7 +491,16 @@ insert  into `tbl_docu_request`(`request_id`,`resident_no`,`nresident_no`,`docum
 ('2024-000009',12,NULL,9,21,'Drivers License','N42-2010353','Verification Purposes',9,'generated_pdf_1728545452.pdf',0,0),
 ('2024-000010',12,NULL,10,21,'Drivers License','N42-2010351','Getting Business Permit',10,'generated_pdf_1728545539.pdf',0,0),
 ('2024-000011',12,NULL,11,21,'Drivers License','N43-2010631','Securing Building Permit',11,'generated_pdf_1728545587.pdf',0,0),
-('2024-000012',NULL,1,12,26,'Police ID','POL-1234567890','Getting Business Permit',12,'generated_pdf_1728671900.pdf',0,0);
+('2024-000012',NULL,1,12,26,'Police ID','POL-1234567890','Getting Business Permit',12,'generated_pdf_1728671900.pdf',0,1),
+('2024-000013',8,NULL,13,38,'Drivers License','N42-1234567890','Meralco Application',13,'generated_pdf_1728742736.pdf',0,0),
+('2024-000014',8,NULL,14,38,'Drivers License','N42-1234567890','Maynilad Application',14,'generated_pdf_1728742778.pdf',0,0),
+('2024-000015',8,NULL,15,38,'Drivers License','N42-1234567890','Verification Purposes',15,'generated_pdf_1728742974.pdf',0,0),
+('2024-000016',8,NULL,16,38,'Drivers License','N42-1234567890','Verification Purposes',16,'generated_pdf_1728743006.pdf',0,0),
+('2024-000017',8,NULL,17,38,'Drivers License','N42-1234567890','Verification Purposes',17,'generated_pdf_1728743074.pdf',0,0),
+('2024-000018',8,NULL,18,38,'Drivers License','N42-1234567890','Verification Purposes',18,'generated_pdf_1728743144.pdf',0,0),
+('2024-000019',8,NULL,19,38,'Drivers License','N42-1234567890','Verification Purposes',19,'generated_pdf_1728743177.pdf',0,0),
+('2024-000020',8,NULL,20,38,'Drivers License','N42-1234567890','Verification Purposes',20,'generated_pdf_1728743209.pdf',0,0),
+('2024-000021',8,NULL,21,38,'Drivers License','N42-1234567890','Verification Purposes',21,'generated_pdf_1728743224.pdf',0,0);
 
 /*Table structure for table `tbl_documents` */
 
@@ -493,7 +532,7 @@ CREATE TABLE `tbl_documents` (
   CONSTRAINT `f_permit_fk` FOREIGN KEY (`Fencing_Permits`) REFERENCES `tbl_fencing_permit` (`fencing_permit_id`) ON DELETE CASCADE,
   CONSTRAINT `indigency_fk` FOREIGN KEY (`Certificate_of_Indigency`) REFERENCES `tbl_indigency` (`indigency_id`) ON DELETE CASCADE,
   CONSTRAINT `tprs_fk` FOREIGN KEY (`TPRS`) REFERENCES `tbl_tprs` (`tprs_id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
 
 /*Data for the table `tbl_documents` */
 
@@ -509,7 +548,16 @@ insert  into `tbl_documents`(`docu_id`,`Barangay_Clearance`,`Certificate_of_Resi
 (9,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
 (10,NULL,NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL),
 (11,NULL,NULL,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL),
-(12,NULL,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL);
+(12,NULL,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL),
+(13,NULL,3,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(14,NULL,4,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(15,NULL,5,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(16,NULL,6,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(17,NULL,7,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(18,NULL,8,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(19,NULL,9,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(21,NULL,11,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 
 /*Table structure for table `tbl_excavation_permits` */
 
@@ -826,6 +874,28 @@ BEGIN
         
     END IF;
 END */$$
+DELIMITER ;
+
+/* Procedure structure for procedure `SearchBusinessPermits` */
+
+/*!50003 DROP PROCEDURE IF EXISTS  `SearchBusinessPermits` */;
+
+DELIMITER $$
+
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `SearchBusinessPermits`(in req_id varchar(255))
+BEGIN
+	
+	SELECT tbl_docu_request.request_id, 
+       tbl_business_permits.store_name, 
+       concat(tbl_business_permits.blg_house_no,' ',tbl_business_permits.street,' ',tbl_business_permits.subdivision) as address, 
+       tbl_business_permits.type_of_buss
+FROM tbl_docu_request
+JOIN tbl_documents ON tbl_docu_request.document_no = tbl_documents.docu_id
+JOIN tbl_business_permits ON tbl_documents.Business_Permits = tbl_business_permits.business_id
+WHERE tbl_docu_request.request_id = req_id;
+
+
+	END */$$
 DELIMITER ;
 
 /* Procedure structure for procedure `SearchNonResident` */

@@ -191,7 +191,7 @@ if($operation_check =="REVOKE"){
 }elseif($operation_check == "FETCH_BUSINESS_PERMIT"){
 
     if(isset($request_Id)){
-        $searchquery = "CALL search_business_permit(?)";
+        $searchquery = "CALL SearchBusinessPermits(?)";
         $searchstmt = $pdo->prepare($searchquery);
         $searchstmt->execute([$request_Id]);
         $results= $searchstmt->fetchAll(PDO::FETCH_ASSOC);

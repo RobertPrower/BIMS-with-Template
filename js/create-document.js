@@ -113,140 +113,178 @@ $(document).ready(function() {
             allowOutsideClick: false 
         });
 
-        if(whatcert == "Create Certificate of Indigency"){
-            $.ajax({
-                url: "documents/generate-indigency-tcpdf.php",
-                type: "POST",
-                dataType:"JSON",
-                data:{
-                    residentno : res_id,
-                    first_name : first_name,
-                    middle_name : middle_name,
-                    last_name : last_name,
-                    suffix : suffix,
-                    address : address,
-                    r_since: r_since,
-                    presented_id : presented_id,
-                    id_num : id_num,
-                    purpose: purpose,
-                    agency: agency
-                },
-                success: function(response){
-                    var filename = "documents/certificate_of_indigency/"+response.file;
-                    console.log(filename);
-                    
-                    $("#generatepdf").attr("src", filename); 
-          
-                    $("#pdfModal").modal("show");
-
-                    $('#pdfModal').on('shown.bs.modal', function () {
+        if(res_id){
+            if(whatcert == "Create Certificate of Indigency"){
+                $.ajax({
+                    url: "documents/generate-indigency-tcpdf.php",
+                    type: "POST",
+                    dataType:"JSON",
+                    data:{
+                        residentno : res_id,
+                        first_name : first_name,
+                        middle_name : middle_name,
+                        last_name : last_name,
+                        suffix : suffix,
+                        address : address,
+                        r_since: r_since,
+                        presented_id : presented_id,
+                        id_num : id_num,
+                        purpose: purpose,
+                        agency: agency
+                    },
+                    success: function(response){
+                        var filename = "documents/certificate_of_indigency/"+response.file;
+                        console.log(filename);
+                        
+                        $("#generatepdf").attr("src", filename); 
+              
+                        $("#pdfModal").modal("show");
+    
+                        $('#pdfModal').on('shown.bs.modal', function () {
+                            Swal.close(); 
+                        });   
+                    },
+                    error: function (xhr, status, error) {
+                        console.error("Error generating PDF:", error);
                         Swal.close(); 
-                    });   
-                },
-                error: function (xhr, status, error) {
-                    console.error("Error generating PDF:", error);
-                },
-            });
-        }else if(whatcert == "Create Certificate of Residency"){
-            $.ajax({
-                url: "documents/generate-residency-tcpdf.php",
-                type: "POST",
-                dataType:"JSON",
-                data:{
-                    residentno : res_id,
-                    first_name : first_name,
-                    middle_name : middle_name,
-                    last_name : last_name,
-                    suffix : suffix,
-                    address : address,
-                    r_since: r_since,
-                    presented_id : presented_id,
-                    id_num : id_num,
-                    purpose: purpose
-                },
-                success: function(response){
-                    var filename = "documents/certificate_of_residency/"+response.file;
-                    console.log(filename);
 
-                    $("#generatepdf").attr("src", filename); 
-
-                    $("#pdfModal").modal("show");
-
-                    $('#pdfModal').on('shown.bs.modal', function () {
+                        Swal.fire({
+                            icon: "error",
+                            title: "Oops...",
+                            text: "Something went wrong!",
+                          });
+                    },
+                });
+            }else if(whatcert == "Create Certificate of Residency"){
+                $.ajax({
+                    url: "documents/generate-residency-tcpdf.php",
+                    type: "POST",
+                    dataType:"JSON",
+                    data:{
+                        residentno : res_id,
+                        first_name : first_name,
+                        middle_name : middle_name,
+                        last_name : last_name,
+                        suffix : suffix,
+                        address : address,
+                        r_since: r_since,
+                        presented_id : presented_id,
+                        id_num : id_num,
+                        purpose: purpose
+                    },
+                    success: function(response){
+                        var filename = "documents/certificate_of_residency/"+response.file;
+                        console.log(filename);
+    
+                        $("#generatepdf").attr("src", filename); 
+    
+                        $("#pdfModal").modal("show");
+    
+                        $('#pdfModal').on('shown.bs.modal', function () {
+                            Swal.close(); 
+                        });                    
+                              
+                    },
+                    error: function (xhr, status, error) {
+                        console.error("Error generating PDF:", error);
                         Swal.close(); 
-                    });                    
-                          
-                },
-                error: function (xhr, status, error) {
-                    console.error("Error generating PDF:", error);
-                },
-            });
-        }else if(whatcert == "Create Certificate of Good Moral"){
-            $.ajax({
-                url: "documents/generate-good-moral-tcpdf.php",
-                type: "POST",
-                dataType:"JSON",
-                data:{
-                    residentno : res_id,
-                    first_name : first_name,
-                    middle_name : middle_name,
-                    last_name : last_name,
-                    suffix : suffix,
-                    address : address,
-                    presented_id : presented_id,
-                    id_num : id_num,
-                    purpose: purpose
-                },
-                success: function(response){
-                    var filename = "documents/certificate_of_good_moral/"+response.file;
-                    console.log(filename);
 
-                    $("#generatepdf").attr("src", filename); 
-          
-                    $("#pdfModal").modal("show");
+                        Swal.fire({
+                            icon: "error",
+                            title: "Oops...",
+                            text: "Something went wrong!",
+                          });
+                    },
+                });
+            }else if(whatcert == "Create Certificate of Good Moral"){
+                $.ajax({
+                    url: "documents/generate-good-moral-tcpdf.php",
+                    type: "POST",
+                    dataType:"JSON",
+                    data:{
+                        residentno : res_id,
+                        first_name : first_name,
+                        middle_name : middle_name,
+                        last_name : last_name,
+                        suffix : suffix,
+                        address : address,
+                        presented_id : presented_id,
+                        id_num : id_num,
+                        purpose: purpose
+                    },
+                    success: function(response){
+                        var filename = "documents/certificate_of_good_moral/"+response.file;
+                        console.log(filename);
+    
+                        $("#generatepdf").attr("src", filename); 
+              
+                        $("#pdfModal").modal("show");
+    
+                        $('#pdfModal').on('shown.bs.modal', function () {
+                            Swal.close(); 
+                        });   
+                        
+                    },
+                    error: function (xhr, status, error) {
+                        console.error("Error generating PDF:", error);
 
-                    $('#pdfModal').on('shown.bs.modal', function () {
                         Swal.close(); 
-                    });   
-                    
-                },
-                error: function (xhr, status, error) {
-                    console.error("Error generating PDF:", error);
-                },
-            });
-        }else if(whatcert == "Create Certificate of First Time Job Seeker"){
-            $.ajax({
-                url: "documents/generate-FTJS-tcpdf.php",
-                type: "POST",
-                dataType:"JSON",
-                data:{
-                    residentno : res_id,
-                    first_name : first_name,
-                    middle_name : middle_name,
-                    last_name : last_name,
-                    suffix : suffix,
-                    address : address,
-                    r_since: r_since,
-                    presented_id : presented_id,
-                    id_num : id_num,
-                },
-                success: function(response){
-                    var filename = "documents/first_time_job_seeker/"+response.file;
-                    console.log(filename);
 
-                    $("#generatepdf").attr("src", filename); 
-          
-                    $("#pdfModal").modal("show");
+                        Swal.fire({
+                            icon: "error",
+                            title: "Oops...",
+                            text: "Something went wrong!",
+                          });
+                    },
+                });
+            }else if(whatcert == "Create Certificate of First Time Job Seeker"){
+                $.ajax({
+                    url: "documents/generate-FTJS-tcpdf.php",
+                    type: "POST",
+                    dataType:"JSON",
+                    data:{
+                        residentno : res_id,
+                        first_name : first_name,
+                        middle_name : middle_name,
+                        last_name : last_name,
+                        suffix : suffix,
+                        address : address,
+                        r_since: r_since,
+                        presented_id : presented_id,
+                        id_num : id_num,
+                    },
+                    success: function(response){
+                        var filename = "documents/first_time_job_seeker/"+response.file;
+                        console.log(filename);
+    
+                        $("#generatepdf").attr("src", filename); 
+              
+                        $("#pdfModal").modal("show");
+    
+                        $('#pdfModal').on('shown.bs.modal', function () {
+                            Swal.close(); 
+                        });   
+                        
+                    },
+                    error: function (xhr, status, error) {
+                        console.error("Error generating PDF:", error);
 
-                    $('#pdfModal').on('shown.bs.modal', function () {
                         Swal.close(); 
-                    });   
-                    
-                },
-                error: function (xhr, status, error) {
-                    console.error("Error generating PDF:", error);
-                },
-            });
+
+                        Swal.fire({
+                            icon: "error",
+                            title: "Oops...",
+                            text: "Something went wrong!",
+                          });
+                    },
+                });
+            }
+        }else{
+            Swal.fire({
+                icon: "error",
+                title: "Empty",
+                text: "Please Select a Resident!",
+              });
         }
     })
 

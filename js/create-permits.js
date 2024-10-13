@@ -135,238 +135,282 @@ $(document).ready(function() {
             allowOutsideClick: false 
         });
 
-        if(whatcert == "Create Business Permit"){
-            var business_name = $("#business_name").val();
-            var business_hnum = $("#business_hnum").val();
-            var business_street = $("#business_street").val();
-            var business_subd = $("#business_subd").val();
-    
-            console.log(res_status);
-            console.log(id_to_record);
-    
-            switch($("#business_type").val()){
-                case "Others":
-                    var business_type = $("#otherbusiness_type").val();
-                break;
-                default:
-                    var business_type = $("#business_type").val(); 
+        if(id_to_record){
+            if(whatcert == "Create Business Permit"){
+                var business_name = $("#business_name").val();
+                var business_hnum = $("#business_hnum").val();
+                var business_street = $("#business_street").val();
+                var business_subd = $("#business_subd").val();
+        
+                console.log(res_status);
+                console.log(id_to_record);
+        
+                switch($("#business_type").val()){
+                    case "Others":
+                        var business_type = $("#otherbusiness_type").val();
+                    break;
+                    default:
+                        var business_type = $("#business_type").val(); 
+                }
+                $.ajax({
+                    type: "POST",
+                    url: "documents/generate-business-permit.php",
+                    data: {res_sta: res_status, id_to_record: id_to_record,first_name: first_name, middle_name: middle_name, last_name: last_name,
+                        suffix: suffix, presented_id: presented_id, id_num: id_num, business_name: business_name
+                        , business_hnum: business_hnum, business_street: business_street, business_subd:business_subd, business_type:business_type
+                    },
+                    dataType: "JSON",
+                    success: function (response) {
+                        console.log(response);
+                        var filename = "documents/business_permits/"+response.file;
+                        console.log(filename);
+                        
+                        $("#generatepdf").attr("src", filename); 
+            
+                        $("#pdfModal").modal("show");
+
+                        $('#pdfModal').on('shown.bs.modal', function () {
+                            Swal.close(); 
+                        });   
+                    },error: function (xhr, status, error) {
+                        console.error("Error generating PDF:", error);
+                        Swal.close(); 
+
+                        Swal.fire({
+                            icon: "error",
+                            title: "Oops...",
+                            text: "Something went wrong!",
+                        });
+                    },
+                });
+            }else if(whatcert == "Create Building Permits"){
+
+                var house_num = $("#house_no").val();
+                var street = $("#street").val();
+                var subd = $("#subd").val();
+                var purpose = $("#purpose").val();
+                var address = $("#address").val();
+
+
+                $.ajax({
+                    url: "documents/generate-building-permit.php",
+                    type: "POST",
+                    dataType:"JSON",
+                    data:{
+                        id_to_record : id_to_record,
+                        res_sta: res_status,
+                        first_name : first_name,
+                        middle_name : middle_name,
+                        last_name : last_name,
+                        suffix : suffix,
+                        address : address,
+                        presented_id : presented_id,
+                        id_num : id_num,
+                        house_num: house_num,
+                        street: street,
+                        subd: subd,
+                        purpose: purpose
+                    },
+                    success: function(response){
+                        var filename = "documents/building_permits/"+response.file;
+                        console.log(filename);
+
+                        $("#generatepdf").attr("src", filename); 
+                
+                        $("#pdfModal").modal("show");
+
+                        $('#pdfModal').on('shown.bs.modal', function () {
+                            Swal.close(); 
+                        });   
+                    },
+                    error: function (xhr, status, error) {
+                        console.error("Error generating PDF:", error);
+                        Swal.close(); 
+
+                        Swal.fire({
+                            icon: "error",
+                            title: "Oops...",
+                            text: "Something went wrong!",
+                        });
+                    },
+                });
+                
+            }else if(whatcert == "Create Excavation Permits"){
+
+                var house_num = $("#house_no").val();
+                var street = $("#street").val();
+                var subd = $("#subd").val();
+                var purpose = $("#purpose").val();
+                var address = $("#address").val();
+
+
+                $.ajax({
+                    url: "documents/generate-excavation-permit.php",
+                    type: "POST",
+                    dataType:"JSON",
+                    data:{
+                        id_to_record : id_to_record,
+                        res_sta: res_status,
+                        first_name : first_name,
+                        middle_name : middle_name,
+                        last_name : last_name,
+                        suffix : suffix,
+                        address : address,
+                        presented_id : presented_id,
+                        id_num : id_num,
+                        house_num: house_num,
+                        street: street,
+                        subd: subd,
+                        purpose: purpose
+                    },
+                    success: function(response){
+                        var filename = "documents/excavation_permits/"+response.file;
+                        console.log(filename);
+
+                        $("#generatepdf").attr("src", filename); 
+                
+                        $("#pdfModal").modal("show");
+
+                        $('#pdfModal').on('shown.bs.modal', function () {
+                            Swal.close(); 
+                        });   
+                    },
+                    error: function (xhr, status, error) {
+                        console.error("Error generating PDF:", error);
+                        Swal.close(); 
+
+                        Swal.fire({
+                            icon: "error",
+                            title: "Oops...",
+                            text: "Something went wrong!",
+                        });
+                    },
+                });
+                
+            }else if(whatcert == "Create Fencing Permits"){
+
+                var house_num = $("#house_no").val();
+                var street = $("#street").val();
+                var subd = $("#subd").val();
+                var purpose = $("#purpose").val();
+                var address = $("#address").val();
+
+
+                $.ajax({
+                    url: "documents/generate-fencing-permit.php",
+                    type: "POST",
+                    dataType:"JSON",
+                    data:{
+                        id_to_record : id_to_record,
+                        res_sta: res_status,
+                        first_name : first_name,
+                        middle_name : middle_name,
+                        last_name : last_name,
+                        suffix : suffix,
+                        address : address,
+                        presented_id : presented_id,
+                        id_num : id_num,
+                        house_num: house_num,
+                        street: street,
+                        subd: subd,
+                        purpose: purpose
+                    },
+                    success: function(response){
+                        var filename = "documents/fencing_permits/"+response.file;
+                        console.log(filename);
+
+                        $("#generatepdf").attr("src", filename); 
+                
+                        $("#pdfModal").modal("show");
+
+                        $('#pdfModal').on('shown.bs.modal', function () {
+                            Swal.close(); 
+                        });   
+                    },
+                    error: function (xhr, status, error) {
+                        console.error("Error generating PDF:", error);
+                        Swal.close(); 
+
+                        Swal.fire({
+                            icon: "error",
+                            title: "Oops...",
+                            text: "Something went wrong!",
+                        });
+                    },
+                });
+                
+            }else if(whatcert == "Create Tricycle Pedicab Regulatory Services"){
+
+                var toda = $("#toda").val();
+                var route =$("#route").val();
+                var plate_no = $("#plate_no").val();
+                var chasis_no = $("#chasis_no").val();
+                var engine_no = $("#engine_no").val();
+
+                switch($("#maker").val()){
+                    case "Others":
+                        var maker = $("#other").val();
+                    break;
+                    default:
+                        var maker = $("#maker").val(); 
+                }
+
+
+                $.ajax({
+                    url: "documents/generate-tprs-tcpdf.php",
+                    type: "POST",
+                    dataType:"JSON",
+                    data:{
+                        id_to_record : id_to_record,
+                        res_sta: res_status,
+                        first_name : first_name,
+                        middle_name : middle_name,
+                        last_name : last_name,
+                        suffix : suffix,
+                        address : address,
+                        presented_id : presented_id,
+                        id_num : id_num,
+                        toda: toda,
+                        route: route,
+                        plate_no: plate_no,
+                        chasis_no: chasis_no,
+                        maker: maker,
+                        engine_no: engine_no
+                    },
+                    success: function(response){
+                        var filename = "documents/tprs/"+response.file;
+                        console.log(filename);
+
+                        $("#generatepdf").attr("src", filename); 
+                
+                        $("#pdfModal").modal("show");
+
+                        $('#pdfModal').on('shown.bs.modal', function () {
+                            Swal.close(); 
+                        });   
+                    },
+                    error: function (xhr, status, error) {
+                        console.error("Error generating PDF:", error);
+                        Swal.close(); 
+
+                        Swal.fire({
+                            icon: "error",
+                            title: "Oops...",
+                            text: "Something went wrong!",
+                        });
+                    },
+                });
+                
             }
-            $.ajax({
-                type: "POST",
-                url: "documents/generate-business-permit.php",
-                data: {res_sta: res_status, id_to_record: id_to_record,first_name: first_name, middle_name: middle_name, last_name: last_name,
-                    suffix: suffix, presented_id: presented_id, id_num: id_num, business_name: business_name
-                    , business_hnum: business_hnum, business_street: business_street, business_subd:business_subd, business_type:business_type
-                },
-                dataType: "JSON",
-                success: function (response) {
-                    console.log(response);
-                    var filename = "documents/business_permits/"+response.file;
-                    console.log(filename);
-                    
-                    $("#generatepdf").attr("src", filename); 
-          
-                    $("#pdfModal").modal("show");
+        }else{
+            Swal.close(); 
 
-                    $('#pdfModal').on('shown.bs.modal', function () {
-                        Swal.close(); 
-                    });   
-                },error: function (xhr, status, error) {
-                    console.error("Error generating PDF:", error);
-                },
-            });
-        }else if(whatcert == "Create Building Permits"){
-
-            var house_num = $("#house_no").val();
-            var street = $("#street").val();
-            var subd = $("#subd").val();
-            var purpose = $("#purpose").val();
-            var address = $("#address").val();
-
-
-            $.ajax({
-                url: "documents/generate-building-permit.php",
-                type: "POST",
-                dataType:"JSON",
-                data:{
-                    id_to_record : id_to_record,
-                    res_sta: res_status,
-                    first_name : first_name,
-                    middle_name : middle_name,
-                    last_name : last_name,
-                    suffix : suffix,
-                    address : address,
-                    presented_id : presented_id,
-                    id_num : id_num,
-                    house_num: house_num,
-                    street: street,
-                    subd: subd,
-                    purpose: purpose
-                },
-                success: function(response){
-                    var filename = "documents/building_permits/"+response.file;
-                    console.log(filename);
-
-                    $("#generatepdf").attr("src", filename); 
-            
-                    $("#pdfModal").modal("show");
-
-                    $('#pdfModal').on('shown.bs.modal', function () {
-                        Swal.close(); 
-                    });   
-                },
-                error: function (xhr, status, error) {
-                    console.error("Error generating PDF:", error);
-                },
-            });
-            
-        }else if(whatcert == "Create Excavation Permits"){
-
-            var house_num = $("#house_no").val();
-            var street = $("#street").val();
-            var subd = $("#subd").val();
-            var purpose = $("#purpose").val();
-            var address = $("#address").val();
-
-
-            $.ajax({
-                url: "documents/generate-excavation-permit.php",
-                type: "POST",
-                dataType:"JSON",
-                data:{
-                    id_to_record : id_to_record,
-                    res_sta: res_status,
-                    first_name : first_name,
-                    middle_name : middle_name,
-                    last_name : last_name,
-                    suffix : suffix,
-                    address : address,
-                    presented_id : presented_id,
-                    id_num : id_num,
-                    house_num: house_num,
-                    street: street,
-                    subd: subd,
-                    purpose: purpose
-                },
-                success: function(response){
-                    var filename = "documents/excavation_permits/"+response.file;
-                    console.log(filename);
-
-                    $("#generatepdf").attr("src", filename); 
-            
-                    $("#pdfModal").modal("show");
-
-                    $('#pdfModal').on('shown.bs.modal', function () {
-                        Swal.close(); 
-                    });   
-                },
-                error: function (xhr, status, error) {
-                    console.error("Error generating PDF:", error);
-                },
-            });
-            
-        }else if(whatcert == "Create Fencing Permits"){
-
-            var house_num = $("#house_no").val();
-            var street = $("#street").val();
-            var subd = $("#subd").val();
-            var purpose = $("#purpose").val();
-            var address = $("#address").val();
-
-
-            $.ajax({
-                url: "documents/generate-fencing-permit.php",
-                type: "POST",
-                dataType:"JSON",
-                data:{
-                    id_to_record : id_to_record,
-                    res_sta: res_status,
-                    first_name : first_name,
-                    middle_name : middle_name,
-                    last_name : last_name,
-                    suffix : suffix,
-                    address : address,
-                    presented_id : presented_id,
-                    id_num : id_num,
-                    house_num: house_num,
-                    street: street,
-                    subd: subd,
-                    purpose: purpose
-                },
-                success: function(response){
-                    var filename = "documents/fencing_permits/"+response.file;
-                    console.log(filename);
-
-                    $("#generatepdf").attr("src", filename); 
-            
-                    $("#pdfModal").modal("show");
-
-                    $('#pdfModal').on('shown.bs.modal', function () {
-                        Swal.close(); 
-                    });   
-                },
-                error: function (xhr, status, error) {
-                    console.error("Error generating PDF:", error);
-                },
-            });
-            
-        }else if(whatcert == "Create Tricycle Pedicab Regulatory Services"){
-
-            var toda = $("#toda").val();
-            var route =$("#route").val();
-            var plate_no = $("#plate_no").val();
-            var chasis_no = $("#chasis_no").val();
-            var engine_no = $("#engine_no").val();
-
-            switch($("#maker").val()){
-                case "Others":
-                    var maker = $("#other").val();
-                break;
-                default:
-                    var maker = $("#maker").val(); 
-            }
-
-
-            $.ajax({
-                url: "documents/generate-tprs-tcpdf.php",
-                type: "POST",
-                dataType:"JSON",
-                data:{
-                    id_to_record : id_to_record,
-                    res_sta: res_status,
-                    first_name : first_name,
-                    middle_name : middle_name,
-                    last_name : last_name,
-                    suffix : suffix,
-                    address : address,
-                    presented_id : presented_id,
-                    id_num : id_num,
-                    toda: toda,
-                    route: route,
-                    plate_no: plate_no,
-                    chasis_no: chasis_no,
-                    maker: maker,
-                    engine_no: engine_no
-                },
-                success: function(response){
-                    var filename = "documents/tprs/"+response.file;
-                    console.log(filename);
-
-                    $("#generatepdf").attr("src", filename); 
-            
-                    $("#pdfModal").modal("show");
-
-                    $('#pdfModal').on('shown.bs.modal', function () {
-                        Swal.close(); 
-                    });   
-                },
-                error: function (xhr, status, error) {
-                    console.error("Error generating PDF:", error);
-                },
-            });
-            
+            Swal.fire({
+                icon: "error",
+                title: "No Resident or Non Resident Selected",
+                text: "Please select a Resident or Non Resident.",
+              });
         }
-
         
     })
 

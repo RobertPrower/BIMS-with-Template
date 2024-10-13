@@ -55,6 +55,10 @@ if($_SERVER['REQUEST_METHOD']== "POST"){
         $imgstmt->execute();
         $imglogo = $imgstmt->fetchAll(PDO::FETCH_ASSOC); 
 
+        foreach($imglogo as $seallogo){
+            $logo[] = $seallogo['filename']; // Collecting each filename
+        }
+
         $brgydetailsquery = "SELECT * FROM brgy_details";
         $brgydetailstmt = $pdo->prepare($brgydetailsquery);
         $brgydetailstmt->execute();
@@ -109,13 +113,13 @@ class MYPDF extends TCPDF {
     global $brgydetailsraw;
        foreach($brgydetailsraw as $brgydetails){
     
-            $this->setXY(27,15);
+            $this->setXY(20,16);
 
             $title = '
             <style>
                 .title{
                 font-family: Rockwell;
-                font-size: 20px;
+                font-size: 18px;
                 }
             </style>
             
@@ -127,10 +131,7 @@ class MYPDF extends TCPDF {
         }
 
         // Logo
-        global $imglogo;
-        foreach($imglogo as $seallogo){
-            $logo[] = $seallogo['filename']; // Collecting each filename
-        }
+        global $logo;
 
         if(isset($logo[0])){
             $this->Image("images/".$logo[0], 10, 5, 25, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false);
@@ -212,7 +213,7 @@ $pdf->AddPage();
 
 // Add image watermark (with transparency)
 $pdf->SetAlpha(0.3); // Set transparency
-$pdf->Image('images/watermark.png', 0, 25, 220, 0, 'PNG', '', '', false, 300, '', false, false, 0); // X, Y, Width, Height
+$pdf->Image('images/'.$logo[4], 0, 25, 220, 0, 'PNG', '', '', false, 300, '', false, false, 0); // X, Y, Width, Height
 $pdf->SetAlpha(1); // Reset transparenc
 
 //Set Line in between brgy officials
