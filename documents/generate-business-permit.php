@@ -199,15 +199,15 @@ class MYPDF extends TCPDF {
 
         global $brgydetailsraw;
         foreach($brgydetailsraw as $brgydetails){
-    
-            $this->setXY(17,16);
 
             $title = '
             <style>
-                .title{
+                      .title{
                 font-family: Rockwell;
-                font-size: 18px;
+                font-size: 20px;
                 line-height: 0.6;
+                letter-spacing: 2rem;
+                font-color: rgb(28,28,28);
 
                 }
 
@@ -217,22 +217,25 @@ class MYPDF extends TCPDF {
 
                 .brgyname{
                 font-family: Cambria;
-                font-size: 16px;
+                font-size: 12px;
+                letter-spacing: 0.5rem;
                 line-height: 0.6;
                 }
 
-                .brgyname2{
-                font-family: Cambria
-                font-size: 12px
+                .contact{
+                font-family: Cambria;
+                font-size: 12px;
+                letter-spacing: 0.5rem;
                 line-height: 0.6;
+                }
 
                 }
             </style>
             
             <p class="body"> 
-            <strong class="title">'.strtoupper($brgydetails['brgy_name'].' '. $brgydetails['sona'].' '.$brgydetails['district']).'</strong>
+            <strong class="title">'.strtoupper($brgydetails['brgy_name'].', '. $brgydetails['sona'].', '.$brgydetails['district']).'</strong>
             <p class="brgyname">'.strtoupper($brgydetails['address']).'</p>
-            <p class="brgyname2"> Tel No: '.$brgydetails['tel_num'].' Cell No: '.$brgydetails['cp_num'].' Email: '.$brgydetails['email'].'</p>
+            <p class="contact"> Tel No: '.$brgydetails['tel_num'].' Cell No: '.$brgydetails['cp_num'].' Email: '.$brgydetails['email'].'</p>
             </p>
 
             
@@ -266,15 +269,15 @@ class MYPDF extends TCPDF {
         
             
             if (isset($logo[1])) {
-                $this->Image("images/" . $logo[1], 15, 8, 23, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false); // Second image
+                $this->Image("../img/" . $logo[1], 15, 8, 23, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false); // Second image
             }
 
             if (isset($logo[5])) {
-                $this->Image("images/" . $logo[5], 30, 5, 153, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false); // Third image
+                $this->Image("../img/" . $logo[5], 30, 5, 153, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false); // Third image
             }
 
             if (isset($logo[3])) {
-                $this->Image("images/" . $logo[3], 175, 8, 25, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false); // Fourth image
+                $this->Image("../img/" . $logo[3], 175, 8, 25, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false); // Fourth image
             }
         } else {
             // Handle the case when no images are returned by the query
@@ -341,13 +344,13 @@ class MYPDF extends TCPDF {
         $this->MultiCell(0, 5, "NOT VALID WITHOUT \n DRY SEAL", 0, 'C', 0, 1, '', '', true);
 
         global $logo; 
-        $this->Image("images/".$logo[3], 145, 277, 15, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false);
+        $this->Image("../img/".$logo[3], 145, 277, 15, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false);
 
-        $this->Image("images/".$logo[0], 160, 277, 15, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false);
+        $this->Image("../img/".$logo[0], 160, 277, 15, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false);
         
-        $this->Image("images/".$logo[1], 175, 277, 15, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false);
+        $this->Image("../img/".$logo[1], 175, 277, 15, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false);
 
-        $this->Image("images/".$logo[4], 188, 275, 20, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false);
+        $this->Image("../img/".$logo[4], 188, 275, 20, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false);
 
    
     }
@@ -399,7 +402,7 @@ $pdf->AddPage();
 
 // Add image watermark (with transparency)
 $pdf->SetAlpha(0.3); // Set transparency
-$pdf->Image('images/'.$logo[4], -20, 20, 280, 0, 'PNG', '', '', false, 300, '', false, false, 0); // X, Y, Width, Height
+$pdf->Image('../img/'.$logo[4], -20, 20, 280, 0, 'PNG', '', '', false, 300, '', false, false, 0); // X, Y, Width, Height
 $pdf->SetAlpha(1); // Reset transparenc
 
 $pdf->SetTopMargin(35);

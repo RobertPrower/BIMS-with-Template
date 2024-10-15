@@ -1,6 +1,6 @@
 /*
 SQLyog Ultimate v13.1.1 (64 bit)
-MySQL - 5.7.20-log : Database - bims
+MySQL - 5.7.44-log : Database - bims
 *********************************************************************
 */
 
@@ -35,7 +35,7 @@ CREATE TABLE `brgy_details` (
 /*Data for the table `brgy_details` */
 
 insert  into `brgy_details`(`brgy_details_id`,`brgy_name`,`sona`,`district`,`tel_num`,`cp_num`,`email`,`address`) values 
-(1,'Barangay 177','Sona 15','Distrito 1','8364-7073','0999-4031692','177Barangay@gmail.com','Cielito Homes Subd., Camarin, Lungsod ng Caloocan, M.M');
+(1,'Barangay 188','Sona 20','Distrito 3','8364-7073','0999-4031692','177Barangay@gmail.com','Cielito Homes Subd., Camarin, Lungsod ng Caloocan, M.M.');
 
 /*Table structure for table `brgy_officials` */
 
@@ -106,7 +106,7 @@ CREATE TABLE `kagawad` (
   `official_name` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`kagawad_id`),
   KEY `kagawad_id` (`kagawad_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 
 /*Data for the table `kagawad` */
 
@@ -365,42 +365,28 @@ CREATE TABLE `tbl_building_permits` (
   `subd` varchar(255) DEFAULT NULL,
   `permit_type` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`building_permit_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
 
 /*Data for the table `tbl_building_permits` */
 
 insert  into `tbl_building_permits`(`building_permit_id`,`blg_house_no`,`street`,`subd`,`permit_type`) values 
-(1,'Blk 8 Lot 4','Pamplona st','Almar Subd','Renovaton'),
-(2,'Blk 8 Lot 4','Pamplona st','Almar Subd','Renovaton'),
-(3,'Blk 8 Lot 4','Pamplona st','Almar Subd','Renovaton'),
-(4,'12','Zabarte Road','','Renovaton'),
-(5,'12','Zabarte Road','','Renovaton'),
-(6,'12','Zabarte Road','','Renovaton'),
-(7,'12','Zabarte Road','','Renovaton'),
-(8,'12','Zabarte Road','','Renovaton'),
-(9,'12','Zabarte Road','','Renovaton'),
-(10,'12','Zabarte Road','','Renovaton'),
-(11,'12','Zabarte Road','','Renovaton'),
-(12,'12','Zabarte Road','','Renovaton'),
-(13,'12','Zabarte Road','','Renovaton'),
-(14,'12','Zabarte Road','','Renovaton'),
-(15,'12','Zabarte Road','','Renovaton'),
-(16,'12','Zabarte Road','','Renovaton'),
-(17,'12','Zabarte Road','','Renovaton'),
-(18,'12','Zabarte Road','','Renovaton'),
-(19,'12','Zabarte Road','','Renovaton'),
-(20,'12','Zabarte Road','','Renovaton'),
-(21,'12','Zabarte Road','','Renovaton'),
-(22,'12','Zabarte Road','','Renovaton'),
-(23,'12','Zabarte Road','','Renovaton'),
-(24,'12','Zabarte Road','','Renovaton'),
-(25,'12','Zabarte Road','','Renovaton'),
-(26,'12','Zabarte Road','','Renovaton'),
-(27,'12','Zabarte Road','','Renovaton'),
-(28,'12','Zabarte Road','','Renovaton'),
-(29,'12','Zabarte Road','','Renovaton'),
-(30,'12','Zabarte Road','','Renovaton'),
-(31,'12','Zabarte Road','','Renovaton');
+(1,'Blk 12 Lot 12','King Ping st','North Triangle','Renovaton'),
+(2,'Blk 12 Lot 12','King Ping st','North Triangle','Renovaton'),
+(3,'Blk 12 Lot 12','King Ping st','North Triangle','Renovaton'),
+(4,'Blk 12 Lot 12','King Ping st','North Triangle','Renovaton'),
+(5,'Blk 12 Lot 12','King Ping st','North Triangle','Renovaton'),
+(6,'Blk 12 Lot 12','King Ping st','North Triangle','Renovaton'),
+(7,'Blk 12 Lot 12','King Ping st','North Triangle','Renovaton'),
+(8,'Blk 12 Lot 12','King Ping st','North Triangle','Renovaton'),
+(9,'Blk 12 Lot 12','King Ping st','North Triangle','Renovaton'),
+(10,'Blk 12 Lot 12','King Ping st','North Triangle','Renovaton'),
+(11,'Blk 12 Lot 12','King Ping st','North Triangle','Renovaton'),
+(12,'Blk 12 Lot 12','King Ping st','North Triangle','Renovaton'),
+(13,'Blk 12 Lot 15','Ping st','Lilleville Subd','Extension'),
+(14,'123','Zabarte Rd','Cielito Homes','Renovaton'),
+(15,'12','Zapote Rd','Maligay Park','Renovaton'),
+(16,'12','Zapote Rd','Maligay Park','Renovaton'),
+(17,'12','Zabarte Road','Cielito Homes','Renovaton');
 
 /*Table structure for table `tbl_business_permits` */
 
@@ -415,12 +401,15 @@ CREATE TABLE `tbl_business_permits` (
   `subdivision` varchar(255) DEFAULT NULL,
   `type_of_buss` varchar(255) NOT NULL,
   PRIMARY KEY (`business_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 /*Data for the table `tbl_business_permits` */
 
 insert  into `tbl_business_permits`(`business_id`,`year_quarter`,`store_name`,`blg_house_no`,`street`,`subdivision`,`type_of_buss`) values 
-(1,'Q3-Q4','Yangshe Gaming Holdings','123','Zabarte Rd','','Gambling');
+(1,'Q3-Q4','Jack Frost Ice Creme','Blk 12 Lot 13','John st','Cielito Homes','Food Stall'),
+(2,'Q3-Q4','Ice Frost Water Refilling Station','Blk 12 Lot 14','Genesis st','Cielito Homes','Water Refilling Station'),
+(3,'Q3-Q4','Master Siomai','Blk 12 Lot 14','Genesis st','Cielito Homes','Food Stall'),
+(4,'Q3-Q4','Rex Metal Works','Blk 12 Lot 14','Genesis st','Cielito Homes','Metal Works Shop');
 
 /*Table structure for table `tbl_cert_audit_trail` */
 
@@ -450,58 +439,35 @@ CREATE TABLE `tbl_cert_audit_trail` (
   CONSTRAINT `edited_by_fk` FOREIGN KEY (`edited_by_no`) REFERENCES `tbl_username` (`username_id`),
   CONSTRAINT `issued_by_fk` FOREIGN KEY (`issued_by_no`) REFERENCES `tbl_username` (`username_id`),
   CONSTRAINT `recovered_by_fk` FOREIGN KEY (`recovered_by_no`) REFERENCES `tbl_username` (`username_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=48 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8;
 
 /*Data for the table `tbl_cert_audit_trail` */
 
 insert  into `tbl_cert_audit_trail`(`audit_trail_id`,`issuing_dept_no`,`issued_by_no`,`datetime_issued`,`expiration`,`edited_by_no`,`datetime_edited`,`deleted_by_no`,`datetime_deleted`,`recovered_by_no`,`datetime_recovered`,`recovered_time`) values 
-(1,NULL,NULL,'2024-10-13 08:31:46','2025-01-13',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(2,NULL,NULL,'2024-10-13 14:36:28','2025-10-13',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(3,NULL,NULL,'2024-10-13 14:36:37','2025-10-13',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(4,NULL,NULL,'2024-10-13 14:37:07','2025-10-13',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(5,NULL,NULL,'2024-10-13 14:38:44','2025-10-13',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(6,NULL,NULL,'2024-10-13 14:39:24','2025-10-13',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(7,NULL,NULL,'2024-10-13 14:43:25','2025-10-13',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(8,NULL,NULL,'2024-10-13 14:53:46','2025-10-13',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(9,NULL,NULL,'2024-10-13 14:53:55','2025-10-13',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(10,NULL,NULL,'2024-10-13 14:54:13','2025-10-13',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(11,NULL,NULL,'2024-10-13 14:55:33','2025-10-13',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(12,NULL,NULL,'2024-10-13 14:55:51','2025-10-13',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(13,NULL,NULL,'2024-10-13 14:57:09','2025-10-13',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(14,NULL,NULL,'2024-10-13 14:58:52','2025-10-13',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(15,NULL,NULL,'2024-10-13 15:01:54','2025-10-13',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(16,NULL,NULL,'2024-10-13 15:03:46','2025-10-13',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(17,NULL,NULL,'2024-10-13 15:05:32','2025-10-13',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(18,NULL,NULL,'2024-10-13 15:06:17','2025-10-13',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(19,NULL,NULL,'2024-10-13 15:10:42','2025-10-13',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(20,NULL,NULL,'2024-10-13 15:12:28','2025-10-13',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(21,NULL,NULL,'2024-10-13 15:12:58','2025-10-13',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(22,NULL,NULL,'2024-10-13 15:14:10','2025-10-13',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(23,NULL,NULL,'2024-10-13 15:15:27','2025-10-13',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(24,NULL,NULL,'2024-10-13 15:19:59','2025-10-13',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(25,NULL,NULL,'2024-10-13 15:20:30','2025-10-13',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(26,NULL,NULL,'2024-10-13 15:21:16','2025-10-13',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(27,NULL,NULL,'2024-10-13 15:22:39','2025-10-13',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(28,NULL,NULL,'2024-10-13 15:23:15','2025-10-13',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(29,NULL,NULL,'2024-10-13 15:23:32','2025-10-13',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(30,NULL,NULL,'2024-10-13 15:24:15','2025-10-13',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(31,NULL,NULL,'2024-10-13 15:24:54','2025-10-13',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(32,NULL,NULL,'2024-10-13 15:25:18','2025-10-13',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(33,NULL,NULL,'2024-10-13 15:25:35','2025-10-13',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(34,NULL,NULL,'2024-10-13 15:25:59','2025-10-13',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(35,NULL,NULL,'2024-10-13 09:30:37','2025-10-13',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(36,NULL,NULL,'2024-10-13 15:34:47','2025-10-13',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(37,NULL,NULL,'2024-10-13 15:37:22','2025-10-13',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(38,NULL,NULL,'2024-10-13 09:38:22','2024-11-13',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(39,NULL,NULL,'2024-10-13 09:40:24','2024-11-13',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(40,NULL,NULL,'2024-10-13 09:41:42','2024-11-13',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(41,NULL,NULL,'2024-10-13 09:42:16','2024-11-13',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(42,NULL,NULL,'2024-10-13 09:42:33','2024-11-13',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(43,NULL,NULL,'2024-10-13 09:42:53','2024-11-13',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(44,NULL,NULL,'2024-10-13 09:43:22','2024-11-13',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(45,NULL,NULL,'2024-10-13 16:20:38','2025-10-13',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(46,NULL,NULL,'2024-10-13 16:37:00','2025-10-13',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(47,NULL,NULL,'2024-10-13 17:39:00','2025-01-13',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+(1,NULL,NULL,'2024-10-14 01:34:59','2025-01-14',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(2,NULL,NULL,'2024-10-14 01:54:23','2025-10-14',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(3,NULL,NULL,'2024-10-14 02:01:50','2025-10-14',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(4,NULL,NULL,'2024-10-14 02:04:49','2025-10-14',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(5,NULL,NULL,'2024-10-14 02:09:36','2025-10-14',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(6,NULL,NULL,'2024-10-14 02:19:44','2025-10-14',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(7,NULL,NULL,'2024-10-14 02:22:03','2025-10-14',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(8,NULL,NULL,'2024-10-14 02:24:15','2025-10-14',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(9,NULL,NULL,'2024-10-14 02:24:48','2025-10-14',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(10,NULL,NULL,'2024-10-14 02:26:20','2025-10-14',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(11,NULL,NULL,'2024-10-14 02:26:55','2025-10-14',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(12,NULL,NULL,'2024-10-14 02:27:56','2025-10-14',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(13,NULL,NULL,'2024-10-14 02:28:08','2025-10-14',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(14,NULL,NULL,'2024-10-14 02:28:32','2025-10-14',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(15,NULL,NULL,'2024-10-14 02:30:29','2025-10-14',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(16,NULL,NULL,'2024-10-14 02:31:26','2025-10-14',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(17,NULL,NULL,'2024-10-14 02:33:07','2025-10-14',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(18,NULL,NULL,'2024-10-14 02:35:23','2025-10-14',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(19,NULL,NULL,'2024-10-14 02:40:36','2025-10-14',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(20,NULL,NULL,'2024-10-14 02:42:15','2025-10-14',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(21,NULL,NULL,'2024-10-14 12:38:44','2025-10-14',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(22,NULL,NULL,'2024-10-14 12:40:33','2025-10-14',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(23,NULL,NULL,'2024-10-14 12:41:04','2025-10-14',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(24,NULL,NULL,'2024-10-14 19:07:38','2025-10-14',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 
 /*Table structure for table `tbl_docu_request` */
 
@@ -534,53 +500,30 @@ CREATE TABLE `tbl_docu_request` (
 /*Data for the table `tbl_docu_request` */
 
 insert  into `tbl_docu_request`(`request_id`,`resident_no`,`nresident_no`,`document_no`,`age`,`presented_id`,`ID_number`,`purpose`,`audit_trail_no`,`pdffile`,`status`,`is_deleted`) values 
-('2024-000001',12,NULL,1,21,'Drivers License','NKD-454545454545','Maynilad Application',1,'generated_pdf_1728801106.pdf',0,0),
-('2024-000002',NULL,1,2,26,'National ID','NKD-454545454545','Securing Building Permit',2,'generated_pdf_1728801388.pdf',0,0),
-('2024-000003',NULL,1,3,26,'National ID','NKD-454545454545','Securing Building Permit',3,'generated_pdf_1728801397.pdf',0,0),
-('2024-000004',NULL,1,4,26,'National ID','NKD-454545454545','Securing Building Permit',4,'generated_pdf_1728801427.pdf',0,0),
-('2024-000005',NULL,1,5,26,'Drivers License','NKD-454545454545','Securing Building Permit',5,'generated_pdf_1728801524.pdf',0,0),
-('2024-000006',NULL,1,6,26,'Drivers License','NKD-454545454545','Securing Building Permit',6,'generated_pdf_1728801564.pdf',0,0),
-('2024-000007',NULL,1,7,26,'National ID','','Securing Building Permit',7,'generated_pdf_1728801805.pdf',0,0),
-('2024-000008',NULL,1,8,26,'National ID','','Securing Building Permit',8,'generated_pdf_1728802426.pdf',0,0),
-('2024-000009',NULL,1,9,26,'National ID','','Securing Building Permit',9,'generated_pdf_1728802435.pdf',0,0),
-('2024-000010',NULL,1,10,26,'National ID','','Securing Building Permit',10,'generated_pdf_1728802453.pdf',0,0),
-('2024-000011',NULL,1,11,26,'National ID','','Securing Building Permit',11,'generated_pdf_1728802533.pdf',0,0),
-('2024-000012',NULL,1,12,26,'National ID','','Securing Building Permit',12,'generated_pdf_1728802551.pdf',0,0),
-('2024-000013',NULL,1,13,26,'National ID','','Securing Building Permit',13,'generated_pdf_1728802629.pdf',0,0),
-('2024-000014',NULL,1,14,26,'National ID','','Securing Building Permit',14,'generated_pdf_1728802732.pdf',0,0),
-('2024-000015',NULL,1,15,26,'National ID','','Securing Building Permit',15,'generated_pdf_1728802914.pdf',0,0),
-('2024-000016',NULL,1,16,26,'National ID','','Securing Building Permit',16,'generated_pdf_1728803026.pdf',0,0),
-('2024-000017',NULL,1,17,26,'National ID','','Securing Building Permit',17,'generated_pdf_1728803132.pdf',0,0),
-('2024-000018',NULL,1,18,26,'National ID','','Securing Building Permit',18,'generated_pdf_1728803177.pdf',0,0),
-('2024-000019',NULL,1,19,26,'National ID','','Securing Building Permit',19,'generated_pdf_1728803442.pdf',0,0),
-('2024-000020',NULL,1,20,26,'National ID','','Securing Building Permit',20,'generated_pdf_1728803548.pdf',0,0),
-('2024-000021',NULL,1,21,26,'National ID','','Securing Building Permit',21,'generated_pdf_1728803578.pdf',0,0),
-('2024-000022',NULL,1,22,26,'National ID','','Securing Building Permit',22,'generated_pdf_1728803650.pdf',0,0),
-('2024-000023',NULL,1,23,26,'National ID','','Securing Building Permit',23,'generated_pdf_1728803727.pdf',0,0),
-('2024-000024',NULL,1,24,26,'National ID','','Securing Building Permit',24,'generated_pdf_1728803999.pdf',0,0),
-('2024-000025',NULL,1,25,26,'National ID','','Securing Building Permit',25,'generated_pdf_1728804030.pdf',0,0),
-('2024-000026',NULL,1,26,26,'National ID','','Securing Building Permit',26,'generated_pdf_1728804076.pdf',0,0),
-('2024-000027',NULL,1,27,26,'National ID','','Securing Building Permit',27,'generated_pdf_1728804159.pdf',0,0),
-('2024-000028',NULL,1,28,26,'National ID','','Securing Building Permit',28,'generated_pdf_1728804195.pdf',0,0),
-('2024-000029',NULL,1,29,26,'National ID','','Securing Building Permit',29,'generated_pdf_1728804212.pdf',0,0),
-('2024-000030',NULL,1,30,26,'National ID','','Securing Building Permit',30,'generated_pdf_1728804255.pdf',0,0),
-('2024-000031',NULL,1,31,26,'National ID','','Securing Building Permit',31,'generated_pdf_1728804294.pdf',0,0),
-('2024-000032',NULL,1,32,26,'National ID','','Securing Building Permit',32,'generated_pdf_1728804318.pdf',0,0),
-('2024-000033',NULL,1,33,26,'National ID','','Securing Building Permit',33,'generated_pdf_1728804335.pdf',0,0),
-('2024-000034',NULL,1,34,26,'National ID','','Securing Building Permit',34,'generated_pdf_1728804359.pdf',0,0),
-('2024-000035',NULL,2,35,26,'Postal ID','NKD-454545454545','Getting Business Permit',35,'generated_pdf_1728804637.pdf',0,0),
-('2024-000036',NULL,1,36,26,'National ID','NKD-45454545454523423423423','Securing Building Permit',36,'generated_pdf_1728804887.pdf',0,0),
-('2024-000037',18,NULL,37,21,'GSIS ID','NKD-4545454545452222','Securing Fencing Permit',37,'generated_pdf_1728805042.pdf',0,0),
-('2024-000038',NULL,3,38,34,'Postal ID','NKD-454545454545','Securing TPRS Permit',38,'generated_pdf_1728805102.pdf',0,0),
-('2024-000039',NULL,3,39,34,'Postal ID','NKD-454545454545','Securing TPRS Permit',39,'generated_pdf_1728805224.pdf',0,0),
-('2024-000040',NULL,3,40,34,'Postal ID','NKD-454545454545','Securing TPRS Permit',40,'generated_pdf_1728805302.pdf',0,0),
-('2024-000041',NULL,3,41,34,'Postal ID','NKD-454545454545','Securing TPRS Permit',41,'generated_pdf_1728805336.pdf',0,0),
-('2024-000042',NULL,3,42,34,'Postal ID','NKD-454545454545','Securing TPRS Permit',42,'generated_pdf_1728805353.pdf',0,0),
-('2024-000043',NULL,3,43,34,'Postal ID','NKD-454545454545','Securing TPRS Permit',43,'generated_pdf_1728805373.pdf',0,0),
-('2024-000044',NULL,3,44,34,'Postal ID','NKD-454545454545','Securing TPRS Permit',44,'generated_pdf_1728805402.pdf',0,0),
-('2024-000045',12,NULL,45,21,'Police ID','df4545454545','Securing Excavation Permit',45,'generated_pdf_1728807638.pdf',0,0),
-('2024-000046',NULL,3,46,34,'Passport','df4545454545','Securing Fencing Permit',46,'generated_pdf_1728808620.pdf',0,0),
-('2024-000047',8,NULL,47,38,'Drivers License','N42-2111112222','Medical Assistance',47,'generated_pdf_1728812340.pdf',0,0);
+('2024-000001',1,NULL,1,32,'National ID','PCN-123455678890','Maynilad Application',1,'generated_pdf_1728840899.pdf',0,0),
+('2024-000002',NULL,1,2,26,'Drivers License','N42-2121212121212','Getting Business Permit',2,'generated_pdf_1728842063.pdf',0,0),
+('2024-000003',12,NULL,3,21,'Drivers License','N42-2010345','Getting Business Permit',3,'generated_pdf_1728842510.pdf',0,0),
+('2024-000004',1,NULL,4,32,'Drivers License','N42-2010345','Getting Business Permit',4,'generated_pdf_1728842689.pdf',0,0),
+('2024-000005',8,NULL,5,38,'Drivers License','N42-2010345','Getting Business Permit',5,'generated_pdf_1728842976.pdf',0,0),
+('2024-000006',NULL,2,6,26,'SSS ID','SSS-1234455677','Securing Building Permit',6,'generated_pdf_1728843584.pdf',0,0),
+('2024-000007',NULL,2,7,26,'SSS ID','SSS-1234455677','Securing Building Permit',7,'generated_pdf_1728843723.pdf',0,0),
+('2024-000008',NULL,2,8,26,'SSS ID','SSS-1234455677','Securing Building Permit',8,'generated_pdf_1728843855.pdf',0,0),
+('2024-000009',NULL,2,9,26,'SSS ID','SSS-1234455677','Securing Building Permit',9,'generated_pdf_1728843888.pdf',0,0),
+('2024-000010',NULL,2,10,26,'SSS ID','SSS-1234455677','Securing Building Permit',10,'generated_pdf_1728843980.pdf',0,0),
+('2024-000011',NULL,2,11,26,'SSS ID','SSS-1234455677','Securing Building Permit',11,'generated_pdf_1728844015.pdf',0,0),
+('2024-000012',NULL,2,12,26,'SSS ID','SSS-1234455677','Securing Building Permit',12,'generated_pdf_1728844076.pdf',0,0),
+('2024-000013',NULL,2,13,26,'SSS ID','SSS-1234455677','Securing Building Permit',13,'generated_pdf_1728844088.pdf',0,0),
+('2024-000014',NULL,2,14,26,'SSS ID','SSS-1234455677','Securing Building Permit',14,'generated_pdf_1728844112.pdf',0,0),
+('2024-000015',NULL,2,15,26,'SSS ID','SSS-1234455677','Securing Building Permit',15,'generated_pdf_1728844229.pdf',0,0),
+('2024-000016',NULL,2,16,26,'SSS ID','SSS-1234455677','Securing Building Permit',16,'generated_pdf_1728844286.pdf',0,0),
+('2024-000017',NULL,2,17,26,'SSS ID','SSS-1234455677','Securing Building Permit',17,'generated_pdf_1728844387.pdf',0,0),
+('2024-000018',NULL,3,18,34,'SSS ID','SSS-1234455677','Securing Building Permit',18,'generated_pdf_1728844523.pdf',0,0),
+('2024-000019',NULL,3,19,34,'Passport','PASS-1234567898998','Securing Excavation Permit',19,'generated_pdf_1728844836.pdf',0,0),
+('2024-000020',NULL,3,20,34,'School ID','19-4545454545','Securing Fencing Permit',20,'generated_pdf_1728844935.pdf',0,0),
+('2024-000021',8,NULL,21,38,'GSIS ID','GSIS-123345567789','Securing Building Permit',21,'generated_pdf_1728880724.pdf',0,0),
+('2024-000022',8,NULL,22,38,'GSIS ID','GSIS-123345567789','Securing Building Permit',22,'generated_pdf_1728880833.pdf',0,0),
+('2024-000023',8,NULL,23,38,'GSIS ID','GSIS-123345567789','Securing Building Permit',23,'generated_pdf_1728880864.pdf',0,0),
+('2024-000024',12,NULL,24,21,'Drivers License','N42-1212121212121','Securing Building Permit',24,'generated_pdf_1728904058.pdf',0,0);
 
 /*Table structure for table `tbl_documents` */
 
@@ -612,58 +555,35 @@ CREATE TABLE `tbl_documents` (
   CONSTRAINT `f_permit_fk` FOREIGN KEY (`Fencing_Permits`) REFERENCES `tbl_fencing_permit` (`fencing_permit_id`) ON DELETE CASCADE,
   CONSTRAINT `indigency_fk` FOREIGN KEY (`Certificate_of_Indigency`) REFERENCES `tbl_indigency` (`indigency_id`) ON DELETE CASCADE,
   CONSTRAINT `tprs_fk` FOREIGN KEY (`TPRS`) REFERENCES `tbl_tprs` (`tprs_id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=48 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8;
 
 /*Data for the table `tbl_documents` */
 
 insert  into `tbl_documents`(`docu_id`,`Barangay_Clearance`,`Certificate_of_Residency`,`Certificate_of_Indigency`,`Certificate_of_Good_Moral`,`FTJS`,`Oath_of_Undertaking`,`Business_Permits`,`Building_Permits`,`Excavation_Permits`,`Fencing_Permits`,`TPRS`) values 
 (1,NULL,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL),
-(3,NULL,NULL,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL),
-(4,NULL,NULL,NULL,NULL,NULL,NULL,NULL,3,NULL,NULL,NULL),
-(5,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,NULL,NULL),
-(6,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL),
-(7,NULL,NULL,NULL,NULL,NULL,NULL,NULL,4,NULL,NULL,NULL),
-(8,NULL,NULL,NULL,NULL,NULL,NULL,NULL,5,NULL,NULL,NULL),
-(9,NULL,NULL,NULL,NULL,NULL,NULL,NULL,6,NULL,NULL,NULL),
-(10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,7,NULL,NULL,NULL),
-(11,NULL,NULL,NULL,NULL,NULL,NULL,NULL,8,NULL,NULL,NULL),
-(12,NULL,NULL,NULL,NULL,NULL,NULL,NULL,9,NULL,NULL,NULL),
-(13,NULL,NULL,NULL,NULL,NULL,NULL,NULL,10,NULL,NULL,NULL),
-(14,NULL,NULL,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,NULL),
-(15,NULL,NULL,NULL,NULL,NULL,NULL,NULL,12,NULL,NULL,NULL),
-(16,NULL,NULL,NULL,NULL,NULL,NULL,NULL,13,NULL,NULL,NULL),
-(17,NULL,NULL,NULL,NULL,NULL,NULL,NULL,14,NULL,NULL,NULL),
-(18,NULL,NULL,NULL,NULL,NULL,NULL,NULL,15,NULL,NULL,NULL),
-(19,NULL,NULL,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,NULL),
-(20,NULL,NULL,NULL,NULL,NULL,NULL,NULL,17,NULL,NULL,NULL),
-(21,NULL,NULL,NULL,NULL,NULL,NULL,NULL,18,NULL,NULL,NULL),
-(22,NULL,NULL,NULL,NULL,NULL,NULL,NULL,19,NULL,NULL,NULL),
-(23,NULL,NULL,NULL,NULL,NULL,NULL,NULL,20,NULL,NULL,NULL),
-(24,NULL,NULL,NULL,NULL,NULL,NULL,NULL,21,NULL,NULL,NULL),
-(25,NULL,NULL,NULL,NULL,NULL,NULL,NULL,22,NULL,NULL,NULL),
-(26,NULL,NULL,NULL,NULL,NULL,NULL,NULL,23,NULL,NULL,NULL),
-(27,NULL,NULL,NULL,NULL,NULL,NULL,NULL,24,NULL,NULL,NULL),
-(28,NULL,NULL,NULL,NULL,NULL,NULL,NULL,25,NULL,NULL,NULL),
-(29,NULL,NULL,NULL,NULL,NULL,NULL,NULL,26,NULL,NULL,NULL),
-(30,NULL,NULL,NULL,NULL,NULL,NULL,NULL,27,NULL,NULL,NULL),
-(31,NULL,NULL,NULL,NULL,NULL,NULL,NULL,28,NULL,NULL,NULL),
-(32,NULL,NULL,NULL,NULL,NULL,NULL,NULL,29,NULL,NULL,NULL),
-(33,NULL,NULL,NULL,NULL,NULL,NULL,NULL,30,NULL,NULL,NULL),
-(34,NULL,NULL,NULL,NULL,NULL,NULL,NULL,31,NULL,NULL,NULL),
-(35,NULL,NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL),
-(36,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,3,NULL,NULL),
-(37,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,NULL),
-(38,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1),
-(39,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,2),
-(40,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,3),
-(41,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,4),
-(42,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,5),
-(43,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,6),
-(44,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,7),
-(45,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,4,NULL,NULL),
-(46,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,2,NULL),
-(47,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+(2,NULL,NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL),
+(3,NULL,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL),
+(4,NULL,NULL,NULL,NULL,NULL,NULL,3,NULL,NULL,NULL,NULL),
+(5,NULL,NULL,NULL,NULL,NULL,NULL,4,NULL,NULL,NULL,NULL),
+(6,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL),
+(7,NULL,NULL,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL),
+(8,NULL,NULL,NULL,NULL,NULL,NULL,NULL,3,NULL,NULL,NULL),
+(9,NULL,NULL,NULL,NULL,NULL,NULL,NULL,4,NULL,NULL,NULL),
+(10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,5,NULL,NULL,NULL),
+(11,NULL,NULL,NULL,NULL,NULL,NULL,NULL,6,NULL,NULL,NULL),
+(12,NULL,NULL,NULL,NULL,NULL,NULL,NULL,7,NULL,NULL,NULL),
+(13,NULL,NULL,NULL,NULL,NULL,NULL,NULL,8,NULL,NULL,NULL),
+(14,NULL,NULL,NULL,NULL,NULL,NULL,NULL,9,NULL,NULL,NULL),
+(15,NULL,NULL,NULL,NULL,NULL,NULL,NULL,10,NULL,NULL,NULL),
+(16,NULL,NULL,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,NULL),
+(17,NULL,NULL,NULL,NULL,NULL,NULL,NULL,12,NULL,NULL,NULL),
+(18,NULL,NULL,NULL,NULL,NULL,NULL,NULL,13,NULL,NULL,NULL),
+(19,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,NULL,NULL),
+(20,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,NULL),
+(21,NULL,NULL,NULL,NULL,NULL,NULL,NULL,14,NULL,NULL,NULL),
+(22,NULL,NULL,NULL,NULL,NULL,NULL,NULL,15,NULL,NULL,NULL),
+(23,NULL,NULL,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,NULL),
+(24,NULL,NULL,NULL,NULL,NULL,NULL,NULL,17,NULL,NULL,NULL);
 
 /*Table structure for table `tbl_excavation_permits` */
 
@@ -675,15 +595,12 @@ CREATE TABLE `tbl_excavation_permits` (
   `street` varchar(255) DEFAULT NULL,
   `subd` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`exca_permit_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 /*Data for the table `tbl_excavation_permits` */
 
 insert  into `tbl_excavation_permits`(`exca_permit_id`,`blg_house_no`,`street`,`subd`) values 
-(1,'12','Zabarte Road',''),
-(2,'12','Zabarte Road',''),
-(3,'Blk 3 Lot 3','Zabarte Road','Capitol Parkland'),
-(4,'Blk 10 Lot 4','La Union st','North Matrix Villge 1');
+(1,'12','Zabarte','');
 
 /*Table structure for table `tbl_fencing_permit` */
 
@@ -696,13 +613,12 @@ CREATE TABLE `tbl_fencing_permit` (
   `subd` varchar(255) DEFAULT NULL,
   `estate_type` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`fencing_permit_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 /*Data for the table `tbl_fencing_permit` */
 
 insert  into `tbl_fencing_permit`(`fencing_permit_id`,`blg_house_no`,`street`,`subd`,`estate_type`) values 
-(1,'Blk 8 Lot 12','Virgo st Corner Aries st','North Matrix Ville','Commercial'),
-(2,'Blk 10 Lot 4','La Union st','Maligay Park','Residencial');
+(1,'12','Zabarte','','Commercial');
 
 /*Table structure for table `tbl_indigency` */
 
@@ -712,12 +628,9 @@ CREATE TABLE `tbl_indigency` (
   `indigency_id` int(55) NOT NULL AUTO_INCREMENT,
   `agency` varchar(55) DEFAULT NULL,
   PRIMARY KEY (`indigency_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Data for the table `tbl_indigency` */
-
-insert  into `tbl_indigency`(`indigency_id`,`agency`) values 
-(1,'PCSO');
 
 /*Table structure for table `tbl_persons_involved` */
 
@@ -748,18 +661,9 @@ CREATE TABLE `tbl_tprs` (
   `makertype` varchar(255) NOT NULL,
   `enginenum` varchar(255) NOT NULL,
   PRIMARY KEY (`tprs_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `tbl_tprs` */
-
-insert  into `tbl_tprs`(`tprs_id`,`toda`,`route`,`platenum`,`chasisnum`,`makertype`,`enginenum`) values 
-(1,'sdfs','dfsdfsdfs','fswedfsdf','sdfsdfsd','Suzuki','dfsdf'),
-(2,'sdfs','dfsdfsdfs','fswedfsdf','sdfsdfsd','Suzuki','dfsdf'),
-(3,'sdfs','dfsdfsdfs','fswedfsdf','sdfsdfsd','Suzuki','dfsdf'),
-(4,'sdfs','dfsdfsdfs','fswedfsdf','sdfsdfsd','Suzuki','dfsdf'),
-(5,'sdfs','dfsdfsdfs','fswedfsdf','sdfsdfsd','Suzuki','dfsdf'),
-(6,'sdfs','dfsdfsdfs','fswedfsdf','sdfsdfsd','Suzuki','dfsdf'),
-(7,'sdfs','dfsdfsdfs','fswedfsdf','sdfsdfsd','Suzuki','dfsdf');
 
 /*Table structure for table `tbl_username` */
 
@@ -1010,7 +914,6 @@ FROM tbl_docu_request
 JOIN tbl_documents ON tbl_docu_request.document_no = tbl_documents.docu_id
 JOIN tbl_building_permits ON tbl_documents.Building_Permits = tbl_building_permits.`building_permit_id`
 WHERE tbl_docu_request.request_id = req_id;
-
 	END */$$
 DELIMITER ;
 
@@ -1050,9 +953,6 @@ BEGIN
 	JOIN tbl_documents ON tbl_docu_request.document_no = tbl_documents.docu_id
 	JOIN tbl_excavation_permits ON tbl_documents.Excavation_Permits = tbl_excavation_permits.`exca_permit_id`
 	WHERE tbl_docu_request.request_id = req_id;
-
-
-
 	END */$$
 DELIMITER ;
 
@@ -1073,9 +973,6 @@ BEGIN
 	JOIN tbl_documents ON tbl_docu_request.document_no = tbl_documents.docu_id
 	JOIN tbl_fencing_permit ON tbl_documents.Fencing_Permits = tbl_fencing_permit.`fencing_permit_id`
 	WHERE tbl_docu_request.request_id = req_id;
-
-
-
 	END */$$
 DELIMITER ;
 
@@ -1092,7 +989,6 @@ BEGIN
     JOIN tbl_documents ON tbl_docu_request.`document_no` = tbl_documents.`docu_id`
     JOIN tbl_indigency ON tbl_documents.`Certificate_of_Indigency` = tbl_indigency.`indigency_id` 
     WHERE tbl_docu_request.`request_id` = req_id;
-
 	END */$$
 DELIMITER ;
 

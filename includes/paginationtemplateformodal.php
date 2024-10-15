@@ -5,7 +5,7 @@
   
   // Make the previous button only appear once the page is more than one
   if ($current_page > 1) {
-      echo '<li class="page-item modal-pagination-control"><a class="page-link modal-pagination-control" href="#" data-page="' . ($current_page - 1) . '">Previous</a></li>';
+      echo '<li class="page-item modal-pagination-control"><a class="page-link docmodal-pagination-control" href="#" data-page="' . ($current_page - 1) . '">Previous</a></li>';
   }
   
   $range = 5; // Max number of entries to be displayed
@@ -29,12 +29,12 @@
   // To generate the Page number buttons
   for ($i = $start_page; $i <= $end_page; $i++) {
       $active = $i == $current_page ? 'active' : '';
-      echo '<li class="page-item modal-pagination-control ' . $active . '"><a class="page-link modal-pagination-control" href="#" data-page="' . $i . '">' . $i . '</a></li>';
+      echo '<li class="page-item modal-pagination-control ' . $active . '"><a class="page-link docmodal-pagination-control" href="#" data-page="' . $i . '">' . $i . '</a></li>';
   }
   
   // Next button
   if ($current_page < $total_pages) {
-      echo '<li class="page-item modal-pagination-control"><a class="page-link modal-pagination-control" href="#" data-page="' . ($current_page + 1) . '">Next</a></li>';
+      echo '<li class="page-item modal-pagination-control"><a class="page-link docmodal-pagination-control" href="#" data-page="' . ($current_page + 1) . '">Next</a></li>';
   }
   
 //   echo '</ul>';

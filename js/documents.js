@@ -202,7 +202,7 @@ $(document).ready(function () {
 
     var request_id = $(this).data("id");
     var resident_id = $(this).data("resident_id");
-    var resident_status = $(this).data("resident_status");
+    var resident_status = $(this).data("resident-status");
     var date_requested = $(this).data("date-requested");
     var expiration = $(this).data("expiration-date");
     var first_name = $(this).data("first-name");
@@ -218,7 +218,6 @@ $(document).ready(function () {
     var presented_id = $(this).data("presented-id");
     var ID_number = $(this).data("id_num");
     var purpose = $(this).data("purpose");
-    var agency = $(this).data("agency");
     var status = $(this).data("status");
     var date_edited = $(this).data("last-edited");
     var date_deleted = $(this).data("last-deleted");
@@ -282,9 +281,7 @@ $(document).ready(function () {
       $("#Last_Edited").html("<b>Last Edited Date:  </b>" + date_edited);
     }
 
-    if(agency !== undefined || null){
-      $(".agency").prop("hidden", false);
-    }
+    $(".Business_name, .Business_address, .Business_type, .agency, .Building_address, .Building_type").prop("hidden", true);
 
     if(docu_type == "Business Permits"){
 
@@ -399,7 +396,7 @@ $(document).ready(function () {
 
           console.log(chasisnum)
 
-          $(".Business_name, .Business_address, .Business_type, .agency, .Building_address, #Building_type").prop("hidden", false);
+          $(".Business_name, .Business_address, .Business_type, .agency, .Building_address, .Building_type").prop("hidden", false);
           $("#Business_name").html("<b>TODA:  </b>" + toda);
           $("#Business_address").html("<b>Route:  </b>" + route);
           $("#Business_type").html("<b>Plate Number:  </b>" + plate_num);
@@ -616,15 +613,20 @@ $(document).ready(function () {
     var residentid = $("#resident_id").val();
     var resident_status = $("#resident_status").val();
 
-    $("#nav-home-tab").tab("show");
+    if(resident_status == "1"){
 
-    if(resident_status == "Resident"){
+      $("#DocumentDetailsModal").modal('hide');
+      $("#ViewResidentModal").modal('show');
+      $("#nav-home-tab").tab("show");
+
+
       $.ajax({
-        url: "includes/fetchresidentdetails.php",
+        url: "includes/fetch_person_details_viewmodal.php",
         type: "POST",
-        data: { id: residentid },
+        data: { id_to_fetch: residentid, OPERATION: "FETCH-RESIDENT-DETAILS" },
         dataType: "JSON",
-        success: function (response) {
+        success: function (data) {
+          var response = data[0];
           var imagepath = "includes/img/resident_img/" + response.img_filename;
 
           $("#viewresident_id").val(response.resident_id);
@@ -661,42 +663,57 @@ $(document).ready(function () {
           console.error("Error fetching table data:", error);
         },
       });
-    }else if(resident_status == "Non Resident"){
+    }else if(resident_status == "0"){
+
+      $("#DocumentDetailsModal").modal('hide');
+      $("#ViewNonResidentModal").modal('show');
+      $("#ViewNonResidentModal [id='nav-home-tab']").tab("show");
+
       $.ajax({
-        url: "includes/fetchnonresdetails.php",
+        url: "includes/fetch_person_details_viewmodal.php",
         type: "POST",
-        data: { id: residentid },
+        data: { id_to_fetch: residentid, OPERATION: "FETCH-NON-RESIDENT-DETAILS" },
         dataType: "JSON",
-        success: function (response) {
+        success: function (data) {
+
+          var response = data[0];
           var imagepath = "includes/img/non_resident_img/" + response.img_filename;
 
-          $("#viewresident_id").val(response.resident_id);
-          $("#fname").val(response.first_name);
-          $("#mname").val(response.middle_name);
-          $("#lname").val(response.last_name);
-          $("#house_no").val(response.house_num);
-          $("#street").val(response.street);
-          $("#subd").val(response.subdivision);
-          $("#sex").val(response.sex);
-          $("#marital_status").val(response.marital_status);
-          $("#birth_date").val(response.birth_date);
-          $("#birth_place").val(response.birth_place);
-          $("#cp_number").val(response.cellphone_num);
-          $("#is_a_voter").val(response.is_a_voter);
-          $("#rsince").val(response.resident_since);
-          $("#viewimagePreview").prop("src", imagepath);
-          $("#backbtntodocu").prop("hidden", false);
+          $("#ViewNonResidentModal [id='viewnonresident_id']").val(response.nresident_id);
+          $("#ViewNonResidentModal [id='fname']").val(response.first_name);
+          $("#ViewNonResidentModal [id='mname']").val(response.middle_name);
+          $("#ViewNonResidentModal [id='lname']").val(response.last_name);
+          $("#ViewNonResidentModal [id='house_no']").val(response.house_num);
+          $("#ViewNonResidentModal [id='street']").val(response.street);
+          $("#ViewNonResidentModal [id='subd']").val(response.subdivision);
+          $("#ViewNonResidentModal [id='district_brgy']").val(response.district_brgy);
+          $("#city").val(response.city);
+          $("#province").val(response.province);
+          $("#zipcode").val(response.zipcode);
+          $("#ViewNonResidentModal [id='sex']").val(response.sex);
+          $("#ViewNonResidentModal [id='marital_status']").val(response.marital_status);
+          $("#ViewNonResidentModal [id='birth_date']").val(response.birth_date);
+          $("#ViewNonResidentModal [id='birth_place']").val(response.birth_place);
+          $("#ViewNonResidentModal [id='cp_number']").val(response.cellphone_num);
+          $("#ViewNonResidentModal [id='is_a_voter']").val(response.is_a_voter);
+          $("#ViewNonResidentModal [id='rsince']").val(response.resident_since);
+          $("#ViewNonResidentModal [id='cellphone_number']").val(response.cellphone_num);
+          $("#ViewNonResidentModal #viewimagePreview").prop("src", imagepath);
+          $("#nrbackbtntodocu").prop("hidden", false);
+
+          console.log(response.nresident_id);
 
           //For counting certificates requested
           $.ajax({
             type: "post",
-            url: "includes/residentoperation.php",
-            data: { operation: "COUNT_RES_CERT", resident_id: response.resident_id },
+            url: "includes/nonresidentoperation.php",
+            data: { operation: "COUNT_RES_CERT", nresident_id: response.nresident_id },
             dataType: "json",
             success: function (response) {
-              console.log(response);
+              
+              console.log(response[0]);
 
-              $("#noofcerts").text(response);
+              $("#ViewNonResidentModal [id='noofcerts']").text(response[0]);
             },
           });
         },
@@ -708,10 +725,10 @@ $(document).ready(function () {
   });
 
   //For the back button on the resident view modal
-  $(document).on("click", "#backbtntodocu", function () {
+  $(document).on("click", ".backbtntodocu", function () {
     $(this).prop("hidden", true);
 
-    $("#ViewResidentModal").modal("hide");
+    $("#ViewResidentModal, #ViewNonResidentModal").modal("hide");
     $("#DocumentDetailsModal").modal("show");
   });
 

@@ -572,7 +572,7 @@ if($operation_check == "ADD"){ //For the add operation
     $stmt->execute([$nresident_no]);
     $results = $stmt -> fetchColumn();
 
-    echo json_encode($results);
+    echo json_encode([$results]);
 }elseif($operation_check=="SEARCH"){
     $search = isset($_POST['search']) ? sanitizeData($_POST['search']): '';
     if(!empty($search)){

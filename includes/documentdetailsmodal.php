@@ -51,19 +51,18 @@
         <br class="Business_address" hidden>
         <p class="Business_type" id="Business_type" hidden></p> 
         <br class="Business_type" hidden>
-        <p class="agency" id="agency" hidden></p> 
-        <br class="agency" hidden>
         <p class="Building_address" id="Building_address" hidden></p> 
         <br class="Building_address" hidden>
         <p class="Building_type" id="Building_type" hidden></p> 
         <br class="Building_type" hidden>
-        <p class="agency" hidden></p> 
+        <p class="agency" id="agency" hidden></p> 
+        <br class="agency" hidden>
         <p id="Status"></p> 
     </div>
     <div class="modal-footer">
 
         <form>
-            <button type="button" id="viewResorNonResfromDocu" class="btn btn-primary" data-bs-toggle="modal" data-isfordocu="YES">View Resident Details</button>
+            <button type="button" id="viewResorNonResfromDocu" class="btn btn-primary" data-isfordocu="YES">View Person Details</button>
             <button type="button" id="retrevePDF" data-cert_type="" class="btn btn-info">Reprint</button>
             <button type="button" id="editDocumentbtn" class="btn btn-success" data-bs-target="#EditDocumentModal" data-bs-toggle="modal" data-expiration="" data-presentedid="" data-id_num="" data-request_id="">Edit</button>
             <button type="button" class="btn btn-danger" id="revokebtn">Revoke</button>

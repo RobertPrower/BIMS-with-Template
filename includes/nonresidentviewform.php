@@ -10,16 +10,16 @@
                 <div class="modal-body">
                     <nav>
                         <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                            <button class="nav-link show" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#profile-tab" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Profile</button>
-                            <button class="nav-link" id="nav-clearance-tab" data-bs-toggle="tab" data-bs-target="#clearance-tab" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Requested Documents</button>
-                            <button class="nav-link" id="nav-blotters-tab" data-bs-toggle="tab" data-bs-target="#nav-contact" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">Blotters Involved</button>
+                            <button class="nav-link" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nonres_profile-tab" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Profile</button>
+                            <button class="nav-link" id="open-clearance-tab" data-bs-toggle="tab" data-bs-target="#nonres_clearance-tab" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Requested Documents</button>
+                            <button class="nav-link" id="nav-blotters-tab" data-bs-toggle="tab" data-bs-target="#nonres_blotters" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">Blotters Involved</button>
                         </div>
                     </nav>
                         <!------------------------------------------------------------------------------------------------------------>
                                                 <!-- Profile Tab Content -->
                         <!-------------------------------------------------------------------------------------------------------------->
                         <div class="tab-content" id="nav-tabContent">
-                            <div class="tab-pane fade active show" id="profile-tab" role="tabpanel" aria-labelledby="nav-home-tab" tabindex="0">
+                            <div class="tab-pane fade active show" id="nonres_profile-tab" role="tabpanel" aria-labelledby="nav-home-tab" tabindex="0">
                                 <div class="row">
 
                                      <!--For the container of the camera and Picture-->
@@ -153,12 +153,12 @@
                     <!------------------------------------------------------------------------------------------------------------>
                                                 <!-- Clearance Tab Content -->
                      <!-------------------------------------------------------------------------------------------------------------->
-                        <div class="tab-content" id="nav-tabContent">    
-                            <div class="tab-pane fade" id="clearance-tab" role="tabpanel" aria-labelledby="nav-clearance-tab" tabindex="0">
+                        <div class="tab-content" id="nav-tabContent2">    
+                            <div class="tab-pane fade" id="nonres_clearance-tab" role="tabpanel" aria-labelledby="nav-clearance-tab" tabindex="0">
                             
                                 <div class="users-table table-wrapper">
 
-                                    <table class="users-table table-wrapper my-4" id="ResidentRequestTable">
+                                    <table class="users-table table-wrapper my-4" id="NonResidentRequestTable">
                                         <thead>
                                             <tr class="users-table-info">
                                                 
@@ -220,7 +220,7 @@
                                                 <!-- Blotters Tab Content -->
                      <!-------------------------------------------------------------------------------------------------------------->
                         <div class="tab-content" id="nav-tabContent">
-                            <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab" tabindex="0">
+                            <div class="tab-pane fade" id="nonres_blotters" role="tabpanel" aria-labelledby="nav-contact-tab" tabindex="0">
                                 <!-- For the Blotter table to be placed here --> ...
                             </div>
                         </div>
@@ -228,7 +228,7 @@
                    
                 </div>
                 <div class="modal-footer">
-                    <button hidden id="backbtntodocu" type="button" class="btn btn-primary" data-bs-target="#ViewDocumentModal">Back</button>
+                    <button hidden id="nrbackbtntodocu" type="button" class="btn btn-primary backbtntodocu" data-bs-target="#ViewDocumentModal">Back</button>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
 
                 </div>

@@ -244,7 +244,7 @@
                    
                 </div>
                 <div class="modal-footer">
-                    <button hidden id="backbtntodocu" type="button" class="btn btn-primary" data-bs-target="#ViewDocumentModal">Back</button>
+                    <button hidden id="backbtntodocu" type="button" class="btn btn-primary backbtntodocu" data-bs-target="#ViewDocumentModal">Back</button>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
 
                 </div>

@@ -9,7 +9,7 @@ $(document).ready(function(){
           data: { pageno: page, nresident_id: nresidentid, OPERATION: "FETCH_TABLE" },
           dataType: "HTML",
           success: function (data) {
-            $("#ResidentRequestTable tbody").html(data);
+            $("#NonResidentRequestTable tbody").html(data);
             updatePaginationControls(page);
           },
           error: function (xhr, status, error) {
@@ -48,7 +48,7 @@ $(document).ready(function(){
       }
 
     //Click event in triggering the pagination control of the table
-    $(document).on("click", ".modal-pagination-control", function (e) {
+    $(document).on("click", ".nrdocmodal-pagination-control", function (e) {
         e.preventDefault();
 
         var page = $(this).data("page");
@@ -61,8 +61,10 @@ $(document).ready(function(){
     });
 
     //Load the Resident Docu request table once the clearance tab was clicked
-    $(document).on("click", "#nav-clearance-tab", function () {
+    $(document).on("click", "#open-clearance-tab", function () {
         var nresident_id = $("#viewnonresident_id").val();
+    
+        $("#nonres_clearance-tab").tab("show");
 
         console.log(nresident_id);
 

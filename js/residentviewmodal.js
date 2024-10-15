@@ -48,7 +48,7 @@ $(document).ready(function(){
       }
 
     //Click event in triggering the pagination control of the table
-    $(document).on("click", ".modal-pagination-control", function (e) {
+    $(document).on("click", ".docmodal-pagination-control", function (e) {
         e.preventDefault();
 
         var residentid = $("#res_id_to_fetch").val();
