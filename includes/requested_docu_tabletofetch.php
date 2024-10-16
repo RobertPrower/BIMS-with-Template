@@ -18,7 +18,7 @@ foreach ($result as $row) {
             echo "<td><span class='badge badge-secondary'>EXPIRED</span></td>";
             break;
         case 2:
-            echo "<td><span class='badge badge-danger'>REVOKED</span></td>";
+            echo "<td><span class='badge badge-trashed'>REVOKED</span></td>";
             break;
         default:
             echo "<td>Unknown Status</td>";

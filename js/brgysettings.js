@@ -376,7 +376,7 @@ $(document).ready(function(){
                     $("#barangay_telnum").html(brgy_telnum);
                     $("#barangay_celnum").html(brgy_celnum);
                     $("#barangay_email").html(brgy_email);
-                    
+
 
 
 
@@ -388,11 +388,203 @@ $(document).ready(function(){
                     });
                 }
                 
+            },error: function (xhr, status, error) {
+
+                console.log(error);
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "Something went wrong! Please Contact the IT department."
+                });
+
             }
         });
 
         
     });
+
+    $(".changelogobtn").click(function(){
+        console.log("Change logo has been triggered")
+        var whatlogo = $(this).data('logo');
+
+        switch (whatlogo){
+            case 1:
+                $("#EditLogoLabel").html("Edit Administration Logo");
+                break;
+            case 2:
+                $("#EditLogoLabel").html("Edit City Logo");
+                break;
+            case 3:
+                $("#EditLogoLabel").html("Edit Barangay Logo");
+                break;
+            case 4:
+                $("#EditLogoLabel").html("Edit Watermark Logo");
+                break;
+        }
+
+        $("#EditLogo").modal('show');
+
+    });
+
+    $('#imagefile').on('change', function() {
+        var fileInput = this; // store reference to file input
+        var file = this.files[0];
+        var imageType = /image.*/;
+        var validExtensions = ['png', 'jpg', 'jpeg']; 
+        var oldImageSrc = $('#imagePreview').attr('src'); 
+    
+        if (!file.type.match(imageType)) {
+            Swal.fire({
+                icon: "error",
+                title: "Oops... The uploaded file is not a image!",
+                text: "Please upload a vaild image file!",
+            });
+    
+            if(isEdit){
+                $('#editimagePreview').attr('src', oldImageSrc);
+            }else{
+                $('#imagePreview').attr('src', oldImageSrc);
+            }
+    
+            $(fileInput).val(''); // use stored reference
+            return;
+        }//Pass to the next check
+    
+        var extension = file.name.split('.').pop().toLowerCase();
+        if(validExtensions.indexOf(extension) == -1) {
+            Swal.fire({
+                icon: "error",
+                title: "Oops... Invalid extension!",
+                text: "Only png, jpg, and jpeg are allowed.",
+            });
+    
+             
+            $('#imagePreview').attr('src', oldImageSrc);
+            
+            $(fileInput).val(''); // use stored reference
+            return;
+        }
+    
+        var reader = new FileReader();
+        reader.onload = function(e) {
+            var img = new Image();
+            img.onload = function() {
+                if(img.width === 300 && img.height === 300) {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Oops... Image Size is too large",
+                        text: "Please upload an image with dimensions excactly 300x300 pixels.",
+                    });
+                  
+                    $('#imagePreview').attr('src', oldImageSrc);
+                    
+                    $(fileInput).val(''); // use stored reference
+                    return;
+                }
+                // If the image is valid, update the preview image source
+                $('#imagePreview').attr('src', reader.result);
+                
+            }
+            img.src = reader.result;
+        }
+        reader.readAsDataURL(file);
+    });
+
+    $("#EditLogo").on('hide.bs.modal', function(){
+        $('#imagePreview').attr('src', "includes/img/blank-profile.webp")
+        $("#imagefile").val(''); // Clear the file upload upon modal hide
+
+    })
+
+    $("#brgylogoform").submit(function(e){
+        e.preventDefault();
+        var whatlogo = $("#EditLogoLabel").html();
+        var formData = new FormData(this);
+
+        switch(whatlogo){
+            case "Edit Administration Logo":
+                var operation = "EDIT_ADMIN_LOGO"
+            break;
+            case "Edit City Logo":
+                var operation = "EDIT_CITY_LOGO"
+            break;
+            case "Edit Barangay Logo":
+                var operation = "EDIT_BARANGAY_LOGO"
+            break;
+            case "Edit Watermark Logo":
+                var operation = "EDIT_WATERMARK_LOGO"
+            break;
+            default:
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "Something went wrong with whatlogo! Please Contact the IT department."
+                });    
+        }
+
+        formData.append('OPERATION', operation);
+
+
+        $.ajax({
+            type: "POST",
+            url: "includes/settingsoperation.php",
+            data: formData,
+            processData: false,
+            contentType: false,
+            dataType: "JSON",
+            success: function (response) {
+                if(response.success == true){
+                    Swal.fire({
+                        icon: "success",
+                        title: "Success",
+                        text: "Image has been updated!"
+                    });
+                }else{
+                    Swal.fire({
+                        icon: "error",
+                        title: "Oops...",
+                        text: "Something went wrong! Please Contact the IT department."
+                    });
+
+                }   
+
+                switch(whatlogo){
+                    case "Edit Administration Logo":
+                        $("#adminlogo").attr('src', "img/logos/"+response.filename);                   
+                    break;
+                    case "Edit City Logo":
+                        $("#citylogo").attr('src',"img/logos/"+response.filename);                   
+                    break;
+                    case "Edit Barangay Logo":
+                        $("#brgylogo").attr('src', "img/logos/"+response.filename);                   
+                    break;
+                    case "Edit Watermark Logo":
+                        $("#watermarklogo").attr('src',"img/logos/"+response.filename);                   
+                    break;
+                    default:
+                        Swal.fire({
+                            icon: "error",
+                            title: "Oops...",
+                            text: "Something went wrong with whatlogo! Please Contact the IT department."
+                        });    
+                }   
+                
+                $("#EditLogo").modal('hide');
+
+            }, error: function(xhr, status, error){
+                console.log(error);
+                console.log(status);
+                console.log(xhr);
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "Something went wrong! Please Contact the IT department."
+                });
+            }
+        });
+
+
+    })
 
 
 })

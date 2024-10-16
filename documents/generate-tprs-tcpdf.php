@@ -214,13 +214,13 @@ class MYPDF extends TCPDF {
         global $logo;
 
         if(isset($logo[0])){
-            $this->Image("../img/".$logo[0], 10, 5, 25, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false);
+            $this->Image("../img/logos/".$logo[0], 10, 5, 25, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false);
         }
         if(isset($logo[2])){
-            $this->Image("../img/".$logo[5], 30, 5, 158, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false);
+            $this->Image("../img/logos/".$logo[5], 30, 5, 158, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false);
         }
         if(isset($logo[3])){
-            $this->Image("../img/".$logo[1], 178, 7, 24, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false);
+            $this->Image("../img/logos/".$logo[1], 178, 7, 24, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false);
         }
         
         $this->SetLineWidth(0); 
@@ -313,7 +313,7 @@ $pdf->VerticalGradient(63,95,146,183,[255,255,255],[253,204,128]);
 
 // Add image watermark (with transparency)
 $pdf->SetAlpha(0.2); // Set transparency
-$pdf->Image('../img/'.$logo[4], 35, 45, 200, 0, 'PNG', '', '', false, 300, '', false, false, 0); // X, Y, Width, Height
+$pdf->Image('../img/logos/'.$logo[4], 35, 45, 200, 0, 'PNG', '', '', false, 300, '', false, false, 0); // X, Y, Width, Height
 $pdf->SetAlpha(1); // Reset transparenc
 
 //Set Line in between brgy officials
@@ -363,7 +363,7 @@ $html ='
         <tr>
             <br>
             <td class="brgyofficials">
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="../img/'.$logo[2].'" width="120" height="120">
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="../img/logos/'.$logo[2].'" width="120" height="120">
             ';
                 
                 foreach ($brgyofficials as $official) {

@@ -135,16 +135,16 @@ class MYPDF extends TCPDF {
         }
 
         if(isset($logo[0])){
-            $this->Image("../img/".$logo[0], 10, 5, 25, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false);
+            $this->Image("../img/logos/".$logo[0], 10, 5, 25, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false);
         }
         if(isset($logo[1])){
-            $this->Image("../img/".$logo[1], 35, 7, 23, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false);
+            $this->Image("../img/logos/".$logo[1], 35, 7, 23, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false);
         }
         if(isset($logo[2])){
-            $this->Image("../img/".$logo[2], 20, 3, 180, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false);
+            $this->Image("../img/logos/".$logo[2], 20, 3, 180, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false);
         }
         if(isset($logo[3])){
-            $this->Image("../img/".$logo[3], 170, 7, 24, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false);
+            $this->Image("../img/logos/".$logo[3], 170, 7, 24, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false);
         }
         
         $this->SetLineWidth(0); 
@@ -194,7 +194,7 @@ $pdf->AddPage();
 
 // Watermark (with transparency)
 $pdf->SetAlpha(0.3); // Set transparency
-$pdf->Image('../img/'.$logo[4], -7, 25, 225, 0, 'PNG', '', '', false, 300, '', false, false, 0); // X, Y, Width, Height
+$pdf->Image('../img/logos/'.$logo[4], -7, 25, 225, 0, 'PNG', '', '', false, 300, '', false, false, 0); // X, Y, Width, Height
 $pdf->SetAlpha(1); // Reset transparenc
 
 // Set some HTML content
@@ -300,7 +300,7 @@ $pdf ->AddPage();
 
 // Add image watermark (with transparency)
 $pdf->SetAlpha(0.3); // Set transparency
-$pdf->Image('../img/watermark.png', -7, 25, 225, 0, 'PNG', '', '', false, 300, '', false, false, 0); // X, Y, Width, Height
+$pdf->Image('../img/logos/'.$logo[4], -7, 25, 225, 0, 'PNG', '', '', false, 300, '', false, false, 0); // X, Y, Width, Height
 $pdf->SetAlpha(1); // Reset transparenc
 
 $expirationday = date('d', strtotime('+1 year'));

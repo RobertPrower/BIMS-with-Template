@@ -157,7 +157,7 @@ if($operation_check =="REVOKE"){
 }elseif($operation_check == "SHOW_DELETED"){
 
      // Fetch the total number of records
-     $total_records = $pdo->query("SELECT COUNT(*) FROM resident WHERE is_deleted=1")->fetchColumn();
+     $total_records = $pdo->query("SELECT COUNT(*) FROM vw_deleted_docu WHERE is_deleted=1")->fetchColumn();
      $limit = 10; //To limit the number of pages
      $total_pages = ceil($total_records / $limit);
  
@@ -167,12 +167,12 @@ if($operation_check =="REVOKE"){
      $start_from = ($page - 1) * $limit;
  
      // Fetch the data for the current page
-     $query = $pdo->prepare("SELECT * FROM vw_all_documents WHERE is_deleted=1 ORDER BY last_name ASC LIMIT $start_from, $limit");
+     $query = $pdo->prepare("SELECT * FROM vw_deleted_docu ORDER BY date_issued DESC LIMIT $start_from, $limit");
      $query->execute();
      $results = $query->fetchAll();
 
     if(!empty($results)){
-        require_once'residenttabletofetch.php';
+        require_once'documentstabletofetch.php';
     }else{
         echo '<tr><td colspan="11"><b>No Deleted Records found</b></td></tr>';
     }

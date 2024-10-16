@@ -4,7 +4,80 @@ include_once'anti-SQLInject.php';
 
 $operation_check = (isset($_POST['OPERATION'])? $_POST['OPERATION'] : null);
 $kagawad_id = (isset($_POST['id'])? sanitizeData($_POST['id']):  null);
+$imagefile = (isset($_FILES['image_file'])? $_FILES['image_file']: null);
+$target_dir="../img/logos/";
 
+function generateUniqueFileName($target_dir, $originalFileName) {
+    $imageFileType = strtolower(pathinfo($originalFileName, PATHINFO_EXTENSION));
+    $baseName = pathinfo($originalFileName, PATHINFO_FILENAME);
+
+    // Generate a unique file name
+    $fileName = $originalFileName;
+    $fileSuffix = 1;
+    while (file_exists($target_dir . $fileName)) {
+        $fileName = $baseName . " ($fileSuffix)." . $imageFileType;
+        $fileSuffix++;
+    }
+
+    return $fileName;
+}
+
+function uploadImage($imageInputName, $targetDir, $maxFileSize = 500000, $allowedFormats = ["jpg", "jpeg", "png"]) {
+    // Check if the file was uploaded without errors
+    if (!isset($imageInputName) || $imageInputName['error'] !== UPLOAD_ERR_OK) {
+        throw new Exception("File upload error or file not found.");
+    }
+
+    // Variable for the path
+    $target_file = $imageInputName["name"];
+
+    // Get the file extension and convert it to lower case
+    $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
+
+    // Generate a unique filename using the user-defined function
+    $fileName = generateUniqueFileName($targetDir, basename($imageInputName["name"]));
+    $target_file = $targetDir . $fileName;
+
+    // Check if the file is an image
+    $check = getimagesize($imageInputName["tmp_name"]);
+    if ($check === false) {
+        throw new Exception("File is not an image.");
+    }
+
+    // Check file size
+    if ($imageInputName["size"] > $maxFileSize) {
+        throw new Exception("Sorry, your file is too large.");
+    }
+
+    // Allow only specific file formats
+    if (!in_array($imageFileType, $allowedFormats)) {
+        throw new Exception("Sorry, only " . implode(", ", $allowedFormats) . " files are allowed.");
+    }
+
+    // Move the uploaded file to the target directory
+    if (!move_uploaded_file($imageInputName["tmp_name"], $target_file)) {
+        throw new Exception("Sorry, there was an error uploading your file.");
+    }
+
+    return $fileName; // Return the unique filename if upload is successful
+}
+
+function deleteFile($target_dir, $filename) {
+    // Construct the full path to the file
+    $filePath = $target_dir . '/' . $filename;
+
+    // Check if the file exists
+    if (file_exists($filePath)) {
+        // Attempt to delete the file
+        if (unlink($filePath)) {
+            return ["success" => true, "message" => "File deleted successfully."];
+        } else {
+            return ["success" => false, "message" => "Error deleting the file."];
+        }
+    } else {
+        return ["success" => false, "message" => "File does not exist."];
+    }
+}
 
 if($operation_check == "FETCH_KAGAWAD"){
 
@@ -181,6 +254,160 @@ if($operation_check == "FETCH_KAGAWAD"){
         $pdo->rollBack();
 
     }
+}else if($operation_check == "EDIT_ADMIN_LOGO"){
+
+    if(isset($imagefile)){  
+      
+        try{  
+            $pdo->beginTransaction();
+
+            $fetcholdfilequery = "SELECT `filename` FROM `certificate-img` WHERE purpose='Government Logo'"; 
+            $stmt = $pdo->prepare($fetcholdfilequery);
+            $stmt->execute();
+            $dbfile = $stmt->fetch(PDO::FETCH_COLUMN);
+
+            deleteFile($target_dir, $dbfile);
+
+            $filename = uploadImage($imagefile, $target_dir);
+
+            $sqlquery="UPDATE `certificate-img` SET `filename` = ? WHERE `purpose` = 'Government Logo';";
+            $stmt = $pdo->prepare($sqlquery);
+            $stmt->execute([$filename]);
+            $pdo->commit();
+
+            echo json_encode(["success"=>true, "message" => "Admin logo updated successfully", "filename" => $filename]);
+
+
+        }catch(Exception $e){
+            echo json_encode(["success"=>false, "message" => $e->getMessage()]);
+            $pdo->rollBack();
+        }
+    }else{
+        echo json_encode(["success"=>false, "message" => "No file recieved"]);
+    }
+
+}else if($operation_check == "EDIT_CITY_LOGO"){
+
+    if(isset($imagefile)){  
+      
+        try{  
+            $pdo->beginTransaction();
+
+            $fetcholdfilequery = "SELECT `filename` FROM `certificate-img` WHERE purpose='City Logo'"; 
+            $stmt = $pdo->prepare($fetcholdfilequery);
+            $stmt->execute();
+            $dbfile = $stmt->fetch(PDO::FETCH_COLUMN);
+
+            $removedunusedfiles = deleteFile($target_dir, $dbfile);
+
+            if($removedunusedfiles == true){
+
+                $filename = uploadImage($imagefile, $target_dir);
+
+                $sqlquery="UPDATE `certificate-img` SET `filename` = ? WHERE `purpose` = 'City Logo';";
+                $stmt = $pdo->prepare($sqlquery);
+                $stmt->execute([$filename]);
+                $pdo->commit();
+
+                exit(json_encode(["success"=> true, "message" => "Admin logo updated successfully", "filename" => $filename]));
+
+                
+            }else{
+
+                exit(json_encode(["success"=> false, "message" => $removedunusedfiles]));
+
+            }
+
+        }catch(Exception $e){
+            echo json_encode(["success"=>false, "message" => $e->getMessage()]);
+            $pdo->rollBack();
+        }
+    }else{
+        echo json_encode(["success"=>false, "message" => "No file recieved"]);
+    }
+
+}else if($operation_check == "EDIT_BARANGAY_LOGO"){
+
+    if(isset($imagefile)){  
+      
+        try{  
+            $pdo->beginTransaction();
+
+            $fetcholdfilequery = "SELECT `filename` FROM `certificate-img` WHERE purpose='Barangay Logo'"; 
+            $stmt = $pdo->prepare($fetcholdfilequery);
+            $stmt->execute();
+            $dbfile = $stmt->fetch(PDO::FETCH_COLUMN);
+
+            $removedunusedfiles = deleteFile($target_dir, $dbfile);
+
+            if($removedunusedfiles == true){
+
+                $filename = uploadImage($imagefile, $target_dir);
+
+                $sqlquery="UPDATE `certificate-img` SET `filename` = ? WHERE `purpose` = 'Barangay Logo';";
+                $stmt = $pdo->prepare($sqlquery);
+                $stmt->execute([$filename]);
+                $pdo->commit();
+
+                exit(json_encode(["success"=> true, "message" => "Admin logo updated successfully", "filename" => $filename]));
+
+                
+            }else{
+
+                exit(json_encode(["success"=> false, "message" => $removedunusedfiles]));
+
+            }
+
+        }catch(Exception $e){
+            echo json_encode(["success"=>false, "message" => $e->getMessage()]);
+            $pdo->rollBack();
+        }
+    }else{
+        echo json_encode(["success"=>false, "message" => "No file recieved"]);
+    }
+
+}else if($operation_check == "EDIT_WATERMARK_LOGO"){
+
+    if(isset($imagefile)){  
+      
+        try{  
+            $pdo->beginTransaction();
+
+            $fetcholdfilequery = "SELECT `filename` FROM `certificate-img` WHERE purpose='Watermark'"; 
+            $stmt = $pdo->prepare($fetcholdfilequery);
+            $stmt->execute();
+            $dbfile = $stmt->fetch(PDO::FETCH_COLUMN);
+
+            $removedunusedfiles = deleteFile($target_dir, $dbfile);
+
+            if($removedunusedfiles == true){
+
+                $filename = uploadImage($imagefile, $target_dir);
+
+                $sqlquery="UPDATE `certificate-img` SET `filename` = ? WHERE `purpose` = 'Watermark';";
+                $stmt = $pdo->prepare($sqlquery);
+                $stmt->execute([$filename]);
+                $pdo->commit();
+
+                exit(json_encode(["success"=> true, "message" => "Admin logo updated successfully", "filename" => $filename]));
+
+                
+            }else{
+
+                exit(json_encode(["success"=> false, "message" => $removedunusedfiles]));
+
+            }
+
+        }catch(Exception $e){
+            echo json_encode(["success"=>false, "message" => $e->getMessage()]);
+            $pdo->rollBack();
+        }
+    }else{
+        echo json_encode(["success"=>false, "message" => "No file recieved"]);
+    }
+
+}else{
+    echo json_encode(["success"=> false, "message" => "Unknown Operation"]);
 }
 
 ?>
