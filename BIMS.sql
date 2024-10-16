@@ -35,7 +35,7 @@ CREATE TABLE `brgy_details` (
 /*Data for the table `brgy_details` */
 
 insert  into `brgy_details`(`brgy_details_id`,`brgy_name`,`sona`,`district`,`tel_num`,`cp_num`,`email`,`address`) values 
-(1,'Barangay 188','Sona 20','Distrito 3','8364-7073','0999-4031692','177Barangay@gmail.com','Cielito Homes Subd., Camarin, Lungsod ng Caloocan, M.M.');
+(1,'Barangay 177','Sona 15','Distrito 1','8364-7073','0999-4031692','177Barangay@gmail.com','Cielito Homes Subd., Camarin, Lungsod ng Caloocan, M.M.');
 
 /*Table structure for table `brgy_officials` */
 
@@ -106,7 +106,7 @@ CREATE TABLE `kagawad` (
   `official_name` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`kagawad_id`),
   KEY `kagawad_id` (`kagawad_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
 /*Data for the table `kagawad` */
 
@@ -365,7 +365,7 @@ CREATE TABLE `tbl_building_permits` (
   `subd` varchar(255) DEFAULT NULL,
   `permit_type` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`building_permit_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
 
 /*Data for the table `tbl_building_permits` */
 
@@ -386,7 +386,8 @@ insert  into `tbl_building_permits`(`building_permit_id`,`blg_house_no`,`street`
 (14,'123','Zabarte Rd','Cielito Homes','Renovaton'),
 (15,'12','Zapote Rd','Maligay Park','Renovaton'),
 (16,'12','Zapote Rd','Maligay Park','Renovaton'),
-(17,'12','Zabarte Road','Cielito Homes','Renovaton');
+(17,'12','Zabarte Road','Cielito Homes','Renovaton'),
+(18,'Blk 12 Lot 3','Yang st','Almar Subd','Extension');
 
 /*Table structure for table `tbl_business_permits` */
 
@@ -401,7 +402,7 @@ CREATE TABLE `tbl_business_permits` (
   `subdivision` varchar(255) DEFAULT NULL,
   `type_of_buss` varchar(255) NOT NULL,
   PRIMARY KEY (`business_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 
 /*Data for the table `tbl_business_permits` */
 
@@ -409,7 +410,14 @@ insert  into `tbl_business_permits`(`business_id`,`year_quarter`,`store_name`,`b
 (1,'Q3-Q4','Jack Frost Ice Creme','Blk 12 Lot 13','John st','Cielito Homes','Food Stall'),
 (2,'Q3-Q4','Ice Frost Water Refilling Station','Blk 12 Lot 14','Genesis st','Cielito Homes','Water Refilling Station'),
 (3,'Q3-Q4','Master Siomai','Blk 12 Lot 14','Genesis st','Cielito Homes','Food Stall'),
-(4,'Q3-Q4','Rex Metal Works','Blk 12 Lot 14','Genesis st','Cielito Homes','Metal Works Shop');
+(4,'Q3-Q4','Rex Metal Works','Blk 12 Lot 14','Genesis st','Cielito Homes','Metal Works Shop'),
+(5,'Q3-Q4','Cions Meat Shop','Blk 12 Lot 15','Genesis st','Cielito Homes','Meat Shop'),
+(6,'Q3-Q4','Yangzhe Metal Works','14','Zabarte Rd','','Metal Works'),
+(7,'Q3-Q4','Yangzhe Metal Works','14','Zabarte Rd','','Metal Works'),
+(8,'Q3-Q4','Yangzhe Metal Works','14','Zabarte Rd','','Metal Works'),
+(9,'Q3-Q4','Yangzhe Metal Works','14','Zabarte Rd','','Metal Works'),
+(10,'Q3-Q4','Yangzhe Metal Works','14','Zabarte Rd','','Metal Works'),
+(11,'Q3-Q4','Umbalin Furniture','123','Genesis st Corner Zabarte','Cielito Homes','Funiture Store');
 
 /*Table structure for table `tbl_cert_audit_trail` */
 
@@ -439,7 +447,7 @@ CREATE TABLE `tbl_cert_audit_trail` (
   CONSTRAINT `edited_by_fk` FOREIGN KEY (`edited_by_no`) REFERENCES `tbl_username` (`username_id`),
   CONSTRAINT `issued_by_fk` FOREIGN KEY (`issued_by_no`) REFERENCES `tbl_username` (`username_id`),
   CONSTRAINT `recovered_by_fk` FOREIGN KEY (`recovered_by_no`) REFERENCES `tbl_username` (`username_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8;
 
 /*Data for the table `tbl_cert_audit_trail` */
 
@@ -467,7 +475,16 @@ insert  into `tbl_cert_audit_trail`(`audit_trail_id`,`issuing_dept_no`,`issued_b
 (21,NULL,NULL,'2024-10-14 12:38:44','2025-10-14',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
 (22,NULL,NULL,'2024-10-14 12:40:33','2025-10-14',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
 (23,NULL,NULL,'2024-10-14 12:41:04','2025-10-14',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(24,NULL,NULL,'2024-10-14 19:07:38','2025-10-14',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+(24,NULL,NULL,'2024-10-14 19:07:38','2025-10-14',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(25,NULL,NULL,'2024-10-15 20:07:51','2025-10-15',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(26,NULL,NULL,'2024-10-16 14:52:19','2025-10-16',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(27,NULL,NULL,'2024-10-16 14:54:22','2025-10-16',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(28,NULL,NULL,'2024-10-16 14:54:36','2025-10-16',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(29,NULL,NULL,'2024-10-16 14:54:53','2025-10-16',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(30,NULL,NULL,'2024-10-16 14:57:20','2025-10-16',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(31,NULL,NULL,'2024-10-16 14:58:38','2025-10-16',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(32,NULL,NULL,'2024-10-16 15:11:33','2025-10-16',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(33,NULL,NULL,'2024-10-16 18:56:35','2025-10-16',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 
 /*Table structure for table `tbl_docu_request` */
 
@@ -520,10 +537,19 @@ insert  into `tbl_docu_request`(`request_id`,`resident_no`,`nresident_no`,`docum
 ('2024-000018',NULL,3,18,34,'SSS ID','SSS-1234455677','Securing Building Permit',18,'generated_pdf_1728844523.pdf',0,0),
 ('2024-000019',NULL,3,19,34,'Passport','PASS-1234567898998','Securing Excavation Permit',19,'generated_pdf_1728844836.pdf',0,0),
 ('2024-000020',NULL,3,20,34,'School ID','19-4545454545','Securing Fencing Permit',20,'generated_pdf_1728844935.pdf',0,0),
-('2024-000021',8,NULL,21,38,'GSIS ID','GSIS-123345567789','Securing Building Permit',21,'generated_pdf_1728880724.pdf',0,0),
-('2024-000022',8,NULL,22,38,'GSIS ID','GSIS-123345567789','Securing Building Permit',22,'generated_pdf_1728880833.pdf',0,0),
-('2024-000023',8,NULL,23,38,'GSIS ID','GSIS-123345567789','Securing Building Permit',23,'generated_pdf_1728880864.pdf',0,0),
-('2024-000024',12,NULL,24,21,'Drivers License','N42-1212121212121','Securing Building Permit',24,'generated_pdf_1728904058.pdf',0,0);
+('2024-000021',8,NULL,21,38,'GSIS ID','GSIS-123345567789','Securing Building Permit',21,'generated_pdf_1728880724.pdf',2,0),
+('2024-000022',8,NULL,22,38,'GSIS ID','GSIS-123345567789','Securing Building Permit',22,'generated_pdf_1728880833.pdf',0,1),
+('2024-000023',8,NULL,23,38,'GSIS ID','GSIS-123345567789','Securing Building Permit',23,'generated_pdf_1728880864.pdf',0,1),
+('2024-000024',12,NULL,24,21,'Drivers License','N42-1212121212121','Securing Building Permit',24,'generated_pdf_1728904058.pdf',0,1),
+('2024-000025',NULL,1,25,26,'NBI Clearance','NBI-12122434345454','Getting Business Permit',25,'generated_pdf_1728994071.pdf',0,1),
+('2024-000026',NULL,2,26,26,'LTOPF ID','LTOF-1234567890','Getting Business Permit',26,'generated_pdf_1729061539.pdf',0,0),
+('2024-000027',NULL,2,27,26,'LTOPF ID','LTOF-1234567890','Getting Business Permit',27,'generated_pdf_1729061662.pdf',0,0),
+('2024-000028',NULL,2,28,26,'LTOPF ID','LTOF-1234567890','Getting Business Permit',28,'generated_pdf_1729061676.pdf',0,0),
+('2024-000029',NULL,2,29,26,'LTOPF ID','LTOF-1234567890','Getting Business Permit',29,'generated_pdf_1729061693.pdf',0,0),
+('2024-000030',NULL,2,30,26,'LTOPF ID','LTOF-1234567890','Getting Business Permit',30,'generated_pdf_1729061840.pdf',0,1),
+('2024-000031',NULL,1,31,26,'Drivers License','N42-12121324343434','Securing Building Permit',31,'generated_pdf_1729061918.pdf',0,0),
+('2024-000032',NULL,3,32,34,'Postal ID','POS-1234567890','Getting Business Permit',32,'generated_pdf_1729062693.pdf',0,1),
+('2024-000033',12,NULL,33,22,'School ID','21-00259','Securing Excavation Permit',33,'generated_pdf_1729076195.pdf',0,0);
 
 /*Table structure for table `tbl_documents` */
 
@@ -555,7 +581,7 @@ CREATE TABLE `tbl_documents` (
   CONSTRAINT `f_permit_fk` FOREIGN KEY (`Fencing_Permits`) REFERENCES `tbl_fencing_permit` (`fencing_permit_id`) ON DELETE CASCADE,
   CONSTRAINT `indigency_fk` FOREIGN KEY (`Certificate_of_Indigency`) REFERENCES `tbl_indigency` (`indigency_id`) ON DELETE CASCADE,
   CONSTRAINT `tprs_fk` FOREIGN KEY (`TPRS`) REFERENCES `tbl_tprs` (`tprs_id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8;
 
 /*Data for the table `tbl_documents` */
 
@@ -583,7 +609,16 @@ insert  into `tbl_documents`(`docu_id`,`Barangay_Clearance`,`Certificate_of_Resi
 (21,NULL,NULL,NULL,NULL,NULL,NULL,NULL,14,NULL,NULL,NULL),
 (22,NULL,NULL,NULL,NULL,NULL,NULL,NULL,15,NULL,NULL,NULL),
 (23,NULL,NULL,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,NULL),
-(24,NULL,NULL,NULL,NULL,NULL,NULL,NULL,17,NULL,NULL,NULL);
+(24,NULL,NULL,NULL,NULL,NULL,NULL,NULL,17,NULL,NULL,NULL),
+(25,NULL,NULL,NULL,NULL,NULL,NULL,5,NULL,NULL,NULL,NULL),
+(26,NULL,NULL,NULL,NULL,NULL,NULL,6,NULL,NULL,NULL,NULL),
+(27,NULL,NULL,NULL,NULL,NULL,NULL,7,NULL,NULL,NULL,NULL),
+(28,NULL,NULL,NULL,NULL,NULL,NULL,8,NULL,NULL,NULL,NULL),
+(29,NULL,NULL,NULL,NULL,NULL,NULL,9,NULL,NULL,NULL,NULL),
+(30,NULL,NULL,NULL,NULL,NULL,NULL,10,NULL,NULL,NULL,NULL),
+(31,NULL,NULL,NULL,NULL,NULL,NULL,NULL,18,NULL,NULL,NULL),
+(32,NULL,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,NULL,NULL),
+(33,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL);
 
 /*Table structure for table `tbl_excavation_permits` */
 
@@ -595,12 +630,13 @@ CREATE TABLE `tbl_excavation_permits` (
   `street` varchar(255) DEFAULT NULL,
   `subd` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`exca_permit_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 /*Data for the table `tbl_excavation_permits` */
 
 insert  into `tbl_excavation_permits`(`exca_permit_id`,`blg_house_no`,`street`,`subd`) values 
-(1,'12','Zabarte','');
+(1,'12','Zabarte',''),
+(2,'Blk 8 Lot 4','Jeremiah st','Cielito Homes');
 
 /*Table structure for table `tbl_fencing_permit` */
 
@@ -1617,6 +1653,40 @@ DROP TABLE IF EXISTS `vw_all_tprs`;
  `is_deleted` tinyint(2) 
 )*/;
 
+/*Table structure for table `vw_deleted_docu` */
+
+DROP TABLE IF EXISTS `vw_deleted_docu`;
+
+/*!50001 DROP VIEW IF EXISTS `vw_deleted_docu` */;
+/*!50001 DROP TABLE IF EXISTS `vw_deleted_docu` */;
+
+/*!50001 CREATE TABLE  `vw_deleted_docu`(
+ `request_id` varchar(255) ,
+ `date_issued` datetime ,
+ `is_resident` varchar(1) ,
+ `resident/nonres_id` bigint(55) ,
+ `last_name` varchar(255) ,
+ `first_name` varchar(255) ,
+ `middle_name` varchar(255) ,
+ `suffix` varchar(10) ,
+ `house_num` varchar(255) ,
+ `street` varchar(255) ,
+ `subdivision` varchar(255) ,
+ `city` varchar(255) ,
+ `document_desc` varchar(36) ,
+ `age` int(10) ,
+ `sex` varchar(255) ,
+ `presented_id` varchar(255) ,
+ `ID_number` varchar(255) ,
+ `purpose` varchar(255) ,
+ `pdffile` varchar(255) ,
+ `expiration` date ,
+ `status` tinyint(3) ,
+ `is_deleted` tinyint(2) ,
+ `date_edited` datetime ,
+ `date_deleted` date 
+)*/;
+
 /*Table structure for table `vw_nonresident` */
 
 DROP TABLE IF EXISTS `vw_nonresident`;
@@ -1784,6 +1854,13 @@ DROP TABLE IF EXISTS `vw_resonly_cert`;
 /*!50001 DROP VIEW IF EXISTS `vw_all_tprs` */;
 
 /*!50001 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vw_all_tprs` AS (select `tbl_docu_request`.`request_id` AS `request_id`,coalesce((case when (`tbl_docu_request`.`resident_no` is not null) then `resident`.`last_name` else NULL end),convert((case when (`tbl_docu_request`.`nresident_no` is not null) then `non_resident`.`last_name` else NULL end) using utf8mb4)) AS `last_name`,coalesce((case when (`tbl_docu_request`.`resident_no` is not null) then `resident`.`first_name` else NULL end),convert((case when (`tbl_docu_request`.`nresident_no` is not null) then `non_resident`.`first_name` else NULL end) using utf8mb4)) AS `first_name`,coalesce((case when (`tbl_docu_request`.`resident_no` is not null) then `resident`.`middle_name` else NULL end),convert((case when (`tbl_docu_request`.`nresident_no` is not null) then `non_resident`.`middle_name` else NULL end) using utf8mb4)) AS `middle_name`,coalesce((case when (`tbl_docu_request`.`resident_no` is not null) then `resident`.`suffix` else NULL end),convert((case when (`tbl_docu_request`.`nresident_no` is not null) then `non_resident`.`suffix` else NULL end) using utf8mb4)) AS `suffix`,(case when (`tbl_docu_request`.`resident_no` is not null) then 'Resident' when (`tbl_docu_request`.`nresident_no` is not null) then 'Non-Resident' else 'Unknown' end) AS `owner_status`,`tbl_docu_request`.`age` AS `age`,`tbl_docu_request`.`presented_id` AS `presented_id`,`tbl_docu_request`.`ID_number` AS `ID_number`,`tbl_docu_request`.`purpose` AS `purpose`,`tbl_tprs`.`toda` AS `toda`,`tbl_tprs`.`route` AS `route`,`tbl_tprs`.`platenum` AS `platenum`,`tbl_tprs`.`chasisnum` AS `chasisnum`,`tbl_tprs`.`makertype` AS `makertype`,`tbl_tprs`.`enginenum` AS `engine_no`,`tbl_cert_audit_trail`.`datetime_issued` AS `date_issued`,`tbl_cert_audit_trail`.`expiration` AS `expires`,`departments_list`.`department_desc` AS `department_issued`,`tbl_username`.`username` AS `issued_by`,`tbl_docu_request`.`status` AS `status`,`tbl_docu_request`.`is_deleted` AS `is_deleted` from (((((((`tbl_docu_request` left join `resident` on((`tbl_docu_request`.`resident_no` = `resident`.`resident_id`))) left join `non_resident` on((`tbl_docu_request`.`nresident_no` = `non_resident`.`nresident_id`))) left join `tbl_documents` on((`tbl_docu_request`.`document_no` = `tbl_documents`.`docu_id`))) join `tbl_tprs` on((`tbl_documents`.`Building_Permits` = `tbl_tprs`.`tprs_id`))) left join `tbl_cert_audit_trail` on((`tbl_docu_request`.`audit_trail_no` = `tbl_cert_audit_trail`.`audit_trail_id`))) left join `departments_list` on((`tbl_cert_audit_trail`.`issuing_dept_no` = `departments_list`.`department_id`))) left join `tbl_username` on((`tbl_cert_audit_trail`.`issued_by_no` = `tbl_username`.`username_id`)))) */;
+
+/*View structure for view vw_deleted_docu */
+
+/*!50001 DROP TABLE IF EXISTS `vw_deleted_docu` */;
+/*!50001 DROP VIEW IF EXISTS `vw_deleted_docu` */;
+
+/*!50001 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vw_deleted_docu` AS (select `tbl_docu_request`.`request_id` AS `request_id`,`tbl_cert_audit_trail`.`datetime_issued` AS `date_issued`,(case when (`tbl_docu_request`.`resident_no` is not null) then '1' else '0' end) AS `is_resident`,(case when (`tbl_docu_request`.`resident_no` is not null) then `resident`.`resident_id` else `non_resident`.`nresident_id` end) AS `resident/nonres_id`,(case when (`tbl_docu_request`.`resident_no` is not null) then `resident`.`last_name` else convert(`non_resident`.`last_name` using utf8mb4) end) AS `last_name`,(case when (`tbl_docu_request`.`resident_no` is not null) then `resident`.`first_name` else convert(`non_resident`.`first_name` using utf8mb4) end) AS `first_name`,(case when (`tbl_docu_request`.`resident_no` is not null) then `resident`.`middle_name` else convert(`non_resident`.`middle_name` using utf8mb4) end) AS `middle_name`,(case when (`tbl_docu_request`.`resident_no` is not null) then `resident`.`suffix` else convert(`non_resident`.`suffix` using utf8mb4) end) AS `suffix`,(case when (`tbl_docu_request`.`resident_no` is not null) then `resident`.`house_num` else convert(`non_resident`.`house_num` using utf8mb4) end) AS `house_num`,(case when (`tbl_docu_request`.`resident_no` is not null) then `resident`.`street` else convert(`non_resident`.`street` using utf8mb4) end) AS `street`,(case when (`tbl_docu_request`.`resident_no` is not null) then `resident`.`subdivision` else convert(`non_resident`.`subdivision` using utf8mb4) end) AS `subdivision`,(case when (`tbl_docu_request`.`nresident_no` is not null) then `non_resident`.`city` else 'Caloocan City' end) AS `city`,(case when (`tbl_documents`.`Barangay_Clearance` is not null) then 'Barangay Clearance' when (`tbl_documents`.`Certificate_of_Residency` is not null) then 'Certificate of Residency' when (`tbl_documents`.`Certificate_of_Indigency` is not null) then 'Certificate of Indigency' when (`tbl_documents`.`Certificate_of_Good_Moral` is not null) then 'Certificate of Good Moral' when (`tbl_documents`.`Business_Permits` is not null) then 'Business Permits' when (`tbl_documents`.`Building_Permits` is not null) then 'Building Permits' when (`tbl_documents`.`Excavation_Permits` is not null) then 'Excavation Permits' when (`tbl_documents`.`Fencing_Permits` is not null) then 'Fencing Permits' when (`tbl_documents`.`FTJS` is not null) then 'First Time Job Seekers' when (`tbl_documents`.`Oath_of_Undertaking` is not null) then 'Oath of Undertaking' when (`tbl_documents`.`TPRS` is not null) then 'Tricycle Pedicab Regulatory Services' else 'Unknown Document Type' end) AS `document_desc`,`tbl_docu_request`.`age` AS `age`,(case when (`tbl_docu_request`.`resident_no` is not null) then `resident`.`sex` else convert(`non_resident`.`sex` using utf8mb4) end) AS `sex`,`tbl_docu_request`.`presented_id` AS `presented_id`,`tbl_docu_request`.`ID_number` AS `ID_number`,`tbl_docu_request`.`purpose` AS `purpose`,`tbl_docu_request`.`pdffile` AS `pdffile`,`tbl_cert_audit_trail`.`expiration` AS `expiration`,`tbl_docu_request`.`status` AS `status`,`tbl_docu_request`.`is_deleted` AS `is_deleted`,`tbl_cert_audit_trail`.`datetime_edited` AS `date_edited`,`tbl_cert_audit_trail`.`datetime_deleted` AS `date_deleted` from ((((`tbl_docu_request` left join `resident` on((`tbl_docu_request`.`resident_no` = `resident`.`resident_id`))) left join `non_resident` on((`tbl_docu_request`.`nresident_no` = `non_resident`.`nresident_id`))) join `tbl_documents` on((`tbl_docu_request`.`document_no` = `tbl_documents`.`docu_id`))) join `tbl_cert_audit_trail` on((`tbl_docu_request`.`audit_trail_no` = `tbl_cert_audit_trail`.`audit_trail_id`))) where (`tbl_docu_request`.`is_deleted` = 1)) */;
 
 /*View structure for view vw_nonresident */
 
