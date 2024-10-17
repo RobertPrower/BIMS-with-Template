@@ -20,15 +20,9 @@ if($operation_check=="SEARCH"){
     if(!empty($search)){
 
         // query to fetch records with pagination
-        $stmt = $pdo->prepare("SELECT *
-            FROM vw_all_documents
-            WHERE is_deleted = 0
-            AND (last_name LIKE :search OR first_name LIKE :search OR middle_name LIKE :search OR request_id LIKE :search)
-            ORDER BY last_name ASC
-            LIMIT $start_from, $limit;
-            "); 
-
-        $stmt->execute(['search' => "%$search%"]);
+        $searchquery = "CALL SearchAllDocuments(:search,:start_from,:limit)";
+        $stmt = $pdo->prepare($searchquery); 
+        $stmt->execute(['search' => "%$search%", 'start_from' => "$start_from", 'limit' => "$limit"]);
 
         $results = $stmt->fetchAll();
 
@@ -69,8 +63,23 @@ if($operation_check=="SEARCH"){
     }
 
 }elseif($operation_check=="SEARCH_PAGINATION"){
+    if(!empty($search)){
+        $countquery="CALL SearchDocuTotalEntries(?)";
+        $stmt = $pdo->prepare($countquery);
+        $stmt->execute(["%$search%"]);
+        $total_entries=$stmt->fetchColumn();
+
+    }else{
+
+        $countquery="SELECT COUNT(*) FROM vw_all_documents ";
+        $stmt = $pdo->prepare($countquery);
+        $stmt->execute(["%$search%"]);
+        $total_entries=$stmt->fetchColumn();
+
+
+    }
     $current_page = isset($_POST['pageno']) ? (int)$_POST['pageno'] : 1;
-    $current_page = max(1, min($current_page, $total_pages));
+    $current_page = max(1, min($current_page, $total_entries));
     $start_from = ($current_page - 1) * $limit;
         
     require_once'paginationtemplate.php';

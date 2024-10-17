@@ -116,7 +116,7 @@ $(document).ready(function () {
     }
   
     //Function to search for entries
-    function fetchResults(query, page = 1) {
+    function fetchResults(query, page) {
       if ($("#showdeletedentries").is(":checked")) {
         console.log("Deleted Entries switch has been on");
         $.ajax({
@@ -154,13 +154,14 @@ $(document).ready(function () {
   
       if (query.length >= 1) {
         //Fetch the results by the fetchResults function above
-        fetchResults(query);
+        fetchResults(query, 1);
       } else {
         if ($("#showdeletedentries").is(":checked")) {
           //If query is less than 2 character just reload the table
           reloadDeletedEntries(1);
         } else {
           reloadTable();
+          console.log('Event has been trigged')
         }
       }
     });
@@ -804,6 +805,7 @@ $(document).ready(function () {
   //For the delete button
   $(document).on("click",'#deletebutton',function () {
     var request_id = $(this).data("request_id");
+    var currentSearch = $("#searchbox").val();
     console.log("Delete button has been click")
     swal({
       title: "Are you sure?",

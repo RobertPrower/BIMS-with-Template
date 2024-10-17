@@ -123,10 +123,10 @@ if($operation_check =="REVOKE"){
      $current_page = max(1, min($current_page, $total_pages));
      $start_from = ($current_page - 1) * $limit;
  
-     // Fetch the data for the current page
-     $query = $pdo->prepare("SELECT * FROM vw_all_documents ORDER BY request_id ASC LIMIT $start_from, $limit");
-     $query->execute();
-     $result = $query->fetchAll();
+    //  // Fetch the data for the current page
+    //  $query = $pdo->prepare("SELECT * FROM vw_all_documents ORDER BY request_id ASC LIMIT $start_from, $limit");
+    //  $query->execute();
+    //  $result = $query->fetchAll();
  
      require_once'paginationtemplate.php';
 

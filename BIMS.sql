@@ -538,17 +538,17 @@ insert  into `tbl_docu_request`(`request_id`,`resident_no`,`nresident_no`,`docum
 ('2024-000019',NULL,3,19,34,'Passport','PASS-1234567898998','Securing Excavation Permit',19,'generated_pdf_1728844836.pdf',0,0),
 ('2024-000020',NULL,3,20,34,'School ID','19-4545454545','Securing Fencing Permit',20,'generated_pdf_1728844935.pdf',0,0),
 ('2024-000021',8,NULL,21,38,'GSIS ID','GSIS-123345567789','Securing Building Permit',21,'generated_pdf_1728880724.pdf',2,0),
-('2024-000022',8,NULL,22,38,'GSIS ID','GSIS-123345567789','Securing Building Permit',22,'generated_pdf_1728880833.pdf',0,1),
-('2024-000023',8,NULL,23,38,'GSIS ID','GSIS-123345567789','Securing Building Permit',23,'generated_pdf_1728880864.pdf',0,1),
-('2024-000024',12,NULL,24,21,'Drivers License','N42-1212121212121','Securing Building Permit',24,'generated_pdf_1728904058.pdf',0,1),
-('2024-000025',NULL,1,25,26,'NBI Clearance','NBI-12122434345454','Getting Business Permit',25,'generated_pdf_1728994071.pdf',0,1),
+('2024-000022',8,NULL,22,38,'GSIS ID','GSIS-123345567789','Securing Building Permit',22,'generated_pdf_1728880833.pdf',0,0),
+('2024-000023',8,NULL,23,38,'GSIS ID','GSIS-123345567789','Securing Building Permit',23,'generated_pdf_1728880864.pdf',0,0),
+('2024-000024',12,NULL,24,21,'Drivers License','N42-1212121212121','Securing Building Permit',24,'generated_pdf_1728904058.pdf',0,0),
+('2024-000025',NULL,1,25,26,'NBI Clearance','NBI-12122434345454','Getting Business Permit',25,'generated_pdf_1728994071.pdf',0,0),
 ('2024-000026',NULL,2,26,26,'LTOPF ID','LTOF-1234567890','Getting Business Permit',26,'generated_pdf_1729061539.pdf',0,0),
 ('2024-000027',NULL,2,27,26,'LTOPF ID','LTOF-1234567890','Getting Business Permit',27,'generated_pdf_1729061662.pdf',0,0),
 ('2024-000028',NULL,2,28,26,'LTOPF ID','LTOF-1234567890','Getting Business Permit',28,'generated_pdf_1729061676.pdf',0,0),
 ('2024-000029',NULL,2,29,26,'LTOPF ID','LTOF-1234567890','Getting Business Permit',29,'generated_pdf_1729061693.pdf',0,0),
-('2024-000030',NULL,2,30,26,'LTOPF ID','LTOF-1234567890','Getting Business Permit',30,'generated_pdf_1729061840.pdf',0,1),
+('2024-000030',NULL,2,30,26,'LTOPF ID','LTOF-1234567890','Getting Business Permit',30,'generated_pdf_1729061840.pdf',0,0),
 ('2024-000031',NULL,1,31,26,'Drivers License','N42-12121324343434','Securing Building Permit',31,'generated_pdf_1729061918.pdf',0,0),
-('2024-000032',NULL,3,32,34,'Postal ID','POS-1234567890','Getting Business Permit',32,'generated_pdf_1729062693.pdf',0,1),
+('2024-000032',NULL,3,32,34,'Postal ID','POS-1234567890','Getting Business Permit',32,'generated_pdf_1729062693.pdf',0,0),
 ('2024-000033',12,NULL,33,22,'School ID','21-00259','Securing Excavation Permit',33,'generated_pdf_1729076195.pdf',0,0);
 
 /*Table structure for table `tbl_documents` */
@@ -931,6 +931,62 @@ BEGIN
         
     END IF;
 END */$$
+DELIMITER ;
+
+/* Procedure structure for procedure `SearchAllDocuments` */
+
+/*!50003 DROP PROCEDURE IF EXISTS  `SearchAllDocuments` */;
+
+DELIMITER $$
+
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `SearchAllDocuments`(IN Search VARCHAR(55), in start_from int, in lim int)
+BEGIN
+	
+	SELECT
+  `tbl_docu_request`.`request_id`           AS `request_id`,
+  `tbl_cert_audit_trail`.`datetime_issued`  AS `date_issued`,
+  (CASE WHEN (`tbl_docu_request`.`resident_no` IS NOT NULL) THEN '1' ELSE '0' END) AS `is_resident`,
+  (CASE WHEN (`tbl_docu_request`.`resident_no` IS NOT NULL) THEN `resident`.`resident_id` ELSE `non_resident`.`nresident_id` END) AS `resident/nonres_id`,
+  (CASE WHEN (`tbl_docu_request`.`resident_no` IS NOT NULL) THEN `resident`.`last_name` ELSE CONVERT(`non_resident`.`last_name` USING utf8mb4) END) AS `last_name`,
+  (CASE WHEN (`tbl_docu_request`.`resident_no` IS NOT NULL) THEN `resident`.`first_name` ELSE CONVERT(`non_resident`.`first_name` USING utf8mb4) END) AS `first_name`,
+  (CASE WHEN (`tbl_docu_request`.`resident_no` IS NOT NULL) THEN `resident`.`middle_name` ELSE CONVERT(`non_resident`.`middle_name` USING utf8mb4) END) AS `middle_name`,
+  (CASE WHEN (`tbl_docu_request`.`resident_no` IS NOT NULL) THEN `resident`.`suffix` ELSE CONVERT(`non_resident`.`suffix` USING utf8mb4) END) AS `suffix`,
+  (CASE WHEN (`tbl_docu_request`.`resident_no` IS NOT NULL) THEN `resident`.`house_num` ELSE CONVERT(`non_resident`.`house_num` USING utf8mb4) END) AS `house_num`,
+  (CASE WHEN (`tbl_docu_request`.`resident_no` IS NOT NULL) THEN `resident`.`street` ELSE CONVERT(`non_resident`.`street` USING utf8mb4) END) AS `street`,
+  (CASE WHEN (`tbl_docu_request`.`resident_no` IS NOT NULL) THEN `resident`.`subdivision` ELSE CONVERT(`non_resident`.`subdivision` USING utf8mb4) END) AS `subdivision`,
+  (CASE WHEN (`tbl_docu_request`.`nresident_no` IS NOT NULL) THEN `non_resident`.`city` ELSE 'Caloocan City' END) AS `city`,
+  (CASE WHEN (`tbl_documents`.`Barangay_Clearance` IS NOT NULL) THEN 'Barangay Clearance' WHEN (`tbl_documents`.`Certificate_of_Residency` IS NOT NULL) THEN 'Certificate of Residency' WHEN (`tbl_documents`.`Certificate_of_Indigency` IS NOT NULL) THEN 'Certificate of Indigency' WHEN (`tbl_documents`.`Certificate_of_Good_Moral` IS NOT NULL) THEN 'Certificate of Good Moral' WHEN (`tbl_documents`.`Business_Permits` IS NOT NULL) THEN 'Business Permits' WHEN (`tbl_documents`.`Building_Permits` IS NOT NULL) THEN 'Building Permits' WHEN (`tbl_documents`.`Excavation_Permits` IS NOT NULL) THEN 'Excavation Permits' WHEN (`tbl_documents`.`Fencing_Permits` IS NOT NULL) THEN 'Fencing Permits' WHEN (`tbl_documents`.`FTJS` IS NOT NULL) THEN 'First Time Job Seekers' WHEN (`tbl_documents`.`Oath_of_Undertaking` IS NOT NULL) THEN 'Oath of Undertaking' WHEN (`tbl_documents`.`TPRS` IS NOT NULL) THEN 'Tricycle Pedicab Regulatory Services' ELSE 'Unknown Document Type' END) AS `document_desc`,
+  `tbl_docu_request`.`age`                  AS `age`,
+  (CASE WHEN (`tbl_docu_request`.`resident_no` IS NOT NULL) THEN `resident`.`sex` ELSE CONVERT(`non_resident`.`sex` USING utf8mb4) END) AS `sex`,
+  `tbl_docu_request`.`presented_id`         AS `presented_id`,
+  `tbl_docu_request`.`ID_number`            AS `ID_number`,
+  `tbl_docu_request`.`purpose`              AS `purpose`,
+  `tbl_docu_request`.`pdffile`              AS `pdffile`,
+  `tbl_cert_audit_trail`.`expiration`       AS `expiration`,
+  `tbl_docu_request`.`status`               AS `status`,
+  `tbl_docu_request`.`is_deleted`           AS `is_deleted`,
+  `tbl_cert_audit_trail`.`datetime_edited`  AS `date_edited`,
+  `tbl_cert_audit_trail`.`datetime_deleted` AS `date_deleted`
+FROM ((((`tbl_docu_request`
+      LEFT JOIN `resident`
+        ON ((`tbl_docu_request`.`resident_no` = `resident`.`resident_id`)))
+     LEFT JOIN `non_resident`
+       ON ((`tbl_docu_request`.`nresident_no` = `non_resident`.`nresident_id`)))
+    JOIN `tbl_documents`
+      ON ((`tbl_docu_request`.`document_no` = `tbl_documents`.`docu_id`)))
+   JOIN `tbl_cert_audit_trail`
+     ON ((`tbl_docu_request`.`audit_trail_no` = `tbl_cert_audit_trail`.`audit_trail_id`)))
+WHERE `tbl_docu_request`.`is_deleted` = 0 
+AND (`resident`.`last_name` LIKE search 
+     OR `non_resident`.`last_name` LIKE search 
+     OR `resident`.`first_name` LIKE search 
+     OR `non_resident`.`first_name` LIKE search 
+     OR `resident`.`middle_name` LIKE search 
+     OR `non_resident`.`middle_name` LIKE search 
+     OR `tbl_docu_request`.`request_id` LIKE search) 
+ORDER BY `tbl_docu_request`.`request_id` DESC
+LIMIT start_from, lim;
+	END */$$
 DELIMITER ;
 
 /* Procedure structure for procedure `SearchBuildingPermits` */
