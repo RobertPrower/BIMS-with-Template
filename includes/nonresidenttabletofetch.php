@@ -33,7 +33,6 @@ foreach ($results as $row) {
                 data-birth-date="' . htmlspecialchars($row['birth_date'], ENT_QUOTES) . '"
                 data-birth-place="' . htmlspecialchars($row['birth_place'], ENT_QUOTES) . '"
                 data-contact-num="' . htmlspecialchars($row['contact_num'], ENT_QUOTES) . '"
-                data-audit-trail-num="' . htmlspecialchars($row['audit_trail_no'], ENT_QUOTES) . '"
                 data-bs-toggle="modal" data-bs-target="#ViewResidentModal">View</button>';
 
             if($row['is_deleted'] == "0"){

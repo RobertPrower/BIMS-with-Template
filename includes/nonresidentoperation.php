@@ -426,7 +426,7 @@ if($operation_check == "ADD"){ //For the add operation
             $update_stmt = $pdo->prepare($update_query);
             $update_stmt->execute([$id_to_delete]);
 
-            $update_audit_sql= "UPDATE nonres_audit_trail SET dept_recovered_no=?, user_recovered_no=?, datetime_recovered=CURRENT_TIMESTAMP() WHERE res_at_id=?";
+            $update_audit_sql= "UPDATE nonres_audit_trail SET dept_recovered_no=?, user_recovered_no=?, datetime_recovered=CURRENT_TIMESTAMP() WHERE audit_trail_id=?";
             $atstmt= $pdo->prepare($update_audit_sql);
             $atstmt -> execute([$departno, $userid, $id_to_delete]);
             echo json_encode(["success" => true, "message" => "Record recovered successfully."]);
@@ -606,7 +606,7 @@ if($operation_check == "ADD"){ //For the add operation
         $start_from = ($page - 1) * $limit;
 
         // query to fetch records with pagination
-        $stmt = $pdo->prepare("CALL SearchNonResident(:search,:start_from,$limit)"); 
+        $stmt = $pdo->prepare("CALL SearchNonResidentDeleted(:search,:start_from,$limit)"); 
 
         $stmt->execute(['search' => "%$search%", 'start_from' => "$start_from"] );
 

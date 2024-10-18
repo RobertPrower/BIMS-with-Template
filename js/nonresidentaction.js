@@ -341,9 +341,13 @@ $(document).ready(function () {
             data: { nresident_id: nresidentId, operation: "UNDO_DELETE"},
             dataType: "json",
             success: function (response) {
-              console.log("Data recovered successfully:", response);
-              swal("Record Has Been Restored", { icon: "success" });
-              reloadDeletedEntries(page);
+              if(response.success == true){
+                console.log("Data recovered successfully:", response);
+                swal("Record Has Been Restored", { icon: "success" });
+                reloadDeletedEntries(page);
+              }else{
+                swal("Something went wrong!", { icon: "error" });
+              }
             },
             error: function (xhr, status, error) {
               console.error("Error deleting data:", error);

@@ -22,7 +22,7 @@ if ($operation_check == "FETCH_TABLE") {
             // Populate table rows with Resident Clearance data
             include_once('requested_docu_tabletofetch.php');
         }else{
-            echo "<p>No records found.</p>";
+            echo '<tr><td colspan="11"><b>No Records found</b></td></tr>';
         }
     } else {
         echo json_encode("ID not provided");
