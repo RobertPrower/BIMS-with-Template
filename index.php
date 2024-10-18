@@ -1,6 +1,10 @@
 <?php
-
     require_once('includes/connecttodb.php');
+
+    $logoquery = "SELECT `filename` FROM `certificate-img` WHERE purpose = 'Barangay Logo'";
+    $logostmt = $pdo->prepare($logoquery);
+    $logostmt -> execute();
+    $logo = $logostmt -> fetchColumn(); 
 
     $sqlquery="SELECT COUNT(*) AS total FROM `tbl_docu_request`";
     $stmt= $pdo->prepare($sqlquery);
@@ -26,6 +30,9 @@
 
     }
 
+    $pdo = null;
+
+
 
 ?>
 
@@ -38,7 +45,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dashboard</title>
   <!-- Favicon -->
-  <link rel="shortcut icon" href="./img/svg/logo.svg" type="image/x-icon">
+  <link rel="shortcut icon" href="img/logos/<?php echo $logo; ?>" type="image/x-icon">
   <!-- Custom styles -->
   <link rel="stylesheet" href="./css/style.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">

@@ -43,6 +43,11 @@
 
     }
 
+    $logoquery = "SELECT `filename` FROM `certificate-img` WHERE purpose = 'Barangay Logo'";
+    $logostmt = $pdo->prepare($logoquery);
+    $logostmt -> execute();
+    $logo = $logostmt -> fetchColumn(); 
+
     $pdo = null;
 ?>
 
@@ -55,7 +60,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Manage Certificate Setings | BIMS</title>
   <!-- Favicon -->
-  <link rel="shortcut icon" href="img/logos/Brgy177.png" type="image/x-icon">
+  <link rel="shortcut icon" href="img/logos/<?php echo $logo;?>" type="image/x-icon">
   <!-- Custom styles -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" 
   integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">

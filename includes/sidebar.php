@@ -3,7 +3,7 @@
         <div class="sidebar-head">
             <a href="/" class="logo-wrapper" title="Home">
                 <span class="sr-only">Home</span>
-                <span class="mx-2" aria-hidden="true"><img src="img/Brgy177.png" style="width: 80px;height: 80px"></img></span>
+                <span class="mx-2" aria-hidden="true"><img src="img/logos/<?php echo $logo; ?>" style="width: 80px;height: 80px"></img></span>
                 <div class="logo-text">
                     <span class="logo-title">BIMS</span>
                     <!--span class="logo-subtitle">Dashboard</span-->
@@ -22,7 +22,7 @@
                 </li>
                 <li>
                     <a id="documents_btn" href="documents.php">
-                        <span class="icon document" aria-hidden="true"></span>Certificates
+                        <span class="icon document" aria-hidden="true"></span>Documents
                     </a>
                     <button class="category__btn transparent-btn show-cat-btn" title="Open list">
                         <span class="sr-only">Open list</span>

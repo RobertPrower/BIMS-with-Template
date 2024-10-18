@@ -121,11 +121,11 @@ $(document).ready(function () {
   }
 
   //Update the pagination controls every flipped of the show deleted entries switch
-  function updateDeletedPaginationControls(currentPage) {
+  function updateDeletedPaginationControls(currentPage, query) {
     $.ajax({
       url: "includes/residentoperation.php",
       type: "POST",
-      data: { pageno: currentPage, operation: "PAGINATION_FOR_DEL_REC" },
+      data: { pageno: currentPage, search: query, operation: "PAGINATION_FOR_DEL_REC" },
       success: function (data) {
         $(".pagination").html(data);
         //Prevent the pagination from showing when the entries is less than 10 entries
@@ -155,7 +155,7 @@ $(document).ready(function () {
         data: { search: query, page: page, operation: "DELETED_SEARCH" },
         success: function (data) {
           $("#ResidentTableBody").html(data);
-          updateDeletedPaginationControls(page);
+          updateDeletedPaginationControls(page, query);
         },
         error: function (xhr, status, error) {
           console.error("Error fetching search results:", error);
@@ -182,7 +182,7 @@ $(document).ready(function () {
   $("#searchbox").on("keyup", function () {
     let query = $(this).val();
 
-    if (query.length > 2) {
+    if (query.length > 0) {
       //Fetch the results by the fetchResults function above
       fetchResults(query);
     } else {

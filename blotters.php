@@ -1,11 +1,13 @@
 <?php 
-    include_once("includes/blottersearchfunction.php");
+    require_once('includes/connecttodb.php');
+    $logoquery = "SELECT `filename` FROM `certificate-img` WHERE purpose = 'Barangay Logo'";
+    $logostmt = $pdo->prepare($logoquery);
+    $logostmt -> execute();
+    $logo = $logostmt -> fetchColumn(); 
 
-    if (isset($_GET['success']) && $_GET['success'] === "deleted") {
-        echo "<script>alert('Record deleted successfully.')</script>";
-    }
+    $pdo = null;
+
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -13,15 +15,12 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Elegant Dashboard | Dashboard</title>
+  <title>Blotters | BIMS</title>
   <!-- Favicon -->
-  <link rel="shortcut icon" href="./img/svg/logo.svg" type="image/x-icon">
+  <link rel="shortcut icon" href="img/logos/<?php echo $logo; ?>" type="image/x-icon">
   <!-- Custom styles -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" 
-  integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <link href="css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="./css/style.min.css">
-  <!--link rel="stylesheet" href="./css/blottertablestyle.css"-->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
 </head>
 
@@ -165,8 +164,7 @@
                                         <button type="button" id="closeButton" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                             <button type="submit" id="addButton" name="submit" class="btn btn-primary">Save</button>
                                             
-                                            <script src="js/.js"> </script>
-                                      </div>
+                                        </div>
                                     </div>
                                   </div>
                                 </div>
@@ -199,10 +197,8 @@
                             <th style="width: 10%;"class="text-center">Date Reported</th>
                             <th style="width: 10%;" class="text-center">Complainant Name</th>
                             <th style="width: 10%;" class="text-center">Complainant Address</th>
-                            <th style="width: 10%;" class="text-center">Complainant Cellphone Number</th>
                             <th style="width: 10%;" class="text-center">Respondent Name</th>
                             <th style="width: 10%;" class="text-center">Respondent Address</th>
-                            <th style="width: 10%;" class="text-center">Respondent Cellphone Number</th>
                             <th style="width: 10%;" class="text-center">Report Status</th>
                             <th style="width: 10%;" class="text-center">Date of Incident</th>
                             <th style="width: 10%;" class=" col-span-3">Blotter Action</th>
@@ -211,87 +207,7 @@
                         <tbody>
                         
                         
-                        <?php
-                            
-                        //To Populate table rows with user data
-                        foreach ($result as $row) {
-                            echo "<tr>";
-                            //echo '<td><input type="checkbox" class="check-all"></td>';
-                            echo "<td>{$row['blotter_id']}</td>";
-                            echo "<td>{$row['reported_date']}</td>";
-                            echo "<td>{$row['complainant_lname']}, {$row['complainant_fname']} {$row['complainant_mname']}</td>";
-                            echo "<td>{$row['complainant_address']}</td>";
-
-                            //Prevent "0" From appearing in Complainant Cellphone Number
-
-                            if($row['complainant_contact_num']== "0"){
-                                echo "<td> </td> ";
-                            } else{
-                                echo "<td>{$row['complainant_contact_num']}</td>";
-                            }
-
-                            //To prevent "," from appearing in the Respondent Name Column
-                            
-                            if(empty($row['respondent_lname']) && empty($row['respondent_fname'])){
-                                    echo "<td> </td> ";
-                                } else{
-                                echo  "<td> {$row['respondent_lname']}, {$row['respondent_fname']} {$row['respondent_mname']}</td>";
-                                }
-
-                            echo "<td>{$row['respondent_address']}</td>";
-
-                            //To prevent "0" from appearing in the Respondent Cellphone Number Column
-                            
-                            if($row['respondent_contact_num']== "0"){
-                                echo "<td> </td> ";
-                            } else{
-                                echo "<td>{$row['respondent_contact_num']}</td>";
-                            }
-
-                            //To display the status theam 
-                            
-                            if($row['report_status'] === 'Ongoing'){       
-                                
-                                echo "<td class='d-flex justify-content-center'><div class='pt-5 pb-5'><span class='badge-pending'>{$row['report_status']}</span></div></td>";
-                            
-                            }elseif($row['report_status'] === 'Settled'){
-
-                                echo "<td class='d-flex justify-content-center'><div class='pt-5 pb-5'><span class='badge-success'>{$row['report_status']}</span></div></td>";
-
-                            }else{
-
-                                echo "<td class='d-flex justify-content-center'><div class='pt-5 pb-5'><span class='badge-trashed'>{$row['report_status']}</span></div></td>";
-                            }
-
-                            echo "<td>{$row['date_of_incident']}</td>";
-
-                            //For the view button
-                            echo "<td style='width: 15%;'><div class='btn-group text-center'>";
-
-
-                            echo "<form method='GET' action='viewandeditblotter.php'>";
-                            echo "<input type='hidden' name='id' value='" . $row['blotter_id'] . "'>";
-                            echo "<button type='submit' id='viewandeditblotter' class='btn btn-primary mx-1'>View</button>";
-                            echo "</form>";
-
-                            //For the edit button
-
-                                echo "<form method='GET' action='viewandeditblotter.php'>";
-                                echo "<input type='hidden' name='id' value='" . $row['blotter_id'] . "'>";
-                                echo "<button type='submit' id='viewandeditblotter' class='btn btn-success mx-1'>Edit</button>";
-                                echo "</form>";
-
-                                // For the Delete Button 
-
-                                echo "<form method='post' action='include/deleteblotterbtn.php' onsubmit='return confirmDelete();'>";
-                                echo "<input type='hidden' name='delete_blotter_id' value='" . $row['blotter_id'] . "'>";
-                                echo "<button type='submit' id='showdeletealert' name='deletebtn' class='btn btn-danger mx-1'>Delete</button>";
-                                echo "</form>";
-                                echo "</div>";
-                                echo "</td>";
-                            echo "</tr>";
-                        }
-                        ?>
+                      
                         </tbody>
                     
                         
@@ -306,14 +222,16 @@
     </div>
 </div>
 
+<script src="js/jquery-3.7.1.min.js"></script>
+<script src="js/bootstrap.bundle.min.js"></script>
 <!-- Chart library -->
 <script src="./plugins/chart.min.js"></script>
 <!-- Icons library -->
 <script src="plugins/feather.min.js"></script>
 <!-- Custom scripts -->
 <script src="js/script.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 <script src="js/sidebar.js"></script>
+
 </body>
 
 </html>

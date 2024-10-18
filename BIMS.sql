@@ -74,8 +74,8 @@ CREATE TABLE `certificate-img` (
 insert  into `certificate-img`(`img_id`,`purpose`,`filename`) values 
 (1,'Government Logo','BagongPinas.png'),
 (2,'City Logo','CaloocanCityLogo.png'),
-(3,'Barangay Logo','Brgy177Logo.png'),
-(4,'Barangay Title','Brgy177.png'),
+(3,'Barangay Title','Brgy177Logo.png'),
+(4,'Barangay Logo','Brgy177.png'),
 (5,'Watermark','watermark.png'),
 (6,'Barangay Title2','Brgy177(2).png');
 
@@ -236,18 +236,18 @@ insert  into `res_audit_trail`(`res_at_id`,`added_depart_no`,`added_by_no`,`date
 (5,NULL,NULL,'2024-09-03','15:56:57',NULL,NULL,'2024-09-12','14:04:20',NULL,NULL,'2024-09-26','19:57:35',NULL,NULL,'2024-09-26','19:56:42'),
 (6,NULL,NULL,'2024-09-03','15:58:04',NULL,NULL,'2024-09-19','11:28:03',NULL,NULL,'2024-09-26','19:55:53',NULL,NULL,'2024-09-26','19:54:20'),
 (7,NULL,NULL,'2024-09-10','17:46:56',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(8,NULL,NULL,'2024-09-03','16:00:19',NULL,NULL,'2024-09-12','14:03:45',NULL,NULL,'2024-09-26','20:02:07',NULL,NULL,'2024-09-26','20:05:48'),
+(8,NULL,NULL,'2024-09-03','16:00:19',NULL,NULL,'2024-09-12','14:03:45',NULL,NULL,'2024-10-17','14:59:38',NULL,NULL,'2024-10-17','14:59:59'),
 (9,NULL,NULL,'2024-09-03','16:02:53',NULL,NULL,'2024-09-12','14:04:08',NULL,NULL,'2024-09-26','20:00:18',NULL,NULL,'2024-09-26','19:59:03'),
 (10,NULL,NULL,'2024-09-03','16:07:36',NULL,NULL,'2024-09-03','18:39:34',NULL,NULL,'2024-09-26','20:01:46',NULL,NULL,'2024-09-26','20:00:55'),
-(11,NULL,NULL,'2024-09-10','17:46:23',NULL,NULL,'2024-09-16','22:51:12',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(11,NULL,NULL,'2024-09-10','17:46:23',NULL,NULL,'2024-09-16','22:51:12',NULL,NULL,'2024-10-17','22:57:05',NULL,NULL,NULL,NULL),
 (12,NULL,NULL,'2024-09-03','16:14:48',NULL,NULL,'2024-10-02','03:13:39',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
 (13,NULL,NULL,'2024-09-03','16:15:39',NULL,NULL,'2024-09-08','03:34:04',NULL,NULL,'2024-09-13','15:39:32',NULL,NULL,'2024-09-08','11:53:41'),
 (14,NULL,NULL,'2024-09-03','18:30:55',NULL,NULL,'2024-09-16','11:30:29',NULL,NULL,'2024-09-04','14:58:55',NULL,NULL,'2024-09-05','23:24:21'),
 (15,NULL,NULL,'2024-09-03','18:39:05',NULL,NULL,'2024-09-10','15:07:53',NULL,NULL,'2024-09-10','15:41:27',NULL,NULL,'2024-09-26','19:53:34'),
 (16,NULL,NULL,'2024-09-07','23:54:29',NULL,NULL,'2024-09-10','14:58:50',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(17,NULL,NULL,'2024-09-07','23:54:41',NULL,NULL,'2024-09-12','14:05:20',NULL,NULL,'2024-09-17','16:27:52',NULL,NULL,'2024-09-26','19:53:38'),
+(17,NULL,NULL,'2024-09-07','23:54:41',NULL,NULL,'2024-09-12','14:05:20',NULL,NULL,'2024-10-17','23:02:27',NULL,NULL,'2024-09-26','19:53:38'),
 (18,NULL,NULL,'2024-09-07','23:57:51',NULL,NULL,'2024-09-12','14:05:08',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(19,NULL,NULL,'2024-09-11','19:37:19',NULL,NULL,'2024-09-12','14:04:43',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(19,NULL,NULL,'2024-09-11','19:37:19',NULL,NULL,'2024-09-12','14:04:43',NULL,NULL,'2024-10-17','22:57:14',NULL,NULL,NULL,NULL),
 (20,NULL,NULL,'2024-09-25','18:41:01',NULL,NULL,NULL,NULL,NULL,NULL,'2024-09-25','18:41:53',NULL,NULL,'2024-09-26','19:56:29');
 
 /*Table structure for table `resident` */
@@ -291,15 +291,15 @@ insert  into `resident`(`resident_id`,`img_filename`,`last_name`,`first_name`,`m
 (8,'images (1).jpg','Yalong','Aaaron','Armengol','','Blk 12 Lot 5','Isaiah st','Cielito Homes','2015','Male','Single','1986-03-21','Gapan Nueva Ecjia','09565656565',1,8,0),
 (9,'miano.jpg','Tecson','Franklin','Miano','','Blk 12 Lot 5','Isaiah st','Cielito Homes','2015','Male','Married','1986-03-21','Cabiao Nueva Ecjia','09565656564',1,9,1),
 (10,'Karen-Bennett-200x200px.jpg','Tecson','Kiana','Macabara','','Blk 8 lot 5B','Jeremiah st','Cielito Homes','2015','Female','Married','1988-09-13','Valenzuela City','09565656565',0,10,1),
-(11,'capture_24-09-161726498272.jpg','Salas','Norberto','Torres','','12','Zabarte rd','','2002','Male','Single','2002-08-23','Caloocan City','09565656566',0,11,0),
+(11,'capture_24-09-161726498272.jpg','Salas','Norberto','Torres','','12','Zabarte rd','','2002','Male','Single','2002-08-23','Caloocan City','09565656566',0,11,1),
 (12,'Shiroe_portal.png','Salas','Robert','Lumauig','','Blk 8 lot 4','Jeremiah st','Cielito Homes','2002','Male','Single','2002-10-16','Caloocan City','09064121066',0,12,0),
 (13,'Akatsuki_portal.png','Salas','Akatsuki','Lumauig','','Blk 8 lot 4','Jeremiah st','Cielito Homes','2004','Female','Single','2004-12-16','Caloocan City','09054321268',1,13,1),
 (14,'6c2e2762dc133ba55627875e9fa27f33.jpg','Dayao','Hiro','Timbol','','Blk 8 lot 3','Jeremiah st','Cielito Homes','2013','Male','Married','1990-04-03','Palauig Quezon','09665656565',1,14,0),
 (15,'Minori_portal.png','Atchico','Denise','Tamaro','','Blk 14 lot 13','Moises st','Cielito Homes','2019','Female','Single','1999-04-24','Palauig Quezon','09665656565',0,15,0),
 (16,'soul (1).jpg','Labancas','Danilo','Lim','','Blk 12 Lot 4','Kang kong st','Kassel Villas','2006','Male','Single','2002-10-16','Bulacan Bulacan','09056565656',1,16,0),
-(17,'capture_24-09-121726121120.jpg','Japerson','Henry','','','123','Zabarte Rd','','2012','Male','Single','2002-10-16','Caloocan City','0906412066',0,17,0),
+(17,'capture_24-09-121726121120.jpg','Japerson','Henry','','','123','Zabarte Rd','','2012','Male','Single','2002-10-16','Caloocan City','0906412066',0,17,1),
 (18,'Naotsugu_portal.png','Operacio','Tim','Lucarnas','','12','Virgo st Corner Aries st','Maria Luisa Subd','2002','Male','Single','2002-10-16','Malabon City','09545454544',1,18,0),
-(19,'Allenwalkerimage.png','Salas','Roberto','Lumauig','','Blk 12 Lot 4','Isaiah st','Cielito Homes','2002','Male','Single','2001-10-16','Caloocan City','09064121066',1,19,0),
+(19,'Allenwalkerimage.png','Salas','Roberto','Lumauig','','Blk 12 Lot 4','Isaiah st','Cielito Homes','2002','Male','Single','2001-10-16','Caloocan City','09064121066',1,19,1),
 (20,'capture_1727260861.jpg','Salas','Robert','Lumauig','','Blk 8 Lot 4','Jeremiah st','Select','2002','Male','Single','2002-10-16','Caloocan City','09064121066',0,20,0);
 
 /*Table structure for table `tbl_blotter_audit_trail` */
@@ -518,37 +518,37 @@ CREATE TABLE `tbl_docu_request` (
 
 insert  into `tbl_docu_request`(`request_id`,`resident_no`,`nresident_no`,`document_no`,`age`,`presented_id`,`ID_number`,`purpose`,`audit_trail_no`,`pdffile`,`status`,`is_deleted`) values 
 ('2024-000001',1,NULL,1,32,'National ID','PCN-123455678890','Maynilad Application',1,'generated_pdf_1728840899.pdf',0,0),
-('2024-000002',NULL,1,2,26,'Drivers License','N42-2121212121212','Getting Business Permit',2,'generated_pdf_1728842063.pdf',0,0),
-('2024-000003',12,NULL,3,21,'Drivers License','N42-2010345','Getting Business Permit',3,'generated_pdf_1728842510.pdf',0,0),
+('2024-000002',NULL,1,2,26,'Drivers License','N42-2121212121212','Getting Business Permit',2,'generated_pdf_1728842063.pdf',0,1),
+('2024-000003',12,NULL,3,21,'Drivers License','N42-2010345','Getting Business Permit',3,'generated_pdf_1728842510.pdf',0,1),
 ('2024-000004',1,NULL,4,32,'Drivers License','N42-2010345','Getting Business Permit',4,'generated_pdf_1728842689.pdf',0,0),
-('2024-000005',8,NULL,5,38,'Drivers License','N42-2010345','Getting Business Permit',5,'generated_pdf_1728842976.pdf',0,0),
-('2024-000006',NULL,2,6,26,'SSS ID','SSS-1234455677','Securing Building Permit',6,'generated_pdf_1728843584.pdf',0,0),
-('2024-000007',NULL,2,7,26,'SSS ID','SSS-1234455677','Securing Building Permit',7,'generated_pdf_1728843723.pdf',0,0),
-('2024-000008',NULL,2,8,26,'SSS ID','SSS-1234455677','Securing Building Permit',8,'generated_pdf_1728843855.pdf',0,0),
-('2024-000009',NULL,2,9,26,'SSS ID','SSS-1234455677','Securing Building Permit',9,'generated_pdf_1728843888.pdf',0,0),
-('2024-000010',NULL,2,10,26,'SSS ID','SSS-1234455677','Securing Building Permit',10,'generated_pdf_1728843980.pdf',0,0),
-('2024-000011',NULL,2,11,26,'SSS ID','SSS-1234455677','Securing Building Permit',11,'generated_pdf_1728844015.pdf',0,0),
-('2024-000012',NULL,2,12,26,'SSS ID','SSS-1234455677','Securing Building Permit',12,'generated_pdf_1728844076.pdf',0,0),
+('2024-000005',8,NULL,5,38,'Drivers License','N42-2010345','Getting Business Permit',5,'generated_pdf_1728842976.pdf',0,1),
+('2024-000006',NULL,2,6,26,'SSS ID','SSS-1234455677','Securing Building Permit',6,'generated_pdf_1728843584.pdf',0,1),
+('2024-000007',NULL,2,7,26,'SSS ID','SSS-1234455677','Securing Building Permit',7,'generated_pdf_1728843723.pdf',0,1),
+('2024-000008',NULL,2,8,26,'SSS ID','SSS-1234455677','Securing Building Permit',8,'generated_pdf_1728843855.pdf',0,1),
+('2024-000009',NULL,2,9,26,'SSS ID','SSS-1234455677','Securing Building Permit',9,'generated_pdf_1728843888.pdf',0,1),
+('2024-000010',NULL,2,10,26,'SSS ID','SSS-1234455677','Securing Building Permit',10,'generated_pdf_1728843980.pdf',0,1),
+('2024-000011',NULL,2,11,26,'SSS ID','SSS-1234455677','Securing Building Permit',11,'generated_pdf_1728844015.pdf',0,1),
+('2024-000012',NULL,2,12,26,'SSS ID','SSS-1234455677','Securing Building Permit',12,'generated_pdf_1728844076.pdf',0,1),
 ('2024-000013',NULL,2,13,26,'SSS ID','SSS-1234455677','Securing Building Permit',13,'generated_pdf_1728844088.pdf',0,0),
 ('2024-000014',NULL,2,14,26,'SSS ID','SSS-1234455677','Securing Building Permit',14,'generated_pdf_1728844112.pdf',0,0),
-('2024-000015',NULL,2,15,26,'SSS ID','SSS-1234455677','Securing Building Permit',15,'generated_pdf_1728844229.pdf',0,0),
-('2024-000016',NULL,2,16,26,'SSS ID','SSS-1234455677','Securing Building Permit',16,'generated_pdf_1728844286.pdf',0,0),
-('2024-000017',NULL,2,17,26,'SSS ID','SSS-1234455677','Securing Building Permit',17,'generated_pdf_1728844387.pdf',0,0),
-('2024-000018',NULL,3,18,34,'SSS ID','SSS-1234455677','Securing Building Permit',18,'generated_pdf_1728844523.pdf',0,0),
+('2024-000015',NULL,2,15,26,'SSS ID','SSS-1234455677','Securing Building Permit',15,'generated_pdf_1728844229.pdf',0,1),
+('2024-000016',NULL,2,16,26,'SSS ID','SSS-1234455677','Securing Building Permit',16,'generated_pdf_1728844286.pdf',0,1),
+('2024-000017',NULL,2,17,26,'SSS ID','SSS-1234455677','Securing Building Permit',17,'generated_pdf_1728844387.pdf',0,1),
+('2024-000018',NULL,3,18,34,'SSS ID','SSS-1234455677','Securing Building Permit',18,'generated_pdf_1728844523.pdf',0,1),
 ('2024-000019',NULL,3,19,34,'Passport','PASS-1234567898998','Securing Excavation Permit',19,'generated_pdf_1728844836.pdf',0,0),
 ('2024-000020',NULL,3,20,34,'School ID','19-4545454545','Securing Fencing Permit',20,'generated_pdf_1728844935.pdf',0,0),
 ('2024-000021',8,NULL,21,38,'GSIS ID','GSIS-123345567789','Securing Building Permit',21,'generated_pdf_1728880724.pdf',2,0),
 ('2024-000022',8,NULL,22,38,'GSIS ID','GSIS-123345567789','Securing Building Permit',22,'generated_pdf_1728880833.pdf',0,0),
-('2024-000023',8,NULL,23,38,'GSIS ID','GSIS-123345567789','Securing Building Permit',23,'generated_pdf_1728880864.pdf',0,0),
-('2024-000024',12,NULL,24,21,'Drivers License','N42-1212121212121','Securing Building Permit',24,'generated_pdf_1728904058.pdf',0,0),
-('2024-000025',NULL,1,25,26,'NBI Clearance','NBI-12122434345454','Getting Business Permit',25,'generated_pdf_1728994071.pdf',0,0),
-('2024-000026',NULL,2,26,26,'LTOPF ID','LTOF-1234567890','Getting Business Permit',26,'generated_pdf_1729061539.pdf',0,0),
+('2024-000023',8,NULL,23,38,'GSIS ID','GSIS-123345567789','Securing Building Permit',23,'generated_pdf_1728880864.pdf',0,1),
+('2024-000024',12,NULL,24,21,'Drivers License','N42-1212121212121','Securing Building Permit',24,'generated_pdf_1728904058.pdf',0,1),
+('2024-000025',NULL,1,25,26,'NBI Clearance','NBI-12122434345454','Getting Business Permit',25,'generated_pdf_1728994071.pdf',0,1),
+('2024-000026',NULL,2,26,26,'LTOPF ID','LTOF-1234567890','Getting Business Permit',26,'generated_pdf_1729061539.pdf',0,1),
 ('2024-000027',NULL,2,27,26,'LTOPF ID','LTOF-1234567890','Getting Business Permit',27,'generated_pdf_1729061662.pdf',0,0),
 ('2024-000028',NULL,2,28,26,'LTOPF ID','LTOF-1234567890','Getting Business Permit',28,'generated_pdf_1729061676.pdf',0,0),
 ('2024-000029',NULL,2,29,26,'LTOPF ID','LTOF-1234567890','Getting Business Permit',29,'generated_pdf_1729061693.pdf',0,0),
 ('2024-000030',NULL,2,30,26,'LTOPF ID','LTOF-1234567890','Getting Business Permit',30,'generated_pdf_1729061840.pdf',0,0),
 ('2024-000031',NULL,1,31,26,'Drivers License','N42-12121324343434','Securing Building Permit',31,'generated_pdf_1729061918.pdf',0,0),
-('2024-000032',NULL,3,32,34,'Postal ID','POS-1234567890','Getting Business Permit',32,'generated_pdf_1729062693.pdf',0,0),
+('2024-000032',NULL,3,32,34,'Postal ID','POS-1234567890','Getting Business Permit',32,'generated_pdf_1729062693.pdf',0,1),
 ('2024-000033',12,NULL,33,22,'School ID','21-00259','Securing Excavation Permit',33,'generated_pdf_1729076195.pdf',0,0);
 
 /*Table structure for table `tbl_documents` */
@@ -1029,6 +1029,63 @@ WHERE tbl_docu_request.request_id = req_id;
 	END */$$
 DELIMITER ;
 
+/* Procedure structure for procedure `SearchDelDocu` */
+
+/*!50003 DROP PROCEDURE IF EXISTS  `SearchDelDocu` */;
+
+DELIMITER $$
+
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `SearchDelDocu`(in search varchar(55), in start_from int, In lim int)
+BEGIN
+	
+		SELECT
+  `tbl_docu_request`.`request_id`           AS `request_id`,
+  `tbl_cert_audit_trail`.`datetime_issued`  AS `date_issued`,
+  (CASE WHEN (`tbl_docu_request`.`resident_no` IS NOT NULL) THEN '1' ELSE '0' END) AS `is_resident`,
+  (CASE WHEN (`tbl_docu_request`.`resident_no` IS NOT NULL) THEN `resident`.`resident_id` ELSE `non_resident`.`nresident_id` END) AS `resident/nonres_id`,
+  (CASE WHEN (`tbl_docu_request`.`resident_no` IS NOT NULL) THEN `resident`.`last_name` ELSE CONVERT(`non_resident`.`last_name` USING utf8mb4) END) AS `last_name`,
+  (CASE WHEN (`tbl_docu_request`.`resident_no` IS NOT NULL) THEN `resident`.`first_name` ELSE CONVERT(`non_resident`.`first_name` USING utf8mb4) END) AS `first_name`,
+  (CASE WHEN (`tbl_docu_request`.`resident_no` IS NOT NULL) THEN `resident`.`middle_name` ELSE CONVERT(`non_resident`.`middle_name` USING utf8mb4) END) AS `middle_name`,
+  (CASE WHEN (`tbl_docu_request`.`resident_no` IS NOT NULL) THEN `resident`.`suffix` ELSE CONVERT(`non_resident`.`suffix` USING utf8mb4) END) AS `suffix`,
+  (CASE WHEN (`tbl_docu_request`.`resident_no` IS NOT NULL) THEN `resident`.`house_num` ELSE CONVERT(`non_resident`.`house_num` USING utf8mb4) END) AS `house_num`,
+  (CASE WHEN (`tbl_docu_request`.`resident_no` IS NOT NULL) THEN `resident`.`street` ELSE CONVERT(`non_resident`.`street` USING utf8mb4) END) AS `street`,
+  (CASE WHEN (`tbl_docu_request`.`resident_no` IS NOT NULL) THEN `resident`.`subdivision` ELSE CONVERT(`non_resident`.`subdivision` USING utf8mb4) END) AS `subdivision`,
+  (CASE WHEN (`tbl_docu_request`.`nresident_no` IS NOT NULL) THEN `non_resident`.`city` ELSE 'Caloocan City' END) AS `city`,
+  (CASE WHEN (`tbl_documents`.`Barangay_Clearance` IS NOT NULL) THEN 'Barangay Clearance' WHEN (`tbl_documents`.`Certificate_of_Residency` IS NOT NULL) THEN 'Certificate of Residency' WHEN (`tbl_documents`.`Certificate_of_Indigency` IS NOT NULL) THEN 'Certificate of Indigency' WHEN (`tbl_documents`.`Certificate_of_Good_Moral` IS NOT NULL) THEN 'Certificate of Good Moral' WHEN (`tbl_documents`.`Business_Permits` IS NOT NULL) THEN 'Business Permits' WHEN (`tbl_documents`.`Building_Permits` IS NOT NULL) THEN 'Building Permits' WHEN (`tbl_documents`.`Excavation_Permits` IS NOT NULL) THEN 'Excavation Permits' WHEN (`tbl_documents`.`Fencing_Permits` IS NOT NULL) THEN 'Fencing Permits' WHEN (`tbl_documents`.`FTJS` IS NOT NULL) THEN 'First Time Job Seekers' WHEN (`tbl_documents`.`Oath_of_Undertaking` IS NOT NULL) THEN 'Oath of Undertaking' WHEN (`tbl_documents`.`TPRS` IS NOT NULL) THEN 'Tricycle Pedicab Regulatory Services' ELSE 'Unknown Document Type' END) AS `document_desc`,
+  `tbl_docu_request`.`age`                  AS `age`,
+  (CASE WHEN (`tbl_docu_request`.`resident_no` IS NOT NULL) THEN `resident`.`sex` ELSE CONVERT(`non_resident`.`sex` USING utf8mb4) END) AS `sex`,
+  `tbl_docu_request`.`presented_id`         AS `presented_id`,
+  `tbl_docu_request`.`ID_number`            AS `ID_number`,
+  `tbl_docu_request`.`purpose`              AS `purpose`,
+  `tbl_docu_request`.`pdffile`              AS `pdffile`,
+  `tbl_cert_audit_trail`.`expiration`       AS `expiration`,
+  `tbl_docu_request`.`status`               AS `status`,
+  `tbl_docu_request`.`is_deleted`           AS `is_deleted`,
+  `tbl_cert_audit_trail`.`datetime_edited`  AS `date_edited`,
+  `tbl_cert_audit_trail`.`datetime_deleted` AS `date_deleted`
+FROM ((((`tbl_docu_request`
+      LEFT JOIN `resident`
+        ON ((`tbl_docu_request`.`resident_no` = `resident`.`resident_id`)))
+     LEFT JOIN `non_resident`
+       ON ((`tbl_docu_request`.`nresident_no` = `non_resident`.`nresident_id`)))
+    JOIN `tbl_documents`
+      ON ((`tbl_docu_request`.`document_no` = `tbl_documents`.`docu_id`)))
+   JOIN `tbl_cert_audit_trail`
+     ON ((`tbl_docu_request`.`audit_trail_no` = `tbl_cert_audit_trail`.`audit_trail_id`)))
+WHERE `tbl_docu_request`.`is_deleted` = 1 
+AND (`resident`.`last_name` LIKE search 
+     OR `non_resident`.`last_name` LIKE search 
+     OR `resident`.`first_name` LIKE search 
+     OR `non_resident`.`first_name` LIKE search 
+     OR `resident`.`middle_name` LIKE search 
+     OR `non_resident`.`middle_name` LIKE search 
+     OR `tbl_docu_request`.`request_id` LIKE search) 
+ORDER BY `tbl_docu_request`.`request_id` DESC
+LIMIT start_from, lim;
+
+	END */$$
+DELIMITER ;
+
 /* Procedure structure for procedure `SearchExcavationPermits` */
 
 /*!50003 DROP PROCEDURE IF EXISTS  `SearchExcavationPermits` */;
@@ -1130,7 +1187,7 @@ DELIMITER ;
 
 DELIMITER $$
 
-/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `SearchNonResidentDeleted`(IN search_query VARCHAR(255), IN start_from INT, IN lim INT)
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `SearchNonResidentDeleted`(IN search_query VARCHAR(55), IN start_from INT, IN lim INT)
 BEGIN
   SELECT
     `non_resident`.`nresident_id` AS `nresident_id`,
@@ -1156,9 +1213,9 @@ BEGIN
   FROM `non_resident`
   JOIN `nonres_audit_trail` ON `non_resident`.`audit_trail_no` = `nonres_audit_trail`.`audit_trail_id`
   WHERE `is_deleted` = 1
-    AND (`last_name` LIKE CONCAT('%', search_query, '%')
-      OR `first_name` LIKE CONCAT('%', search_query, '%')
-      OR `middle_name` LIKE CONCAT('%', search_query, '%'))
+    AND (`last_name` LIKE search_query
+      OR `first_name` LIKE search_query
+      OR `middle_name` LIKE search_query)
   ORDER BY `last_name` ASC
   LIMIT start_from, lim;
 END */$$

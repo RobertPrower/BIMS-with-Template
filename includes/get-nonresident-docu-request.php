@@ -18,16 +18,19 @@ if ($operation_check == "FETCH_TABLE") {
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
         $stmt->closeCursor();
 
-        // Populate table rows with Resident Clearance data
-        include_once('requested_docu_tabletofetch.php');
-
+        if(count($result) > 0){
+            // Populate table rows with Resident Clearance data
+            include_once('requested_docu_tabletofetch.php');
+        }else{
+            echo "<p>No records found.</p>";
+        }
     } else {
         echo json_encode("ID not provided");
     }
 } elseif ($operation_check == "PAGINATION") {
     $id = $_POST['nresident_id'];
     
-    $pagequery = "SELECT COUNT(*) FROM tbl_docu_request WHERE `nresident_no` = ?";
+    $pagequery = "SELECT COUNT(*) FROM tbl_docu_request WHERE `nresident_no` = ? AND is_deleted = 0";
     $total_records_stmt = $pdo->prepare($pagequery);
     $total_records_stmt->execute([$id]);
     $total_records = $total_records_stmt->fetchColumn();

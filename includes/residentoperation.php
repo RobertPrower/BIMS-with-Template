@@ -7,6 +7,11 @@ $nowdate = date("y-m-d"); //Checks the current date
 $time = date('H:i:s'); //Checks the current time
 $userid=null; // For the user currently using the system
 $departno= null; // For the users depart currently using
+$limit = 10;
+$search = isset($_POST['search']) ? sanitizeData($_POST['search']): '';
+$page = isset($_POST['page']) ? $_POST['page'] : '1';
+$start_from = ($page - 1) * $limit;
+
 
  // Retrieve data sent via POST for add and edit
  $fname = (isset($_POST['fname'])) ? sanitizeData($_POST['fname']): null;
@@ -488,10 +493,21 @@ if($operation_check == "ADD"){ //For the add operation
     }
 
 }elseif($operation_check=="PAGINATION_FOR_DEL_REC"){
-    // Fetch the total number of records
-    $total_records = $pdo->query("SELECT COUNT(*) FROM resident WHERE is_deleted=1")->fetchColumn();
-    $limit = 10; //To limit the number of pages
-    $total_pages = ceil($total_records / $limit);
+
+    if(!empty($search)){
+        
+        $stmt = $pdo->prepare("CALL SearchResident(:search, :start_from, $limit)"); 
+        $stmt->execute(['search' => "%$search%", 'start_from' => "$start_from"]);
+        $results = $stmt->fetchAll();
+        $total_pages = ceil(count($results) -1) / $limit;
+
+
+    }else{
+        // Fetch the total number of records
+        $total_records = $pdo->query("SELECT COUNT(*) FROM resident WHERE is_deleted=1")->fetchColumn();
+        $limit = 10; //To limit the number of pages
+        $total_pages = ceil($total_records / $limit);
+    }
 
     // Get the current page or set a default
     $current_page = isset($_POST['pageno']) ? (int)$_POST['pageno'] : 1;
@@ -533,9 +549,7 @@ if($operation_check == "ADD"){ //For the add operation
     }
     
 }elseif($operation_check=="SEARCH"){
-    $search = isset($_POST['search']) ? sanitizeData($_POST['search']): '';
     if(!empty($search)){
-        $limit = 10;
         $page = isset($_POST['page']) ? $_POST['page'] : '1';
         $start_from = ($page - 1) * $limit;
 
@@ -557,15 +571,15 @@ if($operation_check == "ADD"){ //For the add operation
         echo '<tr><td colspan="11">No Query</td></tr>';
     }
 }elseif($operation_check=="DELETED_SEARCH"){
-    $search = isset($_POST['search']) ? sanitizeData($_POST['search']): '';
     if(!empty($search)){
-        $page = isset($_POST['page']) ? $_POST['page'] : '1';
-        $start_from = ($page - 1) * $limit;
 
         // query to fetch records with pagination
-        $stmt = $pdo->prepare("CALL SearchResidentDeleted(:search, :start_from, $limit)"); 
+        $stmt = $pdo->prepare("CALL SearchResidentDeleted(:search, :start_from, :lim)"); 
+        $stmt-> bindValue('search', (string)"%$search%", PDO::PARAM_STR);
+        $stmt-> bindValue('start_from', (int)$start_from, PDO::PARAM_INT);
+        $stmt-> bindValue('lim',(int)$limit, PDO::PARAM_INT);
 
-        $stmt->execute(['search' => "%$search%", 'start_from' => "$start_from"]);
+        $stmt->execute();
 
         $results = $stmt->fetchAll();
 
@@ -581,8 +595,6 @@ if($operation_check == "ADD"){ //For the add operation
     }
 
 }elseif($operation_check=="SEARCH_PAGINATION"){
-    $search = isset($_POST['search']) ? sanitizeData($_POST['search']): '';
-    $limit = 10;
     $stmt = $pdo->prepare("SELECT COUNT(*) FROM resident WHERE last_name LIKE :search OR first_name LIKE :search OR middle_name LIKE :search");
     $stmt->execute(['search' => "%$search%"]);
     $total_records = $stmt->fetchColumn();

@@ -1,9 +1,6 @@
 <?php
-        require_once("connecttodb.php");
         
         $sqlquery = "SELECT * FROM vw_resident";
-
-
         $stmt=$pdo->prepare($sqlquery);
         $stmt -> execute();
         $results = $stmt->fetchAll();
@@ -46,7 +43,6 @@
                                 <?php
                                     
                                 require_once('includes/residenttabletofetch.php');
-                               
                                 ?>
                                 </tbody>
                             

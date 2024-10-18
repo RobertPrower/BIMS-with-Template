@@ -65,7 +65,7 @@ $(document).ready(function () {
     //Update the pagination controls every search
     function updateSearchPaginationControls(query, currentPage) {
       $.ajax({
-        url: "includes/documentssearch.php",
+        url: "includes/documentsoperation.php",
         type: "POST",
         data: {
           search: query,
@@ -92,11 +92,12 @@ $(document).ready(function () {
     }
   
     //Update the pagination controls every flipped of the show deleted entries switch
-    function updateDeletedPaginationControls(currentPage) {
+    function updateDeletedPaginationControls(currentPage, query) {
+      console.log(query);
       $.ajax({
         url: "includes/documentsoperation.php",
         type: "POST",
-        data: { pageno: currentPage, OPERATION: "PAGINATION_FOR_DEL_REC" },
+        data: { pageno: currentPage, search : query, OPERATION: "PAGINATION_FOR_DEL_REC" },
         success: function (data) {
           $(".pagination").html(data);
           //Prevent the pagination from showing when the entries is less than 10 entries
@@ -120,12 +121,12 @@ $(document).ready(function () {
       if ($("#showdeletedentries").is(":checked")) {
         console.log("Deleted Entries switch has been on");
         $.ajax({
-          url: "includes/documentssearch.php",
+          url: "includes/documentsoperation.php",
           type: "POST",
           data: { search: query, page: page, OPERATION: "DELETED_SEARCH" },
           success: function (data) {
             $("#DocumentsTableBody").html(data);
-            updateDeletedPaginationControls(page);
+            updateDeletedPaginationControls(page, query);
           },
           error: function (xhr, status, error) {
             console.error("Error fetching search results:", error);
@@ -134,9 +135,9 @@ $(document).ready(function () {
       } else {
         console.log("Deleted Entries switch has been off");
         $.ajax({
-          url: "includes/documentssearch.php",
+          url: "includes/documentsoperation.php",
           type: "POST",
-          data: { search: query, page: page, operation: "SEARCH" },
+          data: { search: query, page: page, OPERATION: "SEARCH" },
           success: function (data) {
             $("#DocumentsTableBody").html(data);
             updateSearchPaginationControls(query, page);
@@ -149,7 +150,7 @@ $(document).ready(function () {
     }
   
     //For the search box
-    $("#searchbox").on("keydown", function () {
+    $("#searchbox").on("keyup", function () {
       let query = $(this).val();
   
       if (query.length >= 1) {
@@ -806,6 +807,8 @@ $(document).ready(function () {
   $(document).on("click",'#deletebutton',function () {
     var request_id = $(this).data("request_id");
     var currentSearch = $("#searchbox").val();
+    var page = $(this).data("pageno");
+
     console.log("Delete button has been click")
     swal({
       title: "Are you sure?",

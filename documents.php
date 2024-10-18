@@ -1,3 +1,14 @@
+<?php 
+
+    require_once('includes/connecttodb.php');
+    $logoquery = "SELECT `filename` FROM `certificate-img` WHERE purpose = 'Barangay Logo'";
+    $logostmt = $pdo->prepare($logoquery);
+    $logostmt -> execute();
+    $logo = $logostmt -> fetchColumn(); 
+
+    $pdo = null;
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,7 +19,7 @@
   <title>BIMS | Requested Documents</title>
   
   <!-- Favicon -->
-  <link rel="shortcut icon" href="./img/Brgy177.png" type="image/x-icon">
+  <link rel="shortcut icon" href="./img/logos/<?php echo $logo; ?>" type="image/x-icon">
 
   <!-- Custom styles -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" 
