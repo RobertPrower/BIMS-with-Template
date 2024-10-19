@@ -3,9 +3,18 @@ $(document).ready(function() {
     var whatcert = $(".main-title").text();
 
     var selectedRowId = null;
-    // Initialize DataTable when the modal is shown
-    $('#selectresident').on('shown.bs.modal', function() {
-    $('#ResidentTable').DataTable({"lengthChange": false});
+
+    $('#selectresident').on('shown.bs.modal', function () {
+        $('#ResidentTable').DataTable({ "lengthChange": false });
+        console.log("shown modal has been triggered");
+    });
+
+     $("#selectresident").on('hidden.bs.modal', function () {
+
+         var table = $('#ResidentTable').DataTable();
+            table.destroy().destroy;
+         console.log("hidden event has been triggered");
+
     });
 
     // Event listener for row click

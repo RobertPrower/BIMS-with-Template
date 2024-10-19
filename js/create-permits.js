@@ -3,11 +3,20 @@ $(document).ready(function() {
     var selectedRowId = null;
     // Initialize DataTable when the modal is shown
     $('#selectresident').on('shown.bs.modal', function() {
-    $('#ResidentTable').DataTable({"lengthChange": false});
+        $('#ResidentTable').DataTable({"lengthChange": false});
     });
 
     $('#selectnonresident').on('shown.bs.modal', function() {
-        $('#NonResidentTable').DataTable({"lengthChange": false});
+        $('#NonResidentTable').DataTable({ "lengthChange": false });
+        console.log("Table has been shown");
+    });
+
+    $("#selectresident, #selectnonresident").on('hide.bs.modal', function () {
+
+         var table = $('#ResidentTable, #NonResidentTable').DataTable();
+            table.destroy().destroy;
+         console.log("hidden event has been triggered");
+
     });
     // Event listener for row click
     $(document).on('click', '.ResidentTable tbody tr', function() {

@@ -55,6 +55,12 @@ if($_SERVER['REQUEST_METHOD']== "POST"){
         $imgstmt->execute();
         $imglogo = $imgstmt->fetchAll(PDO::FETCH_ASSOC); 
 
+         foreach ($imglogo as $logoraw){
+
+            $logo[]=$logoraw['filename'];
+
+        }
+
         $brgydetailsquery = "SELECT * FROM brgy_details";
         $brgydetailstmt = $pdo->prepare($brgydetailsquery);
         $brgydetailstmt->execute();

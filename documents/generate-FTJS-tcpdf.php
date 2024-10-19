@@ -52,15 +52,16 @@ if($_SERVER['REQUEST_METHOD']== "POST"){
         $imgstmt->execute();
         $imglogo = $imgstmt->fetchAll(PDO::FETCH_ASSOC); 
 
+        foreach ($imglogo as $logoraw){
+
+            $logo[]=$logoraw['filename'];
+
+        }
+
         $brgydetailsquery = "SELECT * FROM brgy_details";
         $brgydetailstmt = $pdo->prepare($brgydetailsquery);
         $brgydetailstmt->execute();
         $brgydetailsraw = $brgydetailstmt->fetchAll(PDO::FETCH_ASSOC); 
-    
-        $docudetailsquery = "CALL determine_docu_type('FTJS')";
-        $docudetailstmt = $pdo->prepare($docudetailsquery);
-        $docudetailstmt->execute();
-        $docudetailstmt->closeCursor();
     
         // Insert into tbl_cert_audit_trail
         $auditTrailQuery = "INSERT INTO tbl_cert_audit_trail(issuing_dept_no, datetime_issued, expiration)
@@ -68,6 +69,11 @@ if($_SERVER['REQUEST_METHOD']== "POST"){
         $auditTrailStmt = $pdo->prepare($auditTrailQuery);
         $auditTrailStmt->execute([$issuingdeptno, $nowdate]);
     
+        $docudetailsquery = "CALL determine_docu_type('FTJS')";
+        $docudetailstmt = $pdo->prepare($docudetailsquery);
+        $docudetailstmt->execute();
+        $docudetailstmt->closeCursor();
+
         // Insert into tbl_docu_request
         $docuRequestQuery = "INSERT INTO tbl_docu_request (resident_no ,presented_id, ID_number, purpose, pdffile)
                                 VALUES (?, ?, ?, ?, ?)";

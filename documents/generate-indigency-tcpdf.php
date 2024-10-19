@@ -56,6 +56,12 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
         $imgstmt->execute();
         $imglogo = $imgstmt->fetchAll(PDO::FETCH_ASSOC); 
 
+        foreach ($imglogo as $logoraw){
+
+            $logo[]=$logoraw['filename'];
+
+        }
+
         $brgydetailsquery = "SELECT * FROM brgy_details";
         $brgydetailstmt = $pdo->prepare($brgydetailsquery);
         $brgydetailstmt->execute();
@@ -216,6 +222,7 @@ $pdf->AddPage();
 
 // Add image watermark (with transparency)
 $pdf->SetAlpha(0.3); // Set transparency
+global $logo;
 $pdf->Image('../img/logos/'.$logo[4], -6, 25, 220, 0, 'PNG', '', '', false, 300, '', false, false, 0); // X, Y, Width, Height
 $pdf->SetAlpha(1); // Reset transparenc
 

@@ -1,6 +1,6 @@
 /*
 SQLyog Ultimate v13.1.1 (64 bit)
-MySQL - 5.7.44-log : Database - bims
+MySQL - 5.7.20-log : Database - bims
 *********************************************************************
 */
 
@@ -12,7 +12,7 @@ MySQL - 5.7.44-log : Database - bims
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-CREATE DATABASE /*!32312 IF NOT EXISTS*/`bims` /*!40100 DEFAULT CHARACTER SET utf8mb4 */;
+CREATE DATABASE /*!32312 IF NOT EXISTS*/`bims` /*!40100 DEFAULT CHARACTER SET utf8 COLLATE utf8_spanish_ci */;
 
 USE `bims`;
 
@@ -453,7 +453,7 @@ CREATE TABLE `tbl_cert_audit_trail` (
   CONSTRAINT `edited_by_fk` FOREIGN KEY (`edited_by_no`) REFERENCES `tbl_username` (`username_id`),
   CONSTRAINT `issued_by_fk` FOREIGN KEY (`issued_by_no`) REFERENCES `tbl_username` (`username_id`),
   CONSTRAINT `recovered_by_fk` FOREIGN KEY (`recovered_by_no`) REFERENCES `tbl_username` (`username_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8;
 
 /*Data for the table `tbl_cert_audit_trail` */
 
@@ -490,7 +490,13 @@ insert  into `tbl_cert_audit_trail`(`audit_trail_id`,`issuing_dept_no`,`issued_b
 (30,NULL,NULL,'2024-10-16 14:57:20','2025-10-16',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
 (31,NULL,NULL,'2024-10-16 14:58:38','2025-10-16',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
 (32,NULL,NULL,'2024-10-16 15:11:33','2025-10-16',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(33,NULL,NULL,'2024-10-16 18:56:35','2025-10-16',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+(33,NULL,NULL,'2024-10-16 18:56:35','2025-10-16',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(34,NULL,NULL,'2024-10-19 13:22:31','2025-01-19',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(35,NULL,NULL,'2024-10-19 19:23:50','2025-01-19',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(36,NULL,NULL,'2024-10-19 19:27:51','2025-01-19',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(37,NULL,NULL,'2024-10-19 19:28:02','2025-01-19',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(38,NULL,NULL,'2024-10-19 19:29:25','2025-01-19',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(39,NULL,NULL,'2024-10-19 13:34:11','2025-10-19',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 
 /*Table structure for table `tbl_docu_request` */
 
@@ -555,7 +561,13 @@ insert  into `tbl_docu_request`(`request_id`,`resident_no`,`nresident_no`,`docum
 ('2024-000030',NULL,2,30,26,'LTOPF ID','LTOF-1234567890','Getting Business Permit',30,'generated_pdf_1729061840.pdf',0,0),
 ('2024-000031',NULL,1,31,26,'Drivers License','N42-12121324343434','Securing Building Permit',31,'generated_pdf_1729061918.pdf',0,0),
 ('2024-000032',NULL,3,32,34,'Postal ID','POS-1234567890','Getting Business Permit',32,'generated_pdf_1729062693.pdf',0,1),
-('2024-000033',12,NULL,33,22,'School ID','21-00259','Securing Excavation Permit',33,'generated_pdf_1729076195.pdf',0,0);
+('2024-000033',12,NULL,33,22,'School ID','21-00259','Securing Excavation Permit',33,'generated_pdf_1729076195.pdf',0,0),
+('2024-000034',8,NULL,34,38,'National ID','df4545454545','Verification Purposes',34,'generated_pdf_1729336951.pdf',0,0),
+('2024-000035',8,NULL,35,38,'NBI Clearance','df4545454545','Medical Assistance',35,'generated_pdf_1729337030.pdf',0,0),
+('2024-000036',8,NULL,36,38,'NBI Clearance','df4545454545','Medical Assistance',36,'generated_pdf_1729337271.pdf',0,0),
+('2024-000037',8,NULL,37,38,'NBI Clearance','df4545454545','Medical Assistance',37,'generated_pdf_1729337282.pdf',0,0),
+('2024-000038',8,NULL,38,38,'NBI Clearance','df4545454545','Medical Assistance',38,'generated_pdf_1729337365.pdf',0,0),
+('2024-000039',8,NULL,39,38,'Postal ID','df4545454545','Employment',39,'C:/xampp/htdocs//BIMS-with-Template/documents/first_time_job_seeker/generated_pdf_1729337651.pdf',0,0);
 
 /*Table structure for table `tbl_documents` */
 
@@ -587,7 +599,7 @@ CREATE TABLE `tbl_documents` (
   CONSTRAINT `f_permit_fk` FOREIGN KEY (`Fencing_Permits`) REFERENCES `tbl_fencing_permit` (`fencing_permit_id`) ON DELETE CASCADE,
   CONSTRAINT `indigency_fk` FOREIGN KEY (`Certificate_of_Indigency`) REFERENCES `tbl_indigency` (`indigency_id`) ON DELETE CASCADE,
   CONSTRAINT `tprs_fk` FOREIGN KEY (`TPRS`) REFERENCES `tbl_tprs` (`tprs_id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8;
 
 /*Data for the table `tbl_documents` */
 
@@ -624,7 +636,13 @@ insert  into `tbl_documents`(`docu_id`,`Barangay_Clearance`,`Certificate_of_Resi
 (30,NULL,NULL,NULL,NULL,NULL,NULL,10,NULL,NULL,NULL,NULL),
 (31,NULL,NULL,NULL,NULL,NULL,NULL,NULL,18,NULL,NULL,NULL),
 (32,NULL,NULL,NULL,NULL,NULL,NULL,11,NULL,NULL,NULL,NULL),
-(33,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL);
+(33,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL),
+(34,NULL,2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(35,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(36,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(37,NULL,NULL,3,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(38,NULL,NULL,4,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(39,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,NULL);
 
 /*Table structure for table `tbl_excavation_permits` */
 
@@ -670,9 +688,15 @@ CREATE TABLE `tbl_indigency` (
   `indigency_id` int(55) NOT NULL AUTO_INCREMENT,
   `agency` varchar(55) DEFAULT NULL,
   PRIMARY KEY (`indigency_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 /*Data for the table `tbl_indigency` */
+
+insert  into `tbl_indigency`(`indigency_id`,`agency`) values 
+(1,'Public Attorneys Office'),
+(2,'PCSO'),
+(3,'PCSO'),
+(4,'PCSO');
 
 /*Table structure for table `tbl_persons_involved` */
 
@@ -899,7 +923,7 @@ BEGIN
         SELECT IFNULL(MAX(Certificate_of_Good_Moral), 0) + 1 FROM tbl_documents;
         
     -- For First Time Job Seeker Certificate
-    ELSEIF certificate_type = 'First_Time_Job_Seeker' THEN
+    ELSEIF certificate_type = 'FTJS' THEN
         INSERT INTO tbl_documents(FTJS)
         SELECT IFNULL(MAX(FTJS), 0) + 1 FROM tbl_documents;
         

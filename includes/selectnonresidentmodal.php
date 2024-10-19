@@ -29,12 +29,12 @@
                                     <!-- <th style="width: 2%;"class="text-center"><input type="checkbox" class="check-all"></th> -->
                                     <th hidden style="width:  1%;"class="text-center nonresident_id" id="nonresident_id">ID</th> 
                                     <th style="width: 15%;"class="text-center">Image</th>
-                                    <th style="width: 15%;" class="text-center">Full Name</th>
+                                    <th style="width: 20%;" class="text-center">Full Name</th>
                                     <th style="width: 25%;" class="text-center">Address</th>
                                     <th style="width: 5%;" class="text-center">Sex</th>
-                                    <th style="width: 10%;" class="text-center">Marital Status</th>
-                                    <th style="width: 10%;" class="text-center">Birth Date</th>
-                                    <th style="width: 10%;" class="text-center">Cellphone Number</th>
+                                    <th style="width: 5%;" class="text-center">Marital Status</th>
+                                    <th style="width: 5%;" class="text-center">Birth Date</th>
+                                    <th style="width: 5%;" class="text-center">Cellphone Number</th>
                                 </tr>
                                 </thead>
                                 <tbody>
