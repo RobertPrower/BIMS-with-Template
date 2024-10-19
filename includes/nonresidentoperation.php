@@ -190,202 +190,204 @@ if($operation_check == "ADD"){ //For the add operation
     
 }elseif($operation_check == "EDIT"){
 
+  
      // Retrieve data sent via POST
      $nresidentId = sanitizeData($_POST['nresident_id']);
      
      //Variable for the Name of the Folder which is img to be accessible to all if statements
      $target_dir = "img/non_resident_img/";
  
-    if(!isset($_POST['isfromcamcheck'])){
+    if(!empty($nresidentId)){
+        if(!isset($_POST['isfromcamcheck'])){
         
-         // Check if there is uploaded file or theres an error
-        if($_FILES['image_file']['error'] == UPLOAD_ERR_OK){
-    
-            //Variable for the path
-            $target_file = $_FILES["image_file"]["name"];
-    
-            // To get the file extension and converts it to lower case
-            $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
-    
-            // Generate a Unique filename via the generateUniqueFileName user define function below
-            $fileName = generateUniqueFileName($target_dir, basename($_FILES["image_file"]["name"]));
-            $target_file = $target_dir . $fileName;
-    
-            // Check if file is an image
-            $check = getimagesize($_FILES["image_file"]["tmp_name"]);
-            if ($check === false) {
-                throw new Exception("File is not an image.");
-            }
-    
-            // Check file size
-            if ($_FILES["image_file"]["size"] > 500000) {
-                throw new Exception("Sorry, your file is too large.");
-            }
-    
-            // Allow only specific file formats
-            if (!in_array($imageFileType, ["jpg", "jpeg", "png"])) {
-                throw new Exception("Sorry, only JPG, JPEG & PNG files are allowed.");
-            }
-    
-            // Move uploaded file to target directory
-            if (!move_uploaded_file($_FILES["image_file"]["tmp_name"], $target_file)) {
-                throw new Exception("Sorry, there was an error uploading your file.");
-            }
-    
-            
-            //MetaData Entering to the Database
-            $stmt = $pdo->prepare("UPDATE non_resident SET img_filename=? WHERE nresident_id=?");
-    
-            $stmt -> execute([$fileName, $nresidentId]);
-    
-            //Checks the img/resident_img folder for any used images
-    
-                // Fetch all filenames from the database
-            $stmt = $pdo->query("SELECT img_filename FROM non_resident");
-            $dbFiles = $stmt->fetchAll(PDO::FETCH_COLUMN);
-    
-            // Retrieve all filenames from the folder
-            $folderFiles = array_diff(scandir($target_dir), array('..', '.'));
-    
-            // Prepend the directory path to each filename
-            $folderFiles = array_map(function($filename) {
-                return $filename;
-            }, $folderFiles);
-    
-            // Find filenames in the folder but not in the database
-            $unusedFiles = array_diff($folderFiles, $dbFiles);
-    
-            // Delete unused files
-            foreach ($unusedFiles as $filename) {
-                $filePath = $target_dir . $filename;
-                if (file_exists($filePath)) {
-                    unlink($filePath);
-                }
-            }
-    
-            $imgopresponse = "Image Updated Successfully";
-
-        }elseif($_FILES['image_file']['error']==UPLOAD_ERR_INI_SIZE){
-
-            $imgopresponse = "UPLOAD_ERR_INI_SIZE: You exceeded the allow file size";
-            exit(json_encode(["success" => false, "message" => "Image Error: ". $imgopresponse]));
-
-        }elseif($_FILES['image_file']['error']==UPLOAD_ERR_FORM_SIZE){
-
-            $imgopresponse = "UPLOAD_ERR_INI_SIZE: You exceeded the allow HTML directive size";
-            exit(json_encode(["success" => false, "message" => "Image Error: ". $imgopresponse]));
-
-        }elseif($_FILES['image_file']['error']==UPLOAD_ERR_PARTIAL){
-
-            $imgopresponse = "UPLOAD_ERR_PARTIAL: The uploaded file was partially upload. Check your Internet Connection";
-            exit(json_encode(["success" => false, "message" => "Image Error: ". $imgopresponse]));
-
-
-        }elseif($_FILES['image_file']['error']==UPLOAD_ERR_NO_FILE){
-
-            $imgopresponse = "UPLOAD_ERR_NO_FILE: No file is uploaded";
-
-
-        }elseif($_FILES['image_file']['error']==UPLOAD_ERR_CANT_WRITE){
-            $imgopresponse = "UPLOAD_ERR_CANT_WRITE: Unable to write file to disk.";
-            exit(json_encode(["success" => false, "message" => "Image Error: ". $imgopresponse]));
-
-
-        }elseif($_FILES['image_file']['error']==UPLOAD_ERR_EXTENSION){
-            $imgopresponse = "UPLOAD_ERR_EXTENSION: A PHP extension stopped the file upload.";
-            exit(json_encode(["success" => false, "message" => "Image Error: ". $imgopresponse]));
-
-
-        }elseif($_FILES['image_file']['error']==UPLOAD_ERR_NO_TMP_DIR){
-            $imgopresponse = "UPLOAD_ERR_NO_TEMP_DIR: You have a missing directory";
-            exit(json_encode(["success" => false, "message" => "Image Error: ". $imgopresponse]));
-
-
-        }else{
-            $imgopresponse = "No unknown Error";
-            exit(json_encode(["success" => false, "message" => "Image Error: ". $imgopresponse]));
-            
-        }// End of Image Check If statement
-
-    }elseif(isset($_POST['isfromcamcheck'])){ //Incase the image comes from the camera
-
-        //Capture the Data
-        $data_uri = $_POST['isfromcamcheck'];
-
-        //Extract the base64 Data
-        $encoded_image = explode(",", $data_uri)[1];
-
-        //Decode the base64 string
-        $decoded_image = base64_decode($encoded_image);
-
-        //For the filename being entered in the Database
-        $fileName =  'capture_'.$nowdate.time().'.jpg';
-
-        $filePath = 'img/resident_img/'.$fileName;
-
-        //Save the image file
-        file_put_contents($filePath, $decoded_image);
-
-        //MetaData Entering to the Database
-        $stmt = $pdo->prepare("UPDATE non_resident SET img_filename=? WHERE nresident_id=?");
-    
-        $stmt -> execute([$fileName, $nresidentId]);
-
-        //Checks the img/resident_img folder for any used images
-
-        // Fetch all filenames from the database
-        $stmt = $pdo->query("SELECT img_filename FROM non_resident");
-        $dbFiles = $stmt->fetchAll(PDO::FETCH_COLUMN);
-
-        // Retrieve all filenames from the folder
-        $folderFiles = array_diff(scandir($target_dir), array('..', '.'));
-
-        // Prepend the directory path to each filename
-        $folderFiles = array_map(function($filename) {
-            return $filename;
-        }, $folderFiles);
-
-        // Find filenames in the folder but not in the database
-        $unusedFiles = array_diff($folderFiles, $dbFiles);
-
-        // Delete unused files
-        foreach ($unusedFiles as $filename) {
-            $filePath = $target_dir . $filename;
-            if (file_exists($filePath)) {
-                unlink($filePath);
-            }
-        }
-
-        $imgopresponse = "Captured Picture recorded successfully";
-        
-    }else{
-        $imgopresponse = "No image data was recevied";
-    }
-        
-
-    try {
-        // Prepare SQL statement for updating non resident data
+            // Check if there is uploaded file or theres an error
+           if($_FILES['image_file']['error'] == UPLOAD_ERR_OK){
+       
+               //Variable for the path
+               $target_file = $_FILES["image_file"]["name"];
+       
+               // To get the file extension and converts it to lower case
+               $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
+       
+               // Generate a Unique filename via the generateUniqueFileName user define function below
+               $fileName = generateUniqueFileName($target_dir, basename($_FILES["image_file"]["name"]));
+               $target_file = $target_dir . $fileName;
+       
+               // Check if file is an image
+               $check = getimagesize($_FILES["image_file"]["tmp_name"]);
+               if ($check === false) {
+                   throw new Exception("File is not an image.");
+               }
+       
+               // Check file size
+               if ($_FILES["image_file"]["size"] > 500000) {
+                   throw new Exception("Sorry, your file is too large.");
+               }
+       
+               // Allow only specific file formats
+               if (!in_array($imageFileType, ["jpg", "jpeg", "png"])) {
+                   throw new Exception("Sorry, only JPG, JPEG & PNG files are allowed.");
+               }
+       
+               // Move uploaded file to target directory
+               if (!move_uploaded_file($_FILES["image_file"]["tmp_name"], $target_file)) {
+                   throw new Exception("Sorry, there was an error uploading your file.");
+               }
+       
+               
+               //MetaData Entering to the Database
+               $stmt = $pdo->prepare("UPDATE non_resident SET img_filename=? WHERE nresident_id=?");
+       
+               $stmt -> execute([$fileName, $nresidentId]);
+       
+               //Checks the img/resident_img folder for any used images
+       
+                   // Fetch all filenames from the database
+               $stmt = $pdo->query("SELECT img_filename FROM non_resident");
+               $dbFiles = $stmt->fetchAll(PDO::FETCH_COLUMN);
+       
+               // Retrieve all filenames from the folder
+               $folderFiles = array_diff(scandir($target_dir), array('..', '.'));
+       
+               // Prepend the directory path to each filename
+               $folderFiles = array_map(function($filename) {
+                   return $filename;
+               }, $folderFiles);
+       
+               // Find filenames in the folder but not in the database
+               $unusedFiles = array_diff($folderFiles, $dbFiles);
+       
+               // Delete unused files
+               foreach ($unusedFiles as $filename) {
+                   $filePath = $target_dir . $filename;
+                   if (file_exists($filePath)) {
+                       unlink($filePath);
+                   }
+               }
+       
+               $imgopresponse = "Image Updated Successfully";
+   
+           }elseif($_FILES['image_file']['error']==UPLOAD_ERR_INI_SIZE){
+   
+               $imgopresponse = "UPLOAD_ERR_INI_SIZE: You exceeded the allow file size";
+               exit(json_encode(["success" => false, "message" => "Image Error: ". $imgopresponse]));
+   
+           }elseif($_FILES['image_file']['error']==UPLOAD_ERR_FORM_SIZE){
+   
+               $imgopresponse = "UPLOAD_ERR_INI_SIZE: You exceeded the allow HTML directive size";
+               exit(json_encode(["success" => false, "message" => "Image Error: ". $imgopresponse]));
+   
+           }elseif($_FILES['image_file']['error']==UPLOAD_ERR_PARTIAL){
+   
+               $imgopresponse = "UPLOAD_ERR_PARTIAL: The uploaded file was partially upload. Check your Internet Connection";
+               exit(json_encode(["success" => false, "message" => "Image Error: ". $imgopresponse]));
+   
+   
+           }elseif($_FILES['image_file']['error']==UPLOAD_ERR_NO_FILE){
+   
+               $imgopresponse = "UPLOAD_ERR_NO_FILE: No file is uploaded";
+   
+           }elseif($_FILES['image_file']['error']==UPLOAD_ERR_CANT_WRITE){
+               $imgopresponse = "UPLOAD_ERR_CANT_WRITE: Unable to write file to disk.";
+               exit(json_encode(["success" => false, "message" => "Image Error: ". $imgopresponse]));
+   
+   
+           }elseif($_FILES['image_file']['error']==UPLOAD_ERR_EXTENSION){
+               $imgopresponse = "UPLOAD_ERR_EXTENSION: A PHP extension stopped the file upload.";
+               exit(json_encode(["success" => false, "message" => "Image Error: ". $imgopresponse]));
+   
+   
+           }elseif($_FILES['image_file']['error']==UPLOAD_ERR_NO_TMP_DIR){
+               $imgopresponse = "UPLOAD_ERR_NO_TEMP_DIR: You have a missing directory";
+               exit(json_encode(["success" => false, "message" => "Image Error: ". $imgopresponse]));
+   
+   
+           }else{
+               $imgopresponse = "No unknown Error";
+               exit(json_encode(["success" => false, "message" => "Image Error: ". $imgopresponse]));
+               
+           }// End of Image Check If statement
+   
+       }elseif(isset($_POST['isfromcamcheck'])){ //Incase the image comes from the camera
+   
+           //Capture the Data
+           $data_uri = $_POST['isfromcamcheck'];
+   
+           //Extract the base64 Data
+           $encoded_image = explode(",", $data_uri)[1];
+   
+           //Decode the base64 string
+           $decoded_image = base64_decode($encoded_image);
+   
+           //For the filename being entered in the Database
+           $fileName =  'capture_'.$nowdate.time().'.jpg';
+   
+           $filePath = 'img/non_resident_img/'.$fileName;
+   
+           //Save the image file
+           file_put_contents($filePath, $decoded_image);
+   
+           //MetaData Entering to the Database
+           $stmt = $pdo->prepare("UPDATE non_resident SET img_filename=? WHERE nresident_id=?");
+       
+           $stmt -> execute([$fileName, $nresidentId]);
+   
+           //Checks the img/resident_img folder for any used images
+   
+           // Fetch all filenames from the database
+           $stmt = $pdo->query("SELECT img_filename FROM non_resident");
+           $dbFiles = $stmt->fetchAll(PDO::FETCH_COLUMN);
+   
+           // Retrieve all filenames from the folder
+           $folderFiles = array_diff(scandir($target_dir), array('..', '.'));
+   
+           // Prepend the directory path to each filename
+           $folderFiles = array_map(function($filename) {
+               return $filename;
+           }, $folderFiles);
+   
+           // Find filenames in the folder but not in the database
+           $unusedFiles = array_diff($folderFiles, $dbFiles);
+   
+           // Delete unused files
+           foreach ($unusedFiles as $filename) {
+               $filePath = $target_dir . $filename;
+               if (file_exists($filePath)) {
+                   unlink($filePath);
+               }
+           }
+   
+           $imgopresponse = "Captured Picture recorded successfully";
+           
+       }else{
+           $imgopresponse = "No image data was recevied";
+       }
+       try {
+        // Prepare SQL statement for updating resident data
         $statement = $pdo->prepare("UPDATE non_resident SET first_name = ?, middle_name = ?, last_name = ?,suffix = ?, house_num = ?, street = ?, subdivision = ?, district_brgy=?, city=?, province=?, zipcode=? ,sex = ?, marital_status = ?, birth_date = ?, birth_place = ?, cellphone_num = ? WHERE nresident_id = ?");
         
         // Bind parameters and execute the statement
-        $statement->execute([$fname, $mname, $lname, $suffix, $houseno, $street, $subd,$districtbrgy, $city, $province, $zipcode ,$sex, $maritalstatus, $birthdate, $birthplace, $cellphonenumber, $nresidentId]);
+        $statement->execute([$fname, $mname, $lname, $suffix, $houseno, $street, $subd,$districtbrgy, $city, $province, $zipcode, $sex, $maritalstatus, $birthdate, $birthplace, $cellphonenumber, $nresidentId]);
         
         // Send success response
         echo json_encode(["success" => true, "message" => "Data updated successfully". " ImageStatus: " . $imgopresponse]);
 
-        $update_audit_sql= "UPDATE nonres_audit_trail SET dept_edited_no=?, user_edited_no=?, last_edited_datetime=? WHERE audit_trail_id=?";
-         $atstmt= $pdo->prepare($update_audit_sql);
-         $atstmt -> execute([$departno, $userid, $nowdate, $nresidentId]);
+        $update_audit_sql= "UPDATE nonres_audit_trail SET dept_edited_no=?, user_edited_no=?, last_edited_dt=? WHERE audit_trail_id=?";
+        $atstmt= $pdo->prepare($update_audit_sql);
+        $atstmt -> execute([$departno, $userid, $nowdate, $nresidentId]);
 
         
-    } catch (PDOException $e) {
-        // Handle database connection or query errors
-        error_log($e->getMessage());
+        } catch (PDOException $e) {
+            // Handle database connection or query errors
+            error_log($e->getMessage());
 
-        echo json_encode(["success" => false, "message" => "Error updating data: " . $e->getMessage()]);
-        ini_set('display_errors', 1);
-        ini_set('display_startup_errors', 1);
-        error_reporting(E_ALL);
+            echo json_encode(["success" => false, "message" => "Error updating data: " . $e->getMessage()]);
+            ini_set('display_errors', 1);
+            ini_set('display_startup_errors', 1);
+            error_reporting(E_ALL);
+        }
+    }else{
+        echo json_encode(["success"=>false, "message"=>"No ID was recieved!!"]);
     }
 
 }elseif($operation_check == "DELETE"){
@@ -400,7 +402,7 @@ if($operation_check == "ADD"){ //For the add operation
             $update_stmt = $pdo->prepare($update_query);
             $update_stmt->execute([$id_to_delete]);
 
-            $update_audit_sql= "UPDATE nonres_audit_trail SET dept_deleted_no=?, user_deleted_no=?, datetime_deleted=? WHERE audit_trail_id=?";
+            $update_audit_sql= "UPDATE nonres_audit_trail SET dept_deleted_no=?, user_deleted_no=?, last_deleted_dt=? WHERE audit_trail_id=?";
             $atstmt= $pdo->prepare($update_audit_sql);
             $atstmt -> execute([$departno, $userid, $nowdate, $id_to_delete]);
             echo json_encode(["success" => true, "message" => "Record Soft deleted successfully."]);
@@ -426,7 +428,7 @@ if($operation_check == "ADD"){ //For the add operation
             $update_stmt = $pdo->prepare($update_query);
             $update_stmt->execute([$id_to_delete]);
 
-            $update_audit_sql= "UPDATE nonres_audit_trail SET dept_recovered_no=?, user_recovered_no=?, datetime_recovered=CURRENT_TIMESTAMP() WHERE audit_trail_id=?";
+            $update_audit_sql= "UPDATE nonres_audit_trail SET dept_recovered_no=?, user_recovered_no=?, last_recovered_dt=CURRENT_TIMESTAMP() WHERE audit_trail_id=?";
             $atstmt= $pdo->prepare($update_audit_sql);
             $atstmt -> execute([$departno, $userid, $id_to_delete]);
             echo json_encode(["success" => true, "message" => "Record recovered successfully."]);

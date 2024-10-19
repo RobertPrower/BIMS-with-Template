@@ -9,7 +9,7 @@ foreach ($results as $row) {
     echo '<td>' . htmlspecialchars($row['house_num']) . ', ' . htmlspecialchars($row['street']) . $subd .' '. htmlspecialchars($row['district_brgy']) .' '. htmlspecialchars($row['city']).' '. htmlspecialchars($row['province']).' '. htmlspecialchars($row['zipcode']). '</td>';
     echo '<td>' . htmlspecialchars($row['sex']) . '</td>';
     echo '<td>' . htmlspecialchars($row['birth_date']) . '</td>';
-    echo '<td class="text-center">' . htmlspecialchars($row['contact_num']) . '</td>';
+    echo '<td class="text-center">' . htmlspecialchars($row['cellphone_num']) . '</td>';
 
     if(!isset($Isforcert)){
         echo '<td style="width: 35%;">
@@ -32,7 +32,7 @@ foreach ($results as $row) {
                 data-marital_status="' . htmlspecialchars($row['marital_status'], ENT_QUOTES) . '"
                 data-birth-date="' . htmlspecialchars($row['birth_date'], ENT_QUOTES) . '"
                 data-birth-place="' . htmlspecialchars($row['birth_place'], ENT_QUOTES) . '"
-                data-contact-num="' . htmlspecialchars($row['contact_num'], ENT_QUOTES) . '"
+                data-contact-num="' . htmlspecialchars($row['cellphone_num'], ENT_QUOTES) . '"
                 data-bs-toggle="modal" data-bs-target="#ViewResidentModal">View</button>';
 
             if($row['is_deleted'] == "0"){
@@ -54,7 +54,7 @@ foreach ($results as $row) {
                 data-marital_status="' . htmlspecialchars($row['marital_status'], ENT_QUOTES) . '"
                 data-birth-date="' . htmlspecialchars($row['birth_date'], ENT_QUOTES) . '"
                 data-birth-place="' . htmlspecialchars($row['birth_place'], ENT_QUOTES) . '"
-                data-contact-num="' . htmlspecialchars($row['contact_num'], ENT_QUOTES) . '"
+                data-contact-num="' . htmlspecialchars($row['cellphone_num'], ENT_QUOTES) . '"
                 data-bs-toggle="modal" data-bs-target="#EditNonResidentModal">Edit</button>';
             }else{
                 //Nothing to Display

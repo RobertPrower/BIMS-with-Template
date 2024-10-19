@@ -5,7 +5,7 @@ $(document).ready(function() {
     var selectedRowId = null;
     // Initialize DataTable when the modal is shown
     $('#selectresident').on('shown.bs.modal', function() {
-    $('#ResidentTable').DataTable();
+    $('#ResidentTable').DataTable({"lengthChange": false});
     });
 
     // Event listener for row click

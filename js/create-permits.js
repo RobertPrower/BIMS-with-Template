@@ -3,11 +3,11 @@ $(document).ready(function() {
     var selectedRowId = null;
     // Initialize DataTable when the modal is shown
     $('#selectresident').on('shown.bs.modal', function() {
-    $('#ResidentTable').DataTable();
+    $('#ResidentTable').DataTable({"lengthChange": false});
     });
 
     $('#selectnonresident').on('shown.bs.modal', function() {
-        $('#NonResidentTable').DataTable();
+        $('#NonResidentTable').DataTable({"lengthChange": false});
     });
     // Event listener for row click
     $(document).on('click', '.ResidentTable tbody tr', function() {

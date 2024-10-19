@@ -529,7 +529,7 @@ $(document).ready(function () {
     var birthplace = $(this).data("birth-place");
     var phone_number = $(this).data("contact-num");
 
-    console.log(marital_status);
+    console.log(nresident_id);
 
     // Determine if this is for 'edit' or 'view'
     var isEdit = $(this).hasClass("editNonResidentButton");
@@ -559,6 +559,7 @@ $(document).ready(function () {
     // Specific logic for editing
     if (isEdit) {
         var page = $(this).data('pageno');
+        $(modalId + ' input[id="nresident_id"]').val(nresident_id);
         $(modalId + ' input[name="pageno"]').val(page);
         $(modalId).modal("show"); // Show the Edit modal
 

@@ -12,7 +12,7 @@ MySQL - 5.7.44-log : Database - bims
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-CREATE DATABASE /*!32312 IF NOT EXISTS*/`bims` /*!40100 DEFAULT CHARACTER SET utf8 */;
+CREATE DATABASE /*!32312 IF NOT EXISTS*/`bims` /*!40100 DEFAULT CHARACTER SET utf8mb4 */;
 
 USE `bims`;
 
@@ -147,16 +147,17 @@ CREATE TABLE `non_resident` (
   PRIMARY KEY (`nresident_id`),
   KEY `nres_audit_trail` (`audit_trail_no`),
   CONSTRAINT `nres_audit_trail` FOREIGN KEY (`audit_trail_no`) REFERENCES `nonres_audit_trail` (`audit_trail_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 /*Data for the table `non_resident` */
 
 insert  into `non_resident`(`nresident_id`,`img_filename`,`last_name`,`first_name`,`middle_name`,`suffix`,`house_num`,`street`,`subdivision`,`district_brgy`,`city`,`province`,`zipcode`,`sex`,`marital_status`,`birth_place`,`birth_date`,`cellphone_num`,`audit_trail_no`,`is_deleted`) values 
 (1,'1images.jpg','Rabanes','Fernan','Jarito','','Blk 9 Lot 3','Kamatis st','Ramirez Subd','Novaliches','Quezon City','Metro Manila','1423','Male','Single','Tuguegarao','1998-06-16','090956565454',1,0),
-(2,'715a5404857b4d3cfdbd2747e2eaac79.jpg','Lim','Nicholas','Mahestro','','12','Zapote Rd','Cielito Homes','Camarin Brgy 175','Caloocan City','Metro Manila','1423','Male','Single','San Nicolas Pangasinan','1998-09-29','0966565666544',2,0),
+(2,'1images (1).jpg','Lim','Nicholas','Mahestro','','12','Zapote Rd','Cielito Homes','Camarin Brgy 175','Caloocan City','Metro Manila','1423','Male','Single','San Nicolas Pangasinan','1998-09-29','0966565666544',2,0),
 (3,'2f070627687d52995cfabf5c1bbde057.jpg','Lim','Mario','Jaen','III','Blk 12 Lot 4','Hillcrest st','Rolling Stone Subd','Novaliches','Quezon City','Metro Manila','1420','Male','Married','Madella Quirino','1990-05-02','090913457854',3,0),
-(4,'capture_1729251630.jpg','Chavez','Celestina','Mariano','','Blk 12 Lot 13','Josephine st','La Forteza Subd','Camarin','Caloocan City','Metro Manila','1432','Female','Married','Lipa Batangas','2024-10-16','09064545125',4,1),
-(5,'capture_1729257482.jpg','La Torre','Nicholas','Trinidad','III','Blk 12 Lot 13','Davao st','Kingdom subd','Novaliches','Quezon City','Metro Manila','1411','Male','Married','Davao City','2000-01-01','090541236585',5,0);
+(4,'capture_1729251630.jpg','Chavez','Celestina','Mariano','','Blk 12 Lot 13','Josephine st','La Forteza Subd','Camarin','Caloocan City','Metro Manila','1432','Female','Married','Lipa Batangas','2024-10-16','09064545125',4,0),
+(5,'ren.jpg','La Torre','Nicholas','Trinidad','III','Blk 12 Lot 13','Davao st','Kingdom subd','Novaliches','Quezon City','Metro Manila','1411','Male','Married','Davao City','2000-01-01','090541236585',5,0),
+(6,'alingpuring.jpg','Lumauig','Marivic','Galindez','','Blk 8 Lot 4','Jeremiah st','Cielito Homes','Novaliches','Quezon City','Metro Manila','60007','Female','Single','Bagabag Nueva Viscaya','1990-06-12','09054321268',6,0);
 
 /*Table structure for table `nonres_audit_trail` */
 
@@ -169,26 +170,26 @@ CREATE TABLE `nonres_audit_trail` (
   `datetime_added` datetime DEFAULT NULL,
   `dept_edited_no` int(55) DEFAULT NULL,
   `user_edited_no` int(55) DEFAULT NULL,
-  `last_edited_datetime` datetime DEFAULT NULL,
+  `last_edited_dt` datetime DEFAULT NULL,
   `dept_deleted_no` int(55) DEFAULT NULL,
   `user_deleted_no` int(55) DEFAULT NULL,
-  `datetime_deleted` datetime DEFAULT NULL,
+  `last_deleted_dt` datetime DEFAULT NULL,
   `dept_recovered_no` int(55) DEFAULT NULL,
   `user_recovered_no` int(55) DEFAULT NULL,
-  `datetime_recovered` datetime DEFAULT NULL,
+  `last_recovered_dt` datetime DEFAULT NULL,
   PRIMARY KEY (`audit_trail_id`),
   KEY `nres_user_fk` (`user_added_no`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
 
 /*Data for the table `nonres_audit_trail` */
 
-insert  into `nonres_audit_trail`(`audit_trail_id`,`dept_added_no`,`user_added_no`,`datetime_added`,`dept_edited_no`,`user_edited_no`,`last_edited_datetime`,`dept_deleted_no`,`user_deleted_no`,`datetime_deleted`,`dept_recovered_no`,`user_recovered_no`,`datetime_recovered`) values 
+insert  into `nonres_audit_trail`(`audit_trail_id`,`dept_added_no`,`user_added_no`,`datetime_added`,`dept_edited_no`,`user_edited_no`,`last_edited_dt`,`dept_deleted_no`,`user_deleted_no`,`last_deleted_dt`,`dept_recovered_no`,`user_recovered_no`,`last_recovered_dt`) values 
 (1,NULL,NULL,'2024-09-04 10:12:00',NULL,NULL,'2024-09-24 18:04:40',NULL,NULL,'2024-09-25 03:03:50',NULL,NULL,NULL),
-(2,NULL,NULL,'2024-09-24 18:32:14',NULL,NULL,'2024-09-25 03:03:22',NULL,NULL,'2024-10-18 21:11:33',NULL,NULL,'2024-10-18 21:27:34'),
+(2,NULL,NULL,'2024-09-24 18:32:14',NULL,NULL,'2024-10-19 11:53:27',NULL,NULL,'2024-10-18 21:11:33',NULL,NULL,'2024-10-18 21:27:34'),
 (3,NULL,NULL,'2024-10-03 00:48:06',NULL,NULL,'2024-10-03 01:46:56',NULL,NULL,'2024-10-12 12:30:24',NULL,NULL,NULL),
-(4,NULL,NULL,'2024-10-03 00:48:33',NULL,NULL,NULL,NULL,NULL,'2024-10-18 23:09:11',NULL,NULL,'2024-10-18 22:12:44'),
-(5,NULL,NULL,'2024-10-03 00:59:05',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(6,NULL,NULL,'2024-10-03 00:59:35',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(4,NULL,NULL,'2024-10-03 00:48:33',NULL,NULL,NULL,NULL,NULL,'2024-10-19 11:58:07',NULL,NULL,'2024-10-19 11:58:12'),
+(5,NULL,NULL,'2024-10-03 00:59:05',NULL,NULL,'2024-10-19 13:56:18',NULL,NULL,'2024-10-19 00:10:29',NULL,NULL,NULL),
+(6,NULL,NULL,'2024-10-03 00:59:35',NULL,NULL,'2024-10-19 11:36:13',NULL,NULL,NULL,NULL,NULL,NULL),
 (7,NULL,NULL,'2024-10-03 01:02:24',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
 (8,NULL,NULL,'2024-10-03 01:04:17',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
 (9,NULL,NULL,'2024-10-03 01:04:34',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
@@ -197,7 +198,8 @@ insert  into `nonres_audit_trail`(`audit_trail_id`,`dept_added_no`,`user_added_n
 (12,NULL,NULL,'2024-10-03 01:18:04',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
 (13,NULL,NULL,'2024-10-03 01:18:46',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
 (14,NULL,NULL,'2024-10-18 19:40:30',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(15,NULL,NULL,'2024-10-18 21:18:02',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+(15,NULL,NULL,'2024-10-18 21:18:02',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(16,NULL,NULL,'2024-10-19 00:17:26',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 
 /*Table structure for table `res_audit_trail` */
 
@@ -247,12 +249,12 @@ insert  into `res_audit_trail`(`res_at_id`,`added_depart_no`,`added_by_no`,`date
 (12,NULL,NULL,'2024-09-03','16:14:48',NULL,NULL,'2024-10-02','03:13:39',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
 (13,NULL,NULL,'2024-09-03','16:15:39',NULL,NULL,'2024-09-08','03:34:04',NULL,NULL,'2024-09-13','15:39:32',NULL,NULL,'2024-09-08','11:53:41'),
 (14,NULL,NULL,'2024-09-03','18:30:55',NULL,NULL,'2024-09-16','11:30:29',NULL,NULL,'2024-09-04','14:58:55',NULL,NULL,'2024-09-05','23:24:21'),
-(15,NULL,NULL,'2024-09-03','18:39:05',NULL,NULL,'2024-09-10','15:07:53',NULL,NULL,'2024-09-10','15:41:27',NULL,NULL,'2024-09-26','19:53:34'),
+(15,NULL,NULL,'2024-09-03','18:39:05',NULL,NULL,'2024-10-19','12:27:39',NULL,NULL,'2024-09-10','15:41:27',NULL,NULL,'2024-09-26','19:53:34'),
 (16,NULL,NULL,'2024-09-07','23:54:29',NULL,NULL,'2024-09-10','14:58:50',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
 (17,NULL,NULL,'2024-09-07','23:54:41',NULL,NULL,'2024-09-12','14:05:20',NULL,NULL,'2024-10-17','23:02:27',NULL,NULL,'2024-09-26','19:53:38'),
 (18,NULL,NULL,'2024-09-07','23:57:51',NULL,NULL,'2024-09-12','14:05:08',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
 (19,NULL,NULL,'2024-09-11','19:37:19',NULL,NULL,'2024-09-12','14:04:43',NULL,NULL,'2024-10-17','22:57:14',NULL,NULL,NULL,NULL),
-(20,NULL,NULL,'2024-09-25','18:41:01',NULL,NULL,NULL,NULL,NULL,NULL,'2024-09-25','18:41:53',NULL,NULL,'2024-09-26','19:56:29');
+(20,NULL,NULL,'2024-09-25','18:41:01',NULL,NULL,'2024-10-19','15:30:32',NULL,NULL,'2024-09-25','18:41:53',NULL,NULL,'2024-09-26','19:56:29');
 
 /*Table structure for table `resident` */
 
@@ -299,12 +301,12 @@ insert  into `resident`(`resident_id`,`img_filename`,`last_name`,`first_name`,`m
 (12,'Shiroe_portal.png','Salas','Robert','Lumauig','','Blk 8 lot 4','Jeremiah st','Cielito Homes','2002','Male','Single','2002-10-16','Caloocan City','09064121066',0,12,0),
 (13,'Akatsuki_portal.png','Salas','Akatsuki','Lumauig','','Blk 8 lot 4','Jeremiah st','Cielito Homes','2004','Female','Single','2004-12-16','Caloocan City','09054321268',1,13,1),
 (14,'6c2e2762dc133ba55627875e9fa27f33.jpg','Dayao','Hiro','Timbol','','Blk 8 lot 3','Jeremiah st','Cielito Homes','2013','Male','Married','1990-04-03','Palauig Quezon','09665656565',1,14,0),
-(15,'Minori_portal.png','Atchico','Denise','Tamaro','','Blk 14 lot 13','Moises st','Cielito Homes','2019','Female','Single','1999-04-24','Palauig Quezon','09665656565',0,15,0),
+(15,'Minori_portal (1).png','Atchico','Denise','Tamaro','','Blk 14 lot 13','Moises st','Cielito Homes','2019','Female','Single','1999-04-24','Palauig Quezon','09665656565',0,15,0),
 (16,'soul (1).jpg','Labancas','Danilo','Lim','','Blk 12 Lot 4','Kang kong st','Kassel Villas','2006','Male','Single','2002-10-16','Bulacan Bulacan','09056565656',1,16,0),
 (17,'capture_24-09-121726121120.jpg','Japerson','Henry','','','123','Zabarte Rd','','2012','Male','Single','2002-10-16','Caloocan City','0906412066',0,17,1),
 (18,'Naotsugu_portal.png','Operacio','Tim','Lucarnas','','12','Virgo st Corner Aries st','Maria Luisa Subd','2002','Male','Single','2002-10-16','Malabon City','09545454544',1,18,0),
 (19,'Allenwalkerimage.png','Salas','Roberto','Lumauig','','Blk 12 Lot 4','Isaiah st','Cielito Homes','2002','Male','Single','2001-10-16','Caloocan City','09064121066',1,19,1),
-(20,'capture_1727260861.jpg','Salas','Robert','Lumauig','','Blk 8 Lot 4','Jeremiah st','Select','2002','Male','Single','2002-10-16','Caloocan City','09064121066',0,20,0);
+(20,'capture_1727260861.jpg','Salas','Robert','Lumauig','','Blk 8 Lot 4','Jeremiah st','','2002','Male','Single','2002-10-16','Caloocan City','09064121066',0,20,0);
 
 /*Table structure for table `tbl_blotter_audit_trail` */
 
@@ -1859,7 +1861,7 @@ DROP TABLE IF EXISTS `vw_nonresident`;
  `marital_status` varchar(255) ,
  `birth_date` date ,
  `birth_place` varchar(255) ,
- `contact_num` varchar(50) ,
+ `cellphone_num` varchar(50) ,
  `audit_trail_no` int(55) ,
  `is_deleted` tinyint(2) 
 )*/;
@@ -2020,7 +2022,7 @@ DROP TABLE IF EXISTS `vw_resonly_cert`;
 /*!50001 DROP TABLE IF EXISTS `vw_nonresident` */;
 /*!50001 DROP VIEW IF EXISTS `vw_nonresident` */;
 
-/*!50001 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vw_nonresident` AS (select `non_resident`.`nresident_id` AS `nresident_id`,cast(`nonres_audit_trail`.`datetime_added` as date) AS `datetime_added`,`non_resident`.`img_filename` AS `img_filename`,`non_resident`.`last_name` AS `last_name`,`non_resident`.`first_name` AS `first_name`,`non_resident`.`middle_name` AS `middle_name`,`non_resident`.`suffix` AS `suffix`,`non_resident`.`house_num` AS `house_num`,`non_resident`.`street` AS `street`,`non_resident`.`subdivision` AS `subdivision`,`non_resident`.`district_brgy` AS `district_brgy`,`non_resident`.`city` AS `city`,`non_resident`.`province` AS `province`,`non_resident`.`zipcode` AS `zipcode`,`non_resident`.`sex` AS `sex`,`non_resident`.`marital_status` AS `marital_status`,`non_resident`.`birth_date` AS `birth_date`,`non_resident`.`birth_place` AS `birth_place`,`non_resident`.`cellphone_num` AS `contact_num`,`non_resident`.`audit_trail_no` AS `audit_trail_no`,`non_resident`.`is_deleted` AS `is_deleted` from (`non_resident` join `nonres_audit_trail` on((`non_resident`.`audit_trail_no` = `nonres_audit_trail`.`audit_trail_id`))) where (`non_resident`.`is_deleted` = 0)) */;
+/*!50001 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vw_nonresident` AS (select `non_resident`.`nresident_id` AS `nresident_id`,cast(`nonres_audit_trail`.`datetime_added` as date) AS `datetime_added`,`non_resident`.`img_filename` AS `img_filename`,`non_resident`.`last_name` AS `last_name`,`non_resident`.`first_name` AS `first_name`,`non_resident`.`middle_name` AS `middle_name`,`non_resident`.`suffix` AS `suffix`,`non_resident`.`house_num` AS `house_num`,`non_resident`.`street` AS `street`,`non_resident`.`subdivision` AS `subdivision`,`non_resident`.`district_brgy` AS `district_brgy`,`non_resident`.`city` AS `city`,`non_resident`.`province` AS `province`,`non_resident`.`zipcode` AS `zipcode`,`non_resident`.`sex` AS `sex`,`non_resident`.`marital_status` AS `marital_status`,`non_resident`.`birth_date` AS `birth_date`,`non_resident`.`birth_place` AS `birth_place`,`non_resident`.`cellphone_num` AS `cellphone_num`,`non_resident`.`audit_trail_no` AS `audit_trail_no`,`non_resident`.`is_deleted` AS `is_deleted` from (`non_resident` join `nonres_audit_trail` on((`non_resident`.`audit_trail_no` = `nonres_audit_trail`.`audit_trail_id`))) where (`non_resident`.`is_deleted` = 0)) */;
 
 /*View structure for view vw_resident */
 
