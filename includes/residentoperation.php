@@ -2,6 +2,8 @@
 require_once("connecttodb.php");
 require_once("anti-SQLInject.php");
 
+header('Content-Type: text/html; charset=utf-8');
+
 $operation_check=$_POST['operation']; //Catches What operation to perform
 $nowdate = date("y-m-d"); //Checks the current date
 $time = date('H:i:s'); //Checks the current time

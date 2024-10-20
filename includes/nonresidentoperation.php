@@ -234,7 +234,6 @@ if($operation_check == "ADD"){ //For the add operation
                    throw new Exception("Sorry, there was an error uploading your file.");
                }
        
-               
                //MetaData Entering to the Database
                $stmt = $pdo->prepare("UPDATE non_resident SET img_filename=? WHERE nresident_id=?");
        
