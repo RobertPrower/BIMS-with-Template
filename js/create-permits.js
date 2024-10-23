@@ -79,7 +79,7 @@ $(document).ready(function() {
                 $('#mname').val(data.middle_name);
                 $('#lname').val(data.last_name);
                 $('#suffix').val(data.suffix);
-                $('#address').val(data.address +" Camarin Caloocan City");
+                $('#address').val(data.address);
 
 
                 // Close the modal

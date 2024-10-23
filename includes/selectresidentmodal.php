@@ -18,7 +18,7 @@
                 <div class="modal-body">
                     
                 <div class="content pt-2">
-                      <div class="users-table table-wrapper">
+                      <div class="">
                         <form id="SelectResidentTable">
                             <table class="tablehover ResidentTable" id="ResidentTable" style="scale: 98%;">
                                 <thead>

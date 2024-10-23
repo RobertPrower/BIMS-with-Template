@@ -28,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }elseif($operation_check == "NON_RESIDENT"){
 
         // Query to fetch resident details based on the ID
-        $query = "SELECT first_name, middle_name, last_name, suffix, CONCAT(house_num, ' ', street, ' ', subdivision) AS address
+        $query = "SELECT first_name, middle_name, last_name, suffix, CONCAT(house_num, ' ', street, ' ', subdivision,' ',district_brgy,' ',city,' ',province,' ',zipcode) AS address
         FROM non_resident WHERE nresident_id = ?";
 
         $stmt=$pdo->prepare($query);

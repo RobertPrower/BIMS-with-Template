@@ -179,7 +179,6 @@
 
     <!-- ! Footer -->
   <?php require_once("includes/footer.php");
-      $pdo = null;
       ?>
   </div>
 </div>
@@ -196,6 +195,7 @@
 <!-- Custom scripts -->
 <script src="js/create-document.js"></script>
 <script src="js/script.js"></script>
+<script src="js/sidebar.js"></script>
 </body>
 
 </html>

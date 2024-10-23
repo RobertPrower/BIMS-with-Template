@@ -241,7 +241,6 @@
   <?php 
   
       require_once("includes/footer.php");
-      $pdo = null;
 
   ?>
   </div>
@@ -259,6 +258,7 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.14.1/dist/sweetalert2.all.min.js"></script>
 <script src="js/create-permits.js"></script>
 <script src="js/script.js"></script>
+<script src="js/sidebar.js"></script>
 </body>
 
 </html>

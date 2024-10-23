@@ -9,10 +9,21 @@ $(document).ready(function () {
     case "Manage Residents":
         $("#resident_btn").addClass("active");
     break;
-    case "Manage Documents":
+    case "Manage Documents" :
+    case "Create Tricycle Pedicab Regulatory Services":
+    case "Create Fencing Permits" :
+    case "Create Business Permit":
+    case "Create Building Permits":
+    case "Create Fencing Permits":
+    case "Create Excavation Permits":
+    case "Create Certificate of Indigency":
+    case "Create Certificate of Good Moral":
+    case "Create Certificate of Residency":
+    case "Create Certificate of First Time Job Seeker":
         $("#documents_btn").addClass("active");
     break;
     case "Manage Blotters":
+    case "Create Blotter":
         $("#blotter_btn").addClass("active");
     break;
     case "Dashboard":

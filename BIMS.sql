@@ -1,6 +1,6 @@
 /*
 SQLyog Ultimate v13.1.1 (64 bit)
-MySQL - 5.7.20-log : Database - bims
+MySQL - 5.7.44-log : Database - bims
 *********************************************************************
 */
 
@@ -12,7 +12,7 @@ MySQL - 5.7.20-log : Database - bims
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-CREATE DATABASE /*!32312 IF NOT EXISTS*/`bims` /*!40100 DEFAULT CHARACTER SET utf8 COLLATE utf8_spanish_ci */;
+CREATE DATABASE /*!32312 IF NOT EXISTS*/`bims` /*!40100 DEFAULT CHARACTER SET utf8mb4 */;
 
 USE `bims`;
 
@@ -155,7 +155,7 @@ insert  into `non_resident`(`nresident_id`,`img_filename`,`last_name`,`first_nam
 (1,'1images.jpg','Rabanes','Fernan','Jarito','','Blk 9 Lot 3','Kamatis st','Ramirez Subd','Novaliches','Quezon City','Metro Manila','1423','Male','Single','Tuguegarao','1998-06-16','090956565454',1,0),
 (2,'1images (1).jpg','Lim','Nicholas','Mahestro','','12','Zapote Rd','Cielito Homes','Camarin Brgy 175','Caloocan City','Metro Manila','1423','Male','Single','San Nicolas Pangasinan','1998-09-29','0966565666544',2,0),
 (3,'2f070627687d52995cfabf5c1bbde057.jpg','Lim','Mario','Jaen','III','Blk 12 Lot 4','Hillcrest st','Rolling Stone Subd','Novaliches','Quezon City','Metro Manila','1420','Male','Married','Madella Quirino','1990-05-02','090913457854',3,0),
-(4,'capture_1729251630.jpg','Chavez','Celestina','Mariano','','Blk 12 Lot 13','Josephine st','La Forteza Subd','Camarin','Caloocan City','Metro Manila','1432','Female','Married','Lipa Batangas','2024-10-16','09064545125',4,0),
+(4,'capture_1729251630.jpg','Chavez','Celestina','Mariano','','Blk 12 Lot 13','Josephine st','La Forteza Subd','Camarin','Caloocan City','Metro Manila','1432','Female','Married','Lipa Batangas','2024-10-16','09064545125',4,1),
 (5,'ren.jpg','La Torre','Nicholas','Trinidad','III','Blk 12 Lot 13','Davao st','Kingdom subd','Novaliches','Quezon City','Metro Manila','1411','Male','Married','Davao City','2000-01-01','090541236585',5,0),
 (6,'alingpuring.jpg','Lumauig','Marivic','Galindez','','Blk 8 Lot 4','Jeremiah st','Cielito Homes','Novaliches','Quezon City','Metro Manila','60007','Female','Single','Bagabag Nueva Viscaya','1990-06-12','09054321268',6,0);
 
@@ -187,7 +187,7 @@ insert  into `nonres_audit_trail`(`audit_trail_id`,`dept_added_no`,`user_added_n
 (1,NULL,NULL,'2024-09-04 10:12:00',NULL,NULL,'2024-09-24 18:04:40',NULL,NULL,'2024-09-25 03:03:50',NULL,NULL,NULL),
 (2,NULL,NULL,'2024-09-24 18:32:14',NULL,NULL,'2024-10-19 11:53:27',NULL,NULL,'2024-10-18 21:11:33',NULL,NULL,'2024-10-18 21:27:34'),
 (3,NULL,NULL,'2024-10-03 00:48:06',NULL,NULL,'2024-10-03 01:46:56',NULL,NULL,'2024-10-12 12:30:24',NULL,NULL,NULL),
-(4,NULL,NULL,'2024-10-03 00:48:33',NULL,NULL,NULL,NULL,NULL,'2024-10-19 11:58:07',NULL,NULL,'2024-10-19 11:58:12'),
+(4,NULL,NULL,'2024-10-03 00:48:33',NULL,NULL,NULL,NULL,NULL,'2024-10-21 15:10:41',NULL,NULL,'2024-10-19 11:58:12'),
 (5,NULL,NULL,'2024-10-03 00:59:05',NULL,NULL,'2024-10-19 13:56:18',NULL,NULL,'2024-10-19 00:10:29',NULL,NULL,NULL),
 (6,NULL,NULL,'2024-10-03 00:59:35',NULL,NULL,'2024-10-19 11:36:13',NULL,NULL,NULL,NULL,NULL,NULL),
 (7,NULL,NULL,'2024-10-03 01:02:24',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
@@ -238,13 +238,13 @@ insert  into `res_audit_trail`(`res_at_id`,`added_depart_no`,`added_by_no`,`date
 (1,NULL,NULL,'2024-09-03','15:42:52',NULL,NULL,'2024-09-19','11:27:24',NULL,NULL,'2024-09-13','15:30:23',NULL,NULL,'2024-09-13','15:31:47'),
 (2,NULL,NULL,'2024-09-03','15:44:00',NULL,NULL,'2024-09-04','09:54:55',NULL,NULL,'2024-09-26','19:57:50',NULL,NULL,'2024-09-26','19:54:44'),
 (3,NULL,NULL,'2024-09-03','15:45:08',NULL,NULL,'2024-09-19','11:27:33',NULL,NULL,'2024-09-26','19:57:40',NULL,NULL,'2024-09-26','19:56:36'),
-(4,NULL,NULL,'2024-09-03','15:56:12',NULL,NULL,'2024-09-19','11:27:47',NULL,NULL,'2024-09-26','19:56:05',NULL,NULL,'2024-09-07','18:09:18'),
+(4,NULL,NULL,'2024-09-03','15:56:12',NULL,NULL,'2024-09-19','11:27:47',NULL,NULL,'2024-09-26','19:56:05',NULL,NULL,'2024-10-22','14:12:15'),
 (5,NULL,NULL,'2024-09-03','15:56:57',NULL,NULL,'2024-09-12','14:04:20',NULL,NULL,'2024-09-26','19:57:35',NULL,NULL,'2024-09-26','19:56:42'),
 (6,NULL,NULL,'2024-09-03','15:58:04',NULL,NULL,'2024-09-19','11:28:03',NULL,NULL,'2024-09-26','19:55:53',NULL,NULL,'2024-09-26','19:54:20'),
 (7,NULL,NULL,'2024-09-10','17:46:56',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
 (8,NULL,NULL,'2024-09-03','16:00:19',NULL,NULL,'2024-09-12','14:03:45',NULL,NULL,'2024-10-17','14:59:38',NULL,NULL,'2024-10-17','14:59:59'),
-(9,NULL,NULL,'2024-09-03','16:02:53',NULL,NULL,'2024-09-12','14:04:08',NULL,NULL,'2024-09-26','20:00:18',NULL,NULL,'2024-09-26','19:59:03'),
-(10,NULL,NULL,'2024-09-03','16:07:36',NULL,NULL,'2024-09-03','18:39:34',NULL,NULL,'2024-09-26','20:01:46',NULL,NULL,'2024-09-26','20:00:55'),
+(9,NULL,NULL,'2024-09-03','16:02:53',NULL,NULL,'2024-09-12','14:04:08',NULL,NULL,'2024-09-26','20:00:18',NULL,NULL,'2024-10-22','14:12:10'),
+(10,NULL,NULL,'2024-09-03','16:07:36',NULL,NULL,'2024-09-03','18:39:34',NULL,NULL,'2024-09-26','20:01:46',NULL,NULL,'2024-10-22','14:12:12'),
 (11,NULL,NULL,'2024-09-10','17:46:23',NULL,NULL,'2024-09-16','22:51:12',NULL,NULL,'2024-10-17','22:57:05',NULL,NULL,NULL,NULL),
 (12,NULL,NULL,'2024-09-03','16:14:48',NULL,NULL,'2024-10-02','03:13:39',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
 (13,NULL,NULL,'2024-09-03','16:15:39',NULL,NULL,'2024-09-08','03:34:04',NULL,NULL,'2024-09-13','15:39:32',NULL,NULL,'2024-09-08','11:53:41'),
@@ -253,7 +253,7 @@ insert  into `res_audit_trail`(`res_at_id`,`added_depart_no`,`added_by_no`,`date
 (16,NULL,NULL,'2024-09-07','23:54:29',NULL,NULL,'2024-09-10','14:58:50',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
 (17,NULL,NULL,'2024-09-07','23:54:41',NULL,NULL,'2024-09-12','14:05:20',NULL,NULL,'2024-10-17','23:02:27',NULL,NULL,'2024-09-26','19:53:38'),
 (18,NULL,NULL,'2024-09-07','23:57:51',NULL,NULL,'2024-09-12','14:05:08',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(19,NULL,NULL,'2024-09-11','19:37:19',NULL,NULL,'2024-09-12','14:04:43',NULL,NULL,'2024-10-17','22:57:14',NULL,NULL,NULL,NULL),
+(19,NULL,NULL,'2024-09-11','19:37:19',NULL,NULL,'2024-09-12','14:04:43',NULL,NULL,'2024-10-17','22:57:14',NULL,NULL,'2024-10-22','14:12:18'),
 (20,NULL,NULL,'2024-09-25','18:41:01',NULL,NULL,'2024-10-19','15:30:32',NULL,NULL,'2024-09-25','18:41:53',NULL,NULL,'2024-09-26','19:56:29');
 
 /*Table structure for table `resident` */
@@ -291,12 +291,12 @@ insert  into `resident`(`resident_id`,`img_filename`,`last_name`,`first_name`,`m
 (1,'capture_24-09-131726191126.jpg','Tecson','Reno','Hofileña','','Blk 12 Lot 4','Isaiah st','Cielito Homes','2015','Male','Single','1992-01-18','Malolos Bulacan','09568989899',0,1,0),
 (2,'8406e341a7981729777f9dee8b55be99 (1).jpg','Tecson','Randy','Hofileña','','Blk 12 Lot 4','Isaiah st','Cielito Homes','2003','Male','Single','1992-01-08','Bulacan Bulacan','09656565655',0,2,1),
 (3,'Miranda_Hallow.png','Tecson','Miranda','Hofileña','','Blk 12 Lot 4','Isaiah st','Cielito Homes','2006','Female','Married','1994-01-15','Plaridel Bulacan','09656565655',1,3,1),
-(4,'Lavi_2006.png','Tecson','James','Hofileña','','Blk 12 Lot 4','Isaiah st','Cielito Homes','2007','Male','Single','1993-02-18','Pulilan Bulacan','09669898989',0,4,1),
+(4,'Lavi_2006.png','Tecson','James','Hofileña','','Blk 12 Lot 4','Isaiah st','Cielito Homes','2007','Male','Single','1993-02-18','Pulilan Bulacan','09669898989',0,4,0),
 (5,'alingpuring.jpg','Tecson','Puring','Ulatan','','Blk 12 Lot 3','Isaiah st','Cielito Homes','2007','Female','Single','1993-02-18','Bustos Bulacan','09669898989',0,5,1),
 (6,'Shirou.png','Tecson','Gardo','Hofileña','','Blk 12 Lot 2','Isaiah st','Cielito Homes','2009','Male','Married','1988-02-27','San Miguel Bulacan','09064154588',1,6,1),
 (8,'images (1).jpg','Yalong','Aaaron','Armengol','','Blk 12 Lot 5','Isaiah st','Cielito Homes','2015','Male','Single','1986-03-21','Gapan Nueva Ecjia','09565656565',1,8,0),
-(9,'miano.jpg','Tecson','Franklin','Miano','','Blk 12 Lot 5','Isaiah st','Cielito Homes','2015','Male','Married','1986-03-21','Cabiao Nueva Ecjia','09565656564',1,9,1),
-(10,'Karen-Bennett-200x200px.jpg','Tecson','Kiana','Macabara','','Blk 8 lot 5B','Jeremiah st','Cielito Homes','2015','Female','Married','1988-09-13','Valenzuela City','09565656565',0,10,1),
+(9,'miano.jpg','Tecson','Franklin','Miano','','Blk 12 Lot 5','Isaiah st','Cielito Homes','2015','Male','Married','1986-03-21','Cabiao Nueva Ecjia','09565656564',1,9,0),
+(10,'Karen-Bennett-200x200px.jpg','Tecson','Kiana','Macabara','','Blk 8 lot 5B','Jeremiah st','Cielito Homes','2015','Female','Married','1988-09-13','Valenzuela City','09565656565',0,10,0),
 (11,'capture_24-09-161726498272.jpg','Salas','Norberto','Torres','','12','Zabarte rd','','2002','Male','Single','2002-08-23','Caloocan City','09565656566',0,11,1),
 (12,'Shiroe_portal.png','Salas','Robert','Lumauig','','Blk 8 lot 4','Jeremiah st','Cielito Homes','2002','Male','Single','2002-10-16','Caloocan City','09064121066',0,12,0),
 (13,'Akatsuki_portal.png','Salas','Akatsuki','Lumauig','','Blk 8 lot 4','Jeremiah st','Cielito Homes','2004','Female','Single','2004-12-16','Caloocan City','09054321268',1,13,1),
@@ -305,7 +305,7 @@ insert  into `resident`(`resident_id`,`img_filename`,`last_name`,`first_name`,`m
 (16,'soul (1).jpg','Labancas','Danilo','Lim','','Blk 12 Lot 4','Kang kong st','Kassel Villas','2006','Male','Single','2002-10-16','Bulacan Bulacan','09056565656',1,16,0),
 (17,'capture_24-09-121726121120.jpg','Japerson','Henry','','','123','Zabarte Rd','','2012','Male','Single','2002-10-16','Caloocan City','0906412066',0,17,1),
 (18,'Naotsugu_portal.png','Operacio','Tim','Lucarnas','','12','Virgo st Corner Aries st','Maria Luisa Subd','2002','Male','Single','2002-10-16','Malabon City','09545454544',1,18,0),
-(19,'Allenwalkerimage.png','Salas','Roberto','Lumauig','','Blk 12 Lot 4','Isaiah st','Cielito Homes','2002','Male','Single','2001-10-16','Caloocan City','09064121066',1,19,1),
+(19,'Allenwalkerimage.png','Salas','Roberto','Lumauig','','Blk 12 Lot 4','Isaiah st','Cielito Homes','2002','Male','Single','2001-10-16','Caloocan City','09064121066',1,19,0),
 (20,'capture_1727260861.jpg','Salas','Robert','Lumauig','','Blk 8 Lot 4','Jeremiah st','','2002','Male','Single','2002-10-16','Caloocan City','09064121066',0,20,0);
 
 /*Table structure for table `tbl_blotter_audit_trail` */
@@ -532,7 +532,7 @@ insert  into `tbl_docu_request`(`request_id`,`resident_no`,`nresident_no`,`docum
 ('2024-000001',1,NULL,1,32,'National ID','PCN-123455678890','Maynilad Application',1,'generated_pdf_1728840899.pdf',0,0),
 ('2024-000002',NULL,1,2,26,'Drivers License','N42-2121212121212','Getting Business Permit',2,'generated_pdf_1728842063.pdf',0,1),
 ('2024-000003',12,NULL,3,21,'Drivers License','N42-2010345','Getting Business Permit',3,'generated_pdf_1728842510.pdf',0,1),
-('2024-000004',1,NULL,4,32,'Drivers License','N42-2010345','Getting Business Permit',4,'generated_pdf_1728842689.pdf',0,0),
+('2024-000004',1,NULL,4,32,'Drivers License','N42-2010345','Getting Business Permit',4,'generated_pdf_1728842689.pdf',2,0),
 ('2024-000005',8,NULL,5,38,'Drivers License','N42-2010345','Getting Business Permit',5,'generated_pdf_1728842976.pdf',0,1),
 ('2024-000006',NULL,2,6,26,'SSS ID','SSS-1234455677','Securing Building Permit',6,'generated_pdf_1728843584.pdf',0,1),
 ('2024-000007',NULL,2,7,26,'SSS ID','SSS-1234455677','Securing Building Permit',7,'generated_pdf_1728843723.pdf',0,1),
@@ -927,11 +927,6 @@ BEGIN
         INSERT INTO tbl_documents(FTJS)
         SELECT IFNULL(MAX(FTJS), 0) + 1 FROM tbl_documents;
         
-    -- For Oath of Undertaking/FTJS
-    ELSEIF certificate_type = 'Oath_of_Undertaking' THEN
-        INSERT INTO tbl_documents(Oath_of_Undertaking)
-        SELECT IFNULL(MAX(Oath_of_Undertaking), 0) + 1 FROM tbl_documents;
-    
       -- For Business Permits
     ELSEIF certificate_type = 'Business_Permits' THEN
         INSERT INTO tbl_documents(Business_Permits)

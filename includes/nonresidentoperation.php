@@ -190,7 +190,6 @@ if($operation_check == "ADD"){ //For the add operation
     
 }elseif($operation_check == "EDIT"){
 
-  
      // Retrieve data sent via POST
      $nresidentId = sanitizeData($_POST['nresident_id']);
      
@@ -475,37 +474,18 @@ if($operation_check == "ADD"){ //For the add operation
      $start_from = ($page - 1) * $limit;
  
      // Fetch the data for the current page
-     $query = $pdo->prepare("SELECT 
-                                `non_resident`.`nresident_id`       AS `nresident_id`,
-                                date(`nonres_audit_trail`.`datetime_added`) as datetime_added,
-                                `non_resident`.`img_filename`      AS `img_filename`,
-                                `non_resident`.`last_name`         AS `last_name`,
-                                `non_resident`.`first_name`        AS `first_name`,
-                                `non_resident`.`middle_name`       AS `middle_name`,
-                                `non_resident`.`suffix`            AS `suffix`,
-                                `non_resident`.`house_num`         AS `house_num`,
-                                `non_resident`.`street`            AS `street`,
-                                `non_resident`.`subdivision`       AS `subdivision`,
-                                `non_resident`.`sex`               AS `sex`,
-                                `non_resident`.`marital_status`    AS `marital_status`,
-                                `non_resident`.`birth_date`        AS `birth_date`,
-                                `non_resident`.`birth_place`       AS `birth_place`,
-                                `non_resident`.`cellphone_num`     AS `contact_num`,
-                                `non_resident`.`is_deleted`        AS `is_deleted`
-                                FROM non_resident
-                                JOIN nonres_audit_trail ON non_resident.audit_trail_no = nonres_audit_trail.`audit_trail_id`      
-                                WHERE is_deleted=1 ORDER BY last_name ASC LIMIT $start_from, $limit");
-     $query->execute();
-     $results = $query->fetchAll();
+     $query = "SELECT * FROM vw_deleted_nonresident LIMIT :start_from, :lim";
+     $stmt = $pdo->prepare($query);
+     $stmt->bindvalue(":start_from", (int)$start_from, PDO::PARAM_INT);
+     $stmt->bindValue(":lim", (int)$limit, PDO::PARAM_INT);
+     $stmt->execute();
+     $results = $stmt->fetchAll();
 
     if(!empty($results)){
         require_once'nonresidenttabletofetch.php';
     }else{
         echo '<tr><td colspan="11"><b>No Deleted Records found</b></td></tr>';
     }
-
-
-    
 
 }elseif($operation_check=="PAGINATION_FOR_DEL_REC"){
     // Fetch the total number of records

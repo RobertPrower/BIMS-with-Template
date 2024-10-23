@@ -24,8 +24,7 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.14.1/dist/sweetalert2.min.css">
-  <!--JavaScript-->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
  
 <body>
   <div class="layer"></div>
@@ -223,6 +222,7 @@
   ?>
   </div>
 </div>
+<script src="js/jquery-3.7.1.min.js"></script>
 <!-- Chart library -->
 <script src="plugins/chart.min.js"></script>
 <!-- Icons library -->
@@ -230,6 +230,7 @@
 <!-- Custom scripts -->
 <script src="js/create-permits.js"></script>
 <script src="js/script.js"></script>
+<script src="js/sidebar.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.14.1/dist/sweetalert2.all.min.js"></script></head>
