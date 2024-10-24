@@ -17,7 +17,7 @@ $nowdate = date("Y-m-d H:i:s"); // Current date
     $issuingdeptno = null;
 
     // Define directory for saving the PDF
-    $directory = "certificate_of_residency/";
+    $directory = "certificate_of_blotter/";
     $fileName = $_SERVER['DOCUMENT_ROOT'] . "/BIMS-with-Template/documents/".$directory."generated_pdf_" . $nowtime . ".pdf";
     $filename= "generated_pdf_" . $nowtime . ".pdf";
 
@@ -116,6 +116,7 @@ class MYPDF extends TCPDF {
     public function Header() {
         
     global $brgydetailsraw;
+
        foreach($brgydetailsraw as $brgydetails){
     
             $this->setXY(20,16);
@@ -129,9 +130,48 @@ class MYPDF extends TCPDF {
             </style>
             
             <strong class="title">'.strtoupper($brgydetails['brgy_name'].' '. $brgydetails['sona'].' '.$brgydetails['district']).'</strong>';
+
             $this->writeHTML($title, true, false, true, false, 'C');
+       }
+    }
     
-        }
+    // Create new PDF document
+    $pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
+    $pdf->setCreator(PDF_CREATOR);
+    $pdf->setTitle('Blotter Certificate');
+    $pdf->setSubject('Blotter Certificate');
+    $pdf->setKeywords('TCPDF, PDF, certificate, Blotters');
+
+    // Set default header data
+    $pdf->setHeaderData('','0','');
+    
+    // Set margins
+    $pdf->setMargins(15, 40, 15);
+    $pdf->setHeaderMargin(15);
+    $pdf->setFooterMargin(20);
+
+    // Set auto page breaks
+    $pdf->setAutoPageBreak(TRUE, 15);
+
+    // Add a page
+    $pdf->AddPage();
+    
+    $pdf->setFont('Rockwell', 'B', 16);
+
+    // Title
+    $pdf->Cell(0, 10, 'Certificate of Blotter', 0, 1, 'C');
+    $pdf->Ln(10);
+
+    // Set font for the content
+    $pdf->setFont('Rockwell', '', 12);
+
+    // Body
+
+    $pdf->MultiCell(0, 10, "This is the sample of the Blotterssdoigfjksdoigjsspdfokspodfsdfsdf. "
+        ."opadkgposdkgopsdgksopdgksopdgkopsdposdkgopsdkgopksg.\n\n"
+        ."Issued on: " . date('Y-m-d') . "\n"
+        ."Authorized Signature: _______________________", 0, 'L', 0, 1, '', '', true);
+
 
         // Logo
         global $logo;
@@ -149,10 +189,7 @@ class MYPDF extends TCPDF {
             $this->Image("../img/logos/".$logo[3], 170, 7, 24, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false);
         }
         
-        $this->SetLineWidth(0); 
-
-         // Draw a line below the header
-         $this->Line(0, 35, 220, 35); 
+        $this->SetLineWidth(0);
     }
 
     // Page footer
@@ -161,7 +198,7 @@ class MYPDF extends TCPDF {
         $this->SetY(-15);
         // Set font
         global $brgydetailsraw;
-       foreach($brgydetailsraw as $brgydetails){
+    foreach($brgydetailsraw as $brgydetails){
     
              // Set font
             $this->SetFont('Cambria', 'B', 8);
@@ -183,7 +220,7 @@ $pdf = new MYPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, 'A4', true, 'UTF-8', false);
 // set document information
 $pdf->SetCreator(PDF_CREATOR);
 $pdf->SetAuthor('Nicola Asuni');
-$pdf->SetTitle('Generate Certificate of Residency');
+$pdf->SetTitle('Generate Certificate of Blotter');
 $pdf->SetSubject('TCPDF Tutorial');
 $pdf->SetKeywords('TCPDF, PDF, example, test, guide');
 

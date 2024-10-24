@@ -364,7 +364,7 @@ $pdf->AddPage();
 // Add image watermark (with transparency)
 $pdf->SetAlpha(0.3); // Set transparency
 $pdf->Image('../img/logos/'.$logo[4], -20, 20, 280, 0, 'PNG', '', '', false, 300, '', false, false, 0); // X, Y, Width, Height
-$pdf->SetAlpha(1); // Reset transparenc
+$pdf->SetAlpha(1); // Reset transparency
 
 $pdf->SetTopMargin(35);
 
