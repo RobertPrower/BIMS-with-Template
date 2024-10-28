@@ -28,6 +28,18 @@ if($operation_check == "SELECT_NONRESIDENT_TABLELOAD"){
         echo json_encode($results);
 
 
+}else if($operation_check == "FETCH_SCHEDULE_ON_MODAL"){
+
+    $sqlquery = "SELECT * FROM vw_blotters_schedule";
+    $stmt = $pdo->prepare($sqlquery);
+    $stmt->execute();
+    $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    echo json_encode($results);
+}else if($operation_check == "ADD_BLOTTER"){
+
+    
+
 }
 $pdo = null;
 

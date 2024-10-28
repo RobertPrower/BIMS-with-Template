@@ -157,7 +157,7 @@ insert  into `non_resident`(`nresident_id`,`img_filename`,`last_name`,`first_nam
 (3,'2f070627687d52995cfabf5c1bbde057.jpg','Lim','Mario','Jaen','III','Blk 12 Lot 4','Hillcrest st','Rolling Stone Subd','Novaliches','Quezon City','Metro Manila','1420','Male','Married','Madella Quirino','1990-05-02','090913457854',3,0),
 (4,'capture_1729251630.jpg','Chavez','Celestina','Mariano','','Blk 12 Lot 13','Josephine st','La Forteza Subd','Camarin','Caloocan City','Metro Manila','1432','Female','Married','Lipa Batangas','2024-10-16','09064545125',4,1),
 (5,'ren.jpg','La Torre','Nicholas','Trinidad','III','Blk 12 Lot 13','Davao st','Kingdom subd','Novaliches','Quezon City','Metro Manila','1411','Male','Married','Davao City','2000-01-01','090541236585',5,0),
-(6,'alingpuring.jpg','Lumauig','Marivic','Galindez','','Blk 8 Lot 4','Jeremiah st','Cielito Homes','Novaliches','Quezon City','Metro Manila','60007','Female','Single','Bagabag Nueva Viscaya','1990-06-12','09054321268',6,0);
+(6,'shanna (1).jpg','Saksi','Shanna','Jiamin','','Blk 1 Lot 12','St Bernard st','La Forteza','Camarin Brgy 175','La Forteza','Metro Manila','1424','Female','Married','Bagabag Nueva Viscaya','1990-06-12','09054321268',6,0);
 
 /*Table structure for table `nonres_audit_trail` */
 
@@ -189,7 +189,7 @@ insert  into `nonres_audit_trail`(`audit_trail_id`,`dept_added_no`,`user_added_n
 (3,NULL,NULL,'2024-10-03 00:48:06',NULL,NULL,'2024-10-03 01:46:56',NULL,NULL,'2024-10-12 12:30:24',NULL,NULL,NULL),
 (4,NULL,NULL,'2024-10-03 00:48:33',NULL,NULL,NULL,NULL,NULL,'2024-10-21 15:10:41',NULL,NULL,'2024-10-19 11:58:12'),
 (5,NULL,NULL,'2024-10-03 00:59:05',NULL,NULL,'2024-10-19 13:56:18',NULL,NULL,'2024-10-19 00:10:29',NULL,NULL,NULL),
-(6,NULL,NULL,'2024-10-03 00:59:35',NULL,NULL,'2024-10-19 11:36:13',NULL,NULL,NULL,NULL,NULL,NULL),
+(6,NULL,NULL,'2024-10-03 00:59:35',NULL,NULL,'2024-10-24 15:09:48',NULL,NULL,NULL,NULL,NULL,NULL),
 (7,NULL,NULL,'2024-10-03 01:02:24',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
 (8,NULL,NULL,'2024-10-03 01:04:17',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
 (9,NULL,NULL,'2024-10-03 01:04:34',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
@@ -320,45 +320,66 @@ CREATE TABLE `tbl_blotter_audit_trail` (
   PRIMARY KEY (`blotter_at_id`),
   KEY `fk_assist_by` (`assist_by_no`),
   CONSTRAINT `fk_assist_by` FOREIGN KEY (`assist_by_no`) REFERENCES `tbl_username` (`username_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 /*Data for the table `tbl_blotter_audit_trail` */
+
+insert  into `tbl_blotter_audit_trail`(`blotter_at_id`,`assist_by_no`,`blotter_date`,`blotter_time`) values 
+(1,1,'2024-10-24','10:45:45');
+
+/*Table structure for table `tbl_blotter_mediator` */
+
+DROP TABLE IF EXISTS `tbl_blotter_mediator`;
+
+CREATE TABLE `tbl_blotter_mediator` (
+  `mediator_id` int(55) NOT NULL AUTO_INCREMENT,
+  `last_name` varchar(85) DEFAULT NULL,
+  `first_name` varchar(85) DEFAULT NULL,
+  `middle_name` varchar(85) DEFAULT NULL,
+  PRIMARY KEY (`mediator_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+/*Data for the table `tbl_blotter_mediator` */
 
 /*Table structure for table `tbl_blotters` */
 
 DROP TABLE IF EXISTS `tbl_blotters`;
 
 CREATE TABLE `tbl_blotters` (
-  `blotter_id` int(11) NOT NULL,
+  `blotter_id` int(55) NOT NULL AUTO_INCREMENT,
   `res_complainant_no` int(55) DEFAULT NULL,
   `nres_complainant_no` int(55) DEFAULT NULL,
-  `res_repondent_no` int(55) DEFAULT NULL,
+  `res_respondent_no` int(55) DEFAULT NULL,
   `nres_respondent_no` int(55) DEFAULT NULL,
   `otherp_involved_no` int(55) DEFAULT NULL,
-  `report_status` tinyint(5) NOT NULL,
-  `date_of_incident` date NOT NULL,
-  `time_of_incident` time NOT NULL,
-  `location_of_incident` varchar(255) NOT NULL,
-  `date_of_resolution` date NOT NULL,
-  `statemnt` longtext NOT NULL,
-  `blot_at_no` int(55) NOT NULL,
-  `is_deleted` tinyint(2) NOT NULL DEFAULT '0',
+  `desc_incident` varchar(255) DEFAULT NULL,
+  `incident_dt` datetime DEFAULT NULL,
+  `location_of_incident` varchar(255) DEFAULT NULL,
+  `date_of_resolution` date DEFAULT NULL,
+  `statemnt` longtext,
+  `mediation_schedule` date DEFAULT NULL,
+  `mediation_starttime` time DEFAULT NULL,
+  `mediation_endtime` time DEFAULT NULL,
+  `blot_at_no` int(55) DEFAULT NULL,
+  `schedule_color` varchar(55) DEFAULT NULL,
+  `report_status` tinyint(5) DEFAULT '0',
+  `is_deleted` tinyint(5) DEFAULT '0',
   PRIMARY KEY (`blotter_id`),
-  KEY `blotter_at_fk` (`blot_at_no`),
-  KEY `nres_complainant_fk` (`nres_complainant_no`),
-  KEY `nres_respondent_fk` (`nres_respondent_no`),
-  KEY `res_respondent_fk` (`res_repondent_no`),
-  KEY `res_complainant_fk` (`res_complainant_no`),
-  KEY `person_involved_fk` (`otherp_involved_no`),
-  CONSTRAINT `blotter_at_fk` FOREIGN KEY (`blot_at_no`) REFERENCES `tbl_blotter_audit_trail` (`blotter_at_id`),
-  CONSTRAINT `nres_complainant_fk` FOREIGN KEY (`nres_complainant_no`) REFERENCES `non_resident` (`nresident_id`),
-  CONSTRAINT `nres_respondent_fk` FOREIGN KEY (`nres_respondent_no`) REFERENCES `non_resident` (`nresident_id`),
-  CONSTRAINT `person_involved_fk` FOREIGN KEY (`otherp_involved_no`) REFERENCES `tbl_persons_involved` (`person_involved_id`),
-  CONSTRAINT `res_complainant_fk` FOREIGN KEY (`res_complainant_no`) REFERENCES `resident` (`resident_id`),
-  CONSTRAINT `res_respondent_fk` FOREIGN KEY (`res_repondent_no`) REFERENCES `resident` (`resident_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  KEY `res_complainant_no` (`res_complainant_no`),
+  KEY `res_repondent_no` (`res_respondent_no`),
+  KEY `nres_respondent_no` (`nres_respondent_no`),
+  KEY `blot_at_no` (`blot_at_no`),
+  CONSTRAINT `tbl_blotters_ibfk_1` FOREIGN KEY (`res_complainant_no`) REFERENCES `resident` (`resident_id`),
+  CONSTRAINT `tbl_blotters_ibfk_2` FOREIGN KEY (`res_complainant_no`) REFERENCES `non_resident` (`nresident_id`),
+  CONSTRAINT `tbl_blotters_ibfk_3` FOREIGN KEY (`res_respondent_no`) REFERENCES `resident` (`resident_id`),
+  CONSTRAINT `tbl_blotters_ibfk_4` FOREIGN KEY (`nres_respondent_no`) REFERENCES `non_resident` (`nresident_id`),
+  CONSTRAINT `tbl_blotters_ibfk_5` FOREIGN KEY (`blot_at_no`) REFERENCES `tbl_blotter_audit_trail` (`blotter_at_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `tbl_blotters` */
+
+insert  into `tbl_blotters`(`blotter_id`,`res_complainant_no`,`nres_complainant_no`,`res_respondent_no`,`nres_respondent_no`,`otherp_involved_no`,`desc_incident`,`incident_dt`,`location_of_incident`,`date_of_resolution`,`statemnt`,`mediation_schedule`,`mediation_starttime`,`mediation_endtime`,`blot_at_no`,`schedule_color`,`report_status`,`is_deleted`) values 
+(1,1,NULL,3,NULL,NULL,'Pambubudol','2024-10-24 22:39:40','Cielito Homes','2024-10-24','sdsdsdsdsdsdsdsd','2024-10-28',NULL,NULL,1,'Yellow',0,0);
 
 /*Table structure for table `tbl_building_permits` */
 
@@ -1790,6 +1811,28 @@ DROP TABLE IF EXISTS `vw_all_tprs`;
  `is_deleted` tinyint(2) 
 )*/;
 
+/*Table structure for table `vw_blotters_schedule` */
+
+DROP TABLE IF EXISTS `vw_blotters_schedule`;
+
+/*!50001 DROP VIEW IF EXISTS `vw_blotters_schedule` */;
+/*!50001 DROP TABLE IF EXISTS `vw_blotters_schedule` */;
+
+/*!50001 CREATE TABLE  `vw_blotters_schedule`(
+ `blotter_id` int(55) ,
+ `complainant_fullname` text ,
+ `complainant_status` varchar(12) ,
+ `respondent_fullname` text ,
+ `respondent_status` varchar(12) ,
+ `desc_incident` varchar(255) ,
+ `incident_dt` datetime ,
+ `mediation_date` date ,
+ `location_of_incident` varchar(255) ,
+ `date_of_resolution` date ,
+ `schedule_color` varchar(55) ,
+ `report_status` tinyint(5) 
+)*/;
+
 /*Table structure for table `vw_deleted_docu` */
 
 DROP TABLE IF EXISTS `vw_deleted_docu`;
@@ -2021,6 +2064,13 @@ DROP TABLE IF EXISTS `vw_resonly_cert`;
 /*!50001 DROP VIEW IF EXISTS `vw_all_tprs` */;
 
 /*!50001 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vw_all_tprs` AS (select `tbl_docu_request`.`request_id` AS `request_id`,coalesce((case when (`tbl_docu_request`.`resident_no` is not null) then `resident`.`last_name` else NULL end),convert((case when (`tbl_docu_request`.`nresident_no` is not null) then `non_resident`.`last_name` else NULL end) using utf8mb4)) AS `last_name`,coalesce((case when (`tbl_docu_request`.`resident_no` is not null) then `resident`.`first_name` else NULL end),convert((case when (`tbl_docu_request`.`nresident_no` is not null) then `non_resident`.`first_name` else NULL end) using utf8mb4)) AS `first_name`,coalesce((case when (`tbl_docu_request`.`resident_no` is not null) then `resident`.`middle_name` else NULL end),convert((case when (`tbl_docu_request`.`nresident_no` is not null) then `non_resident`.`middle_name` else NULL end) using utf8mb4)) AS `middle_name`,coalesce((case when (`tbl_docu_request`.`resident_no` is not null) then `resident`.`suffix` else NULL end),convert((case when (`tbl_docu_request`.`nresident_no` is not null) then `non_resident`.`suffix` else NULL end) using utf8mb4)) AS `suffix`,(case when (`tbl_docu_request`.`resident_no` is not null) then 'Resident' when (`tbl_docu_request`.`nresident_no` is not null) then 'Non-Resident' else 'Unknown' end) AS `owner_status`,`tbl_docu_request`.`age` AS `age`,`tbl_docu_request`.`presented_id` AS `presented_id`,`tbl_docu_request`.`ID_number` AS `ID_number`,`tbl_docu_request`.`purpose` AS `purpose`,`tbl_tprs`.`toda` AS `toda`,`tbl_tprs`.`route` AS `route`,`tbl_tprs`.`platenum` AS `platenum`,`tbl_tprs`.`chasisnum` AS `chasisnum`,`tbl_tprs`.`makertype` AS `makertype`,`tbl_tprs`.`enginenum` AS `engine_no`,`tbl_cert_audit_trail`.`datetime_issued` AS `date_issued`,`tbl_cert_audit_trail`.`expiration` AS `expires`,`departments_list`.`department_desc` AS `department_issued`,`tbl_username`.`username` AS `issued_by`,`tbl_docu_request`.`status` AS `status`,`tbl_docu_request`.`is_deleted` AS `is_deleted` from (((((((`tbl_docu_request` left join `resident` on((`tbl_docu_request`.`resident_no` = `resident`.`resident_id`))) left join `non_resident` on((`tbl_docu_request`.`nresident_no` = `non_resident`.`nresident_id`))) left join `tbl_documents` on((`tbl_docu_request`.`document_no` = `tbl_documents`.`docu_id`))) join `tbl_tprs` on((`tbl_documents`.`Building_Permits` = `tbl_tprs`.`tprs_id`))) left join `tbl_cert_audit_trail` on((`tbl_docu_request`.`audit_trail_no` = `tbl_cert_audit_trail`.`audit_trail_id`))) left join `departments_list` on((`tbl_cert_audit_trail`.`issuing_dept_no` = `departments_list`.`department_id`))) left join `tbl_username` on((`tbl_cert_audit_trail`.`issued_by_no` = `tbl_username`.`username_id`)))) */;
+
+/*View structure for view vw_blotters_schedule */
+
+/*!50001 DROP TABLE IF EXISTS `vw_blotters_schedule` */;
+/*!50001 DROP VIEW IF EXISTS `vw_blotters_schedule` */;
+
+/*!50001 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vw_blotters_schedule` AS select `b`.`blotter_id` AS `blotter_id`,(case when (`r1`.`resident_id` is not null) then concat(`r1`.`first_name`,' ',`r1`.`last_name`,' ',`r1`.`middle_name`) else convert(concat(`nr1`.`first_name`,' ',`nr1`.`last_name`,' ',`nr1`.`middle_name`) using utf8mb4) end) AS `complainant_fullname`,(case when (`r1`.`resident_id` is not null) then 'Resident' else 'Non-Resident' end) AS `complainant_status`,(case when (`r2`.`resident_id` is not null) then concat(`r2`.`first_name`,' ',`r2`.`last_name`,' ',`r2`.`middle_name`) else convert(concat(`nr2`.`first_name`,' ',`nr2`.`last_name`,' ',`nr2`.`middle_name`) using utf8mb4) end) AS `respondent_fullname`,(case when (`r2`.`resident_id` is not null) then 'Resident' else 'Non-Resident' end) AS `respondent_status`,`b`.`desc_incident` AS `desc_incident`,`b`.`incident_dt` AS `incident_dt`,`b`.`mediation_schedule` AS `mediation_date`,`b`.`location_of_incident` AS `location_of_incident`,`b`.`date_of_resolution` AS `date_of_resolution`,`b`.`schedule_color` AS `schedule_color`,`b`.`report_status` AS `report_status` from ((((`tbl_blotters` `b` left join `resident` `r1` on((`b`.`res_complainant_no` = `r1`.`resident_id`))) left join `non_resident` `nr1` on((`b`.`nres_complainant_no` = `nr1`.`nresident_id`))) left join `resident` `r2` on((`b`.`res_respondent_no` = `r2`.`resident_id`))) left join `non_resident` `nr2` on((`b`.`nres_respondent_no` = `nr2`.`nresident_id`))) */;
 
 /*View structure for view vw_deleted_docu */
 

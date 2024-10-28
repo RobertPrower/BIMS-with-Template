@@ -18,9 +18,14 @@
   <link rel="shortcut icon" href="img/logos/<?php echo $logo; ?>" type="image/x-icon">
   <!-- Custom styles -->
   <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
   <link href="https://cdn.datatables.net/v/bs5/dt-2.1.8/datatables.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@eonasdan/tempus-dominus@6.9.4/dist/css/tempus-dominus.min.css" crossorigin="anonymous">
   <link rel="stylesheet" href="./css/create-documents.css">
   <link rel="stylesheet" href="css/sweetalert2.min.css">
+  <!-- <link rel="stylesheet" href="css/changelogo.css"> -->
+  <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.css" rel="stylesheet">
+
 
 </head>
 
@@ -46,6 +51,26 @@
             <h2 class="main-title">Create Blotter</h2>
                 <?php require('includes/selectresidentmodal.php'); require('includes/selectnonresidentmodal.php');?> 
 
+                <div class="modal fade" id="SelectScheduleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-xl">
+                        <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Select Schedule</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <!-- <style>.fc-day:hover {
+                                background-color: #8080FF; }
+                            </style> -->
+                            <div id="calendar">
+
+                            </div>
+
+                        </div>
+                        
+                        </div>
+                    </div>
+                </div>
                 <div class="col-md-12 d-flex align-items-center justify-content-between">
                     <b>Step 1: Select Complainant Person Record</b>
                     <div class="d-flex">
@@ -54,93 +79,330 @@
                     </div>
                 </div>
 
-                <div class="col-md-12 card m-4 px-3" style="border-radius: 10px;" style="padding: 10px;">
-                    <div class="card-header">
-                        Reporting Person/Complainant Details
-                                         
+                <div class="row">
+
+                    <div class="col-md-2 card m-4 d-flex justify-content-center" style="border-radius: 10px;" style="padding: 10px;">
+                        
+                        <img src="includes/img/blank-profile.webp" id="ComplainantImg" width="200" height="200"/>
+                        
                     </div>
 
-                    <div class="text-center row">
+                    <div class="col-md-9 card m-4 px-3" style="border-radius: 10px;" style="padding: 10px;">
+                        <div class="card-header">
+                            Reporting Person/Complainant Details
+                                            
+                        </div>
 
-                    <input type="text" class="form-control" id="checkresident" hidden>
-                    <input type="text" class="form-control" id="id_to_record" hidden>
+                        <div class="text-center row">
 
-                    <div class="form-floating mt-3 mb-3 col-md-4">
-                        <input type="text" class="form-control" id="fname" name="firstname" placeholder="Enter First Name Here" required disabled/>
-                        <label for="fname">First Name</label>
+                            <input type="text" class="form-control" id="checkresident" hidden/>
+                            <input type="text" class="form-control" id="id_to_record" hidden/>
+
+                            <div class="form-floating mt-3 mb-3 col-md-4">
+                                <input type="text" class="form-control" id="fname" name="firstname" placeholder="Enter First Name Here" required disabled/>
+                                <label for="fname">First Name</label>
+                            </div>
+
+                            <div class="form-floating mt-3 mb-3 col-md-4">
+                                <input type="text" class="form-control" id="mname" name="middlename" placeholder="Enter Middle Name Here" disabled/>
+                                <label for="mname">Middle Name</label>
+                            </div>
+
+                            <div class="form-floating mt-3 mb-3 col-md-2">
+                                <input type="text" class="form-control" id="lname" name="lastname" placeholder="Enter Last Name Here" required disabled/>
+                                <label for="lname">Last Name</label>
+                            </div>
+
+                            <div class="form-floating mt-3 mb-3 col-md-2">
+                                <input type="text" class="form-control" id="suffix" name="lastname" placeholder="Enter Last Name Here" required disabled/>
+                                <label for="lname">Suffix</label>
+                            </div>
+
+                            <div class="form-floating mt-3 mb-3 col-md-12">
+                                <input type="text" class="form-control" id="address" name="address" placeholder="Enter Subdvision Here" disabled/>
+                                <label for="subd">Complete Address</label>
+                            </div>
+                        
+                        </div>
                     </div>
 
-                    <div class="form-floating mt-3 mb-3 col-md-4">
-                        <input type="text" class="form-control" id="mname" name="middlename" placeholder="Enter Middle Name Here" disabled/>
-                        <label for="mname">Middle Name</label>
-                    </div>
-
-                    <div class="form-floating mt-3 mb-3 col-md-2">
-                        <input type="text" class="form-control" id="lname" name="lastname" placeholder="Enter Last Name Here" required disabled/>
-                        <label for="lname">Last Name</label>
-                    </div>
-
-                    <div class="form-floating mt-3 mb-3 col-md-2">
-                        <input type="text" class="form-control" id="suffix" name="lastname" placeholder="Enter Last Name Here" required disabled/>
-                        <label for="lname">Suffix</label>
-                    </div>
-
-                    <div class="form-floating mt-3 mb-3 col-md-12">
-                        <input type="text" class="form-control" id="address" name="address" placeholder="Enter Subdvision Here" disabled/>
-                        <label for="subd">Complete Address</label>
-                    </div>
-
-                    
-                    </div>
                 </div>
 
                 <div class="col-md-12 d-flex align-items-center justify-content-between">
                     <b>Step 2: Select Respondent Person Record</b>
                     <div class="d-flex">
-                        <button class="btn btn-primary mx-2 SelectResidentBtnRes" id="SelectResident" data-whatparty="respondent">Select Resident</button>
-                        <button class="btn btn-warning SelectNonResidentBtnRes" id="SelectNonResident" data-whatparty="respondent">Select Non-Resident</button>
+                        <button class="btn btn-primary mx-2 respondent SelectResidentBtnRes" id="SelectResidentRes" data-whatparty="respondent">Select Resident</button>
+                        <button class="btn btn-warning respondent SelectNonResidentBtnRes" id="SelectNonResidentRes" data-whatparty="respondent">Select Non-Resident</button>
+                    </div>
+                </div>
+
+                <div class="row">
+
+                    <div class="col-md-2 card m-4 d-flex justify-content-center" style="border-radius: 10px;" style="padding: 10px;">
+                        
+                        <img src="includes/img/blank-profile.webp" id="RespondentImg" width="200" height="200"/>
+                        
+                    </div>
+
+                    <div class="col-md-9 card m-4" style="border-radius: 10px;" style="padding: 10px;">
+                        <div class="card-header">
+                            Respondent/Offender Details
+                                            
+                        </div>
+
+                        <div class="text-center row">
+
+                        <input type="text" class="form-control" id="checkresidentres" name="resident_no" hidden/>
+                        <input type="text" class="form-control" id="id_to_recordres" name="resident_no" hidden/>
+
+                        <div class="form-floating mt-3 mb-3 col-md-4">
+                            <input type="text" class="form-control" id="fnameres" name="firstname" placeholder="Enter First Name Here" required disabled/>
+                            <label for="fname">First Name</label>
+                        </div>
+
+                        <div class="form-floating mt-3 mb-3 col-md-4">
+                            <input type="text" class="form-control" id="mnameres" name="middlename" placeholder="Enter Middle Name Here" disabled/>
+                            <label for="mname">Middle Name</label>
+                        </div>
+
+                        <div class="form-floating mt-3 mb-3 col-md-2">
+                            <input type="text" class="form-control" id="lnameres" name="lastname" placeholder="Enter Last Name Here" required disabled/>
+                            <label for="lname">Last Name</label>
+                        </div>
+
+                        <div class="form-floating mt-3 mb-3 col-md-2">
+                            <input type="text" class="form-control" id="suffixres" name="lastname" placeholder="Enter Last Name Here" required disabled/>
+                            <label for="lname">Suffix</label>
+                        </div>
+
+                        <div class="form-floating mt-3 mb-3 col-md-12">
+                            <input type="text" class="form-control" id="addressres" name="address" placeholder="Enter Subdvision Here" disabled/>
+                            <label for="subd">Complete Address</label>
+                        </div>
+
+                        
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <div class="col-md-12 d-flex align-items-center justify-content-between">
+                    <b>Step 3: Select Other Person Involved (If Applicable)</b>
+                </div>
+
+                <div class="col-md-12 card m-4 px-3" style="border-radius: 10px;" style="padding: 10px;">
+                    <div class="card-header">
+                       Other Person Involved (Max of 5 Persons per Complainat and Respondent)
+                    </div>
+
+                    <div class="row">
+
+                        <div class="col-md-6">
+                            <br>
+                            <div class="row">
+                                <div class="col-md-6 text-center">
+                                    <h5>Other Resident Complainants</h5>
+                                </div>
+                                <div class="col-md-6 d-flex justify-content-end">
+                                    <button class="btn btn-primary mx-2 AddOtherPartyBtn" data-whatparty="othercomplainant" data-whatbtn="SelectResidentComplainant" disabled>Add</button>
+                                </div>
+                            </div>
+
+                            <br>
+                            <table class="table table-bordered text-center">
+                                <thead>
+                                    <tr>
+                                    <th scope="col" hidden>#</th>
+                                    <th scope="col">Image</th>
+                                    <th scope="col">Fullname</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="ResidentComplainant">
+                                  
+                                 
+                                </tbody>
+                        </table>
+
+                        </div>
+
+                        <div class="col-md-6">
+                            <br>
+                            <div class="row">
+                                <div class="col-md-7">
+                                    <h5>Other Non-Resident Complainants</h5>
+                                </div>
+                                <div class="col-md-5 d-flex justify-content-end">
+                                    <button class="btn btn-primary mx-2 AddOtherPartyBtn" data-whatparty="othercomplainant" data-whatbtn="SelectNonResidentComplainant" disabled>Add</button>
+                                </div>
+                            </div>
+                            <br>
+                            <table class="table table-bordered text-center">
+                                <thead>
+                                    <tr>
+                                    <th scope="col" hidden></th>
+                                    <th scope="col">Image</th>
+                                    <th scope="col">Fullname</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="NonResComplainant">
+                                  
+                                   
+                                </tbody>
+                            </table>
+
+                        </div>
+
+                        <div class="col-md-6">
+                            <br>
+                            <div class="row">
+                                <div class="col-md-6 text-center">
+                                    <h5>Other Resident Respondents</h5>
+                                </div>
+                                <div class="col-md-6 d-flex justify-content-end">
+                                    <button class="btn btn-primary mx-2 AddOtherPartyBtn" data-whatparty="otherrespondent" data-whatbtn="SelectResidentComplainant" disabled>Add</button>
+                                </div>
+                            </div>
+                            <br>
+                            <table class="table table-bordered text-center">
+                                <thead>
+                                    <tr>
+                                        <th scope="col" hidden>#</th>
+                                        <th scope="col">Image</th>
+                                        <th scope="col">Fullname</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="ResidentRespondent">
+                                   
+                            
+                                </tbody>
+                            </table>
+
+                        </div>
+
+                        <div class="col-md-6">
+                            <br>
+                            <div class="row">
+                                <div class="col-md-7 text-center">
+                                    <h5>Other Non-Resident Respondents</h5>
+                                </div>
+                                <div class="col-md-64 d-flex justify-content-end">
+                                    <button class="btn btn-primary mx-2 AddOtherPartyBtn" data-whatparty="otherrespondent" data-whatbtn="SelectOtherNonResRespondent" disabled>Add</button>
+                                </div>
+                            </div>
+                            <br>
+                            <table class="table table-bordered text-center">
+                                <thead>
+                                    <tr>
+                                    <th scope="col" hidden>#</th>
+                                    <th scope="col">Image</th>
+                                    <th scope="col">Fullname</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="NonResRespondent">
+                                   
+                                </tbody>
+                            </table>
+
+                        </div>
+                    
+                    </div>
+                   
+                </div>
+
+
+
+                <div class="col-md-12 d-flex align-items-center justify-content-between">
+                    <b>Step 4: Select Available Schedule</b>
+                    <div class="d-flex">
+                        <button class="btn btn-primary mx-2" id="pick_schedule_btn">Pick Schedule</button>
                     </div>
                 </div>
 
                 <div class="col-md-12 card m-4 px-3" style="border-radius: 10px;" style="padding: 10px;">
                     <div class="card-header">
-                        Respondent/Offender Details
+                       Schedule of the Mediation      
+                    </div>
+
+                    <div class="text-center row">
+                        <div class="form-floating mt-3 mb-3 col-md-2">
+                            <input type="date" class="form-control" id="schedule_date" name="schedule_date" placeholder="" disabled/>
+                            <label for="subd">Mediation Date</label>
+                        </div>
+                        <div class="form-floating mt-3 mb-3 col-md-2">
+                            <input type="time" class="form-control" id="schedule_starttime" name="schedule_date" placeholder="" disabled/>
+                            <label for="subd">Mediation Start Time</label>
+                        </div>
+                        <div class="form-floating mt-3 mb-3 col-md-2">
+                            <input type="time" class="form-control" id="schedule_endtime" name="schedule_time" placeholder="" disabled/>
+                            <label for="subd">Mediation End Time</label>
+                        </div>
+                        <div class="form-floating mt-3 mb-3 col-md-2">
+                        
+                            <input type="color" class="form-control" id="myColor">
+                            <label for="myColor">Schedule Color</label>
+
+                        </div>
+                        <div class="form-floating mt-3 mb-3 col-md-4">
+                            <input type="text" class="form-control" id="mediator_name" name="mediator_name" placeholder=""/>
+                            <label for="subd">Mediator Name</label>
+                        </div>
+                    </div>
+
+                   
+                </div>
+
+                <div class="col-md-12 d-flex align-items-center justify-content-between">
+                    <b>Step 5: Fill Blotter Details</b>
+                </div>
+
+                <div class="col-md-12 card m-4 px-3" style="border-radius: 10px;" style="padding: 10px;">
+                    <div class="card-header">
+                        Details of the Incident
                                          
                     </div>
 
                     <div class="text-center row">
 
-                    <input type="text" class="form-control" id="checkresidentres" name="resident_no" hidden>
-                    <input type="text" class="form-control" id="id_to_recordres" name="resident_no" hidden>
+                    <input type="text" class="form-control" id="checkresidentres" name="resident_no" hidden/>
+                    <input type="text" class="form-control" id="id_to_recordres" name="resident_no" hidden/>
 
                     <div class="form-floating mt-3 mb-3 col-md-4">
-                        <input type="text" class="form-control" id="fnameres" name="firstname" placeholder="Enter First Name Here" required disabled/>
-                        <label for="fname">First Name</label>
+                        <input type="text" class="form-control" id="incident_date" name="firstname" placeholder="Enter First Name Here" required/>
+                        <label for="fname">Incident Date and Time</label>
                     </div>
 
                     <div class="form-floating mt-3 mb-3 col-md-4">
-                        <input type="text" class="form-control" id="mnameres" name="middlename" placeholder="Enter Middle Name Here" disabled/>
-                        <label for="mname">Middle Name</label>
+                        <input type="text" class="form-control" id="mnameres" name="middlename" placeholder="Enter Middle Name Here"/>
+                        <label for="mname">Location of the Incident</label>
                     </div>
 
-                    <div class="form-floating mt-3 mb-3 col-md-2">
-                        <input type="text" class="form-control" id="lnameres" name="lastname" placeholder="Enter Last Name Here" required disabled/>
-                        <label for="lname">Last Name</label>
-                    </div>
-
-                    <div class="form-floating mt-3 mb-3 col-md-2">
-                        <input type="text" class="form-control" id="suffixres" name="lastname" placeholder="Enter Last Name Here" required disabled/>
-                        <label for="lname">Suffix</label>
+                    <div class="form-floating mt-3 mb-3 col-md-4">
+                        <select class="form-select" id="floatingSelect" aria-label="Floating label select example">
+                            <option value="" selected hidden>Select Blotter Type</option>
+                            <option value="1">Blotter</option>
+                            <option value="2">Incident</option>
+                        </select>
+                        <label for="floatingSelect">Works with selects</label>
                     </div>
 
                     <div class="form-floating mt-3 mb-3 col-md-12">
-                        <input type="text" class="form-control" id="addressres" name="address" placeholder="Enter Subdvision Here" disabled/>
-                        <label for="subd">Complete Address</label>
+                        <input type="text" class="form-control" id="addressres" name="address" placeholder="Enter Subdvision Here"/>
+                        <label for="subd">Description of the Incident</label>
+                    </div>
+
+                    <div class="form-floating">
+                        <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea" style="height: 500px; border: 1.5px solid black;"></textarea>
+                        <label for="floatingTextarea">Context of the Case</label>
                     </div>
 
                     
                     </div>
+
+                 
                 </div>
+
+
 
           <div class="col-md-12 d-flex justify-content-end">
 
@@ -162,7 +424,10 @@
 <script src="js/bootstrap.bundle.min.js"></script>
 <script src="js/sweetalert2.min.js"></script>
 <script src="https://cdn.datatables.net/v/bs5/dt-2.1.8/datatables.min.js"></script>
-
+<script src="https://cdn.jsdelivr.net/npm/@eonasdan/tempus-dominus@6.9.11/dist/js/tempus-dominus.min.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha256-BRqBN7dYgABqtY9Hd4ynE+1slnEw+roEPFzQ7TRRfcg=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@eonasdan/tempus-dominus@6.9.11/dist/js/jQuery-provider.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
 
 <!-- Icons library -->
 <script src="plugins/feather.min.js"></script>
