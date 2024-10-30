@@ -81,7 +81,7 @@
 
                 <div class="row">
 
-                    <div class="col-md-2 card m-4 d-flex justify-content-center" style="border-radius: 10px;" style="padding: 10px;">
+                    <div class="col-md-2 card m-3 p-4 d-flex justify-content-center" style="border-radius: 10px;" style="padding: 10px;">
                         
                         <img src="includes/img/blank-profile.webp" id="ComplainantImg" width="200" height="200"/>
                         
@@ -128,7 +128,7 @@
 
                 </div>
 
-                <div class="col-md-12 d-flex align-items-center justify-content-between">
+                <div class="col-md-12 m-4 p-4 d-flex align-items-center justify-content-between">
                     <b>Step 2: Select Respondent Person Record</b>
                     <div class="d-flex">
                         <button class="btn btn-primary mx-2 respondent SelectResidentBtnRes" id="SelectResidentRes" data-whatparty="respondent">Select Resident</button>
@@ -138,7 +138,7 @@
 
                 <div class="row">
 
-                    <div class="col-md-2 card m-4 d-flex justify-content-center" style="border-radius: 10px;" style="padding: 10px;">
+                    <div class="col-md-2 card m-3 p-4 d-flex justify-content-center" style="border-radius: 10px;" style="padding: 10px;">
                         
                         <img src="includes/img/blank-profile.webp" id="RespondentImg" width="200" height="200"/>
                         
@@ -344,9 +344,12 @@
 
                         </div>
                         <div class="form-floating mt-3 mb-3 col-md-4">
-                            <input type="text" class="form-control" id="mediator_name" name="mediator_name" placeholder=""/>
-                            <label for="subd">Mediator Name</label>
-                        </div>
+                        <select class="form-select" id="mediator_name" aria-label="Floating label select example">
+                            <option value="" selected hidden>Select Mediator</option>
+                          
+                        </select>
+                        <label for="mediator_name">Mediator</label>
+                    </div>
                     </div>
 
                    
@@ -383,7 +386,7 @@
                             <option value="1">Blotter</option>
                             <option value="2">Incident</option>
                         </select>
-                        <label for="floatingSelect">Works with selects</label>
+                        <label for="floatingSelect">Blotter Type</label>
                     </div>
 
                     <div class="form-floating mt-3 mb-3 col-md-12">
@@ -408,7 +411,7 @@
 
           <br>
 
-          <button type="submit" id="generate_certificate" class="btn btn-success float-right"> Add Blotter </button> 
+          <button type="submit" id="AddBlotterBtn" class="btn btn-success float-right"> Add Blotter </button> 
           </div>
                 
             </div>

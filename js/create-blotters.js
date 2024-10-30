@@ -366,7 +366,7 @@ $(document).ready(function(){
 
                                     var newContent = `
                                     <tr>
-                                    <td class="complainant${countNonResidentComplainant}" hidden>`+residentid+`</td>
+                                    <td class="NonResComplainant${countNonResidentComplainant}" hidden>`+residentid+`</td>
                                     <td><img src="includes/img/non_resident_img/${imagefile}" width="100 height="100"></td>
                                     <td>`+ data.last_name+', '+data.first_name+' '+data.middle_name+' '+data.suffix+`</td>
                                     </tr>`;
@@ -387,12 +387,12 @@ $(document).ready(function(){
 
                         }else if(whatparty == "otherrespondent"){
                           
-                            if(countNonResidentRespondentNon <=4){
+                            if(countNonResidentRespondent <=4){
                                 if(!resultArrayofOtherResRespondent.includes(residentid) || !resultArrayofOtherResComplainant.includes(residentid)){
                                     countNonResidentRespondent++;
                                     var newContent = `
                                         <tr>
-                                        <td hidden class="nonrescomplainant${countNonResidentRespondent}">`+residentid+`</td>
+                                        <td hidden class="NonResRespondent${countNonResidentRespondent}">`+residentid+`</td>
                                         <td><img src="includes/img/non_resident_img/${imagefile}" width="100 height="100"></td>
                                         <td>`+ data.last_name+', '+data.first_name+' '+data.middle_name+' '+data.suffix+`</td>
                                         </tr>`;
@@ -640,6 +640,88 @@ $(document).ready(function(){
         var whatparty = $(this).data("whatparty");
 
         SelectResandNonResModal(whatbtn, whatparty)
+    })
+
+    $("#mediator_name").one("click", function () {
+        $.ajax({
+            type: "POST",
+            url: "includes/blottersoperation.php",
+            data: {operation: "FETCH_MEDIATOR_SELECT"},
+            dataType: "HTML",
+            success: function (response) {
+
+                $("#mediator_name").html(response);
+            }
+        });
+    });
+
+    $("#AddBlotterBtn").click(function(){
+        var complainant_id = $("#id_to_record").val();
+        var complainant_status = $("#checkresident").val();
+        var respondent_id = $("#id_to_recordres").val();
+        var respondent_status = $("#checkresidentres").val();
+
+        // var 
+
+        let resident_complainants = {};
+        let resident_respondents = {};
+        let non_resident_complaiants = {};
+        let non_resident_respondents = {};
+
+        //Fetch all Complanants and Respondents
+        $("[class^='ResidentComplainant']").each(function(index) { 
+            resident_complainants[`Res_Complainant${index + 1}`] = $(this).text();
+        });
+
+        $("[class^='ResidentRespondent']").each(function(index) { 
+            resident_respondents[`Res_Respondent${index + 1}`] = $(this).text();
+        });
+
+        $("[class^='NonResComplainant']").each(function(index) { 
+            non_resident_complaiants[`NonRes_Complainant${index + 1}`] = $(this).text();
+        });
+
+        $("[class^='NonResRespondent']").each(function(index) { 
+            non_resident_respondents[`NonRes_Respondent${index + 1}`] = $(this).text();
+        });
+
+
+        var otherresidentcomplainant1 = resident_complainants.Res_Complainant1
+        var otherresidentcomplainant2 = resident_complainants.Res_Complainant2
+        var otherresidentcomplainant3 = resident_complainants.Res_Complainant3
+        var otherresidentcomplainant4 = resident_complainants.Res_Complainant4
+        var otherresidentcomplainant5 = resident_complainants.Res_Complainant5
+
+        var otherresidentrespondent1 = resident_respondents.Res_Respondent1
+        var otherresidentrespondent2 = resident_respondents.Res_Respondent2
+        var otherresidentrespondent3 = resident_respondents.Res_Respondent3
+        var otherresidentrespondent4 = resident_respondents.Res_Respondent4
+        var otherresidentrespondent5 = resident_respondents.Res_Respondent5
+
+        var othernonresidentcomplainant1 = non_resident_complainants.NonRes_Complainant1
+        var othernonresidentcomplainant2 = non_resident_complainants.NonRes_Complainant2
+        var othernonresidentcomplainant3 = non_resident_complainants.NonRes_Complainant3
+        var othernonresidentcomplainant4 = non_resident_complainants.NonRes_Complainant4
+        var othernonresidentcomplainant5 = non_resident_complainants.NonRes_Complainant5
+
+        var othernonresidentrespondent1 = non_resident_respondents.NonRes_Respondent1
+        var othernonresidentrespondent2 = non_resident_respondents.NonRes_Respondent2
+        var othernonresidentrespondent3 = non_resident_respondents.NonRes_Respondent3
+        var othernonresidentrespondent4 = non_resident_respondents.NonRes_Respondent4
+        var othernonresidentrespondent5 = non_resident_respondents.NonRes_Respondent5
+
+        
+
+
+
+
+
+
+
+
+
+
+
     })
    
 });

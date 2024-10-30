@@ -12,7 +12,7 @@ MySQL - 5.7.44-log : Database - bims
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-CREATE DATABASE /*!32312 IF NOT EXISTS*/`bims` /*!40100 DEFAULT CHARACTER SET utf8mb4 */;
+CREATE DATABASE /*!32312 IF NOT EXISTS*/`bims` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci */;
 
 USE `bims`;
 
@@ -336,10 +336,15 @@ CREATE TABLE `tbl_blotter_mediator` (
   `last_name` varchar(85) DEFAULT NULL,
   `first_name` varchar(85) DEFAULT NULL,
   `middle_name` varchar(85) DEFAULT NULL,
+  `suffix` varchar(85) DEFAULT NULL,
   PRIMARY KEY (`mediator_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `tbl_blotter_mediator` */
+
+insert  into `tbl_blotter_mediator`(`mediator_id`,`last_name`,`first_name`,`middle_name`,`suffix`) values 
+(1,'Salas','Robert','Lumauig','Jr'),
+(2,'Jamin','Jeffrey','Ocampo','Sr');
 
 /*Table structure for table `tbl_blotters` */
 
@@ -352,6 +357,7 @@ CREATE TABLE `tbl_blotters` (
   `res_respondent_no` int(55) DEFAULT NULL,
   `nres_respondent_no` int(55) DEFAULT NULL,
   `otherp_involved_no` int(55) DEFAULT NULL,
+  `blotter_type` tinyint(5) DEFAULT NULL,
   `desc_incident` varchar(255) DEFAULT NULL,
   `incident_dt` datetime DEFAULT NULL,
   `location_of_incident` varchar(255) DEFAULT NULL,
@@ -378,8 +384,8 @@ CREATE TABLE `tbl_blotters` (
 
 /*Data for the table `tbl_blotters` */
 
-insert  into `tbl_blotters`(`blotter_id`,`res_complainant_no`,`nres_complainant_no`,`res_respondent_no`,`nres_respondent_no`,`otherp_involved_no`,`desc_incident`,`incident_dt`,`location_of_incident`,`date_of_resolution`,`statemnt`,`mediation_schedule`,`mediation_starttime`,`mediation_endtime`,`blot_at_no`,`schedule_color`,`report_status`,`is_deleted`) values 
-(1,1,NULL,3,NULL,NULL,'Pambubudol','2024-10-24 22:39:40','Cielito Homes','2024-10-24','sdsdsdsdsdsdsdsd','2024-10-28',NULL,NULL,1,'Yellow',0,0);
+insert  into `tbl_blotters`(`blotter_id`,`res_complainant_no`,`nres_complainant_no`,`res_respondent_no`,`nres_respondent_no`,`otherp_involved_no`,`blotter_type`,`desc_incident`,`incident_dt`,`location_of_incident`,`date_of_resolution`,`statemnt`,`mediation_schedule`,`mediation_starttime`,`mediation_endtime`,`blot_at_no`,`schedule_color`,`report_status`,`is_deleted`) values 
+(1,1,NULL,3,NULL,NULL,NULL,'Pambubudol','2024-10-24 22:39:40','Cielito Homes','2024-10-24','sdsdsdsdsdsdsdsd','2024-10-28',NULL,NULL,1,'Yellow',0,0);
 
 /*Table structure for table `tbl_building_permits` */
 
@@ -725,12 +731,25 @@ DROP TABLE IF EXISTS `tbl_persons_involved`;
 
 CREATE TABLE `tbl_persons_involved` (
   `person_involved_id` int(55) NOT NULL AUTO_INCREMENT,
-  `person_1` int(55) DEFAULT NULL,
-  `person_2` int(55) DEFAULT NULL,
-  `person_3` int(55) DEFAULT NULL,
-  `person_4` int(55) DEFAULT NULL,
-  `person_5` int(55) DEFAULT NULL,
-  PRIMARY KEY (`person_involved_id`)
+  `res_person_1` int(55) DEFAULT NULL,
+  `nres_person_1` int(55) DEFAULT NULL,
+  `res_person_2` int(55) DEFAULT NULL,
+  `nres_person_2` int(55) DEFAULT NULL,
+  `res_person_3` int(55) DEFAULT NULL,
+  `nres_person_3` int(55) DEFAULT NULL,
+  `res_person_4` int(55) DEFAULT NULL,
+  `nres_person_4` int(55) DEFAULT NULL,
+  `res_person_5` int(55) DEFAULT NULL,
+  `nres_person_5` int(55) DEFAULT NULL,
+  PRIMARY KEY (`person_involved_id`),
+  KEY `res_person_1` (`res_person_1`),
+  KEY `nres_person_1` (`nres_person_1`),
+  KEY `res_person_2` (`res_person_2`),
+  KEY `nres_person_2` (`nres_person_2`),
+  CONSTRAINT `tbl_persons_involved_ibfk_1` FOREIGN KEY (`res_person_1`) REFERENCES `resident` (`resident_id`),
+  CONSTRAINT `tbl_persons_involved_ibfk_2` FOREIGN KEY (`nres_person_1`) REFERENCES `non_resident` (`nresident_id`),
+  CONSTRAINT `tbl_persons_involved_ibfk_3` FOREIGN KEY (`res_person_2`) REFERENCES `resident` (`resident_id`),
+  CONSTRAINT `tbl_persons_involved_ibfk_4` FOREIGN KEY (`nres_person_2`) REFERENCES `non_resident` (`nresident_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Data for the table `tbl_persons_involved` */
@@ -1981,6 +2000,25 @@ DROP TABLE IF EXISTS `vw_resonly_cert`;
  `date_deleted` date 
 )*/;
 
+/*Table structure for table `vw_select_resident` */
+
+DROP TABLE IF EXISTS `vw_select_resident`;
+
+/*!50001 DROP VIEW IF EXISTS `vw_select_resident` */;
+/*!50001 DROP TABLE IF EXISTS `vw_select_resident` */;
+
+/*!50001 CREATE TABLE  `vw_select_resident`(
+ `resident_id` int(55) ,
+ `img_filename` varchar(255) ,
+ `full_name` text ,
+ `address` text ,
+ `sex` varchar(255) ,
+ `marital_status` varchar(50) ,
+ `birth_date` date ,
+ `cellphone_num` varchar(55) ,
+ `is_a_voter` tinyint(2) 
+)*/;
+
 /*View structure for view vw_all_brgy_clearance */
 
 /*!50001 DROP TABLE IF EXISTS `vw_all_brgy_clearance` */;
@@ -2106,6 +2144,13 @@ DROP TABLE IF EXISTS `vw_resonly_cert`;
 /*!50001 DROP VIEW IF EXISTS `vw_resonly_cert` */;
 
 /*!50001 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vw_resonly_cert` AS (select `tbl_docu_request`.`request_id` AS `request_id`,`tbl_cert_audit_trail`.`datetime_issued` AS `date_issued`,`resident`.`resident_id` AS `resident_id`,(case when (`tbl_documents`.`Barangay_Clearance` is not null) then 'Barangay Clearance' when (`tbl_documents`.`Certificate_of_Residency` is not null) then 'Certificate of Residency' when (`tbl_documents`.`Certificate_of_Indigency` is not null) then 'Certificate of Indigency' when (`tbl_documents`.`Certificate_of_Good_Moral` is not null) then 'Certificate of Good Moral' when (`tbl_documents`.`Business_Permits` is not null) then 'Business Permits' when (`tbl_documents`.`Building_Permits` is not null) then 'Building Permits' when (`tbl_documents`.`Excavation_Permits` is not null) then 'Excavation Permits' when (`tbl_documents`.`Fencing_Permits` is not null) then 'Fencing Permits' when (`tbl_documents`.`FTJS` is not null) then 'First Time Job Seekers' when (`tbl_documents`.`Oath_of_Undertaking` is not null) then 'Oath of Undertaking' when (`tbl_documents`.`TPRS` is not null) then 'Tricycle Pedicab Regulatory Services' else 'Unknown Document Type' end) AS `document_desc`,`tbl_docu_request`.`age` AS `age`,`resident`.`sex` AS `sex`,`tbl_docu_request`.`presented_id` AS `presented_id`,`tbl_docu_request`.`ID_number` AS `ID_number`,`tbl_docu_request`.`purpose` AS `purpose`,`tbl_docu_request`.`pdffile` AS `pdffile`,`tbl_cert_audit_trail`.`expiration` AS `expiration`,`tbl_docu_request`.`status` AS `status`,`tbl_docu_request`.`is_deleted` AS `is_deleted`,`tbl_cert_audit_trail`.`datetime_edited` AS `date_edited`,`tbl_cert_audit_trail`.`datetime_deleted` AS `date_deleted` from ((((`tbl_docu_request` left join `resident` on((`tbl_docu_request`.`resident_no` = `resident`.`resident_id`))) left join `non_resident` on((`tbl_docu_request`.`nresident_no` = `non_resident`.`nresident_id`))) join `tbl_documents` on((`tbl_docu_request`.`document_no` = `tbl_documents`.`docu_id`))) join `tbl_cert_audit_trail` on((`tbl_docu_request`.`audit_trail_no` = `tbl_cert_audit_trail`.`audit_trail_id`)))) */;
+
+/*View structure for view vw_select_resident */
+
+/*!50001 DROP TABLE IF EXISTS `vw_select_resident` */;
+/*!50001 DROP VIEW IF EXISTS `vw_select_resident` */;
+
+/*!50001 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vw_select_resident` AS (select `resident`.`resident_id` AS `resident_id`,`resident`.`img_filename` AS `img_filename`,concat(`resident`.`first_name`,' ',`resident`.`last_name`,' ',`resident`.`middle_name`,' ',`resident`.`suffix`) AS `full_name`,concat(`resident`.`house_num`,' ',`resident`.`street`,' ',`resident`.`subdivision`,' Camarin Caloocan City') AS `address`,`resident`.`sex` AS `sex`,`resident`.`marital_status` AS `marital_status`,`resident`.`birth_date` AS `birth_date`,`resident`.`cellphone_num` AS `cellphone_num`,`resident`.`is_a_voter` AS `is_a_voter` from `resident`) */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

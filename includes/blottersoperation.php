@@ -25,8 +25,11 @@ if($operation_check == "SELECT_NONRESIDENT_TABLELOAD"){
         $stmt->execute();
         $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
         
+        if(empty($results)){
+            echo "Responded nothing"; 
+        }else{
         echo json_encode($results);
-
+        }
 
 }else if($operation_check == "FETCH_SCHEDULE_ON_MODAL"){
 
@@ -36,10 +39,27 @@ if($operation_check == "SELECT_NONRESIDENT_TABLELOAD"){
     $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     echo json_encode($results);
+}else if($operation_check == "FETCH_MEDIATOR_SELECT"){
+
+    $sqlquery = "SELECT CONCAT(first_name, ' ', middle_name, ', ', last_name, ' ', COALESCE(suffix, '')) AS mediator_name FROM tbl_blotter_mediator";
+    $stmt = $pdo -> prepare($sqlquery);
+    $stmt -> execute();
+    $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    echo '<option value="" hidden>Select Mediator</option>';
+
+    foreach($results as $mediator_name){
+
+        echo '<option value="'.htmlspecialchars($mediator_name['mediator_name']).'">'.htmlspecialchars($mediator_name['mediator_name']).'</option>';
+
+    }
+
 }else if($operation_check == "ADD_BLOTTER"){
 
     
 
+}else{
+    echo json_encode(["Nothing was recieved"]);
 }
 $pdo = null;
 
