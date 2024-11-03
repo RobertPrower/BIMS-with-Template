@@ -1392,6 +1392,7 @@ label {
   width: -moz-max-content;
   width: max-content;
   cursor: pointer;
+  margin-left: 8px !important;
 }
 .new-page-content input {
   padding: 5px 16px;

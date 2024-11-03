@@ -81,9 +81,9 @@
 
                 <div class="row">
 
-                    <div class="col-md-2 card m-3 p-4 d-flex justify-content-center" style="border-radius: 10px;" style="padding: 10px;">
+                    <div class="col-md-2 card m-3 p-3  d-flex justify-content-center align-items-center" style="border-radius: 10px;padding: 10px;object-fit: contain; max-width: 100%; max-height: 100%">
                         
-                        <img src="includes/img/blank-profile.webp" id="ComplainantImg" width="200" height="200"/>
+                        <img src="includes/img/blank-profile.webp" id="ComplainantImg" width="200" height="200" style="object-fit: contain; max-width: 100%; max-height: 100%;"/>
                         
                     </div>
 
@@ -128,7 +128,7 @@
 
                 </div>
 
-                <div class="col-md-12 m-4 p-4 d-flex align-items-center justify-content-between">
+                <div class="col-md-12 d-flex align-items-center justify-content-between">
                     <b>Step 2: Select Respondent Person Record</b>
                     <div class="d-flex">
                         <button class="btn btn-primary mx-2 respondent SelectResidentBtnRes" id="SelectResidentRes" data-whatparty="respondent">Select Resident</button>
@@ -138,9 +138,9 @@
 
                 <div class="row">
 
-                    <div class="col-md-2 card m-3 p-4 d-flex justify-content-center" style="border-radius: 10px;" style="padding: 10px;">
+                    <div class="col-md-2 card m-3 p-3 d-flex justify-content-center align-items-center" style="border-radius: 10px;padding: 10px;object-fit: contain; max-width: 100%; max-height: 100%">
                         
-                        <img src="includes/img/blank-profile.webp" id="RespondentImg" width="200" height="200"/>
+                        <img src="includes/img/blank-profile.webp" id="RespondentImg" width="200" height="200" style="object-fit: contain; max-width: 100%; max-height: 100%"/>
                         
                     </div>
 
@@ -339,8 +339,8 @@
                         </div>
                         <div class="form-floating mt-3 mb-3 col-md-2">
                         
-                            <input type="color" class="form-control" id="myColor">
-                            <label for="myColor">Schedule Color</label>
+                            <input type="color" class="form-control" id="schedule_color">
+                            <label for="schedule_color">Schedule Color</label>
 
                         </div>
                         <div class="form-floating mt-3 mb-3 col-md-4">
@@ -376,26 +376,36 @@
                     </div>
 
                     <div class="form-floating mt-3 mb-3 col-md-4">
-                        <input type="text" class="form-control" id="mnameres" name="middlename" placeholder="Enter Middle Name Here"/>
+                        <input type="text" class="form-control" id="incident_location" name="middlename" placeholder="Enter Middle Name Here"/>
                         <label for="mname">Location of the Incident</label>
                     </div>
 
                     <div class="form-floating mt-3 mb-3 col-md-4">
-                        <select class="form-select" id="floatingSelect" aria-label="Floating label select example">
+                        <select class="form-select" id="blotter_type" aria-label="Floating label select example">
                             <option value="" selected hidden>Select Blotter Type</option>
                             <option value="1">Blotter</option>
                             <option value="2">Incident</option>
                         </select>
-                        <label for="floatingSelect">Blotter Type</label>
+                        <label for="blotter_type">Blotter Type</label>
                     </div>
 
-                    <div class="form-floating mt-3 mb-3 col-md-12">
-                        <input type="text" class="form-control" id="addressres" name="address" placeholder="Enter Subdvision Here"/>
+                    <div class="form-floating mt-3 mb-3 col-md-4">
+                        <input type="text" class="form-control" id="incident_desc" name="address" placeholder="Enter Subdvision Here"/>
                         <label for="subd">Description of the Incident</label>
                     </div>
 
+                    <div class="form-floating mt-3 mb-3 col-md-4">
+                        <input type="file" class="form-control" id="blotter_evidence" name="blotter_evidence" placeholder="Enter Subdvision Here"/>
+                        <label for="subd">Upload Image Evidence</label>
+                    </div>
+
+                    <div class="form-floating mt-3 mb-3 col-md-4">
+                        <input type="file" class="form-control" id="blotter_filecontext" name="blotter_evidence" placeholder="Enter Subdvision Here"/>
+                        <label for="subd">Upload Image Evidence</label>
+                    </div>
+
                     <div class="form-floating">
-                        <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea" style="height: 500px; border: 1.5px solid black;"></textarea>
+                    <textarea class="form-control" placeholder="Leave a comment here" id="case_context" style="height: 500px; border: 1.5px solid black;"></textarea>
                         <label for="floatingTextarea">Context of the Case</label>
                     </div>
 

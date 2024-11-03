@@ -619,6 +619,21 @@ $(document).ready(function () {
     });
 
   });
+
+  $('#AddNonResidentModal [id="city"]').one('click',function(){
+    console.log("City has been clicked");
+    $.getJSON("includes/table_municipality.json", function(data) {
+        var html = ''; // Initialize empty HTML string
+
+        // Assuming data is an array of objects with municipality_name properties
+        data.forEach(function(municipality) {
+            html += '<option value="' + municipality.municipality_name + '">' + municipality.municipality_name + '</option>';
+        });
+
+        $("#city").html(html); // Set the options
+    });   
+   
+  })
  
 
 });

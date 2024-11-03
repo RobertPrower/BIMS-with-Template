@@ -638,6 +638,7 @@ if($operation_check == "ADD"){ //For the add operation
     $start_from = ($current_page - 1) * $limit;
         
     require_once'paginationtemplate.php';
+}else if($operation_check == "FETCH_CITY_JSON"){
 }else{
     echo "Invalid operation";
 }

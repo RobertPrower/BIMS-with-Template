@@ -38,7 +38,7 @@ $(document).ready(function(){
                     {
                         data: 'img_filename', 
                         render: function(data, type, row) {
-                            return '<img src="includes/img/resident_img/' + data + '" alt="Image" class="img-thumbnail" style="width: 100px; height: 100px;">';
+                            return '<img src="includes/img/resident_img/' + data + '" alt="Image" class="img-thumbnail" style="width: 100px; height: 100px;object-fit: cover; max-width: 100%; max-height: 100%;">';
                         },
                         className: "text-center",
                         width: "15%"
@@ -88,7 +88,7 @@ $(document).ready(function(){
                     {
                         data: 'img_filename', 
                         render: function(data, type, row) {
-                            return '<img src="includes/img/non_resident_img/' + data + '" alt="Image" class="img-thumbnail" style="width: 100px; height: 100px;">';
+                            return '<img src="includes/img/non_resident_img/' + data + '" alt="Image" class="img-thumbnail" style="width: 100px; height: 100px;object-fit: cover; max-width: 100%; max-height: 100%;">';
                         },
                         className: "text-center",
                         width: "5%"
@@ -582,7 +582,7 @@ $(document).ready(function(){
                                 id: blotter.blotter_id,
                                 title: blotter.desc_incident,
                                 incdate: blotter.incident_dt,
-                                start: new Date (blotter.mediation_date),
+                                start: new Date (blotter.mediation_schedule),
                                 end: blotter.date_of_resolution,
                                 complainant: blotter.complainant_fullname,
                                 respondent: blotter.respondent_fullname,
@@ -618,8 +618,7 @@ $(document).ready(function(){
                           '<br><b>Complainant:</b> ' + info.event.extendedProps.complainant +
                           '<br><b>Respondent:</b> ' + info.event.extendedProps.respondent +
                           '<br><b>Mediation Date:</b> ' + formattedStart +
-                          '<br><b>Report Status:</b> ' + report,
-                    width: 700
+                          '<br><b>Report Status:</b> ' + report
                 });
             }
         });
@@ -661,11 +660,25 @@ $(document).ready(function(){
         var respondent_id = $("#id_to_recordres").val();
         var respondent_status = $("#checkresidentres").val();
 
-        // var 
+        var schedule_date = $("#schedule_date").val();
+        var schedule_starttime =$("#schedule_starttime").val();
+        var schedule_endtime = $("#schedule_endtime").val();
+        var schedule_color = $("#schedule_color").val();
+        var mediator_name = $("#mediator_name").val();
 
+        var incident_date = $("#incident_date").val();
+        var incident_location = $("#incident_location").val();
+        var blotter_type = $("#blotter_type").val();
+        var incident_desc = $("#incident_desc").val();
+        var blotter_evidence = $("#blotter_evidence").val();
+        var blotter_filecontext = $("#blotter_filecontext").val();
+        var case_context = $("#case_context").val();
+
+
+        // Objects for the Other Complainants and Respondents
         let resident_complainants = {};
         let resident_respondents = {};
-        let non_resident_complaiants = {};
+        let non_resident_complainants = {};
         let non_resident_respondents = {};
 
         //Fetch all Complanants and Respondents
@@ -678,41 +691,78 @@ $(document).ready(function(){
         });
 
         $("[class^='NonResComplainant']").each(function(index) { 
-            non_resident_complaiants[`NonRes_Complainant${index + 1}`] = $(this).text();
+            non_resident_complainants[`NonRes_Complainant${index + 1}`] = $(this).text();
         });
 
         $("[class^='NonResRespondent']").each(function(index) { 
             non_resident_respondents[`NonRes_Respondent${index + 1}`] = $(this).text();
+        });null
+
+
+        var other_resident_complainant1 = (resident_complainants.Res_Complainant1)?resident_complainants.Res_Complainant1:"";
+        var other_resident_complainant2 = (resident_complainants.Res_Complainant2)?resident_complainants.Res_Complainant2:"";
+        var other_resident_complainant3 = (resident_complainants.Res_Complainant3)?resident_complainants.Res_Complainant3:"";
+        var other_resident_complainant4 = (resident_complainants.Res_Complainant4)?resident_complainants.Res_Complainant4:"";
+        var other_resident_complainant5 = (resident_complainants.Res_Complainant5)?resident_complainants.Res_Complainant5:"";
+
+        var other_resident_respondent1 = (resident_respondents.Res_Respondent1)?resident_respondents.Res_Respondent1:""
+        var other_resident_respondent2 = (resident_respondents.Res_Respondent2)?resident_respondents.Res_Respondent2:""
+        var other_resident_respondent3 = (resident_respondents.Res_Respondent3)?resident_respondents.Res_Respondent3:""
+        var other_resident_respondent4 = (resident_respondents.Res_Respondent4)?resident_respondents.Res_Respondent4:""
+        var other_resident_respondent5 = (resident_respondents.Res_Respondent5)?resident_respondents.Res_Respondent5:""
+
+        var other_nonresident_complainant1 = (non_resident_complainants.NonRes_Complainant1)?non_resident_complainants.NonRes_Complainant1:""
+        var other_nonresident_complainant2 = (non_resident_complainants.NonRes_Complainant2)?non_resident_complainants.NonRes_Complainant2:""
+        var other_nonresident_complainant3 = (non_resident_complainants.NonRes_Complainant3)?non_resident_complainants.NonRes_Complainant3:""
+        var other_nonresident_complainant4 = (non_resident_complainants.NonRes_Complainant4)?non_resident_complainants.NonRes_Complainant4:""
+        var other_nonresident_complainant5 = (non_resident_complainants.NonRes_Complainant5)?non_resident_complainants.NonRes_Complainant5:""
+
+        var other_nonresident_respondent1 = (non_resident_respondents.NonRes_Respondent1)?non_resident_respondents.NonRes_Respondent1:""
+        var other_nonresident_respondent2 = (non_resident_respondents.NonRes_Respondent2)?non_resident_respondents.NonRes_Respondent2:""
+        var other_nonresident_respondent3 = (non_resident_respondents.NonRes_Respondent3)?non_resident_respondents.NonRes_Respondent3:""
+        var other_nonresident_respondent4 = (non_resident_respondents.NonRes_Respondent4)?non_resident_respondents.NonRes_Respondent4:""
+        var other_nonresident_respondent5 = (non_resident_respondents.NonRes_Respondent5)?non_resident_respondents.NonRes_Respondent5:""
+
+        $.ajax({
+            type: "POST",
+            url: "includes/blottersoperation.php",
+            data: {
+                main_complainantid: complainant_id, main_complainant_status: complainant_status, main_respondentid: respondent_id, main_respondent_status: respondent_status,
+                other_nonresident_complainant1: other_nonresident_complainant1, other_nonresident_complainant2: other_nonresident_complainant2, other_nonresident_complainant3: other_nonresident_complainant3, other_nonresident_complainant4: other_nonresident_complainant4, other_nonresident_complainant5: other_nonresident_complainant5,
+                other_nonresident_respondent1: other_nonresident_respondent1, other_nonresident_respondent2: other_nonresident_respondent2, other_nonresident_respondent3: other_nonresident_respondent3, other_nonresident_respondent4: other_nonresident_respondent4, other_nonresident_respondent5, other_nonresident_respondent5,
+                other_resident_complainant1: other_resident_complainant1, other_resident_complainant2: other_resident_complainant2, other_resident_complainant3: other_resident_complainant3, other_resident_complainant4: other_resident_complainant4, other_resident_complainant5: other_resident_complainant5,
+                other_resident_respondent1: other_resident_respondent1, other_resident_respondent2: other_resident_respondent2, other_resident_respondent3: other_resident_respondent3, other_resident_respondent4: other_resident_respondent4, other_resident_respondent5: other_resident_respondent5,
+
+                schedule_date: schedule_date, schedule_starttime: schedule_starttime, schedule_endtime: schedule_endtime, schedule_color: schedule_color, mediator_name: mediator_name,
+
+                incident_date: incident_date, incident_desc: incident_desc, incident_location: incident_location, blotter_type: blotter_type, blotter_evidence: blotter_evidence, blotter_filecontext: blotter_filecontext , case_context: case_context
+            },
+            dataType: "JSON",
+            success: function (response) {
+                if(response.success == true){
+                    Swal.fire({
+                        title: "Blotter Added Successfully",
+                        text: "Do you want to print the Blotter Report?",
+                        icon: "Success",
+                        showCancelButton: false,
+                        confirmButtonColor: "#3085d6",
+                        cancelButtonColor: "#d33",
+                        confirmButtonText: "Yes"
+                      }).then((result) => {
+                        if (result.isConfirmed) {
+                            
+                        }
+                      });
+
+                }else{
+                    Swal.fire({
+                        title: "Something went wrong.",
+                        text: "The server reply's failed",
+                        icon: "error"
+                      });
+                }
+            }
         });
-
-
-        var otherresidentcomplainant1 = resident_complainants.Res_Complainant1
-        var otherresidentcomplainant2 = resident_complainants.Res_Complainant2
-        var otherresidentcomplainant3 = resident_complainants.Res_Complainant3
-        var otherresidentcomplainant4 = resident_complainants.Res_Complainant4
-        var otherresidentcomplainant5 = resident_complainants.Res_Complainant5
-
-        var otherresidentrespondent1 = resident_respondents.Res_Respondent1
-        var otherresidentrespondent2 = resident_respondents.Res_Respondent2
-        var otherresidentrespondent3 = resident_respondents.Res_Respondent3
-        var otherresidentrespondent4 = resident_respondents.Res_Respondent4
-        var otherresidentrespondent5 = resident_respondents.Res_Respondent5
-
-        var othernonresidentcomplainant1 = non_resident_complainants.NonRes_Complainant1
-        var othernonresidentcomplainant2 = non_resident_complainants.NonRes_Complainant2
-        var othernonresidentcomplainant3 = non_resident_complainants.NonRes_Complainant3
-        var othernonresidentcomplainant4 = non_resident_complainants.NonRes_Complainant4
-        var othernonresidentcomplainant5 = non_resident_complainants.NonRes_Complainant5
-
-        var othernonresidentrespondent1 = non_resident_respondents.NonRes_Respondent1
-        var othernonresidentrespondent2 = non_resident_respondents.NonRes_Respondent2
-        var othernonresidentrespondent3 = non_resident_respondents.NonRes_Respondent3
-        var othernonresidentrespondent4 = non_resident_respondents.NonRes_Respondent4
-        var othernonresidentrespondent5 = non_resident_respondents.NonRes_Respondent5
-
-        
-
-
 
 
 

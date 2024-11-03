@@ -12,7 +12,7 @@ MySQL - 5.7.44-log : Database - bims
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-CREATE DATABASE /*!32312 IF NOT EXISTS*/`bims` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci */;
+CREATE DATABASE /*!32312 IF NOT EXISTS*/`bims` /*!40100 DEFAULT CHARACTER SET utf8mb4 */;
 
 USE `bims`;
 
@@ -367,6 +367,7 @@ CREATE TABLE `tbl_blotters` (
   `mediation_starttime` time DEFAULT NULL,
   `mediation_endtime` time DEFAULT NULL,
   `blot_at_no` int(55) DEFAULT NULL,
+  `mediation_date` date DEFAULT NULL,
   `schedule_color` varchar(55) DEFAULT NULL,
   `report_status` tinyint(5) DEFAULT '0',
   `is_deleted` tinyint(5) DEFAULT '0',
@@ -384,8 +385,8 @@ CREATE TABLE `tbl_blotters` (
 
 /*Data for the table `tbl_blotters` */
 
-insert  into `tbl_blotters`(`blotter_id`,`res_complainant_no`,`nres_complainant_no`,`res_respondent_no`,`nres_respondent_no`,`otherp_involved_no`,`blotter_type`,`desc_incident`,`incident_dt`,`location_of_incident`,`date_of_resolution`,`statemnt`,`mediation_schedule`,`mediation_starttime`,`mediation_endtime`,`blot_at_no`,`schedule_color`,`report_status`,`is_deleted`) values 
-(1,1,NULL,3,NULL,NULL,NULL,'Pambubudol','2024-10-24 22:39:40','Cielito Homes','2024-10-24','sdsdsdsdsdsdsdsd','2024-10-28',NULL,NULL,1,'Yellow',0,0);
+insert  into `tbl_blotters`(`blotter_id`,`res_complainant_no`,`nres_complainant_no`,`res_respondent_no`,`nres_respondent_no`,`otherp_involved_no`,`blotter_type`,`desc_incident`,`incident_dt`,`location_of_incident`,`date_of_resolution`,`statemnt`,`mediation_schedule`,`mediation_starttime`,`mediation_endtime`,`blot_at_no`,`mediation_date`,`schedule_color`,`report_status`,`is_deleted`) values 
+(1,1,NULL,3,NULL,NULL,NULL,'Pambubudol','2024-10-24 22:39:40','Cielito Homes','2024-10-31','sdsdsdsdsdsdsdsd','2024-10-31',NULL,NULL,1,NULL,'Yellow',0,0);
 
 /*Table structure for table `tbl_building_permits` */
 
@@ -1845,9 +1846,9 @@ DROP TABLE IF EXISTS `vw_blotters_schedule`;
  `respondent_status` varchar(12) ,
  `desc_incident` varchar(255) ,
  `incident_dt` datetime ,
- `mediation_date` date ,
  `location_of_incident` varchar(255) ,
  `date_of_resolution` date ,
+ `mediation_schedule` date ,
  `schedule_color` varchar(55) ,
  `report_status` tinyint(5) 
 )*/;
@@ -2000,6 +2001,24 @@ DROP TABLE IF EXISTS `vw_resonly_cert`;
  `date_deleted` date 
 )*/;
 
+/*Table structure for table `vw_select_nonresident` */
+
+DROP TABLE IF EXISTS `vw_select_nonresident`;
+
+/*!50001 DROP VIEW IF EXISTS `vw_select_nonresident` */;
+/*!50001 DROP TABLE IF EXISTS `vw_select_nonresident` */;
+
+/*!50001 CREATE TABLE  `vw_select_nonresident`(
+ `nresident_id` int(55) ,
+ `img_filename` varchar(255) ,
+ `full_name` text ,
+ `address` text ,
+ `sex` varchar(55) ,
+ `marital_status` varchar(255) ,
+ `birth_date` date ,
+ `cellphone_num` varchar(50) 
+)*/;
+
 /*Table structure for table `vw_select_resident` */
 
 DROP TABLE IF EXISTS `vw_select_resident`;
@@ -2108,7 +2127,7 @@ DROP TABLE IF EXISTS `vw_select_resident`;
 /*!50001 DROP TABLE IF EXISTS `vw_blotters_schedule` */;
 /*!50001 DROP VIEW IF EXISTS `vw_blotters_schedule` */;
 
-/*!50001 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vw_blotters_schedule` AS select `b`.`blotter_id` AS `blotter_id`,(case when (`r1`.`resident_id` is not null) then concat(`r1`.`first_name`,' ',`r1`.`last_name`,' ',`r1`.`middle_name`) else convert(concat(`nr1`.`first_name`,' ',`nr1`.`last_name`,' ',`nr1`.`middle_name`) using utf8mb4) end) AS `complainant_fullname`,(case when (`r1`.`resident_id` is not null) then 'Resident' else 'Non-Resident' end) AS `complainant_status`,(case when (`r2`.`resident_id` is not null) then concat(`r2`.`first_name`,' ',`r2`.`last_name`,' ',`r2`.`middle_name`) else convert(concat(`nr2`.`first_name`,' ',`nr2`.`last_name`,' ',`nr2`.`middle_name`) using utf8mb4) end) AS `respondent_fullname`,(case when (`r2`.`resident_id` is not null) then 'Resident' else 'Non-Resident' end) AS `respondent_status`,`b`.`desc_incident` AS `desc_incident`,`b`.`incident_dt` AS `incident_dt`,`b`.`mediation_schedule` AS `mediation_date`,`b`.`location_of_incident` AS `location_of_incident`,`b`.`date_of_resolution` AS `date_of_resolution`,`b`.`schedule_color` AS `schedule_color`,`b`.`report_status` AS `report_status` from ((((`tbl_blotters` `b` left join `resident` `r1` on((`b`.`res_complainant_no` = `r1`.`resident_id`))) left join `non_resident` `nr1` on((`b`.`nres_complainant_no` = `nr1`.`nresident_id`))) left join `resident` `r2` on((`b`.`res_respondent_no` = `r2`.`resident_id`))) left join `non_resident` `nr2` on((`b`.`nres_respondent_no` = `nr2`.`nresident_id`))) */;
+/*!50001 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vw_blotters_schedule` AS select `b`.`blotter_id` AS `blotter_id`,(case when (`r1`.`resident_id` is not null) then concat(`r1`.`first_name`,' ',`r1`.`last_name`,' ',`r1`.`middle_name`,' ',`r1`.`suffix`) else convert(concat(`nr1`.`first_name`,' ',`nr1`.`last_name`,' ',`nr1`.`middle_name`) using utf8mb4) end) AS `complainant_fullname`,(case when (`r1`.`resident_id` is not null) then 'Resident' else 'Non-Resident' end) AS `complainant_status`,(case when (`r2`.`resident_id` is not null) then concat(`r2`.`first_name`,' ',`r2`.`last_name`,' ',`r2`.`middle_name`,' ',`r2`.`suffix`) else convert(concat(`nr2`.`first_name`,' ',`nr2`.`last_name`,' ',`nr2`.`middle_name`) using utf8mb4) end) AS `respondent_fullname`,(case when (`r2`.`resident_id` is not null) then 'Resident' else 'Non-Resident' end) AS `respondent_status`,`b`.`desc_incident` AS `desc_incident`,`b`.`incident_dt` AS `incident_dt`,`b`.`location_of_incident` AS `location_of_incident`,`b`.`date_of_resolution` AS `date_of_resolution`,`b`.`mediation_schedule` AS `mediation_schedule`,`b`.`schedule_color` AS `schedule_color`,`b`.`report_status` AS `report_status` from ((((`tbl_blotters` `b` left join `resident` `r1` on((`b`.`res_complainant_no` = `r1`.`resident_id`))) left join `non_resident` `nr1` on((`b`.`nres_complainant_no` = `nr1`.`nresident_id`))) left join `resident` `r2` on((`b`.`res_respondent_no` = `r2`.`resident_id`))) left join `non_resident` `nr2` on((`b`.`nres_respondent_no` = `nr2`.`nresident_id`))) */;
 
 /*View structure for view vw_deleted_docu */
 
@@ -2145,12 +2164,19 @@ DROP TABLE IF EXISTS `vw_select_resident`;
 
 /*!50001 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vw_resonly_cert` AS (select `tbl_docu_request`.`request_id` AS `request_id`,`tbl_cert_audit_trail`.`datetime_issued` AS `date_issued`,`resident`.`resident_id` AS `resident_id`,(case when (`tbl_documents`.`Barangay_Clearance` is not null) then 'Barangay Clearance' when (`tbl_documents`.`Certificate_of_Residency` is not null) then 'Certificate of Residency' when (`tbl_documents`.`Certificate_of_Indigency` is not null) then 'Certificate of Indigency' when (`tbl_documents`.`Certificate_of_Good_Moral` is not null) then 'Certificate of Good Moral' when (`tbl_documents`.`Business_Permits` is not null) then 'Business Permits' when (`tbl_documents`.`Building_Permits` is not null) then 'Building Permits' when (`tbl_documents`.`Excavation_Permits` is not null) then 'Excavation Permits' when (`tbl_documents`.`Fencing_Permits` is not null) then 'Fencing Permits' when (`tbl_documents`.`FTJS` is not null) then 'First Time Job Seekers' when (`tbl_documents`.`Oath_of_Undertaking` is not null) then 'Oath of Undertaking' when (`tbl_documents`.`TPRS` is not null) then 'Tricycle Pedicab Regulatory Services' else 'Unknown Document Type' end) AS `document_desc`,`tbl_docu_request`.`age` AS `age`,`resident`.`sex` AS `sex`,`tbl_docu_request`.`presented_id` AS `presented_id`,`tbl_docu_request`.`ID_number` AS `ID_number`,`tbl_docu_request`.`purpose` AS `purpose`,`tbl_docu_request`.`pdffile` AS `pdffile`,`tbl_cert_audit_trail`.`expiration` AS `expiration`,`tbl_docu_request`.`status` AS `status`,`tbl_docu_request`.`is_deleted` AS `is_deleted`,`tbl_cert_audit_trail`.`datetime_edited` AS `date_edited`,`tbl_cert_audit_trail`.`datetime_deleted` AS `date_deleted` from ((((`tbl_docu_request` left join `resident` on((`tbl_docu_request`.`resident_no` = `resident`.`resident_id`))) left join `non_resident` on((`tbl_docu_request`.`nresident_no` = `non_resident`.`nresident_id`))) join `tbl_documents` on((`tbl_docu_request`.`document_no` = `tbl_documents`.`docu_id`))) join `tbl_cert_audit_trail` on((`tbl_docu_request`.`audit_trail_no` = `tbl_cert_audit_trail`.`audit_trail_id`)))) */;
 
+/*View structure for view vw_select_nonresident */
+
+/*!50001 DROP TABLE IF EXISTS `vw_select_nonresident` */;
+/*!50001 DROP VIEW IF EXISTS `vw_select_nonresident` */;
+
+/*!50001 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vw_select_nonresident` AS (select `non_resident`.`nresident_id` AS `nresident_id`,`non_resident`.`img_filename` AS `img_filename`,concat(`non_resident`.`last_name`,', ',`non_resident`.`first_name`,' ',`non_resident`.`middle_name`,' ',`non_resident`.`suffix`) AS `full_name`,concat(`non_resident`.`house_num`,' ',`non_resident`.`street`,' ',`non_resident`.`subdivision`,' ',`non_resident`.`district_brgy`,' ',`non_resident`.`city`,' ',`non_resident`.`province`,' ',`non_resident`.`zipcode`) AS `address`,`non_resident`.`sex` AS `sex`,`non_resident`.`marital_status` AS `marital_status`,`non_resident`.`birth_date` AS `birth_date`,`non_resident`.`cellphone_num` AS `cellphone_num` from `non_resident` where (`non_resident`.`is_deleted` = 0)) */;
+
 /*View structure for view vw_select_resident */
 
 /*!50001 DROP TABLE IF EXISTS `vw_select_resident` */;
 /*!50001 DROP VIEW IF EXISTS `vw_select_resident` */;
 
-/*!50001 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vw_select_resident` AS (select `resident`.`resident_id` AS `resident_id`,`resident`.`img_filename` AS `img_filename`,concat(`resident`.`first_name`,' ',`resident`.`last_name`,' ',`resident`.`middle_name`,' ',`resident`.`suffix`) AS `full_name`,concat(`resident`.`house_num`,' ',`resident`.`street`,' ',`resident`.`subdivision`,' Camarin Caloocan City') AS `address`,`resident`.`sex` AS `sex`,`resident`.`marital_status` AS `marital_status`,`resident`.`birth_date` AS `birth_date`,`resident`.`cellphone_num` AS `cellphone_num`,`resident`.`is_a_voter` AS `is_a_voter` from `resident`) */;
+/*!50001 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vw_select_resident` AS (select `resident`.`resident_id` AS `resident_id`,`resident`.`img_filename` AS `img_filename`,concat(`resident`.`last_name`,', ',`resident`.`first_name`,' ',`resident`.`middle_name`,' ',`resident`.`suffix`) AS `full_name`,concat(`resident`.`house_num`,' ',`resident`.`street`,' ',`resident`.`subdivision`,' Camarin Caloocan City') AS `address`,`resident`.`sex` AS `sex`,`resident`.`marital_status` AS `marital_status`,`resident`.`birth_date` AS `birth_date`,`resident`.`cellphone_num` AS `cellphone_num`,`resident`.`is_a_voter` AS `is_a_voter` from `resident` where (`resident`.`is_deleted` = 0)) */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
