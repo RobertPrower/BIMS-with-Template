@@ -664,26 +664,15 @@ $(document).ready(function(){
         var schedule_date = $("#schedule_date").val();
         var schedule_starttime =$("#schedule_starttime").val();
         var schedule_endtime = $("#schedule_endtime").val();
-        // var schedule_color = $("#schedule_color").val();
-        // var mediator_name = $("#mediator_name").val();
-
-        // var incident_date = $("#incident_date").val();
-        // var incident_location = $("#incident_location").val();
-        // var blotter_type = $("#blotter_type").val();
-        // var incident_desc = $("#incident_desc").val();
-        // var blotter_evidence = $("#blotter_evidence").val();
-        // var blotter_filecontext = $("#blotter_filecontext").val();
-        // var case_context = $("#case_context").val();
 
         var formData = new FormData(this);  
-        formData.append(complainant_id, complainant_id);
-        formData.append(complainant_status, complainant_status);
-        formData.append(respondent_id, respondent_id);
-        formData.append(respondent_status, respondent_status);
-        formData.append(schedule_date, schedule_date);
-        formData.append(schedule_starttime, schedule_starttime);
-        formData.append(schedule_endtime, schedule_endtime);
-        formData.append(schedule_color, schedule_color);
+        formData.append("main_complainantid", complainant_id);
+        formData.append("main_complainant_status", complainant_status);
+        formData.append("main_respondentid", respondent_id);
+        formData.append("main_respondent_status", respondent_status);
+        formData.append("schedule_date", schedule_date);
+        formData.append("schedule_starttime", schedule_starttime);
+        formData.append("schedule_endtime", schedule_endtime);
         formData.append("operation", "ADD_BLOTTER");
 
 

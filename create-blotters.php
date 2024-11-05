@@ -222,7 +222,7 @@
                                     
                                     
                                     </tbody>
-                            </table>
+                                </table>
 
                             </div>
 
@@ -340,7 +340,7 @@
                             </div>
                             <div class="form-floating mt-3 mb-3 col-md-2">
                             
-                                <input type="color" class="form-control" id="schedule_color">
+                                <input type="color" class="form-control" id="schedule_color" name="schedule_color">
                                 <label for="schedule_color">Schedule Color</label>
 
                             </div>
@@ -384,8 +384,8 @@
                         <div class="form-floating mt-3 mb-3 col-md-4">
                             <select class="form-select" id="blotter_type" name="blotter_type" aria-label="Floating label select example" required>
                                 <option value="" selected hidden>Select Blotter Type</option>
-                                <option value="1">Blotter</option>
-                                <option value="2">Incident</option>
+                                <option value="0">Blotter</option>
+                                <option value="1">Incident</option>
                             </select>
                             <label for="blotter_type">Blotter Type</label>
                         </div>

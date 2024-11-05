@@ -152,7 +152,7 @@ if($operation_check == "SELECT_NONRESIDENT_TABLELOAD"){
         $non_resident_complainant = NULL;
     }else if($main_complainant_status ==1){
         $non_resident_complainant = $main_complainantid;
-        $resident_complainant = NULL;
+        $resident_complainant = NULL;   
     }
 
     if($main_respondent_status == 0){
@@ -168,7 +168,8 @@ if($operation_check == "SELECT_NONRESIDENT_TABLELOAD"){
         $blotter_contextfile = handleImageUpload('blotter_contextfile',$blotter_context_fd);
     }catch(Exception $e){
         $response = ["success" => false, "message" => "Error updating data: " . $e->getMessage()];
-        throw new Exception(json_encode($response));
+        $pdo=null;
+        exit(json_encode($response));
     }
 
     try{
@@ -206,6 +207,65 @@ if($operation_check == "SELECT_NONRESIDENT_TABLELOAD"){
    }
 
     
+
+}elseif ($operation_check == "FETCH_MAIN_TABLE"){
+    $sqlquery = "SELECT * FROM vw_blotters";
+    $stmt=$pdo->prepare($sqlquery);
+    $stmt->execute();
+    $result=$stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    foreach($result as $row){
+
+        echo '<tr>';
+        echo '<td hidden id="resident_id">' . htmlspecialchars($row['blotter_id']) . '</td>';
+
+            switch ($row['blotter_type']){
+            case 0: echo "<td>Blotter</td>";
+            break;  
+            case 1: echo "<td>Incident</td>";
+            break;
+            default: echo "<td> Unknown Status </td>";   
+            }     
+        
+        echo '<td>' . htmlspecialchars($row['blotter_add_dt']) . '</td>';
+        echo '<td>' . htmlspecialchars($row['incident_dt']) . '</td>';
+        echo '<td>' . htmlspecialchars($row['desc_incident']) . '</td>';
+        echo '<td>' . htmlspecialchars($row['complainant_last_name']) .', '. htmlspecialchars($row['complainant_first_name']) .' '. htmlspecialchars($row['complainant_middle_name']) .' '. htmlspecialchars($row['complainant_suffix']) . '</td>';
+        echo '<td>' . htmlspecialchars($row['complainant_last_name']) .', '. htmlspecialchars($row['complainant_first_name']) .' '. htmlspecialchars($row['complainant_middle_name']) .' '. htmlspecialchars($row['complainant_suffix']) . '</td>';
+             
+        switch ($row['report_status']){
+        case 0: echo "<td><span class='badge-pending'>ONGOING</span> </td>";
+        break;
+        case 1: echo "<td><span class='badge-success'>RESOLVED</span></td>";
+        break;
+        case 2: echo "<td> <span class='badge-trashed'>FILE TO ACTION</span></td>";
+        break;
+        default: echo "<td> Unknown Status </td>";
+        } 
+
+        echo '<td>
+        <div class="btn-group text-center">
+                
+            <button class="btn btn-primary mx-1 viewDocumentsButton" id=vbutton
+                
+                data-bs-toggle="modal" data-bs-target="#DocumentDetailsModal">View</button>
+
+            <button class="btn btn-success mx-1 viewDocumentsButton" id=vbutton
+                
+                data-bs-toggle="modal" data-bs-target="#DocumentDetailsModal">Edit</button>';
+
+            if($row['is_deleted'] == "0"){ 
+                echo '<button class="btn btn-danger mx-1 deleteResidentButton" id="deletebutton"
+                    data-pageno=""
+                    data-request_id = "' . htmlspecialchars($row['blotter_id']) . '">Delete</button>';
+            }else{
+                echo '<button class="btn btn-warning mx-1 deleteResidentButton" id="undodeletebutton"
+                data-pageno="'.$page.'"
+                data-request_id = "' . htmlspecialchars($row['blotter_id']) . '">Recover</button>';
+            }
+        echo '</tr>';
+    }
+
 
 }else{
     echo json_encode(["success" => false, "message" =>"Nothing was recieved"]);

@@ -1309,7 +1309,7 @@ button.disabled:focus {
   align-items: center;
 }
 .badge-pending {
-  color: #f3f7ff;
+  color: #19191a;
   background-color: rgba(255, 173, 50, 0.822);
   
 }
