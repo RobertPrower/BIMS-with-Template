@@ -71,14 +71,14 @@
                         <tr class="users-table-info">
             
                             <!--th style="width: 2%;"class="text-center"><input type="checkbox" class="check-all"></th--> 
-                            <th style="width: 2%"class="text-center">ID</th> 
+                            <th style="width: 2%"class="text-center" hidden>ID</th> 
                             <th style="width: 10%;"class="text-center">Date Reported</th>
-                            <th style="width: 10%;" class="text-center">Complainant Name</th>
-                            <th style="width: 10%;" class="text-center">Complainant Address</th>
-                            <th style="width: 10%;" class="text-center">Respondent Name</th>
-                            <th style="width: 10%;" class="text-center">Respondent Address</th>
-                            <th style="width: 10%;" class="text-center">Report Status</th>
                             <th style="width: 10%;" class="text-center">Date of Incident</th>
+                            <th style="width: 10%;" class="text-center">Complainant Name</th>
+                            <!-- <th style="width: 10%;" class="text-center">Complainant Address</th> -->
+                            <th style="width: 10%;" class="text-center">Respondent Name</th>
+                            <!-- <th style="width: 10%;" class="text-center">Respondent Address</th> -->
+                            <th style="width: 10%;" class="text-center">Report Status</th>
                             <th style="width: 10%;" class=" col-span-3">Blotter Action</th>
                         </tr>
                         </thead>

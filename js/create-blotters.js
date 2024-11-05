@@ -14,7 +14,7 @@ $(document).ready(function(){
           }
         },
         localization: {
-          format: 'MM/dd/yyyy HH:mm'  // Set your date and time format
+          format: 'yyyy-MM-dd HH:mm:ss'  // Set your date and time format
         }
     });
 
@@ -654,7 +654,8 @@ $(document).ready(function(){
         });
     });
 
-    $("#AddBlotterBtn").click(function(){
+    $("#blotter_form").submit(function(event){
+        event.preventDefault();
         var complainant_id = $("#id_to_record").val();
         var complainant_status = $("#checkresident").val();
         var respondent_id = $("#id_to_recordres").val();
@@ -663,16 +664,27 @@ $(document).ready(function(){
         var schedule_date = $("#schedule_date").val();
         var schedule_starttime =$("#schedule_starttime").val();
         var schedule_endtime = $("#schedule_endtime").val();
-        var schedule_color = $("#schedule_color").val();
-        var mediator_name = $("#mediator_name").val();
+        // var schedule_color = $("#schedule_color").val();
+        // var mediator_name = $("#mediator_name").val();
 
-        var incident_date = $("#incident_date").val();
-        var incident_location = $("#incident_location").val();
-        var blotter_type = $("#blotter_type").val();
-        var incident_desc = $("#incident_desc").val();
-        var blotter_evidence = $("#blotter_evidence").val();
-        var blotter_filecontext = $("#blotter_filecontext").val();
-        var case_context = $("#case_context").val();
+        // var incident_date = $("#incident_date").val();
+        // var incident_location = $("#incident_location").val();
+        // var blotter_type = $("#blotter_type").val();
+        // var incident_desc = $("#incident_desc").val();
+        // var blotter_evidence = $("#blotter_evidence").val();
+        // var blotter_filecontext = $("#blotter_filecontext").val();
+        // var case_context = $("#case_context").val();
+
+        var formData = new FormData(this);  
+        formData.append(complainant_id, complainant_id);
+        formData.append(complainant_status, complainant_status);
+        formData.append(respondent_id, respondent_id);
+        formData.append(respondent_status, respondent_status);
+        formData.append(schedule_date, schedule_date);
+        formData.append(schedule_starttime, schedule_starttime);
+        formData.append(schedule_endtime, schedule_endtime);
+        formData.append(schedule_color, schedule_color);
+        formData.append("operation", "ADD_BLOTTER");
 
 
         // Objects for the Other Complainants and Respondents
@@ -682,71 +694,61 @@ $(document).ready(function(){
         let non_resident_respondents = {};
 
         //Fetch all Complanants and Respondents
-        $("[class^='ResidentComplainant']").each(function(index) { 
+        $("[class^='ResidentComplainant']").each(function(index) {
             resident_complainants[`Res_Complainant${index + 1}`] = $(this).text();
         });
-
-        $("[class^='ResidentRespondent']").each(function(index) { 
+        
+        $("[class^='ResidentRespondent']").each(function(index) {
             resident_respondents[`Res_Respondent${index + 1}`] = $(this).text();
         });
-
-        $("[class^='NonResComplainant']").each(function(index) { 
+        
+        $("[class^='NonResComplainant']").each(function(index) {
             non_resident_complainants[`NonRes_Complainant${index + 1}`] = $(this).text();
         });
-
-        $("[class^='NonResRespondent']").each(function(index) { 
+        
+        $("[class^='NonResRespondent']").each(function(index) {
             non_resident_respondents[`NonRes_Respondent${index + 1}`] = $(this).text();
-        });null
+        });
 
 
-        var other_resident_complainant1 = (resident_complainants.Res_Complainant1)?resident_complainants.Res_Complainant1:"";
-        var other_resident_complainant2 = (resident_complainants.Res_Complainant2)?resident_complainants.Res_Complainant2:"";
-        var other_resident_complainant3 = (resident_complainants.Res_Complainant3)?resident_complainants.Res_Complainant3:"";
-        var other_resident_complainant4 = (resident_complainants.Res_Complainant4)?resident_complainants.Res_Complainant4:"";
-        var other_resident_complainant5 = (resident_complainants.Res_Complainant5)?resident_complainants.Res_Complainant5:"";
+       // Append resident complainants
+        for (let i = 1; i <= 5; i++) {
+            formData.append(`other_resident_complainant${i}`, resident_complainants[`Res_Complainant${i}`] || "null");
+        }
 
-        var other_resident_respondent1 = (resident_respondents.Res_Respondent1)?resident_respondents.Res_Respondent1:""
-        var other_resident_respondent2 = (resident_respondents.Res_Respondent2)?resident_respondents.Res_Respondent2:""
-        var other_resident_respondent3 = (resident_respondents.Res_Respondent3)?resident_respondents.Res_Respondent3:""
-        var other_resident_respondent4 = (resident_respondents.Res_Respondent4)?resident_respondents.Res_Respondent4:""
-        var other_resident_respondent5 = (resident_respondents.Res_Respondent5)?resident_respondents.Res_Respondent5:""
+        // Append resident respondents
+        for (let i = 1; i <= 5; i++) {
+            formData.append(`other_resident_respondent${i}`, resident_respondents[`Res_Respondent${i}`] || "null");
+        }
 
-        var other_nonresident_complainant1 = (non_resident_complainants.NonRes_Complainant1)?non_resident_complainants.NonRes_Complainant1:""
-        var other_nonresident_complainant2 = (non_resident_complainants.NonRes_Complainant2)?non_resident_complainants.NonRes_Complainant2:""
-        var other_nonresident_complainant3 = (non_resident_complainants.NonRes_Complainant3)?non_resident_complainants.NonRes_Complainant3:""
-        var other_nonresident_complainant4 = (non_resident_complainants.NonRes_Complainant4)?non_resident_complainants.NonRes_Complainant4:""
-        var other_nonresident_complainant5 = (non_resident_complainants.NonRes_Complainant5)?non_resident_complainants.NonRes_Complainant5:""
+        // Append non-resident complainants
+        for (let i = 1; i <= 5; i++) {
+            formData.append(`other_nonresident_complainant${i}`, non_resident_complainants[`NonRes_Complainant${i}`] || "null");
+        }
 
-        var other_nonresident_respondent1 = (non_resident_respondents.NonRes_Respondent1)?non_resident_respondents.NonRes_Respondent1:""
-        var other_nonresident_respondent2 = (non_resident_respondents.NonRes_Respondent2)?non_resident_respondents.NonRes_Respondent2:""
-        var other_nonresident_respondent3 = (non_resident_respondents.NonRes_Respondent3)?non_resident_respondents.NonRes_Respondent3:""
-        var other_nonresident_respondent4 = (non_resident_respondents.NonRes_Respondent4)?non_resident_respondents.NonRes_Respondent4:""
-        var other_nonresident_respondent5 = (non_resident_respondents.NonRes_Respondent5)?non_resident_respondents.NonRes_Respondent5:""
+        // Append non-resident respondents
+        for (let i = 1; i <= 5; i++) {
+            formData.append(`other_nonresident_respondent${i}`, non_resident_respondents[`NonRes_Respondent${i}`] || "null");
+        }
+
 
         $.ajax({
             type: "POST",
             url: "includes/blottersoperation.php",
-            data: {
-                main_complainantid: complainant_id, main_complainant_status: complainant_status, main_respondentid: respondent_id, main_respondent_status: respondent_status,
-                other_nonresident_complainant1: other_nonresident_complainant1, other_nonresident_complainant2: other_nonresident_complainant2, other_nonresident_complainant3: other_nonresident_complainant3, other_nonresident_complainant4: other_nonresident_complainant4, other_nonresident_complainant5: other_nonresident_complainant5,
-                other_nonresident_respondent1: other_nonresident_respondent1, other_nonresident_respondent2: other_nonresident_respondent2, other_nonresident_respondent3: other_nonresident_respondent3, other_nonresident_respondent4: other_nonresident_respondent4, other_nonresident_respondent5, other_nonresident_respondent5,
-                other_resident_complainant1: other_resident_complainant1, other_resident_complainant2: other_resident_complainant2, other_resident_complainant3: other_resident_complainant3, other_resident_complainant4: other_resident_complainant4, other_resident_complainant5: other_resident_complainant5,
-                other_resident_respondent1: other_resident_respondent1, other_resident_respondent2: other_resident_respondent2, other_resident_respondent3: other_resident_respondent3, other_resident_respondent4: other_resident_respondent4, other_resident_respondent5: other_resident_respondent5,
-
-                schedule_date: schedule_date, schedule_starttime: schedule_starttime, schedule_endtime: schedule_endtime, schedule_color: schedule_color, mediator_name: mediator_name,
-
-                incident_date: incident_date, incident_desc: incident_desc, incident_location: incident_location, blotter_type: blotter_type, blotter_evidence: blotter_evidence, blotter_filecontext: blotter_filecontext , case_context: case_context
-            },
+            data: formData,
             dataType: "JSON",
+            contentType: false,
+            processData: false,
             success: function (response) {
                 if(response.success == true){
                     Swal.fire({
                         title: "Blotter Added Successfully",
                         text: "Do you want to print the Blotter Report?",
                         icon: "Success",
-                        showCancelButton: false,
+                        showCancelButton: true,
                         confirmButtonColor: "#3085d6",
                         cancelButtonColor: "#d33",
+                        cancelButtonText: "No",
                         confirmButtonText: "Yes"
                       }).then((result) => {
                         if (result.isConfirmed) {

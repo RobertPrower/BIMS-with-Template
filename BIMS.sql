@@ -313,10 +313,15 @@ insert  into `resident`(`resident_id`,`img_filename`,`last_name`,`first_name`,`m
 DROP TABLE IF EXISTS `tbl_blotter_audit_trail`;
 
 CREATE TABLE `tbl_blotter_audit_trail` (
-  `blotter_at_id` int(255) NOT NULL AUTO_INCREMENT,
+  `blotter_at_id` int(55) NOT NULL AUTO_INCREMENT,
   `assist_by_no` int(55) DEFAULT NULL,
-  `blotter_date` date DEFAULT NULL,
-  `blotter_time` time DEFAULT NULL,
+  `blotter_add_dt` datetime DEFAULT NULL,
+  `blotter_edit_dt` datetime DEFAULT NULL,
+  `edited_by` int(55) DEFAULT NULL,
+  `blotter_delete_dt` datetime DEFAULT NULL,
+  `deleted_by` int(55) DEFAULT NULL,
+  `blotter_recovered_dt` datetime DEFAULT NULL,
+  `recovered_by` int(55) DEFAULT NULL,
   PRIMARY KEY (`blotter_at_id`),
   KEY `fk_assist_by` (`assist_by_no`),
   CONSTRAINT `fk_assist_by` FOREIGN KEY (`assist_by_no`) REFERENCES `tbl_username` (`username_id`)
@@ -324,8 +329,8 @@ CREATE TABLE `tbl_blotter_audit_trail` (
 
 /*Data for the table `tbl_blotter_audit_trail` */
 
-insert  into `tbl_blotter_audit_trail`(`blotter_at_id`,`assist_by_no`,`blotter_date`,`blotter_time`) values 
-(1,1,'2024-10-24','10:45:45');
+insert  into `tbl_blotter_audit_trail`(`blotter_at_id`,`assist_by_no`,`blotter_add_dt`,`blotter_edit_dt`,`edited_by`,`blotter_delete_dt`,`deleted_by`,`blotter_recovered_dt`,`recovered_by`) values 
+(1,NULL,'2024-11-05 00:00:00',NULL,NULL,NULL,NULL,NULL,NULL);
 
 /*Table structure for table `tbl_blotter_mediator` */
 
@@ -356,12 +361,15 @@ CREATE TABLE `tbl_blotters` (
   `nres_complainant_no` int(55) DEFAULT NULL,
   `res_respondent_no` int(55) DEFAULT NULL,
   `nres_respondent_no` int(55) DEFAULT NULL,
-  `otherp_involved_no` int(55) DEFAULT NULL,
+  `other_complainant_no` int(55) DEFAULT NULL,
+  `other_respondent_no` int(55) DEFAULT NULL,
   `blotter_type` tinyint(5) DEFAULT NULL,
   `desc_incident` varchar(255) DEFAULT NULL,
   `incident_dt` datetime DEFAULT NULL,
   `location_of_incident` varchar(255) DEFAULT NULL,
   `date_of_resolution` date DEFAULT NULL,
+  `blotter_contextfile` varchar(255) DEFAULT NULL,
+  `blotter_evidencefile` varchar(255) DEFAULT NULL,
   `statemnt` longtext,
   `mediation_schedule` date DEFAULT NULL,
   `mediation_starttime` time DEFAULT NULL,
@@ -376,17 +384,22 @@ CREATE TABLE `tbl_blotters` (
   KEY `res_repondent_no` (`res_respondent_no`),
   KEY `nres_respondent_no` (`nres_respondent_no`),
   KEY `blot_at_no` (`blot_at_no`),
+  KEY `other_complanant_no` (`other_complainant_no`),
+  KEY `other_respondent_no` (`other_respondent_no`),
+  KEY `tbl_blotters_ibfk_2` (`nres_complainant_no`),
   CONSTRAINT `tbl_blotters_ibfk_1` FOREIGN KEY (`res_complainant_no`) REFERENCES `resident` (`resident_id`),
-  CONSTRAINT `tbl_blotters_ibfk_2` FOREIGN KEY (`res_complainant_no`) REFERENCES `non_resident` (`nresident_id`),
+  CONSTRAINT `tbl_blotters_ibfk_2` FOREIGN KEY (`nres_complainant_no`) REFERENCES `non_resident` (`nresident_id`),
   CONSTRAINT `tbl_blotters_ibfk_3` FOREIGN KEY (`res_respondent_no`) REFERENCES `resident` (`resident_id`),
   CONSTRAINT `tbl_blotters_ibfk_4` FOREIGN KEY (`nres_respondent_no`) REFERENCES `non_resident` (`nresident_id`),
-  CONSTRAINT `tbl_blotters_ibfk_5` FOREIGN KEY (`blot_at_no`) REFERENCES `tbl_blotter_audit_trail` (`blotter_at_id`)
+  CONSTRAINT `tbl_blotters_ibfk_5` FOREIGN KEY (`blot_at_no`) REFERENCES `tbl_blotter_audit_trail` (`blotter_at_id`),
+  CONSTRAINT `tbl_blotters_ibfk_6` FOREIGN KEY (`other_complainant_no`) REFERENCES `tbl_other_complainants` (`complainant_id`),
+  CONSTRAINT `tbl_blotters_ibfk_7` FOREIGN KEY (`other_respondent_no`) REFERENCES `tbl_other_respondents` (`respondent_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `tbl_blotters` */
 
-insert  into `tbl_blotters`(`blotter_id`,`res_complainant_no`,`nres_complainant_no`,`res_respondent_no`,`nres_respondent_no`,`otherp_involved_no`,`blotter_type`,`desc_incident`,`incident_dt`,`location_of_incident`,`date_of_resolution`,`statemnt`,`mediation_schedule`,`mediation_starttime`,`mediation_endtime`,`blot_at_no`,`mediation_date`,`schedule_color`,`report_status`,`is_deleted`) values 
-(1,1,NULL,3,NULL,NULL,NULL,'Pambubudol','2024-10-24 22:39:40','Cielito Homes','2024-10-31','sdsdsdsdsdsdsdsd','2024-10-31',NULL,NULL,1,NULL,'Yellow',0,0);
+insert  into `tbl_blotters`(`blotter_id`,`res_complainant_no`,`nres_complainant_no`,`res_respondent_no`,`nres_respondent_no`,`other_complainant_no`,`other_respondent_no`,`blotter_type`,`desc_incident`,`incident_dt`,`location_of_incident`,`date_of_resolution`,`blotter_contextfile`,`blotter_evidencefile`,`statemnt`,`mediation_schedule`,`mediation_starttime`,`mediation_endtime`,`blot_at_no`,`mediation_date`,`schedule_color`,`report_status`,`is_deleted`) values 
+(1,1,NULL,9,NULL,1,1,1,'xxsxsd','2024-11-04 02:36:09','xzxsxs',NULL,'2f070627687d52995cfabf5c1bbde057 (14).jpg','715a5404857b4d3cfdbd2747e2eaac79 (6).jpg','sdsdsdsdsdsdds',NULL,NULL,NULL,1,NULL,NULL,0,0);
 
 /*Table structure for table `tbl_building_permits` */
 
@@ -726,12 +739,12 @@ insert  into `tbl_indigency`(`indigency_id`,`agency`) values
 (3,'PCSO'),
 (4,'PCSO');
 
-/*Table structure for table `tbl_persons_involved` */
+/*Table structure for table `tbl_other_complainants` */
 
-DROP TABLE IF EXISTS `tbl_persons_involved`;
+DROP TABLE IF EXISTS `tbl_other_complainants`;
 
-CREATE TABLE `tbl_persons_involved` (
-  `person_involved_id` int(55) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `tbl_other_complainants` (
+  `complainant_id` int(55) NOT NULL AUTO_INCREMENT,
   `res_person_1` int(55) DEFAULT NULL,
   `nres_person_1` int(55) DEFAULT NULL,
   `res_person_2` int(55) DEFAULT NULL,
@@ -742,18 +755,49 @@ CREATE TABLE `tbl_persons_involved` (
   `nres_person_4` int(55) DEFAULT NULL,
   `res_person_5` int(55) DEFAULT NULL,
   `nres_person_5` int(55) DEFAULT NULL,
-  PRIMARY KEY (`person_involved_id`),
+  PRIMARY KEY (`complainant_id`),
   KEY `res_person_1` (`res_person_1`),
   KEY `nres_person_1` (`nres_person_1`),
   KEY `res_person_2` (`res_person_2`),
   KEY `nres_person_2` (`nres_person_2`),
-  CONSTRAINT `tbl_persons_involved_ibfk_1` FOREIGN KEY (`res_person_1`) REFERENCES `resident` (`resident_id`),
-  CONSTRAINT `tbl_persons_involved_ibfk_2` FOREIGN KEY (`nres_person_1`) REFERENCES `non_resident` (`nresident_id`),
-  CONSTRAINT `tbl_persons_involved_ibfk_3` FOREIGN KEY (`res_person_2`) REFERENCES `resident` (`resident_id`),
-  CONSTRAINT `tbl_persons_involved_ibfk_4` FOREIGN KEY (`nres_person_2`) REFERENCES `non_resident` (`nresident_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  CONSTRAINT `tbl_other_complainants_ibfk_1` FOREIGN KEY (`res_person_1`) REFERENCES `resident` (`resident_id`),
+  CONSTRAINT `tbl_other_complainants_ibfk_2` FOREIGN KEY (`nres_person_1`) REFERENCES `non_resident` (`nresident_id`),
+  CONSTRAINT `tbl_other_complainants_ibfk_3` FOREIGN KEY (`res_person_2`) REFERENCES `resident` (`resident_id`),
+  CONSTRAINT `tbl_other_complainants_ibfk_4` FOREIGN KEY (`nres_person_2`) REFERENCES `non_resident` (`nresident_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
-/*Data for the table `tbl_persons_involved` */
+/*Data for the table `tbl_other_complainants` */
+
+insert  into `tbl_other_complainants`(`complainant_id`,`res_person_1`,`nres_person_1`,`res_person_2`,`nres_person_2`,`res_person_3`,`nres_person_3`,`res_person_4`,`nres_person_4`,`res_person_5`,`nres_person_5`) values 
+(1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+
+/*Table structure for table `tbl_other_respondents` */
+
+DROP TABLE IF EXISTS `tbl_other_respondents`;
+
+CREATE TABLE `tbl_other_respondents` (
+  `respondent_id` int(55) NOT NULL AUTO_INCREMENT,
+  `res_person_1` int(55) DEFAULT NULL,
+  `nres_person_1` int(55) DEFAULT NULL,
+  `res_person_2` int(55) DEFAULT NULL,
+  `nres_person_2` int(55) DEFAULT NULL,
+  `res_person_3` int(55) DEFAULT NULL,
+  `nres_person_3` int(55) DEFAULT NULL,
+  `res_person_4` int(55) DEFAULT NULL,
+  `nres_person_4` int(55) DEFAULT NULL,
+  `res_person_5` int(55) DEFAULT NULL,
+  `nres_person_5` int(55) DEFAULT NULL,
+  PRIMARY KEY (`respondent_id`),
+  KEY `res_person_1` (`res_person_1`),
+  KEY `nres_person_1` (`nres_person_1`),
+  KEY `res_person_2` (`res_person_2`),
+  KEY `nres_person_2` (`nres_person_2`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+/*Data for the table `tbl_other_respondents` */
+
+insert  into `tbl_other_respondents`(`respondent_id`,`res_person_1`,`nres_person_1`,`res_person_2`,`nres_person_2`,`res_person_3`,`nres_person_3`,`res_person_4`,`nres_person_4`,`res_person_5`,`nres_person_5`) values 
+(1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 
 /*Table structure for table `tbl_tprs` */
 
@@ -844,6 +888,39 @@ DELIMITER $$
     END IF;
     SET NEW.audit_trail = new_id;
    
+    END */$$
+
+
+DELIMITER ;
+
+/* Trigger structure for table `tbl_blotters` */
+
+DELIMITER $$
+
+/*!50003 DROP TRIGGER*//*!50032 IF EXISTS */ /*!50003 `trig_ainc_blotters` */$$
+
+/*!50003 CREATE */ /*!50017 DEFINER = 'root'@'localhost' */ /*!50003 TRIGGER `trig_ainc_blotters` BEFORE INSERT ON `tbl_blotters` FOR EACH ROW BEGIN
+    
+        DECLARE new_id INT;
+      
+    SET new_id = (SELECT MAX(blot_at_no) FROM tbl_blotters) + 1;
+    IF new_id IS NULL THEN
+        SET new_id = 1;
+    END IF;
+    SET NEW.blot_at_no = new_id;
+    
+    SET new_id = (SELECT MAX(other_complainant_no) FROM tbl_blotters) + 1;
+    IF new_id IS NULL THEN
+        SET new_id = 1;
+    END IF;
+    SET NEW.other_complainant_no = new_id;
+    
+    SET new_id = (SELECT MAX(other_respondent_no) FROM tbl_blotters) + 1;
+    IF new_id IS NULL THEN
+        SET new_id = 1;
+    END IF;
+    SET NEW.other_respondent_no = new_id;
+
     END */$$
 
 
