@@ -246,11 +246,25 @@ if($operation_check == "SELECT_NONRESIDENT_TABLELOAD"){
         echo '<td>
         <div class="btn-group text-center">
                 
-            <button class="btn btn-primary mx-1 viewDocumentsButton" id=vbutton
-                
-                data-bs-toggle="modal" data-bs-target="#DocumentDetailsModal">View</button>
+            <button class="btn btn-primary mx-1 viewBlotterButton" id="vbutton"
+                data-complainant_first_name = "'.htmlspecialchars($row['complainant_first_name']).'"
+                data-complainant_last_name = "'.htmlspecialchars($row['complainant_last_name']).'"
+                data-complainant_middle_name = "'.htmlspecialchars($row['complainant_middle_name']).'"
+                data-complainant_suffix = "'.htmlspecialchars($row['complainant_suffix']).'"
+                data-first_name_res = "'.htmlspecialchars($row['respondent_first_name']).'"
+                data-last_name_res = "'.htmlspecialchars($row['respondent_last_name']).'"
+                data-middle_name_res = "'.htmlspecialchars($row['respondent_middle_name']).'"
+                data-suffix_res = "'.htmlspecialchars($row['respondent_suffix']).'"
+                data-complete_address = "'.htmlspecialchars($row['complete_address']).'"
+                data-complainant_no = "'.htmlspecialchars($row['complainant_no']).'"
+                data-complainant_status = "'.htmlspecialchars($row['complainant_status']).'"
+                data-respondent_no = "'.htmlspecialchars($row['respondent_no']).'"
+                data-respondent_status = "'.htmlspecialchars($row['respondent_status']).'"
+                data-blotter_id = "'.htmlspecialchars($row['blotter_id']).'"
+                data-bs-toggle="modal" data-bs-target="#ViewBlotterModal">View
+            </button>
 
-            <button class="btn btn-success mx-1 viewDocumentsButton" id=vbutton
+            <button class="btn btn-success mx-1 editBlotterButton" id=ebutton
                 
                 data-bs-toggle="modal" data-bs-target="#DocumentDetailsModal">Edit</button>';
 

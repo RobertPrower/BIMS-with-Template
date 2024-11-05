@@ -61,7 +61,7 @@
                     </ul>
                     <div class="tab-content" id="myTabContent">
                         <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
-                            <div class="container m-4">
+                            <div class="container mx-2">
                                 <div class="row">
 
                                     <div class="col-md-2 card m-3 p-3  d-flex justify-content-center align-items-center" style="border-radius: 10px;padding: 10px;object-fit: contain; max-width: 100%; max-height: 100%">
@@ -112,7 +112,7 @@
                                 </div>
                             </div>
 
-                            <div class="container m-4">
+                            <div class="container mx-2">
                                 <div class="row">
 
                                     <div class="col-md-2 card m-3 p-3  d-flex justify-content-center align-items-center" style="border-radius: 10px;padding: 10px;object-fit: contain; max-width: 100%; max-height: 100%">
@@ -123,7 +123,7 @@
 
                                     <div class="col-md-9 card m-4 px-3" style="border-radius: 10px;" style="padding: 10px;">
                                         <div class="card-header">
-                                            Reporting Person/Complainant Details
+                                            Respondent Details
                                                             
                                         </div>
 
@@ -256,9 +256,6 @@
 
                             </div>
 
-                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#ViewBlotterModal">
-                                Launch demo modal
-                            </button>
                         </div>
                         <div class="container col-md-3">
                             <div class="row">

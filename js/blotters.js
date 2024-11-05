@@ -198,5 +198,31 @@ $(document).ready(function () {
       updatePaginationControls(page);
     }
   });
+
+  $(".viewBlotterButton").on("click",function(){
+    var complainant_first_name = $(this).data('complainant_first_name');
+    var complainant_middle_name = $(this).data('complainant_middle_name');
+    var complainant_last_name = $(this).data('complainant_last_name');
+    var complainant_suffix = $(this).data('complainant_suffix');
+
+    var respondent_first_name = $(this).data('respondent_first_name');
+    var respondent_middle_name = $(this).data('respondent_middle_name');
+    var respondent_last_name = $(this).data('respondent_last_name');
+    var respondent_suffix = $(this).data('respondent_suffix');
+
+    var complete_address = $(this).data('complete_address');
+    var blotter_id = $(this).data('blotter_id');
+
+    $("#fname").val(complainant_first_name);
+    $("#mname").val(complainant_middle_name);
+    $("#lname").val(complainant_last_name);
+    $("#suffix").val(complainant_suffix);
+
+    console.log(complainant_first_name)
+    console.log("View button has been click")
+
+
+
+  })
   
 });
