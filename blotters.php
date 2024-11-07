@@ -19,6 +19,7 @@
   <!-- Favicon -->
   <link rel="shortcut icon" href="img/logos/<?php echo $logo; ?>" type="image/x-icon">
   <!-- Custom styles -->
+  <link href="https://cdn.datatables.net/v/bs5/dt-2.1.8/datatables.min.css" rel="stylesheet">
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="./css/style.min.css">
 
@@ -47,17 +48,21 @@
                 <div class="modal-body">
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">Complainant and Respondent Details</button>
+                            <button class="nav-link active" id="complainant_respondent_tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">Complainant and Respondent Details</button>
                         </li>
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">Other Complainants</button>
+                            <button class="nav-link" id="other_complainants_tab" data-bs-toggle="tab" data-bs-target="#complainants_tab_pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">Other Complainants</button>
                         </li>
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact-tab-pane" type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false">Other Respondents</button>
+                            <button class="nav-link" id="other_respondents_tab" data-bs-toggle="tab" data-bs-target="#respondents_tab_pane" type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false">Other Respondents</button>
                         </li>
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="disabled-tab" data-bs-toggle="tab" data-bs-target="#disabled-tab-pane" type="button" role="tab" aria-controls="disabled-tab-pane" aria-selected="false">Case Details</button>
+                            <button class="nav-link" id="case_details_tab" data-bs-toggle="tab" data-bs-target="#casedetails_tab_pane" type="button" role="tab" aria-controls="disabled-tab-pane" aria-selected="false">Case Details</button>
                         </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="evidence_tab" data-bs-toggle="tab" data-bs-target="#evidence_tab_pane" type="button" role="tab" aria-controls="disabled-tab-pane" aria-selected="false">Evidence</button>
+                        </li>
+                        
                     </ul>
                     <div class="tab-content" id="myTabContent">
                         <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
@@ -67,7 +72,7 @@
                                     <div class="col-md-2 card m-3 p-3  d-flex justify-content-center align-items-center" style="border-radius: 10px;padding: 10px;object-fit: contain; max-width: 100%; max-height: 100%">
                                         
                                         <img src="includes/img/blank-profile.webp" id="ComplainantImg" width="200" height="200" style="object-fit: contain; max-width: 100%; max-height: 100%;"/>
-                                        
+                                        <h5 id="display_complainant_status"></h5>
                                     </div>
 
                                     <div class="col-md-9 card m-4 px-3" style="border-radius: 10px;" style="padding: 10px;">
@@ -78,8 +83,11 @@
 
                                         <div class="text-center row">
 
-                                            <input type="text" class="form-control" id="checkresident" hidden/>
-                                            <input type="text" class="form-control" id="id_to_record" hidden/>
+                                            <input type="text" class="form-control" id="complainant_status" hidden/>
+                                            <input type="text" class="form-control" id="complainant_id" hidden/>
+                                            <input type="text" class="form-control" id="respondent_status" hidden/>
+                                            <input type="text" class="form-control" id="respondent_id" hidden/>
+                                            <input type="text" class="form-control" id="blotter_id" hidden/>
 
                                             <div class="form-floating mt-3 mb-3 col-md-4">
                                                 <input type="text" class="form-control" id="fname" name="firstname" placeholder="Enter First Name Here" required disabled/>
@@ -117,8 +125,8 @@
 
                                     <div class="col-md-2 card m-3 p-3  d-flex justify-content-center align-items-center" style="border-radius: 10px;padding: 10px;object-fit: contain; max-width: 100%; max-height: 100%">
                                         
-                                        <img src="includes/img/blank-profile.webp" id="ComplainantImg" width="200" height="200" style="object-fit: contain; max-width: 100%; max-height: 100%;"/>
-                                        
+                                        <img src="includes/img/blank-profile.webp" id="RespondentImg" width="200" height="200" style="object-fit: contain; max-width: 100%; max-height: 100%;"/>
+                                        <h5 id="display_respondent_status"></h5>
                                     </div>
 
                                     <div class="col-md-9 card m-4 px-3" style="border-radius: 10px;" style="padding: 10px;">
@@ -129,31 +137,28 @@
 
                                         <div class="text-center row">
 
-                                            <input type="text" class="form-control" id="checkresident" hidden/>
-                                            <input type="text" class="form-control" id="id_to_record" hidden/>
-
                                             <div class="form-floating mt-3 mb-3 col-md-4">
-                                                <input type="text" class="form-control" id="fname" name="firstname" placeholder="Enter First Name Here" required disabled/>
+                                                <input type="text" class="form-control" id="fname_res" name="firstname" placeholder="Enter First Name Here" required disabled/>
                                                 <label for="fname">First Name</label>
                                             </div>
 
                                             <div class="form-floating mt-3 mb-3 col-md-4">
-                                                <input type="text" class="form-control" id="mname" name="middlename" placeholder="Enter Middle Name Here" disabled/>
+                                                <input type="text" class="form-control" id="mname_res" name="middlename" placeholder="Enter Middle Name Here" disabled/>
                                                 <label for="mname">Middle Name</label>
                                             </div>
 
                                             <div class="form-floating mt-3 mb-3 col-md-2">
-                                                <input type="text" class="form-control" id="lname" name="lastname" placeholder="Enter Last Name Here" required disabled/>
+                                                <input type="text" class="form-control" id="lname_res" name="lastname" placeholder="Enter Last Name Here" required disabled/>
                                                 <label for="lname">Last Name</label>
                                             </div>
 
                                             <div class="form-floating mt-3 mb-3 col-md-2">
-                                                <input type="text" class="form-control" id="suffix" name="lastname" placeholder="Enter Last Name Here" required disabled/>
+                                                <input type="text" class="form-control" id="suffix_res" name="lastname" placeholder="Enter Last Name Here" required disabled/>
                                                 <label for="lname">Suffix</label>
                                             </div>
 
                                             <div class="form-floating mt-3 mb-3 col-md-12">
-                                                <input type="text" class="form-control" id="address" name="address" placeholder="Enter Subdvision Here" disabled/>
+                                                <input type="text" class="form-control" id="address_res" name="address" placeholder="Enter Subdvision Here" disabled/>
                                                 <label for="subd">Complete Address</label>
                                             </div>
                                         
@@ -165,17 +170,9 @@
 
                         </div> 
                         <!-- End of first tab -->
-                        <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
+                        <div class="tab-pane fade" id="complainants_tab_pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
                               <div class="col-md-12">
-                                <br>
-                                <div class="row text-center">
-                                    
-                                        <h3>Other Complainants</h3>
-                                    
-                                   
-                                </div>
-
-                                <br>
+                                <BR>
                                 <table class="table table-bordered text-center">
                                     <thead>
                                         <tr>
@@ -187,7 +184,7 @@
 
                                         </tr>
                                     </thead>
-                                    <tbody id="ResidentComplainant">
+                                    <tbody id="Complainant">
                                     
                                     
                                     </tbody>
@@ -196,16 +193,8 @@
                             </div>
                         </div>
                         <!-- End of second tab -->
-                        <div class="tab-pane fade" id="contact-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabindex="0">
+                        <div class="tab-pane fade" id="respondents_tab_pane" role="tabpanel" aria-labelledby="contact-tab" tabindex="0">
                               <div class="col-md-12">
-                                <br>
-                                <div class="row text-center">
-                                    
-                                        <h3>Other Respondents</h3>
-                                    
-                                   
-                                </div>
-
                                 <br>
                                 <table class="table table-bordered text-center">
                                     <thead>
@@ -218,7 +207,7 @@
 
                                         </tr>
                                     </thead>
-                                    <tbody id="ResidentComplainant">
+                                    <tbody id="Respondent">
                                     
                                     
                                     </tbody>
@@ -226,9 +215,65 @@
 
                             </div>
                         </div>
-                        <div class="tab-pane fade" id="disabled-tab-pane" role="tabpanel" aria-labelledby="disabled-tab" tabindex="0">
+                        <!-- End of Third tab -->
+                        <div class="tab-pane fade" id="casedetails_tab_pane" role="tabpanel" aria-labelledby="disabled-tab" tabindex="0">
+                            <div class="row">
+                                <div class="form-floating mt-3 mb-3 col-md-4">
+                                    <input type="date" class="form-control" id="schedule_date" name="schedule_date" placeholder="" disabled/>
+                                    <label for="subd">Mediation Date</label>
+                                </div>
+                                <div class="form-floating mt-3 mb-3 col-md-4">
+                                    <input type="time" class="form-control" id="schedule_starttime" name="schedule_date" placeholder="" disabled/>
+                                    <label for="subd">Mediation Start Time</label>
+                                </div>
+                                <div class="form-floating mt-3 mb-3 col-md-4">
+                                    <input type="time" class="form-control" id="schedule_endtime" name="schedule_time" placeholder="" disabled/>
+                                    <label for="subd">Mediation End Time</label>
+                                </div>
+                            
+                                <div class="form-floating mt-3 mb-3 col-md-4">
+                                    <input type="time" class="form-control" id="mediator" placeholder="" disabled/>
+                                    <label for="subd">Mediator</label>
+                                </div>
 
+                                <div class="form-floating mt-3 mb-3 col-md-4">
+                                    <input type="text" class="form-control" id="incident_date" name="incident_date" placeholder="Enter First Name Here" disabled/>
+                                    <label for="fname">Incident Date and Time</label>
+                                </div>
+
+                                <div class="form-floating mt-3 mb-3 col-md-4">
+                                    <input type="text" class="form-control" id="incident_location" name="incident_location" placeholder="Enter Middle Name Here" disabled/>
+                                    <label for="mname">Location of the Incident</label>
+                                </div>
+
+                                <div class="form-floating mt-3 mb-3 col-md-4">
+                                    <select class="form-select" id="blotter_type" name="blotter_type" aria-label="Floating label select example" disabled>
+                                        <option value="" selected hidden>Select Blotter Type</option>
+                                        <option value="0">Blotter</option>
+                                        <option value="1">Incident</option>
+                                    </select>
+                                    <label for="blotter_type">Blotter Type</label>
+                                </div>
+
+                                <div class="form-floating mt-3 mb-3 col-md-4">
+                                    <input type="text" class="form-control" id="incident_desc" name="incident_desc" placeholder="Enter Subdvision Here" disabled/>
+                                    <label for="subd">Description of the Incident</label>
+                                </div>
+
+                                <div class="form-floating mt-3 mb-3 col-md-4">
+                                    <input type="text" class="form-control" id="incident_desc" name="incident_desc" placeholder="Enter Subdvision Here" disabled/>
+                                    <label for="subd">Date of Resolution</label>
+                                </div>
+
+
+                                <div class="form-floating">
+                                <textarea class="form-control" placeholder="Leave a comment here" id="case_context" name="case_context" style="height: 500px; border: 1.5px solid black;" disabled></textarea>
+                                    <label for="floatingTextarea">Context of the Case</label>
+                                </div>
+
+                            </div>
                         </div>
+                        <!-- End of fourth tab -->
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -300,11 +345,13 @@
     
     <!-- ! Footer -->
   <?php require_once("includes/footer.php")?>
-    </div>
+    
+</div>
 </div>
 
 <script src="js/jquery-3.7.1.min.js"></script>
 <script src="js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.datatables.net/v/bs5/dt-2.1.8/datatables.min.js"></script>
 <script src="js/blotters.js"></script>
 
 <!-- Icons library -->

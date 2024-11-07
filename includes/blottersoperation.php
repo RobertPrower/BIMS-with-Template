@@ -3,6 +3,8 @@ require_once'connecttodb.php';
 
 $operation_check = (isset($_POST['operation']))? $_POST['operation']: null;
 
+$id_to_fetch = (isset($_POST['blotter_id']))? $_POST['blotter_id']: null;
+
 $main_complainantid = isset($_POST['main_complainantid'])?$_POST['main_complainantid']: NULL; 
 $main_complainant_status = isset($_POST['main_complainant_status'])?$_POST['main_complainant_status']: NULL;
 $main_respondentid = isset($_POST['main_respondentid'])?$_POST['main_respondentid']: NULL;
@@ -231,7 +233,7 @@ if($operation_check == "SELECT_NONRESIDENT_TABLELOAD"){
         echo '<td>' . htmlspecialchars($row['incident_dt']) . '</td>';
         echo '<td>' . htmlspecialchars($row['desc_incident']) . '</td>';
         echo '<td>' . htmlspecialchars($row['complainant_last_name']) .', '. htmlspecialchars($row['complainant_first_name']) .' '. htmlspecialchars($row['complainant_middle_name']) .' '. htmlspecialchars($row['complainant_suffix']) . '</td>';
-        echo '<td>' . htmlspecialchars($row['complainant_last_name']) .', '. htmlspecialchars($row['complainant_first_name']) .' '. htmlspecialchars($row['complainant_middle_name']) .' '. htmlspecialchars($row['complainant_suffix']) . '</td>';
+        echo '<td>' . htmlspecialchars($row['respondent_last_name']) .', '. htmlspecialchars($row['respondent_first_name']) .' '. htmlspecialchars($row['respondent_middle_name']) .' '. htmlspecialchars($row['respondent_suffix']) . '</td>';
              
         switch ($row['report_status']){
         case 0: echo "<td><span class='badge-pending'>ONGOING</span> </td>";
@@ -246,27 +248,32 @@ if($operation_check == "SELECT_NONRESIDENT_TABLELOAD"){
         echo '<td>
         <div class="btn-group text-center">
                 
-            <button class="btn btn-primary mx-1 viewBlotterButton" id="vbutton"
+            <button class="btn btn-primary mx-1 viewbtn"
                 data-complainant_first_name = "'.htmlspecialchars($row['complainant_first_name']).'"
                 data-complainant_last_name = "'.htmlspecialchars($row['complainant_last_name']).'"
                 data-complainant_middle_name = "'.htmlspecialchars($row['complainant_middle_name']).'"
                 data-complainant_suffix = "'.htmlspecialchars($row['complainant_suffix']).'"
-                data-first_name_res = "'.htmlspecialchars($row['respondent_first_name']).'"
-                data-last_name_res = "'.htmlspecialchars($row['respondent_last_name']).'"
-                data-middle_name_res = "'.htmlspecialchars($row['respondent_middle_name']).'"
-                data-suffix_res = "'.htmlspecialchars($row['respondent_suffix']).'"
-                data-complete_address = "'.htmlspecialchars($row['complete_address']).'"
+                data-complainant_address = "'.htmlspecialchars($row['complainant_address']).'"
+
+                data-respondent_first_name = "'.htmlspecialchars($row['respondent_first_name']).'"
+                data-respondent_last_name = "'.htmlspecialchars($row['respondent_last_name']).'"
+                data-respondent_middle_name = "'.htmlspecialchars($row['respondent_middle_name']).'"
+                data-respondent_suffix = "'.htmlspecialchars($row['respondent_suffix']).'"
+                data-respondent_address = "'.htmlspecialchars($row['respondent_address']).'"
+
                 data-complainant_no = "'.htmlspecialchars($row['complainant_no']).'"
                 data-complainant_status = "'.htmlspecialchars($row['complainant_status']).'"
                 data-respondent_no = "'.htmlspecialchars($row['respondent_no']).'"
                 data-respondent_status = "'.htmlspecialchars($row['respondent_status']).'"
+                data-complainant_filename = "'.htmlspecialchars($row['complainant_filename']).'";
+                data-respondent_filename = "'.htmlspecialchars($row['respondent_filename']).'";
                 data-blotter_id = "'.htmlspecialchars($row['blotter_id']).'"
                 data-bs-toggle="modal" data-bs-target="#ViewBlotterModal">View
             </button>
 
             <button class="btn btn-success mx-1 editBlotterButton" id=ebutton
                 
-                data-bs-toggle="modal" data-bs-target="#DocumentDetailsModal">Edit</button>';
+                data-bs-toggle="modal" data-bs-target="#ViewBlotterModal">Edit</button>';
 
             if($row['is_deleted'] == "0"){ 
                 echo '<button class="btn btn-danger mx-1 deleteResidentButton" id="deletebutton"
@@ -279,6 +286,83 @@ if($operation_check == "SELECT_NONRESIDENT_TABLELOAD"){
             }
         echo '</tr>';
     }
+
+
+}else if($operation_check == "FETCH_OTHER_COMPLAINANTS_MODAL"){
+    
+    $sqlquery = "CALL FetchAllComplainant(?)";
+    $stmt = $pdo->prepare($sqlquery);
+    $stmt->execute([$id_to_fetch]);
+    $result = $stmt -> fetchAll(PDO::FETCH_ASSOC);
+
+    if(!$result == 0){
+        foreach($result as $row){
+            echo'<tr>';
+    
+            if(htmlspecialchars($row['status']) == "Resident"){
+                echo '<td><img src="includes/img/resident_img/'.htmlspecialchars($row['img_filename']).'" width="100" height="100" style="object-fit: contain; max-width: 100%; max-height: 100%;"/></td>';
+            }else{
+                echo '<td><img src="includes/img/non_resident_img/'.htmlspecialchars($row['img_filename']).'" width="100" height="100" style="object-fit: contain; max-width: 100%; max-height: 100%;"/></td>';
+            }
+    
+            echo    '<td>'.htmlspecialchars($row['full_name']).'</td>
+                    <td>'.htmlspecialchars($row['status']).'</td>
+                    <td>
+                    <button class="btn btn-primary mx-2" 
+                        data-id=complainant_id"'.htmlspecialchars($row['complainant_id']).'"
+                        data-id=comp_status"'.htmlspecialchars($row['status']).'">
+                        View Details
+                    </button>
+                    </td>
+                    </tr>';
+        }
+    }else{
+        echo '<tr><td colspan="4">No Other Complainants Found</td></tr>';
+    }
+}else if($operation_check == "FETCH_OTHER_RESPONDENTS_MODAL"){
+    
+    $sqlquery = "CALL FetchAllRespondents(?)";
+    $stmt = $pdo->prepare($sqlquery);
+    $stmt->execute([$id_to_fetch]);
+    $result = $stmt -> fetchAll(PDO::FETCH_ASSOC);
+
+    if(!$result == 0){
+        foreach($result as $row){
+            echo'<tr>';
+    
+            if(htmlspecialchars($row['status']) == "Resident"){
+                echo '<td><img src="includes/img/resident_img/'.htmlspecialchars($row['img_filename']).'" width="100" height="100" style="object-fit: contain; max-width: 100%; max-height: 100%;"/></td>';
+            }else{
+                echo '<td><img src="includes/img/non_resident_img/'.htmlspecialchars($row['img_filename']).'" width="100" height="100" style="object-fit: contain; max-width: 100%; max-height: 100%;"/></td>';
+            }
+    
+            echo    '<td>'.htmlspecialchars($row['full_name']).'</td>
+                    <td>'.htmlspecialchars($row['status']).'</td>
+                    <td>
+                    <button class="btn btn-primary mx-2" 
+                        data-id=complainant_id"'.htmlspecialchars($row['complainant_id']).'"
+                        data-id=comp_status"'.htmlspecialchars($row['status']).'">
+                        View Details
+                    </button>
+                    </td>
+                    </tr>';
+        }
+    }else{
+        echo '<tr><td colspan="4">No Other Respondents Found</td></tr>';
+    }
+}else if($operation_check == "FETCH_OTHER_CASE_DETAILS_MODAL"){
+
+    $sqlquery = "SELECT blotter_type, desc_incident, incident_dt, 
+                location_of_incident, date_of_resolution, statemnt, 
+                `mediation_starttime`, `mediation_endtime`, `mediation_date`, 
+                `schedule_color` FROM tbl_blotters
+                WHERE blotter_id = ?";
+    $stmt = $pdo->prepare($sqlquery);
+    $stmt->execute([$id_to_fetch]);
+    $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    echo json_encode($result);
+
 
 
 }else{

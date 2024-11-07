@@ -1,6 +1,6 @@
 /*
-SQLyog Ultimate v13.1.1 (64 bit)
-MySQL - 5.7.20-log : Database - bims
+SQLyog Ultimate
+MySQL - 5.7.44-log : Database - bims
 *********************************************************************
 */
 
@@ -325,7 +325,7 @@ CREATE TABLE `tbl_blotter_audit_trail` (
   PRIMARY KEY (`blotter_at_id`),
   KEY `fk_assist_by` (`assist_by_no`),
   CONSTRAINT `fk_assist_by` FOREIGN KEY (`assist_by_no`) REFERENCES `tbl_username` (`username_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 /*Data for the table `tbl_blotter_audit_trail` */
 
@@ -333,7 +333,8 @@ insert  into `tbl_blotter_audit_trail`(`blotter_at_id`,`assist_by_no`,`blotter_a
 (1,NULL,'2024-11-05 00:00:00',NULL,NULL,NULL,NULL,NULL,NULL),
 (2,NULL,'2024-11-05 00:00:00',NULL,NULL,NULL,NULL,NULL,NULL),
 (3,NULL,'2024-11-05 00:00:00',NULL,NULL,NULL,NULL,NULL,NULL),
-(4,NULL,'2024-11-05 00:00:00',NULL,NULL,NULL,NULL,NULL,NULL);
+(4,NULL,'2024-11-05 00:00:00',NULL,NULL,NULL,NULL,NULL,NULL),
+(5,NULL,'2024-11-06 00:00:00',NULL,NULL,NULL,NULL,NULL,NULL);
 
 /*Table structure for table `tbl_blotter_mediator` */
 
@@ -374,7 +375,6 @@ CREATE TABLE `tbl_blotters` (
   `blotter_contextfile` varchar(255) DEFAULT NULL,
   `blotter_evidencefile` varchar(255) DEFAULT NULL,
   `statemnt` longtext,
-  `mediation_schedule` date DEFAULT NULL,
   `mediation_starttime` time DEFAULT NULL,
   `mediation_endtime` time DEFAULT NULL,
   `blot_at_no` int(55) DEFAULT NULL,
@@ -397,15 +397,16 @@ CREATE TABLE `tbl_blotters` (
   CONSTRAINT `tbl_blotters_ibfk_5` FOREIGN KEY (`blot_at_no`) REFERENCES `tbl_blotter_audit_trail` (`blotter_at_id`),
   CONSTRAINT `tbl_blotters_ibfk_6` FOREIGN KEY (`other_complainant_no`) REFERENCES `tbl_other_complainants` (`complainant_id`),
   CONSTRAINT `tbl_blotters_ibfk_7` FOREIGN KEY (`other_respondent_no`) REFERENCES `tbl_other_respondents` (`respondent_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `tbl_blotters` */
 
-insert  into `tbl_blotters`(`blotter_id`,`res_complainant_no`,`nres_complainant_no`,`res_respondent_no`,`nres_respondent_no`,`other_complainant_no`,`other_respondent_no`,`blotter_type`,`desc_incident`,`incident_dt`,`location_of_incident`,`date_of_resolution`,`blotter_contextfile`,`blotter_evidencefile`,`statemnt`,`mediation_schedule`,`mediation_starttime`,`mediation_endtime`,`blot_at_no`,`mediation_date`,`schedule_color`,`report_status`,`is_deleted`) values 
-(1,1,NULL,9,NULL,1,1,0,'xxsxsd','2024-11-04 02:36:09','xzxsxs',NULL,'2f070627687d52995cfabf5c1bbde057 (14).jpg','715a5404857b4d3cfdbd2747e2eaac79 (6).jpg','sdsdsdsdsdsdds',NULL,NULL,NULL,1,NULL,NULL,0,0),
-(2,NULL,1,NULL,5,2,2,1,'Estafa','2024-11-03 17:13:03','Cielito Homes',NULL,'channels4_profile.jpg','channels4_profile.jpg','dsdjnasdjkljhfaskljdhfjasdhfluks',NULL,NULL,NULL,2,NULL,'#000000',0,0),
-(3,4,NULL,3,NULL,3,3,1,'Estafa','2024-11-03 17:13:03','Cielito Homes',NULL,'channels4_profile (1).jpg','channels4_profile (1).jpg','dsdjnasdjkljhfaskljdhfjasdhfluks',NULL,NULL,NULL,3,NULL,'#000000',0,0),
-(4,1,NULL,9,NULL,4,4,1,'fdsfdasfsa','2024-11-05 17:25:17','dfsdfsd',NULL,'hanako5.png','e1bc5bf9591b961956db94bd1e7ab1ed.jpg','dfsdfsdfsdfsd',NULL,'12:00:00','12:30:00',4,'2024-11-11','#000000',0,0);
+insert  into `tbl_blotters`(`blotter_id`,`res_complainant_no`,`nres_complainant_no`,`res_respondent_no`,`nres_respondent_no`,`other_complainant_no`,`other_respondent_no`,`blotter_type`,`desc_incident`,`incident_dt`,`location_of_incident`,`date_of_resolution`,`blotter_contextfile`,`blotter_evidencefile`,`statemnt`,`mediation_starttime`,`mediation_endtime`,`blot_at_no`,`mediation_date`,`schedule_color`,`report_status`,`is_deleted`) values 
+(1,1,NULL,9,NULL,1,1,0,'xxsxsd','2024-11-04 02:36:09','xzxsxs',NULL,'2f070627687d52995cfabf5c1bbde057 (14).jpg','715a5404857b4d3cfdbd2747e2eaac79 (6).jpg','sdsdsdsdsdsdds','12:00:00','12:30:00',1,'2024-11-14','#454545',0,0),
+(2,NULL,1,NULL,5,2,2,1,'Estafa','2024-11-03 17:13:03','Cielito Homes',NULL,'channels4_profile.jpg','channels4_profile.jpg','dsdjnasdjkljhfaskljdhfjasdhfluks','12:00:00','12:30:00',2,'2024-11-21','#000000',0,0),
+(3,4,NULL,3,NULL,3,3,1,'Estafa','2024-11-03 17:13:03','Cielito Homes',NULL,'channels4_profile (1).jpg','channels4_profile (1).jpg','dsdjnasdjkljhfaskljdhfjasdhfluks','12:00:00','12:30:00',3,'2024-11-19','#000000',0,0),
+(4,1,NULL,9,NULL,4,4,1,'fdsfdasfsa','2024-11-05 17:25:17','dfsdfsd',NULL,'hanako5.png','e1bc5bf9591b961956db94bd1e7ab1ed.jpg','dfsdfsdfsdfsd','12:00:00','12:30:00',4,'2024-11-11','#000000',0,0),
+(5,1,NULL,NULL,1,5,5,0,'Estafa/Rentangay','2024-11-04 18:49:04','Cielito Homes',NULL,'715a5404857b4d3cfdbd2747e2eaac79.jpg','Minori_portal.png','Sa ika 4 ng Nobembre si Fernan Rabanes nakatira sa Novaliches Quezon City ayon sa ID kanyang iniwan ay nirentahan ang Toyota Vios ni Reno Tecson Hofileña na may plate number na WOJ 944. ','09:00:00','10:30:00',5,'2024-11-07','#000000',0,0);
 
 /*Table structure for table `tbl_building_permits` */
 
@@ -770,15 +771,16 @@ CREATE TABLE `tbl_other_complainants` (
   CONSTRAINT `tbl_other_complainants_ibfk_2` FOREIGN KEY (`nres_person_1`) REFERENCES `non_resident` (`nresident_id`),
   CONSTRAINT `tbl_other_complainants_ibfk_3` FOREIGN KEY (`res_person_2`) REFERENCES `resident` (`resident_id`),
   CONSTRAINT `tbl_other_complainants_ibfk_4` FOREIGN KEY (`nres_person_2`) REFERENCES `non_resident` (`nresident_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 /*Data for the table `tbl_other_complainants` */
 
 insert  into `tbl_other_complainants`(`complainant_id`,`res_person_1`,`nres_person_1`,`res_person_2`,`nres_person_2`,`res_person_3`,`nres_person_3`,`res_person_4`,`nres_person_4`,`res_person_5`,`nres_person_5`) values 
-(1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(1,19,1,3,5,4,NULL,NULL,NULL,NULL,NULL),
 (2,10,2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
 (3,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(4,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+(4,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(5,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 
 /*Table structure for table `tbl_other_respondents` */
 
@@ -801,7 +803,7 @@ CREATE TABLE `tbl_other_respondents` (
   KEY `nres_person_1` (`nres_person_1`),
   KEY `res_person_2` (`res_person_2`),
   KEY `nres_person_2` (`nres_person_2`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 /*Data for the table `tbl_other_respondents` */
 
@@ -809,7 +811,8 @@ insert  into `tbl_other_respondents`(`respondent_id`,`res_person_1`,`nres_person
 (1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
 (2,20,3,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
 (3,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(4,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+(4,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(5,NULL,6,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 
 /*Table structure for table `tbl_tprs` */
 
@@ -1085,6 +1088,287 @@ BEGIN
         
     END IF;
 END */$$
+DELIMITER ;
+
+/* Procedure structure for procedure `FetchAllComplainant` */
+
+/*!50003 DROP PROCEDURE IF EXISTS  `FetchAllComplainant` */;
+
+DELIMITER $$
+
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `FetchAllComplainant`(IN id int)
+BEGIN
+	
+	SELECT 
+    `tbl_other_complainants`.`complainant_id`,
+    CONCAT(`resident`.`last_name`, ', ', `resident`.`first_name`, ' ', IFNULL(`resident`.`middle_name`, ''), ' ', IFNULL(`resident`.`suffix`, '')) AS `full_name`,
+    'Resident' AS `status`,
+    `resident`.`img_filename`
+FROM 
+    `tbl_other_complainants`
+JOIN 
+    `resident` ON `tbl_other_complainants`.`res_person_1` = `resident`.`resident_id`
+WHERE `tbl_other_complainants`.`res_person_1` IS NOT NULL AND `tbl_other_complainants`.`complainant_id` = id
+
+UNION ALL
+
+SELECT 
+    `tbl_other_complainants`.`complainant_id`,
+    CONCAT(`resident`.`last_name`, ', ', `resident`.`first_name`, ' ', IFNULL(`resident`.`middle_name`, ''), ' ', IFNULL(`resident`.`suffix`, '')) AS `full_name`,
+    'Resident' AS `status`,
+    `resident`.`img_filename`
+FROM 
+    `tbl_other_complainants`
+JOIN 
+    `resident` ON `tbl_other_complainants`.`res_person_2` = `resident`.`resident_id`
+WHERE `tbl_other_complainants`.`res_person_2` IS NOT NULL AND `tbl_other_complainants`.`complainant_id` = id
+
+UNION ALL
+
+SELECT 
+    `tbl_other_complainants`.`complainant_id`,
+    CONCAT(`resident`.`last_name`, ', ', `resident`.`first_name`, ' ', IFNULL(`resident`.`middle_name`, ''), ' ', IFNULL(`resident`.`suffix`, '')) AS `full_name`,
+    'Resident' AS `status`,
+    `resident`.`img_filename`
+FROM 
+    `tbl_other_complainants`
+JOIN 
+    `resident` ON `tbl_other_complainants`.`res_person_3` = `resident`.`resident_id`
+WHERE `tbl_other_complainants`.`res_person_3` IS NOT NULL AND `tbl_other_complainants`.`complainant_id` = id
+
+UNION ALL
+
+SELECT 
+    `tbl_other_complainants`.`complainant_id`,
+    CONCAT(`resident`.`last_name`, ', ', `resident`.`first_name`, ' ', IFNULL(`resident`.`middle_name`, ''), ' ', IFNULL(`resident`.`suffix`, '')) AS `full_name`,
+    'Resident' AS `status`,
+    `resident`.`img_filename`
+FROM 
+    `tbl_other_complainants`
+JOIN 
+    `resident` ON `tbl_other_complainants`.`res_person_4` = `resident`.`resident_id`
+WHERE `tbl_other_complainants`.`res_person_4` IS NOT NULL AND `tbl_other_complainants`.`complainant_id` = id
+
+UNION ALL
+
+SELECT 
+    `tbl_other_complainants`.`complainant_id`,
+    CONCAT(`resident`.`last_name`, ', ', `resident`.`first_name`, ' ', IFNULL(`resident`.`middle_name`, ''), ' ', IFNULL(`resident`.`suffix`, '')) AS `full_name`,
+    'Resident' AS `status`,
+    `resident`.`img_filename`
+FROM 
+    `tbl_other_complainants`
+JOIN 
+    `resident` ON `tbl_other_complainants`.`res_person_5` = `resident`.`resident_id`
+WHERE `tbl_other_complainants`.`res_person_5` IS NOT NULL AND `tbl_other_complainants`.`complainant_id` = id
+
+UNION ALL
+
+SELECT 
+    `tbl_other_complainants`.`complainant_id`,
+    CONCAT(`non_resident`.`last_name`, ', ', `non_resident`.`first_name`, ' ', IFNULL(`non_resident`.`middle_name`, ''), ' ', IFNULL(`non_resident`.`suffix`, '')) AS `full_name`,
+    'Non-Resident' AS `status`,
+    `non_resident`.`img_filename`
+FROM 
+    `tbl_other_complainants`
+JOIN 
+    `non_resident` ON `tbl_other_complainants`.`nres_person_1` = `non_resident`.`nresident_id`
+WHERE `tbl_other_complainants`.`nres_person_1` IS NOT NULL AND `tbl_other_complainants`.`complainant_id` = id
+
+UNION ALL
+
+SELECT 
+    `tbl_other_complainants`.`complainant_id`,
+    CONCAT(`non_resident`.`last_name`, ', ', `non_resident`.`first_name`, ' ', IFNULL(`non_resident`.`middle_name`, ''), ' ', IFNULL(`non_resident`.`suffix`, '')) AS `full_name`,
+    'Non-Resident' AS `status`,
+    `non_resident`.`img_filename`
+FROM 
+    `tbl_other_complainants`
+JOIN 
+    `non_resident` ON `tbl_other_complainants`.`nres_person_2` = `non_resident`.`nresident_id`
+WHERE `tbl_other_complainants`.`nres_person_2` IS NOT NULL AND `tbl_other_complainants`.`complainant_id` = id
+
+UNION ALL
+
+SELECT 
+    `tbl_other_complainants`.`complainant_id`,
+    CONCAT(`non_resident`.`last_name`, ', ', `non_resident`.`first_name`, ' ', IFNULL(`non_resident`.`middle_name`, ''), ' ', IFNULL(`non_resident`.`suffix`, '')) AS `full_name`,
+    'Non-Resident' AS `status`,
+    `non_resident`.`img_filename`
+FROM 
+    `tbl_other_complainants`
+JOIN 
+    `non_resident` ON `tbl_other_complainants`.`nres_person_3` = `non_resident`.`nresident_id`
+WHERE `tbl_other_complainants`.`nres_person_3` IS NOT NULL AND `tbl_other_complainants`.`complainant_id` = id
+
+UNION ALL
+
+SELECT 
+    `tbl_other_complainants`.`complainant_id`,
+    CONCAT(`non_resident`.`last_name`, ', ', `non_resident`.`first_name`, ' ', IFNULL(`non_resident`.`middle_name`, ''), ' ', IFNULL(`non_resident`.`suffix`, '')) AS `full_name`,
+    'Non-Resident' AS `status`,
+    `non_resident`.`img_filename`
+FROM 
+    `tbl_other_complainants`
+JOIN 
+    `non_resident` ON `tbl_other_complainants`.`nres_person_4` = `non_resident`.`nresident_id`
+WHERE `tbl_other_complainants`.`nres_person_4` IS NOT NULL AND `tbl_other_complainants`.`complainant_id` = id
+
+UNION ALL
+
+SELECT 
+    `tbl_other_complainants`.`complainant_id`,
+    CONCAT(`non_resident`.`last_name`, ', ', `non_resident`.`first_name`, ' ', IFNULL(`non_resident`.`middle_name`, ''), ' ', IFNULL(`non_resident`.`suffix`, '')) AS `full_name`,
+    'Non-Resident' AS `status`,
+    `non_resident`.`img_filename`
+FROM 
+    `tbl_other_complainants`
+JOIN 
+    `non_resident` ON `tbl_other_complainants`.`nres_person_5` = `non_resident`.`nresident_id`
+WHERE `tbl_other_complainants`.`nres_person_5` IS NOT NULL AND `tbl_other_complainants`.`complainant_id` = id;
+
+	END */$$
+DELIMITER ;
+
+/* Procedure structure for procedure `FetchAllRespondents` */
+
+/*!50003 DROP PROCEDURE IF EXISTS  `FetchAllRespondents` */;
+
+DELIMITER $$
+
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `FetchAllRespondents`(in id int)
+BEGIN
+	
+SELECT 
+    `tbl_other_respondents`.`respondent_id`,
+    CONCAT(`resident`.`last_name`, ', ', `resident`.`first_name`, ' ', IFNULL(`resident`.`middle_name`, ''), ' ', IFNULL(`resident`.`suffix`, '')) AS `full_name`,
+    'Resident' AS `status`,
+    `resident`.`img_filename`
+FROM 
+    `tbl_other_respondents`
+JOIN 
+    `resident` ON `tbl_other_respondents`.`res_person_1` = `resident`.`resident_id`
+WHERE `tbl_other_respondents`.`res_person_1` IS NOT NULL AND `tbl_other_respondents`.`respondent_id` = id
+
+UNION ALL
+
+SELECT 
+    `tbl_other_respondents`.`respondent_id`,
+    CONCAT(`resident`.`last_name`, ', ', `resident`.`first_name`, ' ', IFNULL(`resident`.`middle_name`, ''), ' ', IFNULL(`resident`.`suffix`, '')) AS `full_name`,
+    'Resident' AS `status`,
+    `resident`.`img_filename`
+FROM 
+    `tbl_other_respondents`
+JOIN 
+    `resident` ON `tbl_other_respondents`.`res_person_2` = `resident`.`resident_id`
+WHERE `tbl_other_respondents`.`res_person_2` IS NOT NULL  AND `tbl_other_respondents`.`respondent_id` = id
+
+UNION ALL
+
+SELECT 
+    `tbl_other_respondents`.`respondent_id`,
+    CONCAT(`resident`.`last_name`, ', ', `resident`.`first_name`, ' ', IFNULL(`resident`.`middle_name`, ''), ' ', IFNULL(`resident`.`suffix`, '')) AS `full_name`,
+    'Resident' AS `status`,
+    `resident`.`img_filename`
+FROM 
+    `tbl_other_respondents`
+JOIN 
+    `resident` ON `tbl_other_respondents`.`res_person_3` = `resident`.`resident_id`
+WHERE `tbl_other_respondents`.`res_person_3` IS NOT NULL  AND `tbl_other_respondents`.`respondent_id` = id
+
+UNION ALL
+
+SELECT 
+    `tbl_other_respondents`.`respondent_id`,
+    CONCAT(`resident`.`last_name`, ', ', `resident`.`first_name`, ' ', IFNULL(`resident`.`middle_name`, ''), ' ', IFNULL(`resident`.`suffix`, '')) AS `full_name`,
+    'Resident' AS `status`,
+    `resident`.`img_filename`
+FROM 
+    `tbl_other_respondents`
+JOIN 
+    `resident` ON `tbl_other_respondents`.`res_person_4` = `resident`.`resident_id`
+WHERE `tbl_other_respondents`.`res_person_4` IS NOT NULL  AND `tbl_other_respondents`.`respondent_id` = id
+
+UNION ALL
+
+SELECT 
+    `tbl_other_respondents`.`respondent_id`,
+    CONCAT(`resident`.`last_name`, ', ', `resident`.`first_name`, ' ', IFNULL(`resident`.`middle_name`, ''), ' ', IFNULL(`resident`.`suffix`, '')) AS `full_name`,
+    'Resident' AS `status`,
+    `resident`.`img_filename`
+FROM 
+    `tbl_other_respondents`
+JOIN 
+    `resident` ON `tbl_other_respondents`.`res_person_5` = `resident`.`resident_id`
+WHERE `tbl_other_respondents`.`res_person_5` IS NOT NULL  AND `tbl_other_respondents`.`respondent_id` = id
+
+UNION ALL
+
+SELECT 
+    `tbl_other_respondents`.`respondent_id`,
+    CONCAT(`non_resident`.`last_name`, ', ', `non_resident`.`first_name`, ' ', IFNULL(`non_resident`.`middle_name`, ''), ' ', IFNULL(`non_resident`.`suffix`, '')) AS `full_name`,
+    'Non-Resident' AS `status`,
+    `non_resident`.`img_filename`
+FROM 
+    `tbl_other_respondents`
+JOIN 
+    `non_resident` ON `tbl_other_respondents`.`nres_person_1` = `non_resident`.`nresident_id`
+WHERE `tbl_other_respondents`.`nres_person_1` IS NOT NULL  AND `tbl_other_respondents`.`respondent_id` = id
+
+UNION ALL
+
+SELECT 
+    `tbl_other_respondents`.`respondent_id`,
+    CONCAT(`non_resident`.`last_name`, ', ', `non_resident`.`first_name`, ' ', IFNULL(`non_resident`.`middle_name`, ''), ' ', IFNULL(`non_resident`.`suffix`, '')) AS `full_name`,
+    'Non-Resident' AS `status`,
+    `non_resident`.`img_filename`
+FROM 
+    `tbl_other_respondents`
+JOIN 
+    `non_resident` ON `tbl_other_respondents`.`nres_person_2` = `non_resident`.`nresident_id`
+WHERE `tbl_other_respondents`.`nres_person_2` IS NOT NULL  AND `tbl_other_respondents`.`respondent_id` = id
+
+UNION ALL
+
+SELECT 
+    `tbl_other_respondents`.`respondent_id`,
+    CONCAT(`non_resident`.`last_name`, ', ', `non_resident`.`first_name`, ' ', IFNULL(`non_resident`.`middle_name`, ''), ' ', IFNULL(`non_resident`.`suffix`, '')) AS `full_name`,
+    'Non-Resident' AS `status`,
+    `non_resident`.`img_filename`
+FROM 
+    `tbl_other_respondents`
+JOIN 
+    `non_resident` ON `tbl_other_respondents`.`nres_person_3` = `non_resident`.`nresident_id`
+WHERE `tbl_other_respondents`.`nres_person_3` IS NOT NULL  AND `tbl_other_respondents`.`respondent_id` = id
+
+UNION ALL
+
+SELECT 
+    `tbl_other_respondents`.`respondent_id`,
+    CONCAT(`non_resident`.`last_name`, ', ', `non_resident`.`first_name`, ' ', IFNULL(`non_resident`.`middle_name`, ''), ' ', IFNULL(`non_resident`.`suffix`, '')) AS `full_name`,
+    'Non-Resident' AS `status`,
+    `non_resident`.`img_filename`
+FROM 
+    `tbl_other_respondents`
+JOIN 
+    `non_resident` ON `tbl_other_respondents`.`nres_person_4` = `non_resident`.`nresident_id`
+WHERE `tbl_other_respondents`.`nres_person_4` IS NOT NULL  AND `tbl_other_respondents`.`respondent_id` = id
+
+UNION ALL
+
+SELECT 
+    `tbl_other_respondents`.`respondent_id`,
+    CONCAT(`non_resident`.`last_name`, ', ', `non_resident`.`first_name`, ' ', IFNULL(`non_resident`.`middle_name`, ''), ' ', IFNULL(`non_resident`.`suffix`, '')) AS `full_name`,
+    'Non-Resident' AS `status`,
+    `non_resident`.`img_filename`
+FROM 
+    `tbl_other_respondents`
+JOIN 
+    `non_resident` ON `tbl_other_respondents`.`nres_person_5` = `non_resident`.`nresident_id`
+WHERE `tbl_other_respondents`.`nres_person_5` IS NOT NULL  AND `tbl_other_respondents`.`respondent_id` = id;
+
+
+	END */$$
 DELIMITER ;
 
 /* Procedure structure for procedure `SearchAllDocuments` */
@@ -1935,6 +2219,8 @@ DROP TABLE IF EXISTS `vw_blotters`;
  `respondent_no` varchar(55) ,
  `complainant_filename` varchar(255) ,
  `respondent_filename` varchar(255) ,
+ `complainant_address` text ,
+ `respondent_address` text ,
  `blotter_type` tinyint(5) ,
  `desc_incident` varchar(255) ,
  `incident_dt` datetime ,
@@ -2246,14 +2532,14 @@ DROP TABLE IF EXISTS `vw_select_resident`;
 /*!50001 DROP TABLE IF EXISTS `vw_blotters` */;
 /*!50001 DROP VIEW IF EXISTS `vw_blotters` */;
 
-/*!50001 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vw_blotters` AS (select `tbl_blotters`.`blotter_id` AS `blotter_id`,`tbl_blotter_audit_trail`.`blotter_add_dt` AS `blotter_add_dt`,(case when (`tbl_blotters`.`res_complainant_no` is not null) then 'Resident' when (`tbl_blotters`.`nres_complainant_no` is not null) then 'Non-Resident' else 'unknown' end) AS `complainant_status`,(case when (`tbl_blotters`.`res_complainant_no` is not null) then `tbl_blotters`.`res_complainant_no` when (`tbl_blotters`.`nres_complainant_no` is not null) then `tbl_blotters`.`nres_complainant_no` else 'unknown' end) AS `complainant_no`,(case when (`tbl_blotters`.`res_respondent_no` is not null) then 'Resident' when (`tbl_blotters`.`nres_respondent_no` is not null) then 'Non-Resident' else 'unknown' end) AS `respondent_status`,(case when (`tbl_blotters`.`res_respondent_no` is not null) then `tbl_blotters`.`res_respondent_no` when (`tbl_blotters`.`nres_respondent_no` is not null) then `tbl_blotters`.`nres_respondent_no` else 'unknown' end) AS `respondent_no`,(case when (`tbl_blotters`.`res_complainant_no` is not null) then `resident_complainant`.`img_filename` when (`tbl_blotters`.`nres_complainant_no` is not null) then convert(`non_resident_complainant`.`img_filename` using utf8mb4) else 'unknown' end) AS `complainant_filename`,(case when (`tbl_blotters`.`res_respondent_no` is not null) then `resident_respondent`.`img_filename` when (`tbl_blotters`.`nres_respondent_no` is not null) then convert(`non_resident_respondent`.`img_filename` using utf8mb4) else 'unknown' end) AS `respondent_filename`,`tbl_blotters`.`blotter_type` AS `blotter_type`,`tbl_blotters`.`desc_incident` AS `desc_incident`,`tbl_blotters`.`incident_dt` AS `incident_dt`,`tbl_blotters`.`report_status` AS `report_status`,`tbl_blotters`.`is_deleted` AS `is_deleted`,(case when (`tbl_blotters`.`res_complainant_no` is not null) then `resident_complainant`.`last_name` when (`tbl_blotters`.`nres_complainant_no` is not null) then convert(`non_resident_complainant`.`last_name` using utf8mb4) else 'unknown' end) AS `complainant_last_name`,(case when (`tbl_blotters`.`res_complainant_no` is not null) then `resident_complainant`.`first_name` when (`tbl_blotters`.`nres_complainant_no` is not null) then convert(`non_resident_complainant`.`first_name` using utf8mb4) else 'unknown' end) AS `complainant_first_name`,(case when (`tbl_blotters`.`res_complainant_no` is not null) then `resident_complainant`.`middle_name` when (`tbl_blotters`.`nres_complainant_no` is not null) then convert(`non_resident_complainant`.`middle_name` using utf8mb4) else 'unknown' end) AS `complainant_middle_name`,(case when (`tbl_blotters`.`res_complainant_no` is not null) then `resident_complainant`.`suffix` when (`tbl_blotters`.`nres_complainant_no` is not null) then convert(`non_resident_complainant`.`suffix` using utf8mb4) else 'unknown' end) AS `complainant_suffix`,(case when (`tbl_blotters`.`res_respondent_no` is not null) then `resident_respondent`.`last_name` when (`tbl_blotters`.`nres_respondent_no` is not null) then convert(`non_resident_respondent`.`last_name` using utf8mb4) else 'unknown' end) AS `respondent_last_name`,(case when (`tbl_blotters`.`res_respondent_no` is not null) then `resident_respondent`.`first_name` when (`tbl_blotters`.`nres_respondent_no` is not null) then convert(`non_resident_respondent`.`first_name` using utf8mb4) else 'unknown' end) AS `respondent_first_name`,(case when (`tbl_blotters`.`res_respondent_no` is not null) then `resident_respondent`.`middle_name` when (`tbl_blotters`.`nres_respondent_no` is not null) then convert(`non_resident_respondent`.`middle_name` using utf8mb4) else 'unknown' end) AS `respondent_middle_name`,(case when (`tbl_blotters`.`res_respondent_no` is not null) then `resident_respondent`.`suffix` when (`tbl_blotters`.`nres_respondent_no` is not null) then convert(`non_resident_respondent`.`suffix` using utf8mb4) else 'unknown' end) AS `respondent_suffix` from (((((`tbl_blotters` join `tbl_blotter_audit_trail` on((`tbl_blotters`.`blot_at_no` = `tbl_blotter_audit_trail`.`blotter_at_id`))) left join `resident` `resident_complainant` on((`tbl_blotters`.`res_complainant_no` = `resident_complainant`.`resident_id`))) left join `non_resident` `non_resident_complainant` on((`tbl_blotters`.`nres_complainant_no` = `non_resident_complainant`.`nresident_id`))) left join `resident` `resident_respondent` on((`tbl_blotters`.`res_respondent_no` = `resident_respondent`.`resident_id`))) left join `non_resident` `non_resident_respondent` on((`tbl_blotters`.`nres_respondent_no` = `non_resident_respondent`.`nresident_id`)))) */;
+/*!50001 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vw_blotters` AS (select `tbl_blotters`.`blotter_id` AS `blotter_id`,`tbl_blotter_audit_trail`.`blotter_add_dt` AS `blotter_add_dt`,(case when (`tbl_blotters`.`res_complainant_no` is not null) then 'Resident' when (`tbl_blotters`.`nres_complainant_no` is not null) then 'Non-Resident' else 'unknown' end) AS `complainant_status`,(case when (`tbl_blotters`.`res_complainant_no` is not null) then `tbl_blotters`.`res_complainant_no` when (`tbl_blotters`.`nres_complainant_no` is not null) then `tbl_blotters`.`nres_complainant_no` else 'unknown' end) AS `complainant_no`,(case when (`tbl_blotters`.`res_respondent_no` is not null) then 'Resident' when (`tbl_blotters`.`nres_respondent_no` is not null) then 'Non-Resident' else 'unknown' end) AS `respondent_status`,(case when (`tbl_blotters`.`res_respondent_no` is not null) then `tbl_blotters`.`res_respondent_no` when (`tbl_blotters`.`nres_respondent_no` is not null) then `tbl_blotters`.`nres_respondent_no` else 'unknown' end) AS `respondent_no`,(case when (`tbl_blotters`.`res_complainant_no` is not null) then `resident_complainant`.`img_filename` when (`tbl_blotters`.`nres_complainant_no` is not null) then convert(`non_resident_complainant`.`img_filename` using utf8mb4) else 'unknown' end) AS `complainant_filename`,(case when (`tbl_blotters`.`res_respondent_no` is not null) then `resident_respondent`.`img_filename` when (`tbl_blotters`.`nres_respondent_no` is not null) then convert(`non_resident_respondent`.`img_filename` using utf8mb4) else 'unknown' end) AS `respondent_filename`,(case when (`tbl_blotters`.`res_complainant_no` is not null) then concat(`resident_complainant`.`house_num`,', ',`resident_complainant`.`street`,', ',`resident_complainant`.`subdivision`,', Camarin Caloocan City') when (`tbl_blotters`.`nres_complainant_no` is not null) then convert(concat(`non_resident_complainant`.`house_num`,', ',`non_resident_complainant`.`street`,', ',`non_resident_complainant`.`subdivision`,', ',`non_resident_complainant`.`city`,', ',`non_resident_complainant`.`province`,', ',`non_resident_complainant`.`zipcode`) using utf8mb4) else 'unknown' end) AS `complainant_address`,(case when (`tbl_blotters`.`res_respondent_no` is not null) then concat(`resident_respondent`.`house_num`,', ',`resident_respondent`.`street`,', ',`resident_respondent`.`subdivision`,', Camarin Caloocan City') when (`tbl_blotters`.`nres_respondent_no` is not null) then convert(concat(`non_resident_respondent`.`house_num`,', ',`non_resident_respondent`.`street`,', ',`non_resident_respondent`.`subdivision`,', ',`non_resident_respondent`.`city`,', ',`non_resident_respondent`.`province`,', ',`non_resident_respondent`.`zipcode`) using utf8mb4) else 'unknown' end) AS `respondent_address`,`tbl_blotters`.`blotter_type` AS `blotter_type`,`tbl_blotters`.`desc_incident` AS `desc_incident`,`tbl_blotters`.`incident_dt` AS `incident_dt`,`tbl_blotters`.`report_status` AS `report_status`,`tbl_blotters`.`is_deleted` AS `is_deleted`,(case when (`tbl_blotters`.`res_complainant_no` is not null) then `resident_complainant`.`last_name` when (`tbl_blotters`.`nres_complainant_no` is not null) then convert(`non_resident_complainant`.`last_name` using utf8mb4) else 'unknown' end) AS `complainant_last_name`,(case when (`tbl_blotters`.`res_complainant_no` is not null) then `resident_complainant`.`first_name` when (`tbl_blotters`.`nres_complainant_no` is not null) then convert(`non_resident_complainant`.`first_name` using utf8mb4) else 'unknown' end) AS `complainant_first_name`,(case when (`tbl_blotters`.`res_complainant_no` is not null) then `resident_complainant`.`middle_name` when (`tbl_blotters`.`nres_complainant_no` is not null) then convert(`non_resident_complainant`.`middle_name` using utf8mb4) else 'unknown' end) AS `complainant_middle_name`,(case when (`tbl_blotters`.`res_complainant_no` is not null) then `resident_complainant`.`suffix` when (`tbl_blotters`.`nres_complainant_no` is not null) then convert(`non_resident_complainant`.`suffix` using utf8mb4) else 'unknown' end) AS `complainant_suffix`,(case when (`tbl_blotters`.`res_respondent_no` is not null) then `resident_respondent`.`last_name` when (`tbl_blotters`.`nres_respondent_no` is not null) then convert(`non_resident_respondent`.`last_name` using utf8mb4) else 'unknown' end) AS `respondent_last_name`,(case when (`tbl_blotters`.`res_respondent_no` is not null) then `resident_respondent`.`first_name` when (`tbl_blotters`.`nres_respondent_no` is not null) then convert(`non_resident_respondent`.`first_name` using utf8mb4) else 'unknown' end) AS `respondent_first_name`,(case when (`tbl_blotters`.`res_respondent_no` is not null) then `resident_respondent`.`middle_name` when (`tbl_blotters`.`nres_respondent_no` is not null) then convert(`non_resident_respondent`.`middle_name` using utf8mb4) else 'unknown' end) AS `respondent_middle_name`,(case when (`tbl_blotters`.`res_respondent_no` is not null) then `resident_respondent`.`suffix` when (`tbl_blotters`.`nres_respondent_no` is not null) then convert(`non_resident_respondent`.`suffix` using utf8mb4) else 'unknown' end) AS `respondent_suffix` from (((((`tbl_blotters` join `tbl_blotter_audit_trail` on((`tbl_blotters`.`blot_at_no` = `tbl_blotter_audit_trail`.`blotter_at_id`))) left join `resident` `resident_complainant` on((`tbl_blotters`.`res_complainant_no` = `resident_complainant`.`resident_id`))) left join `non_resident` `non_resident_complainant` on((`tbl_blotters`.`nres_complainant_no` = `non_resident_complainant`.`nresident_id`))) left join `resident` `resident_respondent` on((`tbl_blotters`.`res_respondent_no` = `resident_respondent`.`resident_id`))) left join `non_resident` `non_resident_respondent` on((`tbl_blotters`.`nres_respondent_no` = `non_resident_respondent`.`nresident_id`)))) */;
 
 /*View structure for view vw_blotters_schedule */
 
 /*!50001 DROP TABLE IF EXISTS `vw_blotters_schedule` */;
 /*!50001 DROP VIEW IF EXISTS `vw_blotters_schedule` */;
 
-/*!50001 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vw_blotters_schedule` AS select `b`.`blotter_id` AS `blotter_id`,(case when (`r1`.`resident_id` is not null) then concat(`r1`.`first_name`,' ',`r1`.`last_name`,' ',`r1`.`middle_name`,' ',`r1`.`suffix`) else convert(concat(`nr1`.`first_name`,' ',`nr1`.`last_name`,' ',`nr1`.`middle_name`) using utf8mb4) end) AS `complainant_fullname`,(case when (`r1`.`resident_id` is not null) then 'Resident' else 'Non-Resident' end) AS `complainant_status`,(case when (`r2`.`resident_id` is not null) then concat(`r2`.`first_name`,' ',`r2`.`last_name`,' ',`r2`.`middle_name`,' ',`r2`.`suffix`) else convert(concat(`nr2`.`first_name`,' ',`nr2`.`last_name`,' ',`nr2`.`middle_name`) using utf8mb4) end) AS `respondent_fullname`,(case when (`r2`.`resident_id` is not null) then 'Resident' else 'Non-Resident' end) AS `respondent_status`,`b`.`desc_incident` AS `desc_incident`,`b`.`incident_dt` AS `incident_dt`,`b`.`location_of_incident` AS `location_of_incident`,`b`.`date_of_resolution` AS `date_of_resolution`,`b`.`mediation_schedule` AS `mediation_schedule`,`b`.`schedule_color` AS `schedule_color`,`b`.`report_status` AS `report_status` from ((((`tbl_blotters` `b` left join `resident` `r1` on((`b`.`res_complainant_no` = `r1`.`resident_id`))) left join `non_resident` `nr1` on((`b`.`nres_complainant_no` = `nr1`.`nresident_id`))) left join `resident` `r2` on((`b`.`res_respondent_no` = `r2`.`resident_id`))) left join `non_resident` `nr2` on((`b`.`nres_respondent_no` = `nr2`.`nresident_id`))) */;
+/*!50001 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vw_blotters_schedule` AS select `b`.`blotter_id` AS `blotter_id`,(case when (`r1`.`resident_id` is not null) then concat(`r1`.`first_name`,' ',`r1`.`last_name`,' ',`r1`.`middle_name`,' ',`r1`.`suffix`) else convert(concat(`nr1`.`first_name`,' ',`nr1`.`last_name`,' ',`nr1`.`middle_name`) using utf8mb4) end) AS `complainant_fullname`,(case when (`r1`.`resident_id` is not null) then 'Resident' else 'Non-Resident' end) AS `complainant_status`,(case when (`r2`.`resident_id` is not null) then concat(`r2`.`first_name`,' ',`r2`.`last_name`,' ',`r2`.`middle_name`,' ',`r2`.`suffix`) else convert(concat(`nr2`.`first_name`,' ',`nr2`.`last_name`,' ',`nr2`.`middle_name`) using utf8mb4) end) AS `respondent_fullname`,(case when (`r2`.`resident_id` is not null) then 'Resident' else 'Non-Resident' end) AS `respondent_status`,`b`.`desc_incident` AS `desc_incident`,`b`.`incident_dt` AS `incident_dt`,`b`.`location_of_incident` AS `location_of_incident`,`b`.`date_of_resolution` AS `date_of_resolution`,`b`.`mediation_date` AS `mediation_schedule`,`b`.`schedule_color` AS `schedule_color`,`b`.`report_status` AS `report_status` from ((((`tbl_blotters` `b` left join `resident` `r1` on((`b`.`res_complainant_no` = `r1`.`resident_id`))) left join `non_resident` `nr1` on((`b`.`nres_complainant_no` = `nr1`.`nresident_id`))) left join `resident` `r2` on((`b`.`res_respondent_no` = `r2`.`resident_id`))) left join `non_resident` `nr2` on((`b`.`nres_respondent_no` = `nr2`.`nresident_id`))) */;
 
 /*View structure for view vw_deleted_docu */
 
