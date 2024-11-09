@@ -1,14 +1,4 @@
-<?php
-        require_once("connecttodb.php");
-        
-        $sqlquery = "SELECT * FROM vw_nonresident";
 
-        $stmt=$pdo->prepare($sqlquery);
-        $stmt -> execute();
-        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        $isResident = 0;
-        $pdo = null;
-?>
 <div class="modal fade" id="selectnonresident" name="add" tabindex="-1" aria-labelledby="EditResidentModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
@@ -37,13 +27,7 @@
                             </thead>
                             <tbody>
                             
-                            
-                            <?php
-                                
-                                require('includes/selectpersonalrecords.php');
-
-                            
-                            ?>
+                        
                             </tbody>
                         
                             

@@ -377,6 +377,7 @@ CREATE TABLE `tbl_blotters` (
   `statemnt` longtext,
   `mediation_starttime` time DEFAULT NULL,
   `mediation_endtime` time DEFAULT NULL,
+  `mediator_no` int(55) DEFAULT NULL,
   `blot_at_no` int(55) DEFAULT NULL,
   `mediation_date` date DEFAULT NULL,
   `schedule_color` varchar(55) DEFAULT NULL,
@@ -390,23 +391,25 @@ CREATE TABLE `tbl_blotters` (
   KEY `other_complanant_no` (`other_complainant_no`),
   KEY `other_respondent_no` (`other_respondent_no`),
   KEY `tbl_blotters_ibfk_2` (`nres_complainant_no`),
+  KEY `mediator_no` (`mediator_no`),
   CONSTRAINT `tbl_blotters_ibfk_1` FOREIGN KEY (`res_complainant_no`) REFERENCES `resident` (`resident_id`),
   CONSTRAINT `tbl_blotters_ibfk_2` FOREIGN KEY (`nres_complainant_no`) REFERENCES `non_resident` (`nresident_id`),
   CONSTRAINT `tbl_blotters_ibfk_3` FOREIGN KEY (`res_respondent_no`) REFERENCES `resident` (`resident_id`),
   CONSTRAINT `tbl_blotters_ibfk_4` FOREIGN KEY (`nres_respondent_no`) REFERENCES `non_resident` (`nresident_id`),
   CONSTRAINT `tbl_blotters_ibfk_5` FOREIGN KEY (`blot_at_no`) REFERENCES `tbl_blotter_audit_trail` (`blotter_at_id`),
   CONSTRAINT `tbl_blotters_ibfk_6` FOREIGN KEY (`other_complainant_no`) REFERENCES `tbl_other_complainants` (`complainant_id`),
-  CONSTRAINT `tbl_blotters_ibfk_7` FOREIGN KEY (`other_respondent_no`) REFERENCES `tbl_other_respondents` (`respondent_id`)
+  CONSTRAINT `tbl_blotters_ibfk_7` FOREIGN KEY (`other_respondent_no`) REFERENCES `tbl_other_respondents` (`respondent_id`),
+  CONSTRAINT `tbl_blotters_ibfk_8` FOREIGN KEY (`mediator_no`) REFERENCES `tbl_blotter_mediator` (`mediator_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `tbl_blotters` */
 
-insert  into `tbl_blotters`(`blotter_id`,`res_complainant_no`,`nres_complainant_no`,`res_respondent_no`,`nres_respondent_no`,`other_complainant_no`,`other_respondent_no`,`blotter_type`,`desc_incident`,`incident_dt`,`location_of_incident`,`date_of_resolution`,`blotter_contextfile`,`blotter_evidencefile`,`statemnt`,`mediation_starttime`,`mediation_endtime`,`blot_at_no`,`mediation_date`,`schedule_color`,`report_status`,`is_deleted`) values 
-(1,1,NULL,9,NULL,1,1,0,'xxsxsd','2024-11-04 02:36:09','xzxsxs',NULL,'2f070627687d52995cfabf5c1bbde057 (14).jpg','715a5404857b4d3cfdbd2747e2eaac79 (6).jpg','sdsdsdsdsdsdds','12:00:00','12:30:00',1,'2024-11-14','#454545',0,0),
-(2,NULL,1,NULL,5,2,2,1,'Estafa','2024-11-03 17:13:03','Cielito Homes',NULL,'channels4_profile.jpg','channels4_profile.jpg','dsdjnasdjkljhfaskljdhfjasdhfluks','12:00:00','12:30:00',2,'2024-11-21','#000000',0,0),
-(3,4,NULL,3,NULL,3,3,1,'Estafa','2024-11-03 17:13:03','Cielito Homes',NULL,'channels4_profile (1).jpg','channels4_profile (1).jpg','dsdjnasdjkljhfaskljdhfjasdhfluks','12:00:00','12:30:00',3,'2024-11-19','#000000',0,0),
-(4,1,NULL,9,NULL,4,4,1,'fdsfdasfsa','2024-11-05 17:25:17','dfsdfsd',NULL,'hanako5.png','e1bc5bf9591b961956db94bd1e7ab1ed.jpg','dfsdfsdfsdfsd','12:00:00','12:30:00',4,'2024-11-11','#000000',0,0),
-(5,1,NULL,NULL,1,5,5,0,'Estafa/Rentangay','2024-11-04 18:49:04','Cielito Homes',NULL,'715a5404857b4d3cfdbd2747e2eaac79.jpg','Minori_portal.png','Sa ika 4 ng Nobembre si Fernan Rabanes nakatira sa Novaliches Quezon City ayon sa ID kanyang iniwan ay nirentahan ang Toyota Vios ni Reno Tecson Hofileña na may plate number na WOJ 944. ','09:00:00','10:30:00',5,'2024-11-07','#000000',0,0);
+insert  into `tbl_blotters`(`blotter_id`,`res_complainant_no`,`nres_complainant_no`,`res_respondent_no`,`nres_respondent_no`,`other_complainant_no`,`other_respondent_no`,`blotter_type`,`desc_incident`,`incident_dt`,`location_of_incident`,`date_of_resolution`,`blotter_contextfile`,`blotter_evidencefile`,`statemnt`,`mediation_starttime`,`mediation_endtime`,`mediator_no`,`blot_at_no`,`mediation_date`,`schedule_color`,`report_status`,`is_deleted`) values 
+(1,1,NULL,9,NULL,1,1,0,'xxsxsd','2024-11-04 02:36:09','xzxsxs',NULL,'2f070627687d52995cfabf5c1bbde057 (14).jpg','715a5404857b4d3cfdbd2747e2eaac79 (6).jpg','sdsdsdsdsdsdds','12:00:00','12:30:00',1,1,'2024-11-14','#454545',0,0),
+(2,NULL,1,NULL,5,2,2,1,'Estafa','2024-11-03 17:13:03','Cielito Homes',NULL,'channels4_profile.jpg','channels4_profile.jpg','dsdjnasdjkljhfaskljdhfjasdhfluks','12:00:00','12:30:00',2,2,'2024-11-21','#000000',0,0),
+(3,4,NULL,3,NULL,3,3,1,'Estafa','2024-11-03 17:13:03','Cielito Homes',NULL,'channels4_profile (1).jpg','channels4_profile (1).jpg','dsdjnasdjkljhfaskljdhfjasdhfluks','12:00:00','12:30:00',2,3,'2024-11-19','#000000',0,0),
+(4,1,NULL,9,NULL,4,4,1,'fdsfdasfsa','2024-11-05 17:25:17','dfsdfsd',NULL,'hanako5.png','e1bc5bf9591b961956db94bd1e7ab1ed.jpg','dfsdfsdfsdfsd','12:00:00','12:30:00',2,4,'2024-11-11','#000000',0,0),
+(5,1,NULL,NULL,1,5,5,0,'Estafa/Rentangay','2024-11-04 18:49:04','Cielito Homes',NULL,'715a5404857b4d3cfdbd2747e2eaac79.jpg','Minori_portal.png','Sa ika 4 ng Nobembre si Fernan Rabanes nakatira sa Novaliches Quezon City ayon sa ID kanyang iniwan ay nirentahan ang Toyota Vios ni Reno Tecson Hofileña na may plate number na WOJ 944. ','09:00:00','10:30:00',1,5,'2024-11-07','#000000',0,0);
 
 /*Table structure for table `tbl_building_permits` */
 
@@ -501,7 +504,7 @@ CREATE TABLE `tbl_cert_audit_trail` (
   CONSTRAINT `edited_by_fk` FOREIGN KEY (`edited_by_no`) REFERENCES `tbl_username` (`username_id`),
   CONSTRAINT `issued_by_fk` FOREIGN KEY (`issued_by_no`) REFERENCES `tbl_username` (`username_id`),
   CONSTRAINT `recovered_by_fk` FOREIGN KEY (`recovered_by_no`) REFERENCES `tbl_username` (`username_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8;
 
 /*Data for the table `tbl_cert_audit_trail` */
 
@@ -544,7 +547,8 @@ insert  into `tbl_cert_audit_trail`(`audit_trail_id`,`issuing_dept_no`,`issued_b
 (36,NULL,NULL,'2024-10-19 19:27:51','2025-01-19',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
 (37,NULL,NULL,'2024-10-19 19:28:02','2025-01-19',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
 (38,NULL,NULL,'2024-10-19 19:29:25','2025-01-19',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(39,NULL,NULL,'2024-10-19 13:34:11','2025-10-19',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+(39,NULL,NULL,'2024-10-19 13:34:11','2025-10-19',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(40,NULL,NULL,'2024-11-09 18:02:01','2025-02-09',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 
 /*Table structure for table `tbl_docu_request` */
 
@@ -615,7 +619,8 @@ insert  into `tbl_docu_request`(`request_id`,`resident_no`,`nresident_no`,`docum
 ('2024-000036',8,NULL,36,38,'NBI Clearance','df4545454545','Medical Assistance',36,'generated_pdf_1729337271.pdf',0,0),
 ('2024-000037',8,NULL,37,38,'NBI Clearance','df4545454545','Medical Assistance',37,'generated_pdf_1729337282.pdf',0,0),
 ('2024-000038',8,NULL,38,38,'NBI Clearance','df4545454545','Medical Assistance',38,'generated_pdf_1729337365.pdf',0,0),
-('2024-000039',8,NULL,39,38,'Postal ID','df4545454545','Employment',39,'C:/xampp/htdocs//BIMS-with-Template/documents/first_time_job_seeker/generated_pdf_1729337651.pdf',0,0);
+('2024-000039',8,NULL,39,38,'Postal ID','df4545454545','Employment',39,'C:/xampp/htdocs//BIMS-with-Template/documents/first_time_job_seeker/generated_pdf_1729337651.pdf',0,0),
+('2024-000040',9,NULL,40,38,'School ID','19-565698989','Verification Purposes',40,'generated_pdf_1731146521.pdf',0,0);
 
 /*Table structure for table `tbl_documents` */
 
@@ -647,7 +652,7 @@ CREATE TABLE `tbl_documents` (
   CONSTRAINT `f_permit_fk` FOREIGN KEY (`Fencing_Permits`) REFERENCES `tbl_fencing_permit` (`fencing_permit_id`) ON DELETE CASCADE,
   CONSTRAINT `indigency_fk` FOREIGN KEY (`Certificate_of_Indigency`) REFERENCES `tbl_indigency` (`indigency_id`) ON DELETE CASCADE,
   CONSTRAINT `tprs_fk` FOREIGN KEY (`TPRS`) REFERENCES `tbl_tprs` (`tprs_id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8;
 
 /*Data for the table `tbl_documents` */
 
@@ -690,7 +695,8 @@ insert  into `tbl_documents`(`docu_id`,`Barangay_Clearance`,`Certificate_of_Resi
 (36,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
 (37,NULL,NULL,3,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
 (38,NULL,NULL,4,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(39,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,NULL);
+(39,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,NULL),
+(40,NULL,3,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 
 /*Table structure for table `tbl_excavation_permits` */
 
@@ -1100,7 +1106,7 @@ DELIMITER $$
 BEGIN
 	
 	SELECT 
-    `tbl_other_complainants`.`complainant_id`,
+    resident.`resident_id` as id,
     CONCAT(`resident`.`last_name`, ', ', `resident`.`first_name`, ' ', IFNULL(`resident`.`middle_name`, ''), ' ', IFNULL(`resident`.`suffix`, '')) AS `full_name`,
     'Resident' AS `status`,
     `resident`.`img_filename`
@@ -1113,7 +1119,7 @@ WHERE `tbl_other_complainants`.`res_person_1` IS NOT NULL AND `tbl_other_complai
 UNION ALL
 
 SELECT 
-    `tbl_other_complainants`.`complainant_id`,
+    resident.`resident_id` as id,
     CONCAT(`resident`.`last_name`, ', ', `resident`.`first_name`, ' ', IFNULL(`resident`.`middle_name`, ''), ' ', IFNULL(`resident`.`suffix`, '')) AS `full_name`,
     'Resident' AS `status`,
     `resident`.`img_filename`
@@ -1126,7 +1132,7 @@ WHERE `tbl_other_complainants`.`res_person_2` IS NOT NULL AND `tbl_other_complai
 UNION ALL
 
 SELECT 
-    `tbl_other_complainants`.`complainant_id`,
+	resident.`resident_id` as id,
     CONCAT(`resident`.`last_name`, ', ', `resident`.`first_name`, ' ', IFNULL(`resident`.`middle_name`, ''), ' ', IFNULL(`resident`.`suffix`, '')) AS `full_name`,
     'Resident' AS `status`,
     `resident`.`img_filename`
@@ -1139,8 +1145,8 @@ WHERE `tbl_other_complainants`.`res_person_3` IS NOT NULL AND `tbl_other_complai
 UNION ALL
 
 SELECT 
-    `tbl_other_complainants`.`complainant_id`,
-    CONCAT(`resident`.`last_name`, ', ', `resident`.`first_name`, ' ', IFNULL(`resident`.`middle_name`, ''), ' ', IFNULL(`resident`.`suffix`, '')) AS `full_name`,
+	resident.`resident_id` as id,   
+	 CONCAT(`resident`.`last_name`, ', ', `resident`.`first_name`, ' ', IFNULL(`resident`.`middle_name`, ''), ' ', IFNULL(`resident`.`suffix`, '')) AS `full_name`,
     'Resident' AS `status`,
     `resident`.`img_filename`
 FROM 
@@ -1152,7 +1158,7 @@ WHERE `tbl_other_complainants`.`res_person_4` IS NOT NULL AND `tbl_other_complai
 UNION ALL
 
 SELECT 
-    `tbl_other_complainants`.`complainant_id`,
+	resident.`resident_id` as id,
     CONCAT(`resident`.`last_name`, ', ', `resident`.`first_name`, ' ', IFNULL(`resident`.`middle_name`, ''), ' ', IFNULL(`resident`.`suffix`, '')) AS `full_name`,
     'Resident' AS `status`,
     `resident`.`img_filename`
@@ -1165,8 +1171,8 @@ WHERE `tbl_other_complainants`.`res_person_5` IS NOT NULL AND `tbl_other_complai
 UNION ALL
 
 SELECT 
-    `tbl_other_complainants`.`complainant_id`,
-    CONCAT(`non_resident`.`last_name`, ', ', `non_resident`.`first_name`, ' ', IFNULL(`non_resident`.`middle_name`, ''), ' ', IFNULL(`non_resident`.`suffix`, '')) AS `full_name`,
+	non_resident.`nresident_id` as id,    
+	CONCAT(`non_resident`.`last_name`, ', ', `non_resident`.`first_name`, ' ', IFNULL(`non_resident`.`middle_name`, ''), ' ', IFNULL(`non_resident`.`suffix`, '')) AS `full_name`,
     'Non-Resident' AS `status`,
     `non_resident`.`img_filename`
 FROM 
@@ -1178,7 +1184,7 @@ WHERE `tbl_other_complainants`.`nres_person_1` IS NOT NULL AND `tbl_other_compla
 UNION ALL
 
 SELECT 
-    `tbl_other_complainants`.`complainant_id`,
+	non_resident.`nresident_id` as id,
     CONCAT(`non_resident`.`last_name`, ', ', `non_resident`.`first_name`, ' ', IFNULL(`non_resident`.`middle_name`, ''), ' ', IFNULL(`non_resident`.`suffix`, '')) AS `full_name`,
     'Non-Resident' AS `status`,
     `non_resident`.`img_filename`
@@ -1191,7 +1197,7 @@ WHERE `tbl_other_complainants`.`nres_person_2` IS NOT NULL AND `tbl_other_compla
 UNION ALL
 
 SELECT 
-    `tbl_other_complainants`.`complainant_id`,
+	non_resident.`nresident_id` as id,
     CONCAT(`non_resident`.`last_name`, ', ', `non_resident`.`first_name`, ' ', IFNULL(`non_resident`.`middle_name`, ''), ' ', IFNULL(`non_resident`.`suffix`, '')) AS `full_name`,
     'Non-Resident' AS `status`,
     `non_resident`.`img_filename`
@@ -1204,7 +1210,7 @@ WHERE `tbl_other_complainants`.`nres_person_3` IS NOT NULL AND `tbl_other_compla
 UNION ALL
 
 SELECT 
-    `tbl_other_complainants`.`complainant_id`,
+	non_resident.`nresident_id` as id,
     CONCAT(`non_resident`.`last_name`, ', ', `non_resident`.`first_name`, ' ', IFNULL(`non_resident`.`middle_name`, ''), ' ', IFNULL(`non_resident`.`suffix`, '')) AS `full_name`,
     'Non-Resident' AS `status`,
     `non_resident`.`img_filename`
@@ -1217,7 +1223,7 @@ WHERE `tbl_other_complainants`.`nres_person_4` IS NOT NULL AND `tbl_other_compla
 UNION ALL
 
 SELECT 
-    `tbl_other_complainants`.`complainant_id`,
+	non_resident.`nresident_id` as id,
     CONCAT(`non_resident`.`last_name`, ', ', `non_resident`.`first_name`, ' ', IFNULL(`non_resident`.`middle_name`, ''), ' ', IFNULL(`non_resident`.`suffix`, '')) AS `full_name`,
     'Non-Resident' AS `status`,
     `non_resident`.`img_filename`
@@ -1240,7 +1246,7 @@ DELIMITER $$
 BEGIN
 	
 SELECT 
-    `tbl_other_respondents`.`respondent_id`,
+    resident.`resident_id` as id, 
     CONCAT(`resident`.`last_name`, ', ', `resident`.`first_name`, ' ', IFNULL(`resident`.`middle_name`, ''), ' ', IFNULL(`resident`.`suffix`, '')) AS `full_name`,
     'Resident' AS `status`,
     `resident`.`img_filename`
@@ -1253,7 +1259,7 @@ WHERE `tbl_other_respondents`.`res_person_1` IS NOT NULL AND `tbl_other_responde
 UNION ALL
 
 SELECT 
-    `tbl_other_respondents`.`respondent_id`,
+    resident.`resident_id` as id,
     CONCAT(`resident`.`last_name`, ', ', `resident`.`first_name`, ' ', IFNULL(`resident`.`middle_name`, ''), ' ', IFNULL(`resident`.`suffix`, '')) AS `full_name`,
     'Resident' AS `status`,
     `resident`.`img_filename`
@@ -1266,7 +1272,7 @@ WHERE `tbl_other_respondents`.`res_person_2` IS NOT NULL  AND `tbl_other_respond
 UNION ALL
 
 SELECT 
-    `tbl_other_respondents`.`respondent_id`,
+    resident.`resident_id` as id,
     CONCAT(`resident`.`last_name`, ', ', `resident`.`first_name`, ' ', IFNULL(`resident`.`middle_name`, ''), ' ', IFNULL(`resident`.`suffix`, '')) AS `full_name`,
     'Resident' AS `status`,
     `resident`.`img_filename`
@@ -1279,7 +1285,7 @@ WHERE `tbl_other_respondents`.`res_person_3` IS NOT NULL  AND `tbl_other_respond
 UNION ALL
 
 SELECT 
-    `tbl_other_respondents`.`respondent_id`,
+    resident.`resident_id` as id,
     CONCAT(`resident`.`last_name`, ', ', `resident`.`first_name`, ' ', IFNULL(`resident`.`middle_name`, ''), ' ', IFNULL(`resident`.`suffix`, '')) AS `full_name`,
     'Resident' AS `status`,
     `resident`.`img_filename`
@@ -1292,7 +1298,7 @@ WHERE `tbl_other_respondents`.`res_person_4` IS NOT NULL  AND `tbl_other_respond
 UNION ALL
 
 SELECT 
-    `tbl_other_respondents`.`respondent_id`,
+	resident.`resident_id` as id,
     CONCAT(`resident`.`last_name`, ', ', `resident`.`first_name`, ' ', IFNULL(`resident`.`middle_name`, ''), ' ', IFNULL(`resident`.`suffix`, '')) AS `full_name`,
     'Resident' AS `status`,
     `resident`.`img_filename`
@@ -1305,7 +1311,7 @@ WHERE `tbl_other_respondents`.`res_person_5` IS NOT NULL  AND `tbl_other_respond
 UNION ALL
 
 SELECT 
-    `tbl_other_respondents`.`respondent_id`,
+    non_resident.`nresident_id` as id,
     CONCAT(`non_resident`.`last_name`, ', ', `non_resident`.`first_name`, ' ', IFNULL(`non_resident`.`middle_name`, ''), ' ', IFNULL(`non_resident`.`suffix`, '')) AS `full_name`,
     'Non-Resident' AS `status`,
     `non_resident`.`img_filename`
@@ -1318,7 +1324,7 @@ WHERE `tbl_other_respondents`.`nres_person_1` IS NOT NULL  AND `tbl_other_respon
 UNION ALL
 
 SELECT 
-    `tbl_other_respondents`.`respondent_id`,
+    non_resident.`nresident_id` as id,
     CONCAT(`non_resident`.`last_name`, ', ', `non_resident`.`first_name`, ' ', IFNULL(`non_resident`.`middle_name`, ''), ' ', IFNULL(`non_resident`.`suffix`, '')) AS `full_name`,
     'Non-Resident' AS `status`,
     `non_resident`.`img_filename`
@@ -1331,7 +1337,7 @@ WHERE `tbl_other_respondents`.`nres_person_2` IS NOT NULL  AND `tbl_other_respon
 UNION ALL
 
 SELECT 
-    `tbl_other_respondents`.`respondent_id`,
+    non_resident.`nresident_id` as id,
     CONCAT(`non_resident`.`last_name`, ', ', `non_resident`.`first_name`, ' ', IFNULL(`non_resident`.`middle_name`, ''), ' ', IFNULL(`non_resident`.`suffix`, '')) AS `full_name`,
     'Non-Resident' AS `status`,
     `non_resident`.`img_filename`
@@ -1344,7 +1350,7 @@ WHERE `tbl_other_respondents`.`nres_person_3` IS NOT NULL  AND `tbl_other_respon
 UNION ALL
 
 SELECT 
-    `tbl_other_respondents`.`respondent_id`,
+    non_resident.`nresident_id` as id,
     CONCAT(`non_resident`.`last_name`, ', ', `non_resident`.`first_name`, ' ', IFNULL(`non_resident`.`middle_name`, ''), ' ', IFNULL(`non_resident`.`suffix`, '')) AS `full_name`,
     'Non-Resident' AS `status`,
     `non_resident`.`img_filename`
@@ -1357,7 +1363,7 @@ WHERE `tbl_other_respondents`.`nres_person_4` IS NOT NULL  AND `tbl_other_respon
 UNION ALL
 
 SELECT 
-    `tbl_other_respondents`.`respondent_id`,
+    non_resident.`nresident_id` as id,
     CONCAT(`non_resident`.`last_name`, ', ', `non_resident`.`first_name`, ' ', IFNULL(`non_resident`.`middle_name`, ''), ' ', IFNULL(`non_resident`.`suffix`, '')) AS `full_name`,
     'Non-Resident' AS `status`,
     `non_resident`.`img_filename`

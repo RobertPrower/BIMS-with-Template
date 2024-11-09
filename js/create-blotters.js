@@ -18,15 +18,13 @@ $(document).ready(function(){
         }
     });
 
-    var selectedRowId = null;
-
     // Initialize DataTable when the modal is shown
     $('#selectresident').on('shown.bs.modal', function() {
         console.log("Select Resident has been loaded");
         if (!$.fn.DataTable.isDataTable('#ResidentTable')) {
             $('#ResidentTable').DataTable({
                 ajax: {
-                    url: 'includes/blottersoperation.php', 
+                    url: 'includes/modaloperation.php', 
                     dataSrc: '',
                     type: 'POST',
                     data: function(d) {
@@ -74,7 +72,7 @@ $(document).ready(function(){
         if (!$.fn.DataTable.isDataTable('#NonResidentTable')) {
             $('#NonResidentTable').DataTable({
                 ajax: {
-                    url: 'includes/blottersoperation.php', 
+                    url: 'includes/modaloperation.php', 
                     dataSrc: '',
                     type: 'POST',
                     data: function(d) {
@@ -131,10 +129,6 @@ $(document).ready(function(){
     var resultArrayofOtherNonResRespondent = []
 
     function SelectResandNonResModal(whatbutton, whatparty){
-        // console.log(resultArrayofOtherResComplainant)
-        // console.log(resultArrayofOtherResRespondent)
-        // console.log(resultArrayofOtherNonResComplainant)
-        // console.log(resultArrayofOtherNonResRespondent)
         if (whatbutton === "SelectResidentComplainant" || whatbutton === "SelectResidentRes") {
             $("#selectresident").modal('show');
     
@@ -151,9 +145,9 @@ $(document).ready(function(){
                 console.log(imagefile)
 
                 $.ajax({
-                    url: 'includes/fetch_nonres_res_details.php', 
+                    url: 'includes/modaloperation.php', 
                     type: 'POST',
-                    data: { resident_id: residentid, OPERATION: "RESIDENT" },
+                    data: { resident_id: residentid, operation: "FETCH_RESIDENT_DETAILS" },
                     success: function(response) {
                         var data = JSON.parse(response);
 
@@ -326,9 +320,9 @@ $(document).ready(function(){
                 var imagefile = rowData.img_filename;
                
                 $.ajax({
-                    url: 'includes/fetch_nonres_res_details.php', 
+                    url: 'includes/modaloperation.php',
                     type: 'POST',
-                    data: { nresident_id: residentid, OPERATION: "NON_RESIDENT" },
+                    data: { nresident_id: residentid, operation: "FETCH_NON_RESIDENT_DETAILS" },
                     success: function(response) {
                         var data = JSON.parse(response);
 

@@ -4,9 +4,9 @@ $(document).ready(function(){
         var residentid = $("#viewresident_id").val();
 
         $.ajax({
-          url: "includes/get-resident-docu-request.php",
+          url: "includes/modaloperation.php",
           type: "POST",
-          data: { pageno: page, resident_id: residentid, OPERATION: "FETCH_TABLE" },
+          data: { pageno: page, resident_id: residentid, operation: "RES_DOCUREQ_FETCH_TABLE" },
           dataType: "HTML",
           success: function (data) {
             $("#ResidentRequestTable tbody").html(data);
@@ -24,7 +24,7 @@ $(document).ready(function(){
         $.ajax({
           url: "includes/get-resident-docu-request.php",
           type: "POST",
-          data: { pageno: currentPage, OPERATION: "PAGINATION", resident_id: residentid },
+          data: { pageno: currentPage, operation: "RES_DOCUREQ_PAGINATION", resident_id: residentid },
           dataType: "HTML",
           success: function (data) {
             $(".modal-pagination").html(data);

@@ -1,12 +1,3 @@
-<?php
-        
-        $sqlquery = "SELECT * FROM vw_resident";
-        $stmt=$pdo->prepare($sqlquery);
-        $stmt -> execute();
-        $results = $stmt->fetchAll();
-        $isResident = 1;
-        $Isforcert = "YES";
-?>
 <form action="#" id="SelectResidentForm" method="POST" enctype="multipart/form-data">
     <div class="modal fade" id="selectresident" name="add" tabindex="-1" aria-labelledby="EditResidentModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-xl">
@@ -38,11 +29,6 @@
                                 </thead>
                                 <tbody>
                                 
-                                
-                                <?php
-                                    
-                                  include('includes/selectpersonalrecords.php');
-                                ?>
                                 </tbody>
                             
                             </table>

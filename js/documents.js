@@ -623,9 +623,9 @@ $(document).ready(function () {
 
 
       $.ajax({
-        url: "includes/fetch_person_details_viewmodal.php",
+        url: "includes/modaloperation.php",
         type: "POST",
-        data: { id_to_fetch: residentid, OPERATION: "FETCH-RESIDENT-DETAILS" },
+        data: { resident_id: residentid, operation: "FETCH-RESIDENT-DETAILS" },
         dataType: "JSON",
         success: function (data) {
           var response = data[0];
@@ -672,9 +672,9 @@ $(document).ready(function () {
       $("#ViewNonResidentModal [id='nav-home-tab']").tab("show");
 
       $.ajax({
-        url: "includes/fetch_person_details_viewmodal.php",
+        url: "includes/modaloperation.php",
         type: "POST",
-        data: { id_to_fetch: residentid, OPERATION: "FETCH-NON-RESIDENT-DETAILS" },
+        data: { nresident_id: residentid, operation: "FETCH-NON-RESIDENT-DETAILS" },
         dataType: "JSON",
         success: function (data) {
 

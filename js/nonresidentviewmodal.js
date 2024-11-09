@@ -4,9 +4,9 @@ $(document).ready(function(){
         var nresidentid = $("#viewnonresident_id").val();
 
         $.ajax({
-          url: "includes/get-nonresident-docu-request.php",
+          url: "includes/modaloperation.php",
           type: "POST",
-          data: { pageno: page, nresident_id: nresidentid, OPERATION: "FETCH_TABLE" },
+          data: { pageno: page, nresident_id: nresidentid, operation: "NONRES_DOCREQ_FETCH_TABLE" },
           dataType: "HTML",
           success: function (data) {
             $("#NonResidentRequestTable tbody").html(data);
@@ -22,9 +22,9 @@ $(document).ready(function(){
         var nresidentid = $("#viewnonresident_id").val();
 
         $.ajax({
-          url: "includes/get-nonresident-docu-request.php",
+          url: "includes/modaloperation.php",
           type: "POST",
-          data: { pageno: currentPage, OPERATION: "PAGINATION", nresident_id: nresidentid },
+          data: { pageno: currentPage, operation: "NONRES_DOCREQ_PAGINATION", nresident_id: nresidentid },
           dataType: "HTML",
           success: function (data) {
             $(".modal-pagination").html(data);

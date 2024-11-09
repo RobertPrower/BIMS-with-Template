@@ -5,8 +5,46 @@ $(document).ready(function() {
     var selectedRowId = null;
 
     $('#selectresident').on('shown.bs.modal', function () {
-        $('#ResidentTable').DataTable({ "lengthChange": false });
-        console.log("shown modal has been triggered");
+        $('#ResidentTable').DataTable({
+            ajax: {
+                url: 'includes/modaloperation.php', 
+                dataSrc: '',
+                type: 'POST',
+                data: function(d) {
+                    d.operation = "SELECT_RESIDENT_TABLELOAD"; 
+                }
+            },
+            columns: [
+                { data: 'resident_id', visible: false }, 
+                {
+                    data: 'img_filename', 
+                    render: function(data, type, row) {
+                        return '<img src="includes/img/resident_img/' + data + '" alt="Image" class="img-thumbnail" style="width: 100px; height: 100px;object-fit: cover; max-width: 100%; max-height: 100%;">';
+                    },
+                    className: "text-center",
+                    width: "15%"
+                },
+                { data: 'full_name', className: "text-center", width: "15%" },
+                { data: 'address', className: "text-center" },
+                { data: 'sex', className: "text-center" },
+                { data: 'marital_status', className: "text-center" },
+                { data: 'birth_date', className: "text-center", width:"12%" },
+                { data: 'cellphone_num', className: "text-center" },
+                {
+                    data: 'is_a_voter',
+                    render: function(data, type, row) {
+                        return data == '1' 
+                            ? '<img width="30" height="30" src="./img/svg/check-solid.png" style="color: #2cfc62"></img>' 
+                            : '<img width="30" height="30" src="./img/svg/xmark-solid.svg" style="opacity: 40%"></img>';
+                    },
+                    className: "text-center"
+                }],
+                responsive: true,
+                scrollX: true,
+                lengthChange: false,
+                autoWidth: false, 
+                pageLength: 5   
+        });
     });
 
      $("#selectresident").on('hidden.bs.modal', function () {
@@ -20,16 +58,18 @@ $(document).ready(function() {
     // Event listener for row click
     $(document).on('click', '.ResidentTable tbody tr', function() {
         $(this).toggleClass("selected").siblings().removeClass("selected");
-        var residentid = $(this).find("#resident_id").text();
-        selectedRowId = $(this).find("#resident_id").text();
+        var table = $("#ResidentTable").DataTable();
+        var rowData = table.row(this).data();
+        var residentid = rowData.resident_id; 
+        selectedRowId = residentid;
         $("#res_id").val(residentid);
 
         if (residentid) {
             // Make an AJAX request to fetch resident details
             $.ajax({
-            url: 'includes/fetch_nonres_res_details.php', // PHP script to fetch resident details
+            url: 'includes/modaloperation.php', // PHP script to fetch resident details
             type: 'POST',
-            data:  { resident_id: residentid, OPERATION:"RESIDENT" },
+            data:  { resident_id: residentid, operation:"FETCH_RESIDENT_DETAILS" },
             success: function(response) {
                 // Parse the JSON response
                 var data = JSON.parse(response);

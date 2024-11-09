@@ -1,14 +1,86 @@
 $(document).ready(function() {
 
     var selectedRowId = null;
+    var currenttable
     // Initialize DataTable when the modal is shown
     $('#selectresident').on('shown.bs.modal', function() {
-        $('#ResidentTable').DataTable({"lengthChange": false});
+        currenttable = $('#ResidentTable').DataTable({
+            ajax: {
+                url: 'includes/modaloperation.php', 
+                dataSrc: '',
+                type: 'POST',
+                data: function(d) {
+                    d.operation = "SELECT_RESIDENT_TABLELOAD"; 
+                }
+            },
+            columns: [
+                { data: 'resident_id', visible: false }, 
+                {
+                    data: 'img_filename', 
+                    render: function(data, type, row) {
+                        return '<img src="includes/img/resident_img/' + data + '" alt="Image" class="img-thumbnail" style="width: 100px; height: 100px;object-fit: cover; max-width: 100%; max-height: 100%;">';
+                    },
+                    className: "text-center",
+                    width: "15%"
+                },
+                { data: 'full_name', className: "text-center", width: "15%" },
+                { data: 'address', className: "text-center" },
+                { data: 'sex', className: "text-center" },
+                { data: 'marital_status', className: "text-center" },
+                { data: 'birth_date', className: "text-center", width:"12%" },
+                { data: 'cellphone_num', className: "text-center" },
+                {
+                    data: 'is_a_voter',
+                    render: function(data, type, row) {
+                        return data == '1' 
+                            ? '<img width="30" height="30" src="./img/svg/check-solid.png" style="color: #2cfc62"></img>' 
+                            : '<img width="30" height="30" src="./img/svg/xmark-solid.svg" style="opacity: 40%"></img>';
+                    },
+                    className: "text-center"
+                }],
+                responsive: true,
+                scrollX: true,
+                lengthChange: false,
+                autoWidth: false, 
+                pageLength: 5   
+        });
     });
 
     $('#selectnonresident').on('shown.bs.modal', function() {
-        $('#NonResidentTable').DataTable({ "lengthChange": false });
-        console.log("Table has been shown");
+       $('#NonResidentTable').DataTable({
+            ajax: {
+                url: 'includes/modaloperation.php', 
+                dataSrc: '',
+                type: 'POST',
+                data: function(d) {
+            
+                    d.operation = "SELECT_NONRESIDENT_TABLELOAD"; 
+                    
+                }
+            },
+            columns: [
+                { data: 'nresident_id', visible: false }, 
+                {
+                    data: 'img_filename', 
+                    render: function(data, type, row) {
+                        return '<img src="includes/img/non_resident_img/' + data + '" alt="Image" class="img-thumbnail" style="width: 100px; height: 100px;object-fit: cover; max-width: 100%; max-height: 100%;">';
+                    },
+                    className: "text-center",
+                    width: "5%"
+                },
+                { data: 'full_name', className: "text-center", width:"5%" }, 
+                { data: 'address', className: "text-center", width:"10%" },
+                { data: 'sex', className: "text-center", width:"2%" },
+                { data: 'marital_status', className: "text-center", width:"2%" },
+                { data: 'birth_date', className: "text-center", width:"4%" },
+                { data: 'cellphone_num', className: "text-center", width:"4%" }
+            ],
+            responsive: true,
+            scrollX: false,
+            lengthChange: false,
+            pageLength: 5    
+
+        });
     });
 
     $("#selectresident, #selectnonresident").on('hide.bs.modal', function () {
@@ -21,18 +93,19 @@ $(document).ready(function() {
     // Event listener for row click
     $(document).on('click', '.ResidentTable tbody tr', function() {
         $(this).toggleClass("selected").siblings().removeClass("selected");
-        var residentid = $(this).find("#resident_id").text();
-        selectedRowId = $(this).find("#resident_id").text();
+        var table = $("#ResidentTable").DataTable();
+        var rowData = table.row(this).data();
+        var residentid = rowData.resident_id; 
+        selectedRowId = residentid;
         $("#id_to_record").val(residentid);
         $("#checkresident").val("1");
-
 
         if (residentid) {
             // Make an AJAX request to fetch resident details
             $.ajax({
-            url: 'includes/fetch_nonres_res_details.php', 
+            url: 'includes/modaloperation.php', 
             type: 'POST',
-            data:  { resident_id: residentid, OPERATION: "RESIDENT" },
+            data:  { resident_id: residentid, operation: "FETCH_RESIDENT_DETAILS" },
             success: function(response) {
                 // Parse the JSON response
                 var data = JSON.parse(response);
@@ -60,16 +133,19 @@ $(document).ready(function() {
 
     $(document).on('click', '.NonResidentTable tbody tr', function() {
         $(this).toggleClass("selected").siblings().removeClass("selected");
-        var nresidentid = $(this).find("#nresident_id").text();
-        selectedRowId = $(this).find("#nresident_id").text();
+        var table = $('#NonResidentTable').DataTable();
+        var data = table.row(this).data();
+        var rowData = table.row(this).data();
+        var nresidentid = rowData.nresident_id;
+        selectedRowId = nresidentid;
         $("#id_to_record").val(nresidentid);
         $("#checkresident").val("2");
         if (nresidentid) {
             // Make an AJAX request to fetch resident details
             $.ajax({
-            url: 'includes/fetch_nonres_res_details.php', 
+            url: 'includes/modaloperation.php', 
             type: 'POST',
-            data:  { nresident_id: nresidentid, OPERATION: "NON_RESIDENT" },
+            data:  { nresident_id: nresidentid, operation: "FETCH_NON_RESIDENT_DETAILS" },
             success: function(response) {
                 // Parse the JSON response
                 var data = JSON.parse(response);
