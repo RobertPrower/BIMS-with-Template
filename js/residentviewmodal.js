@@ -22,7 +22,7 @@ $(document).ready(function(){
         var residentid = $("#viewresident_id").val();
 
         $.ajax({
-          url: "includes/get-resident-docu-request.php",
+          url: "includes/modaloperation.php",
           type: "POST",
           data: { pageno: currentPage, operation: "RES_DOCUREQ_PAGINATION", resident_id: residentid },
           dataType: "HTML",

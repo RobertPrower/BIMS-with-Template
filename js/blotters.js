@@ -246,12 +246,18 @@ $(document).ready(function () {
     $(whatmodal+' [id="complainant_status"').val(complainant_status);
     $(whatmodal+' [id="respondent_status"]').val(respondent_status);
     $(whatmodal+' [id="display_complainant_status"]').text(complainant_status);
-    $(whatmodal+' [id="#display_respondent_status"]').text(respondent_status);
+    $(whatmodal+' [id="display_respondent_status"]').text(respondent_status);
 
     $(whatmodal+' .complainantbtn').attr('data-id',complainant_no);
     $(whatmodal+' .respondentbtn').attr('data-id',respondent_no);
     $(whatmodal+' .respondentbtn').attr('data-status',respondent_status);
     $(whatmodal+' .complainantbtn').attr('data-status',complainant_status);
+
+    if (whatmodal == "#EditBlotterModal") {
+      $('#edit_main_complainant').attr('data-id',complainant_no);
+      $('#edit_main_respondent').attr('data-id',respondent_no);
+     
+    }
 
     if(complainant_status == "Resident"){
       $(whatmodal+' [id="ComplainantImg"]').attr("src", "includes/img/resident_img/"+complainant_filename);
@@ -404,9 +410,9 @@ $(document).ready(function () {
 
 
       $.ajax({
-        url: "includes/fetch_person_details_viewmodal.php",
+        url: "includes/modaloperation.php",
         type: "POST",
-        data: { id_to_fetch: residentid, OPERATION: "FETCH-RESIDENT-DETAILS" },
+        data: { resident_id: residentid, operation: "FETCH-RESIDENT-DETAILS" },
         dataType: "JSON",
         success: function (data) {
           var response = data[0];
@@ -454,9 +460,9 @@ $(document).ready(function () {
       $("#ViewNonResidentModal [id='nav-home-tab']").tab("show");
 
       $.ajax({
-        url: "includes/fetch_person_details_viewmodal.php",
+        url: "includes/modaloperation.php",
         type: "POST",
-        data: { id_to_fetch: residentid, OPERATION: "FETCH-NON-RESIDENT-DETAILS" },
+        data: { nresident_id: residentid, operation: "FETCH-NON-RESIDENT-DETAILS" },
         dataType: "JSON",
         success: function (data) {
 
@@ -514,9 +520,7 @@ $(document).ready(function () {
     $("#ViewResidentModal, #ViewNonResidentModal").modal("hide");
     $("#DocumentDetailsModal, #ViewBlotterModal").modal("show");
   });
-});
-
-    // Initialize DataTable when the modal is shown
+      // Initialize DataTable when the modal is shown
     $('#selectresident').on('shown.bs.modal', function() {
       console.log("Select Resident has been loaded");
       if (!$.fn.DataTable.isDataTable('#ResidentTable')) {
@@ -563,357 +567,33 @@ $(document).ready(function () {
               
           });
       }
-  });
+    });
 
-  function SelectResandNonResModal(whatbutton, whatparty){
-    if (whatbutton === "SelectResidentComplainant" || whatbutton === "SelectResidentRes") {
-        $("#selectresident").modal('show');
-
-        // Unbind any previous event handlers to prevent multiple bindings
-        $(document).off('click', '.ResidentTable tbody tr');
-        
-        $(document).on('click', '.ResidentTable tbody tr', function() {
-            $(this).toggleClass("selected").siblings().removeClass("selected");
-            
-            var table = $('.ResidentTable').DataTable();
-            var rowData = table.row(this).data();
-            var residentid = rowData.resident_id; 
-            var imagefile = rowData.img_filename;
-            console.log(imagefile)
-
-            $.ajax({
-                url: 'includes/fetch_nonres_res_details.php', 
-                type: 'POST',
-                data: { resident_id: residentid, OPERATION: "RESIDENT" },
-                success: function(response) {
-                    var data = JSON.parse(response);
-
-                    if (whatparty === 'respondent') {
-                        $(' #fnameres').val(data.first_name);
-                        $(' #mnameres').val(data.middle_name);
-                        $(' #lnameres').val(data.last_name);
-                        $(' #suffixres').val(data.suffix);
-                        $(' #addressres').val(data.address + " Camarin Caloocan City");
-                        $(" #id_to_recordres").val(residentid);
-                        $(" #checkresidentres").val("0");
-                        $("#RespondentImg").attr("src", "includes/img/resident_img/"+imagefile);
-                        resultArrayofOtherResRespondent.push(residentid)
-
-                    } else if (whatparty === 'complainant') {
-                        $('#fname').val(data.first_name);
-                        $('#mname').val(data.middle_name);
-                        $('#lname').val(data.last_name);
-                        $('#suffix').val(data.suffix);
-                        $('#address').val(data.address + " Camarin Caloocan City");
-                        $("#checkresident").val("0");
-                        $('#id_to_record').val(residentid);
-                        $("#ComplainantImg").attr("src", "includes/img/resident_img/"+imagefile);
-                        resultArrayofOtherResComplainant.push(residentid)
-
-
-                    } else if (whatparty == "othercomplainant"){
-                        
-
-                        if(countResidentComplainant <= 4){
-                            console.log(countResidentComplainant)
-
-                            if(resultArrayofOtherResRespondent.includes(residentid) || resultArrayofOtherResComplainant.includes(residentid)){
-                                Swal.fire({
-                                    icon: 'warning',
-                                    title: 'Entry Already Selected',
-                                    text: 'This person has already been selected. Please choose another one.',
-                                    confirmButtonText: 'OK'
-                                });
-                              
-                            }else{
-                                countResidentComplainant++
-                                var newContent = `
-                                <tr>
-                                <td hidden class="ResidentComplainant${countResidentComplainant}">`+residentid+`</td>
-                                <td><img src="includes/img/resident_img/${imagefile}" width="100 height="100""></td>
-                                <td>`+ data.last_name+', '+data.first_name+' '+data.middle_name+' '+data.suffix+`</td>
-                                </tr>`;
-
-                                $('#ResidentComplainant').append(newContent);
-                                resultArrayofOtherResComplainant.push(residentid);
-                                
-                             
-                            }
-                            
-                       
-                        }else{
-                            Swal.fire({
-                                icon: 'warning',
-                                title: 'You reached the maxium allowed entries',
-                                text: 'If more people is involved, please use to the other input field.',
-                                confirmButtonText: 'OK'
-                            });
-
-                        }
-
-
-                    }else if(whatparty == "otherrespondent"){
-                    
-                        if(countResidentRespondent <= 4){
-                           if(resultArrayofOtherResRespondent.includes(residentid) || resultArrayofOtherResComplainant.includes(residentid)){
-
-                                Swal.fire({
-                                    icon: 'warning',
-                                    title: 'Entry Already Selected',
-                                    text: 'This person has already been selected. Please choose another one.',
-                                    confirmButtonText: 'OK'
-                                });
-                              
-                           }else{
-                               
-                                countResidentRespondent++
-                                var newContent = `
-                                <tr>
-                                <th hidden class="ResidentRespondent${countResidentRespondent}">`+residentid+`</th>
-                                <td><img src="includes/img/resident_img/${imagefile}" width="100 height="100"></td>
-                                <td>`+ data.last_name+', '+data.first_name+' '+data.middle_name+' '+data.suffix+`</td>
-                                </tr>`;
-
-                                $('#ResidentRespondent').append(newContent);
-                                resultArrayofOtherResRespondent.push(residentid);
-                              
-                           }
-                        }else{
-                            Swal.fire({
-                                icon: 'warning',
-                                title: 'You reached the maxium allowed entries',
-                                text: 'If more people is involved, please use to the other input field.',
-                                confirmButtonText: 'OK'
-                            });
-
-                        }
-
-                    }else{
-                        alert("This should not run")
-                    }
-
-                    $('#selectresident').modal('hide');
-      
-                    var checkwhatresidentstatus = $("#checkresident").val();
-                    var checkwhatresidentstatusres = $("#checkresidentres").val();
-                    var existingcomp = $("#id_to_record").val()
-                    var existingres = $("#id_to_recordres").val()
-
-
-                    if (existingcomp == existingres && checkwhatresidentstatusres == checkwhatresidentstatus) {
-                        // Entry already selected, notify the user
-                        Swal.fire({
-                            icon: 'warning',
-                            title: 'Entry Already Selected',
-                            text: 'This person has already been selected. Please choose another one.',
-                            confirmButtonText: 'OK'
-                        });
-
-                        if(whatparty == "complainant"){
-
-                            $('#fname, #mname, #lname, #suffix, #address, #checkresident, #id_to_record').val('');
-                            $("#ComplainantImg").attr("src", "includes/img/blank-profile.webp");
-
-
-                        }else if (whatparty == "respondent"){
-
-                            $('#fnameres, #mnameres, #lnameres, #suffixres, #addressres, #id_to_recordres, #checkresidentres').val('');
-                            $("#RespondentImg").attr("src", "includes/img/blank-profile.webp");
-
-                        }else{
-                            alert("this should not run")
-
-                        }
-
-                    }else{
-                        if(existingcomp && existingres && checkwhatresidentstatusres && checkwhatresidentstatus){
-
-                            $(".AddOtherPartyBtn").removeAttr('disabled');
-
-                        }
-                    }
-                },
-                error: function(xhr, status, error) {
-                    console.error('Error fetching resident details:', error);
-                }
-            });
-            
-        });
-
-       
-    } else {
-        $("#selectnonresident").modal('show');
-        console.log(whatparty)
-        $(document).off('click', '.NonResidentTable tbody tr');
-
-        $(document).on('click', '.NonResidentTable tbody tr', function() {
-            $(this).toggleClass("selected").siblings().removeClass("selected");
-            
-            var table = $('.NonResidentTable').DataTable();
-            var rowData = table.row(this).data();
-            var residentid = rowData.nresident_id; 
-            var imagefile = rowData.img_filename;
-           
-            $.ajax({
-                url: 'includes/fetch_nonres_res_details.php', 
-                type: 'POST',
-                data: { nresident_id: residentid, OPERATION: "NON_RESIDENT" },
-                success: function(response) {
-                    var data = JSON.parse(response);
-
-                    if (whatparty === 'respondent') {
-                        $('#fnameres').val(data.first_name);
-                        $('#mnameres').val(data.middle_name);
-                        $('#lnameres').val(data.last_name);
-                        $('#suffixres').val(data.suffix);
-                        $('#addressres').val(data.address);
-                        $("#id_to_recordres").val(residentid);
-                        $("#checkresidentres").val("1");
-                        $("#RespondentImg").attr("src", "includes/img/non_resident_img/"+imagefile);
-                        resultArrayofOtherNonResRespondent.push(residentid)
-
-
-                    } else if (whatparty === 'complainant') {
-                        $('#fname').val(data.first_name);
-                        $('#mname').val(data.middle_name);
-                        $('#lname').val(data.last_name);
-                        $('#suffix').val(data.suffix);
-                        $('#address').val(data.address);
-                        $("#checkresident").val("1");
-                        $('#id_to_record').val(residentid);
-                        $("#ComplainantImg").attr("src", "includes/img/non_resident_img/"+imagefile);
-                        resultArrayofOtherNonResComplainant.push(residentid)
-
-
-
-                    } else if (whatparty === "othercomplainant"){
-
-                        if(countNonResidentComplainant <= 4){
-                            if(!resultArrayofOtherResRespondent.includes(residentid) || !resultArrayofOtherResComplainant.includes(residentid)){
-                                
-                                countNonResidentComplainant++;
-
-                                var newContent = `
-                                <tr>
-                                <td class="NonResComplainant${countNonResidentComplainant}" hidden>`+residentid+`</td>
-                                <td><img src="includes/img/non_resident_img/${imagefile}" width="100 height="100"></td>
-                                <td>`+ data.last_name+', '+data.first_name+' '+data.middle_name+' '+data.suffix+`</td>
-                                </tr>`;
-
-                                $('#NonResComplainant').append(newContent);
-                                resultArrayofOtherNonResComplainant.push(residentid);
-                            }
-                        }else{
-                            Swal.fire({
-                                icon: 'warning',
-                                title: 'You reached the maxium allowed entries',
-                                text: 'If more people is involved, please use to the other input field.',
-                                confirmButtonText: 'OK'
-                            });
-
-                        }
-
-
-                    }else if(whatparty == "otherrespondent"){
-                      
-                        if(countNonResidentRespondent <=4){
-                            if(!resultArrayofOtherResRespondent.includes(residentid) || !resultArrayofOtherResComplainant.includes(residentid)){
-                                countNonResidentRespondent++;
-                                var newContent = `
-                                    <tr>
-                                    <td hidden class="NonResRespondent${countNonResidentRespondent}">`+residentid+`</td>
-                                    <td><img src="includes/img/non_resident_img/${imagefile}" width="100 height="100"></td>
-                                    <td>`+ data.last_name+', '+data.first_name+' '+data.middle_name+' '+data.suffix+`</td>
-                                    </tr>`;
-
-                                $('#NonResRespondent').append(newContent);
-                                resultArrayofOtherNonResRespondent.push(residentid);
-                            }
-                        }else{
-                            Swal.fire({
-                                icon: 'warning',
-                                title: 'You reached the maxium allowed entries',
-                                text: 'If more people is involved, please use the other input field.',
-                                confirmButtonText: 'OK'
-                            });
-
-                    }
-
-                    }
-
-                    $('#selectnonresident').modal('hide');
-      
-                    var checkwhatresidentstatus = $("#checkresident").val();
-                    var checkwhatresidentstatusres = $("#checkresidentres").val();
-                    var existingcomp = $("#id_to_record").val()
-                    var existingres = $("#id_to_recordres").val()
-
-                    if(existingcomp && existingres && checkwhatresidentstatusres && checkwhatresidentstatus){
-
-                        $(".AddOtherPartyBtn").removeAttr('disabled');
-
-                    }
-
-                    if(whatparty == "complainant" || whatparty == "respondent"){
-                        if (existingcomp == existingres && checkwhatresidentstatusres == checkwhatresidentstatus) {
-                            // Entry already selected, notify the user
-                            Swal.fire({
-                                icon: 'warning',
-                                title: 'Entry Already Selected',
-                                text: 'This person has already been selected. Please choose another one.',
-                                confirmButtonText: 'OK'
-                            });
-
-                            if(whatparty == "complainant"){
-
-                                $('#fname, #mname, #lname, #suffix, #address, #checkresident, #id_to_record').val('');
-                                $("#ComplainantImg").attr("src", "includes/img/blank-profile.webp");
-
-
-                            }else if (whatparty == "respondent"){
-
-                                $('#fnameres, #mnameres, #lnameres, #suffixres, #addressres, #id_to_recordres, #checkresidentres').val('');
-                                $("#RespondentImg").attr("src", "includes/img/blank-profile.webp");
-
-                            }else{
-                                alert("this should not run")
-
-                            }
-
-                        }
-                    } else if(whatparty == "othercomplainant" || whatparty == "otherrespondent"){
-
-                        if ((existingcomp == existingres) && (checkwhatresidentstatusres == checkwhatresidentstatus)) {
-                            // Entry already selected, notify the user
-                            Swal.fire({
-                                icon: 'warning',
-                                title: 'Entry Already Selected',
-                                text: 'This person has already been selected. Please choose another one.',
-                                confirmButtonText: 'OK'
-                            });
-
-                        }
-
-
-                    }
-                },
-                error: function(xhr, status, error) {
-                    console.error('Error fetching resident details:', error);
-                }
-            });
-            
-        });
-    }
-}
-
-// Event listener for row click
-$(".SelectResidentBtn, .SelectNonResidentBtn, .SelectNonResidentBtnRes, .SelectResidentBtnRes").click(function (e) { 
+  // Event listener for row click
+  $("#edit_main_respondent, #edit_main_complainant").click(function (e) { 
     e.preventDefault();
-
-    var whatbutton = $(this).attr("id");
+    var whatbutton = $(this).attr("whatbutton");
     var whatparty = $(this).data("whatparty");
 
-    SelectResandNonResModal(whatbutton, whatparty)
+    Swal.fire({
+      title: "Choose which type of residency.",
+      showDenyButton: true,
+      showCancelButton: true,
+      icon: "question",
+      text: "Please select residency type you what to replace",
+      confirmButtonText: "Resident",
+      denyButtonText: `Non Resident`
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire("Saved!", "", "success");
+      } else if (result.isDenied) {
+        Swal.fire("Changes are not saved", "", "info");
+      }
+    });
+      
+    });
+
+
 });
 
 

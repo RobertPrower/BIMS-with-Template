@@ -219,7 +219,7 @@
 
                                 <!-- End of Add Resident Modal --> 
 
-                                <!-- Edit Blotter Modal -->
+                                <!-- Edit Non Resident Modal -->
                                 <div class="modal fade EditNonResidentModal" id="EditNonResidentModal" name="add" tabindex="-1" aria-labelledby="EditNonResidentModalLabel" aria-hidden="true">
                                     <div class="modal-dialog modal-xl">
                                         <div class="modal-content">
@@ -389,6 +389,11 @@
                                         </div>
                                     </div>
                                 </div>
+                                <!-- End of Edit Non Resident Modal -->
+                                <?php 
+                                require_once("includes/nonresidentviewform.php");
+                                ?>
+
 
                             </div>
                         </div>
@@ -447,10 +452,7 @@
                         </ul>
                     </nav>
 
-                    <?php 
-                    require_once("includes/nonresidentviewform.php");
-                    require_once("includes/nonresidenteditform.php");
-                    ?>
+                 
                 </div>  
             </div>
         </main>
