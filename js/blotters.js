@@ -199,12 +199,19 @@ $(document).ready(function () {
     }
   });
 
+  var lastmodal
+
   $(document).on("click",".viewbtn, .editbtn",function(e){
     e.preventDefault();
     var operation = $(this).data('whatoperation');
 
     var whatmodal = (operation == "view")? '#ViewBlotterModal': '#EditBlotterModal';
+    lastmodal = whatmodal;
     $('.complainant_respondent_tab').tab('show');
+
+    console.log(operation)
+    console.log(whatmodal)
+
 
     var complainant_first_name = $(this).data('complainant_first_name');
     var complainant_middle_name = $(this).data('complainant_middle_name');
@@ -248,15 +255,15 @@ $(document).ready(function () {
     $(whatmodal+' [id="display_complainant_status"]').text(complainant_status);
     $(whatmodal+' [id="display_respondent_status"]').text(respondent_status);
 
-    $(whatmodal+' .complainantbtn').attr('data-id',complainant_no);
-    $(whatmodal+' .respondentbtn').attr('data-id',respondent_no);
-    $(whatmodal+' .respondentbtn').attr('data-status',respondent_status);
-    $(whatmodal+' .complainantbtn').attr('data-status',complainant_status);
-
     if (whatmodal == "#EditBlotterModal") {
       $('#edit_main_complainant').attr('data-id',complainant_no);
       $('#edit_main_respondent').attr('data-id',respondent_no);
      
+    }else if(whatmodal == "#ViewBlotterModal"){
+      $(whatmodal+' .complainantbtn').attr('data-id',complainant_no);
+      $(whatmodal+' .respondentbtn').attr('data-id',respondent_no);
+      $(whatmodal+' .respondentbtn').attr('data-status',respondent_status);
+      $(whatmodal+' .complainantbtn').attr('data-status',complainant_status);
     }
 
     if(complainant_status == "Resident"){
@@ -272,6 +279,13 @@ $(document).ready(function () {
     }
 
   })
+
+  // $(document).on("hide.bs.modal","#ViewBlotterModal, #EditBlotterModal", function () {
+  //   $('.complainantbtn').attr('data-id',"");
+  //   $('.respondentbtn').attr('data-id',"");
+  //   $('.respondentbtn').attr('data-status',"");
+  //   $('.complainantbtn').attr('data-status',"");
+  // });
 
   $(".other_complainants_tab").click(function (e) { 
     var whatmodal = $("#ViewBlotterModal").hasClass('show')? "#ViewBlotterModal": "#EditBlotterModal";
@@ -397,14 +411,20 @@ $(document).ready(function () {
     
   });
 
+  $(".complainantbtn, .respondentbtn").on("click", function () {
 
-  $(document).on("click", "#viewResorNonResfromBlot", function () {
-    var residentid = $(this).data('id');
-    var resident_status = $(this).data('status');
+    var whatparty = ($(this).hasClass("complainantbtn"))? "#complainant_id": "#respondent_id" ;
+    var whatbtn = ($(this).hasClass("complainantbtn"))? "#complainant_status": "#respondent_status" ;
+
+    var residentid = $(whatparty).val();
+    var resident_status = $(whatbtn).val();
+
+    console.log(residentid)
+    console.log(resident_status)
 
     if(resident_status == "Resident"){
 
-      $("#DocumentDetailsModal, #ViewBlotterModal").modal('hide');
+      $("#DocumentDetailsModal, #ViewBlotterModal, #EditBlotterModal").modal('hide');
       $("#ViewResidentModal").modal('show');
       $("#nav-home-tab").tab("show");
 
@@ -518,58 +538,19 @@ $(document).ready(function () {
     $(this).prop("hidden", true);
 
     $("#ViewResidentModal, #ViewNonResidentModal").modal("hide");
-    $("#DocumentDetailsModal, #ViewBlotterModal").modal("show");
-  });
-      // Initialize DataTable when the modal is shown
-    $('#selectresident').on('shown.bs.modal', function() {
-      console.log("Select Resident has been loaded");
-      if (!$.fn.DataTable.isDataTable('#ResidentTable')) {
-          $('#ResidentTable').DataTable({
-              ajax: {
-                  url: 'includes/blottersoperation.php', 
-                  dataSrc: '',
-                  type: 'POST',
-                  data: function(d) {
-                      d.operation = "SELECT_RESIDENT_TABLELOAD"; 
-                  }
-              },
-              columns: [
-                  { data: 'resident_id', visible: false }, 
-                  {
-                      data: 'img_filename', 
-                      render: function(data, type, row) {
-                          return '<img src="includes/img/resident_img/' + data + '" alt="Image" class="img-thumbnail" style="width: 100px; height: 100px;object-fit: cover; max-width: 100%; max-height: 100%;">';
-                      },
-                      className: "text-center",
-                      width: "15%"
-                  },
-                  { data: 'full_name', className: "text-center", width: "15%" },
-                  { data: 'address', className: "text-center" },
-                  { data: 'sex', className: "text-center" },
-                  { data: 'marital_status', className: "text-center" },
-                  { data: 'birth_date', className: "text-center", width:"12%" },
-                  { data: 'cellphone_num', className: "text-center" },
-                  {
-                      data: 'is_a_voter',
-                      render: function(data, type, row) {
-                          return data == '1' 
-                              ? '<img width="30" height="30" src="./img/svg/check-solid.png" style="color: #2cfc62"></img>' 
-                              : '<img width="30" height="30" src="./img/svg/xmark-solid.svg" style="opacity: 40%"></img>';
-                      },
-                      className: "text-center"
-                  }
-              ],
-              responsive: true,
-              scrollX: true,
-              lengthChange: false,
-              autoWidth: false, 
-              pageLength: 5      
-              
-          });
-      }
-    });
+    $("#DocumentDetailsModal").modal("show");
 
-  // Event listener for row click
+    if(lastmodal == '#ViewBlotterModal'){
+
+      $("#ViewBlotterModal").modal("show");
+
+    }else{
+
+      $("#EditBlotterModal").modal("show");
+
+    }
+  });
+ 
   $("#edit_main_respondent, #edit_main_complainant").click(function (e) { 
     e.preventDefault();
     var whatbutton = $(this).attr("whatbutton");
@@ -585,9 +566,14 @@ $(document).ready(function () {
       denyButtonText: `Non Resident`
     }).then((result) => {
       if (result.isConfirmed) {
-        Swal.fire("Saved!", "", "success");
+       
+        $("#selectresident").modal('show');
+
       } else if (result.isDenied) {
-        Swal.fire("Changes are not saved", "", "info");
+        
+        $("#selectnonresident").modal('show');
+
+
       }
     });
       

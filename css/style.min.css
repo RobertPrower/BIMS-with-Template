@@ -1524,8 +1524,8 @@ label {
   
 }
 
-.otherpartytable, th, td{
-  border: 1px solid !important;
+.otherpartytable table{
+  border: 1px solid;
 }
 
 .table-wrapper {

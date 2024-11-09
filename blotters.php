@@ -392,24 +392,28 @@ $pdo = null;
                                         id="complainant_respondent_tab" data-bs-toggle="tab"
                                         data-bs-target="#home-tab-pane2" type="button" role="tab"
                                         aria-controls="home-tab-pane" aria-selected="true">Complainant and Respondent
-                                        Details</button>
+                                        Details
+                                    </button>
                                 </li>
                                 <li class="nav-item" role="presentation">
                                     <button class="nav-link" id="other_complainants_tab" data-bs-toggle="tab"
                                         data-bs-target="#complainants_tab_pane2" type="button" role="tab"
                                         aria-controls="profile-tab-pane" aria-selected="false">Other
-                                        Complainants</button>
+                                        Complainants
+                                    </button>
                                 </li>
                                 <li class="nav-item" role="presentation">
                                     <button class="nav-link" id="other_respondents_tab" data-bs-toggle="tab"
                                         data-bs-target="#respondents_tab_pane2" type="button" role="tab"
                                         aria-controls="contact-tab-pane" aria-selected="false">Other
-                                        Respondents</button>
+                                        Respondents
+                                    </button>
                                 </li>
                                 <li class="nav-item" role="presentation">
                                     <button class="nav-link" id="case_details_tab" data-bs-toggle="tab"
                                         data-bs-target="#casedetails_tab_pane2" type="button" role="tab"
-                                        aria-controls="disabled-tab-pane" aria-selected="false">Case Details</button>
+                                        aria-controls="disabled-tab-pane" aria-selected="false">Case Details
+                                    </button>
                                 </li>
                                 <li class="nav-item" role="presentation">
                                     <button class="nav-link" id="evidence_tab" data-bs-toggle="tab"
@@ -442,12 +446,14 @@ $pdo = null;
                                                         <button type="button"
                                                             class="btn btn-primary btn-sm complainantbtn" data-id=""
                                                             data-status="" id="viewResorNonResfromBlot">View
-                                                            Details</button>
+                                                            Details
+                                                        </button>
                                                         <button type="button"
-                                                            class="btn btn-success btn-sm complainantbtn" data-id=""
+                                                            class="btn btn-success btn-sm" data-id=""
                                                             data-whatbutton="SelectResidentComplainant"
                                                             data-whatparty="complainant"
-                                                            id="edit_main_complainant">Edit</button>
+                                                            id="edit_main_complainant">Edit
+                                                        </button>
                                                     </div>
                                                 </div>
 
@@ -527,7 +533,7 @@ $pdo = null;
                                                             data-status="" id="viewResorNonResfromBlot">View
                                                             Details</button>
                                                         <button type="button"
-                                                            class="btn btn-success btn-sm respondentbtn" data-id=""
+                                                            class="btn btn-success btn-sm" data-id=""
                                                             data-button="SelectResidentRes" data-whatparty="respondent"
                                                             id="edit_main_respondent">Edit</button>
                                                     </div>
@@ -804,6 +810,8 @@ $pdo = null;
     <script src="js/blotters.js"></script>
     <script src="js/residentviewmodal.js"></script>
     <script src="js/nonresidentviewmodal.js"></script>
+    <script src="js/selectresnonresmodal.js"></script>
+
 
     <!-- Icons library -->
     <script src="plugins/feather.min.js"></script>

@@ -447,6 +447,7 @@
 <script src="js/script.js"></script>
 <script src="js/sidebar.js"></script>
 <script src="js/create-blotters.js"></script>
+<script src="js/selectresnonresmodal.js"></script>
 
 
 </body>
