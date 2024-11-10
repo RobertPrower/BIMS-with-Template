@@ -444,12 +444,7 @@ $pdo = null;
                                                     <h6>Reporting Person/Complainant Details</h6>
                                                     <div class="d-flex gap-2 ms-auto">
                                                         <button type="button"
-                                                            class="btn btn-primary btn-sm complainantbtn" data-id=""
-                                                            data-status="" id="viewResorNonResfromBlot">View
-                                                            Details
-                                                        </button>
-                                                        <button type="button"
-                                                            class="btn btn-success btn-sm" data-id=""
+                                                            class="btn btn-success btn-sm editpersonbtn" data-id=""
                                                             data-whatbutton="SelectResidentComplainant"
                                                             data-whatparty="complainant"
                                                             id="edit_main_complainant">Edit
@@ -529,13 +524,10 @@ $pdo = null;
                                                     <h6>Respondent Details</h6>
                                                     <div class="d-flex gap-2 ms-auto">
                                                         <button type="button"
-                                                            class="btn btn-primary btn-sm respondentbtn" data-id=""
-                                                            data-status="" id="viewResorNonResfromBlot">View
-                                                            Details</button>
-                                                        <button type="button"
-                                                            class="btn btn-success btn-sm" data-id=""
+                                                            class="btn btn-success btn-sm editpersonbtn" data-id=""
                                                             data-button="SelectResidentRes" data-whatparty="respondent"
-                                                            id="edit_main_respondent">Edit</button>
+                                                            id="edit_main_respondent">Edit
+                                                        </button>
                                                     </div>
                                                 </div>
 
