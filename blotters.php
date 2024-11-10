@@ -446,8 +446,7 @@ $pdo = null;
                                                         <button type="button"
                                                             class="btn btn-success btn-sm editpersonbtn" data-id=""
                                                             data-whatbutton="SelectResidentComplainant"
-                                                            data-whatparty="complainant"
-                                                            id="edit_main_complainant">Edit
+                                                            data-whatparty="complainant" id="edit_main_complainant">Edit
                                                         </button>
                                                     </div>
                                                 </div>
@@ -525,7 +524,7 @@ $pdo = null;
                                                     <div class="d-flex gap-2 ms-auto">
                                                         <button type="button"
                                                             class="btn btn-success btn-sm editpersonbtn" data-id=""
-                                                            data-button="SelectResidentRes" data-whatparty="respondent"
+                                                            data-button="SelectNonResident" data-whatparty="respondent"
                                                             id="edit_main_respondent">Edit
                                                         </button>
                                                     </div>

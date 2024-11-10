@@ -568,8 +568,44 @@ $(document).ready(function () {
         $(document).off('click', '.ResidentTable tbody tr');
         
         $(document).on('click', '.ResidentTable tbody tr', function() {
-            $(this).toggleClass("selected").siblings().removeClass("selected");
+          $(this).toggleClass("selected").siblings().removeClass("selected");
+          
+          var current_comp_id = $("#complainant_id").val();
+          var current_res_id = $("#respondent_id").val();
+          var current_comp_status = $("#complainant_status").val();
+          var current_res_status = $("#respondent_status").val();
+
+          //Remove the currently selected entry to the check varaibles  
+          if (whatbutton == "SelectResidentComplainant") {
             
+            if (current_comp_status == "Resident") {
+              resultArrayofOtherResComplainant.filter(function (item) {
+                return item !== current_comp_id;
+              });
+            } else if (current_comp_status == "Non-Resident") {
+              resultArrayofOtherNonResRespondent.filter(function (item) {
+                return item !== current_res_id;
+              });
+            } else {
+              alert("Clearing like id in variables falled. Please check code.")
+            }
+          }else if(whatbutton === "SelectResidentRes"){
+            
+            if (current_res_status == "Resident") {
+              resultArrayofOtherResRespondent.filter(function (item) {
+                return item !== current_res_id;
+              });
+            } else if (current_res_status == "Non-Resident") {
+              resultArrayofOtherNonResRespondent.filter(function (item) {
+                return item !== current_res_id;
+              });
+            } else {
+              alert("Clearing like id in variables falled. Please check code.")
+            }
+          } else {
+            alert("Distingishing what button has been press for clearing check variables has failed.")
+          }
+              
             var table = $('.ResidentTable').DataTable();
             var rowData = table.row(this).data();
             var residentid = rowData.resident_id; 
@@ -589,8 +625,8 @@ $(document).ready(function () {
                         $('#lnameres').val(data.last_name);
                         $('#suffixres').val(data.suffix);
                         $('#addressres').val(data.address + " Camarin Caloocan City");
-                        $("#id_to_recordres").val(residentid);
-                        $("#checkresidentres").val("0");
+                        $("#respondent_id").val(residentid);
+                        $("#respondent_status").val("resident");
                         $("#RespondentImg").attr("src", "includes/img/resident_img/"+imagefile);
                         resultArrayofOtherResRespondent.push(residentid)
 
@@ -603,7 +639,7 @@ $(document).ready(function () {
                         $('#suffix').val(data.suffix);
                         $('#address').val(data.address + " Camarin Caloocan City");
                         $("#checkresident").val("0");
-                        $('#id_to_record').val(residentid);
+                        $('#complainant_id').val(residentid);
                         $("#ComplainantImg").attr("src", "includes/img/resident_img/"+imagefile);
                         resultArrayofOtherResComplainant.push(residentid)
 
@@ -692,10 +728,10 @@ $(document).ready(function () {
 
                     $('#selectresident').modal('hide');
       
-                    var checkwhatresidentstatus = $("#checkresident").val();
-                    var checkwhatresidentstatusres = $("#checkresidentres").val();
-                    var existingcomp = $("#id_to_record").val()
-                    var existingres = $("#id_to_recordres").val()
+                    var checkwhatresidentstatus = $("#EditBlotterModal #complainant_status").val();
+                    var checkwhatresidentstatusres = $("#EditBlotterModal #respondent_status").val();
+                    var existingcomp = $("#EditBlotterModal #complainant_id").val()
+                    var existingres = $("#EditBlotterModal #respondent_id").val()
 
 
                     if (existingcomp == existingres && checkwhatresidentstatusres == checkwhatresidentstatus) {
@@ -760,26 +796,28 @@ $(document).ready(function () {
                     var data = JSON.parse(response);
 
                     if (whatparty === 'respondent') {
-                        $('#fnameres').val(data.first_name);
-                        $('#mnameres').val(data.middle_name);
-                        $('#lnameres').val(data.last_name);
-                        $('#suffixres').val(data.suffix);
-                        $('#addressres').val(data.address);
-                        $("#id_to_recordres").val(residentid);
-                        $("#checkresidentres").val("1");
-                        $("#RespondentImg").attr("src", "includes/img/non_resident_img/"+imagefile);
+                        $('#EditBlotterModal #fname_res').val(data.first_name);
+                        $('#EditBlotterModal #mname_res').val(data.middle_name);
+                        $('#EditBlotterModal #lname_res').val(data.last_name);
+                        $('#EditBlotterModal #suffix_res').val(data.suffix);
+                        $('#EditBlotterModal #address_res').val(data.address);
+                        $("#EditBlotterModal #respondent_status").val(residentid);
+                        $("#EditBlotterModal #respondent_id").val("Non-Resident");
+                        $("#EditBlotterModal #display_complainant_status").text("Non-Resident");
+                        $("#EditBlotterModal #RespondentImg").attr("src", "includes/img/non_resident_img/"+imagefile);
                         resultArrayofOtherNonResRespondent.push(residentid)
 
 
                     } else if (whatparty === 'complainant') {
-                        $('#fname').val(data.first_name);
-                        $('#mname').val(data.middle_name);
-                        $('#lname').val(data.last_name);
-                        $('#suffix').val(data.suffix);
-                        $('#address').val(data.address);
-                        $("#checkresident").val("1");
-                        $('#id_to_record').val(residentid);
-                        $("#ComplainantImg").attr("src", "includes/img/non_resident_img/"+imagefile);
+                        $('#EditBlotterModal #fname').val(data.first_name);
+                        $('#EditBlotterModal #mname').val(data.middle_name);
+                        $('#EditBlotterModal #lname').val(data.last_name);
+                        $('#EditBlotterModal #suffix').val(data.suffix);
+                        $('#EditBlotterModal #address').val(data.address);
+                        $("#EditBlotterModal #complainant_status").val("Non-Resident");
+                        $("#EditBlotterModal #display_respondent_status").text("Non-Resident");
+                        $('#EditBlotterModal #complainant_id').val(residentid);
+                        $("#EditBlotterModal #ComplainantImg").attr("src", "includes/img/non_resident_img/"+imagefile);
                         resultArrayofOtherNonResComplainant.push(residentid)
 
 
@@ -841,16 +879,13 @@ $(document).ready(function () {
 
                     $('#selectnonresident').modal('hide');
       
-                    var checkwhatresidentstatus = $("#checkresident").val();
-                    var checkwhatresidentstatusres = $("#checkresidentres").val();
-                    var existingcomp = $("#id_to_record").val()
-                    var existingres = $("#id_to_recordres").val()
-
-                    if(existingcomp && existingres && checkwhatresidentstatusres && checkwhatresidentstatus){
-
-                        $(".AddOtherPartyBtn").removeAttr('disabled');
-
-                    }
+                    var checkwhatresidentstatus = $("#EditBlotterModal #complainant_status").val();
+                    var checkwhatresidentstatusres = $("#EditBlotterModal #respondent_status").val();
+                    var existingcomp = $("#EditBlotterModal #complainant_id").val()
+                    var existingres = $("#EditBlotterModal #respondent_id").val()
+                  
+                    console.log(existingcomp)
+                    console.log(existingres)
 
                     if(whatparty == "complainant" || whatparty == "respondent"){
                         if (existingcomp == existingres && checkwhatresidentstatusres == checkwhatresidentstatus) {
@@ -906,7 +941,6 @@ $(document).ready(function () {
  
   $(".editpersonbtn").click(function (e) { 
     e.preventDefault();
-    var whatbutton = $(this).data("whatbutton");
     var whatparty = $(this).data("whatparty");
 
     Swal.fire({
@@ -920,11 +954,11 @@ $(document).ready(function () {
     }).then((result) => {
       if (result.isConfirmed) {
        
-        SelectResandNonResModal(whatbutton, whatparty);
+        SelectResandNonResModal("SelectResidentComplainant", whatparty);
 
       } else if (result.isDenied) {
         
-        SelectResandNonResModal(whatbutton, whatparty);
+        SelectResandNonResModal("SelectNonResidentComplainant", whatparty);
 
       }
     });
