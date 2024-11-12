@@ -49,28 +49,11 @@
         <div class="container">
             <div class="container p-3">
             <h2 class="main-title">Create Blotter</h2>
-                <?php require('includes/selectresidentmodal.php'); require('includes/selectnonresidentmodal.php');?> 
-
-                    <div class="modal fade" id="SelectScheduleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-xl">
-                            <div class="modal-content">
-                            <div class="modal-header">
-                                <h1 class="modal-title fs-5" id="exampleModalLabel">Select Schedule</h1>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <!-- <style>.fc-day:hover {
-                                    background-color: #8080FF; }
-                                </style> -->
-                                <div id="calendar">
-
-                                </div>
-
-                            </div>
-                            
-                            </div>
-                        </div>
-                    </div>
+                    <?php 
+                        require('includes/selectresidentmodal.php');
+                        require('includes/selectnonresidentmodal.php');
+                        require('includes/schedulemodal.php');
+                    ?> 
                     
                     <div class="col-md-12 d-flex align-items-center justify-content-between">
                         <b>Step 1: Select Complainant Person Record</b>
@@ -448,6 +431,8 @@
 <script src="js/sidebar.js"></script>
 <script src="js/create-blotters.js"></script>
 <script src="js/selectresnonresmodal.js"></script>
+<script src="js/schedulemodal.js"></script>
+
 
 
 </body>

@@ -201,6 +201,14 @@ $(document).ready(function () {
 
   var lastmodal //To be used in where the back button in the Resident/Non Resident modal will back 
 
+  var countComplainant =0
+  var countRespondent =0
+
+  var resultArrayofOtherResComplainant = []
+  var resultArrayofOtherResRespondent = []
+  var resultArrayofOtherNonResComplainant = []
+  var resultArrayofOtherNonResRespondent = []
+
   $(document).on("click",".viewbtn, .editbtn",function(e){
     e.preventDefault();
     var operation = $(this).data('whatoperation');
@@ -211,7 +219,6 @@ $(document).ready(function () {
 
     console.log(operation)
     console.log(whatmodal)
-
 
     var complainant_first_name = $(this).data('complainant_first_name');
     var complainant_middle_name = $(this).data('complainant_middle_name');
@@ -258,6 +265,127 @@ $(document).ready(function () {
     if (whatmodal == "#EditBlotterModal") {
       $('#edit_main_complainant').attr('data-id',complainant_no);
       $('#edit_main_respondent').attr('data-id',respondent_no);
+
+     // Fetching the Complainant Variables
+    $.ajax({
+      type: "POST",
+      url: "includes/blottersoperation.php",
+      data: {operation: "FETCH_COMPLAINANTS_IDS", blotter_id: blotter_id},
+      dataType: "JSON",
+      success: function (response) {
+          console.log("Complainant Response Number: " + response.length);
+
+          if (response.length >= 1) {
+              var comp_residentsID = response.filter(function(comp_entry) {
+                  return comp_entry.status === "Resident";
+              }).map(function(comp_resident) {
+                  return comp_resident.id;
+              });
+
+              var comp_non_residentsID = response.filter(function(comp_entry) {
+                  return comp_entry.status === "Non-Resident";
+              }).map(function(comp_non_resident) {
+                  return comp_non_resident.id;
+              });
+
+              console.log("Complainant ID: " + complainant_no);
+              console.log("Respondent ID: " + respondent_no);
+
+              countComplainant = response.length;
+
+              resultArrayofOtherResComplainant = comp_residentsID;
+              resultArrayofOtherNonResComplainant = comp_non_residentsID;
+
+              if (complainant_status === "Resident") {
+                  resultArrayofOtherResComplainant.push(parseInt(complainant_no, 10));
+                  console.log("Main Resident Complainant has been recorded");
+              } else if (complainant_status === "Non-Resident") {
+                  resultArrayofOtherNonResComplainant.push(parseInt(complainant_no, 10));
+                  console.log("Main Non-Resident Complainant has been recorded");
+              } else {
+                  console.log("Complainant Status is neither Resident nor Non-Resident");
+              }
+
+              console.log("Array of Resident Complainant: " + resultArrayofOtherResComplainant);
+              console.log("Array of Non-Resident Complainant: " + resultArrayofOtherNonResComplainant);
+
+          } else {
+              console.log("AJAX Failed to load the variables for Other Complainants.");
+              
+            if (complainant_status === "Resident") {
+                resultArrayofOtherResComplainant.push(parseInt(complainant_no, 10));
+                console.log("Main Resident Complainant has been recorded");
+            } else if (complainant_status === "Non-Resident") {
+                resultArrayofOtherNonResComplainant.push(parseInt(complainant_no, 10));
+                console.log("Main Non-Resident Complainant has been recorded");
+            } else {
+                console.log("Complainant Status is neither Resident nor Non-Resident");
+            }
+          }
+      },
+      error: function(xhr, status, error) {
+          console.log("AJAX Error: " + status + " - " + error);
+      }
+    });
+
+    // Fetching The Respondent Variables
+    $.ajax({
+      type: "POST",
+      url: "includes/blottersoperation.php",
+      data: {operation: "FETCH_RESPONDENTS_IDS", blotter_id: blotter_id},
+      dataType: "JSON",
+      success: function (response) {
+          if (response.length >= 1) {
+              var res_residentsID = response.filter(function(res_entry) {
+                  return res_entry.status === "Resident";
+              }).map(function(resident) {
+                  return resident.id;
+              });
+
+              var res_non_residentsID = response.filter(function(res_entry) {
+                  return res_entry.status === "Non-Resident";
+              }).map(function(non_resident) {
+                  return non_resident.id;
+              });
+
+              countRespondent = response.length;
+              console.log("countRespondent has been updated");
+
+              resultArrayofOtherResRespondent = res_residentsID;
+              resultArrayofOtherNonResRespondent = res_non_residentsID;
+
+              if (respondent_status === "Resident") {
+                  resultArrayofOtherResRespondent.push(parseInt(respondent_no, 10));
+                  console.log("Main Resident Respondent has been recorded");
+              } else if (respondent_status === "Non-Resident") {
+                  resultArrayofOtherNonResRespondent.push(parseInt(respondent_no, 10));
+                  console.log("Main Non-Resident Respondent has been recorded");
+              } else {
+                  console.log("Respondent Status is neither Resident nor Non-Resident");
+              }
+
+              console.log("Array of Resident Respondent: " + resultArrayofOtherResRespondent);
+              console.log("Array of Non-Resident Respondent: " + resultArrayofOtherNonResRespondent);
+
+          } else {
+              console.log("AJAX Failed to load the variables for Other Respondents.");
+
+              if (respondent_status === "Resident") {
+                resultArrayofOtherResRespondent.push(parseInt(respondent_no, 10));
+                console.log("Main Resident Respondent has been recorded");
+                console.log("All Resident Respondent: "+resultArrayofOtherResRespondent)
+            } else if (respondent_status === "Non-Resident") {
+                resultArrayofOtherNonResRespondent.push(parseInt(respondent_no, 10));
+                console.log("Main Non-Resident Respondent has been recorded");
+            } else {
+                console.log("Respondent Status is neither Resident nor Non-Resident");
+            }
+          }
+      },
+      error: function(xhr, status, error) {
+          console.log("AJAX Error: " + status + " - " + error);
+      }
+    });
      
     }else if(whatmodal == "#ViewBlotterModal"){
       $(whatmodal+' .complainantbtn').attr('data-id',complainant_no);
@@ -278,288 +406,19 @@ $(document).ready(function () {
       $(whatmodal+' [id="RespondentImg"]').attr("src", "includes/img/non_resident_img/"+respondent_filename);
     }
 
+    console.log("Array of Resident Complainant: " + resultArrayofOtherResComplainant);
+    console.log("Array of Non-Resident Complainant: " + resultArrayofOtherNonResComplainant);
+    console.log("Array of Resident Respondent: " + resultArrayofOtherResRespondent);
+    console.log("Array of Non-Resident Respondent: " + resultArrayofOtherNonResRespondent);
+
   })
-
-  $(".other_complainants_tab").click(function (e) { 
-    var whatmodal = $("#ViewBlotterModal").hasClass('show')? "#ViewBlotterModal": "#EditBlotterModal";
-    console.log(whatmodal)
-    e.preventDefault();
-    var blotter_id = $(whatmodal + ' [id="blotter_id"]').val();
-    $.ajax({
-      type: "POST",
-      url: "includes/blottersoperation.php",
-      data: {operation: "FETCH_OTHER_COMPLAINANTS_MODAL", blotter_id, blotter_id},
-      dataType: "HTML",
-      success: function (response) {
-
-        $(whatmodal + ' [id="Complainant"]').html(response);
-        
-      },error: function(xhr, status, error) {
-        console.error('Error fetching other complainants details:', error);
-        Swal.fire({
-          icon: "error",
-          title: "Oops...",
-          text: "Something went wrong!"
-        });
-      }
-    });
-    
-  });
-
-
-  $(".other_respondents_tab").click(function (e) { 
-    var whatmodal = $("#ViewBlotterModal").hasClass('show')? "#ViewBlotterModal": "#EditBlotterModal";
-    var blotter_id = $(whatmodal + ' [id="blotter_id"]').val();
-    e.preventDefault();
-    $.ajax({
-      type: "POST",
-      url: "includes/blottersoperation.php",
-      data: {operation: "FETCH_OTHER_RESPONDENTS_MODAL", blotter_id: blotter_id},
-      dataType: "HTML",
-      success: function (response) {
-
-        $(whatmodal + ' [id="Respondent"]').html(response);
-        
-      },error: function(xhr, status, error) {
-        console.error('Error fetching other respondents details:', error);
-        Swal.fire({
-          icon: "error",
-          title: "Oops...",
-          text: "Something went wrong!"
-        });
-      }
-    });
-    
-  });
-
-  $(document).on("click",".case_details_tab",function (e) { 
-    e.preventDefault();
-    var whatmodal = $("#ViewBlotterModal").hasClass('show')? "#ViewBlotterModal": "#EditBlotterModal";
-    var blotter_id = $(whatmodal + ' [id="blotter_id"]').val();
-    console.log("case details has been press")
-    $.ajax({
-      type: "POST",
-      url: "includes/blottersoperation.php",
-      data: {operation: "FETCH_OTHER_CASE_DETAILS_MODAL", blotter_id: blotter_id},
-      dataType: "JSON",
-      success: function (response) {
-        var data = response.data[0]
-
-        if(response.success == true){
-          $(whatmodal + ' [id="schedule_date"]').val(data.mediation_date);
-          $(whatmodal + ' [id="schedule_starttime"]').val(data.mediation_starttime);
-          $(whatmodal + ' [id="schedule_endtime"]').val(data.mediation_endtime);
-          $(whatmodal + ' [id="incident_date"]').val(data.incident_dt);
-          $(whatmodal + ' [id="incident_location"]').val(data.location_of_incident);
-          $(whatmodal + ' [id="blotter_type"]').val(data.blotter_type);
-          $(whatmodal + ' [id="incident_desc"]').val(data.desc_incident);
-          $(whatmodal + ' [id="case_context"]').val(data.statemnt);
-          $(whatmodal + ' [id="mediator"]').val(data.mediator_name);
-          
-          if(!data.date_of_resolution == null){
-
-            $("#resolution_date").val(data.date_of_resolution);
-
-          }else{
-            $("#resolution_date").val("N/A");
-
-          }
-        }else{
-          console.log("Server Error: "+response.message)
-        }
-
-      },error: function(xhr, status, error) {
-        console.error('Error fetching case details:', error);
-        Swal.fire({
-          icon: "error",
-          title: "Oops...",
-          text: "Something went wrong!"
-        });
-      }
-    });
-    
-  });
-
-  $(document).on("click",".evidence_tab",function () {
-    var whatmodal = $("#ViewBlotterModal").hasClass('show')? "#ViewBlotterModal": "#EditBlotterModal";
-    var blotter_id = $(whatmodal + ' [id="blotter_id"]').val();
-
-    $.ajax({
-      type: "POST",
-      url: "includes/blottersoperation.php",
-      data: {operation: "FETCH_MODAL_IMG", blotter_id: blotter_id},
-      dataType: "JSON",
-      success: function (response) {
-        var data = response.data[0];
-        if(response.success == true){
-          $(whatmodal + ' [id="evidence_img"]').attr("src","includes/img/blotter_evidence/"+data.blotter_evidencefile);
-          $(whatmodal + ' [id="blotter_img"]').attr("src","includes/img/blotter_context/"+data.blotter_contextfile);
-        }else{
-          console.log("Server replied failed: "+responde.message)
-        }
-      },error: function (xhr, status, error) {
-        console.error("Error fetching table data:", error);
-      }
-    });
-    
-  });
-
-  $(".complainantbtn, .respondentbtn").on("click", function () {
-
-    var whatparty = ($(this).hasClass("complainantbtn"))? "#complainant_id": "#respondent_id" ;
-    var whatbtn = ($(this).hasClass("complainantbtn"))? "#complainant_status": "#respondent_status" ;
-
-    var residentid = $(whatparty).val();
-    var resident_status = $(whatbtn).val();
-
-    console.log(residentid)
-    console.log(resident_status)
-
-    if(resident_status == "Resident"){
-
-      $("#DocumentDetailsModal, #ViewBlotterModal, #EditBlotterModal").modal('hide');
-      $("#ViewResidentModal").modal('show');
-      $("#nav-home-tab").tab("show");
-
-
-      $.ajax({
-        url: "includes/modaloperation.php",
-        type: "POST",
-        data: { resident_id: residentid, operation: "FETCH-RESIDENT-DETAILS" },
-        dataType: "JSON",
-        success: function (data) {
-          var response = data[0];
-          var imagepath = "includes/img/resident_img/" + response.img_filename;
-
-          $('#ViewResidentModal [id="viewresident_id"]').val(response.resident_id);
-          $('#ViewResidentModal [id="fname"]').val(response.first_name);
-          $('#ViewResidentModal [id="mname"]').val(response.middle_name);
-          $('#ViewResidentModal [id="lname"]').val(response.last_name);
-          $('#ViewResidentModal [id="suffix"]').val(response.suffix);
-          $('#ViewResidentModal [id="house_no"]').val(response.house_num);
-          $('#ViewResidentModal [id="street"]').val(response.street);
-          $('#ViewResidentModal [id="subd"]').val(response.subdivision);
-          $('#ViewResidentModal [id="sex"]').val(response.sex);
-          $('#ViewResidentModal [id="marital_status]"').val(response.marital_status);
-          $('#ViewResidentModal [id="birth_date"]').val(response.birth_date);
-          $('#ViewResidentModal [id="birth_place"]').val(response.birth_place);
-          $('#ViewResidentModal [id="cp_number"]').val(response.cellphone_num);
-          $('#ViewResidentModal [id="is_a_voter"]').val(response.is_a_voter);
-          $('#ViewResidentModal [id="rsince"]').val(response.resident_since);
-          $('#ViewResidentModal [id="viewimagePreview"]').prop("src", imagepath);
-          $('#ViewResidentModal [id="backbtntodocu"]').prop("hidden", false);
-
-          //For counting certificates requested
-          $.ajax({
-            type: "post",
-            url: "includes/residentoperation.php",
-            data: { operation: "COUNT_RES_CERT", resident_id: response.resident_id },
-            dataType: "json",
-            success: function (response) {
-              console.log(response);
-
-              $("#noofcerts").text(response);
-            },
-          });
-        },
-        error: function (xhr, status, error) {
-          console.error("Error fetching table data:", error);
-        },
-      });
-    }else if(resident_status == "Non-Resident"){
-
-      $("#DocumentDetailsModal,#ViewBlotterModal").modal('hide');
-      $("#ViewNonResidentModal").modal('show');
-      $("#ViewNonResidentModal [id='nav-home-tab']").tab("show");
-
-      $.ajax({
-        url: "includes/modaloperation.php",
-        type: "POST",
-        data: { nresident_id: residentid, operation: "FETCH-NON-RESIDENT-DETAILS" },
-        dataType: "JSON",
-        success: function (data) {
-
-          var response = data[0];
-          var imagepath = "includes/img/non_resident_img/" + response.img_filename;
-
-          $("#ViewNonResidentModal [id='viewnonresident_id']").val(response.nresident_id);
-          $("#ViewNonResidentModal [id='fname']").val(response.first_name);
-          $("#ViewNonResidentModal [id='mname']").val(response.middle_name);
-          $("#ViewNonResidentModal [id='lname']").val(response.last_name);
-          $("#ViewNonResidentModal [id='house_no']").val(response.house_num);
-          $("#ViewNonResidentModal [id='street']").val(response.street);
-          $("#ViewNonResidentModal [id='subd']").val(response.subdivision);
-          $("#ViewNonResidentModal [id='district_brgy']").val(response.district_brgy);
-          $("#city").val(response.city);
-          $("#province").val(response.province);
-          $("#zipcode").val(response.zipcode);
-          $("#ViewNonResidentModal [id='sex']").val(response.sex);
-          $("#ViewNonResidentModal [id='marital_status']").val(response.marital_status);
-          $("#ViewNonResidentModal [id='birth_date']").val(response.birth_date);
-          $("#ViewNonResidentModal [id='birth_place']").val(response.birth_place);
-          $("#ViewNonResidentModal [id='cp_number']").val(response.cellphone_num);
-          $("#ViewNonResidentModal [id='is_a_voter']").val(response.is_a_voter);
-          $("#ViewNonResidentModal [id='rsince']").val(response.resident_since);
-          $("#ViewNonResidentModal [id='cellphone_number']").val(response.cellphone_num);
-          $("#ViewNonResidentModal #viewimagePreview").prop("src", imagepath);
-          $("#nrbackbtntodocu").prop("hidden", false);
-
-          console.log(response.nresident_id);
-
-          //For counting certificates requested
-          $.ajax({
-            type: "post",
-            url: "includes/nonresidentoperation.php",
-            data: { operation: "COUNT_RES_CERT", nresident_id: response.nresident_id },
-            dataType: "json",
-            success: function (response) {
-              
-              console.log(response[0]);
-
-              $("#ViewNonResidentModal [id='noofcerts']").text(response[0]);
-            },
-          });
-        },
-        error: function (xhr, status, error) {
-          console.error("Error fetching table data:", error);
-        },
-      });
-    }
-  });
-  
-  $(document).on("click", ".backbtntodocu", function () {
-    $(this).prop("hidden", true);
-
-    $("#ViewResidentModal, #ViewNonResidentModal").modal("hide");
-    $("#DocumentDetailsModal").modal("show");
-
-    if(lastmodal == '#ViewBlotterModal'){
-
-      $("#ViewBlotterModal").modal("show");
-
-    }else{
-
-      $("#EditBlotterModal").modal("show");
-
-    }
-  });
-
-  var countResidentComplainant =0 
-  var countNonResidentComplainant =0
-  var countResidentRespondent =0
-  var countNonResidentRespondent =0
-
-  var resultArrayofOtherResComplainant = []
-  var resultArrayofOtherResRespondent = []
-  var resultArrayofOtherNonResComplainant = []
-  var resultArrayofOtherNonResRespondent = []
 
   function SelectResandNonResModal(whatbutton, whatparty){
 
-    console.log(resultArrayofOtherResComplainant)
-    console.log(resultArrayofOtherNonResComplainant)
-    console.log(resultArrayofOtherResRespondent)
-    console.log(resultArrayofOtherNonResRespondent)
+    var current_comp_id = $("#EditBlotterModal #complainant_id").val();
+    var current_res_id = $("#EditBlotterModal #respondent_id").val();
+    var current_comp_status = $("#EditBlotterModal #complainant_status").val();
+    var current_res_status = $("#EditBlotterModal #respondent_status").val();
 
     if (whatbutton === "SelectResidentComplainant" || whatbutton === "SelectResidentRes") {
         $("#selectresident").modal('show');
@@ -569,48 +428,17 @@ $(document).ready(function () {
         
         $(document).on('click', '.ResidentTable tbody tr', function() {
           $(this).toggleClass("selected").siblings().removeClass("selected");
-          
-          var current_comp_id = $("#complainant_id").val();
-          var current_res_id = $("#respondent_id").val();
-          var current_comp_status = $("#complainant_status").val();
-          var current_res_status = $("#respondent_status").val();
 
-          //Remove the currently selected entry to the check varaibles  
-          if (whatbutton == "SelectResidentComplainant") {
-            
-            if (current_comp_status == "Resident") {
-              resultArrayofOtherResComplainant.filter(function (item) {
-                return item !== current_comp_id;
-              });
-            } else if (current_comp_status == "Non-Resident") {
-              resultArrayofOtherNonResRespondent.filter(function (item) {
-                return item !== current_res_id;
-              });
-            } else {
-              alert("Clearing like id in variables falled. Please check code.")
-            }
-          }else if(whatbutton === "SelectResidentRes"){
-            
-            if (current_res_status == "Resident") {
-              resultArrayofOtherResRespondent.filter(function (item) {
-                return item !== current_res_id;
-              });
-            } else if (current_res_status == "Non-Resident") {
-              resultArrayofOtherNonResRespondent.filter(function (item) {
-                return item !== current_res_id;
-              });
-            } else {
-              alert("Clearing like id in variables falled. Please check code.")
-            }
-          } else {
-            alert("Distingishing what button has been press for clearing check variables has failed.")
-          }
-              
-            var table = $('.ResidentTable').DataTable();
-            var rowData = table.row(this).data();
-            var residentid = rowData.resident_id; 
-            var imagefile = rowData.img_filename;
-            console.log(imagefile)
+          console.log("Current Comp_id: "+current_comp_id)
+          console.log("Current Res_id: "+current_res_id)
+          console.log("Current Comp_status: "+current_comp_status)
+          console.log("Current Res_status: "+current_res_status)
+
+          var table = $('.ResidentTable').DataTable();
+          var rowData = table.row(this).data();
+          var residentid = rowData.resident_id; 
+          var imagefile = rowData.img_filename;
+          console.log(imagefile)
 
             $.ajax({
                 url: 'includes/modaloperation.php', 
@@ -620,57 +448,122 @@ $(document).ready(function () {
                     var data = JSON.parse(response);
 
                     if (whatparty === 'respondent') {
-                        $('#fnameres').val(data.first_name);
-                        $('#mnameres').val(data.middle_name);
-                        $('#lnameres').val(data.last_name);
-                        $('#suffixres').val(data.suffix);
-                        $('#addressres').val(data.address + " Camarin Caloocan City");
-                        $("#respondent_id").val(residentid);
-                        $("#respondent_status").val("resident");
-                        $("#RespondentImg").attr("src", "includes/img/resident_img/"+imagefile);
-                        resultArrayofOtherResRespondent.push(residentid)
 
+                      if(resultArrayofOtherResRespondent.includes(residentid) || resultArrayofOtherNonResRespondent.includes(residentid) 
+                        || resultArrayofOtherNonResComplainant.includes(residentid) || resultArrayofOtherResComplainant.includes(residentid)){
 
+                          Swal.fire({
+                            icon: 'warning',
+                            title: 'The Person is already selected',
+                            text: 'Please select other one',
+                            confirmButtonText: 'OK'
+                          });
+  
+                      }else{
+                       
+                          //Remove the currently selected entry to the check varaibles  
+                          if(current_res_status === "Resident"){
+                            resultArrayofOtherResRespondent = resultArrayofOtherResRespondent.filter(function (item) {
+                              return item !== parseInt(current_res_id, 10);
+                            });
+                          }else if(current_res_status === "Non-Resident"){
+                            resultArrayofOtherNonResRespondent = resultArrayofOtherNonResRespondent.filter(function (item) {
+                              return item !== parseInt(current_res_id, 10);
+                            });
+                          }else{
+                            alert('There is a problem determining what status of the id to be remove from the check variables.')
+                          }
+
+                  
+                          $('#EditBlotterModal #fname_res').val(data.first_name);
+                          $('#EditBlotterModal #mname_res').val(data.middle_name);
+                          $('#EditBlotterModal #lname_res').val(data.last_name);
+                          $('#EditBlotterModal #suffix_res').val(data.suffix);
+                          $('#EditBlotterModal #address_res').val(data.address + " Camarin Caloocan City");
+                          $("#EditBlotterModal #respondent_id").val(residentid);
+                          $("#EditBlotterModal #respondent_status").val("Resident");
+                          $("#EditBlotterModal #display_respondent_status").text("Resident");
+                          $("#EditBlotterModal #RespondentImg").attr("src", "includes/img/resident_img/"+imagefile);
+                          resultArrayofOtherResRespondent.push(residentid)
+                      }
 
                     } else if (whatparty === 'complainant') {
-                        $('#fname').val(data.first_name);
-                        $('#mname').val(data.middle_name);
-                        $('#lname').val(data.last_name);
-                        $('#suffix').val(data.suffix);
-                        $('#address').val(data.address + " Camarin Caloocan City");
-                        $("#checkresident").val("0");
-                        $('#complainant_id').val(residentid);
-                        $("#ComplainantImg").attr("src", "includes/img/resident_img/"+imagefile);
-                        resultArrayofOtherResComplainant.push(residentid)
 
+                      console.log("Current Comp ID: "+current_comp_id)
+                      console.log("Current Res ID: "+current_res_id)
+                      console.log("Selected ID :"+residentid)
+
+                      if(resultArrayofOtherResRespondent.includes(residentid) || resultArrayofOtherNonResRespondent.includes(residentid) 
+                        || resultArrayofOtherNonResComplainant.includes(residentid) || resultArrayofOtherResComplainant.includes(residentid)){
+                      
+                          Swal.fire({
+                            icon: 'warning',
+                            title: 'The Person is already selected',
+                            text: 'Please select other one',
+                            confirmButtonText: 'OK'
+                          });
+  
+                      }else{
+                      
+                          if(current_comp_status === "Resident"){
+                              resultArrayofOtherResComplainant = resultArrayofOtherResComplainant.filter(function (item) {
+                                return item !== parseInt(current_comp_id, 10);
+                              });
+                          }else if(current_comp_status === "Non-Resident"){
+                              resultArrayofOtherNonResComplainant = resultArrayofOtherNonResComplainant.filter(function (item) {
+                                return item !== parseInt(current_comp_id, 10);
+                              });
+                          }
+
+                          $('#EditBlotterModal #fname').val(data.first_name);
+                          $('#EditBlotterModal #mname').val(data.middle_name);
+                          $('#EditBlotterModal #lname').val(data.last_name);
+                          $('#EditBlotterModal #suffix').val(data.suffix);
+                          $('#EditBlotterModal #address').val(data.address + " Camarin Caloocan City");
+                          $("#EditBlotterModal #complainant_status").val("Resident");
+                          $("#EditBlotterModal #complainant_display_status").text("Resident");
+                          $('#EditBlotterModal #complainant_id').val(residentid);
+                          $("#EditBlotterModal #ComplainantImg").attr("src", "includes/img/resident_img/"+imagefile);
+                          resultArrayofOtherResComplainant.push(residentid)
+                          }
 
                     } else if (whatparty == "othercomplainant"){
-                        
 
-                        if(countResidentComplainant <= 4){
-                            console.log(countResidentComplainant)
-
-
-                            if(resultArrayofOtherResRespondent.includes(residentid) || resultArrayofOtherResComplainant.includes(residentid)){
-                                Swal.fire({
-                                    icon: 'warning',
-                                    title: 'Entry Already Selected',
-                                    text: 'This person has already been selected. Please choose another one.',
-                                    confirmButtonText: 'OK'
-                                });
+                        if(countComplainant < 5){
+                          console.log("Current Count of Complainant :"+countComplainant)
+                            if(resultArrayofOtherResRespondent.includes(residentid) || resultArrayofOtherNonResRespondent.includes(residentid) 
+                              || resultArrayofOtherNonResComplainant.includes(residentid) || resultArrayofOtherResComplainant.includes(residentid)){
+                              
+                              Swal.fire({
+                                icon: 'warning',
+                                title: 'Entry Already Selected',
+                                text: 'This person has already been selected. Please choose another one.',
+                                confirmButtonText: 'OK'
+                              });  
                               
                             }else{
-                                countResidentComplainant++
-                                var newContent = `
-                                <tr>
-                                <td hidden class="ResidentComplainant${countResidentComplainant}">`+residentid+`</td>
-                                <td><img src="includes/img/resident_img/${imagefile}" width="100 height="100""></td>
-                                <td>`+ data.last_name+', '+data.first_name+' '+data.middle_name+' '+data.suffix+`</td>
-                                </tr>`;
+                             
+                              countComplainant++
+                              console.log("Added Count: "+countComplainant)
+                              $("#NoResult").remove();
+                              var newContent = `
+                              <tr id="${residentid}">
+                              <td hidden>`+residentid+`</td>
+                              <td><img src="includes/img/resident_img/${imagefile}" width="100 height="100""></td>
+                              <td>`+ data.last_name+', '+data.first_name+' '+data.middle_name+' '+data.suffix+`</td>
+                              <td>Resident</td>
+                               <td>
+                                  <button class="btn btn-danger mx-2 removepersons" id="removeOtherComplainants"
+                                  data-id="${residentid}"
+                                  data-whatbtn="OtherComplainants" data-status="Resident">
+                                  Remove
+                                  </button>
+                              </td>
+                              </tr>`;
 
-                                $('#ResidentComplainant').append(newContent);
-                                resultArrayofOtherResComplainant.push(residentid);
-                                
+                              $('#EditBlotterModal #Complainant').append(newContent);
+                              resultArrayofOtherResComplainant.push(residentid);
+                              
                              
                             }
                             
@@ -679,7 +572,7 @@ $(document).ready(function () {
                             Swal.fire({
                                 icon: 'warning',
                                 title: 'You reached the maxium allowed entries',
-                                text: 'If more people is involved, please use to the other input field.',
+                                text: 'Please remove other complainants to add more.',
                                 confirmButtonText: 'OK'
                             });
 
@@ -687,9 +580,14 @@ $(document).ready(function () {
 
 
                     }else if(whatparty == "otherrespondent"){
-                    
-                        if(countResidentRespondent <= 4){
-                           if(resultArrayofOtherResRespondent.includes(residentid) || resultArrayofOtherResComplainant.includes(residentid)){
+                      console.log("Current Count of Respondent :"+countRespondent)
+
+                        if(countRespondent <= 5){
+                          console.log("Resident Respondent IDs: "+resultArrayofOtherResRespondent)
+                          console.log("NonResident Respondent IDs: "+resultArrayofOtherResRespondent)
+                          console.log("ID is: "+residentid)
+                           if(resultArrayofOtherResRespondent.includes(residentid) || resultArrayofOtherNonResRespondent.includes(residentid) 
+                            || resultArrayofOtherNonResComplainant.includes(residentid) || resultArrayofOtherResComplainant.includes(residentid)){
 
                                 Swal.fire({
                                     icon: 'warning',
@@ -697,18 +595,26 @@ $(document).ready(function () {
                                     text: 'This person has already been selected. Please choose another one.',
                                     confirmButtonText: 'OK'
                                 });
-                              
+                                
                            }else{
                                
-                                countResidentRespondent++
+                                countRespondent++
+                                $("#respondents_tab_pane2 #NoResult").remove();
                                 var newContent = `
-                                <tr>
-                                <th hidden class="ResidentRespondent${countResidentRespondent}">`+residentid+`</th>
+                                <tr id="${residentid}">
+                                <td hidden>`+residentid+`</td>
                                 <td><img src="includes/img/resident_img/${imagefile}" width="100 height="100"></td>
                                 <td>`+ data.last_name+', '+data.first_name+' '+data.middle_name+' '+data.suffix+`</td>
+                                <td>Resident</td>
+                                <td>
+                                    <button class="btn btn-danger mx-2 removepersons" id="removeOtherComplainants" data-id="${residentid}"
+                                    data-whatbtn="OtherRespondents" data-status="Resident">
+                                    Remove
+                                    </button>
+                                </td>
                                 </tr>`;
 
-                                $('#ResidentRespondent').append(newContent);
+                                $('#EditBlotterModal #Respondent').append(newContent);
                                 resultArrayofOtherResRespondent.push(residentid);
                               
                            }
@@ -716,7 +622,7 @@ $(document).ready(function () {
                             Swal.fire({
                                 icon: 'warning',
                                 title: 'You reached the maxium allowed entries',
-                                text: 'If more people is involved, please use to the other input field.',
+                                text: 'Please remove other respondents to add more.',
                                 confirmButtonText: 'OK'
                             });
 
@@ -727,45 +633,7 @@ $(document).ready(function () {
                     }
 
                     $('#selectresident').modal('hide');
-      
-                    var checkwhatresidentstatus = $("#EditBlotterModal #complainant_status").val();
-                    var checkwhatresidentstatusres = $("#EditBlotterModal #respondent_status").val();
-                    var existingcomp = $("#EditBlotterModal #complainant_id").val()
-                    var existingres = $("#EditBlotterModal #respondent_id").val()
-
-
-                    if (existingcomp == existingres && checkwhatresidentstatusres == checkwhatresidentstatus) {
-                        // Entry already selected, notify the user
-                        Swal.fire({
-                            icon: 'warning',
-                            title: 'Entry Already Selected',
-                            text: 'This person has already been selected. Please choose another one.',
-                            confirmButtonText: 'OK'
-                        });
-
-                        if(whatparty == "complainant"){
-
-                            $('#fname, #mname, #lname, #suffix, #address, #checkresident, #id_to_record').val('');
-                            $("#ComplainantImg").attr("src", "includes/img/blank-profile.webp");
-
-
-                        }else if (whatparty == "respondent"){
-
-                            $('#fnameres, #mnameres, #lnameres, #suffixres, #addressres, #id_to_recordres, #checkresidentres').val('');
-                            $("#RespondentImg").attr("src", "includes/img/blank-profile.webp");
-
-                        }else{
-                            alert("this should not run")
-
-                        }
-
-                    }else{
-                        if(existingcomp && existingres && checkwhatresidentstatusres && checkwhatresidentstatus){
-
-                            $(".AddOtherPartyBtn").removeAttr('disabled');
-
-                        }
-                    }
+            
                 },
                 error: function(xhr, status, error) {
                     console.error('Error fetching resident details:', error);
@@ -776,6 +644,7 @@ $(document).ready(function () {
 
        
     } else {
+      //NonResident Block
         $("#selectnonresident").modal('show');
         console.log(whatparty)
         $(document).off('click', '.NonResidentTable tbody tr');
@@ -796,47 +665,109 @@ $(document).ready(function () {
                     var data = JSON.parse(response);
 
                     if (whatparty === 'respondent') {
-                        $('#EditBlotterModal #fname_res').val(data.first_name);
-                        $('#EditBlotterModal #mname_res').val(data.middle_name);
-                        $('#EditBlotterModal #lname_res').val(data.last_name);
-                        $('#EditBlotterModal #suffix_res').val(data.suffix);
-                        $('#EditBlotterModal #address_res').val(data.address);
-                        $("#EditBlotterModal #respondent_status").val(residentid);
-                        $("#EditBlotterModal #respondent_id").val("Non-Resident");
-                        $("#EditBlotterModal #display_complainant_status").text("Non-Resident");
-                        $("#EditBlotterModal #RespondentImg").attr("src", "includes/img/non_resident_img/"+imagefile);
-                        resultArrayofOtherNonResRespondent.push(residentid)
+                        if(resultArrayofOtherResRespondent.includes(residentid) || resultArrayofOtherNonResRespondent.includes(residentid) 
+                          || resultArrayofOtherNonResComplainant.includes(residentid) || resultArrayofOtherResComplainant.includes(residentid)){
+                          
+                            Swal.fire({
+                              icon: 'warning',
+                              title: 'The Person is already selected',
+                              text: 'Please select other one',
+                              confirmButtonText: 'OK'
+                            });
 
+                        }else{
+                            //Remove the currently selected entry to the check varaibles  
+                            if(current_res_status == "Resident"){
+                              resultArrayofOtherResRespondent = resultArrayofOtherResRespondent.filter(function (item) {
+                                return item !== parseInt(current_res_id, 10);
+                              });
+                            }else if(current_res_status = "Non-Resident"){
+                              resultArrayofOtherNonResRespondent = resultArrayofOtherNonResRespondent.filter(function (item) {
+                                return item !== parseInt(current_res_id, 10);
+                              });
+                            }
+
+                            $('#EditBlotterModal #fname_res').val(data.first_name);
+                            $('#EditBlotterModal #mname_res').val(data.middle_name);
+                            $('#EditBlotterModal #lname_res').val(data.last_name);
+                            $('#EditBlotterModal #suffix_res').val(data.suffix);
+                            $('#EditBlotterModal #address_res').val(data.address);
+                            $("#EditBlotterModal #respondent_status").val("Non-Resident");
+                            $("#EditBlotterModal #respondent_id").val(residentid);
+                            $("#EditBlotterModal #display_respondent_status").text("Non-Resident");
+                            $("#EditBlotterModal #RespondentImg").attr("src", "includes/img/non_resident_img/"+imagefile);
+                            resultArrayofOtherNonResRespondent.push(residentid)
+      
+                        }
 
                     } else if (whatparty === 'complainant') {
-                        $('#EditBlotterModal #fname').val(data.first_name);
-                        $('#EditBlotterModal #mname').val(data.middle_name);
-                        $('#EditBlotterModal #lname').val(data.last_name);
-                        $('#EditBlotterModal #suffix').val(data.suffix);
-                        $('#EditBlotterModal #address').val(data.address);
-                        $("#EditBlotterModal #complainant_status").val("Non-Resident");
-                        $("#EditBlotterModal #display_respondent_status").text("Non-Resident");
-                        $('#EditBlotterModal #complainant_id').val(residentid);
-                        $("#EditBlotterModal #ComplainantImg").attr("src", "includes/img/non_resident_img/"+imagefile);
-                        resultArrayofOtherNonResComplainant.push(residentid)
 
+                      if(resultArrayofOtherResRespondent.includes(residentid) || resultArrayofOtherNonResRespondent.includes(residentid) 
+                        || resultArrayofOtherNonResComplainant.includes(residentid) || resultArrayofOtherResComplainant.includes(residentid)){
+                          Swal.fire({
+                            icon: 'warning',
+                            title: 'The Person is already selected',
+                            text: 'Please select other one',
+                            confirmButtonText: 'OK'
+                          });
+                       
+                      }else{
+                            //Remove the currently selected entry to the check varaibles  
+                          if(current_comp_status === "Resident"){
+                            resultArrayofOtherResComplainant = resultArrayofOtherResComplainant.filter(function (item) {
+                              return item !== parseInt(current_comp_id, 10);
+                            });
+                          }else if(current_comp_status === "Non-Resident"){
+                            resultArrayofOtherNonResComplainant = resultArrayofOtherNonResComplainant.filter(function (item) {
+                              return item !== parseInt(current_comp_id, 10);
+                            });
+                          }
 
+                          $('#EditBlotterModal #fname').val(data.first_name);
+                          $('#EditBlotterModal #mname').val(data.middle_name);
+                          $('#EditBlotterModal #lname').val(data.last_name);
+                          $('#EditBlotterModal #suffix').val(data.suffix);
+                          $('#EditBlotterModal #address').val(data.address);
+                          $("#EditBlotterModal #complainant_status").val("Non-Resident");
+                          $("#EditBlotterModal #display_complainant_status").text("Non-Resident");
+                          $('#EditBlotterModal #complainant_id').val(residentid);
+                          $("#EditBlotterModal #ComplainantImg").attr("src", "includes/img/non_resident_img/"+imagefile);
+                          resultArrayofOtherNonResComplainant.push(residentid)
+                        
+                      }
 
                     } else if (whatparty === "othercomplainant"){
 
-                        if(countNonResidentComplainant <= 4){
-                            if(!resultArrayofOtherResRespondent.includes(residentid) || !resultArrayofOtherResComplainant.includes(residentid)){
+                        if(countComplainant < 5){
+                            if(resultArrayofOtherResRespondent.includes(residentid) || resultArrayofOtherNonResRespondent.includes(residentid) 
+                              || resultArrayofOtherNonResComplainant.includes(residentid) || resultArrayofOtherResComplainant.includes(residentid)){
+                                Swal.fire({
+                                  icon: 'warning',
+                                  title: 'Entry Already Selected',
+                                  text: 'This person has already been selected. Please choose another one.',
+                                  confirmButtonText: 'OK'
+                                });
                                 
-                                countNonResidentComplainant++;
-
+                            }else{
+                                countComplainant+1
+                                console.log("Added Respondent Count: "+countRespondent)
+                                $("#NoResult").remove();
                                 var newContent = `
-                                <tr>
-                                <td class="NonResComplainant${countNonResidentComplainant}" hidden>`+residentid+`</td>
-                                <td><img src="includes/img/non_resident_img/${imagefile}" width="100 height="100"></td>
+                                <tr id="${residentid}">
+                                <td hidden>`+residentid+`</td>
+                                <td><img src="includes/img/non_resident_img/${imagefile}" width="100 height="100""></td>
                                 <td>`+ data.last_name+', '+data.first_name+' '+data.middle_name+' '+data.suffix+`</td>
+                                <td>Non-Resident</td>
+                                <td>
+                                    <button class="btn btn-danger mx-2 removepersons" id="removeOtherComplainants"
+                                    data-id="${residentid}"
+                                    data-whatbtn="OtherComplainants" data-status="Non-Resident">
+                                    Remove
+                                    </button>
+                                </td>
                                 </tr>`;
 
-                                $('#NonResComplainant').append(newContent);
+                                $('#EditBlotterModal #Complainant').append(newContent);
                                 resultArrayofOtherNonResComplainant.push(residentid);
                             }
                         }else{
@@ -852,18 +783,37 @@ $(document).ready(function () {
 
                     }else if(whatparty == "otherrespondent"){
                       
-                        if(countNonResidentRespondent <=4){
-                            if(!resultArrayofOtherResRespondent.includes(residentid) || !resultArrayofOtherResComplainant.includes(residentid)){
-                                countNonResidentRespondent++;
-                                var newContent = `
-                                    <tr>
-                                    <td hidden class="NonResRespondent${countNonResidentRespondent}">`+residentid+`</td>
-                                    <td><img src="includes/img/non_resident_img/${imagefile}" width="100 height="100"></td>
-                                    <td>`+ data.last_name+', '+data.first_name+' '+data.middle_name+' '+data.suffix+`</td>
-                                    </tr>`;
+                        if(countRespondent < 5){
+                            if(resultArrayofOtherResRespondent.includes(residentid) || resultArrayofOtherNonResRespondent.includes(residentid) 
+                              || resultArrayofOtherNonResComplainant.includes(residentid) || resultArrayofOtherResComplainant.includes(residentid)){
 
-                                $('#NonResRespondent').append(newContent);
-                                resultArrayofOtherNonResRespondent.push(residentid);
+                              Swal.fire({
+                                icon: 'warning',
+                                title: 'The person is already selected',
+                                text: 'Please select other person.',
+                                confirmButtonText: 'OK'
+                            });
+                            }else{
+                              countRespondent++
+                              console.log("Added Count: "+countRespondent)
+                              $("#NoResult").remove();
+                              var newContent = `
+                              <tr id="${residentid}">
+                              <td hidden>`+residentid+`</td>
+                              <td><img src="includes/img/non_resident_img/${imagefile}" width="100 height="100""></td>
+                              <td>`+ data.last_name+', '+data.first_name+' '+data.middle_name+' '+data.suffix+`</td>
+                              <td>Non-Resident</td>
+                              <td>
+                                  <button class="btn btn-danger mx-2 removepersons" id="removeOtherComplainants"
+                                  data-id="${residentid}"
+                                  data-whatbtn="OtherRespondents" data-status="Resident">
+                                  Remove
+                                  </button>
+                              </td>
+                              </tr>`;
+                              $('#EditBlotterModal #Respondent').append(newContent);
+                              resultArrayofOtherNonResComplainant.push(residentid);
+
                             }
                         }else{
                             Swal.fire({
@@ -873,62 +823,12 @@ $(document).ready(function () {
                                 confirmButtonText: 'OK'
                             });
 
-                    }
+                        }
 
                     }
 
                     $('#selectnonresident').modal('hide');
-      
-                    var checkwhatresidentstatus = $("#EditBlotterModal #complainant_status").val();
-                    var checkwhatresidentstatusres = $("#EditBlotterModal #respondent_status").val();
-                    var existingcomp = $("#EditBlotterModal #complainant_id").val()
-                    var existingres = $("#EditBlotterModal #respondent_id").val()
-                  
-                    console.log(existingcomp)
-                    console.log(existingres)
 
-                    if(whatparty == "complainant" || whatparty == "respondent"){
-                        if (existingcomp == existingres && checkwhatresidentstatusres == checkwhatresidentstatus) {
-                            // Entry already selected, notify the user
-                            Swal.fire({
-                                icon: 'warning',
-                                title: 'Entry Already Selected',
-                                text: 'This person has already been selected. Please choose another one.',
-                                confirmButtonText: 'OK'
-                            });
-
-                            if(whatparty == "complainant"){
-
-                                $('#fname, #mname, #lname, #suffix, #address, #checkresident, #id_to_record').val('');
-                                $("#ComplainantImg").attr("src", "includes/img/blank-profile.webp");
-
-
-                            }else if (whatparty == "respondent"){
-
-                                $('#fnameres, #mnameres, #lnameres, #suffixres, #addressres, #id_to_recordres, #checkresidentres').val('');
-                                $("#RespondentImg").attr("src", "includes/img/blank-profile.webp");
-
-                            }else{
-                                alert("this should not run")
-
-                            }
-
-                        }
-                    } else if(whatparty == "othercomplainant" || whatparty == "otherrespondent"){
-
-                        if ((existingcomp == existingres) && (checkwhatresidentstatusres == checkwhatresidentstatus)) {
-                            // Entry already selected, notify the user
-                            Swal.fire({
-                                icon: 'warning',
-                                title: 'Entry Already Selected',
-                                text: 'This person has already been selected. Please choose another one.',
-                                confirmButtonText: 'OK'
-                            });
-
-                        }
-
-
-                    }
                 },
                 error: function(xhr, status, error) {
                     console.error('Error fetching resident details:', error);
@@ -937,9 +837,300 @@ $(document).ready(function () {
             
         });
     }
+
   }
+
+  $("#EditBlotterModal #ComplainantImg").click(function (e) { 
+    e.preventDefault();
+
+    console.log("Current Result of Resident Complainant"+resultArrayofOtherResComplainant)
+    console.log("Current Result of Non-Resident Complainant"+resultArrayofOtherNonResComplainant)
+    console.log("Current Result of Resident Respondent"+resultArrayofOtherResRespondent)
+    console.log("Current Result of Non-Resident Respondent"+resultArrayofOtherNonResRespondent)
+    
+  });
+
+  $("#EditBlotterModal, #ViewBlotterModal").on('shown.bs.modal', function () {
+
+    $(".other_complainants_tab, #other_complainants_tab").off('click').one('click',function (e) { 
+      var whatmodal = $("#ViewBlotterModal").hasClass('show')? "#ViewBlotterModal": "#EditBlotterModal";
+      console.log(whatmodal)
+      e.preventDefault();
+      var blotter_id = $(whatmodal + ' [id="blotter_id"]').val();
+  
+      $.ajax({
+        type: "POST",
+        url: "includes/blottersoperation.php",
+        data: {operation: "FETCH_OTHER_COMPLAINANTS_MODAL", blotter_id, blotter_id, what_modal: whatmodal},
+        dataType: "HTML",
+        success: function (response) {
+  
+          $(whatmodal + ' [id="Complainant"]').html(response);
+          
+        },error: function(xhr, status, error) {
+          console.error('Error fetching other complainants details:', error);
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Something went wrong!"
+          });
+        }
+      });
+      
+    });
+
+    $(".other_respondents_tab, #other_respondents_tab").off('click').one('click',function (e) { 
+      var whatmodal = $("#ViewBlotterModal").hasClass('show')? "#ViewBlotterModal": "#EditBlotterModal";
+      var blotter_id = $(whatmodal + ' [id="blotter_id"]').val();
+      e.preventDefault();
+  
+      $.ajax({
+        type: "POST",
+        url: "includes/blottersoperation.php",
+        data: {operation: "FETCH_OTHER_RESPONDENTS_MODAL", blotter_id: blotter_id, what_modal: whatmodal},
+        dataType: "HTML",
+        success: function (response) {
+  
+          $(whatmodal + ' [id="Respondent"]').html(response);
+          
+        },error: function(xhr, status, error) {
+            console.error('Error fetching other respondents details:', error);
+            Swal.fire({
+              icon: "error",
+              title: "Oops...",
+              text: "Something went wrong!"
+            });
+        }
+      });
+      
+    });
+  
+    $(document).off('click', ".case_details_tab").one("click",".case_details_tab",function (e) { 
+      e.preventDefault();
+      var whatmodal = $("#ViewBlotterModal").hasClass('show')? "#ViewBlotterModal": "#EditBlotterModal";
+      var blotter_id = $(whatmodal + ' [id="blotter_id"]').val();
+      console.log("case details has been press")
+      $.ajax({
+        type: "POST",
+        url: "includes/blottersoperation.php",
+        data: {operation: "FETCH_OTHER_CASE_DETAILS_MODAL", blotter_id: blotter_id},
+        dataType: "JSON",
+        success: function (response) {
+          var data = response.data[0]
+  
+          if(response.success == true){
+            $(whatmodal + ' [id="schedule_date"]').val(data.mediation_date);
+            $(whatmodal + ' [id="schedule_starttime"]').val(data.mediation_starttime);
+            $(whatmodal + ' [id="schedule_endtime"]').val(data.mediation_endtime);
+            $(whatmodal + ' [id="incident_date"]').val(data.incident_dt);
+            $(whatmodal + ' [id="incident_location"]').val(data.location_of_incident);
+            $(whatmodal + ' [id="blotter_type"]').val(data.blotter_type);
+            $(whatmodal + ' [id="incident_desc"]').val(data.desc_incident);
+            $(whatmodal + ' [id="case_context"]').val(data.statemnt);
+            $(whatmodal + ' [id="mediator"]').val(data.mediator_name);
+            
+            if(!data.date_of_resolution == null){
+  
+              $("#resolution_date").val(data.date_of_resolution);
+  
+            }else{
+              $("#resolution_date").val("N/A");
+  
+            }
+          }else{
+            console.log("Server Error: "+response.message)
+          }
+  
+        },error: function(xhr, status, error) {
+          console.error('Error fetching case details:', error);
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Something went wrong!"
+          });
+        }
+      });
+      
+    });
+  
+    $(document).off('click',".evidence_tab").one("click",".evidence_tab",function () {
+      var whatmodal = $("#ViewBlotterModal").hasClass('show')? "#ViewBlotterModal": "#EditBlotterModal";
+      var blotter_id = $(whatmodal + ' [id="blotter_id"]').val();
+  
+      $.ajax({
+        type: "POST",
+        url: "includes/blottersoperation.php",
+        data: {operation: "FETCH_MODAL_IMG", blotter_id: blotter_id},
+        dataType: "JSON",
+        success: function (response) {
+          var data = response.data[0];
+          if(response.success == true){
+            $(whatmodal + ' [id="evidence_img"]').attr("src","includes/img/blotter_evidence/"+data.blotter_evidencefile);
+            $(whatmodal + ' [id="blotter_img"]').attr("src","includes/img/blotter_context/"+data.blotter_contextfile);
+          }else{
+            console.log("Server replied failed: "+responde.message)
+          }
+        },error: function (xhr, status, error) {
+          console.error("Error fetching table data:", error);
+        }
+      });
+      
+    });
+  
+    $(".complainantbtn, .respondentbtn").off('click').on("click", function () {
+  
+      var whatparty = ($(this).hasClass("complainantbtn"))? "#complainant_id": "#respondent_id" ;
+      var whatbtn = ($(this).hasClass("complainantbtn"))? "#complainant_status": "#respondent_status" ;
+  
+      var residentid = $(whatparty).val();
+      var resident_status = $(whatbtn).val();
+  
+      console.log(residentid)
+      console.log(resident_status)
+  
+      if(resident_status == "Resident"){
+  
+        $("#DocumentDetailsModal, #ViewBlotterModal, #EditBlotterModal").modal('hide');
+        $("#ViewResidentModal").modal('show');
+        $("#nav-home-tab").tab("show");
+  
+  
+        $.ajax({
+          url: "includes/modaloperation.php",
+          type: "POST",
+          data: { resident_id: residentid, operation: "FETCH-RESIDENT-DETAILS" },
+          dataType: "JSON",
+          success: function (data) {
+            var response = data[0];
+            var imagepath = "includes/img/resident_img/" + response.img_filename;
+  
+            $('#ViewResidentModal [id="viewresident_id"]').val(response.resident_id);
+            $('#ViewResidentModal [id="fname"]').val(response.first_name);
+            $('#ViewResidentModal [id="mname"]').val(response.middle_name);
+            $('#ViewResidentModal [id="lname"]').val(response.last_name);
+            $('#ViewResidentModal [id="suffix"]').val(response.suffix);
+            $('#ViewResidentModal [id="house_no"]').val(response.house_num);
+            $('#ViewResidentModal [id="street"]').val(response.street);
+            $('#ViewResidentModal [id="subd"]').val(response.subdivision);
+            $('#ViewResidentModal [id="sex"]').val(response.sex);
+            $('#ViewResidentModal [id="marital_status]"').val(response.marital_status);
+            $('#ViewResidentModal [id="birth_date"]').val(response.birth_date);
+            $('#ViewResidentModal [id="birth_place"]').val(response.birth_place);
+            $('#ViewResidentModal [id="cp_number"]').val(response.cellphone_num);
+            $('#ViewResidentModal [id="is_a_voter"]').val(response.is_a_voter);
+            $('#ViewResidentModal [id="rsince"]').val(response.resident_since);
+            $('#ViewResidentModal [id="viewimagePreview"]').prop("src", imagepath);
+            $('#ViewResidentModal [id="backbtntodocu"]').prop("hidden", false);
+  
+            //For counting certificates requested
+            $.ajax({
+              type: "post",
+              url: "includes/residentoperation.php",
+              data: { operation: "COUNT_RES_CERT", resident_id: response.resident_id },
+              dataType: "json",
+              success: function (response) {
+                console.log(response);
+  
+                $("#noofcerts").text(response);
+              },
+            });
+          },
+          error: function (xhr, status, error) {
+            console.error("Error fetching table data:", error);
+          },
+        });
+      }else if(resident_status == "Non-Resident"){
+  
+        $("#DocumentDetailsModal,#ViewBlotterModal").modal('hide');
+        $("#ViewNonResidentModal").modal('show');
+        $("#ViewNonResidentModal [id='nav-home-tab']").tab("show");
+  
+        $.ajax({
+          url: "includes/modaloperation.php",
+          type: "POST",
+          data: { nresident_id: residentid, operation: "FETCH-NON-RESIDENT-DETAILS" },
+          dataType: "JSON",
+          success: function (data) {
+  
+            var response = data[0];
+            var imagepath = "includes/img/non_resident_img/" + response.img_filename;
+  
+            $("#ViewNonResidentModal [id='viewnonresident_id']").val(response.nresident_id);
+            $("#ViewNonResidentModal [id='fname']").val(response.first_name);
+            $("#ViewNonResidentModal [id='mname']").val(response.middle_name);
+            $("#ViewNonResidentModal [id='lname']").val(response.last_name);
+            $("#ViewNonResidentModal [id='house_no']").val(response.house_num);
+            $("#ViewNonResidentModal [id='street']").val(response.street);
+            $("#ViewNonResidentModal [id='subd']").val(response.subdivision);
+            $("#ViewNonResidentModal [id='district_brgy']").val(response.district_brgy);
+            $("#city").val(response.city);
+            $("#province").val(response.province);
+            $("#zipcode").val(response.zipcode);
+            $("#ViewNonResidentModal [id='sex']").val(response.sex);
+            $("#ViewNonResidentModal [id='marital_status']").val(response.marital_status);
+            $("#ViewNonResidentModal [id='birth_date']").val(response.birth_date);
+            $("#ViewNonResidentModal [id='birth_place']").val(response.birth_place);
+            $("#ViewNonResidentModal [id='cp_number']").val(response.cellphone_num);
+            $("#ViewNonResidentModal [id='is_a_voter']").val(response.is_a_voter);
+            $("#ViewNonResidentModal [id='rsince']").val(response.resident_since);
+            $("#ViewNonResidentModal [id='cellphone_number']").val(response.cellphone_num);
+            $("#ViewNonResidentModal #viewimagePreview").prop("src", imagepath);
+            $("#nrbackbtntodocu").prop("hidden", false);
+  
+            console.log(response.nresident_id);
+  
+            //For counting certificates requested
+            $.ajax({
+              type: "post",
+              url: "includes/nonresidentoperation.php",
+              data: { operation: "COUNT_RES_CERT", nresident_id: response.nresident_id },
+              dataType: "json",
+              success: function (response) {
+                
+                console.log(response[0]);
+  
+                $("#ViewNonResidentModal [id='noofcerts']").text(response[0]);
+              },
+            });
+          },
+          error: function (xhr, status, error) {
+            console.error("Error fetching table data:", error);
+          },
+        });
+      }
+    });
+    
+  });
+
+  $(document).on("hide.bs.modal",'#EditBlotterModal',function () {
+    countComplainant =1
+    countRespondent =1
+    resultArrayofOtherNonResComplainant=[];
+    resultArrayofOtherNonResRespondent=[];
+    resultArrayofOtherResComplainant=[]
+    resultArrayofOtherResRespondent=[]
+
+    console.log("All referencing varable has been reset")
+  });
+  
+  $(document).on("click", ".backbtntodocu", function () {
+    $(this).prop("hidden", true);
+
+    $("#ViewResidentModal, #ViewNonResidentModal").modal("hide");
+    $("#DocumentDetailsModal").modal("show");
+
+    if(lastmodal == '#ViewBlotterModal'){
+
+      $("#ViewBlotterModal").modal("show");
+
+    }else{
+
+      $("#EditBlotterModal").modal("show");
+
+    }
+  });
  
-  $(".editpersonbtn").click(function (e) { 
+  $(".editpersonbtn").off('click').click(function (e) { 
     e.preventDefault();
     var whatparty = $(this).data("whatparty");
 
@@ -965,6 +1156,192 @@ $(document).ready(function () {
       
   });
 
+  $(document).on('click','.removepersons',function (e) {
+      e.preventDefault();
+
+      console.log("removeperson has been triggered")
+      var whatid = $(this).data("id");
+      var whatbtn = $(this).data("whatbtn")
+      var whatstatus = $(this).data("status")
+
+      console.log(whatbtn)
+      console.log(whatid)
+
+      if(whatbtn == "OtherComplainants" ){
+        console.log("Selected complainants has been clear")
+        console.log("Count Complainant Before Decrement :"+countComplainant)
+        countComplainant --
+        console.log("Count Complainant After Decrement: "+countComplainant)
+        $("#complainants_tab_pane2 #"+whatid).remove(); 
+
+        if(whatstatus == "Resident"){
+          resultArrayofOtherResComplainant.filter(function (item) {
+            return item !== whatid;
+          });
+        }else if(whatstatus == "Non-Resident"){
+          resultArrayofOtherNonResComplainant.filter(function (item) {
+            return item !== whatid;
+          });
+        }else{
+          alert("Failed to get the data in determining status")
+        }
+      
+
+      }else if(whatbtn == "OtherRespondents"){
+        console.log("Selected respondent has been clear")
+        console.log("Count Respondent Before Operation: "+countRespondent)
+        countRespondent --
+        console.log("Count Respondent After Operation: "+countRespondent)
+        $("#respondents_tab_pane2 #"+whatid).remove(); 
+       
+        if(whatstatus == "Resident"){
+          resultArrayofOtherResRespondent.filter(function (item) {
+            return item !== whatid;
+          });
+        }else if(whatstatus == "Non-Resident"){
+          resultArrayofOtherNonResRespondent.filter(function (item) {
+            return item !== whatid;
+          });
+        }else{
+          alert("Failed to get the data in determining status")
+        }
+      }  
+
+      console.log("Current Result of Resident Complainant"+resultArrayofOtherResComplainant)
+      console.log("Current Result of Non-Resident Complainant"+resultArrayofOtherNonResComplainant)
+      console.log("Current Result of Resident Respondent"+resultArrayofOtherResRespondent)
+      console.log("Current Result of Non-Resident Respondent"+resultArrayofOtherNonResRespondent)
+        
+  })  
+
+  $(document).off('click','.AddResidentComplainant, .AddResidentRespondent').on('click','.AddResidentComplainant, .AddResidentRespondent', function (e) {
+    e.preventDefault();
+    console.log("Add resident has been click")
+
+    var whatparty = $(this).data("whatparty");
+    var whatbutton = $(this).data("whatbutton");
+
+    SelectResandNonResModal(whatbutton, whatparty);
+    
+  });
+
+  function convertTo24HourFormat(time12h) {
+      // Split the time string into [time, period] (e.g., ["11:30", "PM"])
+      const [time, period] = time12h.split(' ');
+
+      // Split the time into hours and minutes
+      let [hours, minutes] = time.split(':');
+
+      // Convert the hours to 24-hour format
+      if (period === 'PM' && hours !== '12') {
+          hours = parseInt(hours, 10) + 12;
+      } else if (period === 'AM' && hours === '12') {
+          hours = '00';
+      }
+
+      // Return the formatted 24-hour time as a string
+      return `${hours}:${minutes}`;
+  }
+
+  function formatDate(date) {
+      if (!date) {
+          console.error("Invalid date object:", date);
+          return "";
+      }
+      
+      var year = date.getFullYear();
+      var month = ('0' + (date.getMonth() + 1)).slice(-2);
+      var day = ('0' + date.getDate()).slice(-2);
+      
+      return `${year}-${month}-${day}`;
+  }
+
+  $("#blotter_form").submit(function(event){
+    event.preventDefault();
+
+    var schedule_date = $("#schedule_date").val();
+    var schedule_starttime =$("#schedule_starttime").val();
+    var schedule_endtime = $("#schedule_endtime").val();
+
+    var formData = new FormData(this);  
+    formData.append("schedule_date", formatDate(schedule_date));
+    formData.append("schedule_starttime", convertTo24HourFormat(schedule_starttime));
+    formData.append("schedule_endtime", convertTo24HourFormat(schedule_endtime));
+    formData.append("operation", "EDIT_BLOTTER");
+
+
+    // Objects for the Other Complainants and Respondents
+    let resident_complainants = {};
+    let resident_respondents = {};
+    let non_resident_complainants = {};
+    let non_resident_respondents = {};
+
+    //Fetch all Complanants and Respondents
+    $("[class^='ResidentComplainant']").each(function(index) {
+        resident_complainants[`Res_Complainant${index + 1}`] = $(this).text();
+    });
+    
+    $("[class^='ResidentRespondent']").each(function(index) {
+        resident_respondents[`Res_Respondent${index + 1}`] = $(this).text();
+    });
+    
+    $("[class^='NonResComplainant']").each(function(index) {
+        non_resident_complainants[`NonRes_Complainant${index + 1}`] = $(this).text();
+    });
+    
+    $("[class^='NonResRespondent']").each(function(index) {
+        non_resident_respondents[`NonRes_Respondent${index + 1}`] = $(this).text();
+    });
+
+
+   // Append resident complainants
+    for (let i = 1; i <= 5; i++) {
+        formData.append(`other_resident_complainant${i}`, resident_complainants[`Res_Complainant${i}`] || "null");
+    }
+
+    // Append resident respondents
+    for (let i = 1; i <= 5; i++) {
+        formData.append(`other_resident_respondent${i}`, resident_respondents[`Res_Respondent${i}`] || "null");
+    }
+
+    // Append non-resident complainants
+    for (let i = 1; i <= 5; i++) {
+        formData.append(`other_nonresident_complainant${i}`, non_resident_complainants[`NonRes_Complainant${i}`] || "null");
+    }
+
+    // Append non-resident respondents
+    for (let i = 1; i <= 5; i++) {
+        formData.append(`other_nonresident_respondent${i}`, non_resident_respondents[`NonRes_Respondent${i}`] || "null");
+    }
+
+
+    $.ajax({
+        type: "POST",
+        url: "includes/blottersoperation.php",
+        data: formData,
+        dataType: "JSON",
+        contentType: false,
+        processData: false,
+        success: function (response) {
+            if(response.success == true){
+                Swal.fire({
+                    title: "Success!",
+                    text: "Blotter Edited Successfully",
+                    icon: "success"
+                })
+
+                $("#EditBlotterModal").modal('hide')
+            }else{
+                Swal.fire({
+                    title: "Something went wrong.",
+                    text: "The server reply's failed",
+                    icon: "error"
+                  });
+            }
+        }
+    });
+
+})
 
 });
 

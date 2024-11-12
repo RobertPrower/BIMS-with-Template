@@ -30,11 +30,14 @@
 
     }
 
+    $query = "SELECT COUNT(*) AS total_users FROM tbl_users";
+    $result = $pdo->query($query);
+    $row = $result->fetch(PDO::FETCH_ASSOC);
+    $total_users = $row['total_users'];
+
     $pdo = null;
 
-
-
-?>
+    ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -97,7 +100,7 @@
               <div class="stat-cards-info">
                 <p class="stat-cards-info__num">0</p>
                 <p class="stat-cards-info__title">Total certificates</p>
-                <p class="stat-cards-info__title">For The Month</p>
+                <p class="stat-cards-info__title">for the month</p>
                 <p class="stat-cards-info__progress">
                 </p>
               </div>
@@ -160,7 +163,20 @@
             </article>
           </div>
 
-    
+
+          <div class="col-md-6 col-xl-3">
+            <article class="stat-cards-item">
+              <div class="stat-cards-icon purple">
+                <i data-feather="file" aria-hidden="true"></i>
+              </div
+              <div class="stat-cards-info">
+                <p class="stat-cards-info__num"><?php echo $total_users; ?></p>
+                <p class="stat-cards-info__title">Total Users</p>
+                <p class="stat-cards-info__progress">
+                </p>
+              </div>
+            </article>
+          </div>
        
         </div>
       </div>

@@ -1,14 +1,15 @@
 <?php 
 require_once'connecttodb.php';
+require_once'anti-SQLInject.php';
 
 $operation_check = (isset($_POST['operation']))? $_POST['operation']: null;
 
 $id_to_fetch = (isset($_POST['blotter_id']))? $_POST['blotter_id']: null;
 
-$main_complainantid = isset($_POST['main_complainantid'])?$_POST['main_complainantid']: NULL; 
-$main_complainant_status = isset($_POST['main_complainant_status'])?$_POST['main_complainant_status']: NULL;
-$main_respondentid = isset($_POST['main_respondentid'])?$_POST['main_respondentid']: NULL;
-$main_respondent_status = isset($_POST['main_respondent_status'])?$_POST['main_respondent_status']: NULL;;
+$main_complainantid = isset($_POST['main_complainantid'])?sanitizeData($_POST['main_complainantid']): NULL; 
+$main_complainant_status = isset($_POST['main_complainant_status'])?sanitizeData($_POST['main_complainant_status']): NULL;
+$main_respondentid = isset($_POST['main_respondentid'])?sanitizeData($_POST['main_respondentid']): NULL;
+$main_respondent_status = isset($_POST['main_respondent_status'])?sanitizeData($_POST['main_respondent_status']): NULL;;
 
 function handleNullValue($value) {
     return $value === "null" ? NULL : $value;
@@ -283,64 +284,118 @@ if($operation_check == "FETCH_SCHEDULE_ON_MODAL"){
     }
 
 
-}else if($operation_check == "FETCH_OTHER_COMPLAINANTS_MODAL"){
+}else if($operation_check == "FETCH_COMPLAINANTS_IDS"){
+
     try{
-        $sqlquery = "CALL FetchAllComplainant(?)";
+        $sqlquery = "CALL FetchAllComplainantsID(?)";
+        $stmt = $pdo->prepare($sqlquery);
+        $stmt->execute([$id_to_fetch]);
+        $result = $stmt -> fetchAll(PDO::FETCH_ASSOC);    
+
+        echo json_encode($result);
+        
+
+    }catch(Exception $e){
+
+        echo json_encode(["success" => false, "message" => "Server Error: ".$e->getMessage()]);
+
+    }
+
+}else if($operation_check == "FETCH_RESPONDENTS_IDS"){
+
+    try{
+        $sqlquery = "CALL FetchAllRespondentsID(?)";
         $stmt = $pdo->prepare($sqlquery);
         $stmt->execute([$id_to_fetch]);
         $result = $stmt -> fetchAll(PDO::FETCH_ASSOC);
 
-        if(!$result == 0){
-            foreach($result as $row){
-                $html = '<tr>';
-        
-                if(htmlspecialchars($row['status']) == "Resident"){
-                    $html .= '<td><img src="includes/img/resident_img/'.htmlspecialchars($row['img_filename']).'" width="100" height="100" style="object-fit: contain; max-width: 100%; max-height: 100%;"/></td>';
-                }else{
-                    $html.= '<td><img src="includes/img/non_resident_img/'.htmlspecialchars($row['img_filename']).'" width="100" height="100" style="object-fit: contain; max-width: 100%; max-height: 100%;"/></td>';
-                }
-        
-                $html.=    '<td>'.htmlspecialchars($row['full_name']).'</td>';
+        echo json_encode($result);        
 
-                if($row['status'] == "Resident"){
-
-                    $html .= '<td>'.htmlspecialchars($row['status']).'</td>';
-                }else if($row['status'] == "Non-Resident"){
-                    $html .= '<td>'.htmlspecialchars($row['status']).'</td>';
-                }else{
-                    $html .= '<td><span class="badge rounded-pill  text-bg-secondary">Unknown</span></td>';
-                }
-
-                $html .=        '<td>
-                        <button class="btn btn-primary mx-2" id="viewResorNonResfromBlot"
-                            data-id="'.htmlspecialchars($row['id']).'"
-                            data-status="'.htmlspecialchars($row['status']).'">
-                            View Details
-                        </button>
-                        </td>
-                        </tr>';
-
-                        echo $html;
-
-            }
-
-        }else{
-            echo '<tr><td colspan="4">No Other Complainants Found</td></tr>';
-        }
     }catch(Exception $e){
+
         echo json_encode(["success" => false, "message" => "Server Error: ".$e->getMessage()]);
+
     }
-}else if($operation_check == "FETCH_OTHER_RESPONDENTS_MODAL"){
+
+}else if($operation_check == "FETCH_OTHER_COMPLAINANTS_MODAL"){
+    $isedit = (isset($_POST['what_modal']))?$_POST['what_modal']:null;
     
+        try{
+            $sqlquery = "CALL FetchAllComplainant(?)";
+            $stmt = $pdo->prepare($sqlquery);
+            $stmt->execute([$id_to_fetch]);
+            $result = $stmt -> fetchAll(PDO::FETCH_ASSOC);
+
+            if(!$result == 0){
+                foreach($result as $row){
+                    $html = '<tr id="'.$row['id'].'" data-id="'.$row['id'].'">
+                    
+                    <td hidden>'.htmlspecialchars($row['id']).'</td>';
+            
+                    if(htmlspecialchars($row['status']) == "Resident"){
+                        $html .= '<td><img src="includes/img/resident_img/'.htmlspecialchars($row['img_filename']).'" width="100" height="100" style="object-fit: contain; max-width: 100%; max-height: 100%;"/></td>';
+                    }else{
+                        $html.= '<td><img src="includes/img/non_resident_img/'.htmlspecialchars($row['img_filename']).'" width="100" height="100" style="object-fit: contain; max-width: 100%; max-height: 100%;"/></td>';
+                    }
+            
+                    $html.=    '<td class="text-center justify-content-center">'.htmlspecialchars($row['full_name']).'</td>';
+    
+                    if($row['status'] == "Resident"){
+    
+                        $html .= '<td class="text-center d-flex align-items-center justify-content-center">'.htmlspecialchars($row['status']).'</td>';
+                    }else if($row['status'] == "Non-Resident"){
+                        $html .= '<td class="text-center justify-content-center">'.htmlspecialchars($row['status']).'</td>';
+                    }else{
+                        $html .= '<td class="text-center justify-content-center"><span class="badge rounded-pill  text-bg-secondary">Unknown</span></td>';
+                    }
+    
+
+                    if($isedit == "#EditBlotterModal"){
+                        $html .= '<td><button class="btn btn-danger mx-2 removepersons" id="removeOtherComplainants"
+                                    data-id="'.htmlspecialchars($row['id']).'"
+                                    data-whatbtn="OtherComplainants" data-status="'.htmlspecialchars($row['status']).'">
+                                    Remove
+                                </button>';        
+                    }else{
+
+                        $html .= '
+                            <button class="btn btn-primary" id="viewResorNonResfromBlot"
+                                data-id="'.htmlspecialchars($row['id']).'"
+                                data-status="'.htmlspecialchars($row['status']).'">
+                                View Details
+                            </button>';
+                        
+                    }
+
+                    $html .='</td>
+                            </tr>';
+    
+                            echo $html;
+    
+                }
+    
+            }else{
+                echo '<tr id="NoResult"><td colspan="4">No Other Complainants Found</td></tr>';
+            }
+      
+        }catch(Exception $e){
+            echo json_encode(["success" => false, "message" => "Server Error: ".$e->getMessage()]);
+        }
+   
+    echo $isedit;
+}else if($operation_check == "FETCH_OTHER_RESPONDENTS_MODAL"){
+    $isedit = (isset($_POST['what_modal']))?$_POST['what_modal']:null;
+
     try{
         $sqlquery = "CALL FetchAllRespondents(?)";
         $stmt = $pdo->prepare($sqlquery);
         $stmt->execute([$id_to_fetch]);
         $result = $stmt -> fetchAll(PDO::FETCH_ASSOC);
-
+        
         if(!$result == 0){
             foreach($result as $row){
-                echo'<tr>';
+                echo'<tr id="'.htmlspecialchars($row['id']).'">
+                <td hidden>'.htmlspecialchars($row['id']).'</td>';
         
                 if(htmlspecialchars($row['status']) == "Resident"){
                     echo '<td><img src="includes/img/resident_img/'.htmlspecialchars($row['img_filename']).'" width="100" height="100" style="object-fit: contain; max-width: 100%; max-height: 100%;"/></td>';
@@ -350,18 +405,32 @@ if($operation_check == "FETCH_SCHEDULE_ON_MODAL"){
         
                 echo    '<td>'.htmlspecialchars($row['full_name']).'</td>
                         <td>'.htmlspecialchars($row['status']).'</td>
-                        <td>
-                        <button class="btn btn-primary mx-2" id="viewResorNonResfromBlot"
+                        <td>';
+
+                if($isedit == "#EditBlotterModal"){
+                    echo '
+                        <button class="btn btn-danger mx-2 removepersons" id="removeOtherComplainants"
+                                data-id="'.htmlspecialchars($row['id']).'"
+                                data-whatbtn="OtherRespondents" data-status="'.htmlspecialchars($row['status']).'">
+                                Remove
+                        </button>';        
+                }else{
+    
+                    echo '
+                        <button class="btn btn-primary" id="viewResorNonResfromBlot"
                             data-id="'.htmlspecialchars($row['id']).'"
                             data-status="'.htmlspecialchars($row['status']).'">
                             View Details
-                        </button>
+                        </button>';   
+                        }
+                    echo '
                         </td>
                         </tr>';
             }
         }else{
-            echo '<tr><td colspan="4">No Other Respondents Found</td></tr>';
+            echo '<tr id="NoResult"><td colspan="4">No Other Respondents Found</td></tr>';
         }
+      
     }catch(Exception $e){
         echo json_encode(["success" => false, "message" => "Server Error: ".$e->getMessage()]);
     }
