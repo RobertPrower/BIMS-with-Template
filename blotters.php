@@ -40,6 +40,7 @@ $pdo = null; // Close DB
     <link rel="stylesheet" href="./css/style.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@eonasdan/tempus-dominus@6.9.4/dist/css/tempus-dominus.min.css" crossorigin="anonymous">
     <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
 
     <script src="js/jquery-3.7.1.min.js"></script>
@@ -247,32 +248,30 @@ $pdo = null; // Close DB
 
                                 </div>
                                 <!-- End of first tab -->
-                                <div class="tab-pane fade" id="complainants_tab_pane" role="tabpanel"
-                                    aria-labelledby="profile-tab" tabindex="0">
-                                    <div class="table-wrapper otherparty users-table ">
-                                        <BR>
-                                        <table class="otherpartytable text-center">
-                                            <thead class="post-table">
-                                                <tr class="users-table-info">
-                                                    <th hidden>#</th>
-                                                    <th>Image</th>
-                                                    <th>Fullname</th>
-                                                    <th>Status</th>
-                                                    <th>Action</th>
+                                <div class="tab-pane fade" id="complainants_tab_pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
+                                    <div class="col-md-12">
+                                        <br>
+                                        <table class="table table-bordered text-center">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col" hidden>#</th>
+                                                    <th scope="col">Image</th>
+                                                    <th scope="col">Fullname</th>
+                                                    <th scope="col">Status</th>
+                                                    <th scope="col">Action</th>
 
                                                 </tr>
                                             </thead>
                                             <tbody id="Complainant">
 
-                                                <!-- To be filled by AJAX -->
+
                                             </tbody>
                                         </table>
 
                                     </div>
                                 </div>
                                 <!-- End of second tab -->
-                                <div class="tab-pane fade" id="respondents_tab_pane" role="tabpanel"
-                                    aria-labelledby="contact-tab" tabindex="0">
+                                <div class="tab-pane fade" id="respondents_tab_pane" role="tabpanel" aria-labelledby="contact-tab" tabindex="0">
                                     <div class="col-md-12">
                                         <br>
                                         <table class="table table-bordered text-center">
@@ -404,7 +403,7 @@ $pdo = null; // Close DB
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                        <form>
+                        <form id="EditBlotterModalForm">
                             <ul class="nav nav-tabs" id="myTab" role="tablist">
                                 <li class="nav-item" role="presentation">
                                     <button class="nav-link active complainant_respondent_tab"
@@ -604,7 +603,7 @@ $pdo = null; // Close DB
                                                             data-whatparty="othercomplainant">Add Non Resident</button>
                                             </div>
                                         </div>
-                                        <table class="table table-bordered text-center">
+                                        <table class="table table-bordered text-center othercomplainant">
                                             <thead>
                                                 <tr>
                                                     <th scope="col" hidden>#</th>
@@ -636,7 +635,7 @@ $pdo = null; // Close DB
                                                 <button type="button" class="btn btn-success btn-sm my-2 AddResidentRespondent" data-whatbutton="SelectNonResidentRes" data-whatparty="otherrespondent">Add Non Resident</button>
                                             </div>
                                         </div>
-                                        <table class="table table-bordered text-center">
+                                        <table class="table table-bordered text-center otherrespondent">
                                             <thead>
                                                 <tr>
                                                     <th scope="col" hidden>#</th>
@@ -685,9 +684,11 @@ $pdo = null; // Close DB
                                         </div>
 
                                         <div class="form-floating mt-3 mb-3 col-md-4">
-                                            <input type="text" class="form-control" id="mediator" placeholder=""
-                                                 />
-                                            <label for="subd">Mediator</label>
+                                            <select class="form-select" id="mediator_name" name="blotter_type"
+                                                aria-label="Floating label select example" >
+                                                <option value="" selected hidden>Select Blotter Type</option>
+                                            </select>
+                                            <label for="blotter_type">Blotter Type</label>
                                         </div>
 
                                         <div class="form-floating mt-3 mb-3 col-md-4">
@@ -721,7 +722,7 @@ $pdo = null; // Close DB
 
                                         <div class="form-floating mt-3 mb-3 col-md-4">
                                             <input type="text" class="form-control" id="resolution_date"
-                                                name="incident_desc" placeholder="Enter Subdvision Here"  />
+                                                name="resolution_date" placeholder="Enter Subdvision Here"  />
                                             <label for="subd">Date of Resolution</label>
                                         </div>
 
@@ -740,20 +741,33 @@ $pdo = null; // Close DB
                                     <br>
                                     <div class="card">
                                         <div class="row m-3">
-                                            <div
-                                                class="col d-flex flex-column justify-content-center align-items-center">
+                                            <!-- Evidence Section -->
+                                            <div class="col-md-6 d-flex flex-column justify-content-center align-items-center">
                                                 <h5 class="text-center">Evidence:</h5>
-                                                <img src="" id="evidence_img" width="300" height="300" />
+                                                <img class="img-fluid" src="" id="evidence_img" width="300" height="300" alt="Evidence Image" />
+                                                <br>
+
+                                                <div class="form-floating">
+                                                    <input type="file" class="form-control" id="blotter_evidence" name="blotter_evidencefile" placeholder="Upload Image Evidence" />
+                                                    <label for="blotter_evidence">Upload Image Evidence</label>
+                                                </div>
                                             </div>
-                                            <div
-                                                class="col d-flex flex-column justify-content-center align-items-center">
+
+                                            <!-- Blotter Context Section -->
+                                            <div class="col-md-6 d-flex flex-column justify-content-center align-items-center">
                                                 <h5 class="text-center">Blotter Context:</h5>
-                                                <img src="" id="blotter_img" width="300" height="300" />
+                                                <img class="img-fluid" src="" id="blotter_img" width="300" height="300" alt="Blotter Context Image" />
+                                                <br>
+
+                                                <div class="form-floating">
+                                                    <input type="file" class="form-control" id="blotter_filecontext" name="blotter_contextfile" placeholder="Upload Blotter Context"/>
+                                                    <label for="blotter_filecontext">Upload Blotter Context</label>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-
                                 </div>
+
                                 <!-- End of the fifth tab -->
                             </div>
                         </div>
@@ -787,7 +801,13 @@ $pdo = null; // Close DB
                                 <div class="d-flex justify-content-start" style="padding-left: 15px;">
 
                                     <!-- Button to trigger modal -->
-                                    <a href="create-blotters.php" class="btn btn-primary me-2">Add Blotter</a>
+                                    <a href="create-blotters.php" class="btn btn-primary me-2">New Blotter</a>
+                                    <a href="blotters-schedule.php" class="btn btn-warning me-2">Check Schedule</a>
+                              
+                                    <div class="form-check form-switch my-2">
+                                        <input class="form-check-input" type="checkbox" id="showdeletedentries">
+                                        <label class="form-check-label" for="showdeletedentries">Show deleted entries</label>
+                                    </div>
 
                                 </div>
 
@@ -797,7 +817,7 @@ $pdo = null; // Close DB
                                     <!-- Search Box -->
                                     <div class="search-wrapper">
                                         <i data-feather="search" aria-hidden="true" required></i>
-                                        <input type="text" placeholder="Enter keywords ..." required>
+                                        <input id="searchbox" type="text" placeholder="Enter keywords ..." required>
 
                                     </div>
                                 </div>

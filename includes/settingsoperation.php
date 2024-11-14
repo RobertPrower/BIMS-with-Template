@@ -1,4 +1,7 @@
 <?php 
+if($_SERVER['REQUEST_METHOD']!=="POST"){
+    exit("Access Denied");
+}
 require_once"connecttodb.php";
 include_once'anti-SQLInject.php';
 

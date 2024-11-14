@@ -611,14 +611,28 @@ body {
   justify-content: center;
 }
 .page-center {
-  min-height: 100vh;
+  min-height: 80vh;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
   -ms-flex-direction: column;
   flex-direction: column;
   text-align: center;
   padding: 30px 15px;
+  border:rgba(10, 18, 251, 0.604) 10px solid;
+  border-radius: 10px;
 }
+
+.login_background{
+  background-image: url("../img/BG.jpg");
+  max-width: 500px;
+  margin: 20px auto auto;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  backdrop-filter: blur(30px);
+}
+
 .main-wrapper {
   position: relative;
   width: 100%;
@@ -1375,7 +1389,7 @@ input::placeholder {
   font-weight: 500;
   font-size: 14px;
   line-height: 2.43;
-  color: #d6d7e3;
+  color: #8a8a8e;
 }
 input:focus {
   outline: 0;

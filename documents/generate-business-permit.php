@@ -1,4 +1,7 @@
 <?php
+if($_SERVER['REQUEST_METHOD']!=="POST"){
+    exit("Access Denied");
+}
 
 require_once('tcpdf/tcpdf.php');
 global $pdo;
@@ -40,8 +43,6 @@ if ($expirationmonth == "01") {
 $expirationday = date('d', strtotime('+1 year'));
 $expirationyear = date('Y', strtotime('+1 year'));
 $expirationdate =$expirationday.' '. $tagalogexpiremonth .' '. $expirationyear;
-
-if($_SERVER['REQUEST_METHOD'] === 'POST'){
 
     $brgyquery="SELECT * FROM brgy_officials";
     $brgystmt=$pdo->prepare($brgyquery);
@@ -162,11 +163,6 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
         $pdo->rollBack();
         exit(json_encode(["error", $errors]));
     }
-
-}else{
-    exit("Access Denied");
-}
-
 
 
 // Define directory for saving the PDF

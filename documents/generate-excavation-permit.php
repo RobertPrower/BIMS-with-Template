@@ -1,4 +1,7 @@
 <?php
+if($_SERVER['REQUEST_METHOD']!=="POST"){
+    exit("Access Denied");
+}
 
 require_once('tcpdf/tcpdf.php');
 include_once('../includes/connecttodb.php');
@@ -33,106 +36,102 @@ $filename = "generated_pdf_" . $nowtime . ".pdf";
 $username = null;
 $issuingdeptno = null;
 
-if($_SERVER['REQUEST_METHOD'] === 'POST'){
-    $ID = $_POST['id_to_record'];
-    $isResident = ($_POST['res_sta']=="RESIDENT")? "RESIDENT" : "NON_RESIDENT" ; 
+$ID = $_POST['id_to_record'];
+$isResident = ($_POST['res_sta']=="RESIDENT")? "RESIDENT" : "NON_RESIDENT" ; 
 
-    $fname=sanitizeData(utf8_decode($_POST['first_name']));
-    $mname=sanitizeData(utf8_decode($_POST['middle_name']));
-    $lname=sanitizeData(utf8_decode($_POST['last_name']));
-    $suffix = (isset($_POST['suffix']))? $suffix=$_POST['suffix']: null ;
+$fname=sanitizeData(utf8_decode($_POST['first_name']));
+$mname=sanitizeData(utf8_decode($_POST['middle_name']));
+$lname=sanitizeData(utf8_decode($_POST['last_name']));
+$suffix = (isset($_POST['suffix']))? $suffix=$_POST['suffix']: null ;
 
-    $fullname = $fname .' '. $mname .' '. $lname.' '. $suffix;
-    $address = sanitizeData(utf8_decode($_POST['address']));
+$fullname = $fname .' '. $mname .' '. $lname.' '. $suffix;
+$address = sanitizeData(utf8_decode($_POST['address']));
 
 
-    $presentedid=sanitizeData($_POST['presented_id']);
-    $IDnumber=sanitizeData($_POST['id_num']);
+$presentedid=sanitizeData($_POST['presented_id']);
+$IDnumber=sanitizeData($_POST['id_num']);
 
-    $excavation_hnum= sanitizeData($_POST['house_num']);
-    $excavation_street= sanitizeData($_POST['street']);
-    $excavation_subd = sanitizeData($_POST['subd']);
-    $excavationaddress = utf8_decode($excavation_hnum .' '. $excavation_street. ' '. $excavation_subd);
-    $purpose = "Securing Excavation Permit";
+$excavation_hnum= sanitizeData($_POST['house_num']);
+$excavation_street= sanitizeData($_POST['street']);
+$excavation_subd = sanitizeData($_POST['subd']);
+$excavationaddress = utf8_decode($excavation_hnum .' '. $excavation_street. ' '. $excavation_subd);
+$purpose = "Securing Excavation Permit";
 
-    try{
+try{
 
-        $pdo->beginTransaction();
+    $pdo->beginTransaction();
 
-        $brgydetailsquery = "SELECT * FROM brgy_details";
-        $brgydetailstmt = $pdo->prepare($brgydetailsquery);
-        $brgydetailstmt->execute();
-        $brgydetailsraw = $brgydetailstmt->fetchAll(PDO::FETCH_ASSOC);
-    
-        $buildingquery = "INSERT INTO tbl_excavation_permits(blg_house_no, street, subd) VALUES (?,?,?)";
-        $buildingstmt = $pdo->prepare($buildingquery);
-        $buildingstmt->execute([$excavation_hnum, $excavation_street, $excavation_subd]);
-    
-        $determinedocuquery = "CALL determine_docu_type('Excavation_Permits');";
-        $determinedocustmt = $pdo->prepare($determinedocuquery);
-        $determinedocustmt->execute();
-        $determinedocustmt->closeCursor(); 
-    
-        $auditTrailquery= "
-                INSERT INTO tbl_cert_audit_trail(issuing_dept_no, datetime_issued, expiration)
-                VALUES (?, ?, DATE_ADD(CURDATE(), INTERVAL 1 YEAR));
-                ";
-        $auditTrailstmt=$pdo->prepare($auditTrailquery);
-        $auditTrailstmt->execute([$issuingdeptno, $nowdate]);
-    
-        if ($isResident =="RESIDENT"){
-    
-            $certDetailsquery = "INSERT INTO tbl_docu_request (resident_no ,presented_id, ID_number, purpose, pdffile) 
-                        VALUES (:residentno,:presentedid, :IDnumber, :purpose, :filenames);";
-            $alldatatorequest = [
-                ':residentno' => $ID,
-                ':presentedid' => $presentedid,
-                ':IDnumber' => $IDnumber,
-                ':purpose' => "Securing Excavation Permit",
-                ':filenames' => $filename
-            ];
-            $certDetailsstmt = $pdo->prepare($certDetailsquery);
-            $certDetailsstmt->execute($alldatatorequest);
-    
-            $getimagequery = "SELECT img_filename FROM resident where resident_id = ?";
-            $getimagestmt = $pdo->prepare($getimagequery);
-            $getimagestmt->execute([$ID]);
-            $image = $getimagestmt->fetchColumn();
-    
-        }else{
-    
-            $certDetailsquery = "INSERT INTO tbl_docu_request (nresident_no ,presented_id, ID_number, purpose, pdffile) 
-                        VALUES (:residentno,:presentedid, :IDnumber, :purpose, :filenames);";
-            $alldatatorequest = [
-                ':residentno' => $ID,
-                ':presentedid' => $presentedid,
-                ':IDnumber' => $IDnumber,
-                ':purpose' => "Securing Excavation Permit",
-                ':filenames' => $filename
-            ];
-            $certDetailsstmt = $pdo->prepare($certDetailsquery);
-            $certDetailsstmt->execute($alldatatorequest);
-    
-            $getimagequery = "SELECT img_filename FROM non_resident where nresident_id = ?";
-            $getimagestmt = $pdo->prepare($getimagequery);
-            $getimagestmt->execute([$ID]);
-            $image = $getimagestmt->fetchColumn();
-    
-            }    
-    
-            $requestquery = "SELECT get_max_request_id() AS request_id";
-            $requeststmt = $pdo->prepare($requestquery);
-            $requeststmt -> execute();        
-            $requestid= $requeststmt->fetchColumn();
-    
-            $pdo->commit();
-    
-    }catch(Exception $errors){
-        $pdo->rollBack();
-        exit(json_encode(["error", $errors->getMessage()]));
-    }
-}else{
-    exit('Access denied');
+    $brgydetailsquery = "SELECT * FROM brgy_details";
+    $brgydetailstmt = $pdo->prepare($brgydetailsquery);
+    $brgydetailstmt->execute();
+    $brgydetailsraw = $brgydetailstmt->fetchAll(PDO::FETCH_ASSOC);
+
+    $buildingquery = "INSERT INTO tbl_excavation_permits(blg_house_no, street, subd) VALUES (?,?,?)";
+    $buildingstmt = $pdo->prepare($buildingquery);
+    $buildingstmt->execute([$excavation_hnum, $excavation_street, $excavation_subd]);
+
+    $determinedocuquery = "CALL determine_docu_type('Excavation_Permits');";
+    $determinedocustmt = $pdo->prepare($determinedocuquery);
+    $determinedocustmt->execute();
+    $determinedocustmt->closeCursor(); 
+
+    $auditTrailquery= "
+            INSERT INTO tbl_cert_audit_trail(issuing_dept_no, datetime_issued, expiration)
+            VALUES (?, ?, DATE_ADD(CURDATE(), INTERVAL 1 YEAR));
+            ";
+    $auditTrailstmt=$pdo->prepare($auditTrailquery);
+    $auditTrailstmt->execute([$issuingdeptno, $nowdate]);
+
+    if ($isResident =="RESIDENT"){
+
+        $certDetailsquery = "INSERT INTO tbl_docu_request (resident_no ,presented_id, ID_number, purpose, pdffile) 
+                    VALUES (:residentno,:presentedid, :IDnumber, :purpose, :filenames);";
+        $alldatatorequest = [
+            ':residentno' => $ID,
+            ':presentedid' => $presentedid,
+            ':IDnumber' => $IDnumber,
+            ':purpose' => "Securing Excavation Permit",
+            ':filenames' => $filename
+        ];
+        $certDetailsstmt = $pdo->prepare($certDetailsquery);
+        $certDetailsstmt->execute($alldatatorequest);
+
+        $getimagequery = "SELECT img_filename FROM resident where resident_id = ?";
+        $getimagestmt = $pdo->prepare($getimagequery);
+        $getimagestmt->execute([$ID]);
+        $image = $getimagestmt->fetchColumn();
+
+    }else{
+
+        $certDetailsquery = "INSERT INTO tbl_docu_request (nresident_no ,presented_id, ID_number, purpose, pdffile) 
+                    VALUES (:residentno,:presentedid, :IDnumber, :purpose, :filenames);";
+        $alldatatorequest = [
+            ':residentno' => $ID,
+            ':presentedid' => $presentedid,
+            ':IDnumber' => $IDnumber,
+            ':purpose' => "Securing Excavation Permit",
+            ':filenames' => $filename
+        ];
+        $certDetailsstmt = $pdo->prepare($certDetailsquery);
+        $certDetailsstmt->execute($alldatatorequest);
+
+        $getimagequery = "SELECT img_filename FROM non_resident where nresident_id = ?";
+        $getimagestmt = $pdo->prepare($getimagequery);
+        $getimagestmt->execute([$ID]);
+        $image = $getimagestmt->fetchColumn();
+
+        }    
+
+        $requestquery = "SELECT get_max_request_id() AS request_id";
+        $requeststmt = $pdo->prepare($requestquery);
+        $requeststmt -> execute();        
+        $requestid= $requeststmt->fetchColumn();
+
+        $pdo->commit();
+
+}catch(Exception $errors){
+    $pdo->rollBack();
+    exit(json_encode(["error", $errors->getMessage()]));
 }
 
 class MYPDF extends TCPDF {

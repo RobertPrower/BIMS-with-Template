@@ -1,4 +1,7 @@
 <?php
+if($_SERVER['REQUEST_METHOD']!=="POST"){
+    exit("Access Denied");
+}
 
 require_once('tcpdf/tcpdf.php');
 include_once('../includes/connecttodb.php');
@@ -8,108 +11,101 @@ require_once('../includes/anti-SQLInject.php');
 $nowdate = date("Y-m-d H:i:s"); // Current date
 $nowtime = time(); //Get the time now
 
+$directory = "first_time_job_seeker/";
+$fileName = $_SERVER['DOCUMENT_ROOT'] . "/BIMS-with-Template/documents/".$directory."generated_pdf_" . $nowtime . ".pdf";
+$filename = "generated_pdf_" . time() . ".pdf";
 
-if($_SERVER['REQUEST_METHOD']== "POST"){
+$username = null;
+$issuingdeptno = null;
 
-    $directory = "first_time_job_seeker/";
-    $fileName = $_SERVER['DOCUMENT_ROOT'] . "/BIMS-with-Template/documents/".$directory."generated_pdf_" . $nowtime . ".pdf";
-    $filename = "generated_pdf_" . time() . ".pdf";
+$residentno = (isset($_POST['residentno']))? $_POST['residentno']:null;
+$rsince=(isset($_POST['r_since']))? sanitizeData($_POST['r_since']): null;
+$completeaddress=(isset($_POST['address']))? sanitizeData(utf8_decode($_POST['address'])) : null;
+$fname=sanitizeData(utf8_decode($_POST['first_name']));
+$mname=sanitizeData(utf8_decode($_POST['middle_name']));
+$lname=sanitizeData(utf8_decode($_POST['last_name']));
+$suffix = (isset($_POST['suffix']))? $suffix=$_POST['suffix']: null ;
 
-    $username = null;
-    $issuingdeptno = null;
-    
-    $residentno = (isset($_POST['residentno']))? $_POST['residentno']:null;
-    $rsince=(isset($_POST['r_since']))? sanitizeData($_POST['r_since']): null;
-    $completeaddress=(isset($_POST['address']))? sanitizeData(utf8_decode($_POST['address'])) : null;
-    $fname=sanitizeData(utf8_decode($_POST['first_name']));
-    $mname=sanitizeData(utf8_decode($_POST['middle_name']));
-    $lname=sanitizeData(utf8_decode($_POST['last_name']));
-    $suffix = (isset($_POST['suffix']))? $suffix=$_POST['suffix']: null ;
+$fullname = $fname .' '. $mname .' '. $lname.' '. $suffix;
 
-    $fullname = $fname .' '. $mname .' '. $lname.' '. $suffix;
+$presentedid=sanitizeData($_POST['presented_id']);
+$IDnumber=sanitizeData($_POST['id_num']);
+$purpose = "Employment";
 
-    $presentedid=sanitizeData($_POST['presented_id']);
-    $IDnumber=sanitizeData($_POST['id_num']);
-    $purpose = "Employment";
+try{
+    $pdo->beginTransaction();
 
-    try{
-        $pdo->beginTransaction();
+    $brgyquery="SELECT * FROM brgy_officials";
+    $brgystmt=$pdo->prepare($brgyquery);
+    $brgystmt->execute();
+    $brgyofficials=$brgystmt->fetchAll(PDO::FETCH_ASSOC); 
 
-        $brgyquery="SELECT * FROM brgy_officials";
-        $brgystmt=$pdo->prepare($brgyquery);
-        $brgystmt->execute();
-        $brgyofficials=$brgystmt->fetchAll(PDO::FETCH_ASSOC); 
-    
-        foreach($brgyofficials as $officialname){
-    
-            $official[] = $officialname['official_name'];
-    
-        }
-    
-        //To fetch the logo from the databse
-        $imgquery="SELECT `filename` FROM `certificate-img`";
-        $imgstmt=$pdo->prepare($imgquery);
-        $imgstmt->execute();
-        $imglogo = $imgstmt->fetchAll(PDO::FETCH_ASSOC); 
+    foreach($brgyofficials as $officialname){
 
-        foreach ($imglogo as $logoraw){
+        $official[] = $officialname['official_name'];
 
-            $logo[]=$logoraw['filename'];
-
-        }
-
-        $brgydetailsquery = "SELECT * FROM brgy_details";
-        $brgydetailstmt = $pdo->prepare($brgydetailsquery);
-        $brgydetailstmt->execute();
-        $brgydetailsraw = $brgydetailstmt->fetchAll(PDO::FETCH_ASSOC); 
-    
-        // Insert into tbl_cert_audit_trail
-        $auditTrailQuery = "INSERT INTO tbl_cert_audit_trail(issuing_dept_no, datetime_issued, expiration)
-                            VALUES (?, ?, DATE_ADD(CURDATE(), INTERVAL 1 YEAR))";
-        $auditTrailStmt = $pdo->prepare($auditTrailQuery);
-        $auditTrailStmt->execute([$issuingdeptno, $nowdate]);
-    
-        $docudetailsquery = "CALL determine_docu_type('FTJS')";
-        $docudetailstmt = $pdo->prepare($docudetailsquery);
-        $docudetailstmt->execute();
-        $docudetailstmt->closeCursor();
-
-        // Insert into tbl_docu_request
-        $docuRequestQuery = "INSERT INTO tbl_docu_request (resident_no ,presented_id, ID_number, purpose, pdffile)
-                                VALUES (?, ?, ?, ?, ?)";
-        $docuRequestStmt = $pdo->prepare($docuRequestQuery);
-        $docuRequestStmt->execute([$residentno, $presentedid, $IDnumber, $purpose, $fileName]);
-    
-        $nonofyearsquery = "SELECT resident_since FROM resident WHERE resident_id =?";
-        $nonofyearsstmt = $pdo->prepare($nonofyearsquery);
-        $nonofyearsstmt->execute([$residentno]);
-        $sinceyear = $nonofyearsstmt->fetchColumn();
-        $numofyears = date('Y') - $sinceyear;
-
-         // Fetch the age and request_id
-        $idquery = "SELECT request_id, age FROM tbl_docu_request WHERE request_id =(SELECT MAX(request_id) FROM tbl_docu_request)";
-        $idstmt = $pdo->prepare($idquery);
-        $idstmt->execute();
-        $resultridage=$idstmt->fetchAll(PDO::FETCH_ASSOC);
-
-            foreach($resultridage as $idage){
-                $request_Id[] = $idage['request_id'];
-                $age[] = $idage['age'];
-
-            }
-
-        $pdo->commit();
-
-    }catch(Exception $errors){
-        $pdo->rollBack();
-        exit(json_encode(["error", $errors]));
     }
 
-    $pdo=null;
+    //To fetch the logo from the databse
+    $imgquery="SELECT `filename` FROM `certificate-img`";
+    $imgstmt=$pdo->prepare($imgquery);
+    $imgstmt->execute();
+    $imglogo = $imgstmt->fetchAll(PDO::FETCH_ASSOC); 
 
-}else{
-    exit("Access Denied");
+    foreach ($imglogo as $logoraw){
+
+        $logo[]=$logoraw['filename'];
+
+    }
+
+    $brgydetailsquery = "SELECT * FROM brgy_details";
+    $brgydetailstmt = $pdo->prepare($brgydetailsquery);
+    $brgydetailstmt->execute();
+    $brgydetailsraw = $brgydetailstmt->fetchAll(PDO::FETCH_ASSOC); 
+
+    // Insert into tbl_cert_audit_trail
+    $auditTrailQuery = "INSERT INTO tbl_cert_audit_trail(issuing_dept_no, datetime_issued, expiration)
+                        VALUES (?, ?, DATE_ADD(CURDATE(), INTERVAL 1 YEAR))";
+    $auditTrailStmt = $pdo->prepare($auditTrailQuery);
+    $auditTrailStmt->execute([$issuingdeptno, $nowdate]);
+
+    $docudetailsquery = "CALL determine_docu_type('FTJS')";
+    $docudetailstmt = $pdo->prepare($docudetailsquery);
+    $docudetailstmt->execute();
+    $docudetailstmt->closeCursor();
+
+    // Insert into tbl_docu_request
+    $docuRequestQuery = "INSERT INTO tbl_docu_request (resident_no ,presented_id, ID_number, purpose, pdffile)
+                            VALUES (?, ?, ?, ?, ?)";
+    $docuRequestStmt = $pdo->prepare($docuRequestQuery);
+    $docuRequestStmt->execute([$residentno, $presentedid, $IDnumber, $purpose, $fileName]);
+
+    $nonofyearsquery = "SELECT resident_since FROM resident WHERE resident_id =?";
+    $nonofyearsstmt = $pdo->prepare($nonofyearsquery);
+    $nonofyearsstmt->execute([$residentno]);
+    $sinceyear = $nonofyearsstmt->fetchColumn();
+    $numofyears = date('Y') - $sinceyear;
+
+        // Fetch the age and request_id
+    $idquery = "SELECT request_id, age FROM tbl_docu_request WHERE request_id =(SELECT MAX(request_id) FROM tbl_docu_request)";
+    $idstmt = $pdo->prepare($idquery);
+    $idstmt->execute();
+    $resultridage=$idstmt->fetchAll(PDO::FETCH_ASSOC);
+
+        foreach($resultridage as $idage){
+            $request_Id[] = $idage['request_id'];
+            $age[] = $idage['age'];
+
+        }
+
+    $pdo->commit();
+
+}catch(Exception $errors){
+    $pdo->rollBack();
+    exit(json_encode(["error", $errors]));
 }
+
+$pdo=null;
 
 class MYPDF extends TCPDF {
     

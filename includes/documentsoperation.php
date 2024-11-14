@@ -1,7 +1,5 @@
 <?php 
-if($_SERVER['REQUEST_METHOD']=="POST"){
-
-}else{
+if($_SERVER['REQUEST_METHOD']!=="POST"){
     exit("Access Denied");
 }
 
@@ -55,10 +53,10 @@ if($operation_check =="REVOKE"){
         $id_number = $_POST['id_num'];
 
         $sqlquery = "UPDATE tbl_cert_audit_trail
-        SET expiration = ?, date_edited = ?, time_edited = ?
+        SET expiration = ?, datetime_edited = ?
         WHERE audit_trail_id IN (SELECT audit_trail_no FROM tbl_docu_request WHERE request_id=?)";
         $stmt = $pdo->prepare($sqlquery);
-        $stmt->execute([$expiration, $nowdate, $time, $request_Id]);
+        $stmt->execute([$expiration, $nowdate, $request_Id]);
 
 
         $sqlquery2 = "UPDATE tbl_docu_request SET `presented_id`=?, id_number=? WHERE request_id=?";

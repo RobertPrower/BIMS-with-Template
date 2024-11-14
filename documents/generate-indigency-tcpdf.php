@@ -1,4 +1,7 @@
 <?php
+if($_SERVER['REQUEST_METHOD']!=="POST"){
+    exit("Access Denied");
+}
 
 require_once('tcpdf/tcpdf.php');
 include_once('../includes/connecttodb.php');
@@ -15,104 +18,102 @@ $directory = "certificate_of_indigency/";
 $fileName = $_SERVER['DOCUMENT_ROOT'] . "/BIMS-with-Template/documents/certificate_of_indigency/generated_pdf_" . $nowtime . ".pdf";
 $filename="generated_pdf_" . $nowtime . ".pdf";
 
-if($_SERVER['REQUEST_METHOD']=="POST"){
-    $nowdate= date("Y-m-d H:i:s"); //Get the date now
-    $nowtime = time(); //Get the time now
-    $username = null;
-    $issuingdeptno = null;
-    $residentno = (isset($_POST['residentno']))? $_POST['residentno']:null;
-    $completeaddress=(isset($_POST['address']))? sanitizeData(utf8_decode($_POST['address'])) : null;
-    $fname=sanitizeData(utf8_decode($_POST['first_name']));
-    $mname=sanitizeData(utf8_decode($_POST['middle_name']));
-    $lname=sanitizeData(utf8_decode($_POST['last_name']));
-    $suffix = (isset($_POST['suffix']))? $suffix=$_POST['suffix']: null ;
 
-    $fullname = $fname .' '. $mname .' '. $lname.' '. $suffix;
+$nowdate= date("Y-m-d H:i:s"); //Get the date now
+$nowtime = time(); //Get the time now
+$username = null;
+$issuingdeptno = null;
+$residentno = (isset($_POST['residentno']))? $_POST['residentno']:null;
+$completeaddress=(isset($_POST['address']))? sanitizeData(utf8_decode($_POST['address'])) : null;
+$fname=sanitizeData(utf8_decode($_POST['first_name']));
+$mname=sanitizeData(utf8_decode($_POST['middle_name']));
+$lname=sanitizeData(utf8_decode($_POST['last_name']));
+$suffix = (isset($_POST['suffix']))? $suffix=$_POST['suffix']: null ;
 
-    $presentedid=sanitizeData($_POST['presented_id']);
-    $IDnumber=sanitizeData($_POST['id_num']);
-    $purpose = sanitizeData($_POST['purpose']);
-    $agency=sanitizeData($_POST['agency']);
+$fullname = $fname .' '. $mname .' '. $lname.' '. $suffix;
 
-    try{
+$presentedid=sanitizeData($_POST['presented_id']);
+$IDnumber=sanitizeData($_POST['id_num']);
+$purpose = sanitizeData($_POST['purpose']);
+$agency=sanitizeData($_POST['agency']);
 
-        $pdo->beginTransaction();
+try{
 
-         //Fetch the Brgy Officials
-        $brgyquery="SELECT * FROM brgy_officials";
-        $brgystmt=$pdo->prepare($brgyquery);
-        $brgystmt->execute();
-        $brgyofficials=$brgystmt->fetchAll(PDO::FETCH_ASSOC); 
+    $pdo->beginTransaction();
 
-        foreach($brgyofficials as $officialname){
+        //Fetch the Brgy Officials
+    $brgyquery="SELECT * FROM brgy_officials";
+    $brgystmt=$pdo->prepare($brgyquery);
+    $brgystmt->execute();
+    $brgyofficials=$brgystmt->fetchAll(PDO::FETCH_ASSOC); 
 
-            $official[] = $officialname['official_name'];
+    foreach($brgyofficials as $officialname){
 
-        }
-
-        //Fetch the govenment Seals
-        $imgquery="SELECT `filename` FROM `certificate-img`";
-        $imgstmt=$pdo->prepare($imgquery);
-        $imgstmt->execute();
-        $imglogo = $imgstmt->fetchAll(PDO::FETCH_ASSOC); 
-
-        foreach ($imglogo as $logoraw){
-
-            $logo[]=$logoraw['filename'];
-
-        }
-
-        $brgydetailsquery = "SELECT * FROM brgy_details";
-        $brgydetailstmt = $pdo->prepare($brgydetailsquery);
-        $brgydetailstmt->execute();
-        $brgydetailsraw = $brgydetailstmt->fetchAll(PDO::FETCH_ASSOC); 
-
-        //Fetch the kagawad
-        $callkagawadquery = "SELECT official_name FROM kagawad";
-        $kagawadstmt=$pdo->prepare($callkagawadquery);
-        $kagawadstmt->execute();
-        $kagawad=$kagawadstmt->fetchAll(PDO::FETCH_ASSOC);
-
-        $indigentquery = "INSERT INTO tbl_indigency(agency) VALUES (?)";
-        $indigentstmt = $pdo->prepare($indigentquery);
-        $indigentstmt->execute([$agency]);
-
-        $docudetailsquery = "CALL determine_docu_type('Certificate_of_Indigency')";
-        $docudetailstmt = $pdo->prepare($docudetailsquery);
-        $docudetailstmt->execute();
-        $docudetailstmt->closeCursor();
-
-        // Insert into tbl_cert_audit_trail
-        $auditTrailQuery = "INSERT INTO tbl_cert_audit_trail(issuing_dept_no, datetime_issued, expiration)
-                            VALUES (?, ?, DATE_ADD(CURDATE(), INTERVAL 3 MONTH))";
-        $auditTrailStmt = $pdo->prepare($auditTrailQuery);
-        $auditTrailStmt->execute([$issuingdeptno, $nowdate]);
-
-        // Insert into tbl_docu_request
-        $docuRequestQuery = "INSERT INTO tbl_docu_request (resident_no ,presented_id, ID_number, purpose, pdffile)
-                                VALUES (?, ?, ?, ?, ?)";
-        $docuRequestStmt = $pdo->prepare($docuRequestQuery);
-        $docuRequestStmt->execute([$residentno, $presentedid, $IDnumber, $purpose, $filename]);
-
-
-        // Fetch and request_id
-        $idquery = "SELECT get_max_request_id()";
-        $idstmt = $pdo->prepare($idquery);
-        $idstmt->execute();
-        $request_id=$idstmt->fetchColumn();
-
-        $pdo->commit();
-
-    } catch(Exception $error){
-
-        $pdo->rollBack();
-        exit(json_encode(["error", "message" => $error]));
+        $official[] = $officialname['official_name'];
 
     }
 
-}else{
-    exit("Access denied");
+    //Fetch the govenment Seals
+    $imgquery="SELECT `filename` FROM `certificate-img`";
+    $imgstmt=$pdo->prepare($imgquery);
+    $imgstmt->execute();
+    $imglogo = $imgstmt->fetchAll(PDO::FETCH_ASSOC); 
+
+    foreach ($imglogo as $logoraw){
+
+        $logo[]=$logoraw['filename'];
+
+    }
+
+    $brgydetailsquery = "SELECT * FROM brgy_details";
+    $brgydetailstmt = $pdo->prepare($brgydetailsquery);
+    $brgydetailstmt->execute();
+    $brgydetailsraw = $brgydetailstmt->fetchAll(PDO::FETCH_ASSOC); 
+
+    //Fetch the kagawad
+    $callkagawadquery = "SELECT official_name FROM kagawad";
+    $kagawadstmt=$pdo->prepare($callkagawadquery);
+    $kagawadstmt->execute();
+    $kagawad=$kagawadstmt->fetchAll(PDO::FETCH_ASSOC);
+
+    $indigentquery = "INSERT INTO tbl_indigency(agency) VALUES (?)";
+    $indigentstmt = $pdo->prepare($indigentquery);
+    $indigentstmt->execute([$agency]);
+
+    $docudetailsquery = "CALL determine_docu_type('Certificate_of_Indigency')";
+    $docudetailstmt = $pdo->prepare($docudetailsquery);
+    $docudetailstmt->execute();
+    $docudetailstmt->closeCursor();
+
+    // Insert into tbl_cert_audit_trail
+    $auditTrailQuery = "INSERT INTO tbl_cert_audit_trail(issuing_dept_no, datetime_issued, expiration)
+                        VALUES (?, ?, DATE_ADD(CURDATE(), INTERVAL 3 MONTH))";
+    $auditTrailStmt = $pdo->prepare($auditTrailQuery);
+    $auditTrailStmt->execute([$issuingdeptno, $nowdate]);
+
+    // Insert into tbl_docu_request
+    $docuRequestQuery = "INSERT INTO tbl_docu_request (resident_no ,presented_id, ID_number, purpose, pdffile)
+                            VALUES (?, ?, ?, ?, ?)";
+    $docuRequestStmt = $pdo->prepare($docuRequestQuery);
+    $docuRequestStmt->execute([$residentno, $presentedid, $IDnumber, $purpose, $filename]);
+
+
+    // Fetch and request_id
+    $idquery = "SELECT get_max_request_id()";
+    $idstmt = $pdo->prepare($idquery);
+    $idstmt->execute();
+    $request_id=$idstmt->fetchColumn();
+
+    $pdo->commit();
+
+} catch(Exception $error){
+
+    $pdo->rollBack();
+    exit(json_encode(["error", "message" => $error]));
+
 }
+
+
 
 class MYPDF extends TCPDF {
     

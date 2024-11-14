@@ -167,7 +167,7 @@ $(document).ready(function () {
         }
     });
 
-    $("#mediator_name").one("click", function () {
+    $(whatmodal +" #mediator_name").one("click", function () {
         $.ajax({
             type: "POST",
             url: "includes/blottersoperation.php",

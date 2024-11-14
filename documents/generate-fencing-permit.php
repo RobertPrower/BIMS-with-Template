@@ -1,5 +1,7 @@
 <?php
-
+if($_SERVER['REQUEST_METHOD']!=="POST"){
+    exit("Access Denied");
+}
 require_once('tcpdf/tcpdf.php');
 include_once('../includes/connecttodb.php');
 include_once('../includes/anti-SQLInject.php');
@@ -12,129 +14,125 @@ $nowtime = time(); // Timestamp to generate a unique filename
 
 date_default_timezone_set('Asia/Manila');
 
-if($_SERVER['REQUEST_METHOD'] === 'POST'){
+$brgyquery="SELECT * FROM brgy_officials";
+$brgystmt=$pdo->prepare($brgyquery);
+$brgystmt->execute();
+$brgyofficials=$brgystmt->fetchAll(PDO::FETCH_ASSOC); 
 
-    $brgyquery="SELECT * FROM brgy_officials";
-    $brgystmt=$pdo->prepare($brgyquery);
-    $brgystmt->execute();
-    $brgyofficials=$brgystmt->fetchAll(PDO::FETCH_ASSOC); 
+foreach($brgyofficials as $officialname){
 
-    foreach($brgyofficials as $officialname){
+    $official[] = $officialname['official_name'];
 
-        $official[] = $officialname['official_name'];
-
-    }
-
-    $nowdate= date("Y-m-d H:i:s"); //Get the date now
-    $nowtime = time(); //Get the time now
-    $filePath = $_SERVER['DOCUMENT_ROOT'] . "/BIMS-with-Template/documents/fencing_permits/generated_pdf_" . $nowtime . ".pdf";
-    $filename = "generated_pdf_" . $nowtime . ".pdf";
-
-    $username = null;
-    $issuingdeptno = null;
-
-    $ID = $_POST['id_to_record'];
-    $isResident = ($_POST['res_sta']=="RESIDENT")? "RESIDENT" : "NON_RESIDENT" ; 
-
-    $fname=sanitizeData(utf8_decode($_POST['first_name']));
-    $mname=sanitizeData(utf8_decode($_POST['middle_name']));
-    $lname=sanitizeData(utf8_decode($_POST['last_name']));
-    $suffix = (isset($_POST['suffix']))? $suffix=$_POST['suffix']: null ;
-
-    $fullname = $fname .' '. $mname .' '. $lname.' '. $suffix;
-    $address = sanitizeData(utf8_decode($_POST['address']));
-
-
-    $presentedid=sanitizeData($_POST['presented_id']);
-    $IDnumber=sanitizeData($_POST['id_num']);
-
-    $building_hnum= sanitizeData($_POST['house_num']);
-    $building_street= sanitizeData($_POST['street']);
-    $building_subd = sanitizeData($_POST['subd']);
-    $buildingaddress = utf8_decode($building_hnum .' '. $building_street. ' '. $building_subd);
-    $permit_type= sanitizeData($_POST['purpose']);
-    $purpose = "Securing Fencing Permit "."(".$permit_type.")";
-
-    try{
-
-        $pdo->beginTransaction();
-
-        $brgydetailsquery = "SELECT * FROM brgy_details";
-        $brgydetailstmt = $pdo->prepare($brgydetailsquery);
-        $brgydetailstmt->execute();
-        $brgydetailsraw = $brgydetailstmt->fetchAll(PDO::FETCH_ASSOC);
-    
-        $buildingquery = "INSERT INTO tbl_fencing_permit(blg_house_no, street, subd, estate_type) VALUES (?,?,?,?)";
-        $buildingstmt = $pdo->prepare($buildingquery);
-        $buildingstmt->execute([$building_hnum, $building_street, $building_subd, $permit_type]);
-
-        $determinedocuquery = "CALL determine_docu_type('Fencing_Permits');";
-        $determinedocustmt = $pdo->prepare($determinedocuquery);
-        $determinedocustmt->execute();
-        $determinedocustmt->closeCursor(); 
-
-        $auditTrailquery= "
-                INSERT INTO tbl_cert_audit_trail(issuing_dept_no, datetime_issued, expiration)
-                VALUES (?, ?, DATE_ADD(CURDATE(), INTERVAL 1 YEAR));
-                ";
-        $auditTrailstmt=$pdo->prepare($auditTrailquery);
-        $auditTrailstmt->execute([$issuingdeptno, $nowdate]);
-
-        if ($isResident =="RESIDENT"){
-
-            $certDetailsquery = "INSERT INTO tbl_docu_request (resident_no ,presented_id, ID_number, purpose, pdffile) 
-                        VALUES (:residentno,:presentedid, :IDnumber, :purpose, :filenames);";
-            $alldatatorequest = [
-                ':residentno' => $ID,
-                ':presentedid' => $presentedid,
-                ':IDnumber' => $IDnumber,
-                ':purpose' => "Securing Fencing Permit",
-                ':filenames' => $filename
-            ];
-            $certDetailsstmt = $pdo->prepare($certDetailsquery);
-            $certDetailsstmt->execute($alldatatorequest);
-
-            $getimagequery = "SELECT img_filename FROM resident where resident_id = ?";
-            $getimagestmt = $pdo->prepare($getimagequery);
-            $getimagestmt->execute([$ID]);
-            $image = $getimagestmt->fetchColumn();
-
-        }else{
-
-            $certDetailsquery = "INSERT INTO tbl_docu_request (nresident_no ,presented_id, ID_number, purpose, pdffile) 
-                        VALUES (:residentno,:presentedid, :IDnumber, :purpose, :filenames);";
-            $alldatatorequest = [
-                ':residentno' => $ID,
-                ':presentedid' => $presentedid,
-                ':IDnumber' => $IDnumber,
-                ':purpose' => "Securing Fencing Permit",
-                ':filenames' => $filename
-            ];
-            $certDetailsstmt = $pdo->prepare($certDetailsquery);
-            $certDetailsstmt->execute($alldatatorequest);
-
-            $getimagequery = "SELECT img_filename FROM non_resident where nresident_id = ?";
-            $getimagestmt = $pdo->prepare($getimagequery);
-            $getimagestmt->execute([$ID]);
-            $image = $getimagestmt->fetchColumn();
-
-            }    
-
-            $requestquery = "SELECT get_max_request_id() AS request_id";
-            $requeststmt = $pdo->prepare($requestquery);
-            $requeststmt -> execute();        
-            $requestid= $requeststmt->fetchColumn();
-
-            $pdo->commit();
-
-    }catch(Exception $errors){
-        $pdo->rollBack();
-        exit(json_encode(["error", $errors->getMessage()]));
-    }
-
-}else{
-    exit("Access Denied");
 }
+
+$nowdate= date("Y-m-d H:i:s"); //Get the date now
+$nowtime = time(); //Get the time now
+$filePath = $_SERVER['DOCUMENT_ROOT'] . "/BIMS-with-Template/documents/fencing_permits/generated_pdf_" . $nowtime . ".pdf";
+$filename = "generated_pdf_" . $nowtime . ".pdf";
+
+$username = null;
+$issuingdeptno = null;
+
+$ID = $_POST['id_to_record'];
+$isResident = ($_POST['res_sta']=="RESIDENT")? "RESIDENT" : "NON_RESIDENT" ; 
+
+$fname=sanitizeData(utf8_decode($_POST['first_name']));
+$mname=sanitizeData(utf8_decode($_POST['middle_name']));
+$lname=sanitizeData(utf8_decode($_POST['last_name']));
+$suffix = (isset($_POST['suffix']))? $suffix=$_POST['suffix']: null ;
+
+$fullname = $fname .' '. $mname .' '. $lname.' '. $suffix;
+$address = sanitizeData(utf8_decode($_POST['address']));
+
+
+$presentedid=sanitizeData($_POST['presented_id']);
+$IDnumber=sanitizeData($_POST['id_num']);
+
+$building_hnum= sanitizeData($_POST['house_num']);
+$building_street= sanitizeData($_POST['street']);
+$building_subd = sanitizeData($_POST['subd']);
+$buildingaddress = utf8_decode($building_hnum .' '. $building_street. ' '. $building_subd);
+$permit_type= sanitizeData($_POST['purpose']);
+$purpose = "Securing Fencing Permit "."(".$permit_type.")";
+
+try{
+
+    $pdo->beginTransaction();
+
+    $brgydetailsquery = "SELECT * FROM brgy_details";
+    $brgydetailstmt = $pdo->prepare($brgydetailsquery);
+    $brgydetailstmt->execute();
+    $brgydetailsraw = $brgydetailstmt->fetchAll(PDO::FETCH_ASSOC);
+
+    $buildingquery = "INSERT INTO tbl_fencing_permit(blg_house_no, street, subd, estate_type) VALUES (?,?,?,?)";
+    $buildingstmt = $pdo->prepare($buildingquery);
+    $buildingstmt->execute([$building_hnum, $building_street, $building_subd, $permit_type]);
+
+    $determinedocuquery = "CALL determine_docu_type('Fencing_Permits');";
+    $determinedocustmt = $pdo->prepare($determinedocuquery);
+    $determinedocustmt->execute();
+    $determinedocustmt->closeCursor(); 
+
+    $auditTrailquery= "
+            INSERT INTO tbl_cert_audit_trail(issuing_dept_no, datetime_issued, expiration)
+            VALUES (?, ?, DATE_ADD(CURDATE(), INTERVAL 1 YEAR));
+            ";
+    $auditTrailstmt=$pdo->prepare($auditTrailquery);
+    $auditTrailstmt->execute([$issuingdeptno, $nowdate]);
+
+    if ($isResident =="RESIDENT"){
+
+        $certDetailsquery = "INSERT INTO tbl_docu_request (resident_no ,presented_id, ID_number, purpose, pdffile) 
+                    VALUES (:residentno,:presentedid, :IDnumber, :purpose, :filenames);";
+        $alldatatorequest = [
+            ':residentno' => $ID,
+            ':presentedid' => $presentedid,
+            ':IDnumber' => $IDnumber,
+            ':purpose' => "Securing Fencing Permit",
+            ':filenames' => $filename
+        ];
+        $certDetailsstmt = $pdo->prepare($certDetailsquery);
+        $certDetailsstmt->execute($alldatatorequest);
+
+        $getimagequery = "SELECT img_filename FROM resident where resident_id = ?";
+        $getimagestmt = $pdo->prepare($getimagequery);
+        $getimagestmt->execute([$ID]);
+        $image = $getimagestmt->fetchColumn();
+
+    }else{
+
+        $certDetailsquery = "INSERT INTO tbl_docu_request (nresident_no ,presented_id, ID_number, purpose, pdffile) 
+                    VALUES (:residentno,:presentedid, :IDnumber, :purpose, :filenames);";
+        $alldatatorequest = [
+            ':residentno' => $ID,
+            ':presentedid' => $presentedid,
+            ':IDnumber' => $IDnumber,
+            ':purpose' => "Securing Fencing Permit",
+            ':filenames' => $filename
+        ];
+        $certDetailsstmt = $pdo->prepare($certDetailsquery);
+        $certDetailsstmt->execute($alldatatorequest);
+
+        $getimagequery = "SELECT img_filename FROM non_resident where nresident_id = ?";
+        $getimagestmt = $pdo->prepare($getimagequery);
+        $getimagestmt->execute([$ID]);
+        $image = $getimagestmt->fetchColumn();
+
+        }    
+
+        $requestquery = "SELECT get_max_request_id() AS request_id";
+        $requeststmt = $pdo->prepare($requestquery);
+        $requeststmt -> execute();        
+        $requestid= $requeststmt->fetchColumn();
+
+        $pdo->commit();
+
+}catch(Exception $errors){
+    $pdo->rollBack();
+    exit(json_encode(["error", $errors->getMessage()]));
+}
+
+
 class MYPDF extends TCPDF {
 
     public function DrawGradient($x, $y, $w, $h, $color1, $color2) {

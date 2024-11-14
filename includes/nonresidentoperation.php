@@ -1,4 +1,7 @@
 <?php
+if($_SERVER['REQUEST_METHOD']!=="POST"){
+    exit("Access Denied");
+}
 require_once("connecttodb.php");
 
 //To Sanitize the Data to prevent SQL Injections and Cross site scripting and insertion of special characters
@@ -464,7 +467,7 @@ if($operation_check == "ADD"){ //For the add operation
 }elseif($operation_check=="SHOW_DELETED"){
 
      // Fetch the total number of records
-     $total_records = $pdo->query("SELECT COUNT(*) FROM non_resident WHERE is_deleted=1")->fetchColumn();
+     $total_records = $pdo->query("SELECT COUNT(*) FROM vw_nonresident_deleted")->fetchColumn();
      $limit = 10; //To limit the number of pages
      $total_pages = ceil($total_records / $limit);
  
@@ -474,7 +477,7 @@ if($operation_check == "ADD"){ //For the add operation
      $start_from = ($page - 1) * $limit;
  
      // Fetch the data for the current page
-     $query = "SELECT * FROM vw_deleted_nonresident LIMIT :start_from, :lim";
+     $query = "SELECT * FROM vw_nonresident_deleted LIMIT :start_from, :lim";
      $stmt = $pdo->prepare($query);
      $stmt->bindvalue(":start_from", (int)$start_from, PDO::PARAM_INT);
      $stmt->bindValue(":lim", (int)$limit, PDO::PARAM_INT);

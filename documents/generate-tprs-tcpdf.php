@@ -1,4 +1,7 @@
 <?php
+if($_SERVER['REQUEST_METHOD']!=="POST"){
+    exit("Access Denied");
+}
 
 require_once('tcpdf/tcpdf.php');
 include_once('../includes/connecttodb.php');
@@ -13,7 +16,7 @@ $directory = "tprs/";
     $fileName = $_SERVER['DOCUMENT_ROOT'] . "/BIMS-with-Template/documents/".$directory."generated_pdf_" . $nowdate. ".pdf";
     $filename= "generated_pdf_" . $nowdate . ".pdf";
 
-if($_SERVER['REQUEST_METHOD']== "POST"){
+
 
     $nowdate= date("Y-m-d H:i:s"); //Get the date now
     $nowtime = time(); //Get the time now
@@ -153,9 +156,7 @@ if($_SERVER['REQUEST_METHOD']== "POST"){
 
     $pdo=null;
 
-}else{
-    exit("Access Denied");
-}
+
 
 class MYPDF extends TCPDF {
     
