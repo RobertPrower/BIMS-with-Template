@@ -1,6 +1,6 @@
 <?php 
 if($_SERVER['REQUEST_METHOD']!=="POST"){
-    exit("Access Denied");
+    header('Location: index.php');
 }
 
 require_once'connecttodb.php';
@@ -9,6 +9,9 @@ require_once'anti-SQLInject.php';
 $operation_check = (isset($_POST['operation']))? $_POST['operation']: null;
 $userid = null;
 $id_to_fetch = (isset($_POST['blotter_id']))? $_POST['blotter_id']: null;
+$report_status = (isset($_POST['blotter_status']))? $_POST['blotter_status']: null;
+$mediator_name = (isset($_POST['mediator_name']))? $_POST['mediator_name']: null;
+
 
 $limit = 10;
 $search = isset($_POST['search']) ? sanitizeData($_POST['search']): '';
@@ -40,12 +43,13 @@ $schedule_date = isset($_POST['schedule_date'])?$_POST['schedule_date']: NULL;
 $schedule_starttime = isset($_POST['schedule_starttime'])?$_POST['schedule_starttime']: NULL;
 $schedule_endtime = isset($_POST['schedule_endtime'])?$_POST['schedule_endtime']: NULL;
 $schedule_color = isset($_POST['schedule_color'])?$_POST['schedule_color']: NULL;
-$mediator_name = isset($_POST['mediator_name'])?$_POST['mediator_name']: NULL;
+$mediator_no = isset($_POST['mediator_name'])?$_POST['mediator_name']: NULL;
 $incident_date = isset($_POST['incident_date'])?$_POST['incident_date']: NULL;
 $incident_desc = isset($_POST['incident_desc'])?$_POST['incident_desc']: NULL;
 $incident_location = isset($_POST['incident_location'])?sanitizeData($_POST['incident_location']): NULL;
 $blotter_type = isset($_POST['blotter_type'])?sanitizeData($_POST['blotter_type']): NULL;
 $case_context = isset($_POST['case_context'])?sanitizeData($_POST['case_context']): NULL;
+$resport_status = isset($_POST['report_status'])?sanitizeData($_POST['report_status']): NULL;
 
 $blotter_evidence_fd = "img/blotter_evidence/";
 $blotter_context_fd = "img/blotter_context/";
@@ -126,13 +130,7 @@ if($operation_check == "FETCH_SCHEDULE_ON_MODAL"){
     $stmt -> execute();
     $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    echo '<option value="" hidden>Select Mediator</option>';
-
-    foreach($results as $mediator_name){
-
-        echo '<option value="'.htmlspecialchars($mediator_name['mediator_name']).'">'.htmlspecialchars($mediator_name['mediator_name']).'</option>';
-
-    }
+    echo json_encode($results);
 
 }else if($operation_check == "ADD_BLOTTER"){
     if($main_complainant_status == 0){
@@ -163,7 +161,7 @@ if($operation_check == "FETCH_SCHEDULE_ON_MODAL"){
     try{
         $pdo -> beginTransaction();
 
-        $audit_trail_query = "INSERT INTO tbl_blotter_audit_trail(assisted_by_no) VALUES(?)";
+        $audit_trail_query = "INSERT INTO tbl_blotter_audit_trail(assist_by_no) VALUES(?)";
         $stmt = $pdo->prepare($audit_trail_query);
         $stmt->execute([$userid]);
 
@@ -196,7 +194,11 @@ if($operation_check == "FETCH_SCHEDULE_ON_MODAL"){
 
 }else if($operation_check == "EDIT_BLOTTER") { 
 
-    $resolution_date = (!empty($_POST['resolution_date']))? $_POST['resolution_date']: null;
+    if($report_status == 0){
+        $resolution_date =  null;
+    }else{
+        $resolution_date = date('Y-m-d H:i:s');
+    }
 
     $converted_comp_status = ($main_complainant_status === "Resident")? 0 : 1;
     $converted_res_status = ($main_respondent_status === "Resident")? 0 : 1;
@@ -245,7 +247,7 @@ if($operation_check == "FETCH_SCHEDULE_ON_MODAL"){
         $pdo->beginTransaction();
 
         // Insert into audit trail
-        $audit_trail_query = "INSERT INTO tbl_blotter_audit_trail(edited_by, blotter_edit_dt) VALUES(?, CURRENT_TIMESTAMP)";
+        $audit_trail_query = "UPDATE tbl_blotter_audit_trail SET edited_by=?, blotter_edit_dt=CURRENT_TIMESTAMP";
         $stmt = $pdo->prepare($audit_trail_query);
         $stmt->execute([$userid]);
 
@@ -297,8 +299,8 @@ if($operation_check == "FETCH_SCHEDULE_ON_MODAL"){
                 blotter_type = ?, desc_incident = ?, 
                 incident_dt = ?, location_of_incident = ?, 
                 statemnt = ?, mediation_date = ?, 
-                mediation_starttime = ?, mediation_endtime = ?, 
-                schedule_color = ?
+                mediation_starttime = ?, mediation_endtime = ?, mediator_no = ?,
+                schedule_color = ?, date_of_resolution =?, report_status = ?
         ";
         $params = [
             $resident_complainant, $non_resident_complainant, 
@@ -306,8 +308,8 @@ if($operation_check == "FETCH_SCHEDULE_ON_MODAL"){
             $blotter_type, $incident_desc, 
             $incident_date, $incident_location, 
             $case_context, $schedule_date, 
-            $schedule_starttime, $schedule_endtime, 
-            $schedule_color
+            $schedule_starttime, $schedule_endtime, $mediator_no,
+            $schedule_color, $resolution_date, $report_status
         ];
 
         if (isset($blotter_contextfile)) {
@@ -342,11 +344,24 @@ if($operation_check == "FETCH_SCHEDULE_ON_MODAL"){
         exit(json_encode($response));
     }
 }else if ($operation_check == "FETCH_MAIN_TABLE"){
-    $sqlquery = "SELECT * FROM vw_blotters WHERE is_deleted = 0";
-    $stmt=$pdo->prepare($sqlquery);
-    $stmt->execute();
-    $result=$stmt->fetchAll(PDO::FETCH_ASSOC);
+    
+    try {
+        $sql = "SELECT * FROM vw_blotters ORDER BY blotter_add_dt ASC LIMIT $start_from, $limit"; 
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+        // Check if there are any results
+        if (count($result) > 0) {
+            // Output each row as HTML
+            require_once'blottertabletofetch.php';
+        } else {
+            echo '<tr><td colspan="12">No records found.</td></tr>';
+        }
+    } catch (PDOException $e) {
+        echo 'Error: ' . htmlspecialchars($e->getMessage());
+    }
+    
     require_once'blottertabletofetch.php';
 
 
@@ -528,10 +543,10 @@ if($operation_check == "FETCH_SCHEDULE_ON_MODAL"){
         $sqlquery = "SELECT b.blotter_type, b.desc_incident, b.incident_dt, 
                     b.location_of_incident, b.date_of_resolution, b.statemnt, 
                     b.mediation_starttime, b.mediation_endtime, b.mediation_date, 
-                    b.schedule_color, 
-                    CONCAT(m.first_name, ', ', m.middle_name, ' ', m.last_name, ' ', m.suffix) AS mediator_name
+                    b.schedule_color, b.report_status,
+                    CONCAT(m.first_name, ' ', m.middle_name, ', ', m.last_name, ' ', COALESCE(m.suffix, '')) AS mediator_name
                     FROM tbl_blotters b
-                    JOIN tbl_blotter_mediator m ON b.mediator_no = m.mediator_id
+                    LEFT JOIN tbl_blotter_mediator m ON b.mediator_no = m.mediator_id
                     WHERE b.blotter_id = ?";
         $stmt = $pdo->prepare($sqlquery);
         $stmt->execute([$id_to_fetch]);
@@ -546,11 +561,31 @@ if($operation_check == "FETCH_SCHEDULE_ON_MODAL"){
     try{
        
         $pdo -> beginTransaction();
-        $audit_query = "INSERT INTO tbl_blotter_audit_trail (deleted_by, blottter_delete_dt) VALUES(?, CURRENT_TIMESTAMP)";
+        $audit_query = "UPDATE tbl_blotter_audit_trail SET deleted_by=?, blotter_delete_dt= CURRENT_TIMESTAMP";
         $stmt = $pdo->prepare($audit_query);
-        $stmt->execute([$user_id]);
+        $stmt->execute([$userid]);
 
         $sqlquery = "UPDATE tbl_blotters SET is_deleted=1 WHERE blotter_id = ?";
+        $stmt = $pdo->prepare($sqlquery);
+        $stmt->execute([$id_to_fetch]);
+        $pdo->commit();
+        echo json_encode(["success" => true, "message" => "Blotter deleted successfully"]);
+
+    }catch(Exception $e){
+        $pdo->rollBack();
+        echo json_encode(["success" => false, "message" => "Server Error: ".$e]);
+
+    }
+
+}else if($operation_check == "UNDO_DELETE"){
+    try{
+       
+        $pdo -> beginTransaction();
+        $audit_query = "UPDATE tbl_blotter_audit_trail SET deleted_by=?, blotter_delete_dt= CURRENT_TIMESTAMP";
+        $stmt = $pdo->prepare($audit_query);
+        $stmt->execute([$userid]);
+
+        $sqlquery = "UPDATE tbl_blotters SET is_deleted=0 WHERE blotter_id = ?";
         $stmt = $pdo->prepare($sqlquery);
         $stmt->execute([$id_to_fetch]);
         $pdo->commit();

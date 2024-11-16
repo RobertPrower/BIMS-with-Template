@@ -449,7 +449,7 @@ $(document).ready(function(){
                     Swal.fire({
                         title: "Blotter Added Successfully",
                         text: "Do you want to print the Blotter Report?",
-                        icon: "Success",
+                        icon: "success",
                         showCancelButton: true,
                         confirmButtonColor: "#3085d6",
                         cancelButtonColor: "#d33",
@@ -464,7 +464,7 @@ $(document).ready(function(){
                 }else{
                     Swal.fire({
                         title: "Something went wrong.",
-                        text: "The server reply's failed",
+                        text: "The server reply's failed : " + response.message,
                         icon: "error"
                       });
                 }
@@ -472,12 +472,18 @@ $(document).ready(function(){
         });
 
 
-
-
-
-
-
-
+       
+            $.ajax({
+                type: "POST",
+                url: "includes/blottersoperation.php",
+                data: {operation: "FETCH_MEDIATOR_SELECT"},
+                dataType: "HTML",
+                success: function (response) {
+    
+                    $("#mediator_name").html(response);
+                }
+            });
+        
 
     })
    

@@ -153,6 +153,26 @@ $(document).ready(function () {
     }
   }
 
+  function generatemediatorname(){
+  
+  $.ajax({ 
+    url: 'includes/blottersoperation.php', 
+    type: 'POST', 
+    data: {operation: "FETCH_MEDIATOR_SELECT"},
+    dataType: 'json', 
+    success: function(data) { 
+      data.forEach(function(option) {
+        $('#EditBlotterModal #mediator_name').append($('<option>', 
+          { value: option.mediator_name, 
+          text: option.mediator_name 
+          })); 
+        });
+    }, error: function(xhr, status, error){
+       console.error('Error fetching options:', error); 
+    }
+  })
+}
+
   //For the search box
   $("#searchbox").on("keyup", function () {
     let query = $(this).val();
@@ -845,8 +865,8 @@ $(document).ready(function () {
   }
 
   $("#EditBlotterModal, #ViewBlotterModal").on('shown.bs.modal', function (e) {
+    generatemediatorname()
 
-    
     var whatmodal = $("#ViewBlotterModal").hasClass('show')? "#ViewBlotterModal": "#EditBlotterModal";
     console.log(whatmodal)
     e.preventDefault();
@@ -899,6 +919,7 @@ $(document).ready(function () {
         var data = response.data[0]
 
         if(response.success == true){
+          
           $(whatmodal + ' [id="schedule_date"]').val(data.mediation_date);
           $(whatmodal + ' [id="schedule_starttime"]').val(data.mediation_starttime);
           $(whatmodal + ' [id="schedule_endtime"]').val(data.mediation_endtime);
@@ -907,16 +928,10 @@ $(document).ready(function () {
           $(whatmodal + ' [id="blotter_type"]').val(data.blotter_type);
           $(whatmodal + ' [id="incident_desc"]').val(data.desc_incident);
           $(whatmodal + ' [id="case_context"]').val(data.statemnt);
-          $(whatmodal + ' [id="mediator"]').val(data.mediator_name);
-          
-          if(!data.date_of_resolution == null){
+          $(whatmodal + ' [id="mediator_name"]').val(data.mediator_name)
+          $(whatmodal + ' [id="blotter_status"]').val(data.report_status)
+          $(whatmodal + ' [id="resolution_date"]').val(data.date_of_resolution)
 
-            $("#resolution_date").val(data.date_of_resolution);
-
-          }else{
-            $("#resolution_date").val("N/A");
-
-          }
         }else{
           console.log("Server Error: "+response.message)
         }
@@ -1382,6 +1397,51 @@ $(document).ready(function () {
               });
           }
       });
+  });
+
+  $(document).on("click","#undodeletebutton",function () {
+
+    var id =$(this).data("blotter_id");
+
+    Swal.fire({
+      title: "Are you sure?",
+      text: "This will restore the Blotter Record!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        $.ajax({
+          type: "POST",
+          url: "includes/blottersoperation.php",
+          data: {operation: "UNDO_DELETE", blotter_id: id},
+          dataType: "JSON",
+          success: function (response) {
+    
+            if(response.success == true){
+              Swal.fire({
+                title: "Restored Successfully!",
+                text: "Blotter Restored Successfully!",
+                icon: "success"
+              });
+        
+              reloadDeletedEntries()
+            }else{
+              Swal.fire({
+                title: "Restored Failed!",
+                text: "Blotter Restored Failed! :" + response.message,
+                icon: "error"
+              });
+        
+            }
+            
+          }
+        });
+      }
+    });   
+    
   });
 
 })

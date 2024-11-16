@@ -129,8 +129,7 @@
               <div class="stat-cards-info">
                 <p class="stat-cards-info__num"><?php echo $totalresident[0];?></p>
                 <p class="stat-cards-info__title">Total Residents</p>
-                <p class="stat-cards-info__progress">
-                </p>
+                <p class="stat-cards-info__progress"></p>
               </div>
             </article>
           </div>
@@ -168,7 +167,7 @@
             <article class="stat-cards-item">
               <div class="stat-cards-icon purple">
                 <i data-feather="file" aria-hidden="true"></i>
-              </div
+              </div>
               <div class="stat-cards-info">
                 <p class="stat-cards-info__num"><?php echo $total_users; ?></p>
                 <p class="stat-cards-info__title">Total Users</p>

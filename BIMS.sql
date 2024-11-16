@@ -155,9 +155,9 @@ insert  into `non_resident`(`nresident_id`,`img_filename`,`last_name`,`first_nam
 (1,'1images.jpg','Rabanes','Fernan','Jarito','','Blk 9 Lot 3','Kamatis st','Ramirez Subd','Novaliches','Quezon City','Metro Manila','1423','Male','Single','Tuguegarao','1998-06-16','090956565454',1,0),
 (2,'1images (1).jpg','Lim','Nicholas','Mahestro','','12','Zapote Rd','Cielito Homes','Camarin Brgy 175','Caloocan City','Metro Manila','1423','Male','Single','San Nicolas Pangasinan','1998-09-29','0966565666544',2,0),
 (3,'2f070627687d52995cfabf5c1bbde057.jpg','Lim','Mario','Jaen','III','Blk 12 Lot 4','Hillcrest st','Rolling Stone Subd','Novaliches','Quezon City','Metro Manila','1420','Male','Married','Madella Quirino','1990-05-02','090913457854',3,0),
-(4,'capture_1729251630.jpg','Chavez','Celestina','Mariano','','Blk 12 Lot 13','Josephine st','La Forteza Subd','Camarin','Caloocan City','Metro Manila','1432','Female','Married','Lipa Batangas','2024-10-16','09064545125',4,1),
+(4,'capture_1729251630.jpg','Chavez','Celestina','Mariano','','Blk 12 Lot 13','Josephine st','La Forteza Subd','Camarin','Caloocan City','Metro Manila','1432','Female','Married','Lipa Batangas','2024-10-16','09064545125',4,0),
 (5,'ren.jpg','La Torre','Nicholas','Trinidad','III','Blk 12 Lot 13','Davao st','Kingdom subd','Novaliches','Quezon City','Metro Manila','1411','Male','Married','Davao City','2000-01-01','090541236585',5,0),
-(6,'shanna (1).jpg','Saksi','Shanna','Jiamin','','Blk 1 Lot 12','St Bernard st','La Forteza','Camarin Brgy 175','La Forteza','Metro Manila','1424','Female','Married','Bagabag Nueva Viscaya','1990-06-12','09054321268',6,1);
+(6,'shanna (1).jpg','Saksi','Shanna','Jiamin','','Blk 1 Lot 12','St Bernard st','La Forteza','Camarin Brgy 175','La Forteza','Metro Manila','1424','Female','Married','Bagabag Nueva Viscaya','1990-06-12','09054321268',6,0);
 
 /*Table structure for table `nonres_audit_trail` */
 
@@ -187,9 +187,9 @@ insert  into `nonres_audit_trail`(`audit_trail_id`,`dept_added_no`,`user_added_n
 (1,NULL,NULL,'2024-09-04 10:12:00',NULL,NULL,'2024-09-24 18:04:40',NULL,NULL,'2024-09-25 03:03:50',NULL,NULL,NULL),
 (2,NULL,NULL,'2024-09-24 18:32:14',NULL,NULL,'2024-10-19 11:53:27',NULL,NULL,'2024-10-18 21:11:33',NULL,NULL,'2024-10-18 21:27:34'),
 (3,NULL,NULL,'2024-10-03 00:48:06',NULL,NULL,'2024-10-03 01:46:56',NULL,NULL,'2024-10-12 12:30:24',NULL,NULL,NULL),
-(4,NULL,NULL,'2024-10-03 00:48:33',NULL,NULL,NULL,NULL,NULL,'2024-10-21 15:10:41',NULL,NULL,'2024-10-19 11:58:12'),
-(5,NULL,NULL,'2024-10-03 00:59:05',NULL,NULL,'2024-10-19 13:56:18',NULL,NULL,'2024-10-19 00:10:29',NULL,NULL,NULL),
-(6,NULL,NULL,'2024-10-03 00:59:35',NULL,NULL,'2024-10-24 15:09:48',NULL,NULL,'2024-11-14 15:48:14',NULL,NULL,NULL),
+(4,NULL,NULL,'2024-10-03 00:48:33',NULL,NULL,NULL,NULL,NULL,'2024-10-21 15:10:41',NULL,NULL,'2024-11-16 18:57:20'),
+(5,NULL,NULL,'2024-10-03 00:59:05',NULL,NULL,'2024-10-19 13:56:18',NULL,NULL,'2024-11-15 16:53:50',NULL,NULL,'2024-11-16 18:57:25'),
+(6,NULL,NULL,'2024-10-03 00:59:35',NULL,NULL,'2024-10-24 15:09:48',NULL,NULL,'2024-11-14 15:48:14',NULL,NULL,'2024-11-16 18:57:23'),
 (7,NULL,NULL,'2024-10-03 01:02:24',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
 (8,NULL,NULL,'2024-10-03 01:04:17',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
 (9,NULL,NULL,'2024-10-03 01:04:34',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
@@ -325,51 +325,23 @@ CREATE TABLE `tbl_blotter_audit_trail` (
   PRIMARY KEY (`blotter_at_id`),
   KEY `fk_assist_by` (`assist_by_no`),
   CONSTRAINT `fk_assist_by` FOREIGN KEY (`assist_by_no`) REFERENCES `tbl_username` (`username_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=53 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 
 /*Data for the table `tbl_blotter_audit_trail` */
 
 insert  into `tbl_blotter_audit_trail`(`blotter_at_id`,`assist_by_no`,`blotter_add_dt`,`blotter_edit_dt`,`edited_by`,`blotter_delete_dt`,`deleted_by`,`blotter_recovered_dt`,`recovered_by`) values 
-(1,NULL,'2024-11-05 00:00:00',NULL,NULL,NULL,NULL,NULL,NULL),
-(2,NULL,'2024-11-05 00:00:00',NULL,NULL,NULL,NULL,NULL,NULL),
-(3,NULL,'2024-11-05 00:00:00',NULL,NULL,NULL,NULL,NULL,NULL),
-(4,NULL,'2024-11-05 00:00:00',NULL,NULL,NULL,NULL,NULL,NULL),
-(5,NULL,'2024-11-06 00:00:00',NULL,NULL,NULL,NULL,NULL,NULL),
-(17,NULL,NULL,'2024-11-13 00:00:00',NULL,NULL,NULL,NULL,NULL),
-(18,NULL,NULL,'2024-11-13 00:00:00',NULL,NULL,NULL,NULL,NULL),
-(19,NULL,NULL,'2024-11-13 00:00:00',NULL,NULL,NULL,NULL,NULL),
-(20,NULL,NULL,'2024-11-13 00:00:00',NULL,NULL,NULL,NULL,NULL),
-(22,NULL,NULL,'2024-11-13 00:00:00',NULL,NULL,NULL,NULL,NULL),
-(23,NULL,NULL,'2024-11-13 00:00:00',NULL,NULL,NULL,NULL,NULL),
-(24,NULL,NULL,'2024-11-13 00:00:00',NULL,NULL,NULL,NULL,NULL),
-(25,NULL,NULL,'2024-11-13 00:00:00',NULL,NULL,NULL,NULL,NULL),
-(26,NULL,NULL,'2024-11-13 00:00:00',NULL,NULL,NULL,NULL,NULL),
-(27,NULL,NULL,'2024-11-13 00:00:00',NULL,NULL,NULL,NULL,NULL),
-(28,NULL,NULL,'2024-11-13 00:00:00',NULL,NULL,NULL,NULL,NULL),
-(29,NULL,NULL,'2024-11-13 00:00:00',NULL,NULL,NULL,NULL,NULL),
-(30,NULL,NULL,'2024-11-13 00:00:00',NULL,NULL,NULL,NULL,NULL),
-(31,NULL,NULL,'2024-11-13 00:00:00',NULL,NULL,NULL,NULL,NULL),
-(32,NULL,NULL,'2024-11-13 00:00:00',NULL,NULL,NULL,NULL,NULL),
-(33,NULL,NULL,'2024-11-13 00:00:00',NULL,NULL,NULL,NULL,NULL),
-(34,NULL,NULL,'2024-11-13 00:00:00',NULL,NULL,NULL,NULL,NULL),
-(35,NULL,NULL,'2024-11-13 00:00:00',NULL,NULL,NULL,NULL,NULL),
-(36,NULL,NULL,'2024-11-13 00:00:00',NULL,NULL,NULL,NULL,NULL),
-(37,NULL,NULL,'2024-11-13 00:00:00',NULL,NULL,NULL,NULL,NULL),
-(38,NULL,NULL,'2024-11-13 00:00:00',NULL,NULL,NULL,NULL,NULL),
-(39,NULL,NULL,'2024-11-13 00:00:00',NULL,NULL,NULL,NULL,NULL),
-(40,NULL,NULL,'2024-11-13 00:00:00',NULL,NULL,NULL,NULL,NULL),
-(41,NULL,NULL,'2024-11-13 00:00:00',NULL,NULL,NULL,NULL,NULL),
-(42,NULL,NULL,'2024-11-13 00:00:00',NULL,NULL,NULL,NULL,NULL),
-(43,NULL,NULL,'2024-11-13 00:00:00',NULL,NULL,NULL,NULL,NULL),
-(44,NULL,NULL,'2024-11-13 00:00:00',NULL,NULL,NULL,NULL,NULL),
-(45,NULL,'2024-11-14 06:35:26','2024-11-14 06:35:26',NULL,NULL,NULL,NULL,NULL),
-(46,NULL,'2024-11-14 06:35:41','2024-11-14 06:35:41',NULL,NULL,NULL,NULL,NULL),
-(47,NULL,'2024-11-14 06:35:59','2024-11-14 06:35:59',NULL,NULL,NULL,NULL,NULL),
-(48,NULL,'2024-11-14 06:38:48','2024-11-14 06:38:48',NULL,NULL,NULL,NULL,NULL),
-(49,NULL,'2024-11-14 06:39:06','2024-11-14 06:39:06',NULL,NULL,NULL,NULL,NULL),
-(50,NULL,'2024-11-14 06:39:25','2024-11-14 06:39:25',NULL,NULL,NULL,NULL,NULL),
-(51,NULL,'2024-11-14 06:40:05','2024-11-14 06:40:05',NULL,NULL,NULL,NULL,NULL),
-(52,NULL,'2024-11-14 13:52:37','2024-11-14 13:52:37',NULL,NULL,NULL,NULL,NULL);
+(1,NULL,'2024-11-16 17:12:51','2024-11-16 20:46:09',NULL,'2024-11-16 21:19:05',NULL,NULL,NULL),
+(2,NULL,'2024-11-16 17:18:59','2024-11-16 20:46:09',NULL,'2024-11-16 21:19:05',NULL,NULL,NULL),
+(3,NULL,'2024-11-16 17:21:42','2024-11-16 20:46:09',NULL,'2024-11-16 21:19:05',NULL,NULL,NULL),
+(4,NULL,'2024-11-16 17:23:52','2024-11-16 20:46:09',NULL,'2024-11-16 21:19:05',NULL,NULL,NULL),
+(5,NULL,'2024-11-16 22:16:52',NULL,NULL,NULL,NULL,NULL,NULL),
+(6,NULL,'2024-11-16 22:17:55',NULL,NULL,NULL,NULL,NULL,NULL),
+(7,NULL,'2024-11-16 22:19:31',NULL,NULL,NULL,NULL,NULL,NULL),
+(8,NULL,'2024-11-16 22:20:10',NULL,NULL,NULL,NULL,NULL,NULL),
+(9,NULL,'2024-11-16 22:20:12',NULL,NULL,NULL,NULL,NULL,NULL),
+(10,NULL,'2024-11-16 22:20:30',NULL,NULL,NULL,NULL,NULL,NULL),
+(11,NULL,'2024-11-16 22:25:17',NULL,NULL,NULL,NULL,NULL,NULL),
+(12,NULL,'2024-11-16 22:31:39',NULL,NULL,NULL,NULL,NULL,NULL);
 
 /*Table structure for table `tbl_blotter_mediator` */
 
@@ -435,16 +407,23 @@ CREATE TABLE `tbl_blotters` (
   CONSTRAINT `tbl_blotters_ibfk_6` FOREIGN KEY (`other_complainant_no`) REFERENCES `tbl_other_complainants` (`complainant_id`),
   CONSTRAINT `tbl_blotters_ibfk_7` FOREIGN KEY (`other_respondent_no`) REFERENCES `tbl_other_respondents` (`respondent_id`),
   CONSTRAINT `tbl_blotters_ibfk_8` FOREIGN KEY (`mediator_no`) REFERENCES `tbl_blotter_mediator` (`mediator_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `tbl_blotters` */
 
 insert  into `tbl_blotters`(`blotter_id`,`res_complainant_no`,`nres_complainant_no`,`res_respondent_no`,`nres_respondent_no`,`other_complainant_no`,`other_respondent_no`,`blotter_type`,`desc_incident`,`incident_dt`,`location_of_incident`,`date_of_resolution`,`blotter_contextfile`,`blotter_evidencefile`,`statemnt`,`mediation_starttime`,`mediation_endtime`,`mediator_no`,`blot_at_no`,`mediation_date`,`schedule_color`,`report_status`,`is_deleted`) values 
-(1,1,NULL,NULL,6,1,1,0,'Rentangay Estafa','2024-11-04 02:36:09','xzxsxs',NULL,'Minori_portal.png','toilet-bound-hanako-kun-acryl-keychain-hanako-kun.png','sdsdsdsdsdsdds',NULL,NULL,1,1,'2024-11-20',NULL,0,0),
-(2,NULL,1,NULL,5,2,2,1,'Estafa','2024-11-03 17:13:03','Cielito Homes',NULL,'channels4_profile.jpg','channels4_profile.jpg','dsdjnasdjkljhfaskljdhfjasdhfluks','13:00:00','15:00:00',2,2,'2024-11-25',NULL,0,0),
-(3,4,NULL,3,NULL,3,3,1,'Estafa','2024-11-03 17:13:03','Cielito Homes',NULL,'channels4_profile (1).jpg','channels4_profile (1).jpg','dsdjnasdjkljhfaskljdhfjasdhfluks','07:30:00','10:30:00',2,3,'2024-11-21',NULL,0,0),
-(4,1,NULL,9,NULL,4,4,1,'fdsfdasfsa','2024-11-05 17:25:17','dfsdfsd',NULL,'hanako5.png','e1bc5bf9591b961956db94bd1e7ab1ed.jpg','dfsdfsdfsdfsd','13:00:00','14:30:00',2,4,'2024-11-27',NULL,0,0),
-(5,1,NULL,NULL,1,5,5,0,'Estafa/Rentangay','2024-11-04 18:49:04','Cielito Homes',NULL,'715a5404857b4d3cfdbd2747e2eaac79.jpg','Minori_portal.png','Sa ika 4 ng Nobembre si Fernan Rabanes nakatira sa Novaliches Quezon City ayon sa ID kanyang iniwan ay nirentahan ang Toyota Vios ni Reno Tecson Hofileña na may plate number na WOJ 944. ',NULL,NULL,1,5,NULL,'#000000',0,1);
+(1,1,NULL,10,NULL,1,1,1,'Utang Di na binayaraan','2024-11-13 17:00:21','Cielito Homes','2024-11-16','Shiroe_portal (3).png','715a5404857b4d3cfdbd2747e2eaac79 (3).jpg','Sa ika 13th ng Nobiembre ay nagpautang si Ginang Kiana Makabara ng 10 libong piso kay Reno Hofileña Tecson at di na sumpot ulit','12:30:00','14:00:00',1,1,'2024-11-18',NULL,1,0),
+(2,1,NULL,12,NULL,2,2,0,'Utang Di binabayaraan','2024-11-13 17:00:21','Cielito Homes',NULL,'5_2024-07-06_22-17-53.jpg','2f070627687d52995cfabf5c1bbde057 (2).jpg','Sa ika 13th ng Nobiembre ay nagpautang si Robert Salas Makabara ng 10 libong piso kay Reno Hofileña Tecson at di na sumipot ulit','14:00:00','15:30:00',2,2,'2024-11-18',NULL,0,0),
+(3,1,NULL,4,NULL,3,3,0,'Utang Tangngay','2024-11-13 17:00:21','Cielito Homes',NULL,'2f070627687d52995cfabf5c1bbde057.jpg','456471971_509667595047012_371368751885686431_n.jpg','Sa ika 13th ng Nobiembre ay nagpautang ang kapatid ng nagrereklamo  na si James Hofileña Tecson ng 10 libong piso kay Reno Hofileña Tecson at di na sumipot muli','14:00:00','15:30:00',2,3,'2024-11-21',NULL,0,0),
+(4,1,NULL,8,NULL,4,4,0,'Di nagbabayad ng Utang','2024-11-13 17:00:21','Cielito Homes',NULL,'2f070627687d52995cfabf5c1bbde057 (1).jpg','456471971_509667595047012_371368751885686431_n (1).jpg','Sa ika 13th ng Nobiembre ay si Allen Adrian Yalong ay nagpost ng libeliong mga post sa kanyang social media kung saan binibintangan ang nagrereklamo ng salot at tiwalig','13:00:00','14:30:00',1,4,'2024-11-27','#000000',0,0),
+(5,8,NULL,1,NULL,5,5,0,'Cyber Libel','2024-11-11 22:15:46','Cielito Homes',NULL,'2f070627687d52995cfabf5c1bbde057 (2).jpg','toilet-bound-hanako-kun-acryl-keychain-hanako-kun (1).png','Cyber libel lfjsdklflkasjflsdklfsadklvnlsdakncl','13:00:00','14:00:00',NULL,5,'2024-11-26','#000000',0,0),
+(6,8,NULL,1,NULL,6,6,0,'jkdjfksjdkfjksafksjdfkajdskfjadskkfkldsjdf','2024-11-11 22:15:46','Cielito Homes',NULL,'2f070627687d52995cfabf5c1bbde057 (3).jpg','715a5404857b4d3cfdbd2747e2eaac79 (4).jpg','fvjdfklvjaksljviajsdfklvjadsklfmfvoaefjd','13:00:00','14:00:00',NULL,6,'2024-11-26','#000000',0,0),
+(7,10,NULL,9,NULL,7,7,0,'Cyber Bullying','2024-11-12 22:18:42','Maria Lusisa',NULL,'2f070627687d52995cfabf5c1bbde057 (4).jpg','Shiroe_portal (4).png','dslmalmdlmfqewfmqsdmklawmdcwmdkcmkwsd','09:00:00','10:00:00',NULL,7,'2024-11-29','#000000',0,0),
+(8,10,NULL,9,NULL,8,8,1,'Unjust Vexation','2024-11-12 22:18:42','Maria Lusisa',NULL,'2f070627687d52995cfabf5c1bbde057 (5).jpg','Shiroe_portal (5).png','sdjkmdscmasdmckasmdcklandkclnasdkjnckds hckadscjndkjcnasdkncklasdnckanwdkc','09:00:00','10:00:00',NULL,8,'2024-11-29','#000000',0,0),
+(9,10,NULL,9,NULL,9,9,1,'Unjust Vexation','2024-11-12 22:18:42','Maria Lusisa',NULL,'2f070627687d52995cfabf5c1bbde057 (7).jpg','Shiroe_portal (6).png','sdjkmdscmasdmckasmdcklandkclnasdkjnckds hckadscjndkjcnasdkncklasdnckanwdkc','09:00:00','10:00:00',NULL,9,'2024-11-29','#000000',0,0),
+(10,10,NULL,9,NULL,10,10,1,'Estafa Rentangay','2024-11-12 22:18:42','Maria Lusisa',NULL,'2f070627687d52995cfabf5c1bbde057 (8).jpg','Shiroe_portal (7).png','sdjkmdscmasdmckasmdcklandkclnasdkjnckds hckadscjndkjcnasdkncklasdnckanwdkcdsfsfsdfsd','09:00:00','10:00:00',NULL,10,'2024-11-29','#000000',0,0),
+(11,8,NULL,9,NULL,11,11,0,'Snatching','2024-11-13 22:20:51','Maligay Park',NULL,'2f070627687d52995cfabf5c1bbde057 (13).jpg','toilet-bound-hanako-kun-acryl-keychain-hanako-kun (4).jpg','fsdfcsdcmsdmdclksdmlcmsklmcslacnsdkncadskncvkadsfvkld','08:30:00','10:30:00',NULL,11,'2024-11-20','#c83c3c',0,0),
+(12,8,NULL,9,NULL,12,12,0,'Snatchingfdfsdlcls;dkmcals','2024-11-13 22:20:51','Maligay Park',NULL,'2f070627687d52995cfabf5c1bbde057 (15).jpg','toilet-bound-hanako-kun-acryl-keychain-hanako-kun (5).jpg','fsdfcsdcmsdmdclksdmlcmsklmcslacnsdkncadskncvkadsfvkld','08:30:00','10:30:00',NULL,12,'2024-11-20','#c83c3c',0,0);
 
 /*Table structure for table `tbl_building_permits` */
 
@@ -494,7 +473,7 @@ CREATE TABLE `tbl_business_permits` (
   `subdivision` varchar(255) DEFAULT NULL,
   `type_of_buss` varchar(255) NOT NULL,
   PRIMARY KEY (`business_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 
 /*Data for the table `tbl_business_permits` */
 
@@ -510,7 +489,8 @@ insert  into `tbl_business_permits`(`business_id`,`year_quarter`,`store_name`,`b
 (9,'Q3-Q4','Yangzhe Metal Works','14','Zabarte Rd','','Metal Works'),
 (10,'Q3-Q4','Yangzhe Metal Works','14','Zabarte Rd','','Metal Works'),
 (11,'Q3-Q4','Umbalin Furniture','123','Genesis st Corner Zabarte','Cielito Homes','Funiture Store'),
-(12,'Q3-Q4','Cion Meat Shop','Blk 8 Lot 4','Jeremiah st','Christina Homes','Meat Shop');
+(12,'Q3-Q4','Cion Meat Shop','Blk 8 Lot 4','Jeremiah st','Christina Homes','Meat Shop'),
+(13,'Q3-Q4','Cion Meat Shop','Blk 8 Lot 12','Kambal st','Cielito Homes','Meat Shop');
 
 /*Table structure for table `tbl_cert_audit_trail` */
 
@@ -540,7 +520,7 @@ CREATE TABLE `tbl_cert_audit_trail` (
   CONSTRAINT `edited_by_fk` FOREIGN KEY (`edited_by_no`) REFERENCES `tbl_username` (`username_id`),
   CONSTRAINT `issued_by_fk` FOREIGN KEY (`issued_by_no`) REFERENCES `tbl_username` (`username_id`),
   CONSTRAINT `recovered_by_fk` FOREIGN KEY (`recovered_by_no`) REFERENCES `tbl_username` (`username_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=utf8;
 
 /*Data for the table `tbl_cert_audit_trail` */
 
@@ -584,8 +564,10 @@ insert  into `tbl_cert_audit_trail`(`audit_trail_id`,`issuing_dept_no`,`issued_b
 (37,NULL,NULL,'2024-10-19 19:28:02','2025-01-19',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
 (38,NULL,NULL,'2024-10-19 19:29:25','2025-01-19',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
 (39,NULL,NULL,'2024-10-19 13:34:11','2025-10-19',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(40,NULL,NULL,'2024-11-09 18:02:01','2025-02-09',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(41,NULL,NULL,'2024-11-14 15:44:22','2025-11-14',NULL,'2024-11-14 00:00:00',NULL,NULL,NULL,NULL,NULL);
+(40,NULL,NULL,'2024-11-09 18:02:01','2025-02-09',NULL,'2024-11-15 00:00:00',NULL,NULL,NULL,NULL,NULL),
+(41,NULL,NULL,'2024-11-14 15:44:22','2025-11-14',NULL,'2024-11-14 00:00:00',NULL,NULL,NULL,NULL,NULL),
+(42,NULL,NULL,'2024-11-15 16:56:46','2025-02-15',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(43,NULL,NULL,'2024-11-15 17:00:13','2025-11-15',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 
 /*Table structure for table `tbl_docu_request` */
 
@@ -619,37 +601,37 @@ CREATE TABLE `tbl_docu_request` (
 
 insert  into `tbl_docu_request`(`request_id`,`resident_no`,`nresident_no`,`document_no`,`age`,`presented_id`,`ID_number`,`purpose`,`audit_trail_no`,`pdffile`,`status`,`is_deleted`) values 
 ('2024-000001',1,NULL,1,32,'National ID','PCN-123455678890','Maynilad Application',1,'generated_pdf_1728840899.pdf',0,0),
-('2024-000002',NULL,1,2,26,'Drivers License','N42-2121212121212','Getting Business Permit',2,'generated_pdf_1728842063.pdf',0,1),
-('2024-000003',12,NULL,3,21,'Drivers License','N42-2010345','Getting Business Permit',3,'generated_pdf_1728842510.pdf',0,1),
+('2024-000002',NULL,1,2,26,'Drivers License','N42-2121212121212','Getting Business Permit',2,'generated_pdf_1728842063.pdf',0,0),
+('2024-000003',12,NULL,3,21,'Drivers License','N42-2010345','Getting Business Permit',3,'generated_pdf_1728842510.pdf',0,0),
 ('2024-000004',1,NULL,4,32,'Drivers License','N42-2010345','Getting Business Permit',4,'generated_pdf_1728842689.pdf',2,0),
-('2024-000005',8,NULL,5,38,'Drivers License','N42-2010345','Getting Business Permit',5,'generated_pdf_1728842976.pdf',0,1),
-('2024-000006',NULL,2,6,26,'SSS ID','SSS-1234455677','Securing Building Permit',6,'generated_pdf_1728843584.pdf',0,1),
-('2024-000007',NULL,2,7,26,'SSS ID','SSS-1234455677','Securing Building Permit',7,'generated_pdf_1728843723.pdf',0,1),
-('2024-000008',NULL,2,8,26,'SSS ID','SSS-1234455677','Securing Building Permit',8,'generated_pdf_1728843855.pdf',0,1),
-('2024-000009',NULL,2,9,26,'SSS ID','SSS-1234455677','Securing Building Permit',9,'generated_pdf_1728843888.pdf',0,1),
-('2024-000010',NULL,2,10,26,'SSS ID','SSS-1234455677','Securing Building Permit',10,'generated_pdf_1728843980.pdf',0,1),
-('2024-000011',NULL,2,11,26,'SSS ID','SSS-1234455677','Securing Building Permit',11,'generated_pdf_1728844015.pdf',0,1),
-('2024-000012',NULL,2,12,26,'SSS ID','SSS-1234455677','Securing Building Permit',12,'generated_pdf_1728844076.pdf',0,1),
+('2024-000005',8,NULL,5,38,'Drivers License','N42-2010345','Getting Business Permit',5,'generated_pdf_1728842976.pdf',0,0),
+('2024-000006',NULL,2,6,26,'SSS ID','SSS-1234455677','Securing Building Permit',6,'generated_pdf_1728843584.pdf',0,0),
+('2024-000007',NULL,2,7,26,'SSS ID','SSS-1234455677','Securing Building Permit',7,'generated_pdf_1728843723.pdf',0,0),
+('2024-000008',NULL,2,8,26,'SSS ID','SSS-1234455677','Securing Building Permit',8,'generated_pdf_1728843855.pdf',0,0),
+('2024-000009',NULL,2,9,26,'SSS ID','SSS-1234455677','Securing Building Permit',9,'generated_pdf_1728843888.pdf',0,0),
+('2024-000010',NULL,2,10,26,'SSS ID','SSS-1234455677','Securing Building Permit',10,'generated_pdf_1728843980.pdf',0,0),
+('2024-000011',NULL,2,11,26,'SSS ID','SSS-1234455677','Securing Building Permit',11,'generated_pdf_1728844015.pdf',0,0),
+('2024-000012',NULL,2,12,26,'SSS ID','SSS-1234455677','Securing Building Permit',12,'generated_pdf_1728844076.pdf',0,0),
 ('2024-000013',NULL,2,13,26,'SSS ID','SSS-1234455677','Securing Building Permit',13,'generated_pdf_1728844088.pdf',0,0),
 ('2024-000014',NULL,2,14,26,'SSS ID','SSS-1234455677','Securing Building Permit',14,'generated_pdf_1728844112.pdf',0,0),
-('2024-000015',NULL,2,15,26,'SSS ID','SSS-1234455677','Securing Building Permit',15,'generated_pdf_1728844229.pdf',0,1),
-('2024-000016',NULL,2,16,26,'SSS ID','SSS-1234455677','Securing Building Permit',16,'generated_pdf_1728844286.pdf',0,1),
-('2024-000017',NULL,2,17,26,'SSS ID','SSS-1234455677','Securing Building Permit',17,'generated_pdf_1728844387.pdf',0,1),
-('2024-000018',NULL,3,18,34,'SSS ID','SSS-1234455677','Securing Building Permit',18,'generated_pdf_1728844523.pdf',0,1),
+('2024-000015',NULL,2,15,26,'SSS ID','SSS-1234455677','Securing Building Permit',15,'generated_pdf_1728844229.pdf',0,0),
+('2024-000016',NULL,2,16,26,'SSS ID','SSS-1234455677','Securing Building Permit',16,'generated_pdf_1728844286.pdf',0,0),
+('2024-000017',NULL,2,17,26,'SSS ID','SSS-1234455677','Securing Building Permit',17,'generated_pdf_1728844387.pdf',0,0),
+('2024-000018',NULL,3,18,34,'SSS ID','SSS-1234455677','Securing Building Permit',18,'generated_pdf_1728844523.pdf',0,0),
 ('2024-000019',NULL,3,19,34,'Passport','PASS-1234567898998','Securing Excavation Permit',19,'generated_pdf_1728844836.pdf',0,0),
 ('2024-000020',NULL,3,20,34,'School ID','19-4545454545','Securing Fencing Permit',20,'generated_pdf_1728844935.pdf',0,0),
 ('2024-000021',8,NULL,21,38,'GSIS ID','GSIS-123345567789','Securing Building Permit',21,'generated_pdf_1728880724.pdf',2,0),
 ('2024-000022',8,NULL,22,38,'GSIS ID','GSIS-123345567789','Securing Building Permit',22,'generated_pdf_1728880833.pdf',0,0),
-('2024-000023',8,NULL,23,38,'GSIS ID','GSIS-123345567789','Securing Building Permit',23,'generated_pdf_1728880864.pdf',0,1),
-('2024-000024',12,NULL,24,21,'Drivers License','N42-1212121212121','Securing Building Permit',24,'generated_pdf_1728904058.pdf',0,1),
+('2024-000023',8,NULL,23,38,'GSIS ID','GSIS-123345567789','Securing Building Permit',23,'generated_pdf_1728880864.pdf',0,0),
+('2024-000024',12,NULL,24,21,'Drivers License','N42-1212121212121','Securing Building Permit',24,'generated_pdf_1728904058.pdf',0,0),
 ('2024-000025',NULL,1,25,26,'NBI Clearance','NBI-12122434345454','Getting Business Permit',25,'generated_pdf_1728994071.pdf',0,0),
-('2024-000026',NULL,2,26,26,'LTOPF ID','LTOF-1234567890','Getting Business Permit',26,'generated_pdf_1729061539.pdf',0,1),
+('2024-000026',NULL,2,26,26,'LTOPF ID','LTOF-1234567890','Getting Business Permit',26,'generated_pdf_1729061539.pdf',0,0),
 ('2024-000027',NULL,2,27,26,'LTOPF ID','LTOF-1234567890','Getting Business Permit',27,'generated_pdf_1729061662.pdf',0,0),
 ('2024-000028',NULL,2,28,26,'LTOPF ID','LTOF-1234567890','Getting Business Permit',28,'generated_pdf_1729061676.pdf',0,0),
 ('2024-000029',NULL,2,29,26,'LTOPF ID','LTOF-1234567890','Getting Business Permit',29,'generated_pdf_1729061693.pdf',0,0),
 ('2024-000030',NULL,2,30,26,'LTOPF ID','LTOF-1234567890','Getting Business Permit',30,'generated_pdf_1729061840.pdf',0,0),
 ('2024-000031',NULL,1,31,26,'Drivers License','N42-12121324343434','Securing Building Permit',31,'generated_pdf_1729061918.pdf',0,0),
-('2024-000032',NULL,3,32,34,'Postal ID','POS-1234567890','Getting Business Permit',32,'generated_pdf_1729062693.pdf',0,1),
+('2024-000032',NULL,3,32,34,'Postal ID','POS-1234567890','Getting Business Permit',32,'generated_pdf_1729062693.pdf',0,0),
 ('2024-000033',12,NULL,33,22,'School ID','21-00259','Securing Excavation Permit',33,'generated_pdf_1729076195.pdf',0,0),
 ('2024-000034',8,NULL,34,38,'National ID','df4545454545','Verification Purposes',34,'generated_pdf_1729336951.pdf',0,0),
 ('2024-000035',8,NULL,35,38,'NBI Clearance','df4545454545','Medical Assistance',35,'generated_pdf_1729337030.pdf',0,0),
@@ -657,8 +639,10 @@ insert  into `tbl_docu_request`(`request_id`,`resident_no`,`nresident_no`,`docum
 ('2024-000037',8,NULL,37,38,'NBI Clearance','df4545454545','Medical Assistance',37,'generated_pdf_1729337282.pdf',0,0),
 ('2024-000038',8,NULL,38,38,'NBI Clearance','df4545454545','Medical Assistance',38,'generated_pdf_1729337365.pdf',0,0),
 ('2024-000039',8,NULL,39,38,'Postal ID','df4545454545','Employment',39,'C:/xampp/htdocs//BIMS-with-Template/documents/first_time_job_seeker/generated_pdf_1729337651.pdf',0,0),
-('2024-000040',9,NULL,40,38,'School ID','19-565698989','Verification Purposes',40,'generated_pdf_1731146521.pdf',0,0),
-('2024-000041',12,NULL,41,22,'School ID','21-2100254','Getting Business Permit',41,'generated_pdf_1731570262.pdf',0,1);
+('2024-000040',9,NULL,40,38,'School ID','19-565698912121','Verification Purposes',40,'generated_pdf_1731146521.pdf',0,0),
+('2024-000041',12,NULL,41,22,'School ID','21-2100254','Getting Business Permit',41,'generated_pdf_1731570262.pdf',0,0),
+('2024-000042',1,NULL,42,32,'School ID','21-00254','Maynilad Application',42,'generated_pdf_1731661006.pdf',0,0),
+('2024-000043',1,NULL,43,32,'School ID','21-00259','Getting Business Permit',43,'generated_pdf_1731661213.pdf',0,0);
 
 /*Table structure for table `tbl_documents` */
 
@@ -690,7 +674,7 @@ CREATE TABLE `tbl_documents` (
   CONSTRAINT `f_permit_fk` FOREIGN KEY (`Fencing_Permits`) REFERENCES `tbl_fencing_permit` (`fencing_permit_id`) ON DELETE CASCADE,
   CONSTRAINT `indigency_fk` FOREIGN KEY (`Certificate_of_Indigency`) REFERENCES `tbl_indigency` (`indigency_id`) ON DELETE CASCADE,
   CONSTRAINT `tprs_fk` FOREIGN KEY (`TPRS`) REFERENCES `tbl_tprs` (`tprs_id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=utf8;
 
 /*Data for the table `tbl_documents` */
 
@@ -735,7 +719,9 @@ insert  into `tbl_documents`(`docu_id`,`Barangay_Clearance`,`Certificate_of_Resi
 (38,NULL,NULL,4,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
 (39,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,NULL),
 (40,NULL,3,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(41,NULL,NULL,NULL,NULL,NULL,NULL,12,NULL,NULL,NULL,NULL);
+(41,NULL,NULL,NULL,NULL,NULL,NULL,12,NULL,NULL,NULL,NULL),
+(42,NULL,4,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(43,NULL,NULL,NULL,NULL,NULL,NULL,13,NULL,NULL,NULL,NULL);
 
 /*Table structure for table `tbl_excavation_permits` */
 
@@ -816,16 +802,23 @@ CREATE TABLE `tbl_other_complainants` (
   CONSTRAINT `tbl_other_complainants_ibfk_2` FOREIGN KEY (`nres_person_1`) REFERENCES `non_resident` (`nresident_id`),
   CONSTRAINT `tbl_other_complainants_ibfk_3` FOREIGN KEY (`res_person_2`) REFERENCES `resident` (`resident_id`),
   CONSTRAINT `tbl_other_complainants_ibfk_4` FOREIGN KEY (`nres_person_2`) REFERENCES `non_resident` (`nresident_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 
 /*Data for the table `tbl_other_complainants` */
 
 insert  into `tbl_other_complainants`(`complainant_id`,`res_person_1`,`nres_person_1`,`res_person_2`,`nres_person_2`,`res_person_3`,`nres_person_3`,`res_person_4`,`nres_person_4`,`res_person_5`,`nres_person_5`) values 
-(1,10,5,8,2,NULL,NULL,NULL,NULL,NULL,NULL),
+(1,9,NULL,16,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
 (2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
 (3,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
 (4,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(5,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+(5,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(6,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(7,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(8,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(9,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(11,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(12,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 
 /*Table structure for table `tbl_other_respondents` */
 
@@ -864,16 +857,23 @@ CREATE TABLE `tbl_other_respondents` (
   CONSTRAINT `tbl_other_respondents_ibfk_7` FOREIGN KEY (`res_person_4`) REFERENCES `resident` (`resident_id`),
   CONSTRAINT `tbl_other_respondents_ibfk_8` FOREIGN KEY (`nres_person_4`) REFERENCES `non_resident` (`nresident_id`),
   CONSTRAINT `tbl_other_respondents_ibfk_9` FOREIGN KEY (`res_person_5`) REFERENCES `resident` (`resident_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 
 /*Data for the table `tbl_other_respondents` */
 
 insert  into `tbl_other_respondents`(`respondent_id`,`res_person_1`,`nres_person_1`,`res_person_2`,`nres_person_2`,`res_person_3`,`nres_person_3`,`res_person_4`,`nres_person_4`,`res_person_5`,`nres_person_5`) values 
-(1,18,NULL,20,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(1,8,NULL,19,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
 (2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
 (3,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
 (4,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(5,NULL,6,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+(5,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(6,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(7,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(8,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(9,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(11,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(12,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 
 /*Table structure for table `tbl_tprs` */
 
@@ -1090,6 +1090,160 @@ BEGIN
 END */$$
 DELIMITER ;
 
+/* Procedure structure for procedure `CheckNonResidentBlotterRec` */
+
+/*!50003 DROP PROCEDURE IF EXISTS  `CheckNonResidentBlotterRec` */;
+
+DELIMITER $$
+
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `CheckNonResidentBlotterRec`(IN nresident_id INT, in start_from int)
+BEGIN
+    SELECT 
+        b.blotter_id,
+        aud.blotter_add_dt,
+        CASE 
+            WHEN b.nres_complainant_no = nresident_id THEN "Complainant" 
+            WHEN b.nres_respondent_no = nresident_id THEN "Respondent"
+            WHEN c.nres_person_1 = nresident_id OR c.nres_person_2 = nresident_id OR 
+                 c.nres_person_3 = nresident_id OR c.nres_person_4 = nresident_id OR 
+                 c.nres_person_5 = nresident_id THEN "Other Complainant"
+            WHEN r.nres_person_1 = nresident_id OR r.nres_person_2 = nresident_id OR 
+                 r.nres_person_3 = nresident_id OR r.nres_person_4 = nresident_id OR 
+                 r.nres_person_5 = nresident_id THEN "Other Respondent"
+            ELSE "Not Found"
+        END AS person_status,
+        b.blotter_type, 
+        b.desc_incident,
+        b.incident_dt, 
+        b.location_of_incident, 
+        b.date_of_resolution,
+        b.report_status
+    FROM 
+        tbl_blotters b
+        LEFT JOIN tbl_other_complainants c ON c.complainant_id = b.other_complainant_no
+        LEFT JOIN tbl_other_respondents r ON r.respondent_id = b.other_respondent_no
+        LEFT JOIN tbl_blotter_audit_trail aud ON aud.`blotter_at_id` =  b.`blot_at_no`
+    WHERE 
+        b.nres_complainant_no = nresident_id 
+        OR b.nres_respondent_no = nresident_id
+        OR c.nres_person_1 = nresident_id 
+        OR c.nres_person_2 = nresident_id 
+        OR c.nres_person_3 = nresident_id 
+        OR c.nres_person_4 = nresident_id 
+        OR c.nres_person_5 = nresident_id
+        OR r.nres_person_1 = nresident_id 
+        OR r.nres_person_2 = nresident_id 
+        OR r.nres_person_3 = nresident_id 
+        OR r.nres_person_4 = nresident_id 
+        OR r.nres_person_5 = nresident_id
+        
+          ORDER BY b.incident_dt DESC LIMIT start_from, 5;
+
+END */$$
+DELIMITER ;
+
+/* Procedure structure for procedure `CheckResidentBlotterRec` */
+
+/*!50003 DROP PROCEDURE IF EXISTS  `CheckResidentBlotterRec` */;
+
+DELIMITER $$
+
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `CheckResidentBlotterRec`(
+    IN resident_id INT, 
+    IN start_from INT, 
+    IN count_check INT
+)
+BEGIN
+    IF count_check IS NOT NULL THEN
+        -- If count_check is provided, return the count of entries
+        SELECT COUNT(*) AS total_entries
+        FROM (
+            SELECT 
+                b.blotter_id,
+                aud.blotter_add_dt,
+                CASE 
+                    WHEN b.res_complainant_no = resident_id THEN 'Complainant' 
+                    WHEN b.res_respondent_no = resident_id THEN 'Respondent'
+                    WHEN c.res_person_1 = resident_id OR c.res_person_2 = resident_id OR 
+                         c.res_person_3 = resident_id OR c.res_person_4 = resident_id OR 
+                         c.res_person_5 = resident_id THEN 'Other Complainant'
+                    WHEN r.res_person_1 = resident_id OR r.res_person_2 = resident_id OR 
+                         r.res_person_3 = resident_id OR r.res_person_4 = resident_id OR 
+                         r.res_person_5 = resident_id THEN 'Other Respondent'
+                    ELSE 'Not Found'
+                END AS person_status,
+                b.blotter_type, 
+                b.desc_incident,
+                b.incident_dt, 
+                b.location_of_incident, 
+                b.date_of_resolution,
+                b.report_status
+            FROM 
+                tbl_blotters b
+                LEFT JOIN tbl_other_complainants c ON c.complainant_id = b.other_complainant_no
+                LEFT JOIN tbl_other_respondents r ON r.respondent_id = b.other_respondent_no
+                LEFT JOIN tbl_blotter_audit_trail aud ON aud.blotter_at_id =  b.blot_at_no
+            WHERE 
+                b.res_complainant_no = resident_id 
+                OR b.res_respondent_no = resident_id
+                OR c.res_person_1 = resident_id 
+                OR c.res_person_2 = resident_id 
+                OR c.res_person_3 = resident_id 
+                OR c.res_person_4 = resident_id 
+                OR c.res_person_5 = resident_id
+                OR r.res_person_1 = resident_id 
+                OR r.res_person_2 = resident_id 
+                OR r.res_person_3 = resident_id 
+                OR r.res_person_4 = resident_id 
+                OR r.res_person_5 = resident_id
+        ) AS counted_entries; -- Provide alias for subquery
+
+    ELSE
+        -- If count_check is not provided, return the actual records
+        SELECT 
+            b.blotter_id,
+            aud.blotter_add_dt,
+            CASE 
+                WHEN b.res_complainant_no = resident_id THEN 'Complainant' 
+                WHEN b.res_respondent_no = resident_id THEN 'Respondent'
+                WHEN c.res_person_1 = resident_id OR c.res_person_2 = resident_id OR 
+                     c.res_person_3 = resident_id OR c.res_person_4 = resident_id OR 
+                     c.res_person_5 = resident_id THEN 'Other Complainant'
+                WHEN r.res_person_1 = resident_id OR r.res_person_2 = resident_id OR 
+                     r.res_person_3 = resident_id OR r.res_person_4 = resident_id OR 
+                     r.res_person_5 = resident_id THEN 'Other Respondent'
+                ELSE 'Not Found'
+            END AS person_status,
+            b.blotter_type, 
+            b.desc_incident,
+            b.incident_dt, 
+            b.location_of_incident, 
+            b.date_of_resolution,
+            b.report_status
+        FROM 
+            tbl_blotters b
+            LEFT JOIN tbl_other_complainants c ON c.complainant_id = b.other_complainant_no
+            LEFT JOIN tbl_other_respondents r ON r.respondent_id = b.other_respondent_no
+            LEFT JOIN tbl_blotter_audit_trail aud ON aud.blotter_at_id =  b.blot_at_no
+        WHERE 
+            b.res_complainant_no = resident_id 
+            OR b.res_respondent_no = resident_id
+            OR c.res_person_1 = resident_id 
+            OR c.res_person_2 = resident_id 
+            OR c.res_person_3 = resident_id 
+            OR c.res_person_4 = resident_id 
+            OR c.res_person_5 = resident_id
+            OR r.res_person_1 = resident_id 
+            OR r.res_person_2 = resident_id 
+            OR r.res_person_3 = resident_id 
+            OR r.res_person_4 = resident_id 
+            OR r.res_person_5 = resident_id
+        ORDER BY b.incident_dt DESC
+        LIMIT start_from, 5;
+    END IF;
+END */$$
+DELIMITER ;
+
 /* Procedure structure for procedure `determine_docu_type` */
 
 /*!50003 DROP PROCEDURE IF EXISTS  `determine_docu_type` */;
@@ -1297,118 +1451,117 @@ DELIMITER ;
 
 DELIMITER $$
 
-/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `FetchAllComplainantsID`(in id int)
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `FetchAllComplainantsID`(IN _id INT)
 BEGIN
-	
-		SELECT 
-    resident.`resident_id` AS id,
-    'Resident' AS `status`
-FROM 
-    `tbl_other_complainants`
-JOIN 
-    `resident` ON `tbl_other_complainants`.`res_person_1` = `resident`.`resident_id`
-WHERE `tbl_other_complainants`.`res_person_1` IS NOT NULL AND `tbl_other_complainants`.`complainant_id` = id
+    SELECT 
+        resident.`resident_id` AS id,
+        'Resident' AS `status`
+    FROM 
+        `tbl_other_complainants`
+    JOIN 
+        `resident` ON `tbl_other_complainants`.`res_person_1` = `resident`.`resident_id`
+    WHERE `tbl_other_complainants`.`res_person_1` IS NOT NULL AND `tbl_other_complainants`.`complainant_id` = _id
 
-UNION ALL
+    UNION ALL
 
-SELECT 
-    resident.`resident_id` AS id,
-    'Resident' AS `status`
-FROM 
-    `tbl_other_complainants`
-JOIN 
-    `resident` ON `tbl_other_complainants`.`res_person_2` = `resident`.`resident_id`
-WHERE `tbl_other_complainants`.`res_person_2` IS NOT NULL AND `tbl_other_complainants`.`complainant_id` = id
+    SELECT 
+        resident.`resident_id` AS id,
+        'Resident' AS `status`
+    FROM 
+        `tbl_other_complainants`
+    JOIN 
+        `resident` ON `tbl_other_complainants`.`res_person_2` = `resident`.`resident_id`
+    WHERE `tbl_other_complainants`.`res_person_2` IS NOT NULL AND `tbl_other_complainants`.`complainant_id` = _id
 
-UNION ALL
+    UNION ALL
 
-SELECT 
-	resident.`resident_id` AS id,
-    'Resident' AS `status`
-FROM 
-    `tbl_other_complainants`
-JOIN 
-    `resident` ON `tbl_other_complainants`.`res_person_3` = `resident`.`resident_id`
-WHERE `tbl_other_complainants`.`res_person_3` IS NOT NULL AND `tbl_other_complainants`.`complainant_id` = id
+    SELECT 
+        resident.`resident_id` AS id,
+        'Resident' AS `status`
+    FROM 
+        `tbl_other_complainants`
+    JOIN 
+        `resident` ON `tbl_other_complainants`.`res_person_3` = `resident`.`resident_id`
+    WHERE `tbl_other_complainants`.`res_person_3` IS NOT NULL AND `tbl_other_complainants`.`complainant_id` = _id
 
-UNION ALL
+    UNION ALL
 
-SELECT 
-	resident.`resident_id` AS id,   
-    'Resident' AS `status`
-FROM 
-    `tbl_other_complainants`
-JOIN 
-    `resident` ON `tbl_other_complainants`.`res_person_4` = `resident`.`resident_id`
-WHERE `tbl_other_complainants`.`res_person_4` IS NOT NULL AND `tbl_other_complainants`.`complainant_id` = id
+    SELECT 
+        resident.`resident_id` AS id,   
+        'Resident' AS `status`
+    FROM 
+        `tbl_other_complainants`
+    JOIN 
+        `resident` ON `tbl_other_complainants`.`res_person_4` = `resident`.`resident_id`
+    WHERE `tbl_other_complainants`.`res_person_4` IS NOT NULL AND `tbl_other_complainants`.`complainant_id` = _id
 
-UNION ALL
+    UNION ALL
 
-SELECT 
-	resident.`resident_id` AS id,
-    'Resident' AS `status`
-FROM 
-    `tbl_other_complainants`
-JOIN 
-    `resident` ON `tbl_other_complainants`.`res_person_5` = `resident`.`resident_id`
-WHERE `tbl_other_complainants`.`res_person_5` IS NOT NULL AND `tbl_other_complainants`.`complainant_id` = id
+    SELECT 
+        resident.`resident_id` AS id,
+        'Resident' AS `status`
+    FROM 
+        `tbl_other_complainants`
+    JOIN 
+        `resident` ON `tbl_other_complainants`.`res_person_5` = `resident`.`resident_id`
+    WHERE `tbl_other_complainants`.`res_person_5` IS NOT NULL AND `tbl_other_complainants`.`complainant_id` = _id
 
-UNION ALL
+    UNION ALL
 
-SELECT 
-	non_resident.`nresident_id` AS id,    
-    'Non-Resident' AS `status`
-FROM 
-    `tbl_other_complainants`
-JOIN 
-    `non_resident` ON `tbl_other_complainants`.`nres_person_1` = `non_resident`.`nresident_id`
-WHERE `tbl_other_complainants`.`nres_person_1` IS NOT NULL AND `tbl_other_complainants`.`complainant_id` = id
+    SELECT 
+        non_resident.`nresident_id` AS id,    
+        'Non-Resident' AS `status`
+    FROM 
+        `tbl_other_complainants`
+    JOIN 
+        `non_resident` ON `tbl_other_complainants`.`nres_person_1` = `non_resident`.`nresident_id`
+    WHERE `tbl_other_complainants`.`nres_person_1` IS NOT NULL AND `tbl_other_complainants`.`complainant_id` = _id
 
-UNION ALL
+    UNION ALL
 
-SELECT 
-	non_resident.`nresident_id` AS id,
-    'Non-Resident' AS `status`
-FROM 
-    `tbl_other_complainants`
-JOIN 
-    `non_resident` ON `tbl_other_complainants`.`nres_person_2` = `non_resident`.`nresident_id`
-WHERE `tbl_other_complainants`.`nres_person_2` IS NOT NULL AND `tbl_other_complainants`.`complainant_id` = id
+    SELECT 
+        non_resident.`nresident_id` AS id,
+        'Non-Resident' AS `status`
+    FROM 
+        `tbl_other_complainants`
+    JOIN 
+        `non_resident` ON `tbl_other_complainants`.`nres_person_2` = `non_resident`.`nresident_id`
+    WHERE `tbl_other_complainants`.`nres_person_2` IS NOT NULL AND `tbl_other_complainants`.`complainant_id` = _id
 
-UNION ALL
+    UNION ALL
 
-SELECT 
-	non_resident.`nresident_id` AS id,
-    'Non-Resident' AS `status`
-FROM 
-    `tbl_other_complainants`
-JOIN 
-    `non_resident` ON `tbl_other_complainants`.`nres_person_3` = `non_resident`.`nresident_id`
-WHERE `tbl_other_complainants`.`nres_person_3` IS NOT NULL AND `tbl_other_complainants`.`complainant_id` = id
+    SELECT 
+        non_resident.`nresident_id` AS id,
+        'Non-Resident' AS `status`
+    FROM 
+        `tbl_other_complainants`
+    JOIN 
+        `non_resident` ON `tbl_other_complainants`.`nres_person_3` = `non_resident`.`nresident_id`
+    WHERE `tbl_other_complainants`.`nres_person_3` IS NOT NULL AND `tbl_other_complainants`.`complainant_id` = _id
 
-UNION ALL
+    UNION ALL
 
-SELECT 
-	non_resident.`nresident_id` AS id,
-    'Non-Resident' AS `status`
-FROM 
-    `tbl_other_complainants`
-JOIN 
-    `non_resident` ON `tbl_other_complainants`.`nres_person_4` = `non_resident`.`nresident_id`
-WHERE `tbl_other_complainants`.`nres_person_4` IS NOT NULL AND `tbl_other_complainants`.`complainant_id` = id
+    SELECT 
+        non_resident.`nresident_id` AS id,
+        'Non-Resident' AS `status`
+    FROM 
+        `tbl_other_complainants`
+    JOIN 
+        `non_resident` ON `tbl_other_complainants`.`nres_person_4` = `non_resident`.`nresident_id`
+    WHERE `tbl_other_complainants`.`nres_person_4` IS NOT NULL AND `tbl_other_complainants`.`complainant_id` = _id
 
-UNION ALL
+    UNION ALL
 
-SELECT 
-	non_resident.`nresident_id` AS id,
-    'Non-Resident' AS `status`
-FROM 
-    `tbl_other_complainants`
-JOIN 
-    `non_resident` ON `tbl_other_complainants`.`nres_person_5` = `non_resident`.`nresident_id`
-WHERE `tbl_other_complainants`.`nres_person_5` IS NOT NULL AND `tbl_other_complainants`.`complainant_id` = id;
+    SELECT 
+        non_resident.`nresident_id` AS id,
+        'Non-Resident' AS `status`
+    FROM 
+        `tbl_other_complainants`
+    JOIN 
+        `non_resident` ON `tbl_other_complainants`.`nres_person_5` = `non_resident`.`nresident_id`
+    WHERE `tbl_other_complainants`.`nres_person_5` IS NOT NULL AND `tbl_other_complainants`.`complainant_id` = _id;
 
-	END */$$
+END */$$
 DELIMITER ;
 
 /* Procedure structure for procedure `FetchAllRespondents` */
@@ -1837,7 +1990,10 @@ AND
   (resident_complainant.last_name LIKE search OR 
    non_resident_complainant.last_name LIKE search OR 
    resident_respondent.last_name LIKE search OR 
-   non_resident_respondent.last_name LIKE search)
+   non_resident_respondent.last_name LIKE search OR 
+   tbl_blotters.`desc_incident` LIKE search OR 
+  tbl_blotters.`incident_dt` LIKE search)
+   
 ORDER BY tbl_blotter_audit_trail.blotter_add_dt DESC limit start_from, lim
 
 ;

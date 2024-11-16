@@ -314,7 +314,7 @@ $pdo = null; // Close DB
                                         </div>
 
                                         <div class="form-floating mt-3 mb-3 col-md-4">
-                                            <input type="text" class="form-control" id="mediator" placeholder=""
+                                            <input type="text" class="form-control" id="mediator_name" placeholder=""
                                                 disabled />
                                             <label for="subd">Mediator</label>
                                         </div>
@@ -332,10 +332,10 @@ $pdo = null; // Close DB
                                             <label for="mname">Location of the Incident</label>
                                         </div>
 
-                                        <div class="form-floating mt-3 mb-3 col-md-4">
+                                        <div class="form-floating mt-3 mb-3 col-md-2">
                                             <select class="form-select" id="blotter_type" name="blotter_type"
                                                 aria-label="Floating label select example" disabled>
-                                                <option value="" selected hidden>Select Blotter Type</option>
+                                                <option value="" selected hidden>Select Type</option>
                                                 <option value="0">Blotter</option>
                                                 <option value="1">Incident</option>
                                             </select>
@@ -348,14 +348,23 @@ $pdo = null; // Close DB
                                             <label for="subd">Description of the Incident</label>
                                         </div>
 
-                                        <div class="form-floating mt-3 mb-3 col-md-4">
+                                        <div class="form-floating mt-3 mb-3 col-md-3">
                                             <input type="text" class="form-control" id="resolution_date"
-                                                name="incident_desc" placeholder="Enter Subdvision Here" disabled />
+                                                name="resolution_date" placeholder="Enter Subdvision Here" disabled />
                                             <label for="subd">Date of Resolution</label>
                                         </div>
 
+                                        <div class="form-floating mt-3 mb-3 col-md-3">
+                                            <select class="form-select" id="blotter_status" name="blotter_type"
+                                                aria-label="Floating label select example" disabled>
+                                                <option value="0">Ongoing</option>
+                                                <option value="1">Resolved</option>
+                                                <option value="2">File to Action</option>
+                                            </select>
+                                            <label for="blotter_status">Blotter Status</label>
+                                        </div>
 
-                                        <div class="form-floating">
+                                         <div class="form-floating">
                                             <textarea class="form-control" placeholder="Leave a comment here"
                                                 id="case_context" name="case_context"
                                                 style="height: 500px; border: 1.5px solid black;" disabled></textarea>
@@ -684,11 +693,11 @@ $pdo = null; // Close DB
                                         </div>
 
                                         <div class="form-floating mt-3 mb-3 col-md-4">
-                                            <select class="form-select" id="mediator_name" name="blotter_type"
+                                            <select class="form-select" id="mediator_name" name="mediator_name"
                                                 aria-label="Floating label select example" >
-                                                <option value="" selected hidden>Select Blotter Type</option>
+                                                <option value="" selected hidden>Select Mediator Name</option>
                                             </select>
-                                            <label for="blotter_type">Blotter Type</label>
+                                            <label for="blotter_type">Mediator Name</label>
                                         </div>
 
                                         <div class="form-floating mt-3 mb-3 col-md-4">
@@ -707,7 +716,7 @@ $pdo = null; // Close DB
                                         <div class="form-floating mt-3 mb-3 col-md-4">
                                             <select class="form-select" id="blotter_type" name="blotter_type"
                                                 aria-label="Floating label select example" >
-                                                <option value="" selected hidden>Select Blotter Type</option>
+                                                <option value="" selected hidden>Select Type</option>
                                                 <option value="0">Blotter</option>
                                                 <option value="1">Incident</option>
                                             </select>
@@ -721,9 +730,13 @@ $pdo = null; // Close DB
                                         </div>
 
                                         <div class="form-floating mt-3 mb-3 col-md-4">
-                                            <input type="text" class="form-control" id="resolution_date"
-                                                name="resolution_date" placeholder="Enter Subdvision Here"  />
-                                            <label for="subd">Date of Resolution</label>
+                                            <select class="form-select" id="blotter_status" name="blotter_status"
+                                                aria-label="Floating label select example" >
+                                                <option value="0">Ongoing</option>
+                                                <option value="1">Resolved</option>
+                                                <option value="2">File to Action</option>
+                                            </select>
+                                            <label for="blotter_status">Blotter Status</label>
                                         </div>
 
 

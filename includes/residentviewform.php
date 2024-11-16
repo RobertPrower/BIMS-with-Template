@@ -220,7 +220,7 @@
                                         <!-- Pagination Controls -->
                                     <nav aria-label="Page navigation" id="modalpagenav">
                                         <input hidden id="res_id_to_fetch"/>
-                                        <ul class="pagination modal-pagination justify-content-end">
+                                        <ul class="pagination docu-pagination justify-content-end">
                                         
                                       
                                             
@@ -237,7 +237,60 @@
                      <!-------------------------------------------------------------------------------------------------------------->
                         <div class="tab-content" id="nav-tabContent">
                             <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab" tabindex="0">
-                                <!-- For the Blotter table to be placed here --> ...
+                            <div class="users-table table-wrapper">
+
+                                <table class="users-table table-wrapper my-4" id="ResidentBlotterTable">
+                                    <thead>
+                                        <tr class="users-table-info">
+                                            
+                                            <th style="width: 8%;" class="text-center">Blotter ID
+                                            </th>
+
+                                            <th style="width: 10%;" class="text-center">Blotter Type
+                                            </th>
+
+                                            <th style="width: 10%;" class="text-center">Reported Date
+                                            </th>
+
+                                            <th style="width: 15%;" class="text-center">Involvement
+                                            </th>
+
+                                            <th style="width: 10%;" class="text-center"> Incident Date and Time
+                                            </th>
+
+                                            <th style="width: 20%;" class="text-center"> Title
+                                            </th>
+
+                                            <th style="width: 10%;" class="text-center">Resolution Date
+                                            </th>
+
+                                            <th style="width: 10%;" class="text-center">Status
+                                            
+                                            </th>
+                                            
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                    
+                                    <!-- To be filled by AJAX request to Server -->
+                                        
+                                    </tbody>
+                                    
+                                </table>
+
+                                    <!-- Pagination Controls -->
+                                <nav aria-label="Page navigation" id="modalpagenav">
+                                    <input hidden id="res_id_to_fetch"/>
+                                    <ul class="pagination blotter-pagination justify-content-end">
+                                    
+                                
+                                        
+                                    </ul>
+                                </nav>
+
+                                </div>
+
                             </div>
                         </div>
                     

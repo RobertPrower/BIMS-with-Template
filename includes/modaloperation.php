@@ -10,6 +10,9 @@ $operation_check = (isset($_POST['operation'])) ? $_POST['operation'] : null;
 $nresid = (isset($_POST['nresident_id'])) ? sanitizeData($_POST['nresident_id']) : null;
 $id = (isset($_POST['resident_id'])) ? sanitizeData($_POST['resident_id']) : null;
 
+$limit = 5;
+$page = isset($_POST['page']) ? $_POST['page'] : '1';
+$start_from = ($page - 1) * $limit;
 
 if ($operation_check == "SELECT_RESIDENT_TABLELOAD") {
 
@@ -25,7 +28,7 @@ if ($operation_check == "SELECT_RESIDENT_TABLELOAD") {
         echo json_encode($results);
     }
 
-} elseif ($operation_check == "SELECT_NONRESIDENT_TABLELOAD") {
+} else if ($operation_check == "SELECT_NONRESIDENT_TABLELOAD") {
 
     $sqlquery = "SELECT * FROM vw_select_nonresident";
 
@@ -49,12 +52,18 @@ if ($operation_check == "SELECT_RESIDENT_TABLELOAD") {
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
         $stmt->closeCursor();
 
-        // Populate table rows with Resident Clearance data
-        include_once('requested_docu_tabletofetch.php');
+        if(!empty($result)){
+             // Populate table rows with Resident Clearance data
+            include_once('requested_docu_tabletofetch.php');
+        }else{
+            echo '<tr><td colspan="11"><b>No Records Found</b></td></tr>';
+
+        }
+       
     } else {
         echo json_encode("ID not provided");
     }
-} elseif ($operation_check == "RES_DOCUREQ_PAGINATION") {
+} else if ($operation_check == "RES_DOCUREQ_PAGINATION") {
 
     $pagequery = "SELECT COUNT(*) FROM tbl_docu_request WHERE resident_no = ?";
     $total_records_stmt = $pdo->prepare($pagequery);
@@ -67,8 +76,7 @@ if ($operation_check == "SELECT_RESIDENT_TABLELOAD") {
 
     require_once('paginationtemplateformodal.php');
 
-
-} elseif ($operation_check == "NONRES_DOCREQ_FETCH_TABLE") {
+} else if ($operation_check == "NONRES_DOCREQ_FETCH_TABLE") {
     if (isset($nresid)) {
         $limit = 5;
         $page = isset($_POST['pageno']) ? sanitizeData($_POST['pageno']) : 1;
@@ -90,7 +98,7 @@ if ($operation_check == "SELECT_RESIDENT_TABLELOAD") {
     } else {
         echo json_encode("ID not provided");
     }
-} elseif ($operation_check == "NONRES_DOCREQ_PAGINATION") {
+} else if ($operation_check == "NONRES_DOCREQ_PAGINATION") {
 
     $pagequery = "SELECT COUNT(*) FROM tbl_docu_request WHERE `nresident_no` = ? AND is_deleted = 0";
     $total_records_stmt = $pdo->prepare($pagequery);
@@ -191,7 +199,46 @@ if ($operation_check == "SELECT_RESIDENT_TABLELOAD") {
     } else {
         echo json_encode(['error' => 'No id received']);
     }
-} else {
+} else if ($operation_check == "FETCH_RES_BLOTTER_INVOLVED"){
+
+    $sqlquery = "CALL CheckResidentBlotterRec(?,?,null)";
+    $stmt = $pdo->prepare($sqlquery);
+    $stmt->execute([$id, $start_from]);
+    $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    if(!empty($result)){
+        require_once 'blotterinvolvedtemplate.php';
+    }else{
+        echo '<tr><td colspan="11"><b>No Records found</b></td></tr>';
+    }
+} else if ($operation_check == "FETCH_NONRES_BLOTTER_INVOLVED"){
+
+    //Not yet maded
+    $sqlquery = "CALL CheckNonResidentBlotterRec(?,?)";
+    $stmt = $pdo->prepare($sqlquery);
+    $stmt->execute([$id]);
+    $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    require_once 'blotterinvolvedtemplate.php';
+
+}else if ($operation_check == "RES_BLOTTER_PAGINATION"){
+
+    $sqlquery = "SELECT COUNT (CALL CheckResidentBlotterRec(?, ?))";
+    $stmt = $pdo->prepare($sqlquery);
+    $stmt->execute([$id, $start_from]);
+    $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        require_once 'paginationtemplateformodal.php';    
+
+} else if ($operation_check == "NONRES_BLOTTER_PAGINATION"){
+
+    $sqlquery = "SELECT COUNT (CALL CheckNonResidentBlotterRec(?, ?))";
+    $stmt = $pdo->prepare($sqlquery);
+    $stmt->execute([$id, $start_from]);
+    $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    require_once 'paginationtemplateformodal.php';
+
+}else {
     echo "Invalid operation";
 }
 

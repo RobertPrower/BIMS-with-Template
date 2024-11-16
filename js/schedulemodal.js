@@ -1,7 +1,7 @@
 $(document).ready(function () {
     
     var whatmodal = ($(".main-title").text() == "Manage Blotters")? "#EditBlotterModal": '';  
-    $(whatmodal +' #incident_date').tempusDominus({
+    $(whatmodal +' #incident_date, #resolution_date').tempusDominus({
         display: {
           components: {
                   // Set to true if you want second selection
@@ -103,6 +103,7 @@ $(document).ready(function () {
                
             },
             events: function(fetchInfo, successCallback, failureCallback) {
+
                 $.ajax({
                     url: 'includes/blottersoperation.php',
                     method: 'POST',
@@ -111,12 +112,15 @@ $(document).ready(function () {
                     success: function(data) {
                         var events = [];
                         $.each(data, function(i, blotter) {
+                            var mediation_date = blotter.mediation_date + " " + blotter.mediation_starttime;
+                            var mediation_enddate = blotter.mediation_date + " " + blotter.mediation_endtime;
+    
                             events.push({
                                 id: blotter.blotter_id,
                                 title: blotter.desc_incident,
                                 incdate: blotter.incident_dt,
-                                start: new Date (blotter.mediation_schedule),
-                                end: blotter.date_of_resolution,
+                                start: new Date(mediation_date),
+                                end: new Date(mediation_enddate),
                                 complainant: blotter.complainant_fullname,
                                 respondent: blotter.respondent_fullname,
                                 reportstatus: blotter.report_status,
@@ -167,17 +171,6 @@ $(document).ready(function () {
         }
     });
 
-    $(whatmodal +" #mediator_name").one("click", function () {
-        $.ajax({
-            type: "POST",
-            url: "includes/blottersoperation.php",
-            data: {operation: "FETCH_MEDIATOR_SELECT"},
-            dataType: "HTML",
-            success: function (response) {
-
-                $("#mediator_name").html(response);
-            }
-        });
-    });
+ 
 
 });

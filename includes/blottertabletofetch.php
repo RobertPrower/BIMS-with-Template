@@ -85,9 +85,9 @@ echo '<td>
             data-id = "' . htmlspecialchars($row['blotter_id']) . '">Delete</button>';
     
     }else{
-        echo '<button class="btn btn-warning mx-1 deleteResidentButton" id="undodeletebutton"
+        echo '<button class="btn btn-warning mx-1" id="undodeletebutton"
         data-pageno="'.$page.'"
-        data-request_id = "' . htmlspecialchars($row['blotter_id']) . '">Recover</button>';
+        data-blotter_id = "' . htmlspecialchars($row['blotter_id']) . '">Recover</button>';
     }
 echo '</tr>';
 }
