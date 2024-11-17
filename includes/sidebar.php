@@ -3,7 +3,8 @@
         <div class="sidebar-head">
             <a href="/" class="logo-wrapper" title="Home">
                 <span class="sr-only">Home</span>
-                <span class="mx-2" aria-hidden="true"><img src="img/logos/<?php echo $logo; ?>" style="width: 80px;height: 80px"></img></span>
+                <span class="mx-2" aria-hidden="true"><img src="img/logos/<?php echo $logo; ?>"
+                        style="width: 80px;height: 80px"></img></span>
                 <div class="logo-text">
                     <span class="logo-title">BIMS</span>
                     <!--span class="logo-subtitle">Dashboard</span-->
@@ -18,7 +19,8 @@
         <div class="sidebar-body">
             <ul class="sidebar-body-menu">
                 <li>
-                    <a id="dashboard_btn" href="index.php"><span class="icon home" aria-hidden="true"></span>Dashboard</a>
+                    <a id="dashboard_btn" href="index.php"><span class="icon home"
+                            aria-hidden="true"></span>Dashboard</a>
                 </li>
                 <li>
                     <a id="documents_btn" href="documents.php">
@@ -60,16 +62,19 @@
                 </li>
 
                 <li>
-                    <a id="resident_btn" href="residents.php"><span class="icon home" aria-hidden="true"></span>Residents</a>
-                    
+                    <a id="resident_btn" href="residents.php"><span class="icon home"
+                            aria-hidden="true"></span>Residents</a>
+
                 </li>
                 <li>
-                    <a id="non_resident_btn" href="nonresidents.php"><span class="icon user-3" aria-hidden="true"></span>Non-Residents</a>
-                    
+                    <a id="non_resident_btn" href="nonresidents.php"><span class="icon user-3"
+                            aria-hidden="true"></span>Non-Residents</a>
+
                 </li>
                 <li>
-                    <a id="blotter_btn" href="blotters.php"><span class="icon edit" aria-hidden="true"></span>Blotters</a>
-                   
+                    <a id="blotter_btn" href="blotters.php"><span class="icon edit"
+                            aria-hidden="true"></span>Blotters</a>
+
                 </li>
                 <!-- <li>
                     <a href="brgyofficials.php"><span class="icon user-3" aria-hidden="true"></span>Brgy Offcials</a>
@@ -132,10 +137,19 @@
                     </a>
                     <ul class="cat-sub-menu">
                         <li>
-                            <a href="users-01.html">Users-01</a>
+                            <a href="##">Admin</a>
                         </li>
                         <li>
-                            <a href="users-02.html">Users-02</a>
+                            <a href="##">User</a>
+                        </li>
+                        <li>
+                            <a href="##">Blotter/Lupon Dept.</a>
+                        </li>
+                        <li>
+                            <a href="##">Clearance Dept.</a>
+                        </li>
+                        <li>
+                            <a href="##">Secretariat</a>
                         </li>
                     </ul>
                 </li>
@@ -148,7 +162,10 @@
     <div class="sidebar-footer">
         <a href="##" class="sidebar-user">
             <span class="sidebar-user-img">
-                <picture><source srcset="./img/avatar/avatar-illustrated-01.webp" type="image/webp"><img src="./img/avatar/avatar-illustrated-01.png" alt="User name"></picture>
+                <picture>
+                    <source srcset="./img/avatar/avatar-illustrated-01.webp" type="image/webp"><img
+                        src="./img/avatar/avatar-illustrated-01.png" alt="User name">
+                </picture>
             </span>
             <div class="sidebar-user-info">
                 <span class="sidebar-user__title">Nafisa Sh.</span>
