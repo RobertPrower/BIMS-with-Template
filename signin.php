@@ -1,6 +1,6 @@
 <?php 
-require_once 'includes/config.php';
-require_once 'includes/login-view.php';
+// require_once 'includes/config.php';
+// require_once 'includes/login-view.php';
 
 ?>
 <!DOCTYPE html>
@@ -17,6 +17,82 @@ require_once 'includes/login-view.php';
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
   <link rel="stylesheet" href="./css/style.min.css">
 </head>
+
+<!-- Hindi ko alam saan ilalagay bert nyahaha :( -->
+
+<?php
+  
+  session_start();
+  if (isset($_SESSION['username'])) {
+      $username = $_POST['username'];
+      $password = $_POST['password'];
+
+      // Prepare and bind parameters to prevent SQL Injection
+      $query = "SELECT * FROM user_signin WHERE username = ?";
+      $stmt = mysqli_prepare($conn, query);
+
+      if ($stmt) {
+        mysqli_stmt_bind_param($stmt, "s", $username); // "s" means string paramater
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
+
+        // If a user with that username exists..
+        if ($user = mysqli_fetch_assoc($result)) {
+          // Verifying the password
+          if (password_verify($password, $user['password'])) {
+            // If correct then start session
+            $_SESSION['user_id'] = $user['id'];
+            $_SESSION['username'] = $username['username'];
+            $_SESSION['role'] = $user['role'];
+
+            // Redirect based on role
+            if ($user['role'] == 'admin') {
+              header("Location: admin.php");
+            } elseif ($user['role'] == 'users') {
+              header("Location: users.php");
+            } elseif ($user['role'] == 'secretariat') {
+              header("Location: secretariat.php");
+            } else {
+              header("Location: signin.php");
+            }
+              exit;
+          } else {
+            // Invalid password
+              echo "Invalid username or password.";
+          }
+        } else {
+            // User does not exist
+              echo "User does not exist."
+        }
+          mysqli_stmt_close($stmt);
+          }
+        }
+
+
+        // This checks if user is logged in
+        if (!isset($_SESSION['user_id'])) {
+          header("Location: signin.php");
+          exit;
+        }
+
+        // Checks if user has the appropriate role
+        if ($_SESSION['role'] == 'admin') {
+          echo "<h1> Admin Dashboard </h1>";
+          echo "<p>Welcome, " . $_SESSION['username'] . "!</p>";
+          // Have access to view/edit/delete (Admins only)
+        } elseif ($_SESSION['role'] == 'secretariat') {----------------
+          echo "<h1>Secretariat Dashboard</h1>";
+          echo "<p> Welcome, " . $_SESSION['username'] . "!</p>";
+        } elseif ($_SESSION['role'] == 'user') {
+          echo "<h1>User Dashboard</h1>";
+          echo "<p> Welcome, " . $_SESSION['username'] . "!</p>";
+        } else {
+          // Unauthorized access..
+          echo "Access Denied.";
+          exit;
+        } 
+
+?>
 
 <body class="login_background">
   <div class="layer"></div>
@@ -44,12 +120,6 @@ require_once 'includes/login-view.php';
         </label>
         <button class="form-btn primary-default-btn transparent-btn">Sign in</button>
       </form>
-
-      <?php
-      
-      check_login_errors();
-      
-      ?>
   </article>
 </main>
 <!-- Chart library -->
