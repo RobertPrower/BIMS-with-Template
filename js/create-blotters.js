@@ -1,6 +1,28 @@
 
 $(document).ready(function(){
 
+    generatemediatorname()
+
+    function generatemediatorname(){
+  
+        $.ajax({ 
+          url: 'includes/blottersoperation.php', 
+          type: 'POST', 
+          data: {operation: "FETCH_MEDIATOR_SELECT"},
+          dataType: 'json', 
+          success: function(data) { 
+            data.forEach(function(option) {
+              $('#mediator_name').append($('<option>', 
+                { value: option.mediator_id, 
+                text: option.mediator_name 
+                })); 
+              });
+          }, error: function(xhr, status, error){
+            console.error('Error fetching options:', error); 
+          }
+        })
+    }
+
     var countResidentComplainant =0 
     var countNonResidentComplainant =0
     var countResidentRespondent =0

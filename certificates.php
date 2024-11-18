@@ -52,7 +52,7 @@
         <main>
           <div class="container">
               <div class="container p-3">
-                  <h2 class="main-title">Manage Documents</h2>
+                  <h2 class="main-title">Manage Certificates</h2>
                   <div class="row pb-3">
                       <div class="col-md-8">
                           <!-- Buttons -->

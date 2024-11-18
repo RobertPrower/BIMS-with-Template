@@ -18,23 +18,38 @@ $(document).ready(function(){
         });
     }
 
-    function updatePaginationControls(currentPage, whattable, whatoperation) {
+    function BlotterTable(page){
+
+      var resident_id = $("#viewresident_id").val();
+      console.log(resident_id)
+
+      $.ajax({
+        type: "POST",
+        url: "includes/modaloperation.php",
+        data: {operation: "FETCH_RES_BLOTTER_INVOLVED", resident_id: resident_id, pageno: page},
+        dataType: "HTML",
+        success: function (response) {
+
+          $("#ResidentBlotterTable tbody").html(response);
+          updatePaginationControls(page, 1);
+
+        }
+      });
+    }
+
+    function updatePaginationControls(currentPage, whattable) {
         var residentid = $("#viewresident_id").val();
 
         if(whattable == 1){
-          var table = "blottertab-pagination-control"
-        }else if(whattable == 0){
-          var table = "docutab-pagination-control"
-        }else{
-          var table
-        }
-
-        if(whatoperation == 0){
-          var operation = "RES_DOCUREQ_PAGINATION"
-        }else if(whatoperation == 1){
+          var table = 1
           var operation = "RES_BLOTTER_PAGINATION"
+
+        }else if(whattable == 0){
+          var table = 0
+          var operation = "RES_DOCUREQ_PAGINATION"
+
         }else{
-          var operation
+          alert("This should not run")
         }
 
         $.ajax({
@@ -43,22 +58,13 @@ $(document).ready(function(){
           data: { pageno: currentPage, operation: operation, resident_id: residentid, whattable: table },
           dataType: "HTML",
           success: function (data) {
-            if(operation = 0){
-              $(".docu-pagination").html(data);
-            }else if(operation == 1){
-              $(".blotter-pagination").html(data);
-            }
-            
-  
-          //Prevent the pagination from showing when the entries is less than 10 entries
-          var noofpageitems = $(".blotter_pagination").length;
-
-          if(noofpageitems <=5){
-              $("#modalpagenav").prop("hidden", true);
-          }else{
-              $("#modalpagenav").prop("hidden", false);
-          }
-  
+            if(whattable == 0){
+              $("#clearance-tab .docu-pagination").html(data);
+            }else if(whattable == 1){
+              $("#nav-contact .blotter-pagination").html(data);
+            }else{
+              alert("This should not run")
+            }          
   
           },
           error: function (xhr, status, error) {
@@ -67,9 +73,25 @@ $(document).ready(function(){
         });
       }
 
-    //Click event in triggering the pagination control of the table
-    $(document).on("click", ".doctab-pagination-control", function (e) {
+    $(document).on("shown.bs.modal","#ViewResidentModal", function () {
+      //Click event in triggering the pagination control of the table
+      $(document).on("click", ".docutab-pagination-control", function (e) {
+          e.preventDefault();
+
+          var residentid = $("#res_id_to_fetch").val();
+          var page = $(this).data("page");
+
+          $(".modal-pagination .modal-page-item").removeClass("active");
+          $(this).parent().addClass("active");
+
+          DocuRequestloadTable(page);
+          updatePaginationControls(page, 0, 0);
+      });
+
+      $(document).on("click",".blottertab-pagination-control", function (e) {
         e.preventDefault();
+
+        console.log("Blotter Pagination has been click")
 
         var residentid = $("#res_id_to_fetch").val();
         var page = $(this).data("page");
@@ -77,36 +99,25 @@ $(document).ready(function(){
         $(".modal-pagination .modal-page-item").removeClass("active");
         $(this).parent().addClass("active");
 
-        DocuRequestloadTable(page);
-        updatePaginationControls(page, 0, 0);
-    });
-
-    //Load the Resident Docu request table once the clearance tab was clicked
-    $(document).on("click", "#nav-clearance-tab", function () {
-        var resident_id = $("#viewresident_id").val();
-
-        console.log(resident_id);
-
-        DocuRequestloadTable();
-        updatePaginationControls(1,0,0);
-        
-    });
-
-    $(document).on('click','#nav-blotters-tab', function(){
-      var resident_id = $("#viewresident_id").val();
-
-      $.ajax({
-        type: "POST",
-        url: "includes/modaloperation.php",
-        data: {operation: "FETCH_RES_BLOTTER_INVOLVED", resident_id: resident_id},
-        dataType: "HTML",
-        success: function (response) {
-
-          $("#ResidentBlotterTable tbody").html(response);
-          
-        }
+        BlotterTable(page);
       });
 
+      //Load the Resident Docu request table once the clearance tab was clicked
+      $(document).off("click", "#nav-clearance-tab").one("click", "#nav-clearance-tab", function () {
+          var resident_id = $("#viewresident_id").val();
 
-    })
+          console.log(resident_id);
+
+          DocuRequestloadTable();
+          updatePaginationControls(1,0);
+          
+      });
+
+      $(document).off('click','#nav-blotters-tab').one('click','#nav-blotters-tab', function(){
+
+        BlotterTable()
+
+      })
+
+    });
 });

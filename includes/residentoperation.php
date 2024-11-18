@@ -1,7 +1,8 @@
 <?php
 if($_SERVER['REQUEST_METHOD']!=="POST"){
-    exit("Access Denied");
+    header('Location: ../index.php');
 }
+
 require_once("connecttodb.php");
 require_once("anti-SQLInject.php");
 
@@ -14,9 +15,8 @@ $userid=null; // For the user currently using the system
 $departno= null; // For the users depart currently using
 $limit = 10;
 $search = isset($_POST['search']) ? sanitizeData($_POST['search']): '';
-$page = isset($_POST['page']) ? $_POST['page'] : '1';
+$page = isset($_POST['page']) ? sanitizeData($_POST['page']) : '1';
 $start_from = ($page - 1) * $limit;
-
 
  // Retrieve data sent via POST for add and edit
  $fname = (isset($_POST['fname'])) ? sanitizeData($_POST['fname']): null;
@@ -70,11 +70,8 @@ if($operation_check == "ADD"){ //For the add operation
     ]);
     $result = $check_stmt->fetch(mode: PDO::FETCH_ASSOC);
         
-    if($result == true){
-        echo json_encode(["success" => false, "data" => $result]);
-    }else{
+    if(empty($result)){
         try {
-
             if(isset($_POST['imagefile'])){
                 //Variable for the Name of the Folder which is img
                 $target_dir = "img/resident_img/";
@@ -135,17 +132,13 @@ if($operation_check == "ADD"){ //For the add operation
 
             }
 
+            $pdo->beginTransaction();
+
             //Record to Audit Trail
-            $audit_query = "INSERT INTO res_audit_trail (added_depart_no, added_by_no, date_added, time_added)
-            VALUES (?, ?,?,?)";
+            $audit_query = "INSERT INTO res_audit_trail (added_depart_no, added_by_no)
+            VALUES (?, ?)";
             $audit_stmt = $pdo->prepare($audit_query);
-            $audit_stmt->execute
-            ([
-            $departno,
-            $userid,
-            $nowdate,
-            $time
-            ]);
+            $audit_stmt->execute([$departno, $userid]);
         
             // Insert data into the resident table
             $insert_query = "INSERT INTO resident (img_filename, last_name, first_name, middle_name, suffix, house_num, street, subdivision, 
@@ -153,7 +146,6 @@ if($operation_check == "ADD"){ //For the add operation
                             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?,?);";
             $insert_stmt = $pdo->prepare($insert_query);
             $insert_stmt->execute([
-                
                 $fileName,
                 $lname,
                 $fname,
@@ -175,11 +167,19 @@ if($operation_check == "ADD"){ //For the add operation
             // Success response encodes it to JSON format for the AJAX to read
             $response = ["success" => true, "message" => "Data Added successfully"];
             echo json_encode($response);
+
+            $pdo->commit();
         } catch (Exception $e) {
             // Error response
+
+            $pdo->rollBack();
             $response = ["success" => false, "message" => "Error updating data: " . $e->getMessage()];
             echo json_encode($response);
         }
+    }else{
+
+        echo json_encode(["success" => "entry_match", "data" => $result]);
+    
     }
 }elseif($operation_check == "EDIT"){
 
@@ -233,7 +233,7 @@ if($operation_check == "ADD"){ //For the add operation
     
             //Checks the img/resident_img folder for any used images
     
-                // Fetch all filenames from the database
+            // Fetch all filenames from the database
             $stmt = $pdo->query("SELECT img_filename FROM resident");
             $dbFiles = $stmt->fetchAll(PDO::FETCH_COLUMN);
     
@@ -356,6 +356,8 @@ if($operation_check == "ADD"){ //For the add operation
         
 
     try {
+
+        $pdo->beginTransaction();
         // Prepare SQL statement for updating resident data
         $statement = $pdo->prepare("UPDATE resident SET first_name = ?, middle_name = ?, last_name = ?,suffix = ?, house_num = ?, street = ?, subdivision = ?, resident_since=?, sex = ?, marital_status = ?, birth_date = ?, birth_place = ?, cellphone_num = ?, is_a_voter = ? WHERE resident_id = ?");
         
@@ -365,14 +367,16 @@ if($operation_check == "ADD"){ //For the add operation
         // Send success response
         echo json_encode(["success" => true, "message" => "Data updated successfully". " ImageStatus: " . $imgopresponse]);
 
-        $update_audit_sql= "UPDATE res_audit_trail SET edited_depart_no=?, last_edited_by=?, last_edited_dt=?, last_edited_tm=? WHERE res_at_id=?";
+        $update_audit_sql= "UPDATE res_audit_trail SET edited_depart_no=?, last_edited_by=?, last_edited_dt=CURRENT_TIMESTAMP WHERE res_at_id=?";
          $atstmt= $pdo->prepare($update_audit_sql);
-         $atstmt -> execute([$departno, $userid, $nowdate, $time, $residentId]);
+         $atstmt -> execute([$departno, $userid, $residentId]);
 
-        
+        $pdo->commit();
     } catch (PDOException $e) {
         // Handle database connection or query errors
         error_log($e->getMessage());
+
+        $pdo->rollBack();
 
         echo json_encode(["success" => false, "message" => "Error updating data: " . $e->getMessage()]);
         ini_set('display_errors', 1);
@@ -387,17 +391,22 @@ if($operation_check == "ADD"){ //For the add operation
     if(isset($id_to_delete)){
         // Prepare an update statement to mark the record as deleted
         try{
+
+            $pdo->beginTransaction();
         
             $update_query = "UPDATE resident SET is_deleted = 1 WHERE resident_id = ?";
             $update_stmt = $pdo->prepare($update_query);
             $update_stmt->execute([$id_to_delete]);
 
-            $update_audit_sql= "UPDATE res_audit_trail SET dept_del_no=?, del_by_no=?, del_date=?, del_time=? WHERE res_at_id=?";
+            $update_audit_sql= "UPDATE res_audit_trail SET dept_del_no=?, del_by_no=?, del_dt=CURRENT_TIMESTAMP WHERE res_at_id=?";
             $atstmt= $pdo->prepare($update_audit_sql);
-            $atstmt -> execute([$departno, $userid, $nowdate, $time, $id_to_delete]);
+            $atstmt -> execute([$departno, $userid, $id_to_delete]);
             echo json_encode(["success" => true, "message" => "Record Soft deleted successfully."]);
 
+            $pdo->commit();
         }catch(PDOException $e){
+
+            $pdo->rollBack();
             error_log($e->getMessage());
             echo json_encode(["success" => false, "message" => "Error deleting record" . $e->getMessage()]);
 
@@ -414,16 +423,21 @@ if($operation_check == "ADD"){ //For the add operation
         // Prepare an update statement to mark the record as is_deleted=0
         try{
         
+            $pdo->beginTransaction();
+
             $update_query = "UPDATE resident SET is_deleted = 0 WHERE resident_id = ?";
             $update_stmt = $pdo->prepare($update_query);
             $update_stmt->execute([$id_to_delete]);
 
-            $update_audit_sql= "UPDATE res_audit_trail SET dept_rec_no=?, rec_by_no=?, rec_date=?, rec_time=? WHERE res_at_id=?";
+            $update_audit_sql= "UPDATE res_audit_trail SET dept_rec_no=?, rec_by_no=?, rec_dt= CURRENT_TIMESTAMP WHERE res_at_id=?";
             $atstmt= $pdo->prepare($update_audit_sql);
-            $atstmt -> execute([$departno, $userid, $nowdate, $time, $id_to_delete]);
+            $atstmt -> execute([$departno, $userid, $id_to_delete]);
             echo json_encode(["success" => true, "message" => "Record recovered successfully."]);
 
+            $pdo->commit();
         }catch(PDOException $e){
+
+            $pdo->rollBack();
             error_log($e->getMessage());
             echo json_encode(["success" => false, "message" => "Error recovering the record" . $e->getMessage()]);
 
@@ -465,36 +479,25 @@ if($operation_check == "ADD"){ //For the add operation
      $page = max(1, min($page, $total_pages));
      $start_from = ($page - 1) * $limit;
  
-     // Fetch the data for the current page
-     $query = $pdo->prepare("SELECT 
-                                `resident`.`resident_id`       AS `resident_id`,
-                                `res_audit_trail`.`date_added` AS `date_recorded`,
-                                `resident`.`img_filename`      AS `img_filename`,
-                                `resident`.`last_name`         AS `last_name`,
-                                `resident`.`first_name`        AS `first_name`,
-                                `resident`.`middle_name`       AS `middle_name`,
-                                `resident`.`suffix`            AS `suffix`,
-                                `resident`.`house_num`         AS `house_num`,
-                                `resident`.`street`            AS `street`,
-                                `resident`.`subdivision`       AS `subdivision`,
-                                `resident`.`resident_since`    AS `resident_since`,
-                                `resident`.`sex`               AS `sex`,
-                                `resident`.`marital_status`    AS `marital_status`,
-                                `resident`.`birth_date`        AS `birth_date`,
-                                `resident`.`birth_place`       AS `birth_place`,
-                                `resident`.`cellphone_num`     AS `cellphone_num`,
-                                `resident`.`is_a_voter`        AS `is_a_voter`,
-                                `resident`.`is_deleted`        AS `is_deleted`
-                                FROM resident
-                                JOIN res_audit_trail ON resident.audit_trail = res_audit_trail.res_at_id      
-                                WHERE is_deleted=1 ORDER BY last_name ASC LIMIT $start_from, $limit");
-     $query->execute();
-     $results = $query->fetchAll();
+    try{
+        // Fetch the data for the current page
+        $query = "SELECT * FROM vw_resident_deleted ORDER BY date_recorded DESC LIMIT :start_from, :lim";
+        $stmt = $pdo->prepare($query);
+        $stmt->bindValue(':start_from', (int)$start_from, PDO::PARAM_INT);
+        $stmt->bindValue(':lim', (int)$limit, PDO::PARAM_INT);
+        $stmt->execute();
+        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    if(!empty($results)){
-        require_once'residenttabletofetch.php';
-    }else{
-        echo '<tr><td colspan="11"><b>No Deleted Records found</b></td></tr>';
+        if(!empty($results)){
+            require_once'residenttabletofetch.php';
+        }else{
+            echo '<tr><td colspan="11"><b>No Deleted Records found</b></td></tr>';
+        }
+
+    }catch(Exception $e){
+
+        echo '<tr><td colspan="11"><b>Error: '.$e->getMessage().'</b></td></tr>';
+        
     }
 
 }elseif($operation_check=="PAGINATION_FOR_DEL_REC"){
@@ -524,12 +527,13 @@ if($operation_check == "ADD"){ //For the add operation
 }elseif($operation_check == "COUNT_RES_CERT"){
     $resident_no = $_POST['resident_id'];
 
-    $countquery = "SELECT COUNT(*) AS count FROM tbl_docu_request WHERE resident_no = ?";
+    $countquery = "SELECT COUNT(*) AS count FROM tbl_docu_request WHERE resident_no = ? AND is_deleted=0";
     $stmt = $pdo->prepare($countquery);
     $stmt->execute([$resident_no]);
     $results = $stmt -> fetchColumn();
 
     echo json_encode($results);
+
 }elseif($operation_check == "FETCH_TABLE"){
 
     $limit = 10;
@@ -537,8 +541,10 @@ if($operation_check == "ADD"){ //For the add operation
     $start_from = ($page - 1) * $limit;
 
     try {
-            $sql = "SELECT * FROM vw_resident ORDER BY last_name ASC LIMIT $start_from, $limit"; 
+            $sql = "SELECT * FROM vw_resident ORDER BY last_name ASC LIMIT :start_from, :lim"; 
             $stmt = $pdo->prepare($sql);
+            $stmt->bindValue(":start_from",(int)$start_from, PDO::PARAM_INT);
+            $stmt->bindValue(":lim",(int)$limit, PDO::PARAM_INT);
             $stmt->execute();
             $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 

@@ -155,9 +155,9 @@ $(document).ready(function () {
     
                 var report;
                 switch (info.event.extendedProps.reportstatus){
-                    case 1: report = "<span style='color: green;'> RESOLVED</span>"; break;
-                    case 0: report = "<span style='color: orange;'> ONGOING</span>"; break;
-                    case 2: report = "<span style='color: red;'> FILE TO ACTION</span>"; break;
+                    case "1": report = "<span style='color: green;'> RESOLVED</span>"; break;
+                    case "0": report = "<span style='color: orange;'> ONGOING</span>"; break;
+                    case "2": report = "<span style='color: red;'> FILE TO ACTION</span>"; break;
                     default: report = "Unknown Status";
                 }
     

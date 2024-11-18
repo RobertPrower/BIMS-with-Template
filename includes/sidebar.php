@@ -23,8 +23,8 @@
                             aria-hidden="true"></span>Dashboard</a>
                 </li>
                 <li>
-                    <a id="documents_btn" href="documents.php">
-                        <span class="icon document" aria-hidden="true"></span>Documents
+                    <a id="certificates_btn" href="certificates.php">
+                        <span class="icon document" aria-hidden="true"></span>Certificates
                     </a>
                     <button class="category__btn transparent-btn show-cat-btn" title="Open list">
                         <span class="sr-only">Open list</span>
@@ -128,7 +128,7 @@
                     </ul>
                 </li> -->
                 <li>
-                    <a class="show-cat-btn" href="##">
+                    <!-- <a class="show-cat-btn" href="##">
                         <span class="icon user-3" aria-hidden="true"></span>Users
                         <span class="category__btn transparent-btn" title="Open list">
                             <span class="sr-only">Open list</span>
@@ -151,7 +151,7 @@
                         <li>
                             <a href="##">Secretariat</a>
                         </li>
-                    </ul>
+                    </ul> -->
                 </li>
                 <li>
                     <a href="##"><span class="icon setting" aria-hidden="true"></span>Settings</a>

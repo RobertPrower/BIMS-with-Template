@@ -859,10 +859,24 @@ $pdo = null; // Close DB
 
                                 </tbody>
 
+                                 <!-- To be filled by AJAX -->
+
 
                                 </tbody>
                             </table>
+
+                              
                         </div>
+
+                         <!-- Pagination Controls -->
+                         <nav aria-label="Page navigation" id="pagenav">
+                                <ul class="pagination main-pagination justify-content-end">
+                                
+                                    <!-- To be filled by AJAX -->
+
+                                    
+                                </ul>
+                        </nav>
                     </div>
             </main>
 

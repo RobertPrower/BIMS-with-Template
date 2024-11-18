@@ -114,7 +114,7 @@ $(document).ready(function () {
         type: "POST",
         data: {pageno: currentPage, operation: "PAGINATION_FOR_DEL_REC"},
         success: function (data){
-          $(".pagination").html(data);
+          $(".main-pagination .page-item").html(data);
           //Prevent the pagination from showing when the entries is less than 10
           var noofpageitems = $(".pagination-control").length;
           switch(noofpageitems){

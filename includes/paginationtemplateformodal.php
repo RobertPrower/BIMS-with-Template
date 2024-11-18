@@ -1,7 +1,16 @@
 <?php
 
-    $table = (isset($_POST['whattable']))? $_POST['whattable'] : exit("No table defined");
-    $whattable = ($table)? "docutab-pagination-control": "blotter-pagination-control" ;
+    if($_POST['whattable'] == 0){
+        $whattable = "docutab-pagination-control";
+    }else if($_POST['whattable'] == 1){
+        $whattable = "blottertab-pagination-control";
+    }else if($_POST['whattable'] == 3){
+        $whattable = "nrdocutab-pagination-control";
+    }else if($_POST['whattable'] == 4){
+        $whattable = "nrblottertab-pagination-control";
+    }
+    
+    
 
     // Make the previous button only appear once the page is more than one
     if ($current_page > 1) {

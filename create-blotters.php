@@ -366,7 +366,7 @@
 
                         <div class="form-floating mt-3 mb-3 col-md-4">
                             <select class="form-select" id="blotter_type" name="blotter_type" aria-label="Floating label select example" required>
-                                <option value="" selected hidden>Select Blotter Type</option>
+                                <option value="" selected hidden>Select</option>
                                 <option value="0">Blotter</option>
                                 <option value="1">Incident</option>
                             </select>

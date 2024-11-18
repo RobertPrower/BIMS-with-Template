@@ -1,7 +1,10 @@
 <?php
 if($_SERVER['REQUEST_METHOD']!=="POST"){
-    exit("Access Denied");
+    header('Location: ../index.php');
+    exit();
+
 }
+// header('Content-Type: text/html; charset=utf-8');
 
 require_once('tcpdf/tcpdf.php');
 include_once('../includes/connecttodb.php');
@@ -28,13 +31,13 @@ $directory = "tprs/";
     $fileName = $_SERVER['DOCUMENT_ROOT'] . "/BIMS-with-Template/documents/".$directory."generated_pdf_" . $nowtime . ".pdf";
     $filename= "generated_pdf_" . $nowtime . ".pdf";
 
-    $ID = (isset($_POST['id_to_record']))? $_POST['id_to_record']:null;
+    $ID = (isset($_POST['id_to_record']))? sanitizeData($_POST['id_to_record']):null;
     $isResident = ($_POST['res_sta']=="RESIDENT")? "RESIDENT" : "NON_RESIDENT" ; 
 
-    $completeaddress=(isset($_POST['address']))? sanitizeData(utf8_decode($_POST['address'])) : null;
-    $fname=sanitizeData(utf8_decode($_POST['first_name']));
-    $mname=sanitizeData(utf8_decode($_POST['middle_name']));
-    $lname=sanitizeData(utf8_decode($_POST['last_name']));
+    $completeaddress=(isset($_POST['address']))? sanitizeData($_POST['address']) : null;
+    $fname=sanitizeData($_POST['first_name']);
+    $mname=sanitizeData($_POST['middle_name']);
+    $lname=sanitizeData($_POST['last_name']);
     $suffix = (isset($_POST['suffix']))? $suffix=$_POST['suffix']: null ;
 
     $fullname = $fname .' '. $mname .' '. $lname.' '. $suffix;
@@ -199,8 +202,8 @@ class MYPDF extends TCPDF {
             </style>
             
             <p class="body"> 
-            <strong class="title">'.strtoupper($brgydetails['brgy_name'].' '. $brgydetails['sona'].' '.$brgydetails['district']).'</strong>
-            <p class="brgyname">'.strtoupper($brgydetails['address']).'</p>
+            <strong class="title">'.mb_strtoupper($brgydetails['brgy_name'].' '. $brgydetails['sona'].' '.$brgydetails['district']).'</strong>
+            <p class="brgyname">'.mb_strtoupper($brgydetails['address']).'</p>
             <p class="contact"> Tel No: '.$brgydetails['tel_num'].' Cell No: '.$brgydetails['cp_num'].' Email: '.$brgydetails['email'].'</p>
             </p>
 
@@ -364,13 +367,13 @@ $html ='
         <tr>
             <br>
             <td class="brgyofficials">
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="../img/logos/'.$logo[2].'" width="120" height="120">
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="../img/logos/'.$logo[3].'" width="120" height="120">
             ';
                 
                 foreach ($brgyofficials as $official) {
                     if ($official['official_position'] == 'Punong Barangay') {
                         $html .= '<div class="official" style="text-align: center;">
-                        <h3><u>' . 'KGD. '.strtoupper($official['official_name']) . '</u></h3>
+                        <h3><u>' . 'KGD. '.mb_strtoupper($official['official_name']) . '</u></h3>
                         <h4 style="text-align: center;">PUNONG BARANGAY</h4>  
                         </div>';
 
@@ -386,7 +389,7 @@ $html ='
 
                 foreach ($kagawad as $kagawad1) {
                     $html .= '
-                                <p>' .'KGD. '. strtoupper(htmlspecialchars($kagawad1['official_name'])) . '</p><br><br>
+                                <p>' .'KGD. '. mb_strtoupper(htmlspecialchars($kagawad1['official_name'])) . '</p><br><br>
                     ';
                 }
 
@@ -396,19 +399,19 @@ $html ='
                 foreach ($brgyofficials  as $official) {
                     if ($official['official_position'] == 'SK Chairperson') {
                         $html .= '<div class="official">
-                                    <u>' . strtoupper($official['official_name']) . '</u>
+                                    <u>' . mb_strtoupper($official['official_name']) . '</u>
                                     <h5>SK-CHAIRPERSON</h5>
                                     <br><br>
                                   </div>';
                     } elseif ($official['official_position'] == 'Barangay Secretary') {
                         $html .= '<div class="official">
-                                    <u>' . strtoupper($official['official_name']) . '</u>
+                                    <u>' . mb_strtoupper($official['official_name']) . '</u>
                                     <h5>BARANGAY SECRETARY</h5>
                                     <br><br>
                                   </div>';
                     } elseif ($official['official_position'] == 'Barangay Treasurer') {
                         $html .= '<div class="official">
-                                    <u>' . strtoupper($official['official_name']) . '</u>
+                                    <u>' . mb_strtoupper($official['official_name']) . '</u>
                                     <h5>BARANGAY TREASURER</h5>
                                   </div>';
                     }
@@ -542,13 +545,13 @@ foreach ($brgyofficials as $official) {
     if ($official['official_position'] == 'Punong Barangay') {
         
         $pdf->SetXY(173, 235); 
-        $pdf->Cell(5, 10, "KGG. ".strtoupper($official['official_name']), 0, 0, 'C', false, '', 0, false, 'T', 'M');
+        $pdf->Cell(5, 10, "KGG. ".mb_strtoupper($official['official_name']), 0, 0, 'C', false, '', 0, false, 'T', 'M');
 
     }
 }   
 
 // $pdf->SetXY(180, 235); 
-// $pdf->Cell(5, 10, "KGG. ".strtoupper($official[1]), 0, 0, 'C', false, '', 0, false, 'T', 'M');
+// $pdf->Cell(5, 10, "KGG. ".mb_strtoupper($official[1]), 0, 0, 'C', false, '', 0, false, 'T', 'M');
 
 $pdf->SetFont('cambria', 'B', 10);
 

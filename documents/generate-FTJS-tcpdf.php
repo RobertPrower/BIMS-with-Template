@@ -1,7 +1,10 @@
 <?php
 if($_SERVER['REQUEST_METHOD']!=="POST"){
-    exit("Access Denied");
+    header('Location: ../index.php');
+    exit();
 }
+
+// header('Content-Type: text/html; charset=utf-8');
 
 require_once('tcpdf/tcpdf.php');
 include_once('../includes/connecttodb.php');
@@ -78,7 +81,7 @@ try{
     $docuRequestQuery = "INSERT INTO tbl_docu_request (resident_no ,presented_id, ID_number, purpose, pdffile)
                             VALUES (?, ?, ?, ?, ?)";
     $docuRequestStmt = $pdo->prepare($docuRequestQuery);
-    $docuRequestStmt->execute([$residentno, $presentedid, $IDnumber, $purpose, $fileName]);
+    $docuRequestStmt->execute([$residentno, $presentedid, $IDnumber, $purpose, $filename]);
 
     $nonofyearsquery = "SELECT resident_since FROM resident WHERE resident_id =?";
     $nonofyearsstmt = $pdo->prepare($nonofyearsquery);

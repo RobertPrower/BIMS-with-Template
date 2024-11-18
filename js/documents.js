@@ -42,7 +42,7 @@ $(document).ready(function () {
         data: { pageno: currentPage, OPERATION: "PAGINATION" },
         dataType: "HTML",
         success: function (data) {
-          $(".pagination").html(data);
+          $(".main-pagination").html(data);
 
         //Prevent the pagination from showing when the entries is less than 10 entries
         var noofpageitems = $(".page-item").length;
@@ -53,8 +53,6 @@ $(document).ready(function () {
           default:
             $("#pagenav").prop("hidden", false);
         }
-
-
         },
         error: function (xhr, status, error) {
           console.error("Error updating pagination data:", error);
@@ -180,7 +178,7 @@ $(document).ready(function () {
     });
   
     //For pagination control function and make it dynamic
-    $(document).on("click", ".pagination-control", function (e) {
+    $("#pagenav").on("click", ".pagination-control", function (e) {
       e.preventDefault();
   
       var page = $(this).data("page");
@@ -191,10 +189,8 @@ $(document).ready(function () {
   
       if ($("#showdeletedentries").is(":checked")) {
         reloadDeletedEntries(page);
-        updateDeletedPaginationControls(page);
       } else {
         reloadTable(page);
-        updatePaginationControls(page);
       }
     });
 
@@ -590,6 +586,9 @@ $(document).ready(function () {
             break;  
             case "Certificate of Indigency":
               var filename = "documents/certificate_of_indigency/"+file;
+            break;
+            case "First Time Job Seekers":
+              var filename = "documents/first_time_job_seeker/"+file;
             break;
             default:
               var filename = "unknown file name";

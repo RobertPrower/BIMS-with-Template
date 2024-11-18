@@ -2,6 +2,8 @@ $(document).ready(function () {
 
   reloadTable();
 
+  generatemediatorname()
+
   console.log("Blotter Script has been loaded")
 
   //To Reload the page
@@ -155,23 +157,23 @@ $(document).ready(function () {
 
   function generatemediatorname(){
   
-  $.ajax({ 
-    url: 'includes/blottersoperation.php', 
-    type: 'POST', 
-    data: {operation: "FETCH_MEDIATOR_SELECT"},
-    dataType: 'json', 
-    success: function(data) { 
-      data.forEach(function(option) {
-        $('#EditBlotterModal #mediator_name').append($('<option>', 
-          { value: option.mediator_name, 
-          text: option.mediator_name 
-          })); 
-        });
-    }, error: function(xhr, status, error){
-       console.error('Error fetching options:', error); 
-    }
-  })
-}
+    $.ajax({ 
+      url: 'includes/blottersoperation.php', 
+      type: 'POST', 
+      data: {operation: "FETCH_MEDIATOR_SELECT"},
+      dataType: 'json', 
+      success: function(data) { 
+        data.forEach(function(option) {
+          $('#EditBlotterModal #mediator_name').append($('<option>', 
+            { value: option.mediator_id, 
+            text: option.mediator_name 
+            })); 
+          });
+      }, error: function(xhr, status, error){
+        console.error('Error fetching options:', error); 
+      }
+    })
+  }
 
   //For the search box
   $("#searchbox").on("keyup", function () {
@@ -203,7 +205,7 @@ $(document).ready(function () {
       reloadTable(1); // Reload all entries
     }
   });
-
+  
   //For pagination control function and make it dynamic
   $(document).on("click", ".pagination-control", function (e) {
     e.preventDefault();
@@ -216,12 +218,11 @@ $(document).ready(function () {
 
     if ($("#showdeletedentries").is(":checked")) {
       reloadDeletedEntries(page);
-      updateDeletedPaginationControls(page);
     } else {
       reloadTable(page);
-      updatePaginationControls(page);
     }
   });
+  
 
   var lastmodal //To be used in where the back button in the Resident/Non Resident modal will back 
 
@@ -569,7 +570,7 @@ $(document).ready(function () {
                              
                               countComplainant++
                               console.log("Added Count: "+countComplainant)
-                              $("#NoResult").remove();
+                              $("#complainants_tab_pane2 #NoResult").remove();
                               var newContent = `
                               <tr id="${residentid}" data-status="Resident" data-id="${residentid}">
                               <td hidden>`+residentid+`</td>
@@ -621,7 +622,6 @@ $(document).ready(function () {
                                 });
                                 
                            }else{
-                               
                                 countRespondent++
                                 $("#respondents_tab_pane2 #NoResult").remove();
                                 var newContent = `
@@ -775,7 +775,7 @@ $(document).ready(function () {
                             }else{
                                 countComplainant+1
                                 console.log("Added Respondent Count: "+countRespondent)
-                                $("#NoResult").remove();
+                                $("#complainants_tab_pane2 #NoResult").remove();
                                 var newContent = `
                                 <tr id="${residentid}" data-status="Non-Resident" data-id="${residentid}">
                                 <td hidden>`+residentid+`</td>
@@ -820,7 +820,7 @@ $(document).ready(function () {
                             }else{
                               countRespondent++
                               console.log("Added Count: "+countRespondent)
-                              $("#NoResult").remove();
+                              $("#respondents_tab_pane2 #NoResult").remove();
                               var newContent = `
                               <tr id="${residentid}" data-status="Non-Resident" data-id="${residentid}">
                               <td hidden>`+residentid+`</td>
@@ -865,9 +865,9 @@ $(document).ready(function () {
   }
 
   $("#EditBlotterModal, #ViewBlotterModal").on('shown.bs.modal', function (e) {
-    generatemediatorname()
 
     var whatmodal = $("#ViewBlotterModal").hasClass('show')? "#ViewBlotterModal": "#EditBlotterModal";
+
     console.log(whatmodal)
     e.preventDefault();
     var blotter_id = $(whatmodal + ' [id="blotter_id"]').val();
@@ -1103,6 +1103,8 @@ $(document).ready(function () {
     resultArrayofOtherNonResRespondent=[];
     resultArrayofOtherResComplainant=[]
     resultArrayofOtherResRespondent=[]
+
+    $("#EditBlotterModal input, #EditBlotterModal select").val("");
 
     console.log("All referencing varable has been reset")
   });
@@ -1410,7 +1412,7 @@ $(document).ready(function () {
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, delete it!"
+      confirmButtonText: "Yes, restore it!"
     }).then((result) => {
       if (result.isConfirmed) {
         $.ajax({

@@ -1,7 +1,9 @@
 <?php
 if($_SERVER['REQUEST_METHOD']!=="POST"){
-    exit("Access Denied");
+    header('Location: ../index.php');
+    exit();
 }
+// header('Content-Type: text/html; charset=utf-8');
 
 require_once('tcpdf/tcpdf.php');
 include_once('../includes/connecttodb.php');
@@ -25,10 +27,10 @@ $filename= "generated_pdf_" . $nowtime . ".pdf";
 
 $residentno = (isset($_POST['residentno']))? $_POST['residentno']:null;
 $rsince=(isset($_POST['r_since']))? sanitizeData($_POST['r_since']): null;
-$completeaddress=(isset($_POST['address']))? sanitizeData(utf8_decode($_POST['address'])) : null;
-$fname=sanitizeData(utf8_decode($_POST['first_name']));
-$mname=sanitizeData(utf8_decode($_POST['middle_name']));
-$lname=sanitizeData(utf8_decode($_POST['last_name']));
+$completeaddress=(isset($_POST['address']))? sanitizeData($_POST['address']) : null;
+$fname=sanitizeData($_POST['first_name']);
+$mname=sanitizeData($_POST['middle_name']);
+$lname=sanitizeData($_POST['last_name']);
 $suffix = (isset($_POST['suffix']))? $suffix=$_POST['suffix']: null ;
 
 $fullname = $fname .' '. $mname .' '. $lname.' '. $suffix;
@@ -355,6 +357,18 @@ $pdf->SetFont('calibri', '', 10);
 
 // Set color to default for other text
 $pdf->SetTextColor(0, 0, 0); 
+
+  
+foreach ($brgyofficials as $official) {
+    if ($official['official_position'] == 'Punong Barangay') {
+        $html .= '<div class="official" style="text-align: center;">
+        <h3><u>' . 'KGD. '.mb_strtoupper($official['official_name']) . '</u></h3>
+        <h4 style="text-align: center;">PUNONG BARANGAY</h4>  
+        </div>';
+
+    }
+}   
+
 
 // Add bottom-right aligned text (default color)
 $pdf->MultiCell(0, 5, "NOT VALID WITHOUT DRY SEAL", 0, 'R', 0, 1, '', '', true);

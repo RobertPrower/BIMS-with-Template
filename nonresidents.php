@@ -178,7 +178,7 @@
 
                                                                 <div class="form-floating mt-3 mb-3 col-md-4">
                                                                     <select class="form-select" id="marital_status" name="marital_status" aria-label="Floating label select example" required>
-                                                                        <option hidden selected>Select Marital Status</option>
+                                                                        <option hidden selected>Select</option>
                                                                         <option value="Single">Single</option>
                                                                         <option value="Married">Married</option>
                                                                         <option value="Widow">Widow/Widower</option>
@@ -443,12 +443,13 @@
                     </div>
                 
 
-                <!-- Pagination Controls -->
-                <nav aria-label="Page navigation" id="pagenav">
-                        <ul class="main-pagination justify-content-end">
+                    <!-- Pagination Controls -->
+                    <nav aria-label="Page navigation" id="pagenav">
+                        <ul class="pagination main-pagination justify-content-end">
                         
-                        <!-- To be filled by AJAX -->
-                        
+                            <!-- To be filled by AJAX -->
+
+                            
                         </ul>
                     </nav>
 

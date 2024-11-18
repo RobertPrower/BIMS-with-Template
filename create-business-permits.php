@@ -116,7 +116,7 @@
 
               <div class="form-floating mt-3 mb-3 col-md-4">
                   <select class="form-select" id="presented_id" name="presented_id" aria-label="Floating label select example" required aria-required="true">
-                      <option hidden value="">Select Option</option>
+                      <option hidden value="">Select</option>
                       <option value="National ID">National ID</option>
                       <option value="Postal ID">Postal ID</option>
                       <option value="Driver's License">Driver's License</option>
@@ -185,7 +185,7 @@
               <div class="d-flex justify-content-center">
                 <div class="form-floating mt-3 mb-3 col-md-4">
                     <select class="form-select" id="business_type" name="business_type" aria-label="Floating label select example" required>
-                        <option hidden value="">Select Option</option>
+                        <option hidden value="">Select</option>
                         <option value="Sari-Sari Store">Sari-Sari Store</option>
                         <option value="Barber Shop">Barber Shop</option>
                         <option value="Salon">Salon</option>

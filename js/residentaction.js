@@ -219,10 +219,8 @@ $(document).ready(function () {
 
     if ($("#showdeletedentries").is(":checked")) {
       reloadDeletedEntries(page);
-      updateDeletedPaginationControls(page);
     } else {
       reloadTable(page);
-      updatePaginationControls(page);
     }
   });
 
@@ -260,23 +258,24 @@ $(document).ready(function () {
             button: "Close",
           });
           reloadTable(page);
-        } else if (response.success == false) {
+        } else if (response.success == "entry_match") {
 
            $("#AddResidentModal").modal("hide");
+
                 swal("Duplicated Entry Detected", {
                     icon: "warning",
                     buttons: {
-                        close: "Close",
-                        view: {
-                            text: "View Details",
-                            value: "view",
-                        },
-                    },
+                    close: "Close",
+                    view: {
+                    text: "View Details",
+                    value: "view",
+                },
+                },
                 }).then((value) => {
                   console.log(value);
                     if (value == "view") {
                       console.log(response.data.nresident_id)
-                      if (response.success == false) {
+                      if (response.success == true) {
                         $("#ViewResidentModal").modal("show");
 
                         var correctimagepath = "includes/img/resident_img/" + response.data.img_filename 
@@ -325,13 +324,13 @@ $(document).ready(function () {
                       }
                     }
                 });
-        } else {
-          $("#AddResidentModal").modal("hide");
-          swal({
-            icon: "error",
-            title: "Oops...",
-            text: "Something went wrong!",
-          });
+        } else if (response.success == false){
+            $("#AddResidentModal").modal("hide");
+            swal({
+              icon: "error",
+              title: "Oops...",
+              text: "Server Replys Failed!",
+            });
         } // END of if
       },
       error: function (xhr, status, error) {
@@ -342,7 +341,7 @@ $(document).ready(function () {
         swal({
           icon: "error",
           title: "Oops...",
-          text: "Something went wrong!",
+          text: "AJAX Error!",
         });
       },
     });

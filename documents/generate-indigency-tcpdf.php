@@ -1,7 +1,10 @@
 <?php
 if($_SERVER['REQUEST_METHOD']!=="POST"){
-    exit("Access Denied");
+    header('Location: ../index.php');
+    exit();
 }
+
+header('Content-Type: text/html; charset=utf-8');
 
 require_once('tcpdf/tcpdf.php');
 include_once('../includes/connecttodb.php');
@@ -23,12 +26,12 @@ $nowdate= date("Y-m-d H:i:s"); //Get the date now
 $nowtime = time(); //Get the time now
 $username = null;
 $issuingdeptno = null;
-$residentno = (isset($_POST['residentno']))? $_POST['residentno']:null;
-$completeaddress=(isset($_POST['address']))? sanitizeData(utf8_decode($_POST['address'])) : null;
-$fname=sanitizeData(utf8_decode($_POST['first_name']));
-$mname=sanitizeData(utf8_decode($_POST['middle_name']));
-$lname=sanitizeData(utf8_decode($_POST['last_name']));
-$suffix = (isset($_POST['suffix']))? $suffix=$_POST['suffix']: null ;
+$residentno = (isset($_POST['residentno']))? sanitizeData($_POST['residentno']):null;
+$completeaddress=(isset($_POST['address']))? sanitizeData($_POST['address']) : null;
+$fname=sanitizeData($_POST['first_name']);
+$mname=sanitizeData($_POST['middle_name']);
+$lname=sanitizeData($_POST['last_name']);
+$suffix = (isset($_POST['suffix']))? sanitizeData($suffix=$_POST['suffix']): null ;
 
 $fullname = $fname .' '. $mname .' '. $lname.' '. $suffix;
 
@@ -133,7 +136,7 @@ class MYPDF extends TCPDF {
                 }
             </style>
             
-            <strong class="title">'.strtoupper($brgydetails['brgy_name'].' '. $brgydetails['sona'].' '.$brgydetails['district']).'</strong>';
+            <strong class="title">'.mb_strtoupper($brgydetails['brgy_name'].' '. $brgydetails['sona'].' '.$brgydetails['district']).'</strong>';
             $this->writeHTML($title, true, false, true, false, 'C');
     
         }
@@ -239,7 +242,7 @@ $html =
             foreach ($brgyofficials as $official) {
                 if ($official['official_position'] == 'Punong Barangay') {
                     $html .= '<div class="official">
-                    <u>' . strtoupper($official['official_name']) . '</u>
+                    <u>' . mb_strtoupper($official['official_name']) . '</u>
                     <h5>PUNONG BARANGAY</h5>  
                     </div>';
 
@@ -255,24 +258,24 @@ $html =
              // Insert PHP `foreach` loop outside the string for dynamic content
             foreach ($kagawad as $kagawad1) {
                 $html .= '
-                            <u>' .'KGD. '. strtoupper(htmlspecialchars($kagawad1['official_name'])) . '</u><br><br>
+                            <u>' .'KGD. '. mb_strtoupper(htmlspecialchars($kagawad1['official_name'])) . '</u><br><br>
                 ';
             }
 
             foreach ($brgyofficials  as $official) {
                 if ($official['official_position'] == 'SK Chairperson') {
                     $html .= '<div class="official">
-                                <u>' . strtoupper($official['official_name']) . '</u>
+                                <u>' . mb_strtoupper($official['official_name']) . '</u>
                                 <h5>SK-CHAIRPERSON</h5>
                               </div>';
                 } elseif ($official['official_position'] == 'Barangay Secretary') {
                     $html .= '<div class="official">
-                                <u>' . strtoupper($official['official_name']) . '</u>
+                                <u>' . mb_strtoupper($official['official_name']) . '</u>
                                 <h5>BARANGAY SECRETARY</h5>
                               </div>';
                 } elseif ($official['official_position'] == 'Barangay Treasurer') {
                     $html .= '<div class="official">
-                                <u>' . strtoupper($official['official_name']) . '</u>
+                                <u>' . mb_strtoupper($official['official_name']) . '</u>
                                 <h5>BARANGAY TREASURER</h5>
                               </div>';
                 }
@@ -283,7 +286,7 @@ $html =
             <td class="certbody">
                 <div style="text-align:center; font-family:\'Cambria\',serif;">
                     <h2 style="font-size:22px;">PAGPAPATUNAY NA MAHIRAP</h2>
-                    <p style="font-size:16px;">Sa pamamagitan nito ay pinatutunayan ng tanggapang ito na si <br><b class="bold">'.strtoupper($fullname).'</b>, nakatira sa <strong class="bold">'.$completeaddress.'</strong> ay nabibilang sa mahihirap na mamamayan dito sa aming nasasakupan.</p>
+                    <p style="font-size:16px;">Sa pamamagitan nito ay pinatutunayan ng tanggapang ito na si <br><b class="bold">'.mb_strtoupper($fullname).'</b>, nakatira sa <strong class="bold">'.$completeaddress.'</strong> ay nabibilang sa mahihirap na mamamayan dito sa aming nasasakupan.</p>
                     <p style="font-size:16px;">Ang pagpapatunay na ito ay ipinagkaloob upang magamit na basehan upang siya ay makahingi ng tulong na <strong class="bold"><u>'.$purpose.'</u></strong> mula sa tanggapan ng <strong class="bold"><u>'.$agency.'</u></strong>.</p>
                     <p style="font-size:16px;">Ipinagkaloob ngayong <b class="bold">ika-'.date("j").' ng '.$month.', '.date('Y').'</b> sa tanggapan ng <strong class="bold2">Barangay 177, Cielito Homes Subdivision, Camarin, Lungsod ng Caloocan.</strong></p>
                 </div>

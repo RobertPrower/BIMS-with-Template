@@ -1,8 +1,8 @@
 <?php
 
 // For the pagination controls of for the modal
-echo '<nav aria-label="Page navigation">';
-echo '<ul class="pagination main-pagination justify-content-end">';
+// echo '<nav aria-label="Page navigation">';
+// echo '<ul class="pagination justify-content-end">';
 
 // Make the previous button only appear once the page is more than one
 if ($current_page > 1) {
@@ -30,7 +30,7 @@ if ($end_page - $start_page + 1 < $range) {
 // To generate the Page number buttons
 for ($i = $start_page; $i <= $end_page; $i++) {
     $active = $i == $current_page ? 'active' : '';
-    echo '<li class="page-item ' . $active . '"><a class="page-link pagination-control" href="#" data-page="' . $i . '">' . $i . '</a></li>';
+    echo '<li class="page-item ' . $active . '"><a class="page-link pagination-control" href="#" " data-page="' . $i . '">' . $i . '</a></li>';
 }
 
 // Next button

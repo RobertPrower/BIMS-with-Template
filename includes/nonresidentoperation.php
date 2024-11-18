@@ -77,11 +77,14 @@ if($operation_check == "ADD"){ //For the add operation
     ]);
     $result = $check_stmt->fetch(mode: PDO::FETCH_ASSOC);
         
-        if($result == true){
-            echo json_encode(["success" => false, "data" => $result]);
+        if(!empty($result)){
+
+            echo json_encode(["success" => "entry_match", "data" => $result]);
 
         }else{
             try {
+
+                $pdo->beginTransaction();
 
                 if(isset($_POST['imagefile'])){
                     //Variable for the Name of the Folder which is img
@@ -145,13 +148,10 @@ if($operation_check == "ADD"){ //For the add operation
         
                 //Record to Audit Trail
                 $audit_query = "INSERT INTO nonres_audit_trail (dept_added_no, user_added_no, datetime_added)
-                VALUES (?, ?,CURRENT_TIMESTAMP())";
+                VALUES (?, ?,CURRENT_TIMESTAMP)";
                 $audit_stmt = $pdo->prepare($audit_query);
                 $audit_stmt->execute
-                ([
-                $departno,
-                $userid
-                ]);
+                ([$departno,$userid]);
             
                 // Insert data into the non resident table
                 $insert_query = "INSERT INTO non_resident (img_filename, last_name, first_name, middle_name, suffix, house_num, street, subdivision, 
@@ -183,8 +183,11 @@ if($operation_check == "ADD"){ //For the add operation
                 // Success response encodes it to JSON format for the AJAX to read
                 $response = ["success" => true, "message" => "Data Added successfully"];
                 echo json_encode($response);
+
+                $pdo->commit();
             } catch (Exception $e) {
                 // Error response
+                $pdo->rollBack();
                 $response = ["success" => false, "message" => "Error updating data: " . $e->getMessage()];
                 echo json_encode($response);
             }
@@ -363,7 +366,10 @@ if($operation_check == "ADD"){ //For the add operation
        }else{
            $imgopresponse = "No image data was recevied";
        }
+
        try {
+        $pdo->beginTransaction();
+
         // Prepare SQL statement for updating resident data
         $statement = $pdo->prepare("UPDATE non_resident SET first_name = ?, middle_name = ?, last_name = ?,suffix = ?, house_num = ?, street = ?, subdivision = ?, district_brgy=?, city=?, province=?, zipcode=? ,sex = ?, marital_status = ?, birth_date = ?, birth_place = ?, cellphone_num = ? WHERE nresident_id = ?");
         
@@ -377,15 +383,15 @@ if($operation_check == "ADD"){ //For the add operation
         $atstmt= $pdo->prepare($update_audit_sql);
         $atstmt -> execute([$departno, $userid, $nowdate, $nresidentId]);
 
-        
+        $pdo->commit();
         } catch (PDOException $e) {
             // Handle database connection or query errors
+
+            $pdo->rollBack();
             error_log($e->getMessage());
 
             echo json_encode(["success" => false, "message" => "Error updating data: " . $e->getMessage()]);
-            ini_set('display_errors', 1);
-            ini_set('display_startup_errors', 1);
-            error_reporting(E_ALL);
+
         }
     }else{
         echo json_encode(["success"=>false, "message"=>"No ID was recieved!!"]);
@@ -399,6 +405,8 @@ if($operation_check == "ADD"){ //For the add operation
         // Prepare an update statement to mark the record as deleted
         try{
         
+            $pdo->beginTransaction();
+
             $update_query = "UPDATE non_resident SET is_deleted = 1 WHERE nresident_id = ?";
             $update_stmt = $pdo->prepare($update_query);
             $update_stmt->execute([$id_to_delete]);
@@ -408,7 +416,10 @@ if($operation_check == "ADD"){ //For the add operation
             $atstmt -> execute([$departno, $userid, $nowdate, $id_to_delete]);
             echo json_encode(["success" => true, "message" => "Record Soft deleted successfully."]);
 
+            $pdo->commit();
         }catch(PDOException $e){
+
+            $pdo->rollBack();
             error_log($e->getMessage());
             echo json_encode(["success" => false, "message" => "Error deleting record" . $e->getMessage()]);
 
@@ -424,6 +435,8 @@ if($operation_check == "ADD"){ //For the add operation
     if(isset($id_to_delete)){
         // Prepare an update statement to mark the record as is_deleted=0
         try{
+
+            $pdo->beginTransaction();
         
             $update_query = "UPDATE non_resident SET is_deleted = 0 WHERE nresident_id = ?";
             $update_stmt = $pdo->prepare($update_query);
@@ -434,7 +447,10 @@ if($operation_check == "ADD"){ //For the add operation
             $atstmt -> execute([$departno, $userid, $id_to_delete]);
             echo json_encode(["success" => true, "message" => "Record recovered successfully."]);
 
+            $pdo->commit();
+
         }catch(PDOException $e){
+            $pdo->rollBack();
             error_log($e->getMessage());
             echo json_encode(["success" => false, "message" => "Error recovering the record" . $e->getMessage()]);
 

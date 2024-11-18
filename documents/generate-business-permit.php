@@ -1,7 +1,9 @@
 <?php
 if($_SERVER['REQUEST_METHOD']!=="POST"){
-    exit("Access Denied");
+    header('Location: ../index.php');
+    exit();
 }
+// header('Content-Type: text/html; charset=utf-8');
 
 require_once('tcpdf/tcpdf.php');
 global $pdo;

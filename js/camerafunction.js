@@ -2,7 +2,7 @@ $(document).ready(function() {
     var isCameraOpen = false;
 
     $('#openCamera, #editopenCamera').click(function() {
-        var isEdit = $("#EditResidentModal").hasClass("show");
+        var isEdit = $("#EditResidentModal, #EditNonResidentModal").hasClass("show");
 
 
         if (!isCameraOpen) {
@@ -45,6 +45,7 @@ $(document).ready(function() {
                 isCameraOpen = true;
     
                 $("#imagePreview").attr("disabled");
+
             
             }
 
@@ -63,7 +64,7 @@ $(document).ready(function() {
                 $('#editcameraFeedWrapper').hide();
     
                 // Reset the button text and style
-                $('#editopenCamera').text('Open Camera').removeClass('btn-success').addClass('btn-primary');
+                $('#editopenCamera, .editopenCamera').text('Open Camera').removeClass('btn-success').addClass('btn-primary');
                 $('#editimagefile').prop('disabled',false)
                 $("#editimagefile").val('');  
                 
@@ -72,7 +73,8 @@ $(document).ready(function() {
                 isCameraOpen = false;
                 });
 
-              
+                console.log("Edit Captured has been triggred")
+
             }else{
                 // Capture the image from the webcam
                 Webcam.snap(function(data_uri) {

@@ -1,6 +1,7 @@
 <?php
 if($_SERVER['REQUEST_METHOD']!=="POST"){
-    exit("Access Denied");
+    header('Location: ../index.php');
+    exit();
 }
 
 require_once('tcpdf/tcpdf.php');
@@ -8,6 +9,8 @@ include_once('../includes/connecttodb.php');
 include_once('../includes/anti-SQLInject.php');
 
 date_default_timezone_set('Asia/Manila');
+header('Content-Type: text/html; charset=utf-8');
+
 
 // Get the current date and time
 $nowdate = date("Y-m-d H:i:s"); // Current date
@@ -36,13 +39,13 @@ $issuingdeptno = null;
 $ID = $_POST['id_to_record'];
 $isResident = ($_POST['res_sta']=="RESIDENT")? "RESIDENT" : "NON_RESIDENT" ; 
 
-$fname=sanitizeData(utf8_decode($_POST['first_name']));
-$mname=sanitizeData(utf8_decode($_POST['middle_name']));
-$lname=sanitizeData(utf8_decode($_POST['last_name']));
+$fname=sanitizeData($_POST['first_name']);
+$mname=sanitizeData($_POST['middle_name']);
+$lname=sanitizeData($_POST['last_name']);
 $suffix = (isset($_POST['suffix']))? $suffix=$_POST['suffix']: null ;
 
 $fullname = $fname .' '. $mname .' '. $lname.' '. $suffix;
-$address = sanitizeData(utf8_decode($_POST['address']));
+$address = sanitizeData($_POST['address']);
 
 
 $presentedid=sanitizeData($_POST['presented_id']);
@@ -194,8 +197,8 @@ class MYPDF extends TCPDF {
             </style>
             
             <p class="body"> 
-            <strong class="title">'.strtoupper($brgydetails['brgy_name'].' '. $brgydetails['sona'].' '.$brgydetails['district']).'</strong>
-            <p class="brgyname">'.strtoupper($brgydetails['address']).'</p>
+            <strong class="title">'.mb_strtoupper($brgydetails['brgy_name'].' '. $brgydetails['sona'].' '.$brgydetails['district']).'</strong>
+            <p class="brgyname">'.mb_strtoupper($brgydetails['address']).'</p>
             <p class="contact"> Tel No: '.$brgydetails['tel_num'].' Cell No: '.$brgydetails['cp_num'].' Email: '.$brgydetails['email'].'</p>
             </p>
 
@@ -524,7 +527,7 @@ $pdf->Cell(5, 10, "Pinagtibay ni:", 0, 0, 'C', false, '', 0, false, 'T', 'M');
 $pdf->SetFont('cambria', 'BU', 12);
 
 $pdf->SetXY(35, 235); 
-$pdf->Cell(5, 10, "KGG. ".strtoupper($official[0]), 0, 0, 'C', false, '', 0, false, 'T', 'M');
+$pdf->Cell(5, 10, "KGG. ".mb_strtoupper($official[0]), 0, 0, 'C', false, '', 0, false, 'T', 'M');
 
 $pdf->SetFont('cambria', 'B', 12);
 
@@ -541,7 +544,7 @@ $pdf->Cell(5, 10, "Pinatunayan ni:", 0, 0, 'C', false, '', 0, false, 'T', 'M');
 $pdf->SetFont('cambria', 'BU', 12);
 
 $pdf->SetXY(180, 235); 
-$pdf->Cell(5, 10, strtoupper($official[2]), 0, 0, 'C', false, '', 0, false, 'T', 'M');
+$pdf->Cell(5, 10, mb_strtoupper($official[2]), 0, 0, 'C', false, '', 0, false, 'T', 'M');
 
 $pdf->SetFont('cambria', 'B', 12);
 

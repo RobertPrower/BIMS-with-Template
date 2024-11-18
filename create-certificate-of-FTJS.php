@@ -128,7 +128,7 @@
                   
               <div class="form-floating mt-3 mb-3 col-md-6">
                   <select class="form-select" id="presented_id" name="presented_id" aria-label="Floating label select example" required aria-required="true">
-                      <option hidden value="">Select Option</option>
+                      <option hidden value="">Select</option>
                       <option value="National ID">National ID</option>
                       <option value="Postal ID">Postal ID</option>
                       <option value="Driver's License">Driver's License</option>

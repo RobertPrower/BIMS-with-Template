@@ -1,6 +1,7 @@
 <?php 
 if($_SERVER['REQUEST_METHOD']!=="POST"){
     header('Location: index.php');
+    exit();
 }
 
 require_once'connecttodb.php';
@@ -12,11 +13,10 @@ $id_to_fetch = (isset($_POST['blotter_id']))? $_POST['blotter_id']: null;
 $report_status = (isset($_POST['blotter_status']))? $_POST['blotter_status']: null;
 $mediator_name = (isset($_POST['mediator_name']))? $_POST['mediator_name']: null;
 
-
 $limit = 10;
 $search = isset($_POST['search']) ? sanitizeData($_POST['search']): '';
-$page = isset($_POST['page']) ? $_POST['page'] : '1';
-$start_from = ($page - 1) * $limit;
+$page = isset($_POST['pageno']) ? $_POST['pageno'] : '1';
+$start_from = ceil(($page - 1) * $limit);
 
 $main_complainantid = isset($_POST['main_complainantid'])?sanitizeData($_POST['main_complainantid']): NULL; 
 $main_complainant_status = isset($_POST['main_complainant_status'])?sanitizeData($_POST['main_complainant_status']): NULL;
@@ -125,7 +125,7 @@ if($operation_check == "FETCH_SCHEDULE_ON_MODAL"){
     echo json_encode($results);
 }else if($operation_check == "FETCH_MEDIATOR_SELECT"){
 
-    $sqlquery = "SELECT CONCAT(first_name, ' ', middle_name, ', ', last_name, ' ', COALESCE(suffix, '')) AS mediator_name FROM tbl_blotter_mediator";
+    $sqlquery = "SELECT mediator_id, CONCAT(first_name, ' ', middle_name, ', ', last_name, ' ', COALESCE(suffix, '')) AS mediator_name FROM tbl_blotter_mediator";
     $stmt = $pdo -> prepare($sqlquery);
     $stmt -> execute();
     $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -308,7 +308,7 @@ if($operation_check == "FETCH_SCHEDULE_ON_MODAL"){
             $blotter_type, $incident_desc, 
             $incident_date, $incident_location, 
             $case_context, $schedule_date, 
-            $schedule_starttime, $schedule_endtime, $mediator_no,
+            $schedule_starttime, $schedule_endtime, (int)$mediator_no,
             $schedule_color, $resolution_date, $report_status
         ];
 
@@ -346,8 +346,10 @@ if($operation_check == "FETCH_SCHEDULE_ON_MODAL"){
 }else if ($operation_check == "FETCH_MAIN_TABLE"){
     
     try {
-        $sql = "SELECT * FROM vw_blotters ORDER BY blotter_add_dt ASC LIMIT $start_from, $limit"; 
+        $sql = "SELECT * FROM vw_blotters WHERE is_deleted = 0 ORDER BY blotter_add_dt ASC LIMIT :start_from, :lim"; 
         $stmt = $pdo->prepare($sql);
+        $stmt -> bindValue(':start_from', (int)$start_from, PDO::PARAM_INT);
+        $stmt -> bindValue(':lim', (int)$limit, PDO::PARAM_INT);
         $stmt->execute();
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -544,7 +546,7 @@ if($operation_check == "FETCH_SCHEDULE_ON_MODAL"){
                     b.location_of_incident, b.date_of_resolution, b.statemnt, 
                     b.mediation_starttime, b.mediation_endtime, b.mediation_date, 
                     b.schedule_color, b.report_status,
-                    CONCAT(m.first_name, ' ', m.middle_name, ', ', m.last_name, ' ', COALESCE(m.suffix, '')) AS mediator_name
+                    b.mediator_no AS mediator_name
                     FROM tbl_blotters b
                     LEFT JOIN tbl_blotter_mediator m ON b.mediator_no = m.mediator_id
                     WHERE b.blotter_id = ?";
@@ -599,7 +601,10 @@ if($operation_check == "FETCH_SCHEDULE_ON_MODAL"){
 
 }else if($operation_check == "PAGINATION"){
     // Fetch the total number of records
-    $total_records = $pdo->query("SELECT COUNT(*) FROM vw_blotters WHERE is_deleted = 0")->fetchColumn();
+    $query ="SELECT COUNT(*) FROM vw_blotters WHERE is_deleted = 0";
+    $stmt = $pdo->prepare($query);
+    $stmt->execute();
+    $total_records = $stmt->fetchColumn();
     $limit = 10; //To limit the number of pages
     $total_pages = ceil($total_records / $limit);
 
@@ -607,11 +612,6 @@ if($operation_check == "FETCH_SCHEDULE_ON_MODAL"){
     $current_page = isset($_POST['pageno']) ? (int)$_POST['pageno'] : 1;
     $current_page = max(1, min($current_page, $total_pages));
     $start_from = ($current_page - 1) * $limit;
-
-    // Fetch the data for the current page
-    // $query = $pdo->prepare("SELECT * FROM vw_blotters ORDER BY request_id ASC LIMIT $start_from, $limit");
-    // $query->execute();
-    // $result = $query->fetchAll();
 
     require_once'paginationtemplate.php';
 
