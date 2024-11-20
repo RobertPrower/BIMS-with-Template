@@ -6,11 +6,12 @@ require_once('../includes/anti-SQLInject.php');
 require_once('includes/tagalogmonth.php');
 
 // Get the current date and time
+
 $nowdate = date("Y-m-d H:i:s");
 $nowtime = time(); // Get the time now
 
 // Define directory for saving the PDF
-$directory = "monthly_status_report/";
+$directory = "clearances_report/";
 $fileName = $_SERVER['DOCUMENT_ROOT'] . "/BIMS-with-Template/documents/" . $directory . "generated_pdf_" . $nowtime . ".pdf";
 $filename = "generated_pdf_" . $nowtime . ".pdf";
 
@@ -151,11 +152,11 @@ class MYPDF extends TCPDF
             }
 
             if (isset($logo[5])) {
-                $this->Image("../img/logos/" . $logo[5], 30, 5, 153, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false); // Third image
+                $this->Image("../img/logos/" . $logo[5], 75, 5, 153, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false); // Third image
             }
 
             if (isset($logo[3])) {
-                $this->Image("../img/logos/" . $logo[3], 175, 8, 23, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false); // Fourth image
+                $this->Image("../img/logos/" . $logo[3], 255, 8, 23, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false); // Fourth image
             }
         } else {
             // Handle the case when no images are returned by the query
@@ -166,7 +167,7 @@ class MYPDF extends TCPDF
         $this->SetLineWidth(0);
 
         // Draw a line below the header
-        $this->Line(0, 35, 220, 35);
+        $this->Line(0, 35, 290, 35);
     }
 
     public function Footer()
@@ -187,48 +188,186 @@ $pdf->SetMargins(15, 40, 15);
 $pdf->SetHeaderMargin(15);
 $pdf->SetFooterMargin(20);
 $pdf->SetAutoPageBreak(TRUE, 15);
-$pdf->AddPage();
-
-$fname1 = 'Robert';
+$pdf->AddPage('L');
 
 $html = '
-<div class="body">
-    <h1 class="title"> STATUS REPORT FOR THIS MONTH </h1>
-    <table style="border-collapse: collapse; width: 100%;" border="1" cellpadding="4">
-        <thead>
-            <tr style="background-color: #f2f2f2;">
-                <th style="border: 1px solid #000; text-align: center;">Date</th>
-                <th style="border: 1px solid #000; text-align: center;">Name</th>
-                <th style="border: 1px solid #000; text-align: center;">Address</th>
-                <th style="border: 1px solid #000; text-align: center;">Age</th>
-                <th style="border: 1px solid #000; text-align: center;">Contact</th>
-                <th style="border: 1px solid #000; text-align: center;">Gender</th>
-                <th style="border: 1px solid #000; text-align: center;">Types</th>
-                <th style="border: 1px solid #000; text-align: center;">Purpose</th>
-                <th style="border: 1px solid #000; text-align: center;">Released By</th>
-                <th style="border: 1px solid #000; text-align: center;">Remarks</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td style="border: 1px solid #000; text-align: center;">' . $fname1 . '</td>
-                <td style="border: 1px solid #000; text-align: center;">  </td>
-                <td style="border: 1px solid #000; text-align: center;"> </td>
-                <td style="border: 1px solid #000; text-align: center;"> </td>
-                <td style="border: 1px solid #000; text-align: center;"></td>
-                <td style="border: 1px solid #000; text-align: center;"> </td>
-                <td style="border: 1px solid #000; text-align: center;">  </td>
-                <td style="border: 1px solid #000; text-align: center;"> </td>
-                <td style="border: 1px solid #000; text-align: center;"> </td>
-                <td style="border: 1px solid #000; text-align: center;">Approved</td>
-            </tr>
-            <!-- Repeat <tr>...</tr> as needed for more rows -->
-        </tbody>
-    </table>
-</div>
+
 <style>
-    .body { font-size: 8px; }
-    .title{text-align: center}
+
+    .body { font-size: 11px; }
+    .title { text-align: center; font-size: 20px; font-weight: bold; }
+    table { border-collapse: collapse; width: 90%; height: 150%; margin: 0% auto;  } 
+    th, td { border: 1px solid #000; text-align: center; padding: 10px; width: 30%; }
+    thead { background-color: #f2f2f2; }
+
+</style>
+
+<div class = "body">
+    <h1 class= "title"> STATUS REPORT FOR THIS MONTH </h1>
+
+    <br>
+        <table>
+            <thead>
+                <tr>
+                    <th> Date </th>
+                    <th> May 20,2024 </th>
+                </tr>
+            </thead>
+        </table>
+        <table>
+            <thead>
+                <tr>
+                    <th> Car Loan </th>
+                    <th> 2 </th>
+                </tr>
+            </thead>
+        </table>
+        <table>
+            <thead>
+                <tr>
+                    <th> Loan </th>
+                    <th> 6 </th>
+                </tr>
+            </thead>
+        </table>
+        <table>
+            <thead>
+                <tr>
+                    <th> Local Employment </th>
+                    <th> 14 </th>
+                </tr>
+            </thead>
+        </table>
+        <table>
+            <thead>
+                <tr>
+                    <th> Meralco </th>
+                    <th> 4 </th>
+                </tr>
+            </thead>
+        </table>
+        <table>
+            <thead>
+                <tr>
+                    <th> Philhealth Requirements </th>
+                    <th> 1 </th>
+                </tr>
+            </thead>
+        </table>
+        <table>
+            <thead>
+                <tr>
+                    <th> Police Clearance </th>
+                    <th> 1 </th>
+                </tr>
+            </thead>
+        </table>
+        <table>
+            <thead>
+                <tr>
+                    <th> School Requirements </th>
+                    <th> 2 </th>
+                </tr>
+            </thead>
+        </table>
+        <table>
+            <thead>
+                <tr>
+                    <th> SSS Requirements </th>
+                    <th> 1 </th>
+                </tr>
+            </thead>
+        </table>
+
+        <table>
+            <thead>
+                <tr class = "totals">
+                    <td> Total </td>
+                    <td> 42 </td>
+                </tr>
+            </thead>
+        </table>
+
+        <br><br>
+
+        <table>
+            <thead>
+                <tr>
+                    <th> Business Clearance </th>
+                    <th> 3 </th>
+                </tr>
+            </thead>
+        </table>
+        <table>
+            <thead>
+                <tr>
+                    <th> First Time Job Seeker </th>
+                    <th> 14 </th>
+                </tr>
+            </thead>
+        </table>
+        <table>
+            <thead>
+                <tr>
+                    <th> Securing Business </th>
+                    <th> 1 </th>
+                </tr>
+            </thead>
+        </table>
+        <table>
+            <thead>
+                <tr>
+                    <th> TPRS </th>
+                    <th> 2 </th>
+                </tr>
+            </thead>
+        </table>
+
+        <table>
+            <thead>
+                <tr class = "totals">
+                    <td> Total </td>
+                    <td> 62 </td>
+                </tr>
+            </thead>
+        </table>
+
+        <br><br>
+
+        <table>
+            <thead>
+                <tr>
+                    <th> MALE </th>
+                    <th> 32 </th>
+                </tr>
+            </thead>
+        </table>
+        <table>
+            <thead>
+                <tr>
+                    <th> FEMALE </th>
+                    <th> 32 </th>
+                </tr>
+            </thead>
+        </table>
+        <table>
+            <thead>
+                <tr>
+                    <th> UNGENDER </th>
+                    <th> 0 </th>
+                </tr>
+            </thead>
+        </table>
+
+        <table>
+            <thead>
+                <tr class = "totals">
+                    <td> Total </td>
+                    <td> 62 </td>
+                </tr>
+            </thead>
+        </table>
+
 </style>';
 
 $pdf->writeHTML($html, true, false, true, false, '');
