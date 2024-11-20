@@ -149,10 +149,7 @@
                                                                 </div>
 
                                                                 <div class="form-floating mt-3 mb-3 col-md-4">
-                                                                    <select class="form-select" id="city" name="city" aria-label="Floating label select example" required>
-                                                                        <option value="" hidden selected>Select</option>
-
-                                                                    </select>
+                                                                    <input type="text" class="form-control" id="city" name="city" placeholder="Enter Subdivision Here" required>
                                                                     <label for="city">City</label>
 
                                                                 </div>

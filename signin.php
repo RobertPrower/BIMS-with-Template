@@ -1,38 +1,9 @@
-<<<<<<< Updated upstream
 <?php
 
 // require_once 'includes/config.php';
 // require_once 'includes/login-view.php';
 
-session_start();
-require 'connecttodb.php';
-
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['login'])) {
-  $username = $_POST['username'];
-  $password = $_POST['password'];
-
-  $stmt = $pdo->prepare("SELECT * FROM tbl_users_m WHERE username = :username");
-  $stmt->bindParam(':username', $username);
-  $stmt->execute();
-  $user = $stmt->fetch(PDO::FETCH_ASSOC);
-
-  if ($user && password_verify($password, $user['password'])) {
-    $_SESSION['user_id'] = $user['id'];
-    $_SESSION['user_role'] = $user['role'];
-    header("Location: signin.php");
-    exit();
-  } else {
-    echo "Invalid username or password.";
-  }
-}
-=======
-<?php 
-// require_once 'includes/config.php';
-// require_once 'includes/login-view.php';
->>>>>>> Stashed changes
-
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">

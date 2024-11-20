@@ -147,11 +147,11 @@ class MYPDF extends TCPDF {
             }
 
             if (isset($logo[5])) {
-                $this->Image("../img/logos/" . $logo[5], 30, 5, 153, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false); // Third image
+                $this->Image("../img/logos/" . $logo[5], 75, 5, 153, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false); // Third image
             }
 
             if (isset($logo[3])) {
-                $this->Image("../img/logos/" . $logo[3], 175, 8, 23, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false); // Fourth image
+                $this->Image("../img/logos/" . $logo[3], 255, 8, 23, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false); // Fourth image
             }
         } else {
             // Handle the case when no images are returned by the query
@@ -162,7 +162,7 @@ class MYPDF extends TCPDF {
         $this->SetLineWidth(0); 
 
          // Draw a line below the header
-         $this->Line(0, 35, 220, 35); 
+         $this->Line(0, 35, 290, 35); 
     }
 
     public function Footer() {
@@ -182,13 +182,13 @@ $pdf->SetMargins(15, 40, 15);
 $pdf->SetHeaderMargin(15);
 $pdf->SetFooterMargin(20);
 $pdf->SetAutoPageBreak(TRUE, 15);
-$pdf->AddPage();
+$pdf->AddPage('L');
 
 $html = '
 
 <div class="body">
 
-    <h1> STATUS REPORT FOR THIS MONTH </h1>
+    <h1 class="title"> STATUS REPORT FOR THIS MONTH </h1>
 
     <table style="border-collapse: collapse; width: 100%;" border="1" cellpadding="4">
 
@@ -228,6 +228,7 @@ $html = '
 
 <style>
     .body { font-size: 8px; }
+    .title {text-align: center}
 </style>';
 
 $pdf->writeHTML($html, true, false, true, false, '');

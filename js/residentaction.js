@@ -251,85 +251,77 @@ $(document).ready(function () {
 
         if (response.success == true) {
           $("#AddResidentModal").modal("hide");
-          swal({
+          Swal.fire({
             title: "Add Entry",
             text: "Entry Added Sucessfully!",
             icon: "success",
-            button: "Close",
           });
           reloadTable(page);
         } else if (response.success == "entry_match") {
 
            $("#AddResidentModal").modal("hide");
 
-                swal("Duplicated Entry Detected", {
-                    icon: "warning",
-                    buttons: {
-                    close: "Close",
-                    view: {
-                    text: "View Details",
-                    value: "view",
-                },
-                },
-                }).then((value) => {
-                  console.log(value);
-                    if (value == "view") {
-                      console.log(response.data.nresident_id)
-                      if (response.success == true) {
-                        $("#ViewResidentModal").modal("show");
+            Swal.fire({
+              title: "Duplicate Entry Detected.",
+              text: "Do you want to view the duplicate record?",
+              icon: "warning",
+              showCancelButton: true,
+              confirmButtonColor: "#3085d6",
+              cancelButtonColor: "#d33",
+              confirmButtonText: "View"
+              }).then((result) => {
+                if (result.isConfirmed) {
+                  console.log(response.data.nresident_id)
+                  $("#ViewResidentModal").modal("show");
 
-                        var correctimagepath = "includes/img/resident_img/" + response.data.img_filename 
+                  var correctimagepath = "includes/img/resident_img/" + response.data.img_filename 
 
-                        $("#viewimagePreview").attr("src", correctimagepath);
-                        console.log("Existing Record View Pic has been loaded");
-                        console.log(correctimagepath);
+                  $("#viewimagePreview").attr("src", correctimagepath);
+                  console.log("Existing Record View Pic has been loaded");
+                  console.log(correctimagepath);
 
-                        $('#nav-home-tab').tab('show');
+                  $('#nav-home-tab').tab('show');
 
-                        // Populate the fields in the modal
-                        $('#ViewResidentModal input[name="resident_id"]').val(response.data.resident_id);
-                        $('#ViewResidentModal input[name="fname"]').val(response.data.first_name);
-                        $('#ViewResidentModal input[name="mname"]').val(response.data.middle_name);
-                        $('#ViewResidentModal input[name="lname"]').val(response.data.last_name);
-                        $('#ViewResidentModal input[name="suffix"]').val(response.data.suffix);
-                        $('#ViewResidentModal input[name="house_no"]').val(response.data.house_num);
-                        $('#ViewResidentModal input[name="street"]').val(response.data.street);
-                        $('#ViewResidentModal select[name="subd"]').val(response.data.subdivision);
-                        $('#ViewResidentModal select[name="sex"]').val(response.data.sex);
-                        $('#ViewResidentModal select[name="marital_status"]').val(response.data.marital_status);
-                        $('#ViewResidentModal input[name="birth_date"]').val(response.data.birth_date);
-                        $('#ViewResidentModal input[name="birth_place"]').val(response.data.birth_place);
-                        $('#ViewResidentModal input[name="cellphone_number"]').val(response.data.cellphone_num);
-                        $('#ViewResidentModal select[name="is_a_voter"]').val(response.data.is_a_voter);
-                        $('#ViewResidentModal input[name="rsince"]').val(response.data.resident_since);
+                  // Populate the fields in the modal
+                  $('#ViewResidentModal input[name="resident_id"]').val(response.data.resident_id);
+                  $('#ViewResidentModal input[name="fname"]').val(response.data.first_name);
+                  $('#ViewResidentModal input[name="mname"]').val(response.data.middle_name);
+                  $('#ViewResidentModal input[name="lname"]').val(response.data.last_name);
+                  $('#ViewResidentModal input[name="suffix"]').val(response.data.suffix);
+                  $('#ViewResidentModal input[name="house_no"]').val(response.data.house_num);
+                  $('#ViewResidentModal input[name="street"]').val(response.data.street);
+                  $('#ViewResidentModal select[name="subd"]').val(response.data.subdivision);
+                  $('#ViewResidentModal select[name="sex"]').val(response.data.sex);
+                  $('#ViewResidentModal select[name="marital_status"]').val(response.data.marital_status);
+                  $('#ViewResidentModal input[name="birth_date"]').val(response.data.birth_date);
+                  $('#ViewResidentModal input[name="birth_place"]').val(response.data.birth_place);
+                  $('#ViewResidentModal input[name="cellphone_number"]').val(response.data.cellphone_num);
+                  $('#ViewResidentModal select[name="is_a_voter"]').val(response.data.is_a_voter);
+                  $('#ViewResidentModal input[name="rsince"]').val(response.data.resident_since);
 
-                         //For counting certificates requested
-                        $.ajax({
-                          type: "post",
-                          url: "includes/residentoperation.php",
-                          data: { operation: "COUNT_RES_CERT", resident_id: response.data.resident_id },
-                          dataType: "json",
-                          success: function (response) {
-                            console.log(response);
+                    //For counting certificates requested
+                  $.ajax({
+                    type: "post",
+                    url: "includes/residentoperation.php",
+                    data: { operation: "COUNT_RES_CERT", resident_id: response.data.resident_id },
+                    dataType: "json",
+                    success: function (response) {
+                      console.log(response);
 
-                            $("#noofcerts").text(response);
-                          },
-                        });
-                      } else {
-                        swal({
-                            icon: "error",
-                            title: "Oops...",
-                            text: "Something went wrong!",
-                        });
-                      }
-                    }
-                });
+                      $("#noofcerts").text(response);
+                    },
+                  });
+                  
+                }
+            });
+
+              
         } else if (response.success == false){
             $("#AddResidentModal").modal("hide");
-            swal({
+            Swal.fire({
               icon: "error",
-              title: "Oops...",
-              text: "Server Replys Failed!",
+              title: "Error",
+              text: "Server Replys Failed! Error"+ response.message,
             });
         } // END of if
       },
@@ -338,10 +330,10 @@ $(document).ready(function () {
         console.error("Error saving data:", error);
         // Optionally, display an error message to the user
         $("#AddResidentModal").modal("hide");
-        swal({
-          icon: "error",
-          title: "Oops...",
-          text: "AJAX Error!",
+        Swal.fire({
+          title: "Error",
+          text: "Something went wrong!",
+          icon: "error"
         });
       },
     });
@@ -354,14 +346,17 @@ $(document).ready(function () {
     var residentId = $(this).data("resident_id");
     console.log(residentId);
     var page = $(this).data("page");
-    swal({
+
+    Swal.fire({
       title: "Are you sure?",
-      text: "The record will be recovered.",
+      text: "The Resident will be recovered.",
       icon: "warning",
-      buttons: ["Cancel", "Recovered"],
-      dangerMode: true,
-    }).then((willDelete) => {
-      if (willDelete) {
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!"
+    }).then((result) => {
+      if (result.isConfirmed) {
         $.ajax({
           url: "includes/residentoperation.php",
           type: "POST",
@@ -369,35 +364,49 @@ $(document).ready(function () {
           dataType: "json",
           success: function (response) {
             console.log("Data recovered successfully:", response);
-            swal("Record Has Been Restored", { icon: "success" });
+            Swal.fire({
+              title: "Success.",
+              text: "Resident is Recovered successfully.",
+              icon: "info"
+            });
             reloadDeletedEntries(page);
           },
           error: function (xhr, status, error) {
             console.error("Error deleting data:", error);
-            swal("Error!", "Failed to recovered the entry.", "error");
+            Swal.fire({
+              title: "Error",
+              text: "Resident is not deleted.",
+              icon: "error"
+            });
           },
         });
-      } else {
-        swal("Entry not recovered!", { icon: "info" });
+      }else{
+        Swal.fire({
+          title: "Resident Not Deleted.",
+          text: "Resident is not deleted.",
+          icon: "info"
+        });
       }
     });
   });
 
   $("#ResidentTable").on("click", "#deletebutton", function (event) {
     event.preventDefault();
-
     var currentSearch = $("#searchbox").val();
     var residentId = $(this).data("resident_id");
-    console.log(residentId);
     var page = $(this).data("page");
-    swal({
+    console.log(residentId);
+
+    Swal.fire({
       title: "Are you sure?",
-      text: "Once deleted, you will not be able to recover this entry!",
+      text: "You are deleteing this entry.",
       icon: "warning",
-      buttons: ["Cancel", "Delete"],
-      dangerMode: true,
-    }).then((willDelete) => {
-      if (willDelete) {
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!"
+    }).then((result) => {
+      if (result.isConfirmed) {
         $.ajax({
           url: "includes/residentoperation.php",
           type: "POST",
@@ -405,7 +414,11 @@ $(document).ready(function () {
           dataType: "json",
           success: function (response) {
             console.log("Data deleted successfully:", response);
-            swal("Record Has Been Deleted", { icon: "success" });
+            Swal.fire({
+              title: "Success",
+              text: "Resident is deleted.",
+              icon: "success"
+            });
             //If the modal was fired from a search make sure still the same page
             if (currentSearch) {
               fetchResults(currentSearch, page);
@@ -416,13 +429,18 @@ $(document).ready(function () {
           },
           error: function (xhr, status, error) {
             console.error("Error deleting data:", error);
-            swal("Error!", "Failed to delete the entry.", "error");
+            Swal.fire("Error!", "Failed to delete the entry.", "error");
           },
         });
-      } else {
-        swal("Entry not deleted!", { icon: "info" });
+      }else{
+        Swal.fire({
+          title: "Resident Not Deleted.",
+          text: "Resident is not deleted.",
+          icon: "info"
+        });
       }
     });
+
   });
 
   //For Editing Resident Entry
@@ -470,11 +488,10 @@ $(document).ready(function () {
 
             if (response.success) {
               $("#EditResidentModal").modal("hide");
-              swal({
+              Swal.fire({
                 title: "Edit Entry",
                 text: "Entry Edited Sucessfully!",
                 icon: "success",
-                button: "Close",
               });
               //If the modal was fired from a search make sure still the same page
               if (currentSearch) {
@@ -485,7 +502,7 @@ $(document).ready(function () {
               }
             } else {
               $("#EditResidentModal").modal("hide");
-              swal({
+              Swal.fire({
                 icon: "error",
                 title: "Oops...",
                 text: "Something went wrong!",
@@ -497,7 +514,7 @@ $(document).ready(function () {
             console.error("Error saving data:", error);
             // Optionally, display an error message to the user
             $("#EditResidentModal").modal("hide");
-            swal({
+            Swal.fire({
               icon: "error",
               title: "Oops...",
               text: "Something went wrong!",

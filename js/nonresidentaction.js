@@ -114,7 +114,7 @@ $(document).ready(function () {
         type: "POST",
         data: {pageno: currentPage, operation: "PAGINATION_FOR_DEL_REC"},
         success: function (data){
-          $(".main-pagination .page-item").html(data);
+          $(".main-pagination").html(data);
           //Prevent the pagination from showing when the entries is less than 10
           var noofpageitems = $(".pagination-control").length;
           switch(noofpageitems){
@@ -263,7 +263,6 @@ $(document).ready(function () {
                     },
                 }).then((value) => {
                   console.log(value);
-                    if (value == "view") {
                       console.log(response.data.nresident_id)
                       if (response.success == false) {
                         $("#ViewNonResidentModal").modal("show");
@@ -302,7 +301,7 @@ $(document).ready(function () {
                             text: "Something went wrong!",
                         });
                       }
-                    }
+                  
                 });
             } // End of if
         },
@@ -619,21 +618,6 @@ $(document).ready(function () {
     });
 
   });
-
-  $('#AddNonResidentModal [id="city"]').one('click',function(){
-    console.log("City has been clicked");
-    $.getJSON("includes/table_municipality.json", function(data) {
-        var html = ''; // Initialize empty HTML string
-
-        // Assuming data is an array of objects with municipality_name properties
-        data.forEach(function(municipality) {
-            html += '<option value="' + municipality.municipality_name + '">' + municipality.municipality_name + '</option>';
-        });
-
-        $("#city").html(html); // Set the options
-    });   
-   
-  })
  
 
 });

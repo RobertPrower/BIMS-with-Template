@@ -22,12 +22,12 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
   <link rel="stylesheet" href="./css/style.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/css/bootstrap-datepicker.min.css" integrity="sha512-34s5cpvaNG3BknEWSuOncX28vz97bRI59UnVtEEpFX536A7BtZSJHsDyFoCl8S7Dt2TPzcrCEoHBGeM4SUBDBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="./css/sweetalert2.min.css">
 
 
   <!--Scripts Must be Always On the Top -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js" integrity="sha256-xLD7nhI62fcsEZK2/v8LsBcb4lG7dgULkuXoXB/j91c=" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
   <script src="js/webcam.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/js/bootstrap-datepicker.min.js" integrity="sha512-LsnSViqQyaXpD4mBBdRYeP6sRwJiJveh2ZIbW41EBrNmKxgr/LFZIiWT6yr+nycvhvauz8c2nYMhrP80YhG7Cw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -65,7 +65,7 @@
                                     <label class="form-check-label" for="showdeletedentries">Show deleted entries</label>
                                 </div>
 
-                               <!-- New Blotter Modal -->
+                               <!-- New Resident Modal -->
                                
                                 <div class="modal fade" id="AddResidentModal" name="add" tabindex="-1" aria-labelledby="addBlotterModalLabel" aria-hidden="true">
                                     <div class="modal-dialog modal-xl">
@@ -200,7 +200,7 @@
 
                                                                 <div class="form-floating mt-3 mb-3 col-md-2">
                                                                     <select class="form-select" id="isavoter" name="is_a_voter" aria-label="Floating label select example" required>
-                                                                        <option hidden selected>YES/NO</option>
+                                                                        <option hidden selected>Select</option>
                                                                         <option value="1">YES</option>
                                                                         <option value="0">NO</option>
                                                                     </select>
@@ -489,6 +489,7 @@
 <script src="js/residentaction.js"> </script>
 <script src="js/sidebar.js"></script>
 <script src="js/camerafunction.js"></script>
+<script src="js/sweetalert2.min.js"></script>
 
 <!-- Chart library -->
 <script src="./plugins/chart.min.js"></script>

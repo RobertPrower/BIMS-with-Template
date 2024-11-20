@@ -59,7 +59,7 @@
                           <div class="d-flex justify-content-start" style="padding-left: 15px;">
                           
                               <!-- Button to trigger modal -->
-                              <a type="button" class="btn btn-primary me-2" href="create-documents.php">New Certificate</a>
+                              <a type="button" class="btn btn-primary me-2" href="create-certificates.php">New Certificate</a>
                               <button class="btn btn-warning me-2" data-bs-toggle="modal" data-bs-target="#ScanqrModal"><img src="img/svg/qr-code-scan.svg" alt="Bootstrap" width="25" height="25"> Scan QR Code</button>
                               
                               <div class="form-check form-switch my-2">

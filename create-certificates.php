@@ -69,7 +69,7 @@
                 </i>
               </div>
               <div class="stat-cards-info">
-                <p class="stat-cards-info__num">Barangay ID request</p>
+                <p class="stat-cards-info__num">Generate Reports</p>
                 <p class="stat-cards-info__progress">
                 </p>
               </div>
@@ -134,20 +134,7 @@
                 <i data-feather="file" aria-hidden="true"></i>
               </div>
               <div class="stat-cards-info">
-                <p class="stat-cards-info__num">Oath of Undertaking</p>
-                <p class="stat-cards-info__progress">
-                </p>
-              </div>
-            </a>
-          </div>
-
-          <div class="col-md-6 col-xl-3">
-            <a href="create-certificate-of-good-moral.php" class="btn-for-docu stat-cards-item">
-              <div class="stat-cards-icon purple">
-                <i data-feather="file" aria-hidden="true"></i>
-              </div>
-              <div class="stat-cards-info">
-                <p class="stat-cards-info__num">First-Time-Job-Seeker</p>
+                <p class="stat-cards-info__num">FTJS</p>
                 <p class="stat-cards-info__progress">
                 </p>
               </div>
