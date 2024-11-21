@@ -44,9 +44,6 @@ function uploadImageFile($what_field, $target_dir){
         
     }// End of Image Check If statement
 
-     //Variable for the Name of the Folder which is img
-    //  $target_dir = "img/resident_img/";
-
      //Variable for the path
      $target_file = $target_dir . basename($_FILES[$what_field]["name"]);
 

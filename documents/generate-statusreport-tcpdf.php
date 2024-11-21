@@ -187,7 +187,7 @@ $pdf->SetMargins(15, 40, 15);
 $pdf->SetHeaderMargin(15);
 $pdf->SetFooterMargin(20);
 $pdf->SetAutoPageBreak(TRUE, 15);
-$pdf->AddPage();
+$pdf->AddPage("L");
 
 $fname1 = 'Robert';
 

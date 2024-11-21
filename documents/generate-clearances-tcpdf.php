@@ -368,6 +368,9 @@ $html = '
             </thead>
         </table>
 
+<style>
+    .body{
+    }
 </style>';
 
 $pdf->writeHTML($html, true, false, true, false, '');

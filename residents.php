@@ -1,5 +1,9 @@
 <?php 
     require_once('includes/connecttodb.php');
+    require_once 'includes/config.php';
+    require_once 'includes/enforce_login.php';
+
+    echo $_SESSION["user_id"];
     $logoquery = "SELECT `filename` FROM `certificate-img` WHERE purpose = 'Barangay Logo'";
     $logostmt = $pdo->prepare($logoquery);
     $logostmt -> execute();
@@ -485,11 +489,12 @@
   <?php require_once("includes/footer.php")?>
     </div>
 </div>
+<script src="js/sweetalert2.min.js"></script>
 <script src="js/residentviewmodal.js"></script>
 <script src="js/residentaction.js"> </script>
 <script src="js/sidebar.js"></script>
 <script src="js/camerafunction.js"></script>
-<script src="js/sweetalert2.min.js"></script>
+<script src="js/logout.js"></script>
 
 <!-- Chart library -->
 <script src="./plugins/chart.min.js"></script>

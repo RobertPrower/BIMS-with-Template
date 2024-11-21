@@ -1,5 +1,8 @@
 <?php
 require_once('includes/connecttodb.php');
+require_once 'includes/config.php';
+require_once 'includes/enforce_login.php';
+
 $logoquery = "SELECT `filename` FROM `certificate-img` WHERE purpose = 'Barangay Logo'";
 $logostmt = $pdo->prepare($logoquery);
 $logostmt->execute();
@@ -12,13 +15,6 @@ function hasPermission($requiredRole) {
 if (hasPermission('admin')) {
 
 }
-
-// $_SESSION['user_role'] = $user['role']; // Set user dept
-
-// if ($_SESSION['user_role'] !='admin' || !$_SESSION['user_role'] != 'blotter') {
-//     echo "Access denied!";
-//     exit;
-// }       
 
 $pdo = null; // Close DB
 
@@ -43,7 +39,6 @@ $pdo = null; // Close DB
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
 
-    <script src="js/jquery-3.7.1.min.js"></script>
 
 
 </head>
@@ -886,6 +881,7 @@ $pdo = null; // Close DB
         </div>
     </div>
 
+    <script src="js/jquery-3.7.1.min.js"></script>
     <script src="js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.datatables.net/v/bs5/dt-2.1.8/datatables.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@eonasdan/tempus-dominus@6.9.11/dist/js/tempus-dominus.min.js" crossorigin="anonymous"></script>
@@ -898,6 +894,8 @@ $pdo = null; // Close DB
     <script src="js/nonresidentviewmodal.js"></script>
     <script src="js/selectresnonresmodal.js"></script>
     <script src="js/schedulemodal.js"></script>
+    <script src="js/displayimagedata.js"></script>
+
 
 
     <!-- Icons library -->

@@ -1,6 +1,9 @@
 <?php 
 
     require_once('includes/connecttodb.php');
+    require_once 'includes/config.php';
+    require_once 'includes/enforce_login.php';
+    
     $logoquery = "SELECT `filename` FROM `certificate-img` WHERE purpose = 'Barangay Logo'";
     $logostmt = $pdo->prepare($logoquery);
     $logostmt -> execute();
@@ -231,7 +234,6 @@
 <script src="js/residentviewmodal.js"></script>
 <script src="js/nonresidentviewmodal.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-<script src="js/html5-qrcode.min.js"></script>
 <!-- Chart library -->
 <script src="./plugins/chart.min.js"></script>
 <!-- Icons library -->
@@ -239,6 +241,7 @@
 <!-- Custom scripts -->
 <script src="js/script.js"></script>
 <script src="js/documents.js"></script>
+<script src="js/displayimagedata.js"></script>
 <script src="js/sidebar.js"></script>
 
 </body>
