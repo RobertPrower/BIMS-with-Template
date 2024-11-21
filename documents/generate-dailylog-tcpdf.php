@@ -75,7 +75,7 @@ $pdf->SetMargins(15, 20, 15);
 $pdf->SetHeaderMargin(15);
 $pdf->SetFooterMargin(15);
 $pdf->SetAutoPageBreak(TRUE, 15);
-$pdf->AddPage("L");
+$pdf->AddPage("P");
 
 // Draw a linear gradient in the header area
 $pdf->DrawGradient(0, 0, $pdf->getPageWidth(), 43, [4, 238, 9], [255, 255, 255]);
@@ -153,15 +153,15 @@ if (!empty($imglogo)) {
 
 
   if (isset($logo[1])) {
-    $pdf->Image("../img/logos/" . $logo[1],55, 8, 23, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false); // Second image
+    $pdf->Image("../img/logos/" . $logo[1], 10, 8, 23, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false); // Second image
   }
 
   if (isset($logo[5])) {
-    $pdf->Image("../img/logos/" . $logo[5], 73, 5, 153, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false); // Third image
+    $pdf->Image("../img/logos/" . $logo[5], 30, 5, 153, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false); // Third image
   }
 
   if (isset($logo[3])) {
-    $pdf->Image("../img/logos/" . $logo[3], 220, 8, 23, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false); // Fourth image
+    $pdf->Image("../img/logos/" . $logo[3], 177, 8, 23, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false); // Fourth image
   }
 } else {
   // Handle the case when no images are returned by the query
@@ -191,73 +191,31 @@ $html = ' <style>
      <table> 
         <thead> 
               <tr> 
-                <td></td>
-                <th>Mon</th> 
-                <th>Tue</th> 
-                <th>Wed</th>
-                <th>Thurs</th> 
-                <th>Fri</th>
-                <th>Sat</th>
-                <th>Sun</th>
-                <th>Mon</th> 
-                <th>Tue</th> 
-                <th>Wed</th>
-                <th>Thurs</th> 
-                <th>Fri</th>
-                <th>Sat</th>
-                <th>Sun</th>
-                <th>Mon</th> 
-                <th>Tue</th> 
-                <th>Wed</th>
-                <th>Thurs</th> 
-                <th>Fri</th>
-                <th>Sat</th>
-                <th>Sun</th>
+                <td colspan="2" class="section-title">Requirements Summary</td>
+                <th>July <br> 01-31</th> 
+                <th>August <br> 01-31</th> 
+                <th>September 01-30</th>
+                <th>October 01-31</th> 
+                <th>November 01-30</th>
                 <th>TOTAL</th>
               </tr>
           </thead> 
-
         <tbody>
               <tr> 
-                <td colspan="2" class="section-title">CLEARANCE</td>
-                <td>1</td> 
-                <td>2</td> 
-                <td>3</td> 
-                <td>4</td> 
-                <td>5</td>
-                <td>6</td>
-                <td>7</td>
-                <td>8</td>
-                <td>9</td>
-                <td>10</td>
-                <td>11</td>
-                <td>12</td>
-                <td>13</td>
-                <td>14</td>
-                <td>15</td>
-                <td>16</td>
-                <td>17</td>
-                <td>18</td>
-                <td>19</td>
-                <td>20</td>
-                <td>21</td>
-                <td>22</td>
-                <td>23</td>
-                <td>24</td>
-                <td>25</td>
-                <td>26</td>
-                <td>27</td>
-                <td>28</td>
-                <td>29</td>
-                <td>30</td>
-                <td>31</td>
+                <td></td>
+                <td>2024</td> 
+                <td>2024</td> 
+                <td>2024</td> 
+                <td>2024</td> 
+                <td>2024</td>
+                <td></td>
               </tr> 
             </tbody> 
           </table> 
 
           <table>
-                <tr> 
-                  <td>AFP Requirement/s</td>
+              <tr> 
+                  <td>CLEARANCES</td>
                   <td>343</td>
                   <td>331</td>
                   <td>223</td>
@@ -265,8 +223,8 @@ $html = ' <style>
                   <td>223</td>
                   <td>2553</td> <!--- TOTAL --->
                 </tr> 
-                <tr> 
-                  <td>Avon Requirement/s</td> 
+              <tr> 
+                  <td>BARANGAY BUSINESS PERMIT</td> 
                   <td>223</td>
                   <td>223</td>
                   <td>223</td>
@@ -274,8 +232,8 @@ $html = ' <style>
                   <td>223</td>
                   <td>2425</td> <!--- TOTAL --->
                 </tr> 
-                <tr> 
-                  <td>4Ps Requirements</td> 
+              <tr> 
+                  <td>SECURING BUSINESS PERMIT</td> 
                   <td>634</td>
                   <td>634</td> 
                   <td>634</td> 
@@ -284,7 +242,7 @@ $html = ' <style>
                   <td>3343</td> <!--- TOTAL --->
               </tr> 
                 <tr> 
-                  <td>Bank Requirements</td>
+                  <td>634</td>
                   <td>634</td> 
                   <td>634</td> 
                   <td>634</td> 
@@ -292,8 +250,8 @@ $html = ' <style>
                   <td>634</td>
                   <td>3343</td> <!--- TOTAL --->
                 </tr> 
-                <tr> 
-                    <td>BIR Requirement/s</td> 
+              <tr> 
+                    <td>SECURING FENCING PERMIT</td> 
                     <td>634</td>
                     <td>634</td> 
                     <td>634</td> 
@@ -301,8 +259,8 @@ $html = ' <style>
                     <td>634</td>
                     <td>3343</td> <!--- TOTAL ---> 
                   </tr> 
-                <tr> 
-                    <td>Basic Citizen Military Course</td> 
+              <tr> 
+                    <td>SECURING EXCAVATION PERMIT</td> 
                     <td>432</td>
                     <td>634</td> 
                     <td>634</td> 
@@ -310,8 +268,8 @@ $html = ' <style>
                     <td>634</td>
                     <td>3343</td> <!--- TOTAL --->
                   </tr> 
-                <tr> 
-                    <td>BJMP Requirements/s</td>
+              <tr> 
+                    <td>SECURING CABLE & WIRE INSTALLATION PERMIT</td>
                     <td>432</td>
                     <td>634</td> 
                     <td>634</td> 
@@ -319,8 +277,8 @@ $html = ' <style>
                     <td>634</td>
                     <td>3343</td> <!--- TOTAL --->
                   </tr> 
-                <tr> 
-                    <td>BFP Requirement/s</td>
+              <tr> 
+                    <td>BAIL BOND</td>
                     <td>432</td>
                     <td>634</td> 
                     <td>634</td> 
@@ -328,8 +286,8 @@ $html = ' <style>
                     <td>634</td>
                     <td>3343</td> <!--- TOTAL --->
                 </tr> 
-                <tr> 
-                    <td>Car Loan Requirement/s</td> 
+              <tr> 
+                    <td>SURETY BOND</td> 
                     <td>432</td>
                     <td>634</td> 
                     <td>634</td> 
@@ -337,152 +295,8 @@ $html = ' <style>
                     <td>634</td>
                     <td>3343</td> <!--- TOTAL --->
                 </tr> 
-                <tr> 
-                    <td>COMELEC Requirement/s</td>
-                    <td>432</td>
-                    <td>634</td> 
-                    <td>634</td> 
-                    <td>634</td>
-                    <td>634</td>
-                    <td>3343</td> <!--- TOTAL ---> 
-                </tr>
-                <tr> 
-                    <td>Cenomar Requirement/s</td>
-                    <td>432</td>
-                    <td>634</td> 
-                    <td>634</td> 
-                    <td>634</td>
-                    <td>634</td>
-                    <td>3343</td> <!--- TOTAL ---> 
-                </tr>
-                <tr> 
-                    <td>DFA Requirement/s</td>
-                    <td>432</td>
-                    <td>634</td> 
-                    <td>634</td> 
-                    <td>634</td>
-                    <td>634</td>
-                    <td>3343</td> <!--- TOTAL ---> 
-                </tr>
-                <tr> 
-                    <td>E-Bike Loan</td>
-                    <td>432</td>
-                    <td>634</td> 
-                    <td>634</td> 
-                    <td>634</td>
-                    <td>634</td>
-                    <td>3343</td> <!--- TOTAL ---> 
-                </tr> 
-                <tr> 
-                    <td>HOA Requirement/s</td>
-                    <td>432</td>
-                    <td>634</td> 
-                    <td>634</td> 
-                    <td>634</td>
-                    <td>634</td>
-                    <td>3343</td> <!--- TOTAL ---> 
-                </tr>
-                <tr> 
-                    <td>Hospital Requirement/s</td>
-                    <td>432</td>
-                    <td>634</td> 
-                    <td>634</td> 
-                    <td>634</td>
-                    <td>634</td>
-                    <td>3343</td> <!--- TOTAL ---> 
-                </tr>
-                <tr> 
-                    <td>Housing Loan</td>
-                    <td>432</td>
-                    <td>634</td> 
-                    <td>634</td> 
-                    <td>634</td>
-                    <td>634</td>
-                    <td>3343</td> <!--- TOTAL ---> 
-                </tr
-                <tr> 
-                    <td>Loan</td>
-                    <td>432</td>
-                    <td>634</td> 
-                    <td>634</td> 
-                    <td>634</td>
-                    <td>634</td>
-                    <td>3343</td> <!--- TOTAL ---> 
-                </tr>
-                <tr> 
-                    <td>Local Employment</td>
-                    <td>432</td>
-                    <td>634</td> 
-                    <td>634</td> 
-                    <td>634</td>
-                    <td>634</td>
-                    <td>3343</td> <!--- TOTAL ---> 
-                </tr>
-                <tr> 
-                    <td>LTO Requirement/s</td>
-                    <td>432</td>
-                    <td>634</td> 
-                    <td>634</td> 
-                    <td>634</td>
-                    <td>634</td>
-                    <td>3343</td> <!--- TOTAL ---> 
-                </tr>
-                <tr> 
-                    <td>LTOPF Requirement/s</td>
-                    <td>432</td>
-                    <td>634</td> 
-                    <td>634</td> 
-                    <td>634</td>
-                    <td>634</td>
-                    <td>3343</td> <!--- TOTAL ---> 
-                </tr>
-                <tr> 
-                    <td>Maynilad</td>
-                    <td>432</td>
-                    <td>634</td> 
-                    <td>634</td> 
-                    <td>634</td>
-                    <td>634</td>
-                    <td>3343</td> <!--- TOTAL ---> 
-                </tr>
-                <tr> 
-                    <td>Meralco</td>
-                    <td>432</td>
-                    <td>634</td> 
-                    <td>634</td> 
-                    <td>634</td>
-                    <td>634</td>
-                    <td>3343</td> <!--- TOTAL ---> 
-                </tr>
-                <tr> 
-                    <td>Motorcycle Loan</td>
-                    <td>432</td>
-                    <td>634</td> 
-                    <td>634</td> 
-                    <td>634</td>
-                    <td>634</td>
-                    <td>3343</td> <!--- TOTAL ---> 
-                </tr>
-                <tr> 
-                    <td>NBI Requirements</td>
-                    <td>432</td>
-                    <td>634</td> 
-                    <td>634</td> 
-                    <td>634</td>
-                    <td>634</td>
-                    <td>3343</td> <!--- TOTAL ---> 
-                </tr>
-                <tr> 
-                    <td>National Home Mortage Requirement/s</td>
-                    <td>432</td>
-                    <td>634</td> 
-                    <td>634</td> 
-                    <td>634</td>
-                    <td>634</td>
-                    <td>3343</td> <!--- TOTAL ---> 
-                </tr>
-                <tr> 
-                    <td>OJT Requirement/s</td>
+              <tr> 
+                    <td>TPRS(SUPER VISION)</td>
                     <td>432</td>
                     <td>634</td> 
                     <td>634</td> 
