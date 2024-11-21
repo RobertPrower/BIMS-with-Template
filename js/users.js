@@ -4,10 +4,11 @@ $(document).ready(function () {
         e.preventDefault();
 
         var formdata  = new FormData(this);
+        formdata.append("operation", "ADD_USER");
 
         $.ajax({
             type: "POST",
-            url: "includes/signup.inc.php",
+            url: "includes/useroperation.inc.php",
             data: formdata,
             dataType: "JSON",
             processData: false
@@ -23,7 +24,7 @@ $(document).ready(function () {
 
                     $('#UserSignup')[0].reset();
 
-                    $("#imagePreview").attr("src", "img/blank-profile.webp");
+                    $("#imagePreview").attr("src", "includes/img/blank-profile.webp");
 
                     $("#AddUserModal").modal('hide');
 

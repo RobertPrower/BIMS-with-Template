@@ -1,6 +1,8 @@
 <?php 
     require_once("includes/connecttodb.php");
-
+    require_once 'includes/config.php';
+    require_once 'includes/enforce_login.php';
+    
     $logoquery = "SELECT * FROM `certificate-img`";
     $logostmt = $pdo->prepare($logoquery);
     $logostmt->execute();

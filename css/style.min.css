@@ -2537,7 +2537,8 @@ label {
   width: -webkit-max-content;
   width: -moz-max-content;
   width: max-content;
-  margin-bottom: 20px;
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
 .form-btn {
   width: 100%;

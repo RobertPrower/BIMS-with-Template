@@ -1,5 +1,11 @@
 <?php
     require_once('includes/connecttodb.php');
+    require_once 'includes/config.php';
+    require_once 'includes/enforce_login.php' ;
+
+
+    echo $_SESSION['user_id'];
+
 
     $logoquery = "SELECT `filename` FROM `certificate-img` WHERE purpose = 'Barangay Logo'";
     $logostmt = $pdo->prepare($logoquery);
@@ -52,7 +58,7 @@
   <!-- Custom styles -->
   <link rel="stylesheet" href="./css/style.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="./css/sweetalert2.min.css">
 
 </head>
 
@@ -185,6 +191,10 @@
   <?php require_once("includes/footer.php")?>
   </div>
 </div>
+
+<script src="js/jquery-3.7.1.min.js"></script>
+<script src="js/sweetalert2.min.js"></script>
+<script src="js/logout.js"></script>
 <!-- Chart library -->
 <script src="./plugins/chart.min.js"></script>
 <!-- Icons library -->
@@ -192,6 +202,7 @@
 <!-- Custom scripts -->
 <script src="js/script.js"></script>
 <script src="js/sidebar.js"></script>
+
 
 </body>
 

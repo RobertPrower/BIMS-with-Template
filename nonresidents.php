@@ -1,5 +1,8 @@
 <?php 
     require_once('includes/connecttodb.php');
+    require_once 'includes/config.php';
+    require_once 'includes/enforce_login.php';
+
     $logoquery = "SELECT `filename` FROM `certificate-img` WHERE purpose = 'Barangay Logo'";
     $logostmt = $pdo->prepare($logoquery);
     $logostmt -> execute();
@@ -465,6 +468,8 @@
 <script src="js/nonresidentaction.js"> </script>
 <script src="js/nonresidentviewmodal.js"> </script>
 <script src="js/camerafunction.js"></script>
+<script src="js/logout.js"></script>
+
 
 <!-- Chart library -->
 <script src="./plugins/chart.min.js"></script>

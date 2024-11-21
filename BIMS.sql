@@ -261,7 +261,7 @@ insert  into `res_audit_trail`(`res_at_id`,`added_depart_no`,`added_by_no`,`adde
 (26,NULL,NULL,'2024-11-18 22:08:14',NULL,NULL,'2024-11-18 22:25:56',NULL,NULL,NULL,NULL,NULL,NULL),
 (27,NULL,NULL,'2024-11-18 22:10:42',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
 (28,NULL,NULL,'2024-11-18 22:22:01',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(29,NULL,NULL,'2024-11-18 23:40:19',NULL,NULL,'2024-11-19 14:24:21',NULL,NULL,'2024-11-19 15:56:15',NULL,NULL,'2024-11-19 15:56:22'),
+(29,NULL,NULL,'2024-11-18 23:40:19',NULL,NULL,'2024-11-21 12:02:15',NULL,NULL,'2024-11-19 15:56:15',NULL,NULL,'2024-11-19 15:56:22'),
 (30,NULL,NULL,'2024-11-18 23:43:49',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
 (31,NULL,NULL,'2024-11-19 01:11:25',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
 (32,NULL,NULL,'2024-11-19 01:18:53',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
@@ -334,7 +334,7 @@ insert  into `resident`(`resident_id`,`img_filename`,`last_name`,`first_name`,`m
 (26,'capture_1731938894.jpg','Salas','Marivic','Lumauig','','Blk 8 Lot 4','Jeremiah st','Cielito Homes','2000','Female','Married','1961-11-02','Bagabag Nueva Viscaya','09054321268',1,26,0),
 (27,'capture_1731939042.jpg','Salas','Marivic','Lumauig','','Blk 8 Lot 4','Jeremiah st','Cielito Homes','2000','Female','Married','1961-11-02','Bagabag Nueva Viscaya','09054321268',1,27,0),
 (28,'capture_1731939721.jpg','Salas','Marivic','Lumauig','','Blk 8 Lot 4','Jeremiah st','Cielito Homes','2000','Female','Married','1962-11-02','Bagabag Nueva Viscaya','09054321268',1,28,0),
-(29,'Yuji_shana.png','Hofileña','Karl','Mark','','Blk 3 Lot 3','Virgo st Corner Aries st','Maria Luisa Subd','2015','Male','Single','2004-06-14','Donna Remedios Trinidad Bulacan','09054321268',0,29,0),
+(29,'capture_1732161735.jpg','Hofileña','Karl','Mark','','Blk 3 Lot 3','Virgo st Corner Aries st','Maria Luisa Subd','2015','Male','Single','2004-06-14','Donna Remedios Trinidad Bulacan','09054321268',0,29,0),
 (30,'capture_1731944629.jpg','Salas','Robert','Lumauig','','Blk 12 Lot 14','Jeremiah st','Del Rey Ville 2','2006','Male','Single','2004-06-29','Caloocan City','09054321268',1,30,0),
 (31,'capture_1731949885.jpg','Salas','Robert','Lumauig','','Blk 12 Lot 14','Jeremiah st','Del Rey Ville 2','2006','Female','Married','2004-06-30','Caloocan City','09054321268',1,31,0),
 (32,'capture_1731950333.jpg','Salas','Robert','Lumauig','','Blk 12 Lot 14','Jeremiah st','Del Rey Ville 2','2006','Female','Married','2004-06-07','Caloocan City','09054321268',0,32,0),
@@ -986,13 +986,14 @@ CREATE TABLE `tbl_username` (
   `username_id` int(55) NOT NULL AUTO_INCREMENT,
   `username` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`username_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 /*Data for the table `tbl_username` */
 
 insert  into `tbl_username`(`username_id`,`username`) values 
 (1,'RobertPrower'),
-(2,'Marivic12');
+(2,'Marivic12'),
+(3,'JohnRin123');
 
 /*Table structure for table `tbl_users` */
 
@@ -1015,13 +1016,14 @@ CREATE TABLE `tbl_users` (
   KEY `depart_fk` (`depart_no`),
   CONSTRAINT `depart_fk` FOREIGN KEY (`depart_no`) REFERENCES `departments_list` (`department_id`),
   CONSTRAINT `username_fk` FOREIGN KEY (`username_no`) REFERENCES `tbl_username` (`username_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `tbl_users` */
 
 insert  into `tbl_users`(`user_id`,`username_no`,`pword`,`img_filename`,`fname`,`mname`,`lname`,`suffix`,`depart_no`,`isactive`,`isremoved`) values 
 (1,1,'$2y$10$89lugzlxrSiZu/4d6cGUJeoEt7j4vTlNyxM9trULQ4Av2HyMFM4Za','2f070627687d52995cfabf5c1bbde057.jpg','Robert','Lumauig','Salas','',4,0,0),
-(2,2,'$2y$10$xuB9WU5B9eKIM8.ZuRB3i..4cegIXs5bfgWqbAC69eM4ugrK0E3v2','ab67706c0000da84dc7f5b89d9dd705a9e1a8e4f.jpg','Marivic','Lumauig','Salas','',1,0,0);
+(2,2,'$2y$10$xuB9WU5B9eKIM8.ZuRB3i..4cegIXs5bfgWqbAC69eM4ugrK0E3v2','ab67706c0000da84dc7f5b89d9dd705a9e1a8e4f.jpg','Marivic','Lumauig','Salas','',1,0,0),
+(3,3,'$2y$10$0VEbF0720jaUDFUoVYgTt.cy.6Z.3r7dG1WQ.FJ6LGqRCLGK5cQpa','Yuji_shana.png','John RIn','','Hofileña','',2,0,0);
 
 /* Trigger structure for table `non_resident` */
 

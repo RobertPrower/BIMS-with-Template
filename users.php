@@ -1,5 +1,8 @@
 <?php 
     require_once('includes/connecttodb.php');
+    require_once 'includes/config.php';
+    require_once 'includes/enforce_login.php';
+    
     $logoquery = "SELECT `filename` FROM `certificate-img` WHERE purpose = 'Barangay Logo'";
     $logostmt = $pdo->prepare($logoquery);
     $logostmt -> execute();
@@ -147,7 +150,7 @@
                                                 <label for="username">Username</label>
                                             </div>
                                             <div class="form-floating mb-3">
-                                                <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
+                                                <input type="password" class="form-control" id="password" name="pword" placeholder="Password" required>
                                                 <label for="password">Password</label>
                                             </div>
                                             <div class="form-floating mb-3">

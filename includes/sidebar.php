@@ -163,13 +163,12 @@
         <a href="##" class="sidebar-user">
             <span class="sidebar-user-img">
                 <picture>
-                    <source srcset="./img/avatar/avatar-illustrated-01.webp" type="image/webp"><img
-                        src="./img/avatar/avatar-illustrated-01.png" alt="User name">
+                    <img src="<?php echo 'includes/img/users_img/'.$_SESSION["profile_pic"]?>" alt="User name">
                 </picture>
             </span>
-            <div class="sidebar-user-info">
-                <span class="sidebar-user__title">Nafisa Sh.</span>
-                <span class="sidebar-user__subtitle">Support manager</span>
+            <div class="sidebar-user-info text-center">
+                <span class="sidebar-user__title"><?php echo $_SESSION['username']?></span>
+                <span class="sidebar-user__subtitle"><?php echo $dept?></span>
             </div>
         </a>
     </div>

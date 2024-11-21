@@ -619,7 +619,7 @@ $yPosition = 30;
 
 $pdf->SetY($yPosition); // Set the vertical position
 $pdf->writeHTML($html, true, false, true, false, 'C');
-
+$pdf->writeHTML($html, true, false, true, false, '');
 $pdf->Output($fileName, 'I');
 
 echo json_encode(["file" => $filename]);

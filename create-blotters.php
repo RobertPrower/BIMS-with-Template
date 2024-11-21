@@ -1,5 +1,8 @@
 <?php 
     require_once('includes/connecttodb.php');
+    require_once 'includes/config.php';
+    require_once 'includes/enforce_login.php';
+    
     $logoquery = "SELECT `filename` FROM `certificate-img` WHERE purpose = 'Barangay Logo'";
     $logostmt = $pdo->prepare($logoquery);
     $logostmt -> execute();
@@ -432,6 +435,7 @@
 <script src="js/create-blotters.js"></script>
 <script src="js/selectresnonresmodal.js"></script>
 <script src="js/schedulemodal.js"></script>
+<script src="js/logout.js"></script>
 
 
 

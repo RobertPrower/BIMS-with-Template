@@ -240,4 +240,109 @@ $(document).ready(function () {
       charts.visitors = myChart;
     }
   })();
+
+  $("#logoutbtn").click(function (e) { 
+    e.preventDefault(e);
+
+    Swal.fire({
+        title: "Are you sure?",
+        text: "You are about to logout",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Logout"
+      }).then((result) => {
+        if (result.isConfirmed) {
+            window.location.href = "includes/logout.php";
+        }
+      });
+    
+  });
+
+  const SESSION_TIMEOUT = 120; // 2 minutes in seconds
+  const WARNING_TIME = 10;     // Show warning 10 seconds before logout
+
+  let warningShown = false;
+  let timer;
+
+  // Get the initial timestamp to calculate remaining time
+  let sessionEndTime = Date.now() + (SESSION_TIMEOUT * 1000);
+
+  // Function to show session expiry warning
+  function showSessionExpiryWarning() {
+    warningShown = true;
+    let warningEndTime = Date.now() + (WARNING_TIME * 1000);
+
+    Swal.fire({
+      title: "You are about to be logged out!",
+      html: "You will be logged out in <b></b> seconds.",
+      timer: WARNING_TIME * 1000,
+      timerProgressBar: true,
+      didOpen: () => {
+        Swal.showLoading();
+
+        let interval = setInterval(() => {
+          let timeLeft = Math.round((warningEndTime - Date.now()) / 1000);
+          Swal.getHtmlContainer().querySelector("b").textContent = timeLeft;
+
+          if (timeLeft <= 0) {
+            clearInterval(interval);
+            logoutUser();
+          }
+        }, 1000);
+      },
+      willClose: () => {
+        clearInterval(timer);
+        warningShown = false;
+      }
+    });
+  }
+
+  // Function to log the user out
+  function logoutUser() {
+    window.location.href = "includes/logout.php";
+  }
+
+  // Resets the session timer on user activity
+  function resetTimer() {
+    sessionEndTime = Date.now() + (SESSION_TIMEOUT * 1000);
+
+    if (warningShown) {
+      Swal.close(); // Close warning if it’s open
+      warningShown = false;
+    }
+  }
+
+  // Start the countdown timer
+  function startTimer() {
+    timer = setInterval(() => {
+      let timeRemaining = Math.round((sessionEndTime - Date.now()) / 1000);
+
+      if (timeRemaining <= WARNING_TIME && !warningShown) {
+        showSessionExpiryWarning();
+      } else if (timeRemaining <= 0) {
+        clearInterval(timer);
+        logoutUser();
+      }
+    }, 1000);
+  }
+
+  // Detects user activity with jQuery and resets the timer
+  function detectActivity() {
+    $(window).on("mousemove keypress click scroll", function() {
+      resetTimer();
+    });
+  }
+
+  // Initialize the session timeout functionality
+  function initSessionTimeout() {
+    startTimer();
+    detectActivity();
+  }
+
+  // Start session monitoring on page load
+  $(document).ready(function() {
+    initSessionTimeout();
+  });
 });
