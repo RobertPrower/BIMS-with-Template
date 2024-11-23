@@ -580,6 +580,34 @@ $(document).ready(function () {
             $("#noofcerts").text(response);
           },
         });
+
+        $.ajax({
+          type: "post",
+          url: "includes/nonresidentoperation.php",
+          data: { operation: "CHECK_HIT", nresident_id: nresident_id },
+          dataType: "json",
+          success: function (response) {
+            console.log(response);
+
+            if(response.success == "clear"){
+              $("#with_hit").text("None");
+              $("#blotter_badge").removeClass("text-bg-danger");
+              $("#blotter_badge").removeClass("text-bg-success");
+              $("#blotter_badge").addClass("text-bg-success");
+
+            }else if(response.success == "hit"){
+              $("#with_hit").text("With Hit");
+              $("#blotter_badge").removeClass("text-bg-danger") 
+              $("#blotter_badge").removeClass("text-bg-success");
+              $("#blotter_badge").addClass("text-bg-danger");
+
+            }else{
+              alert("Server replys failed ")
+            }
+          }, error: function (xhr, status, error) {
+            console.error("Error fetching data:", error);
+          },
+        });
     }
 
     //To fetch the image from the database

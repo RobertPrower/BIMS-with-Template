@@ -1,4 +1,7 @@
 <?php
+require_once 'config.php';
+require_once 'enforce_login.php';
+
 foreach ($results as $row) {
     echo '<tr>';
     echo '<td id="request_id">' . htmlspecialchars($row['request_id']) . '</td>';
@@ -51,14 +54,16 @@ foreach ($results as $row) {
                 data-last-deleted="' . htmlspecialchars($row['date_deleted'], ENT_QUOTES) . '"
                 data-bs-toggle="modal" data-bs-target="#DocumentDetailsModal">View</button>';
 
-            if($row['is_deleted'] == "0"){ 
-                echo '<button class="btn btn-danger mx-1 deleteResidentButton" id="deletebutton"
+            if($dept === "Admin"){    
+                if($row['is_deleted'] == "0"){ 
+                    echo '<button class="btn btn-danger mx-1 deleteResidentButton" id="deletebutton"
+                        data-pageno="'.$page.'"
+                        data-request_id = "' . htmlspecialchars($row['request_id']) . '">Delete</button>';
+                }else{
+                    echo '<button class="btn btn-warning mx-1 deleteResidentButton" id="undodeletebutton"
                     data-pageno="'.$page.'"
-                    data-request_id = "' . htmlspecialchars($row['request_id']) . '">Delete</button>';
-            }else{
-                echo '<button class="btn btn-warning mx-1 deleteResidentButton" id="undodeletebutton"
-                data-pageno="'.$page.'"
-                data-request_id = "' . htmlspecialchars($row['request_id']) . '">Recover</button>';
+                    data-request_id = "' . htmlspecialchars($row['request_id']) . '">Recover</button>';
+                }
             }
     }
 }      

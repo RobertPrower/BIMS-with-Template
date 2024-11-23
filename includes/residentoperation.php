@@ -1,150 +1,10 @@
 <?php
-if($_SERVER['REQUEST_METHOD']!=="POST"){
-    header('Location: ../index.php');
-    exit();
-}
-
+if($_SERVER['REQUEST_METHOD'] =="POST"){
+require_once 'config.php';
+require_once 'enforce_login.php';
 require_once("connecttodb.php");
 require_once("anti-SQLInject.php");
-// require_once("fileUpload.php");
-
-function uploadImageFile($what_field, $target_dir){
-
-    if($_FILES[$what_field]['error'] == UPLOAD_ERR_OK){
-    }elseif($_FILES[$what_field]['error']==UPLOAD_ERR_INI_SIZE){
-
-        $imgopresponse = "UPLOAD_ERR_INI_SIZE: You exceeded the allow file size";
-        throw new Exception($imgopresponse); 
-
-    }elseif($_FILES[$what_field]['error']==UPLOAD_ERR_FORM_SIZE){
-
-        $imgopresponse = "UPLOAD_ERR_INI_SIZE: You exceeded the allow HTML directive size";
-        throw new Exception($imgopresponse); 
-
-
-    }elseif($_FILES[$what_field]['error']==UPLOAD_ERR_PARTIAL){
-
-        $imgopresponse = "UPLOAD_ERR_PARTIAL: The uploaded file was partially upload. Check your Internet Connection";
-        throw new Exception($imgopresponse); 
-
-    }elseif($_FILES[$what_field]['error']==UPLOAD_ERR_NO_FILE){
-
-        $imgopresponse = "UPLOAD_ERR_NO_FILE: No file is uploaded";
-        throw new Exception($imgopresponse); 
-
-    }elseif($_FILES[$what_field]['error']==UPLOAD_ERR_CANT_WRITE){
-        $imgopresponse = "UPLOAD_ERR_CANT_WRITE: Unable to write file to disk.";
-        throw new Exception($imgopresponse); 
-
-    }elseif($_FILES[$what_field]['error']==UPLOAD_ERR_EXTENSION){
-        $imgopresponse = "UPLOAD_ERR_EXTENSION: A PHP extension stopped the file upload.";
-        throw new Exception($imgopresponse); 
-
-    }elseif($_FILES[$what_field]['error']==UPLOAD_ERR_NO_TMP_DIR){
-        $imgopresponse = "UPLOAD_ERR_NO_TEMP_DIR: You have a missing directory";
-        throw new Exception($imgopresponse);
-
-    }else{
-        $imgopresponse = "No unknown Error";
-        throw new Exception($imgopresponse);
-
-        
-    }// End of Image Check If statement
-
-     //Variable for the Name of the Folder which is img
-    //  $target_dir = "img/resident_img/";
-
-     //Variable for the path
-     $target_file = $target_dir . basename($_FILES[$what_field]["name"]);
-
-     // To get the file extension and converts it to lower case
-     $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
-
-     // Generate a Unique filename via the generateUniqueFileName user define function below
-     $fileName = generateUniqueFileName($target_dir, basename($_FILES[$what_field]["name"]));
-     $target_file = $target_dir . $fileName;
-
-     // Check if file is an image
-     $check = getimagesize($_FILES[$what_field]["tmp_name"]);
-     if ($check === false) {
-         throw new Exception("File is not an image.");
-     }
-
-    // Allow only specific file formats
-    if (!in_array($imageFileType, ["jpg", "jpeg", "png"])) {
-        throw new Exception("Sorry, only JPG, JPEG & PNG files are allowed.");
-    }
-
-     $mimeType = mime_content_type($_FILES[$what_field]["tmp_name"]);
-     if($mimeType != "image/jpeg" && $mimeType != "image/png"){
-        throw new Exception("Sorry, only JPG, JPEG & PNG are allowed.");
-     }
-
-     // Check file size
-     if ($_FILES[$what_field]["size"] > 500000) {
-         throw new Exception("Sorry, your file is too large.");
-     }
-
-     // Move uploaded file to target directory
-     if (!move_uploaded_file($_FILES[$what_field]["tmp_name"], $target_file)) {
-         throw new Exception("Sorry, there was an error uploading your file.");
-     }
-
-     return $fileName;
-}
-
-function captureImageUpload($what_field){
-    //Capture the Data
-    if(!isset($_POST[$what_field])){
-        throw new Exception("No data was captured.");
-    }
-
-    $data_uri = $_POST[$what_field];
-
-    //Extract the base64 Data
-    $encoded_image = explode(",", $data_uri)[1];
-
-    //Decode the base64 string
-    $decoded_image = base64_decode($encoded_image);
-
-    if($decoded_image ===false){
-        throw new Exception("Failed to decode base64 image data.");
-    }
-
-    //For the filename being entered in the Database
-    $fileName =  'capture_'.time().'.jpg';
-
-    $filePath = 'img/resident_img/'.$fileName;
-
-    if(!is_dir('img/resident_img/') || !is_writable('img/resident_img/')){
-        throw new Exception("Failed to write image to the directory.");
-    }
-
-    //Save the image file
-    $result = file_put_contents($filePath, $decoded_image);
-
-    if($result === false){
-        throw new Exception("Failed to save the image file.");
-    }
-
-    return $fileName;
-}
-
-function check_empty_values ($required_fields){
-
-    $all_filled = true;
-
-    foreach($required_fields as $check_fields){
-        if($check_fields === "" || $check_fields === NULL){
-            $all_filled = false;
-            break;
-        }
-
-    }
-
-    return $all_filled;
-
-}
+ require_once("fileUpload.php");
 
 function check_db_duplicate($pdo, $arraytocheck){
 
@@ -187,8 +47,8 @@ function checkForDuplicateFiles($pdo,$resident_id, $target_dir){
 $operation_check=$_POST['operation']; //Catches What operation to perform
 $nowdate = date("y-m-d"); //Checks the current date
 $time = date('H:i:s'); //Checks the current time
-$userid=null; // For the user currently using the system
-$departno= null; // For the users depart currently using
+$userid=$_SESSION['user_id']; // For the user currently using the system
+$departno=$_SESSION['depart_no']; // For the users depart currently using
 $limit = 10;
 $search = isset($_POST['search']) ? sanitizeData($_POST['search']): '';
 $page = isset($_POST['page']) ? sanitizeData($_POST['page']) : '1';
@@ -243,7 +103,7 @@ if($operation_check == "ADD"){ //For the add operation
         }
 
         try{
-           $fileName = captureImageUpload('captureImageData');
+           $fileName = captureImageUpload('captureImageData',"img/resident_img/");
         }catch(Exception $e){
             echo json_encode(["success" => "error", "message" => $e->getMessage()]);
             die();
@@ -326,7 +186,7 @@ if($operation_check == "ADD"){ //For the add operation
         }
 
         try{
-            $fileName = captureImageUpload("isfromcamcheck");
+            $fileName = captureImageUpload("isfromcamcheck", "img/resident_img/");
         }catch(Exception $e){
             $response = ["success" => false, "message" => "Error uploading the capture image :".$e->getMessage()];
         }
@@ -622,26 +482,33 @@ if($operation_check == "ADD"){ //For the add operation
     $start_from = ($current_page - 1) * $limit;
         
     require_once'paginationtemplate.php';
+}elseif($operation_check=="CHECK_HIT"){
+    $resident_id = $_POST['resident_id'];
+    try{
+        $sqlquery="CALL CountResidentBlotterEntries(?)";
+        $stmt = $pdo->prepare($sqlquery);
+        $stmt->execute(array($resident_id));
+        $count = $stmt->fetchColumn();
+
+        if($count==0){
+            echo json_encode(["success"=> "clear" , "message" => "Clear"]);
+        }else{
+            echo json_encode(["success"=> "hit" , "message" => "Hit Found"]);
+        }
+
+    }catch(Exception $e){
+        die(json_encode(["success"=>false , "message" => "Erorr :".$e->getMessage()]));
+
+    }
+
 }else{
     echo '<tr><td colspan="11">Unknown Operation. Please Call IT Deptparment for troubleshooting</td></tr>';
 }
     
 
-// Function to check if a file with the given name exists in the resident_img table
-
-function generateUniqueFileName($target_dir, $originalFileName) {
-    $imageFileType = strtolower(pathinfo($originalFileName, PATHINFO_EXTENSION));
-    $baseName = pathinfo($originalFileName, PATHINFO_FILENAME);
-
-    // Generate a unique file name
-    $fileName = $originalFileName;
-    $fileSuffix = 1;
-    while (file_exists($target_dir . $fileName)) {
-        $fileName = $baseName . " ($fileSuffix)." . $imageFileType;
-        $fileSuffix++;
-    }
-
-    return $fileName;
+}else{
+    header('Location: ../index.php');
+    exit();
 }
 
 // Close the database connection

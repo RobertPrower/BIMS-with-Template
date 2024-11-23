@@ -79,15 +79,17 @@ echo '<td>
 
         data-bs-toggle="modal" data-bs-target="#EditBlotterModal">Edit</button>';
 
-    if($row['is_deleted'] == "0"){ 
-        echo '<button class="btn btn-danger mx-1 deletebtn" id="deletebtn"
-            data-pageno=""
-            data-id = "' . htmlspecialchars($row['blotter_id']) . '">Delete</button>';
-    
-    }else{
-        echo '<button class="btn btn-warning mx-1" id="undodeletebutton"
-        data-pageno="'.$page.'"
-        data-blotter_id = "' . htmlspecialchars($row['blotter_id']) . '">Recover</button>';
+    if($dept==="Admin"){
+        if($row['is_deleted'] == "0"){ 
+            echo '<button class="btn btn-danger mx-1 deletebtn" id="deletebtn"
+                data-pageno=""
+                data-id = "' . htmlspecialchars($row['blotter_id']) . '">Delete</button>';
+        
+        }else{
+            echo '<button class="btn btn-warning mx-1" id="undodeletebutton"
+            data-pageno="'.$page.'"
+            data-blotter_id = "' . htmlspecialchars($row['blotter_id']) . '">Recover</button>';
+        }
     }
 echo '</tr>';
 }

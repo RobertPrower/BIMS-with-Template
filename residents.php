@@ -3,7 +3,6 @@
     require_once 'includes/config.php';
     require_once 'includes/enforce_login.php';
 
-    echo $_SESSION["user_id"];
     $logoquery = "SELECT `filename` FROM `certificate-img` WHERE purpose = 'Barangay Logo'";
     $logostmt = $pdo->prepare($logoquery);
     $logostmt -> execute();
@@ -27,15 +26,6 @@
   <link rel="stylesheet" href="./css/style.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/css/bootstrap-datepicker.min.css" integrity="sha512-34s5cpvaNG3BknEWSuOncX28vz97bRI59UnVtEEpFX536A7BtZSJHsDyFoCl8S7Dt2TPzcrCEoHBGeM4SUBDBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="stylesheet" href="./css/sweetalert2.min.css">
-
-
-  <!--Scripts Must be Always On the Top -->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js" integrity="sha256-xLD7nhI62fcsEZK2/v8LsBcb4lG7dgULkuXoXB/j91c=" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-  <script src="js/webcam.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/js/bootstrap-datepicker.min.js" integrity="sha512-LsnSViqQyaXpD4mBBdRYeP6sRwJiJveh2ZIbW41EBrNmKxgr/LFZIiWT6yr+nycvhvauz8c2nYMhrP80YhG7Cw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
 
 <body>
   <div class="layer"></div>
@@ -63,11 +53,15 @@
                             
                                 <!-- Button to trigger modal -->
                                 <button type="button" class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#AddResidentModal">New Resident</button>
-                                
-                                <div class="form-check form-switch my-2">
-                                    <input class="form-check-input" type="checkbox" id="showdeletedentries">
-                                    <label class="form-check-label" for="showdeletedentries">Show deleted entries</label>
-                                </div>
+                                <?php
+                                if($dept ==="Admin"){
+                                    echo '<div class="form-check form-switch my-2">
+                                        <input class="form-check-input" type="checkbox" id="showdeletedentries">
+                                        <label class="form-check-label" for="showdeletedentries">Show deleted entries</label>
+                                    </div>';
+                                }
+
+                                ?>
 
                                <!-- New Resident Modal -->
                                
@@ -106,7 +100,6 @@
                                                                         <label for="floatingInput">Upload Image</label>
                                                                     </div>  
 
-                                                                    <script src="js/limitfileresanddisplayimg.js"></script>
 
                                                                 </div>
                                                             </div>
@@ -286,9 +279,7 @@
                                                                     <div class="form-floating mt-3 mb-3 col-md-13">
                                                                         <input type="file" class="form-control" id="editimagefile" name="image_file" placeholder="Upload Picture">
                                                                         <label for="floatingInput">Upload Image</label>
-                                                                    
-                                                                        <script src="js/LimitFileUploadAndDisplayImgForEdit.js"></script>
-
+                                                                
                                                                     </div>  
                                                                 </div>
                                                             </div>
@@ -489,12 +480,22 @@
   <?php require_once("includes/footer.php")?>
     </div>
 </div>
+<!--Scripts Must be Always On the Top -->
+<script src="js/jquery-3.7.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<script src="js/webcam.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/js/bootstrap-datepicker.min.js" integrity="sha512-LsnSViqQyaXpD4mBBdRYeP6sRwJiJveh2ZIbW41EBrNmKxgr/LFZIiWT6yr+nycvhvauz8c2nYMhrP80YhG7Cw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="js/sweetalert2.min.js"></script>
 <script src="js/residentviewmodal.js"></script>
 <script src="js/residentaction.js"> </script>
 <script src="js/sidebar.js"></script>
 <script src="js/camerafunction.js"></script>
 <script src="js/logout.js"></script>
+<script src="js/limitfileresanddisplayimg.js"></script>
+<script src="js/LimitFileUploadAndDisplayImgForEdit.js"></script>
+<script src="js/limitfileresanddisplayimg.js"></script>
+
+
 
 <!-- Chart library -->
 <script src="./plugins/chart.min.js"></script>

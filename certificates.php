@@ -29,12 +29,8 @@
   integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
   <link rel="stylesheet" href="./css/style.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="./css/sweetalert2.min.css">
 
-
-    <!--JavaScript-->
-  <script src="js/jquery-3.7.1.min.js"></script>
-  <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
-  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </head>
 
 <body>
@@ -65,10 +61,17 @@
                               <a type="button" class="btn btn-primary me-2" href="create-certificates.php">New Certificate</a>
                               <button class="btn btn-warning me-2" data-bs-toggle="modal" data-bs-target="#ScanqrModal"><img src="img/svg/qr-code-scan.svg" alt="Bootstrap" width="25" height="25"> Scan QR Code</button>
                               
-                              <div class="form-check form-switch my-2">
-                                  <input class="form-check-input" type="checkbox" id="showdeletedentries">
-                                  <label class="form-check-label" for="showdeletedentries">Show deleted entries</label>
-                              </div>
+                              <?php
+                              if($dept === "Admin"){
+                                echo'
+                                <div class="form-check form-switch my-2">
+                                <input class="form-check-input" type="checkbox" id="showdeletedentries">
+                                <label class="form-check-label" for="showdeletedentries">Show deleted entries</label>
+                                </div>';
+
+                              }
+                             
+                              ?>
 
                                 <?php 
                                 
@@ -231,9 +234,13 @@
   <?php require_once("includes/footer.php")?>
     </div>
 </div>
+<!--JavaScript-->
+<script src="js/jquery-3.7.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+<script src="js/sweetalert2.min.js"></script>
 <script src="js/residentviewmodal.js"></script>
 <script src="js/nonresidentviewmodal.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 <!-- Chart library -->
 <script src="./plugins/chart.min.js"></script>
 <!-- Icons library -->
@@ -241,7 +248,6 @@
 <!-- Custom scripts -->
 <script src="js/script.js"></script>
 <script src="js/documents.js"></script>
-<script src="js/displayimagedata.js"></script>
 <script src="js/sidebar.js"></script>
 
 </body>

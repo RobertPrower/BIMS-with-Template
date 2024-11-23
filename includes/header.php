@@ -11,7 +11,7 @@
         <span class="sr-only">Toggle menu</span>
         <span class="icon menu-toggle--gray" aria-hidden="true"></span>
       </button>
-      <div class="lang-switcher-wrapper">
+      <!-- <div class="lang-switcher-wrapper">
         <button class="lang-switcher transparent-btn" type="button">
           EN
           <i data-feather="chevron-down" aria-hidden="true"></i>
@@ -21,7 +21,7 @@
           <li><a href="##">French</a></li>
           <li><a href="##">Uzbek</a></li>
         </ul>
-      </div>
+      </div> -->
       <button class="theme-switcher gray-circle-btn" type="button" title="Switch theme">
         <span class="sr-only">Switch theme</span>
         <i class="sun-icon" data-feather="sun" aria-hidden="true"></i>

@@ -509,11 +509,11 @@ $(document).ready(function () {
           reloadTable();
 
           // Show success alert
-          swal({
-            title: "Edit Document",
+          Swal.fire({
+            title: "Success",
             text: "Document Edited Successfully!",
             icon: "success",
-            button: "Close",
+            
           });
         } else {
           // Hide modal
@@ -521,7 +521,7 @@ $(document).ready(function () {
           reloadTable();
 
           // Show error alert
-          swal({
+          Swal.fire({
             icon: "error",
             title: "Oops...",
             text: "Something went wrong!",
@@ -533,7 +533,7 @@ $(document).ready(function () {
         $("#EditDocumentModal").modal("hide");
         reloadTable();
         // Show error alert
-        swal({
+        Swal.fire({
           icon: "error",
           title: "Oops...",
           text: "Something went wrong!",
@@ -659,6 +659,34 @@ $(document).ready(function () {
               $("#noofcerts").text(response);
             },
           });
+
+          $.ajax({
+            type: "post",
+            url: "includes/residentoperation.php",
+            data: { operation: "CHECK_HIT", resident_id: resident_id },
+            dataType: "json",
+            success: function (response) {
+              console.log(response);
+  
+              if(response.success == "clear"){
+                $("#with_hit").text("None");
+                $("#blotter_badge").removeClass("text-bg-danger");
+                $("#blotter_badge").removeClass("text-bg-success");
+                $("#blotter_badge").addClass("text-bg-success");
+  
+              }else if(response.success == "hit"){
+                $("#with_hit").text("With Hit");
+                $("#blotter_badge").removeClass("text-bg-danger") 
+                $("#blotter_badge").removeClass("text-bg-success");
+                $("#blotter_badge").addClass("text-bg-danger");
+  
+              }else{
+                alert("Server replys failed ")
+              }
+            }, error: function (xhr, status, error) {
+              console.error("Error fetching data:", error);
+            },
+          });
         },
         error: function (xhr, status, error) {
           console.error("Error fetching table data:", error);
@@ -741,62 +769,87 @@ $(document).ready(function () {
     var status = $("#status").val();
 
     if (status == "2") {
-      swal({
+      Swal.fire({
         title: "Are you sure?",
         text: "Restoring the certificate will continue it's validity.",
         icon: "warning",
-        buttons: ["Cancel", "Yes"],
-        dangerMode: true,
-      }).then((willDelete) => {
-        if (willDelete) {
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Restore"
+      }).then((result) => {
+        if (result.isConfirmed) {
           $.ajax({
             url: "includes/documentsoperation.php",
             type: "POST",
             data: { OPERATION: "RESTORE", request_id: request_id },
             success: function () {
-              swal("The certificate has been RESTORED!", {
-                icon: "success",
+
+              Swal.fire({
+                title: "Success",
+                text: "The certificate has been restored!",
+                icon: "success"
               });
 
               $("#DocumentDetailsModal").modal("hide");
               reloadTable();
             },
             error: function (xhr, status, error) {
-              swal("Error!", "Failed to restore the entry.", "error");
+              Swal.fire({
+                title: "Error",
+                text: "Failed to restore the entry.",
+                icon: "error"
+              });
             },
           });
         } else {
-          swal("The certificate is not RESTORED!.");
+          Swal.fire({
+            title: "Restored Canceled",
+            text: "Certificate has not been Restored.",
+            icon: "info"
+          });
         }
       });
     } else {
       console.log(request_id, status);
-      swal({
+      Swal.fire({
         title: "Are you sure?",
         text: "Revoking the certificate VOIDS a certificate validity",
         icon: "warning",
-        buttons: ["Cancel", "Yes"],
-        dangerMode: true,
-      }).then((willDelete) => {
-        if (willDelete) {
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Revoke"
+      }).then((result) => {
+        if (result.isConfirmed) {
           $.ajax({
             url: "includes/documentsoperation.php",
             type: "POST",
             data: { OPERATION: "REVOKE", request_id: request_id },
             success: function () {
-              swal("The certificate has been REVOKED!", {
-                icon: "success",
+              Swal.fire({
+                title: "Success",
+                text: "Certificate has been Revoked!",
+                icon: "success"
               });
 
               reloadTable();
               $("#DocumentDetailsModal").modal("hide");
             },
             error: function (xhr, status, error) {
-              swal("Error!", "Failed to revoke the entry.", "error");
+              Swal.fire({
+                icon: "error!", 
+                text: "Failed to revoke the entry.",
+                title: "Error"
+              });
             },
           });
         } else {
-          swal("The certificate is not revoked");
+          Swal.fire({
+            title: "Revoke has been Canceled",
+            text: "Certificate has not been revoked.",
+            icon: "info"
+          });
         }
       });
     }
@@ -809,14 +862,16 @@ $(document).ready(function () {
     var page = $(this).data("pageno");
 
     console.log("Delete button has been click")
-    swal({
+    Swal.fire({
       title: "Are you sure?",
-      text: "Once deleted, you will not be able to recover this entry!",
+      text: "You are deleting this entry.",
       icon: "warning",
-      buttons: ["Cancel", "Delete"],
-      dangerMode: true,
-    }).then((willDelete) => {
-      if (willDelete) {
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
         $.ajax({
           url: "includes/documentsoperation.php",
           type: "POST",
@@ -824,7 +879,11 @@ $(document).ready(function () {
           dataType: "json",
           success: function (response) {
             console.log("Data deleted successfully:", response);
-            swal("Record Has Been Deleted", { icon: "success" });
+            Swal.fire({
+              title: "Success",
+              text: "Record Successfully Deleted",
+              icon: "info"
+            });
             //If the modal was fired from a search make sure still the same page
             if (currentSearch) {
               fetchResults(currentSearch, page);
@@ -835,11 +894,19 @@ $(document).ready(function () {
           },
           error: function (xhr, status, error) {
             console.error("Error deleting data:", error);
-            swal("Error!", "Failed to delete the entry.", "error");
+            Swal.fire({
+              title: "Error",
+              text: "Failed to delete the entry.",
+              icon: "info"
+            });
           },
         });
       } else {
-        swal("Entry not deleted!", { icon: "info" });
+        Swal.fire({
+          title: "Delete Canceled",
+          text: "Entry Not Deleted!",
+          icon: "info"
+        });
       }
     });
   });
@@ -850,14 +917,16 @@ $(document).ready(function () {
     var request_id = $(this).data("request_id");
     console.log(request_id);
     var page = $(this).data("page");
-    swal({
+    Swal.fire({
       title: "Are you sure?",
       text: "The record will be recovered.",
       icon: "warning",
-      buttons: ["Cancel", "Recovered"],
-      dangerMode: true,
-    }).then((willDelete) => {
-      if (willDelete) {
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
         $.ajax({
           url: "includes/documentsoperation.php",
           type: "POST",
@@ -865,16 +934,28 @@ $(document).ready(function () {
           dataType: "json",
           success: function (response) {
             console.log("Data recovered successfully:", response);
-            swal("Record Has Been Restored", { icon: "success" });
+            Swal.fire({
+              title: "Success",
+              text: "Record Has Been Restored",
+              icon: "info"
+            }); 
             reloadDeletedEntries(page);
           },
           error: function (xhr, status, error) {
             console.error("Error deleting data:", error);
-            swal("Error!", "Failed to recovered the entry.", "error");
+            Swal.fire({
+              title: "Error",
+              text: "Failed to Recovered the entry.",
+              icon: "error"
+            }); 
           },
         });
       } else {
-        swal("Entry not recovered!", { icon: "info" });
+        Swal.fire({
+          title: "Recover Has been Cancelled",
+          text: "Entry Not Recovered!",
+          icon: "info"
+        });
       }
     });
   });

@@ -9,7 +9,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $username = trim($_POST["username"] ?? '');
         $pword = trim($_POST["pword"] ?? '');
        
-        // Error Handles
         $errors = [];
     
         if (is_input_empty($username, $pword)) {
@@ -19,14 +18,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $result = get_user($pdo, $username);
 
         if (is_username_wrong($result)) {
-            $errors["wrong_username"] = "Incorrect Login Info";
-        }
 
-        if (!is_username_wrong($result) && is_password_wrong($pword, $result["pword"])) {
-            $errors["wrong_password"] = "Password is incorrect";
-        }
+            $errors["wrong_username"] = "Username does not exist!";
 
-       // require_once 'config.php';
+        }elseif (is_password_wrong($pword, $result["pword"])) {
+
+            $errors["wrong_password"] = "Username or Password is Incorrect!";
+        }
 
         session_start();
     
@@ -46,6 +44,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $_SESSION["depart_no"] = $result["depart_no"];
         $_SESSION["profile_pic"]=$result["img_filename"];
         $_SESSION["last_regeneration"] = time();
+
+        if(!mark_as_active($pdo, $result['username_id'], 1)){
+            echo "User not mark as Active";
+            die();
+            
+        }
 
         header("Location: ../index.php?login=success");
         $pdo = null;

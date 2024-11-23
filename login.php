@@ -75,7 +75,7 @@ if(isset($_SESSION['user_id'])){
   <!-- Icons library -->
   <script src="plugins/feather.min.js"></script>
   <!-- Custom scripts -->
-  <script src="js/script.js"></script>
+  <!-- <script src="js/script.js"></script> -->
 </body>
 
 </html>

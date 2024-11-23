@@ -3,10 +3,6 @@
     require_once 'includes/config.php';
     require_once 'includes/enforce_login.php' ;
 
-
-    echo $_SESSION['user_id'];
-
-
     $logoquery = "SELECT `filename` FROM `certificate-img` WHERE purpose = 'Barangay Logo'";
     $logostmt = $pdo->prepare($logoquery);
     $logostmt -> execute();
@@ -57,8 +53,9 @@
   <link rel="shortcut icon" href="img/logos/<?php echo $logo; ?>" type="image/x-icon">
   <!-- Custom styles -->
   <link rel="stylesheet" href="./css/style.min.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
   <link rel="stylesheet" href="./css/sweetalert2.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
 
 </head>
 

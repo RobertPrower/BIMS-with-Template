@@ -1,4 +1,6 @@
 <?php 
+require_once 'config.php';
+require_once 'enforce_login.php';
 
 foreach ($results as $row) {
     $subd = (empty($row['subdivision'])) ? "" : ", " . htmlspecialchars($row['subdivision']) ;
@@ -60,14 +62,16 @@ foreach ($results as $row) {
                 //Nothing to Display
             }
 
-            if($row['is_deleted'] == "0"){ 
-                echo '<button class="btn btn-danger mx-1 deleteResidentButton" id="deletebutton"
+            if($dept==="Admin"){
+                if($row['is_deleted'] == "0"){ 
+                    echo '<button class="btn btn-danger mx-1 deleteResidentButton" id="deletebutton"
+                        data-pageno="'.$page.'"
+                        data-resident_id = "' . htmlspecialchars($row['resident_id']) . '">Delete</button>';
+                }else{
+                    echo '<button class="btn btn-warning mx-1 deleteResidentButton" id="undodeletebutton"
                     data-pageno="'.$page.'"
-                    data-resident_id = "' . htmlspecialchars($row['resident_id']) . '">Delete</button>';
-            }else{
-                echo '<button class="btn btn-warning mx-1 deleteResidentButton" id="undodeletebutton"
-                data-pageno="'.$page.'"
-                data-resident_id = "' . htmlspecialchars($row['resident_id']) . '">Recover</button>';
+                    data-resident_id = "' . htmlspecialchars($row['resident_id']) . '">Recover</button>';
+                }
             }
     } 
 }      

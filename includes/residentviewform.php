@@ -39,7 +39,7 @@
                                             <div class= "mt-2 mb-2 text-center">
                                                     <span class="badge text-bg-primary"><h5 id="noofcerts"></h5><h6>No. of Requested <br> Certificates</h6></span>
                                                     <br><br>
-                                                    <span class="badge text-bg-danger"><h4 id="">With Hit</h4><h5>Blotter Status</h6></span>
+                                                    <span class="badge text-bg-danger" id="blotter_badge"><h4 id="with_hit"></h4><h5>Blotter Status</h6></span>
 
                                             </div>
                             

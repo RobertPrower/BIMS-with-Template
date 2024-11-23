@@ -156,7 +156,7 @@ insert  into `non_resident`(`nresident_id`,`img_filename`,`last_name`,`first_nam
 (2,'capture_24-11-18 15:36:451731915405.jpg','Lim','Nicholas','Mahestro','','12','Zapote Rd','Cielito Homes','Camarin Brgy 175','Caloocan City','Metro Manila','1423','Male','Single','San Nicolas Pangasinan','1998-09-29','0966565666544',2,0),
 (3,'2f070627687d52995cfabf5c1bbde057.jpg','Lim','Mario','Jaen','III','Blk 12 Lot 4','Hillcrest st','Rolling Stone Subd','Novaliches','Quezon City','Metro Manila','1420','Male','Married','Madella Quirino','1990-05-02','090913457854',3,0),
 (4,'capture_1732002496.jpg','Chavez','Celestina','Mariano','','Blk 12 Lot 13','Josephine st','La Forteza Subd','Camarin','Caloocan City','Metro Manila','1432','Female','Married','Lipa Batangas','2024-10-16','09064545125',4,1),
-(5,'capture_24-11-18 09:05:071731891907.jpg','La Torre','Nicholas','Trinidad','III','Blk 12 Lot 13','Davao st','Kingdom subd','Novaliches','Quezon City','Metro Manila','1411','Male','Married','Davao City','2000-01-01','090541236585',5,0),
+(5,'capture_1732338783.jpg','La Torre','Nicholas','Trinidad','III','Blk 12 Lot 13','Davao st','Kingdom subd','Novaliches','Quezon City','Metro Manila','1411','Male','Married','Davao City','2000-01-01','090541236585',5,0),
 (6,'shanna (1).jpg','Saksi','Shanna','Jiamin','','Blk 1 Lot 12','St Bernard st','La Forteza','Camarin Brgy 175','La Forteza','Metro Manila','1424','Female','Married','Bagabag Nueva Viscaya','1990-06-12','09054321268',6,0),
 (7,'capture_1731783438.jpg','San Viciente','Carlos','Mateo','','Blk 12 Lot 14','Aluling st','Francisco Homes','Brgy Mulawin','City of San Jose Del Monte','Bulacan','1143','Male','Single','Cabiao Nueva Ecjia','2024-11-12','0957878787878788',7,0),
 (8,'capture_1731783811.jpg','Santos','Kian','Salvador','','Phase 12 Pkg 9','San Jacinto','-','Bagong Silang','Caloocan City','Metro Manila','1422','Male','Single','San Juan Batangas','1997-06-10','00000000000',8,0),
@@ -194,7 +194,7 @@ insert  into `nonres_audit_trail`(`audit_trail_id`,`dept_added_no`,`user_added_n
 (2,NULL,NULL,'2024-09-24 18:32:14',NULL,NULL,'2024-11-18 15:36:45',NULL,NULL,'2024-11-17 02:52:52',NULL,NULL,'2024-11-17 02:58:10'),
 (3,NULL,NULL,'2024-10-03 00:48:06',NULL,NULL,'2024-10-03 01:46:56',NULL,NULL,'2024-11-17 02:52:50',NULL,NULL,'2024-11-17 02:58:08'),
 (4,NULL,NULL,'2024-10-03 00:48:33',NULL,NULL,'2024-11-19 15:48:16',NULL,NULL,'2024-11-19 15:48:56',NULL,NULL,'2024-11-17 02:58:04'),
-(5,NULL,NULL,'2024-10-03 00:59:05',NULL,NULL,'2024-11-18 09:05:07',NULL,NULL,'2024-11-17 02:52:55',NULL,NULL,'2024-11-17 02:58:02'),
+(5,NULL,NULL,'2024-10-03 00:59:05',NULL,NULL,'2024-11-23 13:13:03',NULL,NULL,'2024-11-17 02:52:55',NULL,NULL,'2024-11-17 02:58:02'),
 (6,NULL,NULL,'2024-10-03 00:59:35',NULL,NULL,'2024-10-24 15:09:48',NULL,NULL,'2024-11-17 02:52:45',NULL,NULL,'2024-11-17 02:58:00'),
 (7,NULL,NULL,'2024-10-03 01:02:24',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
 (8,NULL,NULL,'2024-11-17 03:30:56',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
@@ -228,7 +228,7 @@ CREATE TABLE `res_audit_trail` (
   CONSTRAINT `res_addedby_fk` FOREIGN KEY (`added_by_no`) REFERENCES `tbl_username` (`username_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `res_depart_fk` FOREIGN KEY (`added_depart_no`) REFERENCES `departments_list` (`department_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `res_edited_by` FOREIGN KEY (`last_edited_by`) REFERENCES `tbl_username` (`username_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `res_audit_trail` */
 
@@ -248,32 +248,33 @@ insert  into `res_audit_trail`(`res_at_id`,`added_depart_no`,`added_by_no`,`adde
 (13,NULL,NULL,'2024-11-17 03:58:41',NULL,NULL,'2024-11-17 04:00:10',NULL,NULL,'2024-11-17 04:00:24',NULL,NULL,'2024-11-17 04:00:40'),
 (14,NULL,NULL,'2024-11-17 03:58:41',NULL,NULL,'2024-11-17 04:00:10',NULL,NULL,'2024-11-18 21:18:53',NULL,NULL,'2024-11-17 04:00:40'),
 (15,NULL,NULL,'2024-11-17 03:58:41',NULL,NULL,'2024-11-18 09:05:38',NULL,NULL,'2024-11-18 13:02:21',NULL,NULL,'2024-11-17 04:00:40'),
-(16,NULL,NULL,'2024-11-17 03:58:41',NULL,NULL,'2024-11-17 04:00:10',NULL,NULL,'2024-11-17 04:00:24',NULL,NULL,'2024-11-17 04:00:40'),
+(16,NULL,NULL,'2024-11-17 03:58:41',4,1,'2024-11-23 15:43:12',NULL,NULL,'2024-11-17 04:00:24',NULL,NULL,'2024-11-17 04:00:40'),
 (17,NULL,NULL,'2024-11-17 03:58:41',NULL,NULL,'2024-11-17 04:00:10',NULL,NULL,'2024-11-17 04:00:24',NULL,NULL,'2024-11-17 04:00:40'),
 (18,NULL,NULL,'2024-11-17 03:58:41',NULL,NULL,'2024-11-17 04:00:10',NULL,NULL,'2024-11-17 04:00:24',NULL,NULL,'2024-11-17 04:00:40'),
 (19,NULL,NULL,'2024-11-17 03:58:41',NULL,NULL,'2024-11-17 04:00:10',NULL,NULL,'2024-11-17 04:00:24',NULL,NULL,'2024-11-17 04:00:40'),
-(20,NULL,NULL,'2024-11-17 03:58:41',NULL,NULL,'2024-11-17 04:00:10',NULL,NULL,'2024-11-17 04:00:24',NULL,NULL,'2024-11-17 04:00:40'),
+(20,NULL,NULL,'2024-11-17 03:58:41',4,1,'2024-11-23 15:44:45',NULL,NULL,'2024-11-17 04:00:24',NULL,NULL,'2024-11-17 04:00:40'),
 (21,NULL,NULL,'2024-11-18 15:32:27',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(22,NULL,NULL,'2024-11-18 15:35:30',NULL,NULL,'2024-11-20 02:05:33',NULL,NULL,NULL,NULL,NULL,NULL),
+(22,NULL,NULL,'2024-11-18 15:35:30',4,1,'2024-11-23 02:40:02',NULL,NULL,NULL,NULL,NULL,NULL),
 (23,NULL,NULL,'2024-11-18 17:07:33',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
 (24,NULL,NULL,'2024-11-18 17:22:26',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
 (25,NULL,NULL,'2024-11-18 22:06:04',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
 (26,NULL,NULL,'2024-11-18 22:08:14',NULL,NULL,'2024-11-18 22:25:56',NULL,NULL,NULL,NULL,NULL,NULL),
 (27,NULL,NULL,'2024-11-18 22:10:42',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
 (28,NULL,NULL,'2024-11-18 22:22:01',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(29,NULL,NULL,'2024-11-18 23:40:19',NULL,NULL,'2024-11-21 12:02:15',NULL,NULL,'2024-11-19 15:56:15',NULL,NULL,'2024-11-19 15:56:22'),
+(29,NULL,NULL,'2024-11-18 23:40:19',4,1,'2024-11-23 10:14:08',4,1,'2024-11-23 10:27:30',NULL,NULL,'2024-11-19 15:56:22'),
 (30,NULL,NULL,'2024-11-18 23:43:49',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
 (31,NULL,NULL,'2024-11-19 01:11:25',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
 (32,NULL,NULL,'2024-11-19 01:18:53',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
 (33,NULL,NULL,'2024-11-19 01:34:00',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
 (34,NULL,NULL,'2024-11-19 01:36:49',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(35,NULL,NULL,'2024-11-19 01:40:49',NULL,NULL,'2024-11-19 14:02:02',NULL,NULL,NULL,NULL,NULL,NULL),
-(36,NULL,NULL,'2024-11-19 01:41:02',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(37,NULL,NULL,'2024-11-19 01:43:02',NULL,NULL,'2024-11-19 12:32:30',NULL,NULL,NULL,NULL,NULL,NULL),
-(38,NULL,NULL,'2024-11-19 01:43:14',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(35,NULL,NULL,'2024-11-19 01:40:49',4,1,'2024-11-23 15:06:29',NULL,NULL,NULL,NULL,NULL,NULL),
+(36,NULL,NULL,'2024-11-19 01:41:02',4,1,'2024-11-23 15:40:54',NULL,NULL,NULL,NULL,NULL,NULL),
+(37,NULL,NULL,'2024-11-19 01:43:02',4,1,'2024-11-23 15:10:57',NULL,NULL,NULL,NULL,NULL,NULL),
+(38,NULL,NULL,'2024-11-19 01:43:14',4,1,'2024-11-23 02:35:40',NULL,NULL,NULL,NULL,NULL,NULL),
 (39,NULL,NULL,'2024-11-19 01:57:04',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
 (40,NULL,NULL,'2024-11-19 04:37:49',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(41,NULL,NULL,'2024-11-19 14:47:38',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+(41,NULL,NULL,'2024-11-19 14:47:38',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(42,4,1,'2024-11-23 14:50:25',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 
 /*Table structure for table `resident` */
 
@@ -302,7 +303,7 @@ CREATE TABLE `resident` (
   KEY `res_at_fk` (`audit_trail`),
   FULLTEXT KEY `fullname_idx` (`last_name`,`first_name`,`middle_name`,`suffix`) COMMENT 'For fast res searching',
   CONSTRAINT `res_at_fk` FOREIGN KEY (`audit_trail`) REFERENCES `res_audit_trail` (`res_at_id`) ON DELETE CASCADE ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `resident` */
 
@@ -321,32 +322,33 @@ insert  into `resident`(`resident_id`,`img_filename`,`last_name`,`first_name`,`m
 (13,'Akatsuki_portal.png','Salas','Akatsuki','Lumauig','','Blk 8 lot 4','Jeremiah st','Cielito Homes','2004','Female','Single','2004-12-16','Caloocan City','09054321268',1,13,1),
 (14,'6c2e2762dc133ba55627875e9fa27f33.jpg','Dayao','Hiro','Timbol','','Blk 8 lot 3','Jeremiah st','Cielito Homes','2013','Male','Married','1990-04-03','Palauig Quezon','09665656565',1,14,1),
 (15,'capture_24-11-181731891938.jpg','Atchico','Denise','Tamaro','','Blk 14 lot 13','Moises st','Cielito Homes','2019','Female','Single','1999-04-24','Palauig Quezon','09665656565',0,15,1),
-(16,'soul (1).jpg','Labancas','Danilo','Lim','','Blk 12 Lot 4','Kang kong st','Kassel Villas','2006','Male','Single','2002-10-16','Bulacan Bulacan','09056565656',1,16,0),
+(16,'Shuichi_Kagaya_-_Anime.png','Labancas','Danilo','Lim','','Blk 12 Lot 4','Kang kong st','Kassel Villas','2006','Male','Single','2002-10-16','Hangono Bulacan','09056565656',1,16,0),
 (17,'capture_24-09-121726121120.jpg','Japerson','Henry','','','123','Zabarte Rd','','2012','Male','Single','2002-10-16','Caloocan City','0906412066',0,17,1),
 (18,'Naotsugu_portal.png','Operacio','Tim','Lucarnas','','12','Virgo st Corner Aries st','Maria Luisa Subd','2002','Male','Single','2002-10-16','Malabon City','09545454544',1,18,0),
 (19,'Allenwalkerimage.png','Salas','Roberto','Lumauig','','Blk 12 Lot 4','Isaiah st','Cielito Homes','2002','Male','Single','2001-10-16','Caloocan City','09064121066',1,19,0),
-(20,'capture_1727260861.jpg','Salas','Robert','Lumauig','','Blk 8 Lot 4','Jeremiah st','','2002','Male','Single','2002-10-16','Caloocan City','09064121066',0,20,0),
+(20,'Shuichi_Kagaya_-_Anime (1).png','Salas','Robert','Lumauig','','Blk 8 Lot 4','Jeremiah st','','2002','Male','Single','2002-10-16','Malabon City','09064121066',0,20,0),
 (21,'capture_1731915147.jpg','Salas','Robert','Midalea','','12','Happy st','Caritas','2005','Male','Single','1999-05-10','Iriga Sorsogon','0948784555555',1,21,0),
-(22,'capture_1732039533.jpg','Jasloslos','Ping','Mardaldea','','Blk 12 Lot 11','Lapus st','','2005','Male','Single','1994-06-14','Davao City','098556955555',1,22,0),
+(22,'Lavi_2006 (1).png','Jasloslos','Ping','Mardaldea','','Blk 12 Lot 11','Lapus st','','2005','Male','Single','1994-06-14','Davao City','098556955555',1,22,0),
 (23,'capture_1731920853.jpg','Yalong','Aaaron','Armengol','','Blk 12 Lot5','Isaiah st','Cielito Homes','2015','Male','Single','1986-03-21','Gapan Nueva Ecjia','09565656565',1,23,0),
 (24,'capture_1731921746.jpg','Yalong','Aaaron','Armengol','','Blk 12 Lot 5','Isaiah st','Cielito Homes','2015','Male','Single','1986-03-21','Gapan Nueva Ecija','09565656565',1,24,0),
 (25,'capture_1731938764.jpg','Salas','Marivic','Lumauig','','Blk 8 Lot 4','Jeremiah st','Cielito Homes','2000','Female','Single','1962-11-02','Bagabag Nueva Viscaya','09054321268',1,25,0),
 (26,'capture_1731938894.jpg','Salas','Marivic','Lumauig','','Blk 8 Lot 4','Jeremiah st','Cielito Homes','2000','Female','Married','1961-11-02','Bagabag Nueva Viscaya','09054321268',1,26,0),
 (27,'capture_1731939042.jpg','Salas','Marivic','Lumauig','','Blk 8 Lot 4','Jeremiah st','Cielito Homes','2000','Female','Married','1961-11-02','Bagabag Nueva Viscaya','09054321268',1,27,0),
 (28,'capture_1731939721.jpg','Salas','Marivic','Lumauig','','Blk 8 Lot 4','Jeremiah st','Cielito Homes','2000','Female','Married','1962-11-02','Bagabag Nueva Viscaya','09054321268',1,28,0),
-(29,'capture_1732161735.jpg','Hofileña','Karl','Mark','','Blk 3 Lot 3','Virgo st Corner Aries st','Maria Luisa Subd','2015','Male','Single','2004-06-14','Donna Remedios Trinidad Bulacan','09054321268',0,29,0),
+(29,'capture_1732328048.jpg','Hofileña','Karl','Mark','','Blk 3 Lot 3','Virgo st Corner Aries st','Maria Luisa Subd','2015','Male','Single','2004-06-14','Donna Remedios Trinidad Bulacan','09054321268',0,29,1),
 (30,'capture_1731944629.jpg','Salas','Robert','Lumauig','','Blk 12 Lot 14','Jeremiah st','Del Rey Ville 2','2006','Male','Single','2004-06-29','Caloocan City','09054321268',1,30,0),
 (31,'capture_1731949885.jpg','Salas','Robert','Lumauig','','Blk 12 Lot 14','Jeremiah st','Del Rey Ville 2','2006','Female','Married','2004-06-30','Caloocan City','09054321268',1,31,0),
 (32,'capture_1731950333.jpg','Salas','Robert','Lumauig','','Blk 12 Lot 14','Jeremiah st','Del Rey Ville 2','2006','Female','Married','2004-06-07','Caloocan City','09054321268',0,32,0),
 (33,'capture_1731951240.jpg','Salas','Robert','Lumauig','','Blk 12 Lot 14','Jeremiah st','Del Rey Ville 2','2006','Female','Married','2004-06-01','Caloocan City','09054321268',1,33,0),
 (34,'capture_1731951409.jpg','Salas','Robert','Lumauig','','Blk 12 Lot 14','Jeremiah st','Del Rey Ville 2','2006','Female','Married','2004-06-03','Caloocan City','09054321268',1,34,0),
-(35,'Karen-Bennett-200x200px (1).jpg','Hofileña','Mary','Grace','','Blk 3 Lot 3','Virgo st Corner Aries st','Maria Luisa Subd','2010','Female','Married','2024-11-04','Alicia Isabela','9054321267',1,35,0),
-(36,'capture_1731951662.jpg','Hofileña','Tangol','Mark','','Blk 3 Lot 3','Virgo st Corner Aries st','Maria Luisa Subd','2003','Male','Married','2024-11-08','Bagabag Nueva Viscaya','9054321267',1,36,0),
-(37,'5_2024-07-06_22-17-53.jpg','Hofileña','Tangol','Mark','','Blk 3 Lot 3','Virgo st Corner Aries st','Cassel Spring Subd','2002','Female','Married','2024-02-06','Diadi Nueva Viscaya','09054321268',1,37,0),
-(38,'capture_1731951794.jpg','Hofileña','Tangol','Mark','','Blk 3 Lot 3','Virgo st Corner Aries st','Cassel Spring Subd','2002','Female','Married','2024-02-27','Bagabag Nueva Viscaya','09054321268',1,38,0),
+(35,'Karen-Bennett-200x200px (1).jpg','Hofileña','Mary','Grace','','Blk 3 Lot 3','Virgo st Corner Aries st','Maria Luisa Subd','2010','Female','Married','2024-11-04','Cauayan Isabela','9054321267',1,35,0),
+(36,'Yu_Kanda.PNG','Hofileña','Tangol','Mark','','Blk 3 Lot 3','Virgo st Corner Aries st','Maria Luisa Subd','2003','Male','Married','2024-11-08','Bayombong Nueva Viscaya','9054321267',1,36,0),
+(37,'capture_1732300490.jpg','Hofileña','Tangol','Mark','','Blk 3 Lot 3','Virgo st Corner Aries st','Cassel Spring Subd','2002','Female','Married','2024-02-06','Quezon Nueva Viscaya','09054321268',1,37,0),
+(38,'capture_1732300540.jpg','Hofileña','Tangol','Mark','','Blk 3 Lot 3','Virgo st Corner Aries st','Cassel Spring Subd','2002','Female','Married','2024-02-27','Bagabag Nueva Viscaya','09054321268',1,38,0),
 (39,'capture_1731952624.jpg','Salas','Marivic','Lumauig','','Blk 8 Lot 4','Jeremiah st','Cielito Homes','2000','Male','Single','2024-11-14','Bagabag Nueva Viscaya','09054321268',1,39,0),
 (40,'capture_1731962269.jpg','Salas','Marivic','Lumauig','','Blk 8 Lot 4','Jeremiah st','Select','2000','Male','Single','2024-11-19','Bagabag Nueva Viscaya','09054321268',1,40,0),
-(41,'capture_1731998858.jpg','Lascanas','Robert','Kaledo','','Blk 8 Lot 11','Oliver st','North Matrix Ville','2005','Male','Married','1993-07-08','Caloocan City','095656565656',1,41,0);
+(41,'capture_1731998858.jpg','Lascanas','Robert','Kaledo','','Blk 8 Lot 11','Oliver st','North Matrix Ville','2005','Male','Married','1993-07-08','Caloocan City','095656565656',1,41,0),
+(42,'capture_1732344625.jpg','Jerez','Roberto','Bunanig','','Blk 12 Lot 14','Lapus st','Kassel Villas','2002','Male','Single','2000-01-03','Silang Cavite','095645454547',1,42,0);
 
 /*Table structure for table `tbl_blotter_audit_trail` */
 
@@ -462,7 +464,7 @@ insert  into `tbl_blotters`(`blotter_id`,`res_complainant_no`,`nres_complainant_
 (7,10,NULL,9,NULL,7,7,0,'Cyber Bullying','2024-11-12 22:18:42','Maria Lusisa',NULL,'2f070627687d52995cfabf5c1bbde057 (4).jpg','Shiroe_portal (4).png','dslmalmdlmfqewfmqsdmklawmdcwmdkcmkwsd','09:00:00','10:00:00',NULL,7,'2024-11-29','#000000',0,0),
 (8,10,NULL,9,NULL,8,8,1,'Unjust Vexation','2024-11-12 22:18:42','Maria Lusisa',NULL,'2f070627687d52995cfabf5c1bbde057 (5).jpg','Shiroe_portal (5).png','sdjkmdscmasdmckasmdcklandkclnasdkjnckds hckadscjndkjcnasdkncklasdnckanwdkc','09:00:00','10:00:00',1,8,'2024-11-29',NULL,0,0),
 (9,10,NULL,9,NULL,9,9,1,'Unjust Vexation','2024-11-12 22:18:42','Maria Lusisa',NULL,'2f070627687d52995cfabf5c1bbde057 (7).jpg','Shiroe_portal (6).png','sdjkmdscmasdmckasmdcklandkclnasdkjnckds hckadscjndkjcnasdkncklasdnckanwdkc','09:00:00','10:00:00',1,9,'2024-11-29',NULL,0,0),
-(10,10,NULL,9,NULL,10,10,1,'Estafa Rentangay','2024-11-12 22:18:42','Maria Lusisa',NULL,'2f070627687d52995cfabf5c1bbde057 (8).jpg','Shiroe_portal (7).png','sdjkmdscmasdmckasmdcklandkclnasdkjnckds hckadscjndkjcnasdkncklasdnckanwdkcdsfsfsdfsd','09:00:00','10:00:00',NULL,10,'2024-11-29','#000000',0,0),
+(10,10,NULL,NULL,1,10,10,1,'Estafa Rentangay','2024-11-12 22:18:42','Maria Lusisa',NULL,'2f070627687d52995cfabf5c1bbde057 (8).jpg','Shiroe_portal (7).png','sdjkmdscmasdmckasmdcklandkclnasdkjnckds hckadscjndkjcnasdkncklasdnckanwdkcdsfsfsdfsd','09:00:00','10:00:00',NULL,10,'2024-11-29','#000000',0,0),
 (11,8,NULL,9,NULL,11,11,0,'Snatching','2024-11-13 22:20:51','Maligay Park',NULL,'2f070627687d52995cfabf5c1bbde057 (13).jpg','toilet-bound-hanako-kun-acryl-keychain-hanako-kun (4).jpg','fsdfcsdcmsdmdclksdmlcmsklmcslacnsdkncadskncvkadsfvkld','08:30:00','10:30:00',NULL,11,'2024-11-20','#c83c3c',0,0),
 (12,8,NULL,9,NULL,12,12,0,'Snatchingfdfsdlcls;dkmcals','2024-11-13 22:20:51','Maligay Park',NULL,'2f070627687d52995cfabf5c1bbde057 (15).jpg','toilet-bound-hanako-kun-acryl-keychain-hanako-kun (5).jpg','fsdfcsdcmsdmdclksdmlcmsklmcslacnsdkncadskncvkadsfvkld','08:30:00','10:30:00',NULL,12,'2024-11-20','#c83c3c',0,1),
 (13,1,NULL,9,NULL,13,13,0,'Estafa Rentangay','2024-11-11 13:30:46','Cielito Homes',NULL,'GLooZSFWYAAMxfL.jpeg','GLooZSFWYAAMxfL (2).jpeg','sdkjfndisafcljkasdhfkasndcasoidcpIUASNHDCPIUA','09:00:00','10:00:00',NULL,13,'2024-11-19','#000000',0,1);
@@ -620,7 +622,7 @@ insert  into `tbl_cert_audit_trail`(`audit_trail_id`,`issuing_dept_no`,`issued_b
 (51,NULL,NULL,'2024-11-18 01:13:19','2025-02-18',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
 (52,NULL,NULL,'2024-11-18 01:45:01','2025-02-18',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
 (53,NULL,NULL,'2024-11-18 01:50:16','2025-11-18',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(54,NULL,NULL,'2024-11-18 05:02:49','2025-11-18',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+(54,NULL,NULL,'2024-11-18 05:02:49','2025-11-18',NULL,'2024-11-22 00:00:00',NULL,NULL,NULL,NULL,NULL);
 
 /*Table structure for table `tbl_docu_request` */
 
@@ -704,9 +706,9 @@ insert  into `tbl_docu_request`(`request_id`,`resident_no`,`nresident_no`,`docum
 ('2024-000049',4,NULL,49,31,'Postal ID','1212123232435445','Medical Assistance',49,'generated_pdf_1731863374.pdf',0,0),
 ('2024-000050',1,NULL,50,32,'NBI Clearance','fdfsdfsdf','Medical Assistance',50,'generated_pdf_1731863444.pdf',0,0),
 ('2024-000051',1,NULL,51,32,'NBI Clearance','fdfsdfsdf','Medical Assistance',51,'generated_pdf_1731863599.pdf',0,0),
-('2024-000052',1,NULL,52,32,'Postal ID','PRN-2132323433434','Job Application',52,'generated_pdf_1731890701.pdf',0,0),
+('2024-000052',1,NULL,52,32,'Postal ID','PRN-2132323433434','Job Application',52,'generated_pdf_1731890701.pdf',0,1),
 ('2024-000053',9,NULL,53,38,'Postal ID','FBFDCGCDFGCFGFGFDXGD','Employment',53,'generated_pdf_1731891016.pdf',0,0),
-('2024-000054',10,NULL,54,36,'GSIS ID','LSJDFOISJIKFHDSIOJN','Employment',54,'generated_pdf_1731902569.pdf',0,0);
+('2024-000054',10,NULL,54,36,'Drivers License','N42-201064112','Employment',54,'generated_pdf_1731902569.pdf',0,0);
 
 /*Table structure for table `tbl_documents` */
 
@@ -986,14 +988,13 @@ CREATE TABLE `tbl_username` (
   `username_id` int(55) NOT NULL AUTO_INCREMENT,
   `username` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`username_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 /*Data for the table `tbl_username` */
 
 insert  into `tbl_username`(`username_id`,`username`) values 
 (1,'RobertPrower'),
-(2,'Marivic12'),
-(3,'JohnRin123');
+(2,'AteAnna');
 
 /*Table structure for table `tbl_users` */
 
@@ -1009,21 +1010,73 @@ CREATE TABLE `tbl_users` (
   `lname` varchar(55) NOT NULL,
   `suffix` varchar(55) DEFAULT NULL,
   `depart_no` int(55) NOT NULL,
+  `user_at_no` int(55) NOT NULL,
   `isactive` tinyint(11) NOT NULL DEFAULT '0',
-  `isremoved` tinyint(11) NOT NULL DEFAULT '0',
+  `isdeleted` tinyint(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`user_id`),
   KEY `username_fk` (`username_no`),
   KEY `depart_fk` (`depart_no`),
   CONSTRAINT `depart_fk` FOREIGN KEY (`depart_no`) REFERENCES `departments_list` (`department_id`),
   CONSTRAINT `username_fk` FOREIGN KEY (`username_no`) REFERENCES `tbl_username` (`username_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `tbl_users` */
 
-insert  into `tbl_users`(`user_id`,`username_no`,`pword`,`img_filename`,`fname`,`mname`,`lname`,`suffix`,`depart_no`,`isactive`,`isremoved`) values 
-(1,1,'$2y$10$89lugzlxrSiZu/4d6cGUJeoEt7j4vTlNyxM9trULQ4Av2HyMFM4Za','2f070627687d52995cfabf5c1bbde057.jpg','Robert','Lumauig','Salas','',4,0,0),
-(2,2,'$2y$10$xuB9WU5B9eKIM8.ZuRB3i..4cegIXs5bfgWqbAC69eM4ugrK0E3v2','ab67706c0000da84dc7f5b89d9dd705a9e1a8e4f.jpg','Marivic','Lumauig','Salas','',1,0,0),
-(3,3,'$2y$10$0VEbF0720jaUDFUoVYgTt.cy.6Z.3r7dG1WQ.FJ6LGqRCLGK5cQpa','Yuji_shana.png','John RIn','','Hofileña','',2,0,0);
+insert  into `tbl_users`(`user_id`,`username_no`,`pword`,`img_filename`,`fname`,`mname`,`lname`,`suffix`,`depart_no`,`user_at_no`,`isactive`,`isdeleted`) values 
+(1,1,'$2y$10$S4TBGbekXSy8iFzm88xmGetm8S.nYmOqB4j3FmNv9qcGA4M.8Ol8e','715a5404857b4d3cfdbd2747e2eaac79.jpg','Robert','Lumauig','Salas','',4,1,1,0),
+(2,2,'$2y$10$wB0B16FNxf3p2bN4H96P2uQHvAeqIAhUAz8un6gMFnHBlhO.3zw5e','ab67706c0000da84dc7f5b89d9dd705a9e1a8e4f (1).jpg','Anna','','De Gana','',1,2,0,0);
+
+/*Table structure for table `tbl_users_audit_trail` */
+
+DROP TABLE IF EXISTS `tbl_users_audit_trail`;
+
+CREATE TABLE `tbl_users_audit_trail` (
+  `user_at_id` int(55) NOT NULL AUTO_INCREMENT,
+  `created_dt` datetime DEFAULT CURRENT_TIMESTAMP,
+  `created_by` int(55) DEFAULT NULL,
+  `last_edited_by` int(55) DEFAULT NULL,
+  `last_edited_dt` datetime DEFAULT NULL,
+  `deleted_by` int(55) DEFAULT NULL,
+  `deleted_dt` datetime DEFAULT NULL,
+  `recovered_by` int(55) DEFAULT NULL,
+  `recovered_dt` datetime DEFAULT NULL,
+  `last_login` datetime DEFAULT NULL,
+  PRIMARY KEY (`user_at_id`),
+  KEY `created_by` (`created_by`),
+  KEY `last_edited_by` (`last_edited_by`),
+  KEY `deleted_by` (`deleted_by`),
+  KEY `recovered_by` (`recovered_by`),
+  CONSTRAINT `tbl_users_audit_trail_ibfk_1` FOREIGN KEY (`created_by`) REFERENCES `tbl_username` (`username_id`) ON UPDATE NO ACTION,
+  CONSTRAINT `tbl_users_audit_trail_ibfk_2` FOREIGN KEY (`last_edited_by`) REFERENCES `tbl_username` (`username_id`) ON UPDATE NO ACTION,
+  CONSTRAINT `tbl_users_audit_trail_ibfk_3` FOREIGN KEY (`deleted_by`) REFERENCES `tbl_username` (`username_id`) ON UPDATE NO ACTION,
+  CONSTRAINT `tbl_users_audit_trail_ibfk_4` FOREIGN KEY (`recovered_by`) REFERENCES `tbl_username` (`username_id`) ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+
+/*Data for the table `tbl_users_audit_trail` */
+
+insert  into `tbl_users_audit_trail`(`user_at_id`,`created_dt`,`created_by`,`last_edited_by`,`last_edited_dt`,`deleted_by`,`deleted_dt`,`recovered_by`,`recovered_dt`,`last_login`) values 
+(1,'2024-11-22 04:04:26',1,NULL,NULL,NULL,NULL,NULL,NULL,'2024-11-22 04:23:29'),
+(2,'2024-11-22 04:05:27',1,NULL,NULL,1,'2024-11-22 23:15:25',1,'2024-11-22 22:50:00','2024-11-22 04:23:33');
+
+/*Table structure for table `tbl_whole_system_at` */
+
+DROP TABLE IF EXISTS `tbl_whole_system_at`;
+
+CREATE TABLE `tbl_whole_system_at` (
+  `audit_trail_id` int(55) NOT NULL AUTO_INCREMENT,
+  `operation` varchar(255) NOT NULL,
+  `user_no` int(55) NOT NULL,
+  `dept_no` int(11) NOT NULL,
+  `event_dt` datetime NOT NULL,
+  PRIMARY KEY (`audit_trail_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
+
+/*Data for the table `tbl_whole_system_at` */
+
+insert  into `tbl_whole_system_at`(`audit_trail_id`,`operation`,`user_no`,`dept_no`,`event_dt`) values 
+(1,'ADD',1,4,'2024-11-23 14:50:25'),
+(2,'UPDATE',1,4,'2024-11-23 15:42:51'),
+(3,'UPDATE',1,4,'2024-11-23 15:44:45');
 
 /* Trigger structure for table `non_resident` */
 
@@ -1042,6 +1095,58 @@ DELIMITER $$
     SET NEW.audit_trail_no = new_id;
    
     END */$$
+
+
+DELIMITER ;
+
+/* Trigger structure for table `res_audit_trail` */
+
+DELIMITER $$
+
+/*!50003 DROP TRIGGER*//*!50032 IF EXISTS */ /*!50003 `trig_rec_res_adding_at` */$$
+
+/*!50003 CREATE */ /*!50017 DEFINER = 'root'@'localhost' */ /*!50003 TRIGGER `trig_rec_res_adding_at` AFTER INSERT ON `res_audit_trail` FOR EACH ROW BEGIN
+
+	INSERT INTO `tbl_whole_system_at`(`operation`,`dept_no`,`user_no`,`event_dt`)
+	VALUES ("ADD",New.`added_depart_no`, NEW.`added_by_no`,NEW.`added_dt`);
+	
+    END */$$
+
+
+DELIMITER ;
+
+/* Trigger structure for table `res_audit_trail` */
+
+DELIMITER $$
+
+/*!50003 DROP TRIGGER*//*!50032 IF EXISTS */ /*!50003 `trig_rec_res_update_at` */$$
+
+/*!50003 CREATE */ /*!50017 DEFINER = 'root'@'localhost' */ /*!50003 TRIGGER `trig_rec_res_update_at` AFTER UPDATE ON `res_audit_trail` FOR EACH ROW 
+BEGIN
+    -- Check if edited_depart_no was updated, handling NULLs
+    IF (OLD.edited_depart_no IS NULL AND NEW.edited_depart_no IS NOT NULL)
+       OR (OLD.edited_depart_no IS NOT NULL AND NEW.edited_depart_no IS NULL)
+       OR (OLD.edited_depart_no <> NEW.edited_depart_no) THEN
+        INSERT INTO `tbl_whole_system_at`(`operation`, `dept_no`, `user_no`, `event_dt`)
+        VALUES ("UPDATE", NEW.`edited_depart_no`, NEW.`last_edited_by`, NEW.`last_edited_dt`);
+    END IF;
+
+    -- Check if dept_del_no was updated, handling NULLs
+    IF (OLD.dept_del_no IS NULL AND NEW.dept_del_no IS NOT NULL)
+       OR (OLD.dept_del_no IS NOT NULL AND NEW.dept_del_no IS NULL)
+       OR (OLD.dept_del_no <> NEW.dept_del_no) THEN
+        INSERT INTO `tbl_whole_system_at`(`operation`, `dept_no`, `user_no`, `event_dt`)
+        VALUES ("DELETE", NEW.`dept_del_no`, NEW.`del_by_no`, NEW.`del_dt`);
+    END IF;
+
+    -- Check if dept_rec_no was updated, handling NULLs
+    IF (OLD.dept_rec_no IS NULL AND NEW.dept_rec_no IS NOT NULL)
+       OR (OLD.dept_rec_no IS NOT NULL AND NEW.dept_rec_no IS NULL)
+       OR (OLD.dept_rec_no <> NEW.dept_rec_no) THEN
+        INSERT INTO `tbl_whole_system_at`(`operation`, `dept_no`, `user_no`, `event_dt`)
+        VALUES ("RECOVER", NEW.`dept_rec_no`, NEW.`rec_by_no`, NEW.`rec_dt`);
+    END IF;
+END */$$
 
 
 DELIMITER ;
@@ -1163,6 +1268,7 @@ BEGIN
     END IF;
 
     SET NEW.username_no = new_id;
+    SET NEW.user_at_no = new_id;
 END */$$
 
 
@@ -1316,6 +1422,39 @@ BEGIN
 END */$$
 DELIMITER ;
 
+/* Procedure structure for procedure `CountNonResidentBlotterEntries` */
+
+/*!50003 DROP PROCEDURE IF EXISTS  `CountNonResidentBlotterEntries` */;
+
+DELIMITER $$
+
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `CountNonResidentBlotterEntries`(IN residentId INT)
+BEGIN
+    -- Count the matching entries with the specified resident_id and report_status = 1
+    SELECT COUNT(*)
+    FROM tbl_blotters AS b
+    LEFT JOIN tbl_other_complainants AS oc ON b.blotter_id = oc.complainant_id
+    LEFT JOIN tbl_other_respondents AS orr ON b.blotter_id = orr.respondent_id
+    WHERE 
+        -- Check if resident_id is in tbl_blotters nres_complainant or nres_respondents
+        (b.`nres_complainant_no` = residentId OR b.`nres_respondent_no` = residentId)
+        OR
+        -- Check if resident_id is in tbl_other_complainants nres_person_1 to nres_person_5
+        (oc.nres_person_1 = residentId OR oc.nres_person_2 = residentId 
+         OR oc.nres_person_3 = residentId OR oc.nres_person_4 = residentId 
+         OR oc.nres_person_5 = residentId)
+        OR
+        -- Check if resident_id is in tbl_other_respondents nres_person_1 to nres_person_5
+        (orr.nres_person_1 = residentId OR orr.nres_person_2 = residentId 
+         OR orr.nres_person_3 = residentId OR orr.nres_person_4 = residentId 
+         OR orr.nres_person_5 = residentId)
+        AND
+        -- Only include entries with report_status = 1
+        b.report_status = 1 AND  b.report_status = 2;
+
+	END */$$
+DELIMITER ;
+
 /* Procedure structure for procedure `CountNonResidentBlotterRec` */
 
 /*!50003 DROP PROCEDURE IF EXISTS  `CountNonResidentBlotterRec` */;
@@ -1417,6 +1556,38 @@ BEGIN
                 OR r.res_person_5 = resident_id
         ) AS counted_entries;
 	END */$$
+DELIMITER ;
+
+/* Procedure structure for procedure `CountResidentBlotterEntries` */
+
+/*!50003 DROP PROCEDURE IF EXISTS  `CountResidentBlotterEntries` */;
+
+DELIMITER $$
+
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `CountResidentBlotterEntries`(IN residentId INT)
+BEGIN
+    -- Count the matching entries with the specified resident_id and report_status = 1
+    SELECT COUNT(*)
+    FROM tbl_blotters AS b
+    LEFT JOIN tbl_other_complainants AS oc ON b.blotter_id = oc.complainant_id
+    LEFT JOIN tbl_other_respondents AS orr ON b.blotter_id = orr.respondent_id
+    WHERE 
+        -- Check if resident_id is in tbl_blotters res_complainant or res_respondents
+        (b.`res_complainant_no` = residentId OR b.`res_respondent_no` = residentId)
+        OR
+        -- Check if resident_id is in tbl_other_complainants res_person_1 to res_person_5
+        (oc.res_person_1 = residentId OR oc.res_person_2 = residentId 
+         OR oc.res_person_3 = residentId OR oc.res_person_4 = residentId 
+         OR oc.res_person_5 = residentId)
+        OR
+        -- Check if resident_id is in tbl_other_respondents res_person_1 to res_person_5
+        (orr.res_person_1 = residentId OR orr.res_person_2 = residentId 
+         OR orr.res_person_3 = residentId OR orr.res_person_4 = residentId 
+         OR orr.res_person_5 = residentId)
+        AND
+        -- Only include entries with report_status = 1
+        b.report_status = 1 AND  b.report_status = 2;
+END */$$
 DELIMITER ;
 
 /* Procedure structure for procedure `determine_docu_type` */
@@ -2529,6 +2700,44 @@ BEGIN
 END */$$
 DELIMITER ;
 
+/* Procedure structure for procedure `SearchUsers` */
+
+/*!50003 DROP PROCEDURE IF EXISTS  `SearchUsers` */;
+
+DELIMITER $$
+
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `SearchUsers`(IN search varchar(55), in start_from int, in is_deleted int)
+BEGIN
+    SELECT
+        tu.user_id AS user_id,
+        tu.img_filename AS img_filename,
+        tu.fname AS fname,
+        tu.mname AS mname,
+        tu.lname AS lname,
+        tu.suffix AS suffix,
+        tu.depart_no AS depart_no,
+        tu.isactive AS isactive,
+        un.username AS username,
+        aut.created_dt AS created_dt,
+        aut.last_login AS last_login,
+        tu.isdeleted AS is_deleted
+    FROM tbl_users tu
+        JOIN tbl_username un ON tu.username_no = un.username_id
+        JOIN tbl_users_audit_trail aut ON aut.user_at_id = tu.user_at_no
+    WHERE tu.isdeleted = is_deleted
+        AND (
+            tu.fname LIKE CONCAT('%', search, '%')
+            OR tu.lname LIKE CONCAT('%', search, '%')
+            OR tu.mname LIKE CONCAT('%', search, '%')
+            OR un.username LIKE CONCAT('%', search, '%')
+        )
+    ORDER BY aut.created_dt DESC
+    LIMIT start_from, 10;
+     
+
+	END */$$
+DELIMITER ;
+
 /*Table structure for table `vw_all_brgy_clearance` */
 
 DROP TABLE IF EXISTS `vw_all_brgy_clearance`;
@@ -3175,6 +3384,29 @@ DROP TABLE IF EXISTS `vw_select_resident`;
  `is_a_voter` tinyint(2) 
 )*/;
 
+/*Table structure for table `vw_users` */
+
+DROP TABLE IF EXISTS `vw_users`;
+
+/*!50001 DROP VIEW IF EXISTS `vw_users` */;
+/*!50001 DROP TABLE IF EXISTS `vw_users` */;
+
+/*!50001 CREATE TABLE  `vw_users`(
+ `user_id` int(11) ,
+ `img_filename` varchar(255) ,
+ `fname` varchar(55) ,
+ `mname` varchar(55) ,
+ `lname` varchar(55) ,
+ `suffix` varchar(55) ,
+ `depart_no` int(55) ,
+ `isactive` tinyint(11) ,
+ `username` varchar(255) ,
+ `created_dt` datetime ,
+ `last_login` datetime ,
+ `is_deleted` tinyint(11) ,
+ `created_by` varchar(255) 
+)*/;
+
 /*View structure for view vw_all_brgy_clearance */
 
 /*!50001 DROP TABLE IF EXISTS `vw_all_brgy_clearance` */;
@@ -3335,6 +3567,13 @@ DROP TABLE IF EXISTS `vw_select_resident`;
 /*!50001 DROP VIEW IF EXISTS `vw_select_resident` */;
 
 /*!50001 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vw_select_resident` AS (select `resident`.`resident_id` AS `resident_id`,`resident`.`img_filename` AS `img_filename`,concat(`resident`.`last_name`,', ',`resident`.`first_name`,' ',`resident`.`middle_name`,' ',`resident`.`suffix`) AS `full_name`,concat(`resident`.`house_num`,' ',`resident`.`street`,' ',`resident`.`subdivision`,' Camarin Caloocan City') AS `address`,`resident`.`sex` AS `sex`,`resident`.`marital_status` AS `marital_status`,`resident`.`birth_date` AS `birth_date`,`resident`.`cellphone_num` AS `cellphone_num`,`resident`.`is_a_voter` AS `is_a_voter` from `resident` where (`resident`.`is_deleted` = 0)) */;
+
+/*View structure for view vw_users */
+
+/*!50001 DROP TABLE IF EXISTS `vw_users` */;
+/*!50001 DROP VIEW IF EXISTS `vw_users` */;
+
+/*!50001 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vw_users` AS (select `tu`.`user_id` AS `user_id`,`tu`.`img_filename` AS `img_filename`,`tu`.`fname` AS `fname`,`tu`.`mname` AS `mname`,`tu`.`lname` AS `lname`,`tu`.`suffix` AS `suffix`,`tu`.`depart_no` AS `depart_no`,`tu`.`isactive` AS `isactive`,`un`.`username` AS `username`,`aut`.`created_dt` AS `created_dt`,`aut`.`last_login` AS `last_login`,`tu`.`isdeleted` AS `is_deleted`,`un_created`.`username` AS `created_by` from (((`tbl_users` `tu` join `tbl_username` `un` on((`tu`.`username_no` = `un`.`username_id`))) join `tbl_users_audit_trail` `aut` on((`aut`.`user_at_id` = `tu`.`user_at_no`))) join `tbl_username` `un_created` on((`aut`.`created_by` = `un_created`.`username_id`)))) */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

@@ -22,44 +22,57 @@
                     <a id="dashboard_btn" href="index.php"><span class="icon home"
                             aria-hidden="true"></span>Dashboard</a>
                 </li>
-                <li>
-                    <a id="certificates_btn" href="certificates.php">
-                        <span class="icon document" aria-hidden="true"></span>Certificates
-                    </a>
-                    <button class="category__btn transparent-btn show-cat-btn" title="Open list">
-                        <span class="sr-only">Open list</span>
-                        <span class="icon arrow-down" aria-hidden="true"></span>
-                    </button>
-                    <ul class="cat-sub-menu">
-                        <li>
-                            <a href="create-certificate-of-residency.php">Residency</a>
-                        </li>
-                        <li>
-                            <a href="create-certificate-of-indigency.php">Indigency</a>
-                        </li>
-                        <li>
-                            <a href="create-certificate-of-good-moral.php">Good Moral</a>
-                        </li>
-                        <li>
-                            <a href="create-certificate-of-FTJS.php">First-Time-Job-Seeker</a>
-                        </li>
-                        <li>
-                            <a href="create-business-permits.php">Business Permits</a>
-                        </li>
-                        <li>
-                            <a href="create-building-permits.php">Building Permits</a>
-                        </li>
-                        <li>
-                            <a href="create-excavation-permits.php">Excavation Permits</a>
-                        </li>
-                        <li>
-                            <a href="create-fencing-permits.php">Fencing Permits</a>
-                        </li>
-                        <li>
-                            <a href="create-tprs.php">TPRS</a>
-                        </li>
-                    </ul>
-                </li>
+                <?php
+                if($dept === "Admin" || $dept === "Secretariant" || $dept === "Clearance"){echo'
+                    <li>
+                        <a id="certificates_btn" href="certificates.php">
+                            <span class="icon document" aria-hidden="true"></span>Certificates
+                        </a>
+                        <button class="category__btn transparent-btn show-cat-btn" title="Open list">
+                            <span class="sr-only">Open list</span>
+                            <span class="icon arrow-down" aria-hidden="true"></span>
+                        </button>
+                        <ul class="cat-sub-menu">';
+        
+                            if($dept === "Admin" || $dept === "Secretariant"){
+                                echo '
+                                <li>
+                                    <a href="create-certificate-of-residency.php">Residency</a>
+                                </li>
+                                <li>
+                                    <a href="create-certificate-of-indigency.php">Indigency</a>
+                                </li>
+                                <li>
+                                    <a href="create-certificate-of-good-moral.php">Good Moral</a>
+                                </li>
+                                <li>
+                                    <a href="create-certificate-of-FTJS.php">First-Time-Job-Seeker</a>
+                                </li>';
+                            }
+
+                            if($dept === "Admin" || $dept === "Clearance"){
+                                echo'
+                                <li>
+                                    <a href="create-business-permits.php">Business Permits</a>
+                                </li>
+                                <li>
+                                    <a href="create-building-permits.php">Building Permits</a>
+                                </li>
+                                <li>
+                                    <a href="create-excavation-permits.php">Excavation Permits</a>
+                                </li>
+                                <li>
+                                    <a href="create-fencing-permits.php">Fencing Permits</a>
+                                </li>
+                                <li>
+                                    <a href="create-tprs.php">TPRS</a>
+                                </li>';
+                            }
+
+                            
+                        echo '</ul>
+                    </li>';
+                }?>
 
                 <li>
                     <a id="resident_btn" href="residents.php"><span class="icon home"
@@ -71,11 +84,17 @@
                             aria-hidden="true"></span>Non-Residents</a>
 
                 </li>
-                <li>
-                    <a id="blotter_btn" href="blotters.php"><span class="icon edit"
-                            aria-hidden="true"></span>Blotters</a>
+                <?php
+                    if($dept === "Lupon" || $dept === "Admin"){
+                        echo '
+                        <li>
+                            <a id="blotter_btn" href="blotters.php"><span class="icon edit"
+                                    aria-hidden="true"></span>Blotters</a>
 
-                </li>
+                        </li>';
+                    }
+                
+                ?>
                 <!-- <li>
                     <a href="brgyofficials.php"><span class="icon user-3" aria-hidden="true"></span>Brgy Offcials</a>
                    

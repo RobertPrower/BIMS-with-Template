@@ -10,22 +10,15 @@ function is_input_empty(string $username,string $password){
     }
 }
 
-function is_username_wrong(bool|array $result){
+function is_username_wrong(array|false $result){
     
-    if (!$result) {
-        return true;
-    }else{
-        return false;
-    }
+    return $result === false;
 
 }
 
 function is_password_wrong(string $pwd, string $hashedPwd){
     
-    if (!password_verify($pwd, $hashedPwd)) {
-        return true;
-    }else{
-        return false;
-    }
+    return !password_verify($pwd, $hashedPwd);
+  
 
 }

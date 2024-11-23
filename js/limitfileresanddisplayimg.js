@@ -44,11 +44,11 @@ $('#imagefile, #editimagefile').on('change', function() {
     reader.onload = function(e) {
         var img = new Image();
         img.onload = function() {
-            if(img.width > 200 || img.height > 200) {
+            if(img.width > 500 || img.height > 500) {
                 swal({
                     icon: "error",
                     title: "Oops... Image Size is too large",
-                    text: "Please upload an image with dimensions not exceeding 200x200 pixels.",
+                    text: "Please upload an image with dimensions not exceeding 500x500 pixels.",
                 });
                  if(isEdit){
                     $('#editimagePreview').attr('src', oldImageSrc);

@@ -613,8 +613,73 @@ $(document).ready(function () {
             $("#noofcerts").text(response);
           },
         });
+
+        $.ajax({
+          type: "post",
+          url: "includes/residentoperation.php",
+          data: { operation: "CHECK_HIT", resident_id: resident_id },
+          dataType: "json",
+          success: function (response) {
+            console.log(response);
+
+            if(response.success == "clear"){
+              $("#with_hit").text("None");
+              $("#blotter_badge").removeClass("text-bg-danger");
+              $("#blotter_badge").removeClass("text-bg-success");
+              $("#blotter_badge").addClass("text-bg-success");
+
+            }else if(response.success == "hit"){
+              $("#with_hit").text("With Hit");
+              $("#blotter_badge").removeClass("text-bg-danger") 
+              $("#blotter_badge").removeClass("text-bg-success");
+              $("#blotter_badge").addClass("text-bg-danger");
+
+            }else{
+              alert("Server replys failed ")
+            }
+          }, error: function (xhr, status, error) {
+            console.error("Error fetching data:", error);
+          },
+        });
       }
     }
   );
+
+  $(document).on("click", " .editResidentButton, .viewResidentButton", function () {
+    var residentId = $(this).data("id");
+    var clickedButton = $(this);
+    $.ajax({
+      url: "includes/modaloperation.php",
+      type: "POST",
+      data: { operation: "FETCH_IMG",resident_id: residentId },
+      dataType: "json",
+      success: function (response) {
+        // Variables to collect the response of the server
+        var imageFilename = response.imageData;
+        var match = imageFilename.match("capture");
+        var correctimagepath = "includes/img/resident_img/" + imageFilename;
+        
+        var isEdit = clickedButton.hasClass("editResidentButton");
+        console.log(isEdit);
+
+        if(isEdit){
+          // Display image
+          $("#editimagePreview").attr("src", correctimagepath);
+          console.log("Edit picture has been load");
+          console.log(correctimagepath);
+
+        }else{
+          // Display image
+          $("#viewimagePreview").attr("src", correctimagepath);
+          console.log("View image has been loaded");
+        }
+
+        
+      },
+      error: function (xhr, status, error) {
+        console.error("Error fetching metadata:", error);
+      },
+    });
+  });
 
 });

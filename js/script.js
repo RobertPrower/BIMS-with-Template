@@ -259,23 +259,21 @@ $(document).ready(function () {
       });
     
   });
-
-  const SESSION_TIMEOUT = 120; // 2 minutes in seconds
-  const WARNING_TIME = 10;     // Show warning 10 seconds before logout
+/*
+  const SESSION_TIMEOUT = 300; 
+  const WARNING_TIME = 20;    
 
   let warningShown = false;
   let timer;
 
-  // Get the initial timestamp to calculate remaining time
   let sessionEndTime = Date.now() + (SESSION_TIMEOUT * 1000);
 
-  // Function to show session expiry warning
   function showSessionExpiryWarning() {
     warningShown = true;
     let warningEndTime = Date.now() + (WARNING_TIME * 1000);
 
     Swal.fire({
-      title: "You are about to be logged out!",
+      title: "You are about to be logged out due to inactivity!",
       html: "You will be logged out in <b></b> seconds.",
       timer: WARNING_TIME * 1000,
       timerProgressBar: true,
@@ -299,12 +297,10 @@ $(document).ready(function () {
     });
   }
 
-  // Function to log the user out
   function logoutUser() {
     window.location.href = "includes/logout.php";
   }
 
-  // Resets the session timer on user activity
   function resetTimer() {
     sessionEndTime = Date.now() + (SESSION_TIMEOUT * 1000);
 
@@ -314,7 +310,6 @@ $(document).ready(function () {
     }
   }
 
-  // Start the countdown timer
   function startTimer() {
     timer = setInterval(() => {
       let timeRemaining = Math.round((sessionEndTime - Date.now()) / 1000);
@@ -328,21 +323,18 @@ $(document).ready(function () {
     }, 1000);
   }
 
-  // Detects user activity with jQuery and resets the timer
   function detectActivity() {
     $(window).on("mousemove keypress click scroll", function() {
       resetTimer();
     });
   }
 
-  // Initialize the session timeout functionality
   function initSessionTimeout() {
     startTimer();
     detectActivity();
   }
 
-  // Start session monitoring on page load
   $(document).ready(function() {
     initSessionTimeout();
-  });
+  });*/
 });
