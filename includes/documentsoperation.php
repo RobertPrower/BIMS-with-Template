@@ -14,6 +14,9 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
     $page = isset($_POST['page']) ? $_POST['page'] : '1';
     $start_from = ($page - 1) * $limit;
 
+    $user_id=$_SESSION['user_id'];
+    $depart_no = $_SESSION['depart_no'];
+
     if($operation_check =="REVOKE"){
         if(isset($request_Id)){
             $sqlquery = "UPDATE tbl_docu_request SET `status`=? WHERE request_id=?";
@@ -52,10 +55,10 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
             $id_number = $_POST['id_num'];
 
             $sqlquery = "UPDATE tbl_cert_audit_trail
-            SET expiration = ?, datetime_edited = ?
+            SET expiration = ?, datetime_edited = ?, `edited_by_no`=?, `edited_depart_no`=?	
             WHERE audit_trail_id IN (SELECT audit_trail_no FROM tbl_docu_request WHERE request_id=?)";
             $stmt = $pdo->prepare($sqlquery);
-            $stmt->execute([$expiration, $nowdate, $request_Id]);
+            $stmt->execute([$expiration, $nowdate, $user_id, $depart_no, $request_Id]);
 
 
             $sqlquery2 = "UPDATE tbl_docu_request SET `presented_id`=?, id_number=? WHERE request_id=?";

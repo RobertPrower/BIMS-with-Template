@@ -55,8 +55,8 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
 
     $operation_check=$_POST['operation']; //Catches What operation to perform
     $nowdate = date("y-m-d H:i:s"); //Checks the current date
-    $userid=null; // For the user currently using the system
-    $departno= null; // For the users depart currently using
+    $userid=$_SESSION["user_id"]; // For the user currently using the system
+    $departno=$_SESSION["depart_no"]; // For the users depart currently using
 
     // Retrieve data sent via POST for add and edit
     $fname = (isset($_POST['fname'])) ? sanitizeData($_POST['fname']): null;

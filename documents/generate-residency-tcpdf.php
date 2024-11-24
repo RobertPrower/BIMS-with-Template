@@ -7,6 +7,8 @@ if($_SERVER['REQUEST_METHOD']!=="POST"){
 
 require_once('tcpdf/tcpdf.php');
 include_once('../includes/connecttodb.php');
+require_once '../includes/config.php';
+require_once '../includes/enforce_login.php';
 require_once('../includes/anti-SQLInject.php');
 require_once('includes/tagalogmonth.php');
 
@@ -17,8 +19,8 @@ $nowdate = date("Y-m-d H:i:s"); // Current date
 
 $nowdate= date("Y-m-d H:i:s"); //Get the date now
 $nowtime = time(); //Get the time now
-$username = null;
-$issuingdeptno = null;
+$user_id = $_SESSION['user_id'];
+$issuingdeptno = $_SESSION['depart_no'];
 
 // Define directory for saving the PDF
 $directory = "certificate_of_residency/";
@@ -79,10 +81,10 @@ try{
     $docudetailstmt->closeCursor();
 
     // Insert into tbl_cert_audit_trail
-    $auditTrailQuery = "INSERT INTO tbl_cert_audit_trail(issuing_dept_no, datetime_issued, expiration)
-                        VALUES (?, ?, DATE_ADD(CURDATE(), INTERVAL 3 MONTH))";
+    $auditTrailQuery = "INSERT INTO tbl_cert_audit_trail(issuing_dept_no,issued_by_no, datetime_issued, expiration)
+                        VALUES (?, ?, CURRENT_TIMESTAMP , DATE_ADD(CURDATE(), INTERVAL 3 MONTH))";
     $auditTrailStmt = $pdo->prepare($auditTrailQuery);
-    $auditTrailStmt->execute([$issuingdeptno, $nowdate]);
+    $auditTrailStmt->execute([$issuingdeptno, $user_id]);
 
     // Insert into tbl_docu_request
     $docuRequestQuery = "INSERT INTO tbl_docu_request (resident_no ,presented_id, ID_number, purpose, pdffile)

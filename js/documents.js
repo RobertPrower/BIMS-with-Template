@@ -663,7 +663,7 @@ $(document).ready(function () {
           $.ajax({
             type: "post",
             url: "includes/residentoperation.php",
-            data: { operation: "CHECK_HIT", resident_id: resident_id },
+            data: { operation: "CHECK_HIT", resident_id: response.resident_id },
             dataType: "json",
             success: function (response) {
               console.log(response);
@@ -745,11 +745,41 @@ $(document).ready(function () {
               $("#ViewNonResidentModal [id='noofcerts']").text(response[0]);
             },
           });
+
+          $.ajax({
+            type: "post",
+            url: "includes/nonresidentoperation.php",
+            data: { operation: "CHECK_HIT", nresident_id: response.nresident_id },
+            dataType: "json",
+            success: function (response) {
+              console.log(response);
+    
+              if(response.success == "clear"){
+                $("#ViewNonResidentModal #with_hit").text("None");
+                $("#ViewNonResidentModal #blotter_badge").removeClass("text-bg-danger");
+                $("#ViewNonResidentModal #blotter_badge").removeClass("text-bg-success");
+                $("#ViewNonResidentModal #blotter_badge").addClass("text-bg-success");
+    
+              }else if(response.success == "hit"){
+                $("#ViewNonResidentModal #with_hit").text("With Hit");
+                $("#ViewNonResidentModal #blotter_badge").removeClass("text-bg-danger") 
+                $("#ViewNonResidentModal #blotter_badge").removeClass("text-bg-success");
+                $("#ViewNonResidentModal #blotter_badge").addClass("text-bg-danger");
+    
+              }else{
+                alert("Server replys failed ")
+              }
+            }, error: function (xhr, status, error) {
+              console.error("Error fetching data:", error);
+            },
+          });
         },
         error: function (xhr, status, error) {
           console.error("Error fetching table data:", error);
         },
-      });
+       });
+
+     
     }
   });
 

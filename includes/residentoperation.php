@@ -155,11 +155,11 @@ if($operation_check == "ADD"){ //For the add operation
  
     if(isset($_FILES['image_file']) && $_FILES['image_file']['error'] === UPLOAD_ERR_OK){
 
-        try{
-            checkForDuplicateFiles($pdo, $residentId, "img/resident_img/");
-        }catch(Exception $error){
-            $response = ["success" => false, "message" => "Error checking duplicate images: ".$error->getMessage()];
-        }
+        // try{
+        //     checkForDuplicateFiles($pdo, $residentId, "img/resident_img/");
+        // }catch(Exception $error){
+        //     $response = ["success" => false, "message" => "Error checking duplicate images: ".$error->getMessage()];
+        // }
 
         if($isEmpty === false){
             echo json_encode(["success" => false, "message" => "Some fields are empty"]);
@@ -179,11 +179,11 @@ if($operation_check == "ADD"){ //For the add operation
 
     }elseif(isset($_POST['isfromcamcheck'])){ //Incase the image comes from the camera
 
-        try{
-            checkForDuplicateFiles($pdo, $residentId, "img/resident_img/");
-        }catch(Exception $error){
-            $response = ["success" => false, "message" => "Error checking duplicate images: ".$error->getMessage()];
-        }
+        // try{
+        //     checkForDuplicateFiles($pdo, $residentId, "img/resident_img/");
+        // }catch(Exception $error){
+        //     $response = ["success" => false, "message" => "Error checking duplicate images: ".$error->getMessage()];
+        // }
 
         try{
             $fileName = captureImageUpload("isfromcamcheck", "img/resident_img/");

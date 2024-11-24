@@ -210,7 +210,7 @@
 <!-- Icons library -->
 <script src="plugins/feather.min.js"></script>
 <!-- Custom scripts -->
-<script src="js/sweetalert2.all.min.js"></script></head>
+<script src="js/sweetalert2.min.js"></script></head>
 <script src="js/create-document.js"></script>
 <script src="js/script.js"></script>
 <script src="js/sidebar.js"></script>
