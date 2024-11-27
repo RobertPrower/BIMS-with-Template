@@ -76,96 +76,60 @@ $(document).ready(function () {
 
     $(document).on("click",".viewResidentButton",function (event) {
         event.preventDefault();
+
+        var residentid = $(this).data("id");
   
-        // Get common data attributes
-        var resident_id = $(this).data("id");
-        var first_name = $(this).data("first-name");
-        var middle_name = $(this).data("middle-name");
-        var last_name = $(this).data("last-name");
-        var suffix = $(this).data("suffix");
-        var house_no = $(this).data("house-no");
-        var street_name = $(this).data("street-name");
-        var subdivision = $(this).data("subdivision");
-        var sex = $(this).data("sex");
-        var marital_status = $(this).data("marital-status");
-        var birth_date = $(this).data("birth-date");
-        var birthplace = $(this).data("birth-place");
-        var phone_number = $(this).data("phone-number");
-        var is_a_voter = $(this).data("isa-voter");
-        var resident_since = $(this).data("rsince");
-  
-        // Modal ID based on the button clicked (Edit or View)
-        var modalId = isEdit ? "#EditResidentModal" : "#ViewResidentModal";
-  
-        // Populate the common fields in the modal
-        $(modalId + ' input[name="resident_id"]').val(resident_id);
-        $(modalId + ' input[name="fname"]').val(first_name);
-        $(modalId + ' input[name="mname"]').val(middle_name);
-        $(modalId + ' input[name="lname"]').val(last_name);
-        $(modalId + ' input[name="suffix"]').val(suffix);
-        $(modalId + ' input[name="house_no"]').val(house_no);
-        $(modalId + ' input[name="street"]').val(street_name);
-        $(modalId + ' select[name="subd"]').val(subdivision);
-        $(modalId + ' select[name="sex"]').val(sex);
-        $(modalId + ' select[name="marital_status"]').val(marital_status);
-        $(modalId + ' input[name="birth_date"]').val(birth_date);
-        $(modalId + ' input[name="birth_place"]').val(birthplace);
-        $(modalId + ' input[name="cellphone_number"]').val(phone_number);
-        $(modalId + ' select[name="is_a_voter"]').val(is_a_voter);
-        $(modalId + ' input[name="rsince"]').val(resident_since);
-  
-        // Specific logic for editing
-        if (isEdit) {
-          var page = $(this).data("pageno");
-          $(modalId + ' input[name="pageno"]').val(page);
-          $(modalId).modal("show"); // Show the Edit modal
-  
-          // Specific logic for viewing
-        } else {
-          // Make the profile tab the default tab when the view button is clicked
-          $("#nav-home-tab").tab("show");
-          $(modalId).modal("show"); // Show the View modal
-          //For counting certificates requested
-          $.ajax({
-            type: "post",
-            url: "includes/residentoperation.php",
-            data: { operation: "COUNT_RES_CERT", resident_id: resident_id },
-            dataType: "json",
-            success: function (response) {
-              console.log(response);
-  
-              $("#noofcerts").text(response);
+        $.ajax({
+            url: "includes/audittrailoperation.php",
+            type: "POST",
+            data: { resident_id: residentid, operation: "FETCH_RESIDENT_DETAILS" },
+            dataType: "JSON",
+            success: function (data) {
+              var response = data[0];
+              var imagepath = "includes/img/resident_img/" + response.img_filename;
+    
+                if(response.is_deleted == 1){
+
+                    deleted_stat = "DELETED";
+                    $("#delete_badge").removeClass("text-bg-danger");
+                    $("#delete_badge").removeClass("text-bg-success");
+                    $("#delete_badge").addClass("text-bg-danger");
+
+                }else{
+                    deleted_stat = "ACTIVE";
+                    $("#delete_badge").removeClass("text-bg-danger") 
+                    $("#delete_badge").removeClass("text-bg-success");
+                    $("#delete_badge").addClass("text-bg-success");
+
+                }
+
+
+              $("#viewresident_id").val(response.resident_id);
+              $("#fname").val(response.first_name);
+              $("#mname").val(response.middle_name);
+              $("#lname").val(response.last_name);
+              $("#house_no").val(response.house_num);
+              $("#street").val(response.street);
+              $("#subd").val(response.subdivision);
+              $("#sex").val(response.sex);
+              $("#marital_status").val(response.marital_status);
+              $("#birth_date").val(response.birth_date);
+              $("#birth_place").val(response.birth_place);
+              $("#cp_number").val(response.cellphone_num);
+              $("#is_a_voter").val(response.is_a_voter);
+              $("#resident_since").val(response.resident_since);
+              $("#delete_status").text(deleted_stat);
+              $("#imagePreview").prop("src", imagepath);
+
+
+    
             },
-          });
-  
-          $.ajax({
-            type: "post",
-            url: "includes/residentoperation.php",
-            data: { operation: "CHECK_HIT", resident_id: resident_id },
-            dataType: "json",
-            success: function (response) {
-              console.log(response);
-  
-              if(response.success == "clear"){
-                $("#with_hit").text("None");
-                $("#blotter_badge").removeClass("text-bg-danger");
-                $("#blotter_badge").removeClass("text-bg-success");
-                $("#blotter_badge").addClass("text-bg-success");
-  
-              }else if(response.success == "hit"){
-                $("#with_hit").text("With Hit");
-                $("#blotter_badge").removeClass("text-bg-danger") 
-                $("#blotter_badge").removeClass("text-bg-success");
-                $("#blotter_badge").addClass("text-bg-danger");
-  
-              }else{
-                alert("Server replys failed ")
-              }
-            }, error: function (xhr, status, error) {
-              console.error("Error fetching data:", error);
+            error: function (xhr, status, error) {
+              console.error("Error fetching table data:", error);
             },
-          });
-        }
+        });
+         
+        
       }
     );
 

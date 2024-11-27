@@ -178,6 +178,54 @@ $(document).ready(function () {
     }
   }
 
+  function count_res_cert(resident_id){
+    
+    //For counting certificates requested
+    $.ajax({
+      type: "post",
+      url: "includes/residentoperation.php",
+      data: { operation: "COUNT_RES_CERT", resident_id: resident_id },
+      dataType: "json",
+      success: function (response) {
+        console.log(response);
+
+        $("#noofcerts").text(response);
+      },
+    });
+  }
+
+  function check_hit(resident_id){
+
+    $.ajax({
+      type: "post",
+      url: "includes/residentoperation.php",
+      data: { operation: "CHECK_HIT", resident_id: resident_id },
+      dataType: "json",
+      success: function (response) {
+        console.log(response);
+
+        if(response.success == "clear"){
+          $("#with_hit").text("None");
+          $("#blotter_badge").removeClass("text-bg-danger");
+          $("#blotter_badge").removeClass("text-bg-success");
+          $("#blotter_badge").addClass("text-bg-success");
+
+        }else if(response.success == "hit"){
+          $("#with_hit").text("With Hit");
+          $("#blotter_badge").removeClass("text-bg-danger") 
+          $("#blotter_badge").removeClass("text-bg-success");
+          $("#blotter_badge").addClass("text-bg-danger");
+
+        }else{
+          alert("Server replys failed ")
+        }
+      }, error: function (xhr, status, error) {
+        console.error("Error fetching data:", error);
+      },
+    });
+
+  }
+
   //For the search box
   $("#searchbox").on("keyup", function () {
     let query = $(this).val();
@@ -299,18 +347,8 @@ $(document).ready(function () {
                   $('#ViewResidentModal select[name="is_a_voter"]').val(response.data.is_a_voter);
                   $('#ViewResidentModal input[name="rsince"]').val(response.data.resident_since);
 
-                    //For counting certificates requested
-                  $.ajax({
-                    type: "post",
-                    url: "includes/residentoperation.php",
-                    data: { operation: "COUNT_RES_CERT", resident_id: response.data.resident_id },
-                    dataType: "json",
-                    success: function (response) {
-                      console.log(response);
-
-                      $("#noofcerts").text(response);
-                    },
-                  });
+                  count_res_cert(response.data.residentId);
+                  check_hit(response.data.residentId);
                   
                 }
             });
@@ -414,11 +452,20 @@ $(document).ready(function () {
           dataType: "json",
           success: function (response) {
             console.log("Data deleted successfully:", response);
-            Swal.fire({
-              title: "Success",
-              text: "Resident is deleted.",
-              icon: "success"
-            });
+            if(response.success == true){
+                Swal.fire({
+                title: "Success",
+                text: "Resident is deleted.",
+                icon: "success"
+                });
+            }else{
+              Swal.fire({
+                title: "Resident Not Deleted.",
+                text: "Server Replys Failed",
+                icon: "error"
+              });
+
+            }
             //If the modal was fired from a search make sure still the same page
             if (currentSearch) {
               fetchResults(currentSearch, page);
@@ -602,45 +649,8 @@ $(document).ready(function () {
         $("#nav-home-tab").tab("show");
         $(modalId).modal("show"); // Show the View modal
         //For counting certificates requested
-        $.ajax({
-          type: "post",
-          url: "includes/residentoperation.php",
-          data: { operation: "COUNT_RES_CERT", resident_id: resident_id },
-          dataType: "json",
-          success: function (response) {
-            console.log(response);
-
-            $("#noofcerts").text(response);
-          },
-        });
-
-        $.ajax({
-          type: "post",
-          url: "includes/residentoperation.php",
-          data: { operation: "CHECK_HIT", resident_id: resident_id },
-          dataType: "json",
-          success: function (response) {
-            console.log(response);
-
-            if(response.success == "clear"){
-              $("#with_hit").text("None");
-              $("#blotter_badge").removeClass("text-bg-danger");
-              $("#blotter_badge").removeClass("text-bg-success");
-              $("#blotter_badge").addClass("text-bg-success");
-
-            }else if(response.success == "hit"){
-              $("#with_hit").text("With Hit");
-              $("#blotter_badge").removeClass("text-bg-danger") 
-              $("#blotter_badge").removeClass("text-bg-success");
-              $("#blotter_badge").addClass("text-bg-danger");
-
-            }else{
-              alert("Server replys failed ")
-            }
-          }, error: function (xhr, status, error) {
-            console.error("Error fetching data:", error);
-          },
-        });
+        count_res_cert(resident_id)
+        check_hit(resident_id)
       }
     }
   );

@@ -165,6 +165,51 @@ $(document).ready(function () {
     }
   }
 
+  function count_nonres_cert(nresident_id){
+      $.ajax({
+        type: "post",
+        url: "includes/nonresidentoperation.php",
+        data: { operation: "COUNT_RES_CERT", nresident_id: nresident_id },
+        dataType: "json",
+        success: function (response) {
+          console.log(response);
+
+          $("#noofcerts").text(response);
+        },
+      });
+  }
+
+  function check_hit(nresident_id){
+    $.ajax({
+      type: "post",
+      url: "includes/nonresidentoperation.php",
+      data: { operation: "CHECK_HIT", nresident_id: nresident_id },
+      dataType: "json",
+      success: function (response) {
+        console.log(response);
+
+        if(response.success == "clear"){
+          $("#with_hit").text("None");
+          $("#blotter_badge").removeClass("text-bg-danger");
+          $("#blotter_badge").removeClass("text-bg-success");
+          $("#blotter_badge").addClass("text-bg-success");
+
+        }else if(response.success == "hit"){
+          $("#with_hit").text("With Hit");
+          $("#blotter_badge").removeClass("text-bg-danger") 
+          $("#blotter_badge").removeClass("text-bg-success");
+          $("#blotter_badge").addClass("text-bg-danger");
+
+        }else{
+          alert("Server replys failed ")
+        }
+      }, error: function (xhr, status, error) {
+        console.error("Error fetching data:", error);
+      },
+    });
+
+  }
+
   //For the search box
   $('#searchbox').on("keyup", function(){
     let query = $(this).val();
@@ -242,76 +287,80 @@ $(document).ready(function () {
 
             if (response.success === true) {
                 $("#AddNonResidentModal").modal("hide");
-                swal({
+                Swal.fire({
                     title: "Add Entry",
                     text: "Entry Added Successfully!",
                     icon: "success",
                     button: "Close",
                 });
                 reloadTable(page);
-            }else if(response.success === false) {
+            }else if(response.success === "entry_match") {
 
                 $("#AddNonResidentModal").modal("hide");
-                swal("Duplicated Entry Detected", {
-                    icon: "warning",
-                    buttons: {
-                        close: "Close",
-                        view: {
-                            text: "View Details",
-                            value: "view",
-                        },
-                    },
-                }).then((value) => {
-                  console.log(value);
-                      console.log(response.data.nresident_id)
-                      if (response.success == false) {
-                        $("#ViewNonResidentModal").modal("show");
 
-                        var correctimagepath = "includes/img/non_resident_img/" + response.data.img_filename 
+                Swal.fire({
+                  title: "Duplicate entry detected.",
+                  text: "Do you want to view the duplicate record?",
+                  icon: "warning",
+                  showCancelButton: true,
+                  confirmButtonColor: "#3085d6",
+                  cancelButtonColor: "#d33",
+                  confirmButtonText: "Yes"
+                }).then((result) => {
+                  if (result.isConfirmed) {
+                    console.log(response.data.nresident_id)
+                      $("#ViewNonResidentModal").modal("show");
 
-                        $("#viewimagePreview").attr("src", correctimagepath);
-                        console.log("Existing Record View Pic has been loaded");
-                        console.log(correctimagepath);
+                      var correctimagepath = "includes/img/non_resident_img/" + response.data.img_filename 
 
-                        $('#nav-home-tab').tab('show');
+                      $("#viewimagePreview").attr("src", correctimagepath);
+                      console.log("Existing Record View Pic has been loaded");
+                      console.log(correctimagepath);
 
-                        // Populate the fields in the modal
-                        $('#ViewNonResidentModal input[name="nresident_id"]').val(response.data.nresident_id);
-                        $('#ViewNonResidentModal input[name="fname"]').val(response.data.first_name);
-                        $('#ViewNonResidentModal input[name="mname"]').val(response.data.middle_name);
-                        $('#ViewNonResidentModal input[name="lname"]').val(response.data.last_name);
-                        $('#ViewNonResidentModal input[name="suffix"]').val(response.data.suffix);
-                        $('#ViewNonResidentModal input[name="house_no"]').val(response.data.house_num);
-                        $('#ViewNonResidentModal input[name="street"]').val(response.data.street);
-                        $('#ViewNonResidentModal input[name="subd"]').val(response.data.subdivision);
-                        $('#ViewNonResidentModal input[name="district_brgy"]').val(response.data.district_brgy);
-                        $('#ViewNonResidentModal input[name="city"]').val(response.data.city);
-                        $('#ViewNonResidentModal input[name="province"]').val(response.data.province);
-                        $('#ViewNonResidentModal input[name="zipcode"]').val(response.data.zipcode);
-                        $('#ViewNonResidentModal select[name="sex"]').val(response.data.sex);
-                        $('#ViewNonResidentModal select[name="marital_status"]').val(response.data.marital_status);
-                        $('#ViewNonResidentModal input[name="birth_date"]').val(response.data.birth_date);
-                        $('#ViewNonResidentModal input[name="birth_place"]').val(response.data.birth_place);
-                        $('#ViewNonResidentModal input[name="cellphone_number"]').val(response.data.cellphone_num);
+                      $('#nav-home-tab').tab('show');
 
-                      } else {
-                        swal({
-                            icon: "error",
-                            title: "Oops...",
-                            text: "Something went wrong!",
-                        });
-                      }
-                  
+                      // Populate the fields in the modal
+                      $('#ViewNonResidentModal input[name="nresident_id"]').val(response.data.nresident_id);
+                      $('#ViewNonResidentModal input[name="fname"]').val(response.data.first_name);
+                      $('#ViewNonResidentModal input[name="mname"]').val(response.data.middle_name);
+                      $('#ViewNonResidentModal input[name="lname"]').val(response.data.last_name);
+                      $('#ViewNonResidentModal input[name="suffix"]').val(response.data.suffix);
+                      $('#ViewNonResidentModal input[name="house_no"]').val(response.data.house_num);
+                      $('#ViewNonResidentModal input[name="street"]').val(response.data.street);
+                      $('#ViewNonResidentModal input[name="subd"]').val(response.data.subdivision);
+                      $('#ViewNonResidentModal input[name="district_brgy"]').val(response.data.district_brgy);
+                      $('#ViewNonResidentModal input[name="city"]').val(response.data.city);
+                      $('#ViewNonResidentModal input[name="province"]').val(response.data.province);
+                      $('#ViewNonResidentModal input[name="zipcode"]').val(response.data.zipcode);
+                      $('#ViewNonResidentModal select[name="sex"]').val(response.data.sex);
+                      $('#ViewNonResidentModal select[name="marital_status"]').val(response.data.marital_status);
+                      $('#ViewNonResidentModal input[name="birth_date"]').val(response.data.birth_date);
+                      $('#ViewNonResidentModal input[name="birth_place"]').val(response.data.birth_place);
+                      $('#ViewNonResidentModal input[name="cellphone_number"]').val(response.data.cellphone_num);
+
+                      count_nonres_cert(response.data.nresident_id);
+                      check_hit(response.data.nresident_id);
+                      
+                  } else if (response.success == false){
+                    $("#AddNonResidentModal").modal("hide");
+                    console.log("Server error: "+response.message)
+                    Swal.fire({
+                      icon: "error",
+                      title: "Error",
+                      text: "Server Replys Failed! Error: "+ response.message,
+                    });
+                } 
                 });
+               
             } // End of if
         },
         error: function (xhr, status, error) {
             // Handle error response
             console.error("Error saving data:", error);
             $("#AddNonResidentModal").modal("hide");
-            swal({
+            Swal.fire({
                 icon: "error",
-                title: "Oops...",
+                title: "AJAX error",
                 text: "Something went wrong!",
             });
         },
@@ -326,14 +375,16 @@ $(document).ready(function () {
       var nresidentId = $(this).data("nresident_id");
       console.log(nresidentId);
       var page = $(this).data("page");
-      swal({
+      Swal.fire({
         title: "Are you sure?",
-        text: "The record will be recovered.",
+        text: "You are about to recover the entry.",
         icon: "warning",
-        buttons: ["Cancel", "Recovered"],
-        dangerMode: true,
-      }).then((willDelete) => {
-        if (willDelete) {
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes"
+      }).then((result) => {
+        if (result.isConfirmed) {
           $.ajax({
             url: "includes/nonresidentoperation.php",
             type: "POST",
@@ -342,21 +393,34 @@ $(document).ready(function () {
             success: function (response) {
               if(response.success == true){
                 console.log("Data recovered successfully:", response);
-                swal("Record Has Been Restored", { icon: "success" });
+                Swal.fire({
+                  title: "Record Recovered!",
+                  text: "Entry has been recovered successfully.",
+                  icon: "success"
+                });
                 reloadDeletedEntries(page);
               }else{
-                swal("Something went wrong!", { icon: "error" });
+                Swal.fire({
+                  title: "Server replies failed",
+                  text: response.message,
+                  icon: "error"
+                });              
               }
+
             },
             error: function (xhr, status, error) {
               console.error("Error deleting data:", error);
-              swal("Error!", "Failed to recovered the entry.", "error");
+              Swal.fire({
+                icon: "error",
+                title: "AJAX error",
+                text: "Something went wrong!",
+            });
             },
           });
-        } else {
-          swal("Entry not recovered!", { icon: "info" });
+        
         }
       });
+
     });
 
     $("#NonResidentTable").on("click", "#deletebutton", function (event) {
@@ -366,14 +430,17 @@ $(document).ready(function () {
       var nresidentId = $(this).data("nresident_id");
       console.log(nresidentId);
       var page = $(this).data("page");
-      swal({
+
+      Swal.fire({
         title: "Are you sure?",
-        text: "Once deleted, you will not be able to recover this entry!",
+        text: "You are about to delete an entry.",
         icon: "warning",
-        buttons: ["Cancel", "Delete"],
-        dangerMode: true,
-      }).then((willDelete) => {
-        if (willDelete) {
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!"
+      }).then((result) => {
+        if (result.isConfirmed) {
           $.ajax({
             url: "includes/nonresidentoperation.php",
             type: "POST",
@@ -381,21 +448,38 @@ $(document).ready(function () {
             dataType: "json",
             success: function (response) {
               console.log("Data deleted successfully:", response);
-              swal("Record Has Been Deleted", { icon: "success" });
-             //If the modal was fired from a search make sure still the same page
-              if(currentSearch){
-                fetchResults(currentSearch, page)
-              }else{ //If not just reload the page
-                reloadTable(page);
+
+              if(response.success){
+                  Swal.fire({
+                    title: "Deleted!",
+                    text: "Your file has been deleted.",
+                    icon: "success"
+                  });             
+                  
+                  //If the modal was fired from a search make sure still the same page
+                  if(currentSearch){
+                    fetchResults(currentSearch, page)
+                  }else{ //If not just reload the page
+                    reloadTable(page);
+                  }
+              }else{
+                  Swal.fire({
+                    title: "The record was not Deleted!",
+                    text: "Server replies failed",
+                    icon: "error"
+                  });
               }
             },
             error: function (xhr, status, error) {
               console.error("Error deleting data:", error);
-              swal("Error!", "Failed to delete the entry.", "error");
+              Swal.fire({
+                title: "AJAX error",
+                text: "The record was not deleted!",
+                icon: "error"
+              });            
             },
           });
-        } else {
-          swal("Entry not deleted!", { icon: "info" });
+          
         }
       });
     });
@@ -448,36 +532,34 @@ $(document).ready(function () {
             console.log("Data saved successfully:", response);
 
             if (response.success) {
-              $("#EditNonResidentModal").modal("hide");
-              swal({
-                title: "Edit Entry",
-                text: "Entry Edited Sucessfully!",
-                icon: "success",
-                button: "Close",
-              });
-              //If the modal was fired from a search make sure still the same page
-              if(currentSearch){
-                fetchResults(currentSearch, page)
-              }else{ //If not just reload the page
-                reloadTable(page);
-              }
+                $("#EditNonResidentModal").modal("hide");
+                Swal.fire({
+                  title: "Record has been edited.",
+                  text: "Your record has been edited!",
+                  icon: "success"
+                });
+                //If the modal was fired from a search make sure still the same page
+                if(currentSearch){
+                  fetchResults(currentSearch, page)
+                }else{ //If not just reload the page
+                  reloadTable(page);
+                }
             } else {
-              $("#EditNonResidentModal").modal("hide");
-              swal({
-                icon: "error",
-                title: "Oops...",
-                text: "Something went wrong!",
-              });
+                $("#EditNonResidentModal").modal("hide");
+                Swal.fire({
+                  icon: "error",
+                  title: "Server replies failed",
+                  text: response.message,
+                });
             } // END of if
           },
           error: function (xhr, status, error) {
-            // Handle error response
             console.error("Error saving data:", error);
-            // Optionally, display an error message to the user
+
             $("#EditNonResidentModal").modal("hide");
-            swal({
+            Swal.fire({
               icon: "error",
-              title: "Oops...",
+              title: "AJAX error",
               text: "Something went wrong!",
             });
           },
@@ -564,50 +646,13 @@ $(document).ready(function () {
 
     // Specific logic for viewing
     } else {
-        // Make the profile tab the default tab when the view button is clicked
-        $('#nav-home-tab').tab('show');
-        $(modalId).modal("show"); // Show the View modal
+      // Make the profile tab the default tab when the view button is clicked
+      $('#nav-home-tab').tab('show');
+      $(modalId).modal("show"); // Show the View modal
 
-        //For counting certificates requested
-        $.ajax({
-          type: "post",
-          url: "includes/nonresidentoperation.php",
-          data: { operation: "COUNT_RES_CERT", nresident_id: nresident_id },
-          dataType: "json",
-          success: function (response) {
-            console.log(response);
+      check_hit(nresident_id);
+      count_nonres_cert(nresident_id);
 
-            $("#noofcerts").text(response);
-          },
-        });
-
-        $.ajax({
-          type: "post",
-          url: "includes/nonresidentoperation.php",
-          data: { operation: "CHECK_HIT", nresident_id: nresident_id },
-          dataType: "json",
-          success: function (response) {
-            console.log(response);
-
-            if(response.success == "clear"){
-              $("#with_hit").text("None");
-              $("#blotter_badge").removeClass("text-bg-danger");
-              $("#blotter_badge").removeClass("text-bg-success");
-              $("#blotter_badge").addClass("text-bg-success");
-
-            }else if(response.success == "hit"){
-              $("#with_hit").text("With Hit");
-              $("#blotter_badge").removeClass("text-bg-danger") 
-              $("#blotter_badge").removeClass("text-bg-success");
-              $("#blotter_badge").addClass("text-bg-danger");
-
-            }else{
-              alert("Server replys failed ")
-            }
-          }, error: function (xhr, status, error) {
-            console.error("Error fetching data:", error);
-          },
-        });
     }
 
     //To fetch the image from the database

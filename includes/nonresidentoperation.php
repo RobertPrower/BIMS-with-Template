@@ -236,22 +236,22 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
         }
 
         try {
-        $pdo->beginTransaction();
+            $pdo->beginTransaction();
 
-        // Prepare SQL statement for updating resident data
-        $statement = $pdo->prepare("UPDATE non_resident SET first_name = ?, middle_name = ?, last_name = ?,suffix = ?, house_num = ?, street = ?, subdivision = ?, district_brgy=?, city=?, province=?, zipcode=? ,sex = ?, marital_status = ?, birth_date = ?, birth_place = ?, cellphone_num = ? WHERE nresident_id = ?");
-        
-        // Bind parameters and execute the statement
-        $statement->execute([$fname, $mname, $lname, $suffix, $houseno, $street, $subd,$districtbrgy, $city, $province, $zipcode, $sex, $maritalstatus, $birthdate, $birthplace, $cellphonenumber, $nresidentId]);
-        
-        // Send success response
-        echo json_encode(["success" => true, "message" => "Data updated successfully". " ImageStatus: " . $imgopresponse]);
+            // Prepare SQL statement for updating resident data
+            $statement = $pdo->prepare("UPDATE non_resident SET first_name = ?, middle_name = ?, last_name = ?,suffix = ?, house_num = ?, street = ?, subdivision = ?, district_brgy=?, city=?, province=?, zipcode=? ,sex = ?, marital_status = ?, birth_date = ?, birth_place = ?, cellphone_num = ? WHERE nresident_id = ?");
+            
+            // Bind parameters and execute the statement
+            $statement->execute([$fname, $mname, $lname, $suffix, $houseno, $street, $subd,$districtbrgy, $city, $province, $zipcode, $sex, $maritalstatus, $birthdate, $birthplace, $cellphonenumber, $nresidentId]);
 
-        $update_audit_sql= "UPDATE nonres_audit_trail SET dept_edited_no=?, user_edited_no=?, last_edited_dt=? WHERE audit_trail_id=?";
-        $atstmt= $pdo->prepare($update_audit_sql);
-        $atstmt -> execute([$departno, $userid, $nowdate, $nresidentId]);
+            $update_audit_sql= "UPDATE nonres_audit_trail SET dept_edited_no=?, user_edited_no=?, last_edited_dt=? WHERE audit_trail_id=?";
+            $atstmt= $pdo->prepare($update_audit_sql);
+            $atstmt -> execute([$departno, $userid, $nowdate, $nresidentId]);
 
-        $pdo->commit();
+              // Send success response
+            echo json_encode(["success" => true, "message" => "Data updated successfully". " ImageStatus: " . $imgopresponse]);
+
+            $pdo->commit();
         } catch (PDOException $e) {
             // Handle database connection or query errors
 

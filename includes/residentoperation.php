@@ -4,13 +4,14 @@ require_once 'config.php';
 require_once 'enforce_login.php';
 require_once("connecttodb.php");
 require_once("anti-SQLInject.php");
- require_once("fileUpload.php");
+require_once("fileUpload.php");
+require_once 'checkhit.php';
+require_once 'checkforempty.php';
 
 function check_db_duplicate($pdo, $arraytocheck){
 
     //Check for any duplicates of the entered details
-    $check_query = "SELECT * FROM resident WHERE last_name = ? AND first_name = ? AND middle_name = ? AND suffix = ? AND house_num = ? AND street = ? AND subdivision = ? 
-    AND resident_since = ? AND sex = ? AND marital_status = ? AND birth_date = ? AND birth_place = ? AND cellphone_num = ? AND is_a_voter =?";
+    $check_query = "SELECT * FROM resident WHERE last_name = ? AND first_name = ? AND middle_name = ? AND suffix = ? AND birth_date = ?";
     
     $check_stmt = $pdo->prepare($check_query);
     $check_stmt->execute($arraytocheck);
@@ -72,6 +73,8 @@ $start_from = ($page - 1) * $limit;
 
  $params = [$lname, $fname, $mname, $suffix, $houseno, $street, $subd, $residentsince, $sex, $maritalstatus, $birthdate, $birthplace, $cellphonenumber, $is_a_voter];
  $paramstocheckempty = [$lname, $fname, $houseno, $street, $residentsince, $sex, $maritalstatus, $birthdate, $birthplace, $cellphonenumber, $is_a_voter];
+ $paramstocheckduplicate = [$lname, $fname, $mname, $suffix, $birthdate];
+
 
 if($operation_check == "ADD"){ //For the add operation
 
@@ -82,11 +85,6 @@ if($operation_check == "ADD"){ //For the add operation
 
     if(isset($_FILES['image_file']) && $_FILES['image_file']['error'] === UPLOAD_ERR_OK){
 
-        if(!empty(check_db_duplicate($pdo, $params))){
-            echo json_encode(["success" => "entry_match", "message" => "Duplicate Entry has been found!", "data" => check_db_duplicate($pdo, $params)]);
-            die();
-        }
-
         try{
            $fileName = uploadImageFile("image_file", "img/resident_img/");
 
@@ -96,11 +94,6 @@ if($operation_check == "ADD"){ //For the add operation
         }
 
     }else if(isset($_POST['captureImageData'])){ //Incase the image comes from the camera
-
-        if(!empty(check_db_duplicate($pdo, $params))){
-            echo json_encode(["success" => "entry_match", "message" => "Duplicate Entry has been found!", "data" => check_db_duplicate($pdo, $params)]);
-            die();
-        }
 
         try{
            $fileName = captureImageUpload('captureImageData',"img/resident_img/");
@@ -113,6 +106,11 @@ if($operation_check == "ADD"){ //For the add operation
 
         exit(json_encode(['success' => false, 'message' => 'No image was sent!'.$e->Message()])); 
 
+    }
+
+    if(!empty(check_db_duplicate($pdo, $paramstocheckduplicate))){
+        echo json_encode(["success" => "entry_match", "message" => "Duplicate Entry has been found!", "data" => check_db_duplicate($pdo, $paramstocheckduplicate)]);
+        die();
     }
         
 
@@ -485,10 +483,8 @@ if($operation_check == "ADD"){ //For the add operation
 }elseif($operation_check=="CHECK_HIT"){
     $resident_id = $_POST['resident_id'];
     try{
-        $sqlquery="CALL CountResidentBlotterEntries(?)";
-        $stmt = $pdo->prepare($sqlquery);
-        $stmt->execute(array($resident_id));
-        $count = $stmt->fetchColumn();
+        
+        $count = check_for_hits($pdo, $resident_id);
 
         if($count==0){
             echo json_encode(["success"=> "clear" , "message" => "Clear"]);

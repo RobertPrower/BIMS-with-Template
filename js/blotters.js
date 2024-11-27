@@ -175,6 +175,86 @@ $(document).ready(function () {
     })
   }
 
+  $("#EditBlotterForm").submit(function(event){
+    event.preventDefault();
+
+    var schedule_date = new Date($("#EditBlotterModal #schedule_date").val());
+    var schedule_starttime =$("#EditBlotterModal #schedule_starttime").val();
+    var schedule_endtime = $("#EditBlotterModal #schedule_endtime").val();
+
+    var formData = new FormData(this);  
+    formData.append("schedule_date", formatDate(schedule_date));
+    formData.append("schedule_starttime", convertTo24HourFormat(schedule_starttime));
+    formData.append("schedule_endtime", convertTo24HourFormat(schedule_endtime));
+    formData.append("operation", "EDIT_BLOTTER");
+
+    let resident_complainants = [];
+    let non_resident_complainants = [];
+    let resident_respondents = [];
+    let non_resident_respondents = [];
+
+    $(".othercomplainant tbody tr").each(function () {
+      var id = $(this).data('id');
+      var status = $(this).data('status');
+      if (status === "Resident") resident_complainants.push(id);
+      else if (status === "Non-Resident") non_resident_complainants.push(id);
+    });
+
+    $(".otherrespondent tbody tr").each(function () {
+      var id = $(this).data("id");
+      var status = $(this).data('status');
+      if (status === "Resident") resident_respondents.push(id);
+      else if (status === "Non-Resident") non_resident_respondents.push(id);
+    });
+
+    for (var i = 0; i < 5; i++) {
+      formData.append(`other_resident_complainant${i + 1}`, resident_complainants[i] || null);
+      formData.append(`other_nonresident_complainant${i + 1}`, non_resident_complainants[i] || null);
+      formData.append(`other_resident_respondent${i + 1}`, resident_respondents[i] || null);
+      formData.append(`other_nonresident_respondent${i + 1}`, non_resident_respondents[i] || null);
+    }
+
+    // Log the FormData entries for debugging
+    for (let [key, value] of formData.entries()) {
+      console.log(key, value);
+    }
+
+    $.ajax({
+        type: "POST",
+        url: "includes/blottersoperation.php",
+        data: formData,
+        dataType: "JSON",
+        contentType: false,
+        processData: false,
+        success: function (response) {
+            if(response.success){
+                Swal.fire({
+                    title: "Success!",
+                    text: "Blotter Edited Successfully",
+                    icon: "success"
+                });
+                reloadTable();
+                $("#EditBlotterModal").modal('hide');
+            } else {
+                Swal.fire({
+                    title: "Something went wrong.",
+                    text: "The server reply's failed",
+                    icon: "error"
+                });
+            }
+        },
+        error: function(xhr, status, error) {
+            console.error('Error submitting form:', error);
+            Swal.fire({
+                title: "Error",
+                text: "An error occurred while submitting the form.",
+                icon: "error"
+            });
+        }
+    });
+  });
+
+
   //For the search box
   $("#searchbox").on("keyup", function () {
     let query = $(this).val();
@@ -1252,108 +1332,8 @@ $(document).ready(function () {
       return `${year}-${month}-${day}`;
   }
 
-  $("#EditBlotterModalForm").submit(function(event){
-    event.preventDefault();
-
-    var schedule_date = new Date($("#EditBlotterModal #schedule_date").val());
-    var schedule_starttime =$("#EditBlotterModal #schedule_starttime").val();
-    var schedule_endtime = $("#EditBlotterModal #schedule_endtime").val();
-
-    var formData = new FormData(this);  
-    formData.append("schedule_date", formatDate(schedule_date));
-    formData.append("schedule_starttime", convertTo24HourFormat(schedule_starttime));
-    formData.append("schedule_endtime", convertTo24HourFormat(schedule_endtime));
-    formData.append("operation", "EDIT_BLOTTER");
-
-
-    // Objects for the Other Complainants and Respondents
-   
-    let resident_complainants=[];
-    let non_resident_complainants=[]
-    let resident_respondents=[];
-    let non_resident_respondents=[]
-
-    $(".othercomplainant tbody tr").each(function () {
-
-      var id = $(this).data('id');
-      var status = $(this).data('status');
-
-      console.log("Complainant tr id :" +id)
-      console.log("Complainant tr status :" +status)
-
-      if (status === "Resident") {
-          resident_complainants.push(id);
-          console.log(resident_complainants)
-
-      } else if (status === "Non-Resident") {
-          non_resident_complainants.push(id);
-          console.log(non_resident_complainants)
-      }
-
-    });
-
-    $(".otherrespondent tbody tr").each(function () {
-
-      var id = $(this).data("id");
-      var status = $(this).data('status');
-
-      console.log("Respondent tr id :" +id)
-      console.log("Respondent tr status :" +status)
-
-      // Add ID to the appropriate array based on status
-      if (status === "Resident") {
-          resident_respondents.push(id);
-          console.log(resident_respondents)
-
-      } else if (status === "Non-Resident") {
-          non_resident_respondents.push(id);
-          console.log(non_resident_respondents)
-
-      }
-
-    });
-
-    for (var i = 0; i < 5; i++) {
-      formData.append(`other_resident_complainant${i + 1}`, resident_complainants[i] || "null");
-      formData.append(`other_nonresident_complainant${i + 1}`, non_resident_complainants[i] || "null");
-      formData.append(`other_resident_respondent${i + 1}`, resident_respondents[i] || "null");
-      formData.append(`other_nonresident_respondent${i + 1}`, non_resident_respondents[i] || "null");
-    }
-
-    $.ajax({
-        type: "POST",
-        url: "includes/blottersoperation.php",
-        data: formData,
-        dataType: "JSON",
-        contentType: false,
-        processData: false,
-        success: function (response) {
-            if(response.success == true){
-                Swal.fire({
-                    title: "Success!",
-                    text: "Blotter Edited Successfully",
-                    icon: "success"
-                })
-
-                reloadTable()
-
-                $("#EditBlotterModal").modal('hide')
-            }else{
-                Swal.fire({
-                    title: "Something went wrong.",
-                    text: "The server reply's failed",
-                    icon: "error"
-                  });
-            }
-        },error: function(xhr, status, error) {
-            console.error('Error fetching resident details:', error);
-        }
-    });
-
-  });
-
   $(document).on("click",'#deletebtn',function () {
-      var blotter_id = $(this).data("id");
+      var blotter_id = $(this).data("blotter_id");
       
       Swal.fire({
         title: "Are you sure?",

@@ -160,33 +160,33 @@
               <label style="text-align: left;">Details of the Motor Vehicle</label>
 
               <div class="form-floating mt-3 mb-3 col-md-3">
-                  <input type="text" class="form-control" id="toda" name="house_no" placeholder="Enter Subdvision Here"/>
+                  <input type="text" class="form-control" id="toda" name="house_no" placeholder="Enter Subdvision Here" required/>
                   <label for="toda">Toda</label>
               </div>
 
               <div class="form-floating mt-3 mb-3 col-md-3">
-                  <input type="text" class="form-control" id="route" name="house_no" placeholder="Enter Subdvision Here"/>
+                  <input type="text" class="form-control" id="route" name="house_no" placeholder="Enter Subdvision Here" required/>
                   <label for="route">Route</label>
               </div>
 
               <div class="form-floating mt-3 mb-3 col-md-3">
-                  <input type="text" class="form-control" id="plate_no" name="house_no" placeholder="Enter Subdvision Here"/>
+                  <input type="text" class="form-control" id="plate_no" name="house_no" placeholder="Enter Subdvision Here" required/>
                   <label for="plate_no">Plate No.</label>
               </div>
 
               <div class="form-floating mt-3 mb-3 col-md-3">
-                  <input type="text" class="form-control" id="chasis_no" name="street" placeholder="Enter Subdvision Here"/>
+                  <input type="text" class="form-control" id="chasis_no" name="street" placeholder="Enter Subdvision Here" required/>
                   <label for="chasis_no">Chasis No.</label>
               </div>
 
               
               <div class="form-floating mt-3 mb-3 col-md-4">
-                  <input type="text" class="form-control" id="engine_no" name="street" placeholder="Enter Subdvision Here"/>
+                  <input type="text" class="form-control" id="engine_no" name="street" placeholder="Enter Subdvision Here" required/>
                   <label for="engine_no">Engine No.</label>
               </div>
 
               <div class="form-floating mt-3 mb-3 col-md-4">
-                  <select class="form-select" id="maker" name="maker" aria-label="Floating label select example">
+                  <select class="form-select" id="maker" name="maker" aria-label="Floating label select example" required>
                       <option value="" hidden>Select</option>
                       <option value="Kawazaki">Kawazaki</option>
                       <option value="Honda">Honda</option>
@@ -198,7 +198,7 @@
               </div>
               
               <div class="form-floating mt-3 mb-3 col-md-4">
-                  <input type="text" class="form-control" id="others" name="street" placeholder="Enter Subdvision Here" disabled/>
+                  <input type="text" class="form-control" id="others" name="othermaker" placeholder="Enter Subdvision Here" disabled/>
                   <label for="others">Other Marker Please Specify</label>
               </div>
             </div>

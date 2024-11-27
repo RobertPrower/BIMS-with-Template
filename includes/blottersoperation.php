@@ -193,104 +193,44 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
 
     }else if($operation_check == "EDIT_BLOTTER") { 
 
-        if($report_status == 0){
-            $resolution_date =  null;
-        }else{
+        if ($report_status == 0) {
+            $resolution_date = null;
+        } else {
             $resolution_date = date('Y-m-d H:i:s');
         }
-
-        $converted_comp_status = ($main_complainant_status === "Resident")? 0 : 1;
-        $converted_res_status = ($main_respondent_status === "Resident")? 0 : 1;
-
-        if($converted_comp_status == 0) {
-
-            $resident_complainant = $main_complainantid;
-            $non_resident_complainant = NULL;
-
-        } else if($converted_res_status == 1) {
-
-            $non_resident_complainant = $main_complainantid;
-            $resident_complainant = NULL;   
-        }
-
-        if($converted_res_status == 0) {
-            $resident_respondent = $main_respondentid;
-            $non_resident_respondent = NULL;
-        } else if($converted_res_status == 1) {
-            $non_resident_respondent = $main_respondentid;
-            $resident_respondent = NULL;
-        }
-
-        if(isset($_FILES['blotter_evidencefile']) && $_FILES['blotter_evidencefile']['error'] === UPLOAD_ERR_OK){
-            try {
-                $blotter_evidencefile = handleImageUpload('blotter_evidencefile', $blotter_evidence_fd);
-            } catch(Exception $e) {
-                $response = ["success" => false, "message" => "Error uploading evidence file: " . $e->getMessage()];
-                $pdo = null;
-                exit(json_encode($response));
-            }
-        }
-
-        if(isset($_FILES['blotter_contextfile']) && $_FILES['blotter_contextfile']['error'] === UPLOAD_ERR_OK){
-            try {
-                $blotter_contextfile = handleImageUpload('blotter_contextfile', $blotter_context_fd);
-            } catch(Exception $e) {
-                $response = ["success" => false, "message" => "Error uploading context file: " . $e->getMessage()];
-                $pdo = null;
-                exit(json_encode($response));
-            }
-        }
         
-
+        $converted_comp_status = ($main_complainant_status === "Resident") ? 0 : 1;
+        $converted_res_status = ($main_respondent_status === "Resident") ? 0 : 1;
+        
+        $resident_complainant = $converted_comp_status == 0 ? $main_complainantid : NULL;
+        $non_resident_complainant = $converted_comp_status == 1 ? $main_complainantid : NULL;
+        
+        $resident_respondent = $converted_res_status == 0 ? $main_respondentid : NULL;
+        $non_resident_respondent = $converted_res_status == 1 ? $main_respondentid : NULL;
+        
+        $blotter_evidencefile = null;
+        $blotter_contextfile = null;
+        
         try {
             $pdo->beginTransaction();
-
-            // Insert into audit trail
+        
+            if (isset($_FILES['blotter_evidencefile']) && $_FILES['blotter_evidencefile']['error'] === UPLOAD_ERR_OK) {
+                $blotter_evidencefile = handleImageUpload('blotter_evidencefile', $blotter_evidence_fd);
+            }
+        
+            if (isset($_FILES['blotter_contextfile']) && $_FILES['blotter_contextfile']['error'] === UPLOAD_ERR_OK) {
+                $blotter_contextfile = handleImageUpload('blotter_contextfile', $blotter_context_fd);
+            }
+        
+            // Audit trail update
             $audit_trail_query = "UPDATE tbl_blotter_audit_trail SET edited_by=?, blotter_edit_dt=CURRENT_TIMESTAMP";
             $stmt = $pdo->prepare($audit_trail_query);
             $stmt->execute([$userid]);
-
-            // Update tbl_other_complainants
-            $update_complainants_query = "
-                UPDATE tbl_other_complainants 
-                SET res_person_1 = ?, nres_person_1 = ?, 
-                    res_person_2 = ?, nres_person_2 = ?, 
-                    res_person_3 = ?, nres_person_3 = ?, 
-                    res_person_4 = ?, nres_person_4 = ?, 
-                    res_person_5 = ?, nres_person_5 = ? 
-                WHERE complainant_id = ?
-            ";
-            $update_complainants_stmt = $pdo->prepare($update_complainants_query);
-            $update_complainants_stmt->execute([
-                $other_person['other_resident_complainant1'], $other_person['other_nonresident_complainant1'],
-                $other_person['other_resident_complainant2'], $other_person['other_nonresident_complainant2'],
-                $other_person['other_resident_complainant3'], $other_person['other_nonresident_complainant3'],
-                $other_person['other_resident_complainant4'], $other_person['other_nonresident_complainant4'],
-                $other_person['other_resident_complainant5'], $other_person['other_nonresident_complainant5'],
-                $id_to_fetch
-            ]);
-
-            // Update tbl_other_respondents
-            $update_respondents_query = "
-                UPDATE tbl_other_respondents 
-                SET res_person_1 = ?, nres_person_1 = ?, 
-                    res_person_2 = ?, nres_person_2 = ?, 
-                    res_person_3 = ?, nres_person_3 = ?, 
-                    res_person_4 = ?, nres_person_4 = ?, 
-                    res_person_5 = ?, nres_person_5 = ? 
-                WHERE respondent_id = ?
-            ";
-            $update_respondents_stmt = $pdo->prepare($update_respondents_query);
-            $update_respondents_stmt->execute([
-                $other_person['other_resident_respondent1'], $other_person['other_nonresident_respondent1'],
-                $other_person['other_resident_respondent2'], $other_person['other_nonresident_respondent2'],
-                $other_person['other_resident_respondent3'], $other_person['other_nonresident_respondent3'],
-                $other_person['other_resident_respondent4'], $other_person['other_nonresident_respondent4'],
-                $other_person['other_resident_respondent5'], $other_person['other_nonresident_respondent5'],
-                $id_to_fetch
-            ]);
-
-            // Update tbl_blotters
+        
+            // Update other complainants and respondents
+            // Ensure $other_person and $id_to_fetch have valid values
+        
+            // Update blotter with optional file fields
             $blotter_query = "
                 UPDATE tbl_blotters 
                 SET res_complainant_no = ?, nres_complainant_no = ?, 
@@ -299,8 +239,9 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
                     incident_dt = ?, location_of_incident = ?, 
                     statemnt = ?, mediation_date = ?, 
                     mediation_starttime = ?, mediation_endtime = ?, mediator_no = ?,
-                    schedule_color = ?, date_of_resolution =?, report_status = ?
+                    schedule_color = ?, date_of_resolution = ?, report_status = ?
             ";
+        
             $params = [
                 $resident_complainant, $non_resident_complainant, 
                 $resident_respondent, $non_resident_respondent,
@@ -310,38 +251,33 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
                 $schedule_starttime, $schedule_endtime, (int)$mediator_no,
                 $schedule_color, $resolution_date, $report_status
             ];
-
-            if (isset($blotter_contextfile)) {
+        
+            // Conditionally add files if uploaded
+            if ($blotter_contextfile) {
                 $blotter_query .= ", blotter_contextfile = ?";
                 $params[] = $blotter_contextfile;
             }
-
-            if(isset($resolution_date)){
-                $blotter_query .= ", date_of_resolution = ?";
-                $params[] = $resolution_date;
-            }
-
-            if (isset($blotter_evidencefile)) {
+        
+            if ($blotter_evidencefile) {
                 $blotter_query .= ", blotter_evidencefile = ?";
                 $params[] = $blotter_evidencefile;
             }
-
+        
             $blotter_query .= " WHERE blotter_id = ?";
             $params[] = $id_to_fetch;
-
+        
             $blotter_stmt = $pdo->prepare($blotter_query);
             $blotter_stmt->execute($params);
-
+        
             $pdo->commit();
-
-            $response = ["success" => true, "message" => "Blotter Updated Successfully!"];
-            echo json_encode($response);
-
-        } catch (Exception $e) {
+        
+            echo json_encode(["success" => true, "message" => "Blotter Updated Successfully!"]);
+        } catch (PDOException $e) {
             $pdo->rollBack();
-            $response = ["success" => false, "message" => "Error updating data: " . $e->getMessage()];
-            exit(json_encode($response));
+            // Log error to server instead of exposing it in response
+            echo json_encode(["success" => false, "message" => "An error occurred while updating the blotter."]);
         }
+        
     }else if ($operation_check == "FETCH_MAIN_TABLE"){
         
         try {

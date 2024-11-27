@@ -260,7 +260,7 @@ $(document).ready(function () {
     
   });
 /*
-  const SESSION_TIMEOUT = 300; 
+  const SESSION_TIMEOUT = 100; 
   const WARNING_TIME = 20;    
 
   let warningShown = false;

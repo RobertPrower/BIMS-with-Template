@@ -250,20 +250,28 @@ $(document).ready(function() {
                         var filename = "documents/business_permits/"+response.file;
                         console.log(filename);
                         
-                        $("#generatepdf").attr("src", filename); 
-            
-                        $("#pdfModal").modal("show");
+                        if(response.success == true){
+                            $("#generatepdf").attr("src", filename); 
+                
+                            $("#pdfModal").modal("show");
 
-                        $('#pdfModal').on('shown.bs.modal', function () {
-                            Swal.close(); 
-                        });   
+                            $('#pdfModal').on('shown.bs.modal', function () {
+                                Swal.close(); 
+                            });   
+                        }else{
+                            Swal.fire({
+                                icon: "error",
+                                title: "Server replies failed",
+                                text: response.message,
+                              });
+                        }
                     },error: function (xhr, status, error) {
                         console.error("Error generating PDF:", error);
                         Swal.close(); 
 
                         Swal.fire({
                             icon: "error",
-                            title: "Oops...",
+                            title: "AJAX error",
                             text: "Something went wrong!",
                         });
                     },
@@ -300,13 +308,21 @@ $(document).ready(function() {
                         var filename = "documents/building_permits/"+response.file;
                         console.log(filename);
 
-                        $("#generatepdf").attr("src", filename); 
-                
-                        $("#pdfModal").modal("show");
+                        if(response.success == true){
+                            $("#generatepdf").attr("src", filename); 
+                    
+                            $("#pdfModal").modal("show");
 
-                        $('#pdfModal').on('shown.bs.modal', function () {
-                            Swal.close(); 
-                        });   
+                            $('#pdfModal').on('shown.bs.modal', function () {
+                                Swal.close(); 
+                            }); 
+                        }else{
+                            Swal.fire({
+                                icon: "error",
+                                title: "Server replies failed",
+                                text: response.message,
+                              });
+                        }  
                     },
                     error: function (xhr, status, error) {
                         console.error("Error generating PDF:", error);
@@ -314,7 +330,7 @@ $(document).ready(function() {
 
                         Swal.fire({
                             icon: "error",
-                            title: "Oops...",
+                            title: "AJAX error",
                             text: "Something went wrong!",
                         });
                     },
@@ -352,13 +368,21 @@ $(document).ready(function() {
                         var filename = "documents/excavation_permits/"+response.file;
                         console.log(filename);
 
-                        $("#generatepdf").attr("src", filename); 
-                
-                        $("#pdfModal").modal("show");
+                        if(response.success == true){
+                            $("#generatepdf").attr("src", filename); 
+                    
+                            $("#pdfModal").modal("show");
 
-                        $('#pdfModal').on('shown.bs.modal', function () {
-                            Swal.close(); 
-                        });   
+                            $('#pdfModal').on('shown.bs.modal', function () {
+                                Swal.close(); 
+                            });   
+                        }else{
+                            Swal.fire({
+                                icon: "error",
+                                title: "Server replies failed",
+                                text: response.message,
+                              });
+                        }
                     },
                     error: function (xhr, status, error) {
                         console.error("Error generating PDF:", error);
@@ -366,7 +390,7 @@ $(document).ready(function() {
 
                         Swal.fire({
                             icon: "error",
-                            title: "Oops...",
+                            title: "AJAX error",
                             text: "Something went wrong!",
                         });
                     },
@@ -404,13 +428,21 @@ $(document).ready(function() {
                         var filename = "documents/fencing_permits/"+response.file;
                         console.log(filename);
 
-                        $("#generatepdf").attr("src", filename); 
-                
-                        $("#pdfModal").modal("show");
+                        if(response.success == true){
+                            $("#generatepdf").attr("src", filename); 
+                    
+                            $("#pdfModal").modal("show");
 
-                        $('#pdfModal').on('shown.bs.modal', function () {
-                            Swal.close(); 
-                        });   
+                            $('#pdfModal').on('shown.bs.modal', function () {
+                                Swal.close(); 
+                            });   
+                         }else{
+                            Swal.fire({
+                                icon: "error",
+                                title: "Server replies failed",
+                                text: response.message,
+                              });
+                         }
                     },
                     error: function (xhr, status, error) {
                         console.error("Error generating PDF:", error);
@@ -418,7 +450,7 @@ $(document).ready(function() {
 
                         Swal.fire({
                             icon: "error",
-                            title: "Oops...",
+                            title: "AJAX error",
                             text: "Something went wrong!",
                         });
                     },
@@ -466,13 +498,21 @@ $(document).ready(function() {
                         var filename = "documents/tprs/"+response.file;
                         console.log(filename);
 
-                        $("#generatepdf").attr("src", filename); 
-                
-                        $("#pdfModal").modal("show");
+                        if(response.success == true){
+                            $("#generatepdf").attr("src", filename); 
+                    
+                            $("#pdfModal").modal("show");
 
-                        $('#pdfModal').on('shown.bs.modal', function () {
-                            Swal.close(); 
-                        });   
+                            $('#pdfModal').on('shown.bs.modal', function () {
+                                Swal.close(); 
+                            }); 
+                        }else{
+                            Swal.fire({
+                                icon: "error",
+                                title: "Server replies failed",
+                                text: response.message,
+                              });
+                        }  
                     },
                     error: function (xhr, status, error) {
                         console.error("Error generating PDF:", error);
@@ -480,15 +520,19 @@ $(document).ready(function() {
 
                         Swal.fire({
                             icon: "error",
-                            title: "Oops...",
+                            title: "AJAX error",
                             text: "Something went wrong!",
                         });
                     },
                 });
                 
             }
+
+           $("input, select").val('');
         }else{
             Swal.close(); 
+
+            $("input, select").val('');
 
             Swal.fire({
                 icon: "error",

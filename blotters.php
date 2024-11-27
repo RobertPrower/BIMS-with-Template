@@ -406,8 +406,8 @@ $pdo = null; // Close DB
                             <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Blotter</h1>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
+                        <form id="EditBlotterForm" method="post" enctype="multipart/form-data">
                         <div class="modal-body">
-                        <form id="EditBlotterModalForm">
                             <ul class="nav nav-tabs" id="myTab" role="tablist">
                                 <li class="nav-item" role="presentation">
                                     <button class="nav-link active complainant_respondent_tab"
@@ -502,7 +502,7 @@ $pdo = null; // Close DB
 
                                                     <div class="form-floating mt-3 mb-3 col-md-2">
                                                         <input type="text" class="form-control" id="suffix"
-                                                            name="lastname" placeholder="Enter Last Name Here" required
+                                                            name="suffix" placeholder="Enter Last Name Here" required
                                                             disabled />
                                                         <label for="lname">Suffix</label>
                                                     </div>
@@ -781,7 +781,7 @@ $pdo = null; // Close DB
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Save</button>
+                            <button type="submit" class="btn btn-primary">Save</button>
 
                         </div>
                         </form>
@@ -882,6 +882,7 @@ $pdo = null; // Close DB
     </div>
 
     <script src="js/jquery-3.7.1.min.js"></script>
+    <script src="js/displayimagedata.js"></script>
     <script src="js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.datatables.net/v/bs5/dt-2.1.8/datatables.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@eonasdan/tempus-dominus@6.9.11/dist/js/tempus-dominus.min.js" crossorigin="anonymous"></script>
@@ -894,7 +895,6 @@ $pdo = null; // Close DB
     <script src="js/nonresidentviewmodal.js"></script>
     <script src="js/selectresnonresmodal.js"></script>
     <script src="js/schedulemodal.js"></script>
-    <script src="js/displayimagedata.js"></script>
 
 
 

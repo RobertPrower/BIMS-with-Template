@@ -33,12 +33,7 @@ foreach ($results as $row) {
     <div class="btn-group text-center">
             
         <button class="btn btn-primary mx-1 viewResidentButton" id=vbutton
-            data-id="' . htmlspecialchars($row['resident_id']) . '"
-            data-first-name="' . htmlspecialchars($row['first_name'], ENT_QUOTES) . '"
-            data-middle-name="' . htmlspecialchars($row['middle_name'], ENT_QUOTES) . '"
-            data-last-name="' . htmlspecialchars($row['last_name'], ENT_QUOTES) . '"
-            data-suffix="' . htmlspecialchars($row['suffix'], ENT_QUOTES) . '"
-
+            data-id="' . htmlspecialchars($row['entry_id']) . '"
             data-bs-toggle="modal" data-bs-target="#ViewResidentModal">View Changes</button>';
 
         

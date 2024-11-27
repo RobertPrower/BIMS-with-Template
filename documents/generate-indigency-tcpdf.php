@@ -4,11 +4,13 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
     header('Content-Type: text/html; charset=utf-8');
 
     require_once('tcpdf/tcpdf.php');
-    include_once('../includes/connecttodb.php');
-    include_once '../includes/config.php';
-    include_once '../includes/enforce_login.php';
+    require_once('../includes/connecttodb.php');
+    require_once '../includes/config.php';
+    require_once '../includes/enforce_login.php';
     include_once('includes/tagalogmonth.php');
     include_once('../includes/anti-SQLInject.php');
+    require_once '../includes/checkforempty.php';
+
 
     date_default_timezone_set('Asia/Manila');
 
@@ -27,17 +29,23 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
     $issuingdeptno = $_SESSION['depart_no'];
     $residentno = (isset($_POST['residentno']))? sanitizeData($_POST['residentno']):null;
     $completeaddress=(isset($_POST['address']))? sanitizeData($_POST['address']) : null;
-    $fname=sanitizeData($_POST['first_name']);
-    $mname=sanitizeData($_POST['middle_name']);
-    $lname=sanitizeData($_POST['last_name']);
+    $fname=sanitizeData($_POST['first_name']?? null);
+    $mname=sanitizeData($_POST['middle_name']?? null);
+    $lname=sanitizeData($_POST['last_name']?? null);
     $suffix = (isset($_POST['suffix']))? sanitizeData($suffix=$_POST['suffix']): null ;
 
     $fullname = $fname .' '. $mname .' '. $lname.' '. $suffix;
 
-    $presentedid=sanitizeData($_POST['presented_id']);
-    $IDnumber=sanitizeData($_POST['id_num']);
-    $purpose = sanitizeData($_POST['purpose']);
-    $agency=sanitizeData($_POST['agency']);
+    $presentedid=sanitizeData($_POST['presented_id']?? null);
+    $IDnumber=sanitizeData($_POST['id_num']?? null);
+    $purpose = sanitizeData($_POST['purpose']?? null);
+    $agency=sanitizeData($_POST['agency']?? null);
+
+    $checkforempty=[$fname, $lname, $issuingdeptno, $residentno, $completeaddress, $presentedid, $IDnumber, $purpose, $agency];
+
+    if(!check_empty_values($checkforempty)){
+        die(json_encode(["success" => false, "message" => "Some fields are empty"]));
+    }
 
     try{
 
@@ -48,12 +56,6 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
         $brgystmt=$pdo->prepare($brgyquery);
         $brgystmt->execute();
         $brgyofficials=$brgystmt->fetchAll(PDO::FETCH_ASSOC); 
-
-        foreach($brgyofficials as $officialname){
-
-            $official[] = $officialname['official_name'];
-
-        }
 
         //Fetch the govenment Seals
         $imgquery="SELECT `filename` FROM `certificate-img`";
@@ -88,18 +90,18 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
         $docudetailstmt->closeCursor();
 
         // Insert into tbl_cert_audit_trail
-        $auditTrailQuery = "INSERT INTO tbl_cert_audit_trail(issuing_dept_no, `issued_by_no` ,datetime_issued, expiration)
-                            VALUES (?, ?,CURRENT_TIMESTAMP, DATE_ADD(CURDATE(), INTERVAL 3 MONTH))";
+        $auditTrailQuery = "INSERT INTO tbl_cert_audit_trail(issuing_dept_no, `issued_by_no` ,datetime_issued)
+                            VALUES (?, ?,CURRENT_TIMESTAMP)";
         $auditTrailStmt = $pdo->prepare($auditTrailQuery);
         $auditTrailStmt->execute([$issuingdeptno, $user_id]);
 
         // Insert into tbl_docu_request
-        $docuRequestQuery = "INSERT INTO tbl_docu_request (resident_no ,presented_id, ID_number, purpose, pdffile)
-                                VALUES (?, ?, ?, ?, ?)";
+        $docuRequestQuery = "INSERT INTO tbl_docu_request (resident_no ,presented_id, ID_number, purpose, pdffile, expiration_date)
+                                VALUES (?, ?, ?, ?, ?,DATE_ADD(CURDATE(), INTERVAL 3 MONTH))";
         $docuRequestStmt = $pdo->prepare($docuRequestQuery);
         $docuRequestStmt->execute([$residentno, $presentedid, $IDnumber, $purpose, $filename]);
 
-
+        
         // Fetch and request_id
         $idquery = "SELECT get_max_request_id()";
         $idstmt = $pdo->prepare($idquery);
@@ -108,10 +110,10 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
 
         $pdo->commit();
 
-    } catch(Exception $error){
+    } catch(PDOException $error){
 
         $pdo->rollBack();
-        exit(json_encode(["error", "message" => $error]));
+        exit(json_encode(["error", "message" => $error->getMessage()]));
 
     }
 
@@ -192,7 +194,7 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
 
     // set document information
     $pdf->SetCreator(PDF_CREATOR);
-    $pdf->SetAuthor('Nicola Asuni');
+    $pdf->SetAuthor('');
     $pdf->SetTitle('Generate Certificate of Residency');
     $pdf->SetSubject('TCPDF Tutorial');
     $pdf->SetKeywords('TCPDF, PDF, example, test, guide');
@@ -355,7 +357,23 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
     $pdf->write2DBarcode($qrContent, 'QRCODE,H', 20, 235, 30, 30, $style, 'N');
 
     $pdf->SetXY(21, 266);
-    $pdf->Cell(0, 5, $qrContent, 0, 1, 'L', false, '', 0, false, 'T', 'M');
+    // $pdf->Cell(0, 5, $qrContent, 0, 1, 'L', false, '', 0, false, 'T', 'M');
+
+    $pdf->SetY(205); 
+    // Move 60 units from the right
+    $pdf->SetX(40); 
+
+    foreach($brgyofficials as $officialname){
+
+        $official[] = $officialname['official_name'];
+
+    }
+
+    // Add bottom-right aligned text (default color)
+    $pdf->MultiCell(0, 5, mb_strtoupper("HON. $official[0]"), 0, 'R', 0, 1, '', '', true);
+
+    // Set color to red for specific text
+    $pdf->MultiCell(0, 5, "PUNONG BARANGAY", 0, 'C', 0, 1, '140', '', true);
 
     // Move 30 units above the bottom
     $pdf->SetY(230); 
@@ -384,7 +402,7 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
     //Close and output PDF document
     $pdf->Output($fileName, 'F');
 
-    echo json_encode(["file" => $filename]);
+    echo json_encode(["success" => true, "file" => $filename]);
 
 }else{
     header('Location: ../index.php');

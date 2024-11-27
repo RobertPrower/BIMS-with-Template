@@ -55,7 +55,7 @@ echo '<td>
         data-bs-toggle="modal" data-bs-target="#ViewBlotterModal">View
     </button>
 
-    <button class="btn btn-success mx-1 editbtn" id=ebutton
+    <button class="btn btn-success mx-1 editbtn" id="ebutton"
         data-whatoperation = "edit"
         data-complainant_first_name = "'.htmlspecialchars($row['complainant_first_name']).'"
         data-complainant_last_name = "'.htmlspecialchars($row['complainant_last_name']).'"

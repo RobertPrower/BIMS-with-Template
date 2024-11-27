@@ -20,6 +20,8 @@ $(document).ready(function () {
     case "Create Certificate of Good Moral":
     case "Create Certificate of Residency":
     case "Create Certificate of First Time Job Seeker":
+    case "Generate Reports":
+    case "Create Certificates":
         $("#certificates_btn").addClass("active");
     break;
     case "Manage Blotters":

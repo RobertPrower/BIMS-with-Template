@@ -1,0 +1,124 @@
+<?php 
+    require_once('includes/connecttodb.php');
+    require_once 'includes/config.php';
+    require_once 'includes/enforce_login.php';
+    
+    $logoquery = "SELECT `filename` FROM `certificate-img` WHERE purpose = 'Barangay Logo'";
+    $logostmt = $pdo->prepare($logoquery);
+    $logostmt -> execute();
+    $logo = $logostmt -> fetchColumn(); 
+
+?>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Certificates</title>
+  <!-- Favicon -->
+  <link rel="shortcut icon" href="img/logos/<?php echo $logo; ?>" type="image/x-icon">
+  <!-- Custom styles -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" 
+  integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <link rel="stylesheet" href="./css/create-documents.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="css/sweetalert2.min.css">
+
+</head>
+
+<body>
+  <div class="layer"></div>
+<!-- ! Body -->
+<a class="skip-link sr-only" href="#skip-target">Skip to content</a>
+<div class="page-flex">
+  <!-- ! Sidebar -->
+
+  <?php
+  include ("includes/sidebar.php");
+  ?>
+
+  <div class="main-wrapper">
+    <!-- ! Main nav -->
+
+    <?php require_once("includes/header.php")?>
+
+    <!-- ! Main -->
+    <main class="main users chart-page" id="skip-target">
+      <div class="container">
+        <h2 class="main-title">Create Certificates</h2>
+        <div class="row container">
+          <style>
+
+              .btn-for-docu:hover {
+                background-color: #CED8FF;
+                opacity: 50;
+                padding: 0.5rem 1rem;
+                border: solid;
+                border-color: black;
+                border-radius: 20px;
+                cursor: pointer;
+                transition: background-color 0.2s ease;
+                
+              }
+          </style>
+          <?php
+          if($departmentno == 4 || $departmentno == 5){
+            echo'
+          <div class="col-md-6 col-xl-3">
+              <a class="stat-cards-item btn-for-docu" href="certificate-settings.php">
+                  <div class="stat-cards-icon primary" id="btnBrgyIDreq">
+                      <i data-feather="settings" aria-hidden="true"></i>
+                  </div>
+                  <div class="stat-cards-info">
+                      <p class="stat-cards-info__num">Details and Images</p>
+                      <p class="stat-cards-info__progress"></p>
+                  </div>
+              </a>
+          </div>
+          <div class="col-md-6 col-xl-3">
+              <a class="stat-cards-item btn-for-docu" href="users.php">
+                  <div class="stat-cards-icon primary" id="btnBrgyIDreq">
+                      <i data-feather="users" aria-hidden="true"></i>
+                  </div>
+                  <div class="stat-cards-info">
+                      <p class="stat-cards-info__num">Users</p>
+                      <p class="stat-cards-info__progress"></p>
+                  </div>
+              </a>
+          </div>
+';
+         
+          }
+
+          ?>
+
+
+
+         
+        </div>
+      </div>
+      
+    </main>
+
+    <!-- ! Footer -->
+  <?php require_once("includes/footer.php");
+      $pdo = null;
+      ?>
+  </div>
+</div>
+<!--JavaScript-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="js/sweetalert2.min.js"></script>
+<!-- Chart library -->
+<script src="./plugins/chart.min.js"></script>
+<!-- Icons library -->
+<script src="plugins/feather.min.js"></script>
+<!-- Custom scripts -->
+<script src="js/script.js"></script>
+<script src="js/sidebar.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+
+</html>

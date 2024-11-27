@@ -183,11 +183,11 @@ $html = ' <style>
             th, td { border: 1px solid #000; text-align: center; padding: 10px; width: 21%; }
             thead { background-color: #f2f2f2; }
             .section-title { font-weight: bold; text-align: center; }
-            .totals { font-weight: bold; } 
-          </style> 
+            .totals { font-weight: bold; }
+          </style>
           
 <div class="body"> 
-  <h1 class="title">STATUS REPORT FOR THIS MONTH</h1>
+  <h1 class="title">MONTHLY REPORT</h1>
      <table> 
         <thead> 
               <tr> 

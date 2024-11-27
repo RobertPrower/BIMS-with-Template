@@ -39,6 +39,7 @@ $(document).ready(function(){
     
             // Unbind any previous event handlers to prevent multiple bindings
             $(document).off('click', '.ResidentTable tbody tr');
+
             
             $(document).on('click', '.ResidentTable tbody tr', function() {
                 $(this).toggleClass("selected").siblings().removeClass("selected");
@@ -48,6 +49,10 @@ $(document).ready(function(){
                 var residentid = rowData.resident_id; 
                 var imagefile = rowData.img_filename;
                 console.log(imagefile)
+
+                $('#example_filter').prepend(
+                    `<button id="openAdditionalModal" class="btn btn-primary me-3" data-bs-modal="#AddResidentModal" data-bs-toggle="modal" >Open Additional Modal</button>`
+                );
 
                 $.ajax({
                     url: 'includes/modaloperation.php', 
@@ -67,12 +72,10 @@ $(document).ready(function(){
                             $("#RespondentImg").attr("src", "includes/img/resident_img/"+imagefile);
                             resultArrayofOtherResRespondent.push(residentid)
 
-
-
                         } else if (whatparty === 'complainant') {
-                            $('#fname').val(data.first_name);
-                            $('#mname').val(data.middle_name);
-                            $('#lname').val(data.last_name);
+                            $('#f_name').val(data.first_name);
+                            $('#m_name').val(data.middle_name);
+                            $('#l_name').val(data.last_name);
                             $('#suffix').val(data.suffix);
                             $('#address').val(data.address + " Camarin Caloocan City");
                             $("#checkresident").val("0");
@@ -508,5 +511,222 @@ $(document).ready(function(){
         
 
     })
+
+    $("#AddResidentModalForm").submit(function (event) {
+        event.preventDefault();
+    
+        var captureImageData = $("#imagePreview").attr("src");
+        console.log(captureImageData);
+    
+        var formData = new FormData(this);
+        formData.append("operation", "ADD");
+        formData.append("captureImageData", captureImageData);
+    
+        var page = $(this).data("pageno");
+        console.log(page);
+    
+        $.ajax({
+          url: "includes/residentoperation.php",
+          type: "POST",
+          data: formData,
+          dataType: "JSON",
+          contentType: false,
+          processData: false,
+          success: function (response) {
+            // Handle success response
+            console.log("Data saved successfully:", response);
+    
+            if (response.success == true) {
+              $("#AddResidentModal").modal("hide");
+              Swal.fire({
+                title: "Add Entry",
+                text: "Entry Added Sucessfully!",
+                icon: "success",
+              });
+              reloadTable(page);
+            } else if (response.success == "entry_match") {
+    
+               $("#AddResidentModal").modal("hide");
+    
+                Swal.fire({
+                  title: "Duplicate Entry Detected.",
+                  text: "Do you want to view the duplicate record?",
+                  icon: "warning",
+                  showCancelButton: true,
+                  confirmButtonColor: "#3085d6",
+                  cancelButtonColor: "#d33",
+                  confirmButtonText: "View"
+                  }).then((result) => {
+                    if (result.isConfirmed) {
+                      console.log(response.data.nresident_id)
+                      $("#ViewResidentModal").modal("show");
+    
+                      var correctimagepath = "includes/img/resident_img/" + response.data.img_filename 
+    
+                      $("#viewimagePreview").attr("src", correctimagepath);
+                      console.log("Existing Record View Pic has been loaded");
+                      console.log(correctimagepath);
+    
+                      $('#nav-home-tab').tab('show');
+    
+                      // Populate the fields in the modal
+                      $('#ViewResidentModal input[name="resident_id"]').val(response.data.resident_id);
+                      $('#ViewResidentModal input[name="fname"]').val(response.data.first_name);
+                      $('#ViewResidentModal input[name="mname"]').val(response.data.middle_name);
+                      $('#ViewResidentModal input[name="lname"]').val(response.data.last_name);
+                      $('#ViewResidentModal input[name="suffix"]').val(response.data.suffix);
+                      $('#ViewResidentModal input[name="house_no"]').val(response.data.house_num);
+                      $('#ViewResidentModal input[name="street"]').val(response.data.street);
+                      $('#ViewResidentModal select[name="subd"]').val(response.data.subdivision);
+                      $('#ViewResidentModal select[name="sex"]').val(response.data.sex);
+                      $('#ViewResidentModal select[name="marital_status"]').val(response.data.marital_status);
+                      $('#ViewResidentModal input[name="birth_date"]').val(response.data.birth_date);
+                      $('#ViewResidentModal input[name="birth_place"]').val(response.data.birth_place);
+                      $('#ViewResidentModal input[name="cellphone_number"]').val(response.data.cellphone_num);
+                      $('#ViewResidentModal select[name="is_a_voter"]').val(response.data.is_a_voter);
+                      $('#ViewResidentModal input[name="rsince"]').val(response.data.resident_since);
+    
+                        //For counting certificates requested
+                      $.ajax({
+                        type: "post",
+                        url: "includes/residentoperation.php",
+                        data: { operation: "COUNT_RES_CERT", resident_id: response.data.resident_id },
+                        dataType: "json",
+                        success: function (response) {
+                          console.log(response);
+    
+                          $("#noofcerts").text(response);
+                        },
+                      });
+                      
+                    }
+                });
+    
+                  
+            } else if (response.success == false){
+                $("#AddResidentModal").modal("hide");
+                Swal.fire({
+                  icon: "error",
+                  title: "Error",
+                  text: "Server Replys Failed! Error"+ response.message,
+                });
+            } // END of if
+          },
+          error: function (xhr, status, error) {
+            // Handle error response
+            console.error("Error saving data:", error);
+            // Optionally, display an error message to the user
+            $("#AddResidentModal").modal("hide");
+            Swal.fire({
+              title: "Error",
+              text: "Something went wrong!",
+              icon: "error"
+            });
+          },
+        });
+      });
+
+      $("#AddNonResidentModalForm").submit(function (event) {
+        event.preventDefault();
+    
+        var captureImageData = $('#imagePreview').attr("src");
+        console.log(captureImageData);
+    
+        var formData = new FormData(this);
+        formData.append("operation", "ADD");
+        formData.append("captureImageData", captureImageData);
+    
+        var page = $(this).data('pageno');
+        console.log(page);
+    
+        $.ajax({
+            url: "includes/nonresidentoperation.php",
+            type: "POST",
+            data: formData,
+            dataType: "JSON",
+            contentType: false,
+            processData: false,
+            success: function (response) {
+                // Handle success response
+                console.log("Data saved successfully:", response);
+    
+                if (response.success === true) {
+                    $("#AddNonResidentModal").modal("hide");
+                    swal({
+                        title: "Add Entry",
+                        text: "Entry Added Successfully!",
+                        icon: "success",
+                        button: "Close",
+                    });
+                    reloadTable(page);
+                }else if(response.success === false) {
+    
+                    $("#AddNonResidentModal").modal("hide");
+                    swal("Duplicated Entry Detected", {
+                        icon: "warning",
+                        buttons: {
+                            close: "Close",
+                            view: {
+                                text: "View Details",
+                                value: "view",
+                            },
+                        },
+                    }).then((value) => {
+                      console.log(value);
+                          console.log(response.data.nresident_id)
+                          if (response.success == false) {
+                            $("#ViewNonResidentModal").modal("show");
+    
+                            var correctimagepath = "includes/img/non_resident_img/" + response.data.img_filename 
+    
+                            $("#viewimagePreview").attr("src", correctimagepath);
+                            console.log("Existing Record View Pic has been loaded");
+                            console.log(correctimagepath);
+    
+                            $('#nav-home-tab').tab('show');
+    
+                            // Populate the fields in the modal
+                            $('#ViewNonResidentModal input[name="nresident_id"]').val(response.data.nresident_id);
+                            $('#ViewNonResidentModal input[name="fname"]').val(response.data.first_name);
+                            $('#ViewNonResidentModal input[name="mname"]').val(response.data.middle_name);
+                            $('#ViewNonResidentModal input[name="lname"]').val(response.data.last_name);
+                            $('#ViewNonResidentModal input[name="suffix"]').val(response.data.suffix);
+                            $('#ViewNonResidentModal input[name="house_no"]').val(response.data.house_num);
+                            $('#ViewNonResidentModal input[name="street"]').val(response.data.street);
+                            $('#ViewNonResidentModal input[name="subd"]').val(response.data.subdivision);
+                            $('#ViewNonResidentModal input[name="district_brgy"]').val(response.data.district_brgy);
+                            $('#ViewNonResidentModal input[name="city"]').val(response.data.city);
+                            $('#ViewNonResidentModal input[name="province"]').val(response.data.province);
+                            $('#ViewNonResidentModal input[name="zipcode"]').val(response.data.zipcode);
+                            $('#ViewNonResidentModal select[name="sex"]').val(response.data.sex);
+                            $('#ViewNonResidentModal select[name="marital_status"]').val(response.data.marital_status);
+                            $('#ViewNonResidentModal input[name="birth_date"]').val(response.data.birth_date);
+                            $('#ViewNonResidentModal input[name="birth_place"]').val(response.data.birth_place);
+                            $('#ViewNonResidentModal input[name="cellphone_number"]').val(response.data.cellphone_num);
+    
+                          } else {
+                            swal({
+                                icon: "error",
+                                title: "Oops...",
+                                text: "Something went wrong!",
+                            });
+                          }
+                      
+                    });
+                } // End of if
+            },
+            error: function (xhr, status, error) {
+                // Handle error response
+                console.error("Error saving data:", error);
+                $("#AddNonResidentModal").modal("hide");
+                swal({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "Something went wrong!",
+                });
+            },
+        });
+    });
+    
    
 });

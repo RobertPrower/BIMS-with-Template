@@ -24,6 +24,7 @@
   integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
   <link rel="stylesheet" href="./css/create-documents.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="css/sweetalert2.min.css">
 
 </head>
 
@@ -62,41 +63,89 @@
                 
               }
           </style>
+          <?php
+          if($departmentno == 2 || $departmentno == 4 || $departmentno == 5){
+            echo'
+            <div class="col-md-6 col-xl-3">
+              <a class="stat-cards-item btn-for-docu" href="generatereports.php">
+                <div class="stat-cards-icon primary" id="btnBrgyIDreq" >
+                  <i data-feather="activity" aria-hidden="true">
+                  </i>
+                </div>
+                <div class="stat-cards-info">
+                  <p class="stat-cards-info__num">Generate Reports</p>
+                  <p class="stat-cards-info__progress">
+                  </p>
+                </div>
+              </a>
+            </div>
+
+            <div class="col-md-6 col-xl-3">
+              <a class="stat-cards-item btn-for-docu" href="create-certificate-of-residency.php">
+                <div class="stat-cards-icon purple">
+                  <i data-feather="home" aria-hidden="true"></i>
+                </div>
+                <div class="stat-cards-info">
+                  <p class="stat-cards-info__num">Residency</p>
+                  <p class="stat-cards-info__progress">
+                  </p>
+                </div>
+              </a>
+            </div>
+
+            <div class="col-md-6 col-xl-3">
+              <a href="create-certificate-of-good-moral.php" class="btn-for-docu stat-cards-item">
+                <div class="stat-cards-icon purple">
+                  <i data-feather="heart" aria-hidden="true"></i>
+                </div>
+                <div class="stat-cards-info">
+                  <p class="stat-cards-info__num">Indigency</p>
+                  <p class="stat-cards-info__progress">
+                  </p>
+                </div>
+              </a>
+            </div>
+
+            <div class="col-md-6 col-xl-3">
+              <a href="create-certificate-of-good-moral.php" class="btn-for-docu stat-cards-item">
+                <div class="stat-cards-icon purple">
+                  <i data-feather="check" aria-hidden="true"></i>
+                </div>
+                <div class="stat-cards-info">
+                  <p class="stat-cards-info__num">Good Moral</p>
+                  <p class="stat-cards-info__progress">
+                  </p>
+                </div>
+              </a>
+            </div>
+
+            <div class="col-md-6 col-xl-3">
+              <a href="create-certificate-of-good-moral.php" class="btn-for-docu stat-cards-item">
+                <div class="stat-cards-icon purple">
+                  <i data-feather="search" aria-hidden="true"></i>
+                </div>
+                <div class="stat-cards-info">
+                  <p class="stat-cards-info__num">FTJS</p>
+                  <p class="stat-cards-info__progress">
+                  </p>
+                </div>
+              </a>
+            </div>';
+          }
+
+          
+          if($departmentno == 1 || $departmentno == 4 || $departmentno == 5){
+          
+            echo'
+             
 
           <div class="col-md-6 col-xl-3">
-            <a class="stat-cards-item btn-for-docu">
-              <div class="stat-cards-icon primary" id="btnBrgyIDreq">
-                <i data-feather="bar-chart-2" aria-hidden="true">
-                </i>
-              </div>
-              <div class="stat-cards-info">
-                <p class="stat-cards-info__num">Generate Reports</p>
-                <p class="stat-cards-info__progress">
-                </p>
-              </div>
-            </a>
-          </div>
-
-          <div class="col-md-6 col-xl-3">
-            <a class="stat-cards-item btn-for-docu">
-              <div class="stat-cards-icon warning">
-                <i data-feather="file" aria-hidden="true"></i>
-              </div>
-              <div class="stat-cards-info">
-                <p class="stat-cards-info__num">Barangay Clearances</p>
-                <p class="stat-cards-info__progress">
-                </p>
-              </div>
-            </a>
-          </div>
-
-          <div class="col-md-6 col-xl-3">
-            <a class="stat-cards-item btn-for-docu" href="create-certificate-of-residency.php">
+            <a href="create-business-permits.php" class="btn-for-docu stat-cards-item">
               <div class="stat-cards-icon purple">
-                <i data-feather="home" aria-hidden="true"></i>
+                <i data-feather="briefcase" aria-hidden="true"></i>
               </div>
               <div class="stat-cards-info">
-                <p class="stat-cards-info__num">Residency</p>
+                <p class="stat-cards-info__num">Business Permit</p>
                 <p class="stat-cards-info__progress">
                 </p>
               </div>
@@ -104,12 +153,12 @@
           </div>
 
           <div class="col-md-6 col-xl-3">
-            <a href="create-certificate-of-good-moral.php" class="btn-for-docu stat-cards-item">
+            <a href="create-building-permits.php" class="btn-for-docu stat-cards-item">
               <div class="stat-cards-icon purple">
-                <i data-feather="file" aria-hidden="true"></i>
+                <i data-feather="map-pin" aria-hidden="true"></i>
               </div>
               <div class="stat-cards-info">
-                <p class="stat-cards-info__num">Indigency</p>
+                <p class="stat-cards-info__num">Building Permit</p>
                 <p class="stat-cards-info__progress">
                 </p>
               </div>
@@ -117,12 +166,12 @@
           </div>
 
           <div class="col-md-6 col-xl-3">
-            <a href="create-certificate-of-good-moral.php" class="btn-for-docu stat-cards-item">
+            <a href="create-excavation-permits.php" class="btn-for-docu stat-cards-item">
               <div class="stat-cards-icon purple">
-                <i data-feather="file" aria-hidden="true"></i>
+                <i data-feather="alert-octagon" aria-hidden="true"></i>
               </div>
               <div class="stat-cards-info">
-                <p class="stat-cards-info__num">Good Moral</p>
+                <p class="stat-cards-info__num">Excavation Permit</p>
                 <p class="stat-cards-info__progress">
                 </p>
               </div>
@@ -130,12 +179,12 @@
           </div>
 
           <div class="col-md-6 col-xl-3">
-            <a href="create-certificate-of-good-moral.php" class="btn-for-docu stat-cards-item">
+            <a href="create-fencing-permits.php" class="btn-for-docu stat-cards-item">
               <div class="stat-cards-icon purple">
-                <i data-feather="file" aria-hidden="true"></i>
+                <i data-feather="tool" aria-hidden="true"></i>
               </div>
               <div class="stat-cards-info">
-                <p class="stat-cards-info__num">FTJS</p>
+                <p class="stat-cards-info__num">Fencing Permit</p>
                 <p class="stat-cards-info__progress">
                 </p>
               </div>
@@ -143,17 +192,25 @@
           </div>
 
           <div class="col-md-6 col-xl-3">
-            <a href="certificate-settings.php" class="btn-for-docu stat-cards-item">
+            <a href="create-tprs.php" class="btn-for-docu stat-cards-item">
               <div class="stat-cards-icon purple">
-                <i data-feather="file" aria-hidden="true"></i>
+                <i data-feather="command" aria-hidden="true"></i>
               </div>
               <div class="stat-cards-info">
-                <p class="stat-cards-info__num">Settings</p>
+                <p class="stat-cards-info__num">TPRS</p>
                 <p class="stat-cards-info__progress">
                 </p>
               </div>
             </a>
-          </div>
+          </div>';
+
+          }
+
+          ?>
+
+
+
+         
         </div>
       </div>
       
@@ -167,14 +224,14 @@
 </div>
 <!--JavaScript-->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="js/sweetalert2.min.js"></script>
 <!-- Chart library -->
 <script src="./plugins/chart.min.js"></script>
 <!-- Icons library -->
 <script src="plugins/feather.min.js"></script>
 <!-- Custom scripts -->
 <script src="js/script.js"></script>
-<script src="js/logout.js"></script>
+<script src="js/sidebar.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 

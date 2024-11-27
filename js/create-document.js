@@ -185,13 +185,23 @@ $(document).ready(function() {
                         var filename = "documents/certificate_of_indigency/"+response.file;
                         console.log(filename);
                         
-                        $("#generatepdf").attr("src", filename); 
-              
-                        $("#pdfModal").modal("show");
-    
-                        $('#pdfModal').on('shown.bs.modal', function () {
-                            Swal.close(); 
-                        });   
+                        if(response.success == true){
+                            $("#generatepdf").attr("src", filename); 
+                
+                            $("#pdfModal").modal("show");
+        
+                            $('#pdfModal').on('shown.bs.modal', function () {
+                                Swal.close(); 
+                            }); 
+                        }else{
+
+                            Swal.fire({
+                                icon: "error",
+                                title: "Server replies failed.",
+                                text: response.message,
+                            });
+
+                        }  
                     },
                     error: function (xhr, status, error) {
                         console.error("Error generating PDF:", error);
@@ -199,7 +209,7 @@ $(document).ready(function() {
 
                         Swal.fire({
                             icon: "error",
-                            title: "Oops...",
+                            title: "AJAX error",
                             text: "Something went wrong!",
                           });
                     },
@@ -225,13 +235,21 @@ $(document).ready(function() {
                         var filename = "documents/certificate_of_residency/"+response.file;
                         console.log(filename);
     
-                        $("#generatepdf").attr("src", filename); 
-    
-                        $("#pdfModal").modal("show");
-    
-                        $('#pdfModal').on('shown.bs.modal', function () {
-                            Swal.close(); 
-                        });                    
+                        if(response.success == true){
+                            $("#generatepdf").attr("src", filename); 
+        
+                            $("#pdfModal").modal("show");
+        
+                            $('#pdfModal').on('shown.bs.modal', function () {
+                                Swal.close(); 
+                            });  
+                        }else{
+                            Swal.fire({
+                                icon: "error",
+                                title: "Server replies failed.",
+                                text: response.message,
+                              });
+                        }                  
                               
                     },
                     error: function (xhr, status, error) {
@@ -240,7 +258,7 @@ $(document).ready(function() {
 
                         Swal.fire({
                             icon: "error",
-                            title: "Oops...",
+                            title: "AJAX error",
                             text: "Something went wrong!",
                           });
                     },
@@ -264,20 +282,28 @@ $(document).ready(function() {
                     success: function(response){
                         var filename = "documents/certificate_of_good_moral/"+response.file;
                         console.log(filename);
-    
-                        $("#generatepdf").attr("src", filename); 
-              
-                        $("#pdfModal").modal("show");
-    
-                        $('#pdfModal').on('shown.bs.modal', function () {
-                            Swal.close(); 
-                        });   
+        
+                        if(response.success == true){
+                            $("#generatepdf").attr("src", filename); 
+                
+                            $("#pdfModal").modal("show");
+        
+                            $('#pdfModal').on('shown.bs.modal', function () {
+                                Swal.close(); 
+                            });  
+                        }else{
+
+                            Swal.fire({
+                                icon: "error",
+                                title: "Server replies failed.",
+                                text: response.message,
+                            });
+
+                        } 
                         
                     },
                     error: function (xhr, status, error) {
                         console.error("Error generating PDF:", error);
-
-                        Swal.close(); 
 
                         Swal.fire({
                             icon: "error",
@@ -306,19 +332,25 @@ $(document).ready(function() {
                         var filename = "documents/first_time_job_seeker/"+response.file;
                         console.log(filename);
     
-                        $("#generatepdf").attr("src", filename); 
-              
-                        $("#pdfModal").modal("show");
-    
-                        $('#pdfModal').on('shown.bs.modal', function () {
-                            Swal.close(); 
-                        });   
-                        
+                        if(response.success == true){
+                            $("#generatepdf").attr("src", filename); 
+                
+                            $("#pdfModal").modal("show");
+        
+                            $('#pdfModal').on('shown.bs.modal', function () {
+                                Swal.close(); 
+                            }); 
+                        }else{
+                            Swal.fire({
+                                icon: "error",
+                                title: "Server replies failed",
+                                text: response.message,
+                              });
+                        }  
+                            
                     },
                     error: function (xhr, status, error) {
                         console.error("Error generating PDF:", error);
-
-                        Swal.close(); 
 
                         Swal.fire({
                             icon: "error",
@@ -328,12 +360,17 @@ $(document).ready(function() {
                     },
                 });
             }
+
+            $("input, select").val('');
         }else{
             Swal.fire({
                 icon: "error",
                 title: "Empty",
                 text: "Please Select a Resident!",
-              });
+            });
+
+              $("input, select").val('');
+
         }
     })
 

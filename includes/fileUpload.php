@@ -120,23 +120,6 @@ function captureImageUpload($what_field, $target_dir){
     return $fileName;
 }
 
-function check_empty_values ($required_fields){
-
-    $all_filled = true;
-
-    foreach($required_fields as $check_fields){
-        if($check_fields === "" || $check_fields === NULL){
-            $all_filled = false;
-            break;
-        }
-
-    }
-
-    return $all_filled;
-
-}
-
-
 // Function to check if a file with the given name exists in the non_resident_img table
 function generateUniqueFileName($target_dir, $originalFileName) {
     $imageFileType = strtolower(pathinfo($originalFileName, PATHINFO_EXTENSION));

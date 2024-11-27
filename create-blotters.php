@@ -24,10 +24,12 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
   <link href="https://cdn.datatables.net/v/bs5/dt-2.1.8/datatables.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@eonasdan/tempus-dominus@6.9.4/dist/css/tempus-dominus.min.css" crossorigin="anonymous">
-  <link rel="stylesheet" href="./css/create-documents.css">
+  <link rel="stylesheet" href="./css/style.min.css">
   <link rel="stylesheet" href="css/sweetalert2.min.css">
   <!-- <link rel="stylesheet" href="css/changelogo.css"> -->
   <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/css/bootstrap-datepicker.min.css" integrity="sha512-34s5cpvaNG3BknEWSuOncX28vz97bRI59UnVtEEpFX536A7BtZSJHsDyFoCl8S7Dt2TPzcrCEoHBGeM4SUBDBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
 
 
 </head>
@@ -52,7 +54,20 @@
         <div class="container">
             <div class="container p-3">
             <h2 class="main-title">Create Blotter</h2>
+
+                    <!-- Buttons -->
+                    <div class="d-flex justify-content-start" style="padding-left: 15px;">
+                    
+                        <!-- Button to trigger modal -->
+                        <button type="button" class="btn btn-info me-2" data-bs-toggle="modal" data-bs-target="#AddResidentModal">New Resident</button>
+                        <button type="button" class="btn btn-success me-2" data-bs-toggle="modal" data-bs-target="#AddNonResidentModal" id="AddNonResidentBtn">New Non Resident</button>    
+
+                    </div>
                     <?php 
+                        require_once 'includes/residentaddform.php';
+                        require_once 'includes/residentviewform.php';
+                        require_once 'includes/nonresidentaddform.php';
+                        require_once 'includes/nonresidentviewform.php';
                         require('includes/selectresidentmodal.php');
                         require('includes/selectnonresidentmodal.php');
                         require('includes/schedulemodal.php');
@@ -86,17 +101,17 @@
                                 <input type="text" class="form-control" id="id_to_record" hidden/>
 
                                 <div class="form-floating mt-3 mb-3 col-md-4">
-                                    <input type="text" class="form-control" id="fname" name="firstname" placeholder="Enter First Name Here" required disabled/>
+                                    <input type="text" class="form-control" id="f_name" name="firstname" placeholder="Enter First Name Here" required disabled/>
                                     <label for="fname">First Name</label>
                                 </div>
 
                                 <div class="form-floating mt-3 mb-3 col-md-4">
-                                    <input type="text" class="form-control" id="mname" name="middlename" placeholder="Enter Middle Name Here" disabled/>
+                                    <input type="text" class="form-control" id="m_name" name="middlename" placeholder="Enter Middle Name Here" disabled/>
                                     <label for="mname">Middle Name</label>
                                 </div>
 
                                 <div class="form-floating mt-3 mb-3 col-md-2">
-                                    <input type="text" class="form-control" id="lname" name="lastname" placeholder="Enter Last Name Here" required disabled/>
+                                    <input type="text" class="form-control" id="l_name" name="lastname" placeholder="Enter Last Name Here" required disabled/>
                                     <label for="lname">Last Name</label>
                                 </div>
 
@@ -331,7 +346,7 @@
 
                             </div>
                             <div class="form-floating mt-3 mb-3 col-md-4">
-                            <select class="form-select" id="mediator_name" aria-label="Floating label select example">
+                            <select class="form-select" id="mediator_name" aria-label="Floating label select example" require>
                                 <option value="" selected hidden>Select Mediator</option>
                             
                             </select>
@@ -421,21 +436,31 @@
 <script src="js/jquery-3.7.1.min.js"></script>
 <script src="js/bootstrap.bundle.min.js"></script>
 <script src="js/sweetalert2.min.js"></script>
+
 <script src="https://cdn.datatables.net/v/bs5/dt-2.1.8/datatables.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@eonasdan/tempus-dominus@6.9.11/dist/js/tempus-dominus.min.js" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha256-BRqBN7dYgABqtY9Hd4ynE+1slnEw+roEPFzQ7TRRfcg=" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/@eonasdan/tempus-dominus@6.9.11/dist/js/jQuery-provider.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/js/bootstrap-datepicker.min.js" integrity="sha512-LsnSViqQyaXpD4mBBdRYeP6sRwJiJveh2ZIbW41EBrNmKxgr/LFZIiWT6yr+nycvhvauz8c2nYMhrP80YhG7Cw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
 
 <!-- Icons library -->
 <script src="plugins/feather.min.js"></script>
 <!-- Custom scripts -->
 <script src="js/script.js"></script>
 <script src="js/sidebar.js"></script>
+<script src="js/residentviewmodal.js"></script>
+<script src="js/nonresidentaction.js"></script>
 <script src="js/create-blotters.js"></script>
 <script src="js/selectresnonresmodal.js"></script>
 <script src="js/schedulemodal.js"></script>
-<script src="js/logout.js"></script>
+<script src="js/camerafunction.js"></script>
+<!-- <script src="js/limitfileresanddisplayimg.js"></script>
+<script src="js/LimitFileUploadAndDisplayImgForEdit.js"></script>
+<script src="js/limitfileresanddisplayimg.js"></script> -->
+<!-- <script src="js/displayimagedata.js"></script> -->
 
 
 

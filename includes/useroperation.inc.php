@@ -55,6 +55,48 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
             die(json_encode(["success" => false, "message" => "Operation Failed: ". $e->getMessage()]));
         }
 
+    }else if ($operation_check =="EDIT_USER") {
+
+        try{
+            $username = trim($_POST["username"] ?? '');
+            $pword = trim($_POST["pword"] ?? '');
+            $fname = trim($_POST['fname']?? '');
+            $lname = trim($_POST['lname']?? '');
+            $mname = trim($_POST['mname']?? '');
+            $suffix = trim($_POST['suffix']??'');
+            $dept = trim($_POST['department']?? '');
+        
+            //Error Handles
+            $errors = [];
+        
+            if(is_input_empty($username, $pword, $fname, $lname) === true){
+                $errors["empty_input"]="Fill all the fields";
+            }
+        
+            if(is_username_taken($pdo,  $username)){
+                $errors["username_taken"]="Username already taken!";
+            }
+
+            $hashed_password = password_hash($pword, PASSWORD_DEFAULT);
+                
+            if($errors){
+                echo json_encode(["success" => false, "message" => $errors]);
+                die();
+            }
+
+            $img_filename = uploadImageFile("image_file", "img/users_img/");
+
+            if(update_user($pdo ,$username, $hashed_password, $fname ,$mname, $lname ,$suffix, $dept, $img_filename)){
+                echo json_encode(["success" => true, "message" => "User Edited Successfully"]);
+            }
+
+            
+        
+        }catch(PDOException $e){
+            die(json_encode(["success" => false, "message" => "Operation Failed: ". $e->getMessage()]));
+        }
+
+
     }elseif($operation_check=="TABLE_LOAD"){
         $start_from = limit_main_table($_POST['pageno']?? 1);
 

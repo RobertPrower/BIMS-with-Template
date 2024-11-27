@@ -1,12 +1,12 @@
 <?php
-if($_SERVER['REQUEST_METHOD']!=="POST"){
-    header('Location: ../index.php');
-    exit();
-}
+if($_SERVER['REQUEST_METHOD'] =="POST"){
 
 require_once('tcpdf/tcpdf.php');
 include_once('../includes/connecttodb.php');
 include_once('../includes/anti-SQLInject.php');
+require_once '../includes/config.php';
+require_once '../includes/enforce_login.php';
+require_once '../includes/checkforempty.php';
 
 date_default_timezone_set('Asia/Manila');
 header('Content-Type: text/html; charset=utf-8');
@@ -33,36 +33,41 @@ $directory = "building_permits/";
 $filePath = $_SERVER['DOCUMENT_ROOT'] . "/BIMS-with-Template/documents/".$directory."/generated_pdf_" . $nowtime . ".pdf";
 $filename = "generated_pdf_" . $nowtime . ".pdf";
 
-$username = null;
-$issuingdeptno = null;
+$issued_by_no = $_SESSION['user_id'];
+$issuingdeptno = $departmentno;
 
 $ID = $_POST['id_to_record'];
 $isResident = ($_POST['res_sta']=="RESIDENT")? "RESIDENT" : "NON_RESIDENT" ; 
 
-$fname=sanitizeData($_POST['first_name']);
-$mname=sanitizeData($_POST['middle_name']);
-$lname=sanitizeData($_POST['last_name']);
+$fname=sanitizeData($_POST['first_name']?? null);
+$mname=sanitizeData($_POST['middle_name']?? null);
+$lname=sanitizeData($_POST['last_name']?? null);
 $suffix = (isset($_POST['suffix']))? $suffix=$_POST['suffix']: null ;
 
 $fullname = $fname .' '. $mname .' '. $lname.' '. $suffix;
-$address = sanitizeData($_POST['address']);
+$address = sanitizeData($_POST['address']?? null);
 
+$presentedid=sanitizeData($_POST['presented_id']?? null);
+$IDnumber=sanitizeData($_POST['id_num']?? null);
 
-$presentedid=sanitizeData($_POST['presented_id']);
-$IDnumber=sanitizeData($_POST['id_num']);
-
-$building_hnum= sanitizeData($_POST['house_num']);
-$building_street= sanitizeData($_POST['street']);
-$building_subd = sanitizeData($_POST['subd']);
+$building_hnum= sanitizeData($_POST['house_num']?? null);
+$building_street= sanitizeData($_POST['street']?? null);
+$building_subd = sanitizeData($_POST['subd']?? null);
 $buildingaddress = utf8_decode($building_hnum .' '. $building_street. ' '. $building_subd);
-$permit_type= sanitizeData($_POST['purpose']);
+$permit_type= sanitizeData($_POST['purpose']?? null);
 $purpose = "Securing Building Permit "."(".$permit_type.")";
+
+$checkifempty=[$fname, $lname, $building_hnum, $building_street, $building_subd, $permit_type, $purpose, $address];
+
+if(!check_empty_values($checkifempty)){
+    die(json_encode(["success" => false, "message" => "Some fields are empty"]));
+}
 
 try{
 
     $pdo->beginTransaction();
 
-        $brgydetailsquery = "SELECT * FROM brgy_details";
+    $brgydetailsquery = "SELECT * FROM brgy_details";
     $brgydetailstmt = $pdo->prepare($brgydetailsquery);
     $brgydetailstmt->execute();
     $brgydetailsraw = $brgydetailstmt->fetchAll(PDO::FETCH_ASSOC); 
@@ -77,16 +82,16 @@ try{
     $determinedocustmt->closeCursor(); 
 
     $auditTrailquery= "
-            INSERT INTO tbl_cert_audit_trail(issuing_dept_no, datetime_issued, expiration)
-            VALUES (?, ?, DATE_ADD(CURDATE(), INTERVAL 1 YEAR));
+            INSERT INTO tbl_cert_audit_trail(issued_by_no,issuing_dept_no, datetime_issued)
+            VALUES (?,?, CURRENT_TIMESTAMP);
             ";
     $auditTrailstmt=$pdo->prepare($auditTrailquery);
-    $auditTrailstmt->execute([$issuingdeptno, $nowdate]);
+    $auditTrailstmt->execute([$issued_by_no, $issuingdeptno]);
 
     if ($isResident =="RESIDENT"){
 
-        $certDetailsquery = "INSERT INTO tbl_docu_request (resident_no ,presented_id, ID_number, purpose, pdffile) 
-                    VALUES (:residentno,:presentedid, :IDnumber, :purpose, :filenames);";
+        $certDetailsquery = "INSERT INTO tbl_docu_request (resident_no ,presented_id, ID_number, purpose, pdffile, expiration_date) 
+                    VALUES (:residentno,:presentedid, :IDnumber, :purpose, :filenames, DATE_ADD(CURDATE(), INTERVAL 1 YEAR));";
         $alldatatorequest = [
             ':residentno' => $ID,
             ':presentedid' => $presentedid,
@@ -104,8 +109,8 @@ try{
 
     }else{
 
-        $certDetailsquery = "INSERT INTO tbl_docu_request (nresident_no ,presented_id, ID_number, purpose, pdffile) 
-                    VALUES (:residentno,:presentedid, :IDnumber, :purpose, :filenames);";
+        $certDetailsquery = "INSERT INTO tbl_docu_request (nresident_no ,presented_id, ID_number, purpose, pdffile, expiration_date) 
+                    VALUES (:residentno,:presentedid, :IDnumber, :purpose, :filenames, DATE_ADD(CURDATE(), INTERVAL 1 YEAR));";
         $alldatatorequest = [
             ':residentno' => $ID,
             ':presentedid' => $presentedid,
@@ -126,13 +131,19 @@ try{
         $requestquery = "SELECT get_max_request_id() AS request_id";
         $requeststmt = $pdo->prepare($requestquery);
         $requeststmt -> execute();        
-        $requestid= $requeststmt->fetchColumn();
+        $requestid= $requeststmt->fetchColumn(); //For the QR code
+
+        $getusernamequery="SELECT fname FROM tbl_users WHERE user_id=?";
+        $usernamestmt=$pdo->prepare($getusernamequery);
+        $usernamestmt->execute([$issued_by_no]);
+
+        $username=$usernamestmt->fetchColumn();
 
         $pdo->commit();
 
 }catch(Exception $errors){
     $pdo->rollBack();
-    exit(json_encode(["error", $errors->getMessage()]));
+    exit(json_encode(["success"=> false , "message"=> $errors->getMessage()]));
 }
 
 
@@ -286,15 +297,17 @@ class MYPDF extends TCPDF {
         $this->SetXY(25, 276); 
         $this->Cell(5, 10, "Print Issued By", 0, 0, 'C', false, '', 0, false, 'T', 'M');
 
+        global $username;
         $this->SetXY(25, 279); 
-        $this->Cell(5, 10, "Wenzel", 0, 0, 'C', false, '', 0, false, 'T', 'M');
+        $this->Cell(5, 10, $username, 0, 0, 'C', false, '', 0, false, 'T', 'M');
 
-        // global $year_quarter;
+        global $year_quarter;
 
-        // $this->SetXY(25, 282); 
-        // $this->Cell(5, 10, $year_quarter, 0, 0, 'C', false, '', 0, false, 'T', 'M');
+        $this->SetXY(25, 282); 
+        $this->Cell(5, 10, $year_quarter, 0, 0, 'C', false, '', 0, false, 'T', 'M');
 
-        // global $expirationdate;
+        global $expirationdate;
+
         // $this->SetXY(25, 285); 
         // $this->Cell(5, 10, "May Bisa Hanggang ika-".$expirationdate, 0, 0, 'C', false, '', 0, false, 'T', 'M');
 
@@ -398,8 +411,13 @@ $html =
         <br><br>
 
         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Sa pamamagitan nito ay pinatutunayan na si <b class="bold">'.'  '.$fullname. '  '.'</b>
-         na kasulukuyang naninirahan sa <b class="bold">'.' '.$address. ' '.'</b> na nasasakupan ng Barangay 177, Sona 15, Distrito 1, Lungsod ng Caloocan.
-        </p>
+         na kasulukuyang naninirahan sa <b class="bold">'.' '.$address. '</b>';
+         
+         if($isResident == "RESIDENT"){
+          $html .= 'na nasasakupan ng Barangay 177, Sona 15, Distrito 1, Lungsod ng Caloocan';
+         }
+
+   $html .=     '.</p>
 
         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Ang pagpapatunay na ito ay ipinagkaloob sa kahilingan ni <b class="bold">'.'  '.$fullname. '  '.'</b> upang magamit sa kaniyang <b class="bold">'.' '.$purpose.' '.'</b>
          na matatagpuan sa <b class="bold">'.' '.$buildingaddress.' '.'</b> na nasasakupan ng Barangay 177, Sona 15, Distrito 1, Lungsod ng Caloocan.
@@ -459,7 +477,7 @@ $style = array(
 $pdf->write2DBarcode($qrContent, 'QRCODE,H', 95, 210, 30, 30, $style, 'N');
 
 $pdf->SetXY(108 , 240); 
-$pdf->Cell(5, 10, $qrContent, 0, 0, 'C', false, '', 0, false, 'T', 'M');
+// $pdf->Cell(5, 10, $qrContent, 0, 0, 'C', false, '', 0, false, 'T', 'M');
 
 $extension = strtolower(pathinfo($image, PATHINFO_EXTENSION));
 
@@ -555,7 +573,10 @@ $pdf->Cell(5, 10, "KALIHIM BARANGAY", 0, 0, 'C', false, '', 0, false, 'T', 'M');
 
 //Close and output PDF document
 $pdf->Output($filePath, 'F');
-echo json_encode(["file" => $filename]);
+echo json_encode(["success"=> true, "file" => $filename]);
 
-
+}else{
+    header('Location: ../index.php');
+    exit();
+}
 ?>
