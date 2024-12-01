@@ -151,8 +151,15 @@ $(document).ready(function () {
     $("#UserSignup").on("submit",function (e) {
         e.preventDefault();
 
+        var captureImageData = $("#imagePreview").attr("src");
         var formdata  = new FormData(this);
         formdata.append("operation", "ADD_USER");
+        formdata.append("captureImageData", captureImageData);
+
+        var fname = $("#fname").val();
+        var lname = $("#lname").val();
+        var depart = $("#department").val();
+        var file=$("imagefile").val();
 
         $.ajax({
             type: "POST",
@@ -176,6 +183,8 @@ $(document).ready(function () {
 
                     $("#AddUserModal").modal('hide');
 
+                    reloadTable();
+
                 }else{
                     Swal.fire({
                         icon: "error",
@@ -187,11 +196,63 @@ $(document).ready(function () {
                 console.log("Request failed:", textStatus, errorThrown);
             }
         });
-
-
-
+       
 
     });
+
+    $("#EditUserForm").on("submit",function (e) {
+      e.preventDefault();
+
+      var captureImageData = $("#editimagePreview").attr("src");
+      var formdata  = new FormData(this);
+      formdata.append("operation", "EDIT_USER");
+      formdata.append("captureImageData", captureImageData);
+
+      $.ajax({
+          type: "POST",
+          url: "includes/useroperation.inc.php",
+          data: formdata,
+          dataType: "JSON",
+          processData: false
+          ,contentType: false,
+          success: function (response) {
+
+              if(response.success){
+                  Swal.fire({
+                      icon: "success",
+                      title: "Success",
+                      text: "User has been added",
+                  });
+
+                  $('#UserSignup')[0].reset();
+
+                  $("#imagePreview").attr("src", "includes/img/blank-profile.webp");
+
+                  $("#EditUserModal").modal('hide');
+
+                  reloadTable();
+
+              }else{
+                  Swal.fire({
+                      icon: "error",
+                      title: "Server replies error",
+                      text: "Error :" + response.message,
+                  });
+
+                  $("#EditUserModal").modal('hide');
+
+              }
+          },error: function(jqXHR, textStatus, errorThrown) {
+              console.log("Request failed:", textStatus, errorThrown);
+
+              Swal.fire({
+                icon: "error",
+                title: "AJAX error",
+                text: "Something is wrong.",
+            });
+          }
+      });
+  });
 
     $("#showdeletedentries").click(function () {
       let query = $("#searchbox").val(); // Get the current search query
@@ -332,6 +393,8 @@ $(document).ready(function () {
         var filename =$(this).data("img_filename");
         var username = $(this).data("username")
         var created_by = $(this).data("created_by")
+        var user_id = $(this).data("user_id")
+
 
         if(whatbtn =="#ViewUserModal"){
           $("#ViewUserModal #imagePreview").attr("src", "includes/img/users_img/"+filename);
@@ -349,6 +412,10 @@ $(document).ready(function () {
           $("#edit_mname").val(mname);
           $("#edit_suffix").val(suffix);
           $("#edit_department").val(depart);
+          $("#edit_username").val(username);
+          $("#user_id").val(user_id);
+
+
         }
 
         if(depart == 1){
@@ -367,14 +434,163 @@ $(document).ready(function () {
           $(".usernamelabel").addClass("text-bg-secondary");
         }
 
-
-
-
-
-       
-
     });
-  
 
+    const passwordInput = $("#password");
+    const editpasswordInput = $("#edit_password");
+    const confirmPasswordInput = $("#confirm_password");
+    const editconfirmPasswordInput = $("#edit_confirm_password");
+    const submitButton = $("#edit_submit, #add_submit");
+    
+    // Initially hide password requirements
+    $(".passwordrequirements").hide();
+    
+    // Password requirements
+    const requirements = {
+        length: { regex: /^.{8,}$/, element: $(".req-length") },
+        uppercase: { regex: /[A-Z]/, element: $(".req-uppercase") },
+        lowercase: { regex: /[a-z]/, element: $(".req-lowercase") },
+        number: { regex: /\d/, element: $(".req-number") },
+        special: { regex: /[!@#$%^&*]/, element: $(".req-special") }
+    };
+    
+    // General function to validate password
+    function checkPassword(inputPassword, confirmInputPassword) {
+        const password = inputPassword.val();
+        let allValid = true;
+    
+        // Show password requirements when user starts typing
+        if (password.length > 0) {
+            $(".passwordrequirements").show();  // Show the requirements
+        } else {
+            $(".passwordrequirements").hide();  // Hide the requirements if the field is empty
+        }
+    
+        // Check each requirement for the current password
+        $.each(requirements, function (key, req) {
+            if (req.regex.test(password)) {
+                req.element.removeClass("text-danger").addClass("text-success");
+            } else {
+                req.element.removeClass("text-success").addClass("text-danger");
+                allValid = false;
+            }
+        });
+    
+        // Update the password field validation
+        if (allValid) {
+            inputPassword.removeClass("is-invalid").addClass("is-valid");
+        } else {
+            inputPassword.removeClass("is-valid").addClass("is-invalid");
+        }
+    
+        // Check if the passwords match (password and confirm password)
+        const passwordsMatchResult = passwordsMatch(inputPassword, confirmInputPassword);
+        
+        // Enable or disable the submit button based on validation
+        submitButton.prop("disabled", !(allValid && passwordsMatchResult));
+    }
+    
+    // Check if passwords match
+    function passwordsMatch(passwordInput, confirmPasswordInput) {
+        const password = passwordInput.val();
+        const confirmPassword = confirmPasswordInput.val();
+    
+        if (password && confirmPassword && password === confirmPassword) {
+            confirmPasswordInput.removeClass("is-invalid").addClass("is-valid");
+            return true;  // Passwords match
+        } else {
+            confirmPasswordInput.removeClass("is-valid").addClass("is-invalid");
+            return false;  // Passwords do not match
+        }
+    }
+    
+    // Bind input events for both password inputs (main and edit)
+    passwordInput.on("input", function() {
+        checkPassword(passwordInput, confirmPasswordInput);
+    });
+    editpasswordInput.on("input", function() {
+        checkPassword(editpasswordInput, editconfirmPasswordInput);
+    });
+    
+    // Bind input events for both confirm password inputs (main and edit)
+    confirmPasswordInput.on("input", function() {
+        // Check both password validity and matching
+        checkPassword(passwordInput, confirmPasswordInput);
+    });
+    editconfirmPasswordInput.on("input", function() {
+        // Check both password validity and matching
+        checkPassword(editpasswordInput, editconfirmPasswordInput);
+    });
+    
 
+    $(document).on("hide.bs.modal","#usernamepwd, #EditUserModal, #editusernamepwd", function () {
+
+      submitButton.prop("disabled", true);
+      $(".passwordrequirements").hide();
+      $("#edit_confirm_password, #edit_password, #password, #confirm_password").removeClass("is-valid").removeClass("is-invalid");
+
+      $.each(requirements, function (key, req) {
+
+          req.element.removeClass("text-success").addClass("text-danger");
+        
+      });
+      
+    });
+
+    $(document).on("click",".deletebtn", function () {
+
+        var user_id = $(this).data("user_id");
+
+        Swal.fire({
+          title: "Are you sure?",
+          text: "You won't be able to revert this!",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Yes, delete it!"
+        }).then((result) => {
+          if (result.isConfirmed) {
+            $.ajax({
+              type: "POST",
+              url: "includes/useroperation.inc.php",
+              data: {operation: "DELETE_USER", user_id: user_id},
+              dataType: "JSON",
+              success: function (response) {
+    
+                if(response.success == true){
+                    Swal.fire({
+                      icon: "success",
+                      title: "Success",
+                      text: "The user has been deleted!",
+                    });
+
+                    reloadTable()
+                }else{
+                    Swal.fire({
+                      icon: "error",
+                      title: "Server replies error",
+                      text: response.message,
+                    });
+                }
+                
+              },error: function (xhr, status, error) {
+                    Swal.fire({
+                      icon: "error",
+                      title: "AJAX error",
+                      text: "Something is wrong.",
+                    });
+              }
+            });
+          }else{
+            Swal.fire({
+              icon: "info",
+              title: "Delete has been canceled",
+              text: "The user has not been deleted.",
+          });
+          }
+        });
+      
+    });
+    
 });

@@ -20,5 +20,5 @@ function is_password_wrong(string $pwd, string $hashedPwd){
     
     return !password_verify($pwd, $hashedPwd);
   
-
 }
+

@@ -16,7 +16,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Create Certificates</title>
+  <title>Manage Settings | BIMS</title>
   <!-- Favicon -->
   <link rel="shortcut icon" href="img/logos/<?php echo $logo; ?>" type="image/x-icon">
   <!-- Custom styles -->
@@ -47,7 +47,7 @@
     <!-- ! Main -->
     <main class="main users chart-page" id="skip-target">
       <div class="container">
-        <h2 class="main-title">Create Certificates</h2>
+        <h2 class="main-title">Manage Settings</h2>
         <div class="row container">
           <style>
 
@@ -84,6 +84,18 @@
                   </div>
                   <div class="stat-cards-info">
                       <p class="stat-cards-info__num">Users</p>
+                      <p class="stat-cards-info__progress"></p>
+                  </div>
+              </a>
+          </div>
+
+             <div class="col-md-6 col-xl-3">
+              <a class="stat-cards-item btn-for-docu" href="audit_trail.php">
+                  <div class="stat-cards-icon primary" id="btnBrgyIDreq">
+                      <i data-feather="bar-chart" aria-hidden="true"></i>
+                  </div>
+                  <div class="stat-cards-info">
+                      <p class="stat-cards-info__num">Audit Trail</p>
                       <p class="stat-cards-info__progress"></p>
                   </div>
               </a>

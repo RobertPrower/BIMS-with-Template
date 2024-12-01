@@ -64,10 +64,9 @@
           </style>
 
           <div class="col-md-6 col-xl-3">
-            <a class="stat-cards-item btn-for-docu">
-              <div class="stat-cards-icon primary" id="btnBrgyIDreq">
-                <i data-feather="bar-chart-2" aria-hidden="true">
-                </i>
+            <a href="resident-audit-trail.php" class="stat-cards-item btn-for-docu">
+              <div class="stat-cards-icon purple">
+                <i data-feather="home" aria-hidden="true"></i>
               </div>
               <div class="stat-cards-info">
                 <p class="stat-cards-info__num">Resident Audit Trail</p>
@@ -78,25 +77,12 @@
           </div>
 
           <div class="col-md-6 col-xl-3">
-            <a class="stat-cards-item btn-for-docu">
-              <div class="stat-cards-icon warning">
-                <i data-feather="file" aria-hidden="true"></i>
-              </div>
-              <div class="stat-cards-info">
-                <p class="stat-cards-info__num">Non Resident Audit Trail</p>
-                <p class="stat-cards-info__progress">
-                </p>
-              </div>
-            </a>
-          </div>
-
-          <div class="col-md-6 col-xl-3">
-            <a class="stat-cards-item btn-for-docu" href="create-certificate-of-residency.php">
+            <a href="nonresident-audit-trail.php" class="stat-cards-item btn-for-docu">
               <div class="stat-cards-icon purple">
                 <i data-feather="home" aria-hidden="true"></i>
               </div>
               <div class="stat-cards-info">
-                <p class="stat-cards-info__num">Documents Audit Trail</p>
+                <p class="stat-cards-info__num" style="font-size: 15px;">Non Resident Audit Trail</p>
                 <p class="stat-cards-info__progress">
                 </p>
               </div>
@@ -104,12 +90,12 @@
           </div>
 
           <div class="col-md-6 col-xl-3">
-            <a href="create-certificate-of-good-moral.php" class="btn-for-docu stat-cards-item">
+            <a href="documents-audit-trail.php" class="stat-cards-item btn-for-docu">
               <div class="stat-cards-icon purple">
                 <i data-feather="file" aria-hidden="true"></i>
               </div>
               <div class="stat-cards-info">
-                <p class="stat-cards-info__num">Indigency</p>
+                <p class="stat-cards-info__num" style="font-size: 15px;">Documents Audit Trail</p>
                 <p class="stat-cards-info__progress">
                 </p>
               </div>
@@ -117,45 +103,19 @@
           </div>
 
           <div class="col-md-6 col-xl-3">
-            <a href="create-certificate-of-good-moral.php" class="btn-for-docu stat-cards-item">
+            <a href="blotters-audit-trail.php" class="btn-for-docu stat-cards-item">
               <div class="stat-cards-icon purple">
-                <i data-feather="file" aria-hidden="true"></i>
+                <i data-feather="book" aria-hidden="true"></i>
               </div>
               <div class="stat-cards-info">
-                <p class="stat-cards-info__num">Good Moral</p>
+                <p class="stat-cards-info__num">Blotter Audit Trail</p>
                 <p class="stat-cards-info__progress">
                 </p>
               </div>
             </a>
           </div>
 
-          <div class="col-md-6 col-xl-3">
-            <a href="create-certificate-of-good-moral.php" class="btn-for-docu stat-cards-item">
-              <div class="stat-cards-icon purple">
-                <i data-feather="file" aria-hidden="true"></i>
-              </div>
-              <div class="stat-cards-info">
-                <p class="stat-cards-info__num">FTJS</p>
-                <p class="stat-cards-info__progress">
-                </p>
-              </div>
-            </a>
-          </div>
-
-          <div class="col-md-6 col-xl-3">
-            <a href="certificate-settings.php" class="btn-for-docu stat-cards-item">
-              <div class="stat-cards-icon purple">
-                <i data-feather="file" aria-hidden="true"></i>
-              </div>
-              <div class="stat-cards-info">
-                <p class="stat-cards-info__num">Settings</p>
-                <p class="stat-cards-info__progress">
-                </p>
-              </div>
-            </a>
-          </div>
-        </div>
-      </div>
+         
       
     </main>
 
@@ -175,6 +135,7 @@
 <!-- Custom scripts -->
 <script src="js/script.js"></script>
 <script src="js/logout.js"></script>
+<script src="js/sidebar.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 

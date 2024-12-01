@@ -18,7 +18,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BIMS | Manage Residents</title>
+  <title>BIMS | Manage Non Residents</title>
   <!-- Favicon -->
   <link rel="shortcut icon" href="./img/logos/<?php echo $logo; ?>" type="image/x-icon">
   <!-- Custom styles -->
@@ -45,7 +45,7 @@
         <main>
             <div class="container">
                 <div class="container p-3">
-                    <h2 class="main-title">Residents Audit Trail</h2>
+                    <h2 class="main-title">Non Resident Audit Trail</h2>
                     <div class="row pb-3">
                         <div class="col-md-8">
                             <!-- Buttons -->
@@ -76,47 +76,39 @@
                                             
                                     </div>
                                                     
-                                <div class="modal fade" id="ViewResidentModal" name="add" tabindex="-1" aria-labelledby="EditResidentModalLabel" aria-hidden="true">
+                                    <div class="modal fade" id="ViewNonResidentModal" name="add" tabindex="-1" aria-labelledby="EditNonResidentModalLabel" aria-hidden="true">
                                     <div class="modal-dialog modal-xl">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="View    ResidentModalLabel">View Resident Status</h5>
+                                                <h5 class="modal-title" id="EditNonResidentModalLabel">Edit Non Resident</h5>
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
 
                                             <!-- Edit form -->
-                                            <form action="#" id="EditResidentModalForm" method="POST" enctype="multipart/form-data">
+                                            <form action="" id="EditNonResidentModalForm" method="POST" enctype="multipart/form-data">
                                                 <div class="modal-body">
                                             
                                                     <div class="row">
                                                         <div class="mt-3" style="width: 270px">
                                                         
                                                             <!--For the container of the camera and Picture-->
-                                                            <div class="col card" id="imageForm" style="border-radius: 15px; height: 400px">
+                                                            <div class="col card" id="imageForm" style="border-radius: 15px; height: 455px">
                                                                 <div class="text-center">
                                                                     <div class="mt-3 mb-4">
-
-                                                                    <!-- Hidden Text Box to Store the resident_id value and current page -->
-                                                               
-                                                                        <div id="cameraFeedWrapper" class="camera-frame" style="width: 200px; height: 200px; display: none;">
-                                                                            <div id="editcameraFeed"></div>
-                                                                        </div>
-
+                                                                      
                                                                         <!-- Preview image container (shown initially) -->
                                                                         <div id="imagePreviewWrapper" class="camera-frame" style="width: 200px; height: 200px;">
                                                                             <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
                                                                             class="rounded-circle img-fluid" id="imagePreview" style="width: 200px; height: 200px;" />
                                                                         </div>
 
-                                                                        <div class= "mt-2 mb-2 text-center">
-                                                                           
-                                                                            <br><br>
-                                                                            <span class="badge" id="delete_badge"><h6 id="delete_status"></h6><h6>Delete Status</h6></span>
+                                                                        <br><br><br>
 
-                                                                        </div>
+                                                                        <span class="badge" id="delete_badge"><h6 id="delete_status"></h6><h6>Delete Status</h6></span>
+
 
                                                                     </div>
-                                                                    
+                                                                
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -125,62 +117,65 @@
                                                             <div class="text-center row">
 
                                                                 <div class="form-floating mt-3 mb-3 col-md-4">
-                                                                    <input type="text" class="form-control" id="fname" name="fname" disabled>
+                                                                    <input type="text" class="form-control" id="fname" name="fname" placeholder="Enter First Name Here" disabled>
                                                                     <label for="fname">First Name</label>
                                                                 </div>
 
                                                                 <div class="form-floating mt-3 mb-3 col-md-4">
-                                                                    <input type="text" class="form-control" id="mname" name="mname" disabled>
+                                                                    <input type="text" class="form-control" id="mname" name="mname" placeholder="Enter Middle Name Here" disabled>
                                                                     <label for="mname">Middle Name</label>
                                                                 </div>
 
                                                                 <div class="form-floating mt-3 mb-3 col-md-3">
-                                                                    <input type="text" class="form-control" id="lname" name="lname" disabled>
+                                                                    <input type="text" class="form-control" id="lname" name="lname" placeholder="Enter Last Name Here" disabled>
                                                                     <label for="lname">Last Name</label>
                                                                 </div>
 
                                                                 <div class="form-floating mt-3 mb-3 col-md-1">
-                                                                    <input type="text" class="form-control" id="suffix" name="suffix" style="width:50px" disabled>
+                                                                    <input type="text" class="form-control" id="suffix" name="suffix" style="width:50px" placeholder="Enter Suffix Here" disabled>
                                                                     <label for="suffix">Suffix</label>
                                                                 </div>
 
                                                                 <div class="form-floating mt-3 mb-3 col-md-4">
-                                                                    <input type="text" class="form-control" id="house_no" name="house_no" disabled>
-                                                                    <label for="house_no">House No. (Blk no, Lot no, Unit no)</label>
+                                                                    <input type="text" class="form-control" id="house_no" name="house_no" placeholder="Enter House No Here" disabled>
+                                                                    <label for="house_no">Blk no, Lot no, Unit no</label>
                                                                 </div>
 
                                                                 <div class="form-floating mt-3 mb-3 col-md-4">
-                                                                    <input type="text" class="form-control" id="street" name="street" disabled>
+                                                                    <input type="text" class="form-control" id="street" name="street" placeholder="Enter Street Here" disabled>
                                                                     <label for="street">Street</label>
                                                                 </div>
 
                                                                 <div class="form-floating mt-3 mb-3 col-md-4">
-                                                                    <select class="form-select" id="subd" name="subd" aria-label="Floating label select example" disabled>
-                                                                        <option value="">Not Applicable</option>
-                                                                        <option value="Almar Subd">Almar Subd</option>
-                                                                        <option value="Caritas Village">Caritas Village</option>
-                                                                        <option value="Capitol Parkland">Capitol Parkland</option>
-                                                                        <option value="Cassel Spring Subd">Cassel Spring Subd</option>
-                                                                        <option value="Christina Homes">Christina Homes</option>
-                                                                        <option value="Cielito Homes">Cielito Homes</option>
-                                                                        <option value="Del Rey Ville 2 Subd">Del Rey Ville 2</option>
-                                                                        <option value="Kassel Villas">Kassel Villas</option>
-                                                                        <option value="Lilleville Subd">Lilleville Subd</option>
-                                                                        <option value="Maligay Park">Maligaya Park</option>
-                                                                        <option value="Maria Luisa Subd">Maria Luisa Subd</option>
-                                                                        <option value="North Matrix Villge 1">North Matrix Village 1</option>
-                                                                        <option value="North Matrix Ville">North Matrix Ville</option>
-                                                                        <option value="North Triangle">North Triangle</option>
-                                                                    </select>
+                                                                    <input type="text" class="form-control" id="subd" name="subd" placeholder="Enter Subdivision Here" disabled>
                                                                     <label for="subd">Subdivision</label>
                                                                 </div>
-                                                            
+
+                                                                <div class="form-floating mt-3 mb-3 col-md-4">
+                                                                    <input type="text" class="form-control" id="district_brgy" name="district_brgy" placeholder="Enter Subdivision Here" disabled>
+                                                                    <label for="district_brgy">District or Brgy</label>
+                                                                </div>
+
+                                                                <div class="form-floating mt-3 mb-3 col-md-4">
+                                                                    <input type="text" class="form-control" id="city" name="city" placeholder="Enter Subdivision Here" disabled>
+                                                                    <label for="city">City</label>
+                                                                </div>
+
+                                                                <div class="form-floating mt-3 mb-3 col-md-4">
+                                                                    <input type="text" class="form-control" id="province" name="province" placeholder="Enter Subdivision Here" disabled>
+                                                                    <label for="province">Province</label>
+                                                                </div>
+
+                                                                <div class="form-floating mt-3 mb-3 col-md-4">
+                                                                    <input type="text" class="form-control" id="zipcode" name="zipcode" placeholder="Enter Subdivision Here" disabled>
+                                                                    <label for="zipcode">Zipcode</label>
+                                                                </div>
+
                                                                 <div class="form-floating mt-3 mb-3 col-md-4">
                                                                     <select class="form-select" id="sex" name="sex" aria-label="Floating label select example" disabled>
-                                                                        <option hidden selected>Select Sex</option>
+                                                                        <option hidden selected>Select</option>
                                                                         <option value="Male">Male</option>
                                                                         <option value="Female">Female</option>
-                                                                        
                                                                     </select>
                                                                     <label for="sex">Sex</label>
                                                                 </div>
@@ -197,34 +192,19 @@
                                                                 </div>
 
                                                                 <div class="form-floating mt-3 mb-3 col-md-4">
-                                                                    <input type="text" class="form-control" id="birth_date"name="birth_date" disabled>
-                                                                    <label for="birth_place">Birth Date</label>
+                                                                    <input type="text" class="form-control" id="birth_date" name="birth_date" disabled>
+                                                                    <label for="birth_date">Birth Date</label>
                                                                 </div> 
 
                                                                 <div class="form-floating mt-3 mb-3 col-md-4">
-                                                                    <input type="Text" class="form-control" id="birth_place" name="birth_place" disabled>
+                                                                    <input type="Text" class="form-control" id="birth_place" name="birth_place" placeholder="Enter Birth Place Here" disabled>
                                                                     <label for="birth_place">Birth Place</label>
                                                                 </div> 
 
                                                                 <div class="form-floating mt-3 mb-3 col-md-4">
-                                                                    <input type="number" maxlength="11" class="form-control" id="cp_number" name="cellphone_number" disabled>
-                                                                    <label for="cp_number">Phone Number</label>
+                                                                    <input type="number" class="form-control" id="cellphone_number" name="cellphone_number" placeholder="Enter Phone Number Here" maxlength="11" disabled>
+                                                                    <label for="cellphone_number">Phone Number</label>
                                                                 </div> 
-
-                                                                <div class="form-floating mt-3 mb-3 col-md-2">
-                                                                    <select class="form-select" id="is_a_voter" name="is_a_voter" aria-label="Floating label select example" disabled>
-                                                                        <option hidden selected>Select Option</option>
-                                                                        <option value="1">YES</option>
-                                                                        <option value="0">NO</option>
-                                                                    
-                                                                    </select>
-                                                                    <label for="isavoter">Is a Voter?</label>
-                                                                </div>
-
-                                                                <div class="form-floating mt-3 mb-3 col-md-2">
-                                                                    <input type="number" maxlength="4" class="form-control" id="resident_since" name="rsince" disabled>
-                                                                    <label for="resident_since">Resident Since</label>
-                                                                </div>
 
                                                             </div>
                                                         </div>
@@ -234,6 +214,7 @@
                                                 
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                    <button type="submit" id="saveButton" class="btn btn-primary" data-id="' . $row['resident_id'] . '" >Save</button>
                                                 </div>
                                             </form>
 
@@ -314,7 +295,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/js/bootstrap-datepicker.min.js" integrity="sha512-LsnSViqQyaXpD4mBBdRYeP6sRwJiJveh2ZIbW41EBrNmKxgr/LFZIiWT6yr+nycvhvauz8c2nYMhrP80YhG7Cw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="js/sweetalert2.min.js"></script>
-<script src="js/residentaudittrail.js"> </script>
+<script src="js/nonresidentaudittrail.js"> </script>
 <script src="js/sidebar.js"></script>
 
 

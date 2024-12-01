@@ -9,7 +9,7 @@ $(document).ready(function () {
 
     function reloadTable(page) {
         $.ajax({
-        url: "includes/residentaudittrailoperation.php",
+        url: "includes/nonresidentaudittrailoperation.php",
         type: "POST",
         data: { pageno: page, operation: "RESIDENT_FETCH_TABLE"  },
         dataType: "HTML",
@@ -25,7 +25,7 @@ $(document).ready(function () {
 
     function updatePaginationControls(currentPage) {
         $.ajax({
-          url: "includes/residentaudittrailoperation.php",
+          url: "includes/nonresidentaudittrailoperation.php",
           type: "POST",
           data: { pageno: currentPage, operation: "FETCH_RESIDENT_PAGINATION" },
           dataType: "HTML",
@@ -57,7 +57,7 @@ $(document).ready(function () {
 
         if(!start_date && !end_date){
           $.ajax({
-            url: "includes/residentaudittrailoperation.php",
+            url: "includes/nonresidentaudittrailoperation.php",
             type: "POST",
             data: { search: query, page: page, operation: "RESIDENT_AUDIT_SEARCH" },
             success: function (data) {
@@ -70,7 +70,7 @@ $(document).ready(function () {
           });
         }else{
           $.ajax({
-            url: "includes/residentaudittrailoperation.php",
+            url: "includes/nonresidentaudittrailoperation.php",
             type: "POST",
             data: { search: query, page: page, operation: "RESIDENT_AUDIT_SEARCH_WITH_FILTERS", start_date: start_date, end_date: end_date},
             success: function (data) {
@@ -90,7 +90,7 @@ $(document).ready(function () {
       //Update the pagination controls every search
       function updateSearchPaginationControls(query, currentPage) {
         $.ajax({
-          url: "includes/residentaudittrailoperation.php",
+          url: "includes/nonresidentaudittrailoperation.php",
           type: "POST",
           data: {
             search: query,
@@ -115,6 +115,47 @@ $(document).ready(function () {
             console.error("Error updating search pagination data:", error);
           },
         });
+    }
+
+    function populatemodal(oldValues){
+      var imagepath = "includes/img/non_resident_img/" + oldValues.img_filename;
+
+      if(oldValues.is_deleted == 1){
+  
+        deleted_stat = "DELETED";
+        $("#delete_badge").removeClass("text-bg-danger");
+        $("#delete_badge").removeClass("text-bg-success");
+        $("#delete_badge").addClass("text-bg-danger");
+
+      }else{
+          deleted_stat = "ACTIVE";
+          $("#delete_badge").removeClass("text-bg-danger") 
+          $("#delete_badge").removeClass("text-bg-success");
+          $("#delete_badge").addClass("text-bg-success");
+
+      }
+
+
+      $("#viewresident_id").val(oldValues.audit_id);
+      $("#fname").val(oldValues.first_name);
+      $("#mname").val(oldValues.middle_name);
+      $("#lname").val(oldValues.last_name);
+      $("#house_no").val(oldValues.house_num);
+      $("#street").val(oldValues.street);
+      $("#subd").val(oldValues.subdivision);
+      $("#district_brgy").val(oldValues.district_brgy);
+      $("#city").val(oldValues.city);
+      $("#province").val(oldValues.province);
+      $("#zipcode").val(oldValues.zipcode);
+      $("#sex").val(oldValues.sex);
+      $("#marital_status").val(oldValues.marital_status);
+      $("#birth_date").val(oldValues.birth_date);
+      $("#birth_place").val(oldValues.birth_place);
+      $("#cellphone_number").val(oldValues.cellphone_num);
+      $("#is_a_voter").val(oldValues.is_a_voter);
+      $("#resident_since").val(oldValues.resident_since);
+      $("#delete_status").text(deleted_stat);
+      $("#imagePreview").prop("src", imagepath);
     }
 
       //For the search box
@@ -173,7 +214,7 @@ $(document).ready(function () {
   
       $.ajax({
           type: "POST",
-          url: "includes/residentaudittrailoperation.php",
+          url: "includes/nonresidentaudittrailoperation.php",
           data: { 
               start_date: start_date, 
               end_date: end_date, 
@@ -201,12 +242,13 @@ $(document).ready(function () {
 
     $(document).on("click",".viewOldButton",function (event) {
         event.preventDefault();
-        $("#ViewResidentModal").modal("show")
+        $("#ViewNonResidentModal").modal("show")
+
 
         var residentid = $(this).data("id");
   
         $.ajax({
-            url: "includes/residentaudittrailoperation.php",
+            url: "includes/nonresidentaudittrailoperation.php",
             type: "POST",
             data: { audit_id: residentid, operation: "FETCH_RESIDENT_OLD_DETAILS" },
             dataType: "JSON",
@@ -214,40 +256,8 @@ $(document).ready(function () {
               if (data && data.length > 0 && data[0].old_values) {
 
                 var oldValues = JSON.parse(data[0].old_values);
-                var imagepath = "includes/img/resident_img/" + oldValues.img_filename;
   
-                  if(oldValues.is_deleted == 1){
-  
-                      deleted_stat = "DELETED";
-                      $("#delete_badge").removeClass("text-bg-danger");
-                      $("#delete_badge").removeClass("text-bg-success");
-                      $("#delete_badge").addClass("text-bg-danger");
-  
-                  }else{
-                      deleted_stat = "ACTIVE";
-                      $("#delete_badge").removeClass("text-bg-danger") 
-                      $("#delete_badge").removeClass("text-bg-success");
-                      $("#delete_badge").addClass("text-bg-success");
-  
-                  }
-  
-  
-                $("#viewresident_id").val(oldValues.audit_id);
-                $("#fname").val(oldValues.first_name);
-                $("#mname").val(oldValues.middle_name);
-                $("#lname").val(oldValues.last_name);
-                $("#house_no").val(oldValues.house_num);
-                $("#street").val(oldValues.street);
-                $("#subd").val(oldValues.subdivision);
-                $("#sex").val(oldValues.sex);
-                $("#marital_status").val(oldValues.marital_status);
-                $("#birth_date").val(oldValues.birth_date);
-                $("#birth_place").val(oldValues.birth_place);
-                $("#cp_number").val(oldValues.cellphone_num);
-                $("#is_a_voter").val(oldValues.is_a_voter);
-                $("#resident_since").val(oldValues.resident_since);
-                $("#delete_status").text(deleted_stat);
-                $("#imagePreview").prop("src", imagepath);
+                populatemodal(oldValues)
   
               } else {
                   alert('No old values found for this resident.');
@@ -263,12 +273,13 @@ $(document).ready(function () {
 
     $(document).on("click",".viewNewButton",function (event) {
       event.preventDefault();
-      $("#ViewResidentModal").modal("show")
+      $("#ViewNonResidentModal").modal("show")
+
 
       var residentid = $(this).data("id");
 
       $.ajax({
-          url: "includes/residentaudittrailoperation.php",
+          url: "includes/nonresidentaudittrailoperation.php",
           type: "POST",
           data: { audit_id: residentid, operation: "FETCH_RESIDENT_NEW_DETAILS" },
           dataType: "JSON",
@@ -276,40 +287,8 @@ $(document).ready(function () {
             if (data && data.length > 0 && data[0].old_values) {
 
               var oldValues = JSON.parse(data[0].old_values);
-              var imagepath = "includes/img/resident_img/" + oldValues.img_filename;
-
-                if(oldValues.is_deleted == 1){
-
-                    deleted_stat = "DELETED";
-                    $("#delete_badge").removeClass("text-bg-danger");
-                    $("#delete_badge").removeClass("text-bg-success");
-                    $("#delete_badge").addClass("text-bg-danger");
-
-                }else{
-                    deleted_stat = "ACTIVE";
-                    $("#delete_badge").removeClass("text-bg-danger") 
-                    $("#delete_badge").removeClass("text-bg-success");
-                    $("#delete_badge").addClass("text-bg-success");
-
-                }
-
-
-              $("#viewresident_id").val(oldValues.audit_id);
-              $("#fname").val(oldValues.first_name);
-              $("#mname").val(oldValues.middle_name);
-              $("#lname").val(oldValues.last_name);
-              $("#house_no").val(oldValues.house_num);
-              $("#street").val(oldValues.street);
-              $("#subd").val(oldValues.subdivision);
-              $("#sex").val(oldValues.sex);
-              $("#marital_status").val(oldValues.marital_status);
-              $("#birth_date").val(oldValues.birth_date);
-              $("#birth_place").val(oldValues.birth_place);
-              $("#cp_number").val(oldValues.cellphone_num);
-              $("#is_a_voter").val(oldValues.is_a_voter);
-              $("#resident_since").val(oldValues.resident_since);
-              $("#delete_status").text(deleted_stat);
-              $("#imagePreview").prop("src", imagepath);
+            
+              populatemodal(oldValues);
 
             } else {
                 alert('No old values found for this resident.');
@@ -325,13 +304,12 @@ $(document).ready(function () {
 
     $(document).on("click",".viewNewEntryButton",function (event) {
       event.preventDefault();
-      $("#ViewResidentModal").modal("show")
-
+      $("#ViewNonResidentModal").modal("show")
 
       var audit_id = $(this).data("id");
 
       $.ajax({
-          url: "includes/residentaudittrailoperation.php",
+          url: "includes/nonresidentaudittrailoperation.php",
           type: "POST",
           data: { audit_id: audit_id, operation: "FETCH_RESIDENT_NEW_ENTRY" },
           dataType: "JSON",
@@ -339,40 +317,7 @@ $(document).ready(function () {
             if (data && data.length > 0 && data[0].new_entry) {
 
               var oldValues = JSON.parse(data[0].new_entry);
-              var imagepath = "includes/img/resident_img/" + oldValues.img_filename;
-
-                if(oldValues.is_deleted == 1){
-
-                    deleted_stat = "DELETED";
-                    $("#delete_badge").removeClass("text-bg-danger");
-                    $("#delete_badge").removeClass("text-bg-success");
-                    $("#delete_badge").addClass("text-bg-danger");
-
-                }else{
-                    deleted_stat = "ACTIVE";
-                    $("#delete_badge").removeClass("text-bg-danger") 
-                    $("#delete_badge").removeClass("text-bg-success");
-                    $("#delete_badge").addClass("text-bg-success");
-
-                }
-
-
-              $("#viewresident_id").val(oldValues.audit_id);
-              $("#fname").val(oldValues.first_name);
-              $("#mname").val(oldValues.middle_name);
-              $("#lname").val(oldValues.last_name);
-              $("#house_no").val(oldValues.house_num);
-              $("#street").val(oldValues.street);
-              $("#subd").val(oldValues.subdivision);
-              $("#sex").val(oldValues.sex);
-              $("#marital_status").val(oldValues.marital_status);
-              $("#birth_date").val(oldValues.birth_date);
-              $("#birth_place").val(oldValues.birth_place);
-              $("#cp_number").val(oldValues.cellphone_num);
-              $("#is_a_voter").val(oldValues.is_a_voter);
-              $("#resident_since").val(oldValues.resident_since);
-              $("#delete_status").text(deleted_stat);
-              $("#imagePreview").prop("src", imagepath);
+             populatemodal(oldValues)
 
             } else {
                 alert('No old values found for this resident.');
@@ -388,12 +333,11 @@ $(document).ready(function () {
 
     $(document).on("click",".viewRecoverButton, .viewDeleteButton",function (event) {
       event.preventDefault();
-      $("#ViewResidentModal").modal("show")
-
+      $("#ViewNonResidentModal").modal("show")
       var audit_id = $(this).data("id");
 
       $.ajax({
-          url: "includes/residentaudittrailoperation.php",
+          url: "includes/nonresidentaudittrailoperation.php",
           type: "POST",
           data: { audit_id: audit_id, operation: "FETCH_RESIDENT_RECOVER_DELETE" },
           dataType: "JSON",
@@ -402,41 +346,7 @@ $(document).ready(function () {
 
               var newValues = JSON.parse(data[0].new_entry);
 
-
-              var imagepath = "includes/img/resident_img/" + newValues.img_filename;
-
-                if(newValues.is_deleted == 1){
-
-                    deleted_stat = "DELETED";
-                    $("#delete_badge").removeClass("text-bg-danger");
-                    $("#delete_badge").removeClass("text-bg-success");
-                    $("#delete_badge").addClass("text-bg-danger");
-
-                }else{
-                    deleted_stat = "ACTIVE";
-                    $("#delete_badge").removeClass("text-bg-danger") 
-                    $("#delete_badge").removeClass("text-bg-success");
-                    $("#delete_badge").addClass("text-bg-success");
-
-                }
-
-
-              $("#viewresident_id").val(newValues.audit_id);
-              $("#fname").val(newValues.first_name);
-              $("#mname").val(newValues.middle_name);
-              $("#lname").val(newValues.last_name);
-              $("#house_no").val(newValues.house_num);
-              $("#street").val(newValues.street);
-              $("#subd").val(newValues.subdivision);
-              $("#sex").val(newValues.sex);
-              $("#marital_status").val(newValues.marital_status);
-              $("#birth_date").val(newValues.birth_date);
-              $("#birth_place").val(newValues.birth_place);
-              $("#cp_number").val(newValues.cellphone_num);
-              $("#is_a_voter").val(newValues.is_a_voter);
-              $("#resident_since").val(newValues.resident_since);
-              $("#delete_status").text(deleted_stat);
-              $("#imagePreview").prop("src", imagepath);
+              populatemodal(newValues)
 
             } else {
                 alert('No old values found for this resident.');

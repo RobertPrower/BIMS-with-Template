@@ -24,6 +24,7 @@ $(document).ready(function () {
     case "Create Certificates":
         $("#certificates_btn").addClass("active");
     break;
+    case "Manage Blotter Schedule":
     case "Manage Blotters":
     case "Create Blotter":
         $("#blotter_btn").addClass("active");
@@ -33,6 +34,17 @@ $(document).ready(function () {
     break;
     case "Manage Non-Residents":
         $("#non_resident_btn").addClass("active");
+    break;
+    case "Manage Settings":
+    case "Select Audit Trail":
+    case "Residents Audit Trail":
+    case "Non Resident Audit Trail":
+    case "Documents Audit Trail":
+    case "Manage Users":
+    case "Manage Brgy Details":
+    
+
+        $("#settings_btn").addClass("active");
     break;
    }
 });

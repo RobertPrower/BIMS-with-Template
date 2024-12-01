@@ -137,7 +137,7 @@ $(document).ready(function () {
                                 end: new Date(mediation_enddate),
                                 complainant: blotter.complainant_fullname,
                                 respondent: blotter.respondent_fullname,
-                                reportstatus: blotter.report_status,
+                                report_status: blotter.report_status,
                                 color: blotter.schedule_color
                             });
                         });
@@ -154,11 +154,16 @@ $(document).ready(function () {
                 var formattedincident = info.event.extendedProps.incdate;
     
                 var report;
-                switch (info.event.extendedProps.reportstatus){
-                    case "1": report = "<span style='color: green;'> RESOLVED</span>"; break;
-                    case "0": report = "<span style='color: orange;'> ONGOING</span>"; break;
-                    case "2": report = "<span style='color: red;'> FILE TO ACTION</span>"; break;
-                    default: report = "Unknown Status";
+                if (info.event.extendedProps.report_status == 1){
+                    report = "<span style='color: green;'> RESOLVED</span>"; 
+                }else if(info.event.extendedProps.report_status == 0){
+                    report = "<span style='color: orange;'> ONGOING</span>"; 
+
+                }else if(info.event.extendedProps.report_status == 2){               
+                    report = "<span style='color: red;'> FILE TO ACTION</span>";
+                    
+                }else{
+                    report = "Unknown Status";
                 }
     
                 Swal.fire({

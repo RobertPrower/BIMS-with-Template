@@ -89,7 +89,7 @@
                                                                 </div>
                                                                 <button type="button" id="openCamera" class="btn btn-primary btn-lg col-md-12">Open Camera</button>
                                                                 <div class="form-floating mt-3 mb-3">
-                                                                    <input type="file" class="form-control" id="imagefile" name="image_file" placeholder="Upload Picture" required>
+                                                                    <input type="file" class="form-control" id="imagefile" name="image_file" placeholder="Upload Picture">
                                                                     <label for="floatingInput">Upload Image</label>
                                                                 </div>
                                                             </div>
@@ -152,16 +152,29 @@
                                                 <div class="form-floating mb-3">
                                                     <input type="password" class="form-control" id="password" name="pword" placeholder="Password" required>
                                                     <label for="password">Password</label>
+
+                                                    <div class="invalid-feedback">
+                                                        Password does not meet the requirements.
+                                                    </div>
+                                                    <br class="passwordrequirements">
+                                                    <ul id="passwordRequirements" class="passwordrequirements list-unstyled text-center">
+                                                        <li class="req-length text-danger">At least 8 characters</li>
+                                                        <li class="req-uppercase text-danger">At least one uppercase letter</li>
+                                                        <li class="req-lowercase text-danger">At least one lowercase letter</li>
+                                                        <li class="req-number text-danger">At least one number</li>
+                                                        <li class="req-special text-danger">At least one special character (!@#$%^&*)</li>
+                                                    </ul>
+
                                                 </div>
                                                 <div class="form-floating mb-3">
-                                                    <input type="password" class="form-control" id="confirm_password" name="password" placeholder="Confirm Password" required>
+                                                    <input type="password" class="form-control" id="confirm_password" name="pword2" placeholder="Confirm Password" required>
                                                     <label for="password">Confirm Password</label>
                                                 </div>
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                                 <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#AddUserModal">Back</button>
-                                                <button type="submit" class="btn btn-primary">Save changes</button>
+                                                <button type="submit" class="btn btn-primary submit_btn" id="add_submit" disabled>Submit</button>
                                             </div>
                                         </div>
                                     </div>
@@ -264,16 +277,16 @@
                                                     <div class="col card" style="border-radius: 15px; height: 400px">
                                                         <div class="text-center">
                                                             <div class="mt-3 mb-4">
-                                                                <div id="cameraFeedWrapper" class="camera-frame cameraFeedWrapper" style="width: 200px; height: 200px; display: none;">
-                                                                    <div id="cameraFeed"></div>
+                                                                <div id="editcameraFeedWrapper" class="camera-frame cameraFeedWrapper" style="width: 200px; height: 200px; display: none;">
+                                                                    <div id="editcameraFeed"></div>
                                                                 </div>
-                                                                <div id="imagePreviewWrapper" class="camera-frame imagePreviewWrapper" style="width: 200px; height: 200px;">
+                                                                <div id="editimagePreviewWrapper" class="camera-frame imagePreviewWrapper" style="width: 200px; height: 200px;">
                                                                     <img src="includes/img/blank-profile.webp" id="editimagePreview" class="imagePreview" alt="Profile Image" />
                                                                 </div>
                                                             </div>
                                                             <button type="button" id="editopenCamera" class="btn btn-primary btn-lg col-md-12">Open Camera</button>
                                                             <div class="form-floating mt-3 mb-3">
-                                                                <input type="file" class="form-control" id="editimagefile" name="image_file" placeholder="Upload Picture" required>
+                                                                <input type="file" class="form-control" id="editimagefile" name="image_file" placeholder="Upload Picture">
                                                                 <label for="floatingInput">Upload Image</label>
                                                             </div>
                                                         </div>
@@ -312,12 +325,57 @@
                                                 </div>
                                             </div>
                                             <div class="modal-footer">
-                                                <button type="button" id="NextButton" data-bs-target="#usernamepwd" data-bs-toggle="modal" class="btn btn-primary">Next</button>
+                                                <button type="button" id="NextButton" data-bs-target="#editusernamepwd" data-bs-toggle="modal" class="btn btn-primary">Next</button>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+
+                            <div class="modal fade" id="editusernamepwd" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Username and Password</h1>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="form-floating mb-3">
+                                                    <input type="text" class="form-control" id="user_id" name="user_id" placeholder="Username" hidden>
+                                                    <input type="text" class="form-control" id="edit_username" name="username" placeholder="Username" required>
+                                                    <label for="username">Username</label>
+                                                </div>
+                                                <div class="form-floating mb-3">
+                                                    <input type="password" class="form-control" id="edit_password" name="pword" placeholder="Password" required>
+                                                    <label for="password">Password</label>
+
+                                                    <div class="invalid-feedback">
+                                                        Password does not meet the requirements.
+                                                    </div>
+                                                    <br class="passwordrequirements">
+                                                    <ul id="passwordRequirements" class="passwordrequirements list-unstyled text-center">
+                                                        <li class="req-length text-danger">At least 8 characters</li>
+                                                        <li class="req-uppercase text-danger">At least one uppercase letter</li>
+                                                        <li class="req-lowercase text-danger">At least one lowercase letter</li>
+                                                        <li class="req-number text-danger">At least one number</li>
+                                                        <li class="req-special text-danger">At least one special character (!@#$%^&*)</li>
+                                                    </ul>
+                                                </div>
+                                                <div class="form-floating mb-3">
+                                                    <input type="password" class="form-control" id="edit_confirm_password" name="pword2" placeholder="Confirm Password" required>
+                                                    <label for="password">Confirm Password</label>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#EditUserProfile">Back</button>
+                                                <button type="submit" class="btn btn-primary submit_btn" id="edit_submit" disabled>Submit</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                            </div>
+
+
                           </form>
                                 <!-- End of Users Modal -->
                              
@@ -404,7 +462,11 @@
 <!-- Custom scripts -->
 <script src="js/script.js"></script>
 <script src="js/limitfileresanddisplayimg.js"></script>
+<script src="js/LimitFileUploadAndDisplayImgForEdit.js"></script>
+<script src="js/camerafunction.js"></script>
 <script src="js/users.js"></script>
+<script src="js/sidebar.js"></script>
+
 </body>
 
 </html>

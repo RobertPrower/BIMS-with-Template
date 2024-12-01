@@ -44,15 +44,14 @@ foreach ($results as $row) {
             data-img_filename="' . htmlspecialchars($row['img_filename'], ENT_QUOTES) . '"
             data-username="' . htmlspecialchars($row['username'], ENT_QUOTES) . '"
             data-created_by="' . htmlspecialchars($row['created_by'], ENT_QUOTES) . '"
-            
-
+            data-user_id="' . htmlspecialchars($row['user_id'], ENT_QUOTES) . '"
 
             data-bs-toggle="modal" data-bs-target="#EditUserProfile">Edit</button>';
         }else{
             //Nothing to Display
         }
 
-        if($dept==="Admin"){
+        if($departmentno==4){
             if($row['is_deleted'] == "0"){ 
                 echo '<button class="btn btn-danger mx-1 deletebtn" id="deletebtn"
                 data-user_id="' . htmlspecialchars($row['user_id']) . '">Delete</button>';

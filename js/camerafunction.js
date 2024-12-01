@@ -2,7 +2,7 @@ $(document).ready(function() {
     var isCameraOpen = false;
 
     $('#openCamera, #editopenCamera').click(function() {
-        var isEdit = $("#EditResidentModal, #EditNonResidentModal").hasClass("show");
+        var isEdit = $("#EditResidentModal, #EditNonResidentModal, #EditUserProfile").hasClass("show");
 
 
         if (!isCameraOpen) {

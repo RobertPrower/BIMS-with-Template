@@ -203,6 +203,10 @@ if($operation_check == "ADD"){ //For the add operation
         $pdo->beginTransaction();
    
         // Prepare SQL statement for updating resident data
+        
+        $update_audit_sql= "UPDATE res_audit_trail SET edited_depart_no=?, last_edited_by=?, last_edited_dt=CURRENT_TIMESTAMP WHERE res_at_id=?";
+        $atstmt= $pdo->prepare($update_audit_sql);
+        $atstmt -> execute([$departno, $userid, $residentId]);
 
         $entriestodb = [$fname, $mname, $lname, $suffix, $houseno, $street, $subd,$residentsince, $sex, $maritalstatus, $birthdate, $birthplace, $cellphonenumber, $is_a_voter];
         
@@ -223,10 +227,6 @@ if($operation_check == "ADD"){ //For the add operation
         
         // Send success response
         echo json_encode(["success" => true, "message" => "Data updated successfully". " ImageStatus: " . $imgopresponse]);
-
-        $update_audit_sql= "UPDATE res_audit_trail SET edited_depart_no=?, last_edited_by=?, last_edited_dt=CURRENT_TIMESTAMP WHERE res_at_id=?";
-         $atstmt= $pdo->prepare($update_audit_sql);
-         $atstmt -> execute([$departno, $userid, $residentId]);
 
         $pdo->commit();
     } catch (PDOException $e) {
@@ -250,15 +250,15 @@ if($operation_check == "ADD"){ //For the add operation
         try{
 
             $pdo->beginTransaction();
-        
-            $update_query = "UPDATE resident SET is_deleted = 1 WHERE resident_id = ?";
-            $update_stmt = $pdo->prepare($update_query);
-            $update_stmt->execute([$id_to_delete]);
 
             $update_audit_sql= "UPDATE res_audit_trail SET dept_del_no=?, del_by_no=?, del_dt=CURRENT_TIMESTAMP WHERE res_at_id=?";
             $atstmt= $pdo->prepare($update_audit_sql);
             $atstmt -> execute([$departno, $userid, $id_to_delete]);
             echo json_encode(["success" => true, "message" => "Record Soft deleted successfully."]);
+        
+            $update_query = "UPDATE resident SET is_deleted = 1 WHERE resident_id = ?";
+            $update_stmt = $pdo->prepare($update_query);
+            $update_stmt->execute([$id_to_delete]);
 
             $pdo->commit();
         }catch(PDOException $e){
@@ -282,14 +282,16 @@ if($operation_check == "ADD"){ //For the add operation
         
             $pdo->beginTransaction();
 
-            $update_query = "UPDATE resident SET is_deleted = 0 WHERE resident_id = ?";
-            $update_stmt = $pdo->prepare($update_query);
-            $update_stmt->execute([$id_to_delete]);
-
             $update_audit_sql= "UPDATE res_audit_trail SET dept_rec_no=?, rec_by_no=?, rec_dt= CURRENT_TIMESTAMP WHERE res_at_id=?";
             $atstmt= $pdo->prepare($update_audit_sql);
             $atstmt -> execute([$departno, $userid, $id_to_delete]);
             echo json_encode(["success" => true, "message" => "Record recovered successfully."]);
+
+            $update_query = "UPDATE resident SET is_deleted = 0 WHERE resident_id = ?";
+            $update_stmt = $pdo->prepare($update_query);
+            $update_stmt->execute([$id_to_delete]);
+
+          
 
             $pdo->commit();
         }catch(PDOException $e){

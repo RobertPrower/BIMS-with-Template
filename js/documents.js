@@ -908,18 +908,28 @@ $(document).ready(function () {
           data: { request_id: request_id, OPERATION: "DELETE_ENTRY" },
           dataType: "json",
           success: function (response) {
-            console.log("Data deleted successfully:", response);
-            Swal.fire({
-              title: "Success",
-              text: "Record Successfully Deleted",
-              icon: "info"
-            });
-            //If the modal was fired from a search make sure still the same page
-            if (currentSearch) {
-              fetchResults(currentSearch, page);
-            } else {
-              //If not just reload the page
-              reloadTable(page);
+            if(response.success == true){
+              console.log("Data deleted successfully:", response);
+              Swal.fire({
+                title: "Success",
+                text: "Record Successfully Deleted",
+                icon: "info"
+              });
+              //If the modal was fired from a search make sure still the same page
+              if (currentSearch) {
+                fetchResults(currentSearch, page);
+              } else {
+                //If not just reload the page
+                reloadTable(page);
+              }
+            }else{
+
+              Swal.fire({
+                title: "error",
+                text: response.message,
+                icon: "error"
+              }); 
+
             }
           },
           error: function (xhr, status, error) {
@@ -927,7 +937,7 @@ $(document).ready(function () {
             Swal.fire({
               title: "Error",
               text: "Failed to delete the entry.",
-              icon: "info"
+              icon: "error"
             });
           },
         });
@@ -954,7 +964,7 @@ $(document).ready(function () {
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, delete it!",
+      confirmButtonText: "Yes",
     }).then((result) => {
       if (result.isConfirmed) {
         $.ajax({
@@ -963,13 +973,21 @@ $(document).ready(function () {
           data: { request_id: request_id, OPERATION: "UNDO_DELETE" },
           dataType: "json",
           success: function (response) {
-            console.log("Data recovered successfully:", response);
-            Swal.fire({
-              title: "Success",
-              text: "Record Has Been Restored",
-              icon: "info"
-            }); 
-            reloadDeletedEntries(page);
+            if(response.success == true){
+              console.log("Data recovered successfully:", response);
+              Swal.fire({
+                title: "Success",
+                text: "Record Has Been Restored",
+                icon: "info"
+              }); 
+              reloadDeletedEntries(page);
+            }else{
+              Swal.fire({
+                title: "Success",
+                text: response.message,
+                icon: "error"
+              }); 
+            }
           },
           error: function (xhr, status, error) {
             console.error("Error deleting data:", error);

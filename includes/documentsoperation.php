@@ -19,13 +19,21 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
 
     if($operation_check =="REVOKE"){
         if(isset($request_Id)){
-            $sqlquery = "UPDATE tbl_docu_request SET `status`=? WHERE request_id=?";
-            $stmt = $pdo->prepare($sqlquery);
-            $stmt->execute(["2", $request_Id ]);
 
-            $response="Certificate has been revoked!!";
+            try{
+                $pdo->beginTransaction();
+                $sqlquery = "UPDATE tbl_docu_request SET `status`=? WHERE request_id=?";
+                $stmt = $pdo->prepare($sqlquery);
+                $stmt->execute(["2", $request_Id ]);
 
-            echo json_encode(value: ["success" => true, $response]);
+                $response="Certificate has been revoked!!";
+
+                echo json_encode(value: ["success" => true, $response]);
+                $pdo->commit();
+            }catch(PDOException $e){
+                $pdo->rollBack();
+                echo json_encode(value: ["success" => false, $e->getMessage()]);
+            }
         }else{
             $response="No request ID recevied";
             echo "REVOKE";
@@ -34,16 +42,22 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
 
     }elseif($operation_check =="RESTORE"){
         if(isset($request_Id)){
-            $sqlquery = "UPDATE tbl_docu_request SET `status`=? WHERE request_id=?";
-            $stmt = $pdo->prepare($sqlquery);
-            $stmt->execute(["0", $request_Id ]);
+            try{
+                $pdo->beginTransaction();
+                $sqlquery = "UPDATE tbl_docu_request SET `status`=? WHERE request_id=?";
+                $stmt = $pdo->prepare($sqlquery);
+                $stmt->execute(["0", $request_Id ]);
 
-            $response="Certificate has been restored!!";
+                $response="Certificate has been restored!!";
 
-            echo json_encode(value: ["success" => true, $response]);
+                echo json_encode(value: ["success" => true, $response]);
+                $pdo->commit();
+            }catch(PDOException $e){
+                $pdo->rollBack();
+                echo json_encode(value: ["success" => false, "message" => $response]);
+            }
         }else{
             $response="No request ID recevied";
-            echo "RESTORE";
             exit(json_encode(value: ["success" => false, $response]));
 
         }
@@ -54,23 +68,35 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
             $presentedid = $_POST['presented_id'];
             $id_number = $_POST['id_num'];
 
-            $sqlquery = "UPDATE tbl_cert_audit_trail
-            SET expiration = ?, datetime_edited = ?, `edited_by_no`=?, `edited_depart_no`=?	
-            WHERE audit_trail_id IN (SELECT audit_trail_no FROM tbl_docu_request WHERE request_id=?)";
-            $stmt = $pdo->prepare($sqlquery);
-            $stmt->execute([$expiration, $nowdate, $user_id, $depart_no, $request_Id]);
+            try{
+
+                $pdo->beginTransaction();
+
+                $sqlquery = "UPDATE tbl_cert_audit_trail
+                SET datetime_edited = ?, `edited_by_no`=?, `edited_depart_no`=?	
+                WHERE audit_trail_id IN (SELECT audit_trail_no FROM tbl_docu_request WHERE request_id=?)";
+                $stmt = $pdo->prepare($sqlquery);
+                $stmt->execute([$nowdate, $user_id, $depart_no, $request_Id]);
 
 
-            $sqlquery2 = "UPDATE tbl_docu_request SET `presented_id`=?, id_number=? WHERE request_id=?";
-            $stmt2 = $pdo->prepare($sqlquery2);
-            $stmt2->execute([$presentedid, $id_number, $request_Id]);
+                $sqlquery2 = "UPDATE tbl_docu_request SET `presented_id`=?, id_number=?, expiration_date = ? WHERE request_id=?";
+                $stmt2 = $pdo->prepare($sqlquery2);
+                $stmt2->execute([$presentedid, $id_number, $expiration ,$request_Id]);
 
 
-            $response="The certificate has been updated";
+                $response="The certificate has been updated";
+                $pdo->commit();
 
-            echo json_encode(value: ["success" => true, $response]);
+                echo json_encode(value: ["success" => true, "message" => $response]);
+            }catch(PDOException $e){
+                $pdo->rollBack();
+
+                echo json_encode(value: ["success" => false, "message" => $e->getMessage()]);
+
+
+            }
         }else{
-            exit(json_encode(value: ["success" => false, "No Request ID recieved"]));
+            exit(json_encode(value: ["success" => false, "message" => "No Request ID recieved"]));
         }
 
     }elseif($operation_check == "FETCH_FILENAME"){
@@ -86,16 +112,31 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
 
         }else{
 
-            exit(json_encode(['error' => 'No certificate request_id recieved']));
+            exit(json_encode(['success'=> false, 'message' => 'No certificate request_id recieved']));
         }
     }elseif($operation_check == "DELETE_ENTRY"){
 
         if(isset($_POST['request_id'])){
-            $sqlquery = "UPDATE tbl_docu_request SET is_deleted =? WHERE request_id=?";
-            $stmt = $pdo->prepare($sqlquery);
-            $stmt->execute([1, $request_Id]);
 
-            echo json_encode(['success' => true, 'message' => "Entry has been deleted"]);
+            try{
+                $pdo->beginTransaction();
+                $sqlquery = "UPDATE tbl_cert_audit_trail
+                SET datetime_deleted = ?, `deleted_by_no`=?, `deleted_depart`=?	
+                WHERE audit_trail_id IN (SELECT audit_trail_no FROM tbl_docu_request WHERE request_id=?)";
+                $stmt = $pdo->prepare($sqlquery);
+                $stmt->execute([$nowdate, $user_id, $depart_no, $request_Id]);
+
+                $sqlquery = "UPDATE tbl_docu_request SET is_deleted =? WHERE request_id=?";
+                $stmt = $pdo->prepare($sqlquery);
+                $stmt->execute([1, $request_Id]);
+
+                echo json_encode(['success' => true, 'message' => "Entry has been deleted"]);
+                $pdo->commit();
+            }catch(PDOException $e){
+                $pdo->rollBack();
+                echo json_encode(['success' => false, 'message' => $e->getMessage()]);
+
+            }
 
         }else{
             echo json_encode(['error' => 'No certificate request_id recieved']);
@@ -103,16 +144,30 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
 
     }elseif($operation_check =="UNDO_DELETE"){
         if(isset($request_Id)){
-            $sqlquery = "UPDATE tbl_docu_request SET `is_deleted`= 0 WHERE request_id=?";
-            $stmt = $pdo->prepare($sqlquery);
-            $stmt->execute([$request_Id]);
 
-            $response="Certificate has been restored!!";
+            try{
+                $pdo->beginTransaction();
+                $sqlquery = "UPDATE tbl_cert_audit_trail
+                SET datetime_edited = ?, `recovered_by_no`=?, `recovered_depart_no`=?	
+                WHERE audit_trail_id IN (SELECT audit_trail_no FROM tbl_docu_request WHERE request_id=?)";
+                $stmt = $pdo->prepare($sqlquery);
+                $stmt->execute([$nowdate, $user_id, $depart_no, $request_Id]);
 
-            echo json_encode(value: ["success" => true, $response]);
+                $sqlquery = "UPDATE tbl_docu_request SET `is_deleted`= 0 WHERE request_id=?";
+                $stmt = $pdo->prepare($sqlquery);
+                $stmt->execute([$request_Id]);
+
+                $response="Certificate has been restored!!";
+
+                echo json_encode(value: ["success" => true, "message" => $response]);
+                $pdo->commit();
+            }catch(PDOException $e){
+                $pdo->rollBack();
+                echo json_encode(['success' => false, 'message' => $e->getMessage()]);
+
+            }
         }else{
             $response="No request ID recevied";
-            echo "RESTORE";
             exit(json_encode(value: ["success" => false, $response]));
 
         }

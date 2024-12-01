@@ -173,7 +173,7 @@
                     </ul> -->
                 </li>
                 <li>
-                    <a href="settings.php"><span class="icon setting" aria-hidden="true"></span>Settings</a>
+                    <a id="settings_btn" href="settings.php"><span class="icon setting" aria-hidden="true"></span>Settings</a>
                 </li>
             </ul>
         </div>

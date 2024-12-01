@@ -4,6 +4,7 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
     require_once 'config.php';
     require_once 'enforce_login.php';
     require_once 'connecttodb.php';
+    require_once 'anti-SQLInject.php';
     require_once 'paginationfunctions.php';
     require_once 'useroperation_model.inc.php';
     require_once 'useroperation_ctrl.inc.php';
@@ -14,40 +15,81 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
     $user_id = (isset($_POST['user_id']))? sanitizeData($_POST['user_id']): null;
     $current_user = $_SESSION["user_id"];
     $pageno=(isset($_POST['pageno']))?$_POST['pageno']: 1;
+
+    $username = sanitizeData($_POST["username"] ?? '');
+    $pword = trim(htmlspecialchars($_POST["pword"] ?? ''));
+    $pword2 = trim(htmlspecialchars($_POST["pword2"] ?? ''));
+    $fname = sanitizeData($_POST['fname']?? '');
+    $lname = sanitizeData($_POST['lname']?? '');
+    $mname = sanitizeData($_POST['mname']?? '');
+    $suffix = sanitizeData($_POST['suffix']??'');
+    $dept = sanitizeData($_POST['department']?? '');
+
     if($operation_check === "ADD_USER"){
 
         try{
-            $username = trim($_POST["username"] ?? '');
-            $pword = trim($_POST["pword"] ?? '');
-            $fname = trim($_POST['fname']?? '');
-            $lname = trim($_POST['lname']?? '');
-            $mname = trim($_POST['mname']?? '');
-            $suffix = trim($_POST['suffix']??'');
-            $dept = trim($_POST['department']?? '');
-        
             //Error Handles
             $errors = [];
         
             if(is_input_empty($username, $pword, $fname, $lname) === true){
                 $errors["empty_input"]="Fill all the fields";
             }
+
+            if(empty($errors)){
+                if(!check_pword_match($pword, $pword2)){
+                   $errors["password_mismatch"]="Password did not match.";
+                }
+            }
         
-            if(is_username_taken($pdo,  $username)){
-                $errors["username_taken"]="Username already taken!";
+            if(empty($errors)){
+                if(is_username_taken($pdo,  $username)){
+                    $errors["username_taken"]="Username already taken!";
+                }
             }
 
-            $hashed_password = password_hash($pword, PASSWORD_DEFAULT);
+            if(empty($errors)){
+                $hashed_password = password_hash($pword, PASSWORD_DEFAULT);
+            }
                 
+            if(empty($errors)){
+                if(isset($_FILES['image_file']) && $_FILES['image_file']['error'] == UPLOAD_ERR_OK){
+                    try{
+
+                        $img_filename = uploadImageFile("image_file", "img/users_img/");
+
+                        update_profile_pic($pdo ,$img_filename, $user_id);
+
+                    }catch(Exception $e){
+                        $errors["image_upload_error"]="Error Uploading Image: ".$e->getMessage();
+                    }
+                }else if(isset($_POST['captureImageData'])){
+                    try{
+                        $img_filename = captureImageUpload('captureImageData',"img/users_img/");
+                     }catch(Exception $e){
+                         echo json_encode(["success" => false, "message" => $e->getMessage()]);
+                         die();
+                     }
+                }
+            }
+
+            if(empty($errors)){
+                try{
+                    record_user($pdo ,$current_user,$username, $hashed_password, $fname ,$mname, $lname ,$suffix, $dept, $img_filename);
+                    echo json_encode(["success" => true, "message" => "User Added Successfully"]);
+
+                }catch(Exception $e){
+                    $errors["db_error"]="Error Adding User: ".$e->getMessage();
+
+                }
+            }
+
             if($errors){
-                echo json_encode(["success" => false, "message" => $errors]);
+                foreach ($errors as $error){
+                    echo json_encode(["success" => false, "message" => $error]);
+                }
                 die();
             }
 
-            $img_filename = uploadImageFile("image_file", "img/users_img/");
-
-            if(record_user($pdo ,$username, $hashed_password, $fname ,$mname, $lname ,$suffix, $dept, $img_filename)){
-                echo json_encode(["success" => true, "message" => "User Added Successfully"]);
-            }
 
             
         
@@ -57,38 +99,77 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
 
     }else if ($operation_check =="EDIT_USER") {
 
-        try{
-            $username = trim($_POST["username"] ?? '');
-            $pword = trim($_POST["pword"] ?? '');
-            $fname = trim($_POST['fname']?? '');
-            $lname = trim($_POST['lname']?? '');
-            $mname = trim($_POST['mname']?? '');
-            $suffix = trim($_POST['suffix']??'');
-            $dept = trim($_POST['department']?? '');
-        
+        try{ 
             //Error Handles
             $errors = [];
         
             if(is_input_empty($username, $pword, $fname, $lname) === true){
                 $errors["empty_input"]="Fill all the fields";
             }
+
+            if(empty($errors)){
+                if(!check_pword_match($pword, $pword2)){
+
+                    $errors["password_mismatch"]="Password did not match.";
+
+                }
+            }
         
-            if(is_username_taken($pdo,  $username)){
-                $errors["username_taken"]="Username already taken!";
+            // if(empty($errors)){
+            //     if(is_username_taken($pdo,  $username)){
+            //         $errors["username_taken"]="Username already taken!";
+            //     }
+            // }
+
+            if(empty($errors)){
+                $hashed_password = password_hash($pword, PASSWORD_DEFAULT);
             }
 
-            $hashed_password = password_hash($pword, PASSWORD_DEFAULT);
+            if(empty($errors)){
+                if(isset($_FILES['image_file']) && $_FILES['image_file']['error'] == UPLOAD_ERR_OK){
+                    try{
+
+                        $img_filename = uploadImageFile("image_file", "img/users_img/");
+
+                        update_profile_pic($pdo ,$img_filename, $user_id);
+
+                    }catch(Exception $e){
+                        $errors["image_upload_error"]="Error Uploading Image: ".$e->getMessage();
                 
+                    }
+                }else if(isset($_POST['captureImageData'])){
+                    try{
+                        $img_filename = captureImageUpload('captureImageData',"img/users_img/");
+
+                        update_profile_pic($pdo ,$img_filename, $user_id);
+
+                     }catch(Exception $e){
+                         echo json_encode(["success" => false, "message" => $e->getMessage()]);
+                         die();
+                     }
+                }
+            }
+
+            if(empty($errors)){
+                try{
+
+                    update_user($pdo ,$username, $hashed_password, $fname ,$mname, $lname ,$suffix, $dept, $user_id, $current_user);
+                    echo json_encode(["success" => true, "message" => "User Edited Successfully"]);
+
+                }catch(Exception $errors){
+
+                    echo json_encode(["success" => false, "message" => "There is an DB error: ".$errors->getMessage()]);
+                    die();
+                }
+            }
+
+
             if($errors){
                 echo json_encode(["success" => false, "message" => $errors]);
                 die();
             }
 
-            $img_filename = uploadImageFile("image_file", "img/users_img/");
 
-            if(update_user($pdo ,$username, $hashed_password, $fname ,$mname, $lname ,$suffix, $dept, $img_filename)){
-                echo json_encode(["success" => true, "message" => "User Edited Successfully"]);
-            }
 
             
         

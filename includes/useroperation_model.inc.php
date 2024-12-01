@@ -12,17 +12,21 @@ function get_username(object $pdo, string $username){
     return $result;
 }
 
-function record_user($pdo, $username, $password, $fname, $mname, $lname, $suffix, $dept, $img_filename){
+function record_user($pdo, $current_user ,$username, $password, $fname, $mname, $lname, $suffix, $dept, $img_filename){
 
     try{
         $pdo->beginTransaction();
 
-        $query="INSERT INTO tbl_username(username) VALUES(?)";
-        $stmt = $pdo->prepare($query);
+        $auditquery="INSERT INTO tbl_users_audit_trail(created_by, created_dt) VALUES(?, CURRENT_TIMESTAMP)";
+        $stmt = $pdo->prepare($auditquery);
+        $stmt->execute([$current_user]);
+
+        $usernamequery="INSERT INTO tbl_username(username) VALUES(?)";
+        $stmt = $pdo->prepare($usernamequery);
         $stmt->execute([$username]);
 
-        $query="INSERT INTO tbl_users(pword, depart_no, fname, lname, mname, suffix, img_filename) VALUES(?,?,?,?,?,?,?)";
-        $stmt = $pdo->prepare($query);
+        $userquery="INSERT INTO tbl_users(pword, depart_no, fname, lname, mname, suffix, img_filename) VALUES(?,?,?,?,?,?,?)";
+        $stmt = $pdo->prepare($userquery);
         $stmt->execute([$password, $dept, $fname, $lname, $mname, $suffix, $img_filename]);
 
         $pdo->commit();
@@ -36,18 +40,22 @@ function record_user($pdo, $username, $password, $fname, $mname, $lname, $suffix
 
 }
 
-function update_user($pdo, $username, $password, $fname, $mname, $lname, $suffix, $dept, $img_filename){
+function update_user($pdo, $username, $password, $fname, $mname, $lname, $suffix, $dept, $user_id, $current_user_id){
 
     try{
         $pdo->beginTransaction();
 
-        $query="UPDATE tbl_users SET pword=?, depart_no=?, fname=?, mname=?, lname=?, suffix=? , img_filename=?  VALUES(?)";
-        $stmt = $pdo->prepare($query);
-        $stmt->execute([$username]);
+        $auditquery="UPDATE tbl_users_audit_trail SET last_edited_by =?, last_edited_dt = CURRENT_TIMESTAMP WHERE user_at_id=?";
+        $stmt = $pdo->prepare($auditquery);
+        $stmt->execute([$current_user_id, $user_id]);
 
-        $query="INSERT INTO tbl_users(pword, depart_no, fname, lname, mname, suffix, img_filename) VALUES(?,?,?,?,?,?,?)";
+        $usernamequery="UPDATE tbl_username SET username=? WHERE username_id =?";
+        $stmt = $pdo->prepare($usernamequery);
+        $stmt->execute([$username, $user_id]);
+
+        $query="UPDATE tbl_users SET pword=?, depart_no=?, fname=?, mname=?, lname=?, suffix=? WHERE user_id= ?";
         $stmt = $pdo->prepare($query);
-        $stmt->execute([$password, $dept, $fname, $lname, $mname, $suffix, $img_filename]);
+        $stmt->execute([$password, $dept, $fname, $mname, $lname, $suffix, $user_id]);
 
         $pdo->commit();
 
@@ -58,6 +66,29 @@ function update_user($pdo, $username, $password, $fname, $mname, $lname, $suffix
 
     }
 
+}
+
+function update_profile_pic($pdo ,$image_filename, $user_id){
+
+    try{
+
+        $pdo->beginTransaction();
+
+        $update_query = "UPDATE tbl_users SET img_filename=? WHERE user_id=?";
+        $stmt = $pdo->prepare($update_query);
+        $stmt->execute([$image_filename, $user_id]);
+
+        $pdo->commit();
+
+        return true;
+
+
+    }catch(Exception $e){
+
+        $pdo->rollback();
+
+        return throw new Exception("There is an error on db query: ".$e->getMessage());
+    }
 }
 
 function add_audit_trail($pdo, $whatop, $current_user, $user_id){
