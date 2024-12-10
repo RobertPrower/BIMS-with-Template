@@ -2,6 +2,11 @@
     require_once("includes/connecttodb.php");
     require_once 'includes/config.php';
     require_once 'includes/enforce_login.php';
+
+  if($departmentno == 1 || $departmentno == 2 || $departmentno == 3){
+    header("Location: index.php");
+  }
+
     
     $logoquery = "SELECT * FROM `certificate-img`";
     $logostmt = $pdo->prepare($logoquery);

@@ -95,87 +95,23 @@
                     }
                 
                 ?>
-                <!-- <li>
-                    <a href="brgyofficials.php"><span class="icon user-3" aria-hidden="true"></span>Brgy Offcials</a>
-                   
-                </li> -->
-                <!-- <li>
-                    <a class="show-cat-btn" href="##">
-                        <span class="icon paper" aria-hidden="true"></span>Pages
-                        <span class="category__btn transparent-btn" title="Open list">
-                            <span class="sr-only">Open list</span>
-                           
-                        </span>
-                    </a>
-                    <ul class="cat-sub-menu">
-                        <li>
-                            <a href="pages.html">All pages</a>
-                        </li>
-                        <li>
-                            <a href="new-page.html">Add new page</a>
-                        </li>
-                    </ul>
-                </li> -->
-                <!-- <li>
-                    <a href="comments.html">
-                        <span class="icon message" aria-hidden="true"></span>
-                        Comments
-                    </a>
-                    <span class="msg-counter">7</span>
-                </li> -->
+                
             </ul>
-            <span class="system-menu__title">system</span>
-            <ul class="sidebar-body-menu">
-                <!-- <li>
-                    <a href="appearance.html"><span class="icon edit" aria-hidden="true"></span>Appearance</a>
-                </li> -->
-                <!-- <li>
-                    <a class="show-cat-btn" href="##">
-                        <span class="icon category" aria-hidden="true"></span>Extentions
-                        <span class="category__btn transparent-btn" title="Open list">
-                            <span class="sr-only">Open list</span>
-                            <span class="icon arrow-down" aria-hidden="true"></span>
-                        </span>
-                    </a>
-                    <ul class="cat-sub-menu">
-                        <li>
-                            <a href="extention-01.html">Extentions-01</a>
+            <?php 
+                if($departmentno == 4 || $departmentno == 5 ){
+                    echo '<span class="system-menu__title">system</span>
+                    <ul class="sidebar-body-menu">
+                        
                         </li>
+                        
                         <li>
-                            <a href="extention-02.html">Extentions-02</a>
-                        </li>
-                    </ul>
-                </li> -->
-                <li>
-                    <!-- <a class="show-cat-btn" href="##">
-                        <span class="icon user-3" aria-hidden="true"></span>Users
-                        <span class="category__btn transparent-btn" title="Open list">
-                            <span class="sr-only">Open list</span>
-                            <span class="icon arrow-down" aria-hidden="true"></span>
-                        </span>
-                    </a>
-                    <ul class="cat-sub-menu">
-                        <li>
-                            <a href="##">Admin</a>
-                        </li>
-                        <li>
-                            <a href="##">User</a>
-                        </li>
-                        <li>
-                            <a href="##">Blotter/Lupon Dept.</a>
-                        </li>
-                        <li>
-                            <a href="##">Clearance Dept.</a>
-                        </li>
-                        <li>
-                            <a href="##">Secretariat</a>
-                        </li>
-                    </ul> -->
-                </li>
-                <li>
-                    <a id="settings_btn" href="settings.php"><span class="icon setting" aria-hidden="true"></span>Settings</a>
-                </li>
-            </ul>
+                                <a id="settings_btn" href="settings.php"><span class="icon setting" aria-hidden="true"></span>Settings</a>
+                            </li>
+                        
+                    
+                    </ul>';
+                }
+            ?>
         </div>
     </div>
     <div class="sidebar-footer">

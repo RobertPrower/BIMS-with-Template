@@ -1,6 +1,7 @@
 <?php 
 
 foreach ($results as $row) {
+ 
     switch($row['depart_no']){
         case 1: 
             $department = "Clearance";
@@ -35,30 +36,67 @@ foreach ($results as $row) {
         echo '
         
          <button class="btn btn-secondary mx-1 viewOldButton" id=vbutton
-            data-id="' . htmlspecialchars($row['audit_id']) . '">Old
+            data-id="' . htmlspecialchars($row['audit_id']) . '"
+
+            ';
+
+            if(isset($forblotter)){
+                echo ' data-blotter_id="' . htmlspecialchars($row['audit_id']) . '"';
+            }
+            
+            echo'>Old
         </button>
         
         <button class="btn btn-success mx-1 viewNewButton" id=vbutton2
-            data-id="' . htmlspecialchars($row['audit_id']) . '">New
+            data-id="' . htmlspecialchars($row['audit_id']) . '"
+            
+                   ';
+
+            if(isset($forblotter)){
+                echo ' data-blotter_id="' . htmlspecialchars($row['audit_id']) . '"';
+            }
+            
+            echo'>New
         </button>
         ';
 
     } else if($row['action_type'] == "INSERT"){
 
         echo' <button class="btn btn-primary mx-1 viewNewEntryButton" id=vbutton2
-            data-id="' . htmlspecialchars($row['audit_id']) . '">View
+            data-id="' . htmlspecialchars($row['audit_id']) . '"
+                   ';
+
+            if(isset($forblotter)){
+                echo ' data-blotter_id="' . htmlspecialchars($row['audit_id']) . '"';
+            }
+            
+            echo'>View
         </button>';
 
     } else if($row['action_type'] == "RECOVER"){
 
         echo' <button class="btn btn-warning mx-1 viewRecoverButton" id=vbutton2
-            data-id="' . htmlspecialchars($row['audit_id']) . '">View
+            data-id="' . htmlspecialchars($row['audit_id']) . '"
+                   ';
+
+            if(isset($forblotter)){
+                echo ' data-blotter_id="' . htmlspecialchars($row['audit_id']) . '"';
+            }
+            
+            echo'>View
         </button>';
 
     }else if($row['action_type'] == "DELETE"){
 
         echo' <button class="btn btn-danger mx-1 viewDeleteButton" id=vbutton2
-            data-id="' . htmlspecialchars($row['audit_id']) . '">View Entry
+            data-id="' . htmlspecialchars($row['audit_id']) . '"
+                   ';
+
+            if(isset($forblotter)){
+                echo ' data-blotter_id="' . htmlspecialchars($row['audit_id']) . '"';
+            }
+            
+            echo'>View Entry
         </button>';
 
     }

@@ -1,22 +1,25 @@
 $(document).ready(function () {
     
     var whatmodal = ($(".main-title").text() == "Manage Blotters")? "#EditBlotterModal": '';  
-    $(whatmodal +' #incident_date, #resolution_date').tempusDominus({
+    $(whatmodal + ' #incident_date, #resolution_date').tempusDominus({
         display: {
-          components: {
-                  // Set to true if you want second selection
-          },
-          icons: {
-            time: 'bi bi-clock-fill',
-            date: 'bi bi-calendar',
-            up: 'bi bi-arrow-up',
-            down: 'bi bi-arrow-down'
-          }
+            components: {
+                calendar: true,
+                clock: true,   
+                seconds: true   
+            },
+            icons: {
+                time: 'bi bi-clock-fill',
+                date: 'bi bi-calendar',
+                up: 'bi bi-arrow-up',
+                down: 'bi bi-arrow-down'
+            }
         },
         localization: {
-          format: 'yyyy-MM-dd HH:mm:ss'  // Set your date and time format
+            format: 'yyyy-MM-dd HH:mm:ss' 
         }
     });
+    
 
     //Event listener for the scheduling modal
     $("#pick_schedule_btn").click(function(e){
@@ -137,14 +140,15 @@ $(document).ready(function () {
             eventClick: function(info) {
                 var formattedStart = formatDate(info.event.start);
                 var formattedincident = info.event.extendedProps.incdate;
+                var reportstatus= info.event.extendedProps.reportstatus;
 
                 console.log(info.event.extendedProps.reportstatus);
 
-                var report;
+                report = parseInt(reportstatus, 10);
                 switch (info.event.extendedProps.reportstatus){
-                    case "1": report = "<span style='color: green;'> RESOLVED</span>"; break;
-                    case "0": report = "<span style='color: orange;'> ONGOING</span>"; break;
-                    case "2": report = "<span style='color: red;'> FILE TO ACTION</span>"; break;
+                    case 1: report = "<span style='color: green;'> RESOLVED</span>"; break;
+                    case 0: report = "<span style='color: orange;'> ONGOING</span>"; break;
+                    case 2: report = "<span style='color: red;'> FILE TO ACTION</span>"; break;
                     default: report = "Unknown Status";
                 }
 

@@ -2,6 +2,11 @@
     require_once('includes/connecttodb.php');
     require_once 'includes/config.php';
     require_once 'includes/enforce_login.php';
+
+    if($departmentno == 1 || $departmentno == 3){
+      header("Location: index.php");
+    }
+    
     
     $logoquery = "SELECT `filename` FROM `certificate-img` WHERE purpose = 'Barangay Logo'";
     $logostmt = $pdo->prepare($logoquery);

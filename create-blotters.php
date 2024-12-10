@@ -2,7 +2,11 @@
     require_once('includes/connecttodb.php');
     require_once 'includes/config.php';
     require_once 'includes/enforce_login.php';
-    
+
+    if($departmentno == 1 || $departmentno == 2){
+        header("Location: index.php");
+    }
+      
     $logoquery = "SELECT `filename` FROM `certificate-img` WHERE purpose = 'Barangay Logo'";
     $logostmt = $pdo->prepare($logoquery);
     $logostmt -> execute();
@@ -63,15 +67,166 @@
                         <button type="button" class="btn btn-success me-2" data-bs-toggle="modal" data-bs-target="#AddNonResidentModal" id="AddNonResidentBtn">New Non Resident</button>    
 
                     </div>
+                  
                     <?php 
                         require_once 'includes/residentaddform.php';
                         require_once 'includes/residentviewform.php';
-                        require_once 'includes/nonresidentaddform.php';
                         require_once 'includes/nonresidentviewform.php';
                         require('includes/selectresidentmodal.php');
                         require('includes/selectnonresidentmodal.php');
                         require('includes/schedulemodal.php');
                     ?> 
+
+                    <div class="modal fade" id="AddNonResidentModal" name="add" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="addBlotterModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-xl">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="addBlotterModalLabel">New Non-Resident</h5>
+                                    <button type="button" class="btn-close btnClose" data-bs-dismiss="modal" id="closeButton" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <!-- Add Resident Form -->
+                                    <form action="#" id="AddNonResidentModalForm" enctype="multipart/form-data" method="POST">    
+                                        <div class="row">
+                                            <div class="mt-3" style="width: 270px">
+                                            
+                                                <!--For the container of the camera and Picture-->
+                                                <div class="col card" style="border-radius: 15px; height: 455px">
+                                                    <div class="text-center">
+                                                        <div class="mt-3 mb-4">
+
+                                                        <div id="nonres_cameraFeedWrapper" class="camera-frame nonres_cameraFeedWrapper" style="width: 200px; height: 200px; display: none;">
+                                                                <div id="nonres_cameraFeed">
+                                                                    
+                                                                </div>
+                                                            </div>
+
+                                                            <!-- Preview image container (shown initially) -->
+                                                            <div id="nonres_imagePreviewWrapper" class="camera-frame nonres_imagePreviewWrapper" style="width: 200px; height: 200px;">
+                                                                <img src="includes/img/blank-profile.webp" id="nonres_imagePreview" class="imagePreview" alt="Profile Image" />
+                                                            </div>
+                                                        </div>
+
+                                                            <button type="button" id="nonres_openCamera" class="btn btn-primary btn-lg col-md-12">Open Camera</button>
+                                                        
+                                                        <div class="form-floating mt-3 mb-3 col-md-13">
+                                                            <input type="file" class="form-control" id="nonres_imagefile" name="image_file" placeholder="Upload Picture">
+                                                            <label for="floatingInput">Upload Image</label>
+                                                        </div>  
+
+
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-9 card mt-3 " style="border-radius: 10px;" style="padding: 10px;">
+                                                <div class="text-center row">
+
+                                                    <div class="form-floating mt-3 mb-3 col-md-4">
+                                                        <input type="text" class="form-control" id="fname" name="fname" placeholder="Enter First Name Here" required>
+                                                        <label for="fname">First Name</label>
+                                                    </div>
+
+                                                    <div class="form-floating mt-3 mb-3 col-md-4">
+                                                        <input type="text" class="form-control" id="mname" name="mname" placeholder="Enter Middle Name Here">
+                                                        <label for="mname">Middle Name</label>
+                                                    </div>
+
+                                                    <div class="form-floating mt-3 mb-3 col-md-3">
+                                                        <input type="text" class="form-control" id="lname" name="lname" placeholder="Enter Last Name Here" required>
+                                                        <label for="lname">Last Name</label>
+                                                    </div>
+
+                                                    <div class="form-floating mt-3 mb-3 col-md-1">
+                                                        <input type="text" class="form-control" id="suffix" name="suffix" style="width:50px" placeholder="Enter Suffix Here">
+                                                        <label for="suffix">Suffix</label>
+                                                    </div>
+
+                                                    <div class="form-floating mt-3 mb-3 col-md-4">
+                                                        <input type="text" class="form-control" id="house_no" name="house_no" placeholder="Enter House No Here" required>
+                                                        <label for="house_no">Blk no, Lot no, Unit no</label>
+                                                    </div>
+
+                                                    <div class="form-floating mt-3 mb-3 col-md-4">
+                                                        <input type="text" class="form-control" id="street" name="street" placeholder="Enter Street Here" required>
+                                                        <label for="street">Street</label>
+                                                    </div>
+
+                                                    <div class="form-floating mt-3 mb-3 col-md-4">
+                                                        <input type="text" class="form-control" id="subd" name="subd" placeholder="Enter Subdivision Here" required>
+                                                        <label for="subd">Subdivision</label>
+                                                    </div>
+
+                                                    <div class="form-floating mt-3 mb-3 col-md-4">
+                                                        <input type="text" class="form-control" id="district_brgy" name="district_brgy" placeholder="Enter Subdivision Here" required>
+                                                        <label for="district_brgy">District or Brgy</label>
+                                                    </div>
+
+                                                    <div class="form-floating mt-3 mb-3 col-md-4">
+                                                        <input type="text" class="form-control" id="city" name="city" placeholder="Enter Subdivision Here" required>
+                                                        <label for="city">City</label>
+
+                                                    </div>
+
+                                                    <div class="form-floating mt-3 mb-3 col-md-4">
+                                                        <input type="text" class="form-control" id="province" name="province" placeholder="Enter Subdivision Here" required>
+                                                        <label for="province">Province</label>
+                                                    </div>
+
+                                                    <div class="form-floating mt-3 mb-3 col-md-4">
+                                                        <input type="text" class="form-control" id="zipcode" name="zipcode" placeholder="Enter Subdivision Here" required>
+                                                        <label for="zipcode">Zipcode</label>
+                                                    </div>
+
+                                                    <div class="form-floating mt-3 mb-3 col-md-4">
+                                                        <select class="form-select" id="sex" name="sex" aria-label="Floating label select example" required>
+                                                            <option hidden selected>Select</option>
+                                                            <option value="Male">Male</option>
+                                                            <option value="Female">Female</option>
+                                                        </select>
+                                                        <label for="sex">Sex</label>
+                                                    </div>
+
+                                                    <div class="form-floating mt-3 mb-3 col-md-4">
+                                                        <select class="form-select" id="marital_status" name="marital_status" aria-label="Floating label select example" required>
+                                                            <option hidden selected>Select</option>
+                                                            <option value="Single">Single</option>
+                                                            <option value="Married">Married</option>
+                                                            <option value="Widow">Widow/Widower</option>
+                                                            <option value="Annul">Annul</option>
+                                                        </select>
+                                                        <label for="marital_status">Marital Status</label>
+                                                    </div>
+
+                                                    <div class="form-floating mt-3 mb-3 col-md-4">
+                                                        <input type="text" class="form-control" id="birth_date" name="birth_date" placeholder="mm/dd/yyyy" required>
+                                                        <label for="birth_date">Birth Date</label>
+                                                    </div> 
+
+                                                    <div class="form-floating mt-3 mb-3 col-md-4">
+                                                        <input type="Text" class="form-control" id="birth_place" name="birth_place" placeholder="Enter Birth Place Here"required>
+                                                        <label for="birth_place">Birth Place</label>
+                                                    </div> 
+
+                                                    <div class="form-floating mt-3 mb-3 col-md-4">
+                                                        <input type="number" class="form-control" id="cellphone_number" name="cellphone_number" placeholder="Enter Phone Number Here" maxlength="11" required >
+                                                        <label for="cellphone_number">Phone Number</label>
+                                                    </div> 
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="modal-footer">
+                                            <button type="button" id="clearButton" class="btn btn-warning">Clear</button>
+                                            <button type="button" id="closeButton" class="btn btn-secondary btnClose" data-bs-dismiss="modal">Close</button>
+                                            <button type="submit" id="addButtonnonres" name="submit" class="btn btn-primary">Save</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     
                     <div class="col-md-12 d-flex align-items-center justify-content-between">
                         <b>Step 1: Select Complainant Person Record</b>
@@ -116,7 +271,7 @@
                                 </div>
 
                                 <div class="form-floating mt-3 mb-3 col-md-2">
-                                    <input type="text" class="form-control" id="suffix" name="lastname" placeholder="Enter Last Name Here" required disabled/>
+                                    <input type="text" class="form-control" id="suffix" name="lastname" placeholder="Enter Last Name Here" disabled/>
                                     <label for="lname">Suffix</label>
                                 </div>
 
@@ -346,7 +501,7 @@
 
                             </div>
                             <div class="form-floating mt-3 mb-3 col-md-4">
-                            <select class="form-select" id="mediator_name" aria-label="Floating label select example" require>
+                            <select class="form-select" id="mediator_name" name="mediator_name" aria-label="Floating label select example" required>
                                 <option value="" selected hidden>Select Mediator</option>
                             
                             </select>
@@ -436,6 +591,7 @@
 <script src="js/jquery-3.7.1.min.js"></script>
 <script src="js/bootstrap.bundle.min.js"></script>
 <script src="js/sweetalert2.min.js"></script>
+<script src="js/webcam.min.js"></script>
 
 <script src="https://cdn.datatables.net/v/bs5/dt-2.1.8/datatables.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@eonasdan/tempus-dominus@6.9.11/dist/js/tempus-dominus.min.js" crossorigin="anonymous"></script>
@@ -452,15 +608,11 @@
 <script src="js/script.js"></script>
 <script src="js/sidebar.js"></script>
 <script src="js/residentviewmodal.js"></script>
-<script src="js/nonresidentaction.js"></script>
 <script src="js/create-blotters.js"></script>
 <script src="js/selectresnonresmodal.js"></script>
 <script src="js/schedulemodal.js"></script>
-<script src="js/camerafunction.js"></script>
-<!-- <script src="js/limitfileresanddisplayimg.js"></script>
-<script src="js/LimitFileUploadAndDisplayImgForEdit.js"></script>
-<script src="js/limitfileresanddisplayimg.js"></script> -->
-<!-- <script src="js/displayimagedata.js"></script> -->
+<script src="js/limitfileresanddisplayimg.js"></script>
+<script src="js/displayimagedata.js"></script>
 
 
 

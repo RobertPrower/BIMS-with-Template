@@ -3,7 +3,7 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
 
     require_once 'config.php';
     require_once 'enforce_login.php';
-
+    require_once 'checkforempty.php';
     require_once("connecttodb.php");
 
     //To Sanitize the Data to prevent SQL Injections and Cross site scripting and insertion of special characters
@@ -87,7 +87,7 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
         }
 
         if(!empty(check_db_duplicate($pdo, $checkifempty))){
-            echo json_encode(["success" => "entry_match", "message" => "Duplicate Entry has been found!", "data" => check_db_duplicate($pdo, $params)]);
+            echo json_encode(["success" => "entry_match", "message" => "Duplicate Entry has been found!", "data" => check_db_duplicate($pdo, $checkifempty)]);
             die();
         }
 
@@ -120,12 +120,6 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
         try {
 
             $pdo->beginTransaction();
-
-            //Record to Audit Trail
-            $audit_query = "INSERT INTO nonres_audit_trail (dept_added_no, user_added_no, datetime_added)
-            VALUES (?, ?,CURRENT_TIMESTAMP)";
-            $audit_stmt = $pdo->prepare($audit_query);
-            $audit_stmt->execute([$departno,$userid]);
         
             // Insert data into the non resident table
             $insert_query = "INSERT INTO non_resident (img_filename, last_name, first_name, middle_name, suffix, house_num, street, subdivision, 
@@ -154,19 +148,69 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
                 
             ]);
 
+            $nresident_id_to_rec=$pdo->lastInsertId();
+
+            //Record to Audit Trail
+            $audit_query = "INSERT INTO nonres_audit_trail (nresident_id, dept_added_no, user_added_no, datetime_added)
+            VALUES (?,?, ?,CURRENT_TIMESTAMP)";
+            $audit_stmt = $pdo->prepare($audit_query);  
+            $audit_stmt->execute([$nresident_id_to_rec, $departno,$userid]);
+
+            $auditrecquery = "INSERT INTO nonresident_audit (
+                nresident_id, action_type, user_no, dept_no, is_deleted, last_name, first_name, action_data
+            )
+            VALUES (
+                ?, 
+                'INSERT', 
+                ?, 
+                ?, 
+                0, 
+                ?, 
+                ?, 
+                JSON_OBJECT(
+                    'img_filename', ?,
+                    'last_name', ?,
+                    'first_name', ?,
+                    'middle_name', ?,
+                    'suffix', ?,
+                    'house_num', ?,
+                    'street', ?,
+                    'subdivision', ?,
+                    'district_brgy', ?,
+                    'city', ?,
+                    'province', ?,
+                    'zipcode', ?,
+                    'sex', ?,
+                    'marital_status', ?,
+                    'birth_place', ?,
+                    'birth_date', ?,
+                    'cellphone_num', ?
+                )
+            );
+            ";
+                $audit_report_stmt = $pdo->prepare($auditrecquery);
+                $audit_report_stmt->execute([
+                    $nresident_id_to_rec, $userid, $departno, $lname, $fname,
+                    $fileName, $lname, $fname, $mname, $suffix, 
+                    $houseno, $street, $subd, $districtbrgy, 
+                    $city, $province, $zipcode, $sex, 
+                    $maritalstatus, $birthplace, $birthdate, 
+                    $cellphonenumber
+                ]);
             // Success response encodes it to JSON format for the AJAX to read
             $response = ["success" => true, "message" => "Data Added successfully"];
             echo json_encode($response);
-
             $pdo->commit();
+                 
         } catch (Exception $e) {
             // Error response
             $pdo->rollBack();
             $response = ["success" => false, "message" => "Error updating data: " . $e->getMessage()];
-            echo json_encode($response);
+            die(json_encode($response));
+        
         }
 
-
+    
         
     }elseif($operation_check == "EDIT"){
 
@@ -238,16 +282,15 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
         try {
             $pdo->beginTransaction();
 
-            $update_audit_sql= "UPDATE nonres_audit_trail SET dept_edited_no=?, user_edited_no=?, last_edited_dt=? WHERE audit_trail_id=?";
-            $atstmt= $pdo->prepare($update_audit_sql);
-            $atstmt -> execute([$departno, $userid, $nowdate, $nresidentId]);
-
             // Prepare SQL statement for updating resident data
             $statement = $pdo->prepare("UPDATE non_resident SET first_name = ?, middle_name = ?, last_name = ?,suffix = ?, house_num = ?, street = ?, subdivision = ?, district_brgy=?, city=?, province=?, zipcode=? ,sex = ?, marital_status = ?, birth_date = ?, birth_place = ?, cellphone_num = ? WHERE nresident_id = ?");
             
             // Bind parameters and execute the statement
             $statement->execute([$fname, $mname, $lname, $suffix, $houseno, $street, $subd,$districtbrgy, $city, $province, $zipcode, $sex, $maritalstatus, $birthdate, $birthplace, $cellphonenumber, $nresidentId]);
 
+            $update_audit_sql= "UPDATE nonres_audit_trail SET dept_edited_no=?, user_edited_no=?, last_edited_dt=? WHERE nresident_id=?";
+            $atstmt= $pdo->prepare($update_audit_sql);
+            $atstmt -> execute([$departno, $userid, $nowdate, $nresidentId]);
 
               // Send success response
             echo json_encode(["success" => true, "message" => "Data updated successfully". " ImageStatus: " . $imgopresponse]);

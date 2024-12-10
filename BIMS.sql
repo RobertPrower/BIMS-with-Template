@@ -132,7 +132,7 @@ CREATE TABLE `login_attempts` (
   `last_attempt` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `username_no` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `login_attempts` */
 
@@ -159,30 +159,33 @@ CREATE TABLE `non_resident` (
   `birth_place` varchar(255) DEFAULT NULL,
   `birth_date` date DEFAULT NULL,
   `cellphone_num` varchar(50) NOT NULL,
-  `audit_trail_no` int(55) DEFAULT NULL,
   `is_deleted` tinyint(2) DEFAULT '0',
-  PRIMARY KEY (`nresident_id`),
-  KEY `nres_audit_trail` (`audit_trail_no`),
-  CONSTRAINT `nres_audit_trail` FOREIGN KEY (`audit_trail_no`) REFERENCES `nonres_audit_trail` (`audit_trail_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`nresident_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
 
 /*Data for the table `non_resident` */
 
-insert  into `non_resident`(`nresident_id`,`img_filename`,`last_name`,`first_name`,`middle_name`,`suffix`,`house_num`,`street`,`subdivision`,`district_brgy`,`city`,`province`,`zipcode`,`sex`,`marital_status`,`birth_place`,`birth_date`,`cellphone_num`,`audit_trail_no`,`is_deleted`) values 
-(1,'Picture_043__1__v_1706525302.jpg','Rabanes','Fernan','Jarito','','Blk 9 Lot 3','Kamatis st','Ramirez Subd','Novaliches','Quezon City','Metro Manila','1423','Male','Single','Tuguegarao','1998-06-16','090956565454',1,0),
-(2,'capture_1732500165.jpg','Lim','Nicholas','Mahestro','','12','Zapote Rd','Cielito Homes','Camarin Brgy 175','Caloocan City','Metro Manila','1423','Male','Single','San Nicolas Pangasinan','1998-09-29','0966565666544',2,0),
-(3,'2f070627687d52995cfabf5c1bbde057.jpg','Lim','Mario','Jaen','III','Blk 12 Lot 4','Hillcrest st','Rolling Stone Subd','Novaliches','Quezon City','Metro Manila','1420','Male','Married','Madella Quirino','1990-05-02','090913457854',3,0),
-(4,'capture_1732002496.jpg','Chavez','Celestina','Mariano','','Blk 12 Lot 13','Josephine st','La Forteza Subd','Camarin','Caloocan City','Metro Manila','1432','Female','Married','Lipa Batangas','2024-10-16','09064545125',4,1),
-(5,'capture_1732338783.jpg','La Torre','Nicholas','Trinidad','III','Blk 12 Lot 13','Davao st','Kingdom subd','Novaliches','Quezon City','Metro Manila','1411','Male','Married','Davao City','2000-01-01','090541236585',5,0),
-(6,'shanna (1).jpg','Saksi','Shanna','Jiamin','','Blk 1 Lot 12','St Bernard st','La Forteza','Camarin Brgy 175','La Forteza','Metro Manila','1424','Female','Married','Bagabag Nueva Viscaya','1990-06-12','09054321268',6,0),
-(7,'capture_1732713130.jpg','San Viciente','Carlos','Mateo','','Blk 12 Lot 14','Aluling st','Francisco Homes','Brgy Mulawin','City of San Jose Del Monte','Bulacan','1143','Male','Single','Cabiao Nueva Ecjia','2024-11-12','0957878787878788',7,0),
-(8,'capture_1731783811.jpg','Santos','Kian','Salvador','','Phase 12 Pkg 9','San Jacinto','-','Bagong Silang','Caloocan City','Metro Manila','1422','Male','Single','San Juan Batangas','1997-06-10','00000000000',8,0),
-(9,'capture_1731783837.jpg','Santos','Hugo','Salvador','','Phase 12 Pkg 9','San Jacinto','-','Bagong Silang','Caloocan City','Metro Manila','1422','Male','Single','San Juan Batangas','1997-06-10','00000000000',9,0),
-(10,'capture_1731783858.jpg','Santos','Mariano','Salvador','','Phase 12 Pkg 9','San Jacinto','-','Bagong Silang','Caloocan City','Metro Manila','1422','Male','Single','San Juan Batangas','1997-06-10','00000000000',10,0),
-(11,'capture_1731783875.jpg','Santos','Jacob','Salvador','','Phase 12 Pkg 9','San Jacinto','-','Bagong Silang','Caloocan City','Metro Manila','1422','Male','Single','San Juan Batangas','1997-06-10','00000000000',11,0),
-(12,'capture_1732003889.jpg','Joselito','Robert','Kaledo','','Phase 2 Lot 9','Miriam Defensor Santiago st','Justice Subd','Deparo','Caloocan City','Metro Manila','1148','Male','Married','Valenzuela City','1983-10-12','094585656566',12,0),
-(15,'capture_1732426183.jpg','Nograles','James','Balete','','Blk 13 Lot 3 Unit 7','Navaro st','Kiko Subd','Brgy 178 Camarin','Caloocan City','Metor Manila','1123','Male','Single','San Jose Del Monte Bulacan','2000-02-02','09064545655',13,0),
-(16,'capture_1732527187.jpg','Timothy','Timmy','Gardo','','15 Zabarte blg','Zabarte Rd','Mary Homes','Brgy 172','Caloocan City','Metro Manila','1122','Male','Single','Candaba Pampanga','2024-01-01','094454545454',14,0);
+insert  into `non_resident`(`nresident_id`,`img_filename`,`last_name`,`first_name`,`middle_name`,`suffix`,`house_num`,`street`,`subdivision`,`district_brgy`,`city`,`province`,`zipcode`,`sex`,`marital_status`,`birth_place`,`birth_date`,`cellphone_num`,`is_deleted`) values 
+(1,'Picture_043__1__v_1706525302.jpg','Rabanes','Fernan','Jarito','','Blk 9 Lot 3','Kamatis st','Ramirez Subd','Novaliches','Quezon City','Metro Manila','1423','Male','Single','Tuguegarao','1998-06-16','090956565454',0),
+(2,'capture_1732500165.jpg','Lim','Nicholas','Mahestro','','12','Zapote Rd','Cielito Homes','Camarin Brgy 175','Caloocan City','Metro Manila','1423','Male','Single','San Nicolas Pangasinan','1998-09-29','0966565666544',0),
+(3,'2f070627687d52995cfabf5c1bbde057.jpg','Lim','Mario','Jaen','III','Blk 12 Lot 4','Hillcrest st','Rolling Stone Subd','Novaliches','Quezon City','Metro Manila','1420','Male','Married','Madella Quirino','1990-05-02','090913457854',0),
+(4,'capture_1732002496.jpg','Chavez','Celestina','Mariano','','Blk 12 Lot 13','Josephine st','La Forteza Subd','Camarin','Caloocan City','Metro Manila','1432','Female','Married','Lipa Batangas','2024-10-16','09064545125',1),
+(5,'capture_1732338783.jpg','La Torre','Nicholas','Trinidad','III','Blk 12 Lot 13','Davao st','Kingdom subd','Novaliches','Quezon City','Metro Manila','1411','Male','Married','Davao City','1998-06-30','090541236585',0),
+(6,'shanna (1).jpg','Saksi','Shanna','Jiamin','','Blk 1 Lot 12','St Bernard st','La Forteza','Camarin Brgy 175','La Forteza','Metro Manila','1424','Female','Married','Bagabag Nueva Viscaya','1990-06-12','09054321268',0),
+(7,'capture_1732713130.jpg','San Viciente','Carlos','Mateo','','Blk 12 Lot 14','Aluling st','Francisco Homes','Brgy Mulawin','City of San Jose Del Monte','Bulacan','1143','Male','Single','Cabiao Nueva Ecjia','2024-11-12','0957878787878788',0),
+(8,'capture_1731783811.jpg','Santos','Kian','Salvador','','Phase 12 Pkg 9','San Jacinto','-','Bagong Silang','Caloocan City','Metro Manila','1422','Male','Single','San Juan Batangas','1997-06-10','00000000000',0),
+(9,'capture_1731783837.jpg','Santos','Hugo','Salvador','','Phase 12 Pkg 9','San Jacinto','-','Bagong Silang','Caloocan City','Metro Manila','1422','Male','Single','San Juan Batangas','1997-06-10','00000000000',0),
+(10,'capture_1731783858.jpg','Santos','Mariano','Salvador','','Phase 12 Pkg 9','San Jacinto','-','Bagong Silang','Caloocan City','Metro Manila','1422','Male','Single','San Juan Batangas','1997-06-10','00000000000',0),
+(11,'capture_1731783875.jpg','Santos','Jacob','Salvador','','Phase 12 Pkg 9','San Jacinto','-','Bagong Silang','Caloocan City','Metro Manila','1422','Male','Single','San Juan Batangas','1997-06-10','00000000000',0),
+(12,'capture_1732003889.jpg','Joselito','Robert','Kaledo','','Phase 2 Lot 9','Miriam Defensor Santiago st','Justice Subd','Deparo','Caloocan City','Metro Manila','1148','Male','Married','Valenzuela City','1983-10-12','094585656566',0),
+(13,'capture_1732426183.jpg','Nograles','James','Balete','','Blk 13 Lot 3 Unit 7','Navaro st','Kiko Subd','Brgy 178 Camarin','Caloocan City','Metor Manila','1123','Male','Single','San Jose Del Monte Bulacan','2000-02-02','09064545655',0),
+(14,'capture_1733333269.jpg','Salas','Ruperto','Manabat','','Blk 14 Lot 15','Jamin st','Concepcion Village','Brgy Cauluan','Concepcion City','Tarlac','1234','Male','Married','Tarlac City','1990-02-06','095656565666',0),
+(15,'capture_1733333216.jpg','Lopez','James','Hofileña','','Blk 12 Lot 12 Unit 12 Josefa Apartments','Operacio st','Mighty Subd','Brgy Mangahan','San Mateo','Rizal','12345','Male','Single','Bagabag Nueva Viscaya','2024-11-24','09054321268',0),
+(16,'capture_1733471248.jpg','Lapidante','Franciscoq','Mariano','','Blk 12 Lot 15','Rachel Lane st','Diamond Village','Novaliches','Quezon City','Metro Manila','1123','Male','Single','Caloocan City','2000-12-13','095658888888',0),
+(17,'capture_1733472095.jpg','Jerez','Daniel','Perez','','Blk 12 Lot 23','Picasso st','North Olympus Subd','Novaliches','Quezon City','Metro Manila','1145','Male','Single','Tangkawayan Quezon','2024-12-06','095656565656',0),
+(18,'capture_1733500970.jpg','Colminares','Neri','Imares','','Blk 12 Lot 13','Constitutional Hill St','Congress Village','Brgy Batasan','Quezon City','Metro Manila','1234','Male','Single','Las Piñas City','2000-12-14','095656565656',0),
+(19,'capture_1733502017.jpg','Tupas','Neil','Colminares','','12','Zapote rd','-','Brgy 174','Caloocan City','Metro Manila','1234','Male','Single','San Jose Del Monte Bulacan','1993-01-03','095656565666',0),
+(20,'capture_1733573702.jpg','Hofileña','Marco','Mark','','Blk 3 Lot 3','Virgo st Corner Aries st','Cielito Homes','Novaliches','Quezon City','Quezon City','1123','Male','Single','Santa Fe Nueva Viscaya','1993-05-10','095656565666',0);
 
 /*Table structure for table `nonres_audit_trail` */
 
@@ -190,6 +193,7 @@ DROP TABLE IF EXISTS `nonres_audit_trail`;
 
 CREATE TABLE `nonres_audit_trail` (
   `audit_trail_id` int(55) NOT NULL AUTO_INCREMENT,
+  `nresident_id` int(55) DEFAULT NULL,
   `dept_added_no` int(55) DEFAULT NULL,
   `user_added_no` int(55) DEFAULT NULL,
   `datetime_added` datetime DEFAULT NULL,
@@ -203,26 +207,34 @@ CREATE TABLE `nonres_audit_trail` (
   `user_recovered_no` int(55) DEFAULT NULL,
   `last_recovered_dt` datetime DEFAULT NULL,
   PRIMARY KEY (`audit_trail_id`),
-  KEY `nres_user_fk` (`user_added_no`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
+  KEY `nres_user_fk` (`user_added_no`),
+  KEY `nonres_audit_trail_ibfk_1` (`nresident_id`),
+  CONSTRAINT `nonres_audit_trail_ibfk_1` FOREIGN KEY (`nresident_id`) REFERENCES `non_resident` (`nresident_id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
 
 /*Data for the table `nonres_audit_trail` */
 
-insert  into `nonres_audit_trail`(`audit_trail_id`,`dept_added_no`,`user_added_no`,`datetime_added`,`dept_edited_no`,`user_edited_no`,`last_edited_dt`,`dept_deleted_no`,`user_deleted_no`,`last_deleted_dt`,`dept_recovered_no`,`user_recovered_no`,`last_recovered_dt`) values 
-(1,NULL,NULL,'2024-09-04 10:12:00',NULL,NULL,'2024-11-18 08:11:35',NULL,NULL,'2024-11-17 02:52:47',NULL,NULL,'2024-11-17 02:58:12'),
-(2,NULL,NULL,'2024-09-24 18:32:14',4,1,'2024-11-25 10:02:45',NULL,NULL,'2024-11-17 02:52:52',NULL,NULL,'2024-11-17 02:58:10'),
-(3,NULL,NULL,'2024-10-03 00:48:06',NULL,NULL,'2024-10-03 01:46:56',NULL,NULL,'2024-11-17 02:52:50',NULL,NULL,'2024-11-17 02:58:08'),
-(4,NULL,NULL,'2024-10-03 00:48:33',NULL,NULL,'2024-11-19 15:48:16',4,1,'2024-11-30 21:03:09',4,1,'2024-11-30 21:00:01'),
-(5,NULL,NULL,'2024-10-03 00:59:05',NULL,NULL,'2024-11-23 13:13:03',NULL,NULL,'2024-11-17 02:52:55',NULL,NULL,'2024-11-17 02:58:02'),
-(6,NULL,NULL,'2024-10-03 00:59:35',NULL,NULL,'2024-10-24 15:09:48',NULL,NULL,'2024-11-17 02:52:45',NULL,NULL,'2024-11-17 02:58:00'),
-(7,NULL,NULL,'2024-10-03 01:02:24',4,1,'2024-11-27 21:12:10',NULL,NULL,NULL,NULL,NULL,NULL),
-(8,NULL,NULL,'2024-11-17 03:30:56',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(9,NULL,NULL,'2024-11-17 03:30:59',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(10,NULL,NULL,'2024-11-17 03:31:03',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(11,NULL,NULL,'2024-11-17 03:31:08',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(12,NULL,NULL,'2024-11-19 15:31:03',2,4,'2024-11-30 20:54:10',4,1,'2024-11-27 21:15:05',4,1,'2024-11-27 21:15:14'),
-(13,4,1,'2024-11-24 13:29:43',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(14,4,1,'2024-11-25 17:33:07',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+insert  into `nonres_audit_trail`(`audit_trail_id`,`nresident_id`,`dept_added_no`,`user_added_no`,`datetime_added`,`dept_edited_no`,`user_edited_no`,`last_edited_dt`,`dept_deleted_no`,`user_deleted_no`,`last_deleted_dt`,`dept_recovered_no`,`user_recovered_no`,`last_recovered_dt`) values 
+(1,1,NULL,NULL,'2024-09-04 10:12:00',NULL,NULL,'2024-11-18 08:11:35',NULL,NULL,'2024-11-17 02:52:47',NULL,NULL,'2024-11-17 02:58:12'),
+(2,2,NULL,NULL,'2024-09-24 18:32:14',4,1,'2024-11-25 10:02:45',NULL,NULL,'2024-11-17 02:52:52',NULL,NULL,'2024-11-17 02:58:10'),
+(3,3,NULL,NULL,'2024-10-03 00:48:06',NULL,NULL,'2024-10-03 01:46:56',NULL,NULL,'2024-11-17 02:52:50',NULL,NULL,'2024-11-17 02:58:08'),
+(4,4,NULL,NULL,'2024-10-03 00:48:33',NULL,NULL,'2024-11-19 15:48:16',4,1,'2024-11-30 21:03:09',4,1,'2024-11-30 21:00:01'),
+(5,5,NULL,NULL,'2024-10-03 00:59:05',4,1,'2024-12-05 15:55:29',NULL,NULL,'2024-11-17 02:52:55',NULL,NULL,'2024-11-17 02:58:02'),
+(6,6,NULL,NULL,'2024-10-03 00:59:35',NULL,NULL,'2024-10-24 15:09:48',NULL,NULL,'2024-11-17 02:52:45',NULL,NULL,'2024-11-17 02:58:00'),
+(7,7,NULL,NULL,'2024-10-03 01:02:24',4,1,'2024-11-27 21:12:10',NULL,NULL,NULL,NULL,NULL,NULL),
+(8,8,NULL,NULL,'2024-11-17 03:30:56',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(9,9,NULL,NULL,'2024-11-17 03:30:59',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(10,10,NULL,NULL,'2024-11-17 03:31:03',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(11,11,NULL,NULL,'2024-11-17 03:31:08',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(12,12,NULL,NULL,'2024-11-19 15:31:03',2,4,'2024-11-30 20:54:10',4,1,'2024-11-27 21:15:05',4,1,'2024-11-27 21:15:14'),
+(13,13,4,1,'2024-11-24 13:29:43',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(14,14,4,1,'2024-12-05 00:37:21',4,1,'2024-12-05 01:27:49',NULL,NULL,NULL,NULL,NULL,NULL),
+(15,15,4,1,'2024-12-05 01:26:56',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(16,16,4,1,'2024-12-06 15:47:28',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(17,17,4,1,'2024-12-06 16:01:35',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(18,18,4,1,'2024-12-07 00:02:50',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(19,19,4,1,'2024-12-07 00:20:17',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(20,20,4,1,'2024-12-07 20:15:02',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 
 /*Table structure for table `nonresident_audit` */
 
@@ -234,7 +246,7 @@ CREATE TABLE `nonresident_audit` (
   `action_type` enum('INSERT','UPDATE','DELETE','RECOVER') NOT NULL,
   `action_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `user_no` int(11) NOT NULL,
-  `dept_no` int(11) DEFAULT NULL,
+  `dept_no` int(11) NOT NULL,
   `is_deleted` tinyint(2) DEFAULT '0',
   `last_name` varchar(255) DEFAULT NULL,
   `first_name` varchar(255) DEFAULT NULL,
@@ -242,9 +254,11 @@ CREATE TABLE `nonresident_audit` (
   PRIMARY KEY (`audit_id`),
   KEY `user_no` (`user_no`),
   KEY `dept_no` (`dept_no`),
+  KEY `nresident_id` (`nresident_id`),
   CONSTRAINT `nonresident_audit_ibfk_1` FOREIGN KEY (`user_no`) REFERENCES `tbl_username` (`username_id`),
-  CONSTRAINT `nonresident_audit_ibfk_2` FOREIGN KEY (`dept_no`) REFERENCES `departments_list` (`department_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+  CONSTRAINT `nonresident_audit_ibfk_2` FOREIGN KEY (`dept_no`) REFERENCES `departments_list` (`department_id`),
+  CONSTRAINT `nonresident_audit_ibfk_3` FOREIGN KEY (`nresident_id`) REFERENCES `non_resident` (`nresident_id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 
 /*Data for the table `nonresident_audit` */
 
@@ -252,7 +266,13 @@ insert  into `nonresident_audit`(`audit_id`,`nresident_id`,`action_type`,`action
 (1,12,'UPDATE','2024-11-29 23:08:35',1,4,0,'Joselito','Robert','{\"new_values\": {\"sex\": \"Female\", \"city\": \"Caloocan City\", \"street\": \"Miriam Defensor Santiago st\", \"suffix\": \"\", \"zipcode\": \"1148\", \"province\": \"Metro Manila\", \"house_num\": \"Phase 2 Lot 9\", \"last_name\": \"Joselito\", \"birth_date\": \"1983-10-12\", \"first_name\": \"Robert\", \"birth_place\": \"Valenzuela City\", \"middle_name\": \"Kaledo\", \"subdivision\": \"Justice Subd\", \"img_filename\": \"capture_1732003889.jpg\", \"cellphone_num\": \"094585656566\", \"district_brgy\": \"Deparo\", \"marital_status\": \"Single\"}, \"old_values\": {\"sex\": \"Female\", \"city\": \"Caloocan City\", \"street\": \"Miriam Defensor Santiago st\", \"suffix\": \"\", \"zipcode\": \"1148\", \"province\": \"Metro Manila\", \"house_num\": \"Phase 2 Lot 9\", \"last_name\": \"Joselito\", \"birth_date\": \"1983-10-12\", \"first_name\": \"Robert\", \"birth_place\": \"Navotas City\", \"middle_name\": \"Kaledo\", \"subdivision\": \"Justice Subd\", \"img_filename\": \"capture_1732003889.jpg\", \"cellphone_num\": \"094585656566\", \"district_brgy\": \"Deparo\", \"marital_status\": \"Single\"}}'),
 (2,12,'UPDATE','2024-11-30 20:54:10',4,2,0,'Joselito','Robert','{\"new_values\": {\"sex\": \"Male\", \"city\": \"Caloocan City\", \"street\": \"Miriam Defensor Santiago st\", \"suffix\": \"\", \"zipcode\": \"1148\", \"province\": \"Metro Manila\", \"house_num\": \"Phase 2 Lot 9\", \"last_name\": \"Joselito\", \"birth_date\": \"1983-10-12\", \"first_name\": \"Robert\", \"birth_place\": \"Valenzuela City\", \"middle_name\": \"Kaledo\", \"subdivision\": \"Justice Subd\", \"img_filename\": \"capture_1732003889.jpg\", \"cellphone_num\": \"094585656566\", \"district_brgy\": \"Deparo\", \"marital_status\": \"Married\"}, \"old_values\": {\"sex\": \"Female\", \"city\": \"Caloocan City\", \"street\": \"Miriam Defensor Santiago st\", \"suffix\": \"\", \"zipcode\": \"1148\", \"province\": \"Metro Manila\", \"house_num\": \"Phase 2 Lot 9\", \"last_name\": \"Joselito\", \"birth_date\": \"1983-10-12\", \"first_name\": \"Robert\", \"is_deleted\": 0, \"birth_place\": \"Valenzuela City\", \"middle_name\": \"Kaledo\", \"subdivision\": \"Justice Subd\", \"img_filename\": \"capture_1732003889.jpg\", \"cellphone_num\": \"094585656566\", \"district_brgy\": \"Deparo\", \"marital_status\": \"Single\"}}'),
 (3,4,'RECOVER','2024-11-30 21:00:01',1,4,0,'Chavez','Celestina','{\"new_values\": {\"sex\": \"Female\", \"city\": \"Caloocan City\", \"street\": \"Josephine st\", \"suffix\": \"\", \"zipcode\": \"1432\", \"province\": \"Metro Manila\", \"house_num\": \"Blk 12 Lot 13\", \"last_name\": \"Chavez\", \"birth_date\": \"2024-10-16\", \"first_name\": \"Celestina\", \"is_deleted\": 0, \"birth_place\": \"Lipa Batangas\", \"middle_name\": \"Mariano\", \"subdivision\": \"La Forteza Subd\", \"img_filename\": \"capture_1732002496.jpg\", \"cellphone_num\": \"09064545125\", \"district_brgy\": \"Camarin\", \"marital_status\": \"Married\"}, \"old_values\": {\"is_deleted\": 1}}'),
-(4,4,'DELETE','2024-11-30 21:03:09',1,4,1,'Chavez','Celestina','{\"new_values\": {\"sex\": \"Female\", \"city\": \"Caloocan City\", \"street\": \"Josephine st\", \"suffix\": \"\", \"zipcode\": \"1432\", \"province\": \"Metro Manila\", \"house_num\": \"Blk 12 Lot 13\", \"last_name\": \"Chavez\", \"birth_date\": \"2024-10-16\", \"first_name\": \"Celestina\", \"is_deleted\": 1, \"birth_place\": \"Lipa Batangas\", \"middle_name\": \"Mariano\", \"subdivision\": \"La Forteza Subd\", \"img_filename\": \"capture_1732002496.jpg\", \"cellphone_num\": \"09064545125\", \"district_brgy\": \"Camarin\", \"marital_status\": \"Married\"}, \"old_values\": {\"is_deleted\": 0}}');
+(4,4,'DELETE','2024-11-30 21:03:09',1,4,1,'Chavez','Celestina','{\"new_values\": {\"sex\": \"Female\", \"city\": \"Caloocan City\", \"street\": \"Josephine st\", \"suffix\": \"\", \"zipcode\": \"1432\", \"province\": \"Metro Manila\", \"house_num\": \"Blk 12 Lot 13\", \"last_name\": \"Chavez\", \"birth_date\": \"2024-10-16\", \"first_name\": \"Celestina\", \"is_deleted\": 1, \"birth_place\": \"Lipa Batangas\", \"middle_name\": \"Mariano\", \"subdivision\": \"La Forteza Subd\", \"img_filename\": \"capture_1732002496.jpg\", \"cellphone_num\": \"09064545125\", \"district_brgy\": \"Camarin\", \"marital_status\": \"Married\"}, \"old_values\": {\"is_deleted\": 0}}'),
+(5,14,'INSERT','2024-12-05 00:37:21',1,4,0,'Salas','Ruperto','{\"sex\": \"Male\", \"city\": \"Concepcion City\", \"street\": \"Jamin st\", \"suffix\": \"\", \"zipcode\": \"1234\", \"province\": \"Tarlac\", \"house_num\": \"Blk 14 Lot 15\", \"last_name\": \"Salas\", \"birth_date\": \"1990-02-06\", \"first_name\": \"Ruperto\", \"birth_place\": \"Tarlac City\", \"middle_name\": \"Manabat\", \"subdivision\": \"Concepcion Village\", \"img_filename\": \"capture_1733330241.jpg\", \"cellphone_num\": \"095656565666\", \"district_brgy\": \"Brgy Cauluan\", \"marital_status\": \"Married\"}'),
+(6,15,'INSERT','2024-12-05 01:26:56',1,4,0,'Lopez','James','{\"sex\": \"Male\", \"city\": \"San Mateo\", \"street\": \"Operacio st\", \"suffix\": \"\", \"zipcode\": \"12345\", \"province\": \"Rizal\", \"house_num\": \"Blk 12 Lot 12 Unit 12 Josefa Apartments\", \"last_name\": \"Lopez\", \"birth_date\": \"2024-11-24\", \"first_name\": \"James\", \"birth_place\": \"Bagabag Nueva Viscaya\", \"middle_name\": \"Hofileña\", \"subdivision\": \"Mighty Subd\", \"img_filename\": \"capture_1733333216.jpg\", \"cellphone_num\": \"09054321268\", \"district_brgy\": \"Brgy Mangahan\", \"marital_status\": \"Single\"}'),
+(7,14,'UPDATE','2024-12-05 01:27:49',1,4,0,'Salas','Ruperto','{\"new_values\": {\"sex\": \"Male\", \"city\": \"Concepcion City\", \"street\": \"Jamin st\", \"suffix\": \"\", \"zipcode\": \"1234\", \"province\": \"Tarlac\", \"house_num\": \"Blk 14 Lot 15\", \"last_name\": \"Salas\", \"birth_date\": \"1990-02-06\", \"first_name\": \"Ruperto\", \"is_deleted\": 0, \"birth_place\": \"Tarlac City\", \"middle_name\": \"Manabat\", \"subdivision\": \"Concepcion Village\", \"img_filename\": \"capture_1733333269.jpg\", \"cellphone_num\": \"095656565666\", \"district_brgy\": \"Brgy Cauluan\", \"marital_status\": \"Married\"}, \"old_values\": {\"sex\": \"Male\", \"city\": \"Concepcion City\", \"street\": \"Jamin st\", \"suffix\": \"\", \"zipcode\": \"1234\", \"province\": \"Tarlac\", \"house_num\": \"Blk 14 Lot 15\", \"last_name\": \"Salas\", \"birth_date\": \"1990-02-06\", \"first_name\": \"Ruperto\", \"is_deleted\": 0, \"birth_place\": \"Tarlac City\", \"middle_name\": \"Manabat\", \"subdivision\": \"Concepcion Village\", \"img_filename\": \"capture_1733330241.jpg\", \"cellphone_num\": \"095656565666\", \"district_brgy\": \"Brgy Cauluan\", \"marital_status\": \"Married\"}}'),
+(8,14,'UPDATE','2024-12-05 01:27:49',1,4,0,'Salas','Ruperto','{\"new_values\": {\"sex\": \"Male\", \"city\": \"Concepcion City\", \"street\": \"Jamin st\", \"suffix\": \"\", \"zipcode\": \"1234\", \"province\": \"Tarlac\", \"house_num\": \"Blk 14 Lot 15\", \"last_name\": \"Salas\", \"birth_date\": \"1990-02-06\", \"first_name\": \"Ruperto\", \"is_deleted\": 0, \"birth_place\": \"Tarlac City\", \"middle_name\": \"Manabat\", \"subdivision\": \"Concepcion Village\", \"img_filename\": \"capture_1733333269.jpg\", \"cellphone_num\": \"095656565666\", \"district_brgy\": \"Brgy Cauluan\", \"marital_status\": \"Married\"}, \"old_values\": {\"sex\": \"Male\", \"city\": \"Concepcion City\", \"street\": \"Jamin st\", \"suffix\": \"\", \"zipcode\": \"1234\", \"province\": \"Tarlac\", \"house_num\": \"Blk 14 Lot 15\", \"last_name\": \"Salas\", \"birth_date\": \"1990-02-06\", \"first_name\": \"Ruperto\", \"is_deleted\": 0, \"birth_place\": \"Tarlac City\", \"middle_name\": \"Manabat\", \"subdivision\": \"Concepcion Village\", \"img_filename\": \"capture_1733333269.jpg\", \"cellphone_num\": \"095656565666\", \"district_brgy\": \"Brgy Cauluan\", \"marital_status\": \"Married\"}}'),
+(9,5,'UPDATE','2024-12-05 15:55:29',1,4,0,'La Torre','Nicholas','{\"new_values\": {\"sex\": \"Male\", \"city\": \"Quezon City\", \"street\": \"Davao st\", \"suffix\": \"III\", \"zipcode\": \"1411\", \"province\": \"Metro Manila\", \"house_num\": \"Blk 12 Lot 13\", \"last_name\": \"La Torre\", \"birth_date\": \"1998-06-30\", \"first_name\": \"Nicholas\", \"is_deleted\": 0, \"birth_place\": \"Davao City\", \"middle_name\": \"Trinidad\", \"subdivision\": \"Kingdom subd\", \"img_filename\": \"capture_1732338783.jpg\", \"cellphone_num\": \"090541236585\", \"district_brgy\": \"Novaliches\", \"marital_status\": \"Married\"}, \"old_values\": {\"sex\": \"Male\", \"city\": \"Quezon City\", \"street\": \"Davao st\", \"suffix\": \"III\", \"zipcode\": \"1411\", \"province\": \"Metro Manila\", \"house_num\": \"Blk 12 Lot 13\", \"last_name\": \"La Torre\", \"birth_date\": \"2000-01-01\", \"first_name\": \"Nicholas\", \"is_deleted\": 0, \"birth_place\": \"Davao City\", \"middle_name\": \"Trinidad\", \"subdivision\": \"Kingdom subd\", \"img_filename\": \"capture_1732338783.jpg\", \"cellphone_num\": \"090541236585\", \"district_brgy\": \"Novaliches\", \"marital_status\": \"Married\"}}'),
+(10,20,'INSERT','2024-12-07 20:15:02',1,4,0,'Hofileña','Marco','{\"sex\": \"Male\", \"city\": \"Quezon City\", \"street\": \"Virgo st Corner Aries st\", \"suffix\": \"\", \"zipcode\": \"1123\", \"province\": \"Quezon City\", \"house_num\": \"Blk 3 Lot 3\", \"last_name\": \"Hofileña\", \"birth_date\": \"1993-05-10\", \"first_name\": \"Marco\", \"birth_place\": \"Santa Fe Nueva Viscaya\", \"middle_name\": \"Mark\", \"subdivision\": \"Cielito Homes\", \"img_filename\": \"capture_1733573702.jpg\", \"cellphone_num\": \"095656565666\", \"district_brgy\": \"Novaliches\", \"marital_status\": \"Single\"}');
 
 /*Table structure for table `res_audit_trail` */
 
@@ -279,7 +299,7 @@ CREATE TABLE `res_audit_trail` (
   CONSTRAINT `res_addedby_fk` FOREIGN KEY (`added_by_no`) REFERENCES `tbl_username` (`username_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `res_depart_fk` FOREIGN KEY (`added_depart_no`) REFERENCES `departments_list` (`department_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `res_edited_by` FOREIGN KEY (`last_edited_by`) REFERENCES `tbl_username` (`username_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=48 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=50 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `res_audit_trail` */
 
@@ -329,7 +349,9 @@ insert  into `res_audit_trail`(`res_at_id`,`added_depart_no`,`added_by_no`,`adde
 (44,4,1,'2024-11-24 04:03:30',4,1,'2024-11-24 13:04:59',4,1,'2024-11-30 13:29:02',4,1,'2024-11-30 13:30:52'),
 (45,4,1,'2024-11-25 09:03:50',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
 (46,4,4,'2024-11-29 23:50:28',4,1,'2024-11-29 23:56:39',NULL,NULL,NULL,NULL,NULL,NULL),
-(47,2,4,'2024-11-30 11:52:38',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+(47,2,4,'2024-11-30 11:52:38',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(48,4,1,'2024-12-04 15:54:00',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(49,4,1,'2024-12-09 16:13:34',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 
 /*Table structure for table `resident` */
 
@@ -358,7 +380,7 @@ CREATE TABLE `resident` (
   KEY `res_at_fk` (`audit_trail`),
   FULLTEXT KEY `fullname_idx` (`last_name`,`first_name`,`middle_name`,`suffix`) COMMENT 'For fast res searching',
   CONSTRAINT `res_at_fk` FOREIGN KEY (`audit_trail`) REFERENCES `res_audit_trail` (`res_at_id`) ON DELETE CASCADE ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=48 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=50 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `resident` */
 
@@ -407,7 +429,9 @@ insert  into `resident`(`resident_id`,`img_filename`,`last_name`,`first_name`,`m
 (44,'capture_1732392173.jpg','De Leon','Vincient','Simbulan','','Blk 12 Lot 4','Zapote st','Lilleville Subd','2002','Male','Married','2000-02-09','Muntinlupa','09045565656',1,44,0),
 (45,'capture_1732392210.jpg','Orlando','David','Simbulan','','Blk 12 Lot 4','Zapote st','Lilleville Subd','2002','Male','Married','2000-02-16','Quezon city','09565656233',0,45,0),
 (46,'Shiroe_portal (1).png','Carmona','Nicholas','Dasol','','Blk 8 Lot 4','Jeremiah st','','2002','Male','Single','2002-12-24','Solano Nueva Viscaya','09054321268',1,46,0),
-(47,'capture_1732938758.jpg','Obo','Francis','','','Blk 12 Lot 15','Papili st','Christina Homes','2005','Male','Single','2003-01-06','Quezon City','0956565656565',1,47,0);
+(47,'capture_1732938758.jpg','Obo','Francis','','','Blk 12 Lot 15','Papili st','Christina Homes','2005','Male','Single','2003-01-06','Quezon City','0956565656565',1,47,0),
+(48,'capture_1733298840.jpg','Temones','Carl','Evan','','12','Zabarte Rd','-','2008','Male','Single','2004-06-15','Lemery Batangas','095656565655',1,48,0),
+(49,'capture_1733732014.jpg','Atienza','Gabriel','Ramon','','Blk 3 Lot 3','Virgo st Corner Aries st','Maria Luisa Subd','2006','Male','Single','1989-01-02','Santiago Isabela','09666454555',1,49,0);
 
 /*Table structure for table `resident_audit` */
 
@@ -429,7 +453,7 @@ CREATE TABLE `resident_audit` (
   KEY `dept_no` (`dept_no`),
   CONSTRAINT `resident_audit_ibfk_1` FOREIGN KEY (`user_no`) REFERENCES `tbl_username` (`username_id`),
   CONSTRAINT `resident_audit_ibfk_2` FOREIGN KEY (`dept_no`) REFERENCES `departments_list` (`department_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 /*Data for the table `resident_audit` */
 
@@ -437,7 +461,9 @@ insert  into `resident_audit`(`audit_id`,`resident_id`,`action_type`,`action_tim
 (1,46,'UPDATE','2024-11-29 23:56:39',1,4,0,'Carmona','Nicholas','{\"new_values\": {\"sex\": \"Male\", \"street\": \"Jeremiah st\", \"suffix\": \"\", \"house_num\": \"Blk 8 Lot 4\", \"last_name\": \"Carmona\", \"birth_date\": \"2002-12-24\", \"first_name\": \"Nicholas\", \"is_a_voter\": 1, \"birth_place\": \"Solano Nueva Viscaya\", \"middle_name\": \"Dasol\", \"subdivision\": \"\", \"img_filename\": \"Shiroe_portal (1).png\", \"cellphone_num\": \"09054321268\", \"marital_status\": \"Single\", \"resident_since\": \"2002\"}, \"old_values\": {\"sex\": \"Male\", \"street\": \"Jeremiah st\", \"suffix\": \"\", \"house_num\": \"Blk 8 Lot 4\", \"last_name\": \"Carmona\", \"birth_date\": \"2002-12-24\", \"first_name\": \"Nicholas\", \"is_a_voter\": 1, \"birth_place\": \"Bayombong Nueva Viscaya\", \"middle_name\": \"Dasol\", \"subdivision\": null, \"img_filename\": \"Shiroe_portal (1).png\", \"cellphone_num\": \"09054321268\", \"marital_status\": \"Single\", \"resident_since\": \"2002\"}}'),
 (2,47,'INSERT','2024-11-30 11:52:38',4,2,0,'Obo','Francis','{\"sex\": \"Male\", \"street\": \"Papili st\", \"suffix\": \"\", \"house_num\": \"Blk 12 Lot 15\", \"last_name\": \"Obo\", \"birth_date\": \"2003-01-06\", \"first_name\": \"Francis\", \"is_a_voter\": 1, \"birth_place\": \"Quezon City\", \"middle_name\": \"\", \"subdivision\": \"Christina Homes\", \"img_filename\": \"capture_1732938758.jpg\", \"cellphone_num\": \"0956565656565\", \"marital_status\": \"Single\", \"resident_since\": \"2005\"}'),
 (3,44,'DELETE','2024-11-30 13:29:02',1,4,1,'De Leon','Vincient','{\"new_values\": {\"sex\": \"Male\", \"street\": \"Zapote st\", \"suffix\": \"\", \"house_num\": \"Blk 12 Lot 4\", \"last_name\": \"De Leon\", \"birth_date\": \"2000-02-09\", \"first_name\": \"Vincient\", \"is_a_voter\": 1, \"is_deleted\": 1, \"birth_place\": \"Muntinlupa\", \"middle_name\": \"Simbulan\", \"subdivision\": \"Lilleville Subd\", \"img_filename\": \"capture_1732392173.jpg\", \"cellphone_num\": \"09045565656\", \"marital_status\": \"Married\", \"resident_since\": \"2002\"}, \"old_values\": {\"is_deleted\": 0}}'),
-(4,44,'RECOVER','2024-11-30 13:30:52',1,4,0,'De Leon','Vincient','{\"new_values\": {\"sex\": \"Male\", \"street\": \"Zapote st\", \"suffix\": \"\", \"house_num\": \"Blk 12 Lot 4\", \"last_name\": \"De Leon\", \"birth_date\": \"2000-02-09\", \"first_name\": \"Vincient\", \"is_a_voter\": 1, \"is_deleted\": 0, \"birth_place\": \"Muntinlupa\", \"middle_name\": \"Simbulan\", \"subdivision\": \"Lilleville Subd\", \"img_filename\": \"capture_1732392173.jpg\", \"cellphone_num\": \"09045565656\", \"marital_status\": \"Married\", \"resident_since\": \"2002\"}, \"old_values\": {\"is_deleted\": 1}}');
+(4,44,'RECOVER','2024-11-30 13:30:52',1,4,0,'De Leon','Vincient','{\"new_values\": {\"sex\": \"Male\", \"street\": \"Zapote st\", \"suffix\": \"\", \"house_num\": \"Blk 12 Lot 4\", \"last_name\": \"De Leon\", \"birth_date\": \"2000-02-09\", \"first_name\": \"Vincient\", \"is_a_voter\": 1, \"is_deleted\": 0, \"birth_place\": \"Muntinlupa\", \"middle_name\": \"Simbulan\", \"subdivision\": \"Lilleville Subd\", \"img_filename\": \"capture_1732392173.jpg\", \"cellphone_num\": \"09045565656\", \"marital_status\": \"Married\", \"resident_since\": \"2002\"}, \"old_values\": {\"is_deleted\": 1}}'),
+(5,48,'INSERT','2024-12-04 15:54:00',1,4,0,'Temones','Carl','{\"sex\": \"Male\", \"street\": \"Zabarte Rd\", \"suffix\": \"\", \"house_num\": \"12\", \"last_name\": \"Temones\", \"birth_date\": \"2004-06-15\", \"first_name\": \"Carl\", \"is_a_voter\": 1, \"birth_place\": \"Lemery Batangas\", \"middle_name\": \"Evan\", \"subdivision\": \"-\", \"img_filename\": \"capture_1733298840.jpg\", \"cellphone_num\": \"095656565655\", \"marital_status\": \"Single\", \"resident_since\": \"2008\"}'),
+(6,49,'INSERT','2024-12-09 16:13:34',1,4,0,'Atienza','Gabriel','{\"sex\": \"Male\", \"street\": \"Virgo st Corner Aries st\", \"suffix\": \"\", \"house_num\": \"Blk 3 Lot 3\", \"last_name\": \"Atienza\", \"birth_date\": \"1989-01-02\", \"first_name\": \"Gabriel\", \"is_a_voter\": 1, \"birth_place\": \"Santiago Isabela\", \"middle_name\": \"Ramon\", \"subdivision\": \"Maria Luisa Subd\", \"img_filename\": \"capture_1733732014.jpg\", \"cellphone_num\": \"09666454555\", \"marital_status\": \"Single\", \"resident_since\": \"2006\"}');
 
 /*Table structure for table `tbl_blotter_audit_trail` */
 
@@ -456,27 +482,17 @@ CREATE TABLE `tbl_blotter_audit_trail` (
   PRIMARY KEY (`blotter_at_id`),
   KEY `fk_assist_by` (`assist_by_no`),
   CONSTRAINT `fk_assist_by` FOREIGN KEY (`assist_by_no`) REFERENCES `tbl_username` (`username_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 /*Data for the table `tbl_blotter_audit_trail` */
 
 insert  into `tbl_blotter_audit_trail`(`blotter_at_id`,`assist_by_no`,`blotter_add_dt`,`blotter_edit_dt`,`edited_by`,`blotter_delete_dt`,`deleted_by`,`blotter_recovered_dt`,`recovered_by`) values 
-(1,NULL,'2024-11-16 17:12:51','2024-11-25 17:23:31',NULL,'2024-11-18 13:53:09',NULL,NULL,NULL),
-(2,NULL,'2024-11-16 17:18:59','2024-11-25 17:23:31',NULL,'2024-11-18 13:53:09',NULL,NULL,NULL),
-(3,NULL,'2024-11-16 17:21:42','2024-11-25 17:23:31',NULL,'2024-11-18 13:53:09',NULL,NULL,NULL),
-(4,NULL,'2024-11-16 17:23:52','2024-11-25 17:23:31',NULL,'2024-11-18 13:53:09',NULL,NULL,NULL),
-(5,NULL,'2024-11-16 22:16:52','2024-11-25 17:23:31',NULL,'2024-11-18 13:53:09',NULL,NULL,NULL),
-(6,NULL,'2024-11-16 22:17:55','2024-11-25 17:23:31',NULL,'2024-11-18 13:53:09',NULL,NULL,NULL),
-(7,NULL,'2024-11-16 22:19:31','2024-11-25 17:23:31',NULL,'2024-11-18 13:53:09',NULL,NULL,NULL),
-(8,NULL,'2024-11-16 22:20:10','2024-11-25 17:23:31',NULL,'2024-11-18 13:53:09',NULL,NULL,NULL),
-(9,NULL,'2024-11-16 22:20:12','2024-11-25 17:23:31',NULL,'2024-11-18 13:53:09',NULL,NULL,NULL),
-(10,NULL,'2024-11-16 22:20:30','2024-11-25 17:23:31',NULL,'2024-11-18 13:53:09',NULL,NULL,NULL),
-(11,NULL,'2024-11-16 22:25:17','2024-11-25 17:23:31',NULL,'2024-11-18 13:53:09',NULL,NULL,NULL),
-(12,NULL,'2024-11-16 22:31:39','2024-11-25 17:23:31',NULL,'2024-11-18 13:53:09',NULL,NULL,NULL),
-(13,NULL,'2024-11-18 13:49:28','2024-11-25 17:23:31',NULL,'2024-11-18 13:53:09',NULL,NULL,NULL),
-(14,NULL,'2024-11-25 17:20:21','2024-11-25 17:23:31',NULL,NULL,NULL,NULL,NULL),
-(15,NULL,'2024-11-25 17:27:19',NULL,NULL,NULL,NULL,NULL,NULL),
-(16,NULL,'2024-11-25 17:30:06',NULL,NULL,NULL,NULL,NULL,NULL);
+(1,1,'2024-12-03 14:40:07','2024-12-08 17:57:20',1,'2024-12-09 11:20:00',1,NULL,NULL),
+(2,1,'2024-12-04 01:03:18','2024-12-04 02:26:54',1,'2024-12-09 11:20:00',1,NULL,NULL),
+(3,1,'2024-12-09 00:31:35',NULL,NULL,'2024-12-09 11:20:00',1,NULL,NULL),
+(4,1,'2024-12-09 00:34:52',NULL,NULL,'2024-12-09 11:20:00',1,NULL,NULL),
+(5,1,'2024-12-09 16:16:13',NULL,NULL,NULL,NULL,NULL,NULL),
+(6,1,'2024-12-09 18:40:38','2024-12-09 18:45:50',1,NULL,NULL,NULL,NULL);
 
 /*Table structure for table `tbl_blotter_mediator` */
 
@@ -488,14 +504,57 @@ CREATE TABLE `tbl_blotter_mediator` (
   `first_name` varchar(85) DEFAULT NULL,
   `middle_name` varchar(85) DEFAULT NULL,
   `suffix` varchar(85) DEFAULT NULL,
+  `is_deleted` smallint(5) NOT NULL DEFAULT '0',
   PRIMARY KEY (`mediator_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `tbl_blotter_mediator` */
 
-insert  into `tbl_blotter_mediator`(`mediator_id`,`last_name`,`first_name`,`middle_name`,`suffix`) values 
-(1,'Salas','Robert','Lumauig','Jr'),
-(2,'Jamin','Jeffrey','Ocampo','Sr');
+insert  into `tbl_blotter_mediator`(`mediator_id`,`last_name`,`first_name`,`middle_name`,`suffix`,`is_deleted`) values 
+(1,'Salas','Robert','Lumauig','Jr',0),
+(2,'Jamin','Jeffrey','Ocampo','Sr',0),
+(3,'Benabe','June','Damian','III',0),
+(4,'Fely','Feliciano','Neri',NULL,0),
+(5,'Sajiro','Dayao','Nerissa',NULL,1),
+(6,'Renzy','Morte','Carlo',NULL,0);
+
+/*Table structure for table `tbl_blotter_other_person` */
+
+DROP TABLE IF EXISTS `tbl_blotter_other_person`;
+
+CREATE TABLE `tbl_blotter_other_person` (
+  `other_person_id` int(11) NOT NULL AUTO_INCREMENT,
+  `party_type` enum('complainant','respondent') NOT NULL,
+  `blotter_id` int(11) NOT NULL,
+  `resident_id` int(11) DEFAULT NULL,
+  `non_resident_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`other_person_id`),
+  KEY `blotter_id` (`blotter_id`),
+  KEY `resident_id` (`resident_id`),
+  KEY `non_resident_id` (`non_resident_id`),
+  CONSTRAINT `tbl_blotter_other_person_ibfk_1` FOREIGN KEY (`blotter_id`) REFERENCES `tbl_blotters` (`blotter_id`),
+  CONSTRAINT `tbl_blotter_other_person_ibfk_2` FOREIGN KEY (`resident_id`) REFERENCES `resident` (`resident_id`),
+  CONSTRAINT `tbl_blotter_other_person_ibfk_3` FOREIGN KEY (`non_resident_id`) REFERENCES `non_resident` (`nresident_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=138 DEFAULT CHARSET=utf8mb4;
+
+/*Data for the table `tbl_blotter_other_person` */
+
+insert  into `tbl_blotter_other_person`(`other_person_id`,`party_type`,`blotter_id`,`resident_id`,`non_resident_id`) values 
+(47,'complainant',2,6,NULL),
+(48,'complainant',2,NULL,6),
+(49,'respondent',2,10,NULL),
+(50,'respondent',2,NULL,1),
+(127,'complainant',1,9,NULL),
+(128,'complainant',1,NULL,2),
+(129,'respondent',1,NULL,6),
+(130,'complainant',3,6,NULL),
+(131,'respondent',3,NULL,3),
+(132,'complainant',4,6,NULL),
+(133,'respondent',4,NULL,3),
+(134,'complainant',5,1,NULL),
+(135,'complainant',5,NULL,5),
+(136,'respondent',5,3,NULL),
+(137,'respondent',5,NULL,2);
 
 /*Table structure for table `tbl_blotters` */
 
@@ -507,8 +566,6 @@ CREATE TABLE `tbl_blotters` (
   `nres_complainant_no` int(55) DEFAULT NULL,
   `res_respondent_no` int(55) DEFAULT NULL,
   `nres_respondent_no` int(55) DEFAULT NULL,
-  `other_complainant_no` int(55) DEFAULT NULL,
-  `other_respondent_no` int(55) DEFAULT NULL,
   `blotter_type` tinyint(5) DEFAULT NULL,
   `desc_incident` varchar(255) DEFAULT NULL,
   `incident_dt` datetime DEFAULT NULL,
@@ -519,8 +576,8 @@ CREATE TABLE `tbl_blotters` (
   `statemnt` longtext,
   `mediation_starttime` time DEFAULT NULL,
   `mediation_endtime` time DEFAULT NULL,
-  `mediator_no` int(55) DEFAULT NULL,
-  `blot_at_no` int(55) DEFAULT NULL,
+  `mediator_no` int(55) NOT NULL,
+  `blot_at_no` int(55) NOT NULL,
   `mediation_date` date DEFAULT NULL,
   `schedule_color` varchar(55) DEFAULT NULL,
   `report_status` tinyint(5) DEFAULT '0',
@@ -530,39 +587,58 @@ CREATE TABLE `tbl_blotters` (
   KEY `res_repondent_no` (`res_respondent_no`),
   KEY `nres_respondent_no` (`nres_respondent_no`),
   KEY `blot_at_no` (`blot_at_no`),
-  KEY `other_complanant_no` (`other_complainant_no`),
-  KEY `other_respondent_no` (`other_respondent_no`),
   KEY `tbl_blotters_ibfk_2` (`nres_complainant_no`),
   KEY `mediator_no` (`mediator_no`),
-  CONSTRAINT `tbl_blotters_ibfk_1` FOREIGN KEY (`res_complainant_no`) REFERENCES `resident` (`resident_id`),
-  CONSTRAINT `tbl_blotters_ibfk_2` FOREIGN KEY (`nres_complainant_no`) REFERENCES `non_resident` (`nresident_id`),
-  CONSTRAINT `tbl_blotters_ibfk_3` FOREIGN KEY (`res_respondent_no`) REFERENCES `resident` (`resident_id`),
-  CONSTRAINT `tbl_blotters_ibfk_4` FOREIGN KEY (`nres_respondent_no`) REFERENCES `non_resident` (`nresident_id`),
-  CONSTRAINT `tbl_blotters_ibfk_5` FOREIGN KEY (`blot_at_no`) REFERENCES `tbl_blotter_audit_trail` (`blotter_at_id`),
-  CONSTRAINT `tbl_blotters_ibfk_6` FOREIGN KEY (`other_complainant_no`) REFERENCES `tbl_other_complainants` (`complainant_id`),
-  CONSTRAINT `tbl_blotters_ibfk_7` FOREIGN KEY (`other_respondent_no`) REFERENCES `tbl_other_respondents` (`respondent_id`),
-  CONSTRAINT `tbl_blotters_ibfk_8` FOREIGN KEY (`mediator_no`) REFERENCES `tbl_blotter_mediator` (`mediator_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4;
+  CONSTRAINT `tbl_blotters_ibfk_1` FOREIGN KEY (`res_complainant_no`) REFERENCES `resident` (`resident_id`) ON DELETE CASCADE,
+  CONSTRAINT `tbl_blotters_ibfk_2` FOREIGN KEY (`nres_complainant_no`) REFERENCES `non_resident` (`nresident_id`) ON DELETE CASCADE,
+  CONSTRAINT `tbl_blotters_ibfk_3` FOREIGN KEY (`res_respondent_no`) REFERENCES `resident` (`resident_id`) ON DELETE CASCADE,
+  CONSTRAINT `tbl_blotters_ibfk_4` FOREIGN KEY (`nres_respondent_no`) REFERENCES `non_resident` (`nresident_id`) ON DELETE CASCADE,
+  CONSTRAINT `tbl_blotters_ibfk_5` FOREIGN KEY (`blot_at_no`) REFERENCES `tbl_blotter_audit_trail` (`blotter_at_id`) ON DELETE CASCADE,
+  CONSTRAINT `tbl_blotters_ibfk_8` FOREIGN KEY (`mediator_no`) REFERENCES `tbl_blotter_mediator` (`mediator_id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `tbl_blotters` */
 
-insert  into `tbl_blotters`(`blotter_id`,`res_complainant_no`,`nres_complainant_no`,`res_respondent_no`,`nres_respondent_no`,`other_complainant_no`,`other_respondent_no`,`blotter_type`,`desc_incident`,`incident_dt`,`location_of_incident`,`date_of_resolution`,`blotter_contextfile`,`blotter_evidencefile`,`statemnt`,`mediation_starttime`,`mediation_endtime`,`mediator_no`,`blot_at_no`,`mediation_date`,`schedule_color`,`report_status`,`is_deleted`) values 
-(1,1,NULL,10,NULL,1,1,1,'Utang Di na binayaraan, naglahong parang bula','2024-11-13 17:00:21','Cielito Homes','2024-11-25','GettyImages-846492016-cab58ea8fa1c4540b6ae00f133b28889 (1).jpg','GLooZSFWYAAMxfL (1).jpeg','Sa ika 13th ng Nobiembre ay nagpautang si Ginang Kiana Makabara ng 10 libong piso kay Reno Hofileña Tecson at di na sumpot ulit','12:30:00','14:00:00',1,1,'2024-11-18',NULL,1,0),
-(2,1,NULL,12,NULL,2,2,0,'Utang Di binabayaraan','2024-11-13 17:00:21','Cielito Homes',NULL,'5_2024-07-06_22-17-53.jpg','2f070627687d52995cfabf5c1bbde057 (2).jpg','Sa ika 13th ng Nobiembre ay nagpautang si Robert Salas Makabara ng 10 libong piso kay Reno Hofileña Tecson at di na sumipot ulit','14:00:00','15:30:00',2,2,'2024-11-18',NULL,0,0),
-(3,1,NULL,4,NULL,3,3,0,'Utang Tangngay','2024-11-13 17:00:21','Cielito Homes',NULL,'2f070627687d52995cfabf5c1bbde057.jpg','456471971_509667595047012_371368751885686431_n.jpg','Sa ika 13th ng Nobiembre ay nagpautang ang kapatid ng nagrereklamo  na si James Hofileña Tecson ng 10 libong piso kay Reno Hofileña Tecson at di na sumipot muli','14:00:00','15:30:00',2,3,'2024-11-21',NULL,0,0),
-(4,1,NULL,8,NULL,4,4,0,'Di nagbabayad ng Utang','2024-11-13 17:00:21','Cielito Homes',NULL,'2f070627687d52995cfabf5c1bbde057 (1).jpg','456471971_509667595047012_371368751885686431_n (1).jpg','Sa ika 13th ng Nobiembre ay si Allen Adrian Yalong ay nagpost ng libeliong mga post sa kanyang social media kung saan binibintangan ang nagrereklamo ng salot at tiwalig','13:00:00','14:30:00',1,4,'2024-11-27','#000000',0,0),
-(5,8,NULL,1,NULL,5,5,0,'Cyber Libel','2024-11-11 22:15:46','Cielito Homes',NULL,'GettyImages-846492016-cab58ea8fa1c4540b6ae00f133b28889.jpg','GLooZSFWYAAMxfL.jpeg','Cyber libel lfjsdklflkasjflsdklfsadklvnlsdakncl','13:00:00','14:00:00',1,5,'2024-11-26',NULL,0,0),
-(6,8,NULL,1,NULL,6,6,0,'jkdjfksjdkfjksafksjdfkajdskfjadskkfkldsjdf','2024-11-11 22:15:46','Cielito Homes',NULL,'5_2024-07-06_22-17-53 (4).jpg','5_2024-07-06_22-17-53 (3).jpg','fvjdfklvjaksljviajsdfklvjadsklfmfvoaefjd','13:00:00','14:00:00',1,6,'2024-11-26',NULL,0,0),
-(7,10,NULL,9,NULL,7,7,0,'Cyber Bullying','2024-11-12 22:18:42','Maria Lusisa',NULL,'2f070627687d52995cfabf5c1bbde057 (4).jpg','Shiroe_portal (4).png','dslmalmdlmfqewfmqsdmklawmdcwmdkcmkwsd','09:00:00','10:00:00',NULL,7,'2024-11-29','#000000',0,0),
-(8,10,NULL,9,NULL,8,8,1,'Unjust Vexation','2024-11-12 22:18:42','Maria Lusisa',NULL,'2f070627687d52995cfabf5c1bbde057 (5).jpg','Shiroe_portal (5).png','sdjkmdscmasdmckasmdcklandkclnasdkjnckds hckadscjndkjcnasdkncklasdnckanwdkc','09:00:00','10:00:00',1,8,'2024-11-29',NULL,0,0),
-(9,10,NULL,9,NULL,9,9,1,'Unjust Vexation','2024-11-12 22:18:42','Maria Lusisa',NULL,'2f070627687d52995cfabf5c1bbde057 (7).jpg','Shiroe_portal (6).png','sdjkmdscmasdmckasmdcklandkclnasdkjnckds hckadscjndkjcnasdkncklasdnckanwdkc','09:00:00','10:00:00',1,9,'2024-11-29',NULL,0,0),
-(10,10,NULL,NULL,1,10,10,1,'Estafa Rentangay','2024-11-12 22:18:42','Maria Lusisa',NULL,'2f070627687d52995cfabf5c1bbde057 (8).jpg','Shiroe_portal (7).png','sdjkmdscmasdmckasmdcklandkclnasdkjnckds hckadscjndkjcnasdkncklasdnckanwdkcdsfsfsdfsd','09:00:00','10:00:00',NULL,10,'2024-11-29','#000000',0,0),
-(11,8,NULL,9,NULL,11,11,0,'Snatching','2024-11-13 22:20:51','Maligay Park',NULL,'2f070627687d52995cfabf5c1bbde057 (13).jpg','toilet-bound-hanako-kun-acryl-keychain-hanako-kun (4).jpg','fsdfcsdcmsdmdclksdmlcmsklmcslacnsdkncadskncvkadsfvkld','08:30:00','10:30:00',NULL,11,'2024-11-20','#c83c3c',0,0),
-(12,8,NULL,9,NULL,12,12,0,'Snatchingfdfsdlcls;dkmcals','2024-11-13 22:20:51','Maligay Park',NULL,'2f070627687d52995cfabf5c1bbde057 (15).jpg','toilet-bound-hanako-kun-acryl-keychain-hanako-kun (5).jpg','fsdfcsdcmsdmdclksdmlcmsklmcslacnsdkncadskncvkadsfvkld','08:30:00','10:30:00',NULL,12,'2024-11-20','#c83c3c',0,1),
-(13,1,NULL,9,NULL,13,13,0,'Estafa Rentangay','2024-11-11 13:30:46','Cielito Homes',NULL,'GLooZSFWYAAMxfL.jpeg','GLooZSFWYAAMxfL (2).jpeg','sdkjfndisafcljkasdhfkasndcasoidcpIUASNHDCPIUA','09:00:00','10:00:00',NULL,13,'2024-11-19','#000000',0,1),
-(14,1,NULL,3,NULL,14,14,0,'Estafa Ebike na di na binalik sa pinagupahan','2024-11-26 17:17:18','Cielito Homes',NULL,'456471971_509667595047012_371368751885686431_n (1).jpg','465560047_3983565665304630_891432138380119720_n.jpg','Gdpfcklsdlcksldmcsldjclasmdocaskdlmcsiodlsdmvlksdmvldsmf','10:00:00','10:30:00',1,14,'2024-11-27',NULL,0,0),
-(15,1,NULL,8,NULL,15,15,0,'Online harasment','2024-11-13 17:25:25','Maria Lusisa',NULL,'465560047_3983565665304630_891432138380119720_n.jpg','465560047_3983565665304630_891432138380119720_n (1).jpg','Sa ika 10 ng nobyembre si Aaaron Armengol Yalong ay nagpost ng mga malisiosong mga post laban sa nagrereklamo','15:00:00','15:30:00',NULL,15,'2024-11-28','#b40404',0,0),
-(16,1,NULL,8,NULL,16,16,0,'Online harasment','2024-11-06 17:29:08','Maria Lusisa',NULL,'456471971_509667595047012_371368751885686431_n (2).jpg','465560047_3983565665304630_891432138380119720_n (2).jpg','adssldmclksdmcklsmadlkcmslkdmcsdmn','13:30:00','14:00:00',NULL,16,'2024-11-28','#000000',0,0);
+insert  into `tbl_blotters`(`blotter_id`,`res_complainant_no`,`nres_complainant_no`,`res_respondent_no`,`nres_respondent_no`,`blotter_type`,`desc_incident`,`incident_dt`,`location_of_incident`,`date_of_resolution`,`blotter_contextfile`,`blotter_evidencefile`,`statemnt`,`mediation_starttime`,`mediation_endtime`,`mediator_no`,`blot_at_no`,`mediation_date`,`schedule_color`,`report_status`,`is_deleted`) values 
+(1,NULL,3,8,NULL,1,'Estafa/Rentangay Utang di na binayaran','2024-12-01 13:56:15','Cassel Spring',NULL,'462570570_1859289424892345_8887677385207056678_n (15).jpg','465560047_3983565665304630_891432138380119720_n (15).jpg','vsdffsfsdfsdfsdfsdfsdfsdfvdvddfvsdvsdfsfdkjfosdasdasdsdfsdfsdfvsdfxczzczxczxxczxczxczx','10:00:00','10:30:00',2,1,'2024-12-16',NULL,0,0),
+(2,1,NULL,8,NULL,0,'Utang di na binayaraan','2024-12-01 01:02:10','Cielito Homes','2024-12-04','5_2024-07-06_22-17-53.jpg','Karen-Bennett-200x200px (4).jpg','dfjkvadfnvkjndfuhvkdjncvjkndfvndjfn djkfnvkjdfnkvjnadfkjvnadsfosf','08:00:00','08:30:00',1,2,'2024-12-10',NULL,1,0),
+(3,3,NULL,NULL,6,0,'Utang di na binayaraan','2024-12-09 03:20:36','Cielito Homes',NULL,'462570570_1859289424892345_8887677385207056678_n (19).jpg','465560047_3983565665304630_891432138380119720_n (19).jpg','xcvxkcjklskcjnaslidhcvlkasdncknsdkcnskdncjksdnc','11:00:00','11:30:00',1,3,'2024-12-13','#e5ff1f',0,1),
+(4,3,NULL,NULL,6,0,'Utang di na binayaraan','2024-12-09 03:20:36','Cielito Homes',NULL,'462570570_1859289424892345_8887677385207056678_n (20).jpg','465560047_3983565665304630_891432138380119720_n (20).jpg','xcvxkcjklskcjnaslidhcvlkasdncknsdkcnskdncjksdnc','11:00:00','11:30:00',1,4,'2024-12-13','#e5ff1f',0,0),
+(5,49,NULL,4,NULL,0,'Faul Play','2024-12-09 16:15:23','Cielito Homes',NULL,'462570570_1859289424892345_8887677385207056678_n (21).jpg','465560047_3983565665304630_891432138380119720_n (21).jpg','kvmldfvdfmvkmzxckvmzdkvkdfmvinmdxlkvjdfkmvldkmfvlkzdmfl','09:00:00','09:30:00',1,5,'2024-12-11','#ff0000',0,0),
+(6,49,NULL,1,NULL,0,'Estafa/Rentangay ng bike','2024-12-01 08:39:08','Maria Luisa','2024-12-09','465560047_3983565665304630_891432138380119720_n (7).jpg','462570570_1859289424892345_8887677385207056678_n (7).jpg','Sa ika 1 ng december 2024 nawala ang bike','13:00:00','13:30:00',1,6,'2024-12-11',NULL,1,0);
+
+/*Table structure for table `tbl_blotters_audit` */
+
+DROP TABLE IF EXISTS `tbl_blotters_audit`;
+
+CREATE TABLE `tbl_blotters_audit` (
+  `audit_id` int(11) NOT NULL AUTO_INCREMENT,
+  `blotter_no` int(11) NOT NULL,
+  `action_type` enum('INSERT','UPDATE','DELETE','RECOVER') NOT NULL,
+  `action_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `user_no` int(11) DEFAULT NULL,
+  `is_deleted` tinyint(2) DEFAULT '0',
+  `action_data` json DEFAULT NULL,
+  PRIMARY KEY (`audit_id`),
+  KEY `user_no` (`user_no`),
+  KEY `blotter_no` (`blotter_no`),
+  CONSTRAINT `tbl_blotters_audit_ibfk_1` FOREIGN KEY (`user_no`) REFERENCES `tbl_username` (`username_id`),
+  CONSTRAINT `tbl_blotters_audit_ibfk_2` FOREIGN KEY (`blotter_no`) REFERENCES `tbl_blotters` (`blotter_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
+
+/*Data for the table `tbl_blotters_audit` */
+
+insert  into `tbl_blotters_audit`(`audit_id`,`blotter_no`,`action_type`,`action_timestamp`,`user_no`,`is_deleted`,`action_data`) values 
+(4,1,'UPDATE','2024-12-08 17:21:31',1,0,'{\"new_other_data\": {\"statemnt\": \"vsdffsfsdfsdfsdfsdfsdfsdfvdvddfvsdvsdfsfdkjfosdasdasdsdfsdfsdfvsdfxczzczxczxxczxczxczx\", \"incident_dt\": \"2024-12-01 13:56:15\", \"blotter_type\": 0, \"desc_incident\": \"Estafa/Rentangay\", \"mediator_name\": 1, \"report_status\": 0, \"mediation_date\": \"2024-12-16\", \"schedule_color\": null, \"mediation_endtime\": \"10:30:00\", \"date_of_resolution\": null, \"blotter_contextfile\": \"462570570_1859289424892345_8887677385207056678_n (15).jpg\", \"mediation_starttime\": \"10:00:00\", \"blotter_evidencefile\": \"465560047_3983565665304630_891432138380119720_n (15).jpg\", \"location_of_incident\": \"Christina Homes\"}, \"old_other_data\": {\"statemnt\": \"vsdffsfsdfsdfsdfsdfsdfsdfvdvddfvsdvsdfsfdkjfosdasdasdsdfsdfsdfvsdfxczzczxczxxczxczxczx\", \"incident_dt\": \"2024-12-01 13:56:15\", \"blotter_type\": 1, \"desc_incident\": \"Estafa/Rentangay\", \"mediator_name\": 1, \"report_status\": 0, \"mediation_date\": \"2024-12-16\", \"schedule_color\": null, \"mediation_endtime\": \"10:30:00\", \"date_of_resolution\": null, \"blotter_contextfile\": \"462570570_1859289424892345_8887677385207056678_n (15).jpg\", \"mediation_starttime\": \"10:00:00\", \"blotter_evidencefile\": \"465560047_3983565665304630_891432138380119720_n (15).jpg\", \"location_of_incident\": \"Maria Luisa\"}, \"new_other_respondents\": [{\"id\": 6, \"status\": \"Non-Resident\", \"full_name\": \"Saksi, Shanna Jiamin \", \"blotter_id\": 1, \"img_filename\": \"shanna (1).jpg\"}], \"old_other_respondents\": [{\"id\": 6, \"status\": \"Non-Resident\", \"full_name\": \"Saksi, Shanna Jiamin \", \"blotter_id\": 1, \"img_filename\": \"shanna (1).jpg\"}], \"new_other_complainants\": [{\"id\": 9, \"status\": \"Resident\", \"full_name\": \"Franklin, Tecson Miano \", \"blotter_id\": 1, \"img_filename\": \"miano.jpg\"}, {\"id\": 2, \"status\": \"Non-Resident\", \"full_name\": \"Nicholas, Lim Mahestro \", \"blotter_id\": 1, \"img_filename\": \"capture_1732500165.jpg\"}], \"old_other_complainants\": [{\"id\": 9, \"status\": \"Resident\", \"full_name\": \"Franklin, Tecson Miano \", \"blotter_id\": 1, \"img_filename\": \"miano.jpg\"}, {\"id\": 2, \"status\": \"Non-Resident\", \"full_name\": \"Nicholas, Lim Mahestro \", \"blotter_id\": 1, \"img_filename\": \"capture_1732500165.jpg\"}], \"new_main_comp_res_details\": {\"respondent_no\": \"8\", \"complainant_no\": \"3\", \"respondent_status\": \"Resident\", \"respondent_suffix\": \"\", \"complainant_status\": \"Non-Resident\", \"complainant_suffix\": \"III\", \"respondent_address\": \"Blk 12 Lot 5, Isaiah st, Cielito Homes, Camarin Caloocan City\", \"complainant_address\": \"Blk 12 Lot 4, Hillcrest st, Rolling Stone Subd, Quezon City, Metro Manila, 1420\", \"respondent_filename\": \"images (1).jpg\", \"complainant_filename\": \"2f070627687d52995cfabf5c1bbde057.jpg\", \"respondent_last_name\": \"Yalong\", \"complainant_last_name\": \"Lim\", \"respondent_first_name\": \"Aaaron\", \"complainant_first_name\": \"Mario\", \"respondent_middle_name\": \"Armengol\", \"complainant_middle_name\": \"Jaen\"}, \"old_main_comp_res_details\": {\"respondent_no\": \"8\", \"complainant_no\": \"3\", \"respondent_status\": \"Resident\", \"respondent_suffix\": \"\", \"complainant_status\": \"Non-Resident\", \"complainant_suffix\": \"III\", \"respondent_address\": \"Blk 12 Lot 5, Isaiah st, Cielito Homes, Camarin Caloocan City\", \"complainant_address\": \"Blk 12 Lot 4, Hillcrest st, Rolling Stone Subd, Quezon City, Metro Manila, 1420\", \"respondent_filename\": \"images (1).jpg\", \"complainant_filename\": \"2f070627687d52995cfabf5c1bbde057.jpg\", \"respondent_last_name\": \"Yalong\", \"complainant_last_name\": \"Lim\", \"respondent_first_name\": \"Aaaron\", \"complainant_first_name\": \"Mario\", \"respondent_middle_name\": \"Armengol\", \"complainant_middle_name\": \"Jaen\"}}'),
+(5,1,'UPDATE','2024-12-08 17:57:20',1,0,'{\"new_other_data\": {\"statemnt\": \"vsdffsfsdfsdfsdfsdfsdfsdfvdvddfvsdvsdfsfdkjfosdasdasdsdfsdfsdfvsdfxczzczxczxxczxczxczx\", \"incident_dt\": \"2024-12-01 13:56:15\", \"blotter_type\": 1, \"desc_incident\": \"Estafa/Rentangay Utang di na binayaran\", \"mediator_name\": 2, \"report_status\": 0, \"mediation_date\": \"2024-12-16\", \"schedule_color\": null, \"mediation_endtime\": \"10:30:00\", \"date_of_resolution\": null, \"blotter_contextfile\": \"462570570_1859289424892345_8887677385207056678_n (15).jpg\", \"mediation_starttime\": \"10:00:00\", \"blotter_evidencefile\": \"465560047_3983565665304630_891432138380119720_n (15).jpg\", \"location_of_incident\": \"Cassel Spring\"}, \"old_other_data\": {\"statemnt\": \"vsdffsfsdfsdfsdfsdfsdfsdfvdvddfvsdvsdfsfdkjfosdasdasdsdfsdfsdfvsdfxczzczxczxxczxczxczx\", \"incident_dt\": \"2024-12-01 13:56:15\", \"blotter_type\": 0, \"desc_incident\": \"Estafa/Rentangay\", \"mediator_name\": 1, \"report_status\": 0, \"mediation_date\": \"2024-12-16\", \"schedule_color\": null, \"mediation_endtime\": \"10:30:00\", \"date_of_resolution\": null, \"blotter_contextfile\": \"462570570_1859289424892345_8887677385207056678_n (15).jpg\", \"mediation_starttime\": \"10:00:00\", \"blotter_evidencefile\": \"465560047_3983565665304630_891432138380119720_n (15).jpg\", \"location_of_incident\": \"Christina Homes\"}, \"new_other_respondents\": [{\"id\": 6, \"status\": \"Non-Resident\", \"full_name\": \"Saksi, Shanna Jiamin \", \"blotter_id\": 1, \"img_filename\": \"shanna (1).jpg\"}], \"old_other_respondents\": [{\"id\": 6, \"status\": \"Non-Resident\", \"full_name\": \"Saksi, Shanna Jiamin \", \"blotter_id\": 1, \"img_filename\": \"shanna (1).jpg\"}], \"new_other_complainants\": [{\"id\": 9, \"status\": \"Resident\", \"full_name\": \"Franklin, Tecson Miano \", \"blotter_id\": 1, \"img_filename\": \"miano.jpg\"}, {\"id\": 2, \"status\": \"Non-Resident\", \"full_name\": \"Nicholas, Lim Mahestro \", \"blotter_id\": 1, \"img_filename\": \"capture_1732500165.jpg\"}], \"old_other_complainants\": [{\"id\": 9, \"status\": \"Resident\", \"full_name\": \"Franklin, Tecson Miano \", \"blotter_id\": 1, \"img_filename\": \"miano.jpg\"}, {\"id\": 2, \"status\": \"Non-Resident\", \"full_name\": \"Nicholas, Lim Mahestro \", \"blotter_id\": 1, \"img_filename\": \"capture_1732500165.jpg\"}], \"new_main_comp_res_details\": {\"respondent_no\": \"8\", \"complainant_no\": \"3\", \"respondent_status\": \"Resident\", \"respondent_suffix\": \"\", \"complainant_status\": \"Non-Resident\", \"complainant_suffix\": \"III\", \"respondent_address\": \"Blk 12 Lot 5, Isaiah st, Cielito Homes, Camarin Caloocan City\", \"complainant_address\": \"Blk 12 Lot 4, Hillcrest st, Rolling Stone Subd, Quezon City, Metro Manila, 1420\", \"respondent_filename\": \"images (1).jpg\", \"complainant_filename\": \"2f070627687d52995cfabf5c1bbde057.jpg\", \"respondent_last_name\": \"Yalong\", \"complainant_last_name\": \"Lim\", \"respondent_first_name\": \"Aaaron\", \"complainant_first_name\": \"Mario\", \"respondent_middle_name\": \"Armengol\", \"complainant_middle_name\": \"Jaen\"}, \"old_main_comp_res_details\": {\"respondent_no\": \"8\", \"complainant_no\": \"3\", \"respondent_status\": \"Resident\", \"respondent_suffix\": \"\", \"complainant_status\": \"Non-Resident\", \"complainant_suffix\": \"III\", \"respondent_address\": \"Blk 12 Lot 5, Isaiah st, Cielito Homes, Camarin Caloocan City\", \"complainant_address\": \"Blk 12 Lot 4, Hillcrest st, Rolling Stone Subd, Quezon City, Metro Manila, 1420\", \"respondent_filename\": \"images (1).jpg\", \"complainant_filename\": \"2f070627687d52995cfabf5c1bbde057.jpg\", \"respondent_last_name\": \"Yalong\", \"complainant_last_name\": \"Lim\", \"respondent_first_name\": \"Aaaron\", \"complainant_first_name\": \"Mario\", \"respondent_middle_name\": \"Armengol\", \"complainant_middle_name\": \"Jaen\"}}'),
+(6,2,'DELETE','2024-12-08 20:32:56',1,1,'{\"new_other_data\": {\"statemnt\": \"dfjkvadfnvkjndfuhvkdjncvjkndfvndjfn djkfnvkjdfnkvjnadfkjvnadsfosf\", \"is_deleted\": 1, \"incident_dt\": \"2024-12-01 01:02:10\", \"blotter_type\": 0, \"desc_incident\": \"Utang di na binayaraan\", \"mediator_name\": 1, \"report_status\": 1, \"mediation_date\": \"2024-12-10\", \"schedule_color\": null, \"mediation_endtime\": \"08:30:00\", \"date_of_resolution\": \"2024-12-04\", \"blotter_contextfile\": \"5_2024-07-06_22-17-53.jpg\", \"mediation_starttime\": \"08:00:00\", \"blotter_evidencefile\": \"Karen-Bennett-200x200px (4).jpg\", \"location_of_incident\": \"Cielito Homes\"}, \"new_other_respondents\": [{\"id\": 10, \"status\": \"Resident\", \"full_name\": \"Tecson, Kiana Macabara \", \"blotter_id\": 2, \"img_filename\": \"Karen-Bennett-200x200px.jpg\"}, {\"id\": 1, \"status\": \"Non-Resident\", \"full_name\": \"Rabanes, Fernan Jarito \", \"blotter_id\": 2, \"img_filename\": \"Picture_043__1__v_1706525302.jpg\"}], \"new_other_complainants\": [{\"id\": 6, \"status\": \"Resident\", \"full_name\": \"Gardo, Tecson Hofileña \", \"blotter_id\": 2, \"img_filename\": \"Shirou.png\"}, {\"id\": 6, \"status\": \"Non-Resident\", \"full_name\": \"Shanna, Saksi Jiamin \", \"blotter_id\": 2, \"img_filename\": \"shanna (1).jpg\"}], \"new_main_comp_res_details\": {\"respondent_no\": \"8\", \"complainant_no\": \"1\", \"respondent_status\": \"Resident\", \"respondent_suffix\": \"\", \"complainant_status\": \"Resident\", \"complainant_suffix\": \"\", \"respondent_address\": \"Blk 12 Lot 5, Isaiah st, Cielito Homes, Camarin Caloocan City\", \"complainant_address\": \"Blk 12 Lot 4, Isaiah st, Cielito Homes, Camarin Caloocan City\", \"respondent_filename\": \"images (1).jpg\", \"complainant_filename\": \"capture_24-09-131726191126.jpg\", \"respondent_last_name\": \"Yalong\", \"complainant_last_name\": \"Tecson\", \"respondent_first_name\": \"Aaaron\", \"complainant_first_name\": \"Reno\", \"respondent_middle_name\": \"Armengol\", \"complainant_middle_name\": \"Hofileña\"}}'),
+(7,2,'RECOVER','2024-12-08 20:33:31',1,0,'{\"new_other_data\": {\"statemnt\": \"dfjkvadfnvkjndfuhvkdjncvjkndfvndjfn djkfnvkjdfnkvjnadfkjvnadsfosf\", \"is_deleted\": 0, \"incident_dt\": \"2024-12-01 01:02:10\", \"blotter_type\": 0, \"desc_incident\": \"Utang di na binayaraan\", \"mediator_name\": 1, \"report_status\": 1, \"mediation_date\": \"2024-12-10\", \"schedule_color\": null, \"mediation_endtime\": \"08:30:00\", \"date_of_resolution\": \"2024-12-04\", \"blotter_contextfile\": \"5_2024-07-06_22-17-53.jpg\", \"mediation_starttime\": \"08:00:00\", \"blotter_evidencefile\": \"Karen-Bennett-200x200px (4).jpg\", \"location_of_incident\": \"Cielito Homes\"}, \"new_other_respondents\": [{\"id\": 10, \"status\": \"Resident\", \"full_name\": \"Tecson, Kiana Macabara \", \"blotter_id\": 2, \"img_filename\": \"Karen-Bennett-200x200px.jpg\"}, {\"id\": 1, \"status\": \"Non-Resident\", \"full_name\": \"Rabanes, Fernan Jarito \", \"blotter_id\": 2, \"img_filename\": \"Picture_043__1__v_1706525302.jpg\"}], \"new_other_complainants\": [{\"id\": 6, \"status\": \"Resident\", \"full_name\": \"Gardo, Tecson Hofileña \", \"blotter_id\": 2, \"img_filename\": \"Shirou.png\"}, {\"id\": 6, \"status\": \"Non-Resident\", \"full_name\": \"Shanna, Saksi Jiamin \", \"blotter_id\": 2, \"img_filename\": \"shanna (1).jpg\"}], \"new_main_comp_res_details\": {\"respondent_no\": \"8\", \"complainant_no\": \"1\", \"respondent_status\": \"Resident\", \"respondent_suffix\": \"\", \"complainant_status\": \"Resident\", \"complainant_suffix\": \"\", \"respondent_address\": \"Blk 12 Lot 5, Isaiah st, Cielito Homes, Camarin Caloocan City\", \"complainant_address\": \"Blk 12 Lot 4, Isaiah st, Cielito Homes, Camarin Caloocan City\", \"respondent_filename\": \"images (1).jpg\", \"complainant_filename\": \"capture_24-09-131726191126.jpg\", \"respondent_last_name\": \"Yalong\", \"complainant_last_name\": \"Tecson\", \"respondent_first_name\": \"Aaaron\", \"complainant_first_name\": \"Reno\", \"respondent_middle_name\": \"Armengol\", \"complainant_middle_name\": \"Hofileña\"}}'),
+(8,2,'RECOVER','2024-12-08 20:33:41',1,0,'{\"new_other_data\": {\"statemnt\": \"dfjkvadfnvkjndfuhvkdjncvjkndfvndjfn djkfnvkjdfnkvjnadfkjvnadsfosf\", \"is_deleted\": 0, \"incident_dt\": \"2024-12-01 01:02:10\", \"blotter_type\": 0, \"desc_incident\": \"Utang di na binayaraan\", \"mediator_name\": 1, \"report_status\": 1, \"mediation_date\": \"2024-12-10\", \"schedule_color\": null, \"mediation_endtime\": \"08:30:00\", \"date_of_resolution\": \"2024-12-04\", \"blotter_contextfile\": \"5_2024-07-06_22-17-53.jpg\", \"mediation_starttime\": \"08:00:00\", \"blotter_evidencefile\": \"Karen-Bennett-200x200px (4).jpg\", \"location_of_incident\": \"Cielito Homes\"}, \"new_other_respondents\": [{\"id\": 10, \"status\": \"Resident\", \"full_name\": \"Tecson, Kiana Macabara \", \"blotter_id\": 2, \"img_filename\": \"Karen-Bennett-200x200px.jpg\"}, {\"id\": 1, \"status\": \"Non-Resident\", \"full_name\": \"Rabanes, Fernan Jarito \", \"blotter_id\": 2, \"img_filename\": \"Picture_043__1__v_1706525302.jpg\"}], \"new_other_complainants\": [{\"id\": 6, \"status\": \"Resident\", \"full_name\": \"Gardo, Tecson Hofileña \", \"blotter_id\": 2, \"img_filename\": \"Shirou.png\"}, {\"id\": 6, \"status\": \"Non-Resident\", \"full_name\": \"Shanna, Saksi Jiamin \", \"blotter_id\": 2, \"img_filename\": \"shanna (1).jpg\"}], \"new_main_comp_res_details\": {\"respondent_no\": \"8\", \"complainant_no\": \"1\", \"respondent_status\": \"Resident\", \"respondent_suffix\": \"\", \"complainant_status\": \"Resident\", \"complainant_suffix\": \"\", \"respondent_address\": \"Blk 12 Lot 5, Isaiah st, Cielito Homes, Camarin Caloocan City\", \"complainant_address\": \"Blk 12 Lot 4, Isaiah st, Cielito Homes, Camarin Caloocan City\", \"respondent_filename\": \"images (1).jpg\", \"complainant_filename\": \"capture_24-09-131726191126.jpg\", \"respondent_last_name\": \"Yalong\", \"complainant_last_name\": \"Tecson\", \"respondent_first_name\": \"Aaaron\", \"complainant_first_name\": \"Reno\", \"respondent_middle_name\": \"Armengol\", \"complainant_middle_name\": \"Hofileña\"}}'),
+(9,4,'INSERT','2024-12-09 00:34:52',1,0,'{\"new_other_data\": {\"statemnt\": \"xcvxkcjklskcjnaslidhcvlkasdncknsdkcnskdncjksdnc\", \"is_deleted\": 0, \"incident_dt\": \"2024-12-09 03:20:36\", \"blotter_type\": 0, \"desc_incident\": \"Utang di na binayaraan\", \"mediator_name\": 1, \"report_status\": 0, \"mediation_date\": \"2024-12-13\", \"schedule_color\": \"#e5ff1f\", \"mediation_endtime\": \"11:30:00\", \"date_of_resolution\": null, \"blotter_contextfile\": \"462570570_1859289424892345_8887677385207056678_n (20).jpg\", \"mediation_starttime\": \"11:00:00\", \"blotter_evidencefile\": \"465560047_3983565665304630_891432138380119720_n (20).jpg\", \"location_of_incident\": \"Cielito Homes\"}, \"new_other_respondents\": [{\"id\": 3, \"status\": \"Non-Resident\", \"full_name\": \"Lim, Mario Jaen III\", \"blotter_id\": 4, \"img_filename\": \"2f070627687d52995cfabf5c1bbde057.jpg\"}], \"new_other_complainants\": [{\"id\": 6, \"status\": \"Resident\", \"full_name\": \"Gardo, Tecson Hofileña \", \"blotter_id\": 4, \"img_filename\": \"Shirou.png\"}], \"new_main_comp_res_details\": {\"respondent_no\": \"6\", \"complainant_no\": \"3\", \"respondent_status\": \"Non-Resident\", \"respondent_suffix\": \"\", \"complainant_status\": \"Resident\", \"complainant_suffix\": \"\", \"respondent_address\": \"Blk 1 Lot 12, St Bernard st, La Forteza, La Forteza, Metro Manila, 1424\", \"complainant_address\": \"Blk 12 Lot 4, Isaiah st, Cielito Homes, Camarin Caloocan City\", \"respondent_filename\": \"shanna (1).jpg\", \"complainant_filename\": \"Miranda_Hallow.png\", \"respondent_last_name\": \"Saksi\", \"complainant_last_name\": \"Tecson\", \"respondent_first_name\": \"Shanna\", \"complainant_first_name\": \"Miranda\", \"respondent_middle_name\": \"Jiamin\", \"complainant_middle_name\": \"Hofileña\"}}'),
+(10,3,'DELETE','2024-12-09 11:20:01',1,1,'{\"new_other_data\": {\"statemnt\": \"xcvxkcjklskcjnaslidhcvlkasdncknsdkcnskdncjksdnc\", \"is_deleted\": 1, \"incident_dt\": \"2024-12-09 03:20:36\", \"blotter_type\": 0, \"desc_incident\": \"Utang di na binayaraan\", \"mediator_name\": 1, \"report_status\": 0, \"mediation_date\": \"2024-12-13\", \"schedule_color\": \"#e5ff1f\", \"mediation_endtime\": \"11:30:00\", \"date_of_resolution\": null, \"blotter_contextfile\": \"462570570_1859289424892345_8887677385207056678_n (19).jpg\", \"mediation_starttime\": \"11:00:00\", \"blotter_evidencefile\": \"465560047_3983565665304630_891432138380119720_n (19).jpg\", \"location_of_incident\": \"Cielito Homes\"}, \"new_other_respondents\": [{\"id\": 3, \"status\": \"Non-Resident\", \"full_name\": \"Lim, Mario Jaen III\", \"blotter_id\": 3, \"img_filename\": \"2f070627687d52995cfabf5c1bbde057.jpg\"}], \"new_other_complainants\": [{\"id\": 6, \"status\": \"Resident\", \"full_name\": \"Gardo, Tecson Hofileña \", \"blotter_id\": 3, \"img_filename\": \"Shirou.png\"}], \"new_main_comp_res_details\": {\"respondent_no\": \"6\", \"complainant_no\": \"3\", \"respondent_status\": \"Non-Resident\", \"respondent_suffix\": \"\", \"complainant_status\": \"Resident\", \"complainant_suffix\": \"\", \"respondent_address\": \"Blk 1 Lot 12, St Bernard st, La Forteza, La Forteza, Metro Manila, 1424\", \"complainant_address\": \"Blk 12 Lot 4, Isaiah st, Cielito Homes, Camarin Caloocan City\", \"respondent_filename\": \"shanna (1).jpg\", \"complainant_filename\": \"Miranda_Hallow.png\", \"respondent_last_name\": \"Saksi\", \"complainant_last_name\": \"Tecson\", \"respondent_first_name\": \"Shanna\", \"complainant_first_name\": \"Miranda\", \"respondent_middle_name\": \"Jiamin\", \"complainant_middle_name\": \"Hofileña\"}}'),
+(11,5,'INSERT','2024-12-09 16:16:13',1,0,'{\"new_other_data\": {\"statemnt\": \"kvmldfvdfmvkmzxckvmzdkvkdfmvinmdxlkvjdfkmvldkmfvlkzdmfl\", \"is_deleted\": 0, \"incident_dt\": \"2024-12-09 16:15:23\", \"blotter_type\": 0, \"desc_incident\": \"Faul Play\", \"mediator_name\": 1, \"report_status\": 0, \"mediation_date\": \"2024-12-11\", \"schedule_color\": \"#ff0000\", \"mediation_endtime\": \"09:30:00\", \"date_of_resolution\": null, \"blotter_contextfile\": \"462570570_1859289424892345_8887677385207056678_n (21).jpg\", \"mediation_starttime\": \"09:00:00\", \"blotter_evidencefile\": \"465560047_3983565665304630_891432138380119720_n (21).jpg\", \"location_of_incident\": \"Cielito Homes\"}, \"new_other_respondents\": [{\"id\": 3, \"status\": \"Resident\", \"full_name\": \"Tecson, Miranda Hofileña \", \"blotter_id\": 5, \"img_filename\": \"Miranda_Hallow.png\"}, {\"id\": 2, \"status\": \"Non-Resident\", \"full_name\": \"Lim, Nicholas Mahestro \", \"blotter_id\": 5, \"img_filename\": \"capture_1732500165.jpg\"}], \"new_other_complainants\": [{\"id\": 1, \"status\": \"Resident\", \"full_name\": \"Reno, Tecson Hofileña \", \"blotter_id\": 5, \"img_filename\": \"capture_24-09-131726191126.jpg\"}, {\"id\": 5, \"status\": \"Non-Resident\", \"full_name\": \"Nicholas, La Torre Trinidad III\", \"blotter_id\": 5, \"img_filename\": \"capture_1732338783.jpg\"}], \"new_main_comp_res_details\": {\"respondent_no\": \"4\", \"complainant_no\": \"49\", \"respondent_status\": \"Resident\", \"respondent_suffix\": \"\", \"complainant_status\": \"Resident\", \"complainant_suffix\": \"\", \"respondent_address\": \"Blk 12 Lot 4, Isaiah st, Cielito Homes, Camarin Caloocan City\", \"complainant_address\": \"Blk 3 Lot 3, Virgo st Corner Aries st, Maria Luisa Subd, Camarin Caloocan City\", \"respondent_filename\": \"Lavi_2006.png\", \"complainant_filename\": \"capture_1733732014.jpg\", \"respondent_last_name\": \"Tecson\", \"complainant_last_name\": \"Atienza\", \"respondent_first_name\": \"James\", \"complainant_first_name\": \"Gabriel\", \"respondent_middle_name\": \"Hofileña\", \"complainant_middle_name\": \"Ramon\"}}'),
+(12,6,'INSERT','2024-12-09 18:40:38',1,0,'{\"new_other_data\": {\"statemnt\": \"Sa ika 1 ng december 2024 nawala ang bike\", \"is_deleted\": 0, \"incident_dt\": \"2024-12-01 08:39:08\", \"blotter_type\": 0, \"desc_incident\": \"Estafa/Rentangay ng bike\", \"mediator_name\": 1, \"report_status\": 0, \"mediation_date\": \"2024-12-11\", \"schedule_color\": \"#c51b1b\", \"mediation_endtime\": \"13:30:00\", \"date_of_resolution\": null, \"blotter_contextfile\": \"465560047_3983565665304630_891432138380119720_n (7).jpg\", \"mediation_starttime\": \"13:00:00\", \"blotter_evidencefile\": \"462570570_1859289424892345_8887677385207056678_n (7).jpg\", \"location_of_incident\": \"Maria Luisa\"}, \"new_other_respondents\": [], \"new_other_complainants\": [], \"new_main_comp_res_details\": {\"respondent_no\": \"1\", \"complainant_no\": \"49\", \"respondent_status\": \"Resident\", \"respondent_suffix\": \"\", \"complainant_status\": \"Resident\", \"complainant_suffix\": \"\", \"respondent_address\": \"Blk 12 Lot 4, Isaiah st, Cielito Homes, Camarin Caloocan City\", \"complainant_address\": \"Blk 3 Lot 3, Virgo st Corner Aries st, Maria Luisa Subd, Camarin Caloocan City\", \"respondent_filename\": \"capture_24-09-131726191126.jpg\", \"complainant_filename\": \"capture_1733732014.jpg\", \"respondent_last_name\": \"Tecson\", \"complainant_last_name\": \"Atienza\", \"respondent_first_name\": \"Reno\", \"complainant_first_name\": \"Gabriel\", \"respondent_middle_name\": \"Hofileña\", \"complainant_middle_name\": \"Ramon\"}}'),
+(13,6,'UPDATE','2024-12-09 18:45:50',1,0,'{\"new_other_data\": {\"statemnt\": \"Sa ika 1 ng december 2024 nawala ang bike\", \"is_deleted\": 0, \"incident_dt\": \"2024-12-01 08:39:08\", \"blotter_type\": 0, \"desc_incident\": \"Estafa/Rentangay ng bike\", \"mediator_name\": 1, \"report_status\": 1, \"mediation_date\": \"2024-12-11\", \"schedule_color\": null, \"mediation_endtime\": \"13:30:00\", \"date_of_resolution\": \"2024-12-09\", \"blotter_contextfile\": \"465560047_3983565665304630_891432138380119720_n (7).jpg\", \"mediation_starttime\": \"13:00:00\", \"blotter_evidencefile\": \"462570570_1859289424892345_8887677385207056678_n (7).jpg\", \"location_of_incident\": \"Maria Luisa\"}, \"old_other_data\": {\"statemnt\": \"Sa ika 1 ng december 2024 nawala ang bike\", \"is_deleted\": 0, \"incident_dt\": \"2024-12-01 08:39:08\", \"blotter_type\": 0, \"desc_incident\": \"Estafa/Rentangay ng bike\", \"mediator_name\": 1, \"report_status\": 0, \"mediation_date\": \"2024-12-11\", \"schedule_color\": \"#c51b1b\", \"mediation_endtime\": \"13:30:00\", \"date_of_resolution\": null, \"blotter_contextfile\": \"465560047_3983565665304630_891432138380119720_n (7).jpg\", \"mediation_starttime\": \"13:00:00\", \"blotter_evidencefile\": \"462570570_1859289424892345_8887677385207056678_n (7).jpg\", \"location_of_incident\": \"Maria Luisa\"}, \"new_other_respondents\": [], \"old_other_respondents\": [], \"new_other_complainants\": [], \"old_other_complainants\": [], \"new_main_comp_res_details\": {\"respondent_no\": \"1\", \"complainant_no\": \"49\", \"respondent_status\": \"Resident\", \"respondent_suffix\": \"\", \"complainant_status\": \"Resident\", \"complainant_suffix\": \"\", \"respondent_address\": \"Blk 12 Lot 4, Isaiah st, Cielito Homes, Camarin Caloocan City\", \"complainant_address\": \"Blk 3 Lot 3, Virgo st Corner Aries st, Maria Luisa Subd, Camarin Caloocan City\", \"respondent_filename\": \"capture_24-09-131726191126.jpg\", \"complainant_filename\": \"capture_1733732014.jpg\", \"respondent_last_name\": \"Tecson\", \"complainant_last_name\": \"Atienza\", \"respondent_first_name\": \"Reno\", \"complainant_first_name\": \"Gabriel\", \"respondent_middle_name\": \"Hofileña\", \"complainant_middle_name\": \"Ramon\"}, \"old_main_comp_res_details\": {\"respondent_no\": \"1\", \"complainant_no\": \"49\", \"respondent_status\": \"Resident\", \"respondent_suffix\": \"\", \"complainant_status\": \"Resident\", \"complainant_suffix\": \"\", \"respondent_address\": \"Blk 12 Lot 4, Isaiah st, Cielito Homes, Camarin Caloocan City\", \"complainant_address\": \"Blk 3 Lot 3, Virgo st Corner Aries st, Maria Luisa Subd, Camarin Caloocan City\", \"respondent_filename\": \"capture_24-09-131726191126.jpg\", \"complainant_filename\": \"capture_1733732014.jpg\", \"respondent_last_name\": \"Tecson\", \"complainant_last_name\": \"Atienza\", \"respondent_first_name\": \"Reno\", \"complainant_first_name\": \"Gabriel\", \"respondent_middle_name\": \"Hofileña\", \"complainant_middle_name\": \"Ramon\"}}');
 
 /*Table structure for table `tbl_building_permits` */
 
@@ -671,7 +747,7 @@ CREATE TABLE `tbl_cert_audit_trail` (
   CONSTRAINT `edited_by_fk` FOREIGN KEY (`edited_by_no`) REFERENCES `tbl_username` (`username_id`),
   CONSTRAINT `issued_by_fk` FOREIGN KEY (`issued_by_no`) REFERENCES `tbl_username` (`username_id`),
   CONSTRAINT `recovered_by_fk` FOREIGN KEY (`recovered_by_no`) REFERENCES `tbl_username` (`username_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=99 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=100 DEFAULT CHARSET=utf8;
 
 /*Data for the table `tbl_cert_audit_trail` */
 
@@ -773,7 +849,8 @@ insert  into `tbl_cert_audit_trail`(`audit_trail_id`,`issuing_dept_no`,`issued_b
 (95,4,1,'2024-11-27 14:28:17',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
 (96,4,1,'2024-11-27 14:34:26',NULL,NULL,NULL,4,1,'2024-12-01',NULL,NULL,NULL,NULL),
 (97,2,4,'2024-11-27 14:37:13',2,4,'2024-12-01 00:00:00',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(98,4,1,'2024-12-01 13:57:07',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+(98,4,1,'2024-12-01 13:57:07',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(99,4,1,'2024-12-09 16:14:13',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 
 /*Table structure for table `tbl_docu_request` */
 
@@ -900,11 +977,12 @@ insert  into `tbl_docu_request`(`request_id`,`resident_no`,`nresident_no`,`docum
 ('2024-000091',NULL,12,91,'2025-11-27',41,'Postal ID','POS-1232334354546456','Securing Building Permit',91,'generated_pdf_1732681557.pdf',0,0),
 ('2024-000092',NULL,12,92,'2025-11-27',41,'Postal ID','POS-1232334354546456','Securing Building Permit',92,'generated_pdf_1732682640.pdf',0,0),
 ('2024-000093',NULL,1,93,'2025-11-27',26,'Senior ID','SEN-11283787236472364','Getting Business Permit',93,'generated_pdf_1732684463.pdf',0,0),
-('2024-000094',NULL,16,94,'2025-11-27',0,'GSIS ID','1212232323232','Securing Excavation Permit',94,'generated_pdf_1732688643.pdf',0,0),
+('2024-000094',NULL,NULL,94,'2025-11-27',0,'GSIS ID','1212232323232','Securing Excavation Permit',94,'generated_pdf_1732688643.pdf',0,0),
 ('2024-000095',NULL,5,95,'2025-11-27',24,'SSS ID','218298178371273612','Securing Fencing Permit',95,'generated_pdf_1732688897.pdf',0,0),
 ('2024-000096',NULL,2,96,'2025-11-27',26,'GSIS ID','1212121212121212','Securing Fencing Permit',96,'generated_pdf_1732689266.pdf',0,1),
 ('2024-000097',18,NULL,97,'2025-02-27',22,'National ID','PCN-122343534554655443344','Legal Aid',97,'generated_pdf_1732689433.pdf',0,0),
-('2024-000098',9,NULL,98,'2025-03-01',38,'Drivers License','N42-1212121212121212','Maynilad Application',98,'generated_pdf_1733032627.pdf',0,0);
+('2024-000098',9,NULL,98,'2025-03-01',38,'Drivers License','N42-1212121212121212','Maynilad Application',98,'generated_pdf_1733032627.pdf',0,0),
+('2024-000099',49,NULL,99,'2025-03-09',35,'PWD ID','PWD-21212233423423','Verification Purposes',99,'generated_pdf_1733732053.pdf',0,0);
 
 /*Table structure for table `tbl_documents` */
 
@@ -936,7 +1014,7 @@ CREATE TABLE `tbl_documents` (
   CONSTRAINT `f_permit_fk` FOREIGN KEY (`Fencing_Permits`) REFERENCES `tbl_fencing_permit` (`fencing_permit_id`) ON DELETE CASCADE,
   CONSTRAINT `indigency_fk` FOREIGN KEY (`Certificate_of_Indigency`) REFERENCES `tbl_indigency` (`indigency_id`) ON DELETE CASCADE,
   CONSTRAINT `tprs_fk` FOREIGN KEY (`TPRS`) REFERENCES `tbl_tprs` (`tprs_id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=99 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=100 DEFAULT CHARSET=utf8;
 
 /*Data for the table `tbl_documents` */
 
@@ -1038,7 +1116,8 @@ insert  into `tbl_documents`(`docu_id`,`Barangay_Clearance`,`Certificate_of_Resi
 (95,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,2,NULL),
 (96,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,3,NULL),
 (97,NULL,NULL,13,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(98,NULL,15,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+(98,NULL,15,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(99,NULL,NULL,NULL,5,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 
 /*Table structure for table `tbl_documents_audit` */
 
@@ -1064,7 +1143,7 @@ CREATE TABLE `tbl_documents_audit` (
   CONSTRAINT `tbl_documents_audit_ibfk_1` FOREIGN KEY (`resident_no`) REFERENCES `resident` (`resident_id`),
   CONSTRAINT `tbl_documents_audit_ibfk_2` FOREIGN KEY (`nresident_no`) REFERENCES `non_resident` (`nresident_id`),
   CONSTRAINT `tbl_documents_audit_ibfk_3` FOREIGN KEY (`document_no`) REFERENCES `tbl_documents` (`docu_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
 /*Data for the table `tbl_documents_audit` */
 
@@ -1074,7 +1153,8 @@ insert  into `tbl_documents_audit`(`audit_id`,`action_type`,`action_timestamp`,`
 (3,'RECOVER','2024-12-01 00:35:01',1,4,0,1,NULL,52,'{\"new_values\": {\"ID_number\": \"PRN-2132323433434\", \"is_deleted\": 0, \"presented_id\": \"Postal ID\", \"expiration_date\": \"2025-02-18\"}, \"old_values\": {\"is_deleted\": 1}}'),
 (4,'DELETE','2024-12-01 00:48:49',1,4,1,NULL,2,96,'{\"new_values\": {\"ID_number\": \"1212121212121212\", \"is_deleted\": 1, \"presented_id\": \"GSIS ID\", \"expiration_date\": \"2025-11-27\"}, \"old_values\": {\"is_deleted\": 0}}'),
 (5,'UPDATE','2024-12-01 10:29:01',4,2,0,18,NULL,97,'{\"new_values\": {\"ID_number\": \"PCN-122343534554655443344\", \"is_deleted\": 0, \"presented_id\": \"National ID\", \"expiration_date\": \"2025-02-27\"}, \"old_values\": {\"ID_number\": \"45454545454545454545\", \"is_deleted\": 0, \"presented_id\": \"Drivers License\", \"expiration_date\": \"2025-02-27\"}}'),
-(6,'INSERT','2024-12-01 13:57:07',1,4,0,9,NULL,98,'{\"ID_number\": \"N42-1212121212121212\", \"is_deleted\": 0, \"presented_id\": \"Drivers License\", \"expiration_date\": \"2025-03-01\"}');
+(6,'INSERT','2024-12-01 13:57:07',1,4,0,9,NULL,98,'{\"ID_number\": \"N42-1212121212121212\", \"is_deleted\": 0, \"presented_id\": \"Drivers License\", \"expiration_date\": \"2025-03-01\"}'),
+(7,'INSERT','2024-12-09 16:14:13',1,4,0,49,NULL,99,'{\"ID_number\": \"PWD-21212233423423\", \"is_deleted\": 0, \"presented_id\": \"PWD ID\", \"expiration_date\": \"2025-03-09\"}');
 
 /*Table structure for table `tbl_excavation_permits` */
 
@@ -1141,112 +1221,6 @@ insert  into `tbl_indigency`(`indigency_id`,`agency`) values
 (11,'Sa Isang Foundation'),
 (12,'Malasakit Center'),
 (13,'Public Attorneys Office');
-
-/*Table structure for table `tbl_other_complainants` */
-
-DROP TABLE IF EXISTS `tbl_other_complainants`;
-
-CREATE TABLE `tbl_other_complainants` (
-  `complainant_id` int(55) NOT NULL AUTO_INCREMENT,
-  `res_person_1` int(55) DEFAULT NULL,
-  `nres_person_1` int(55) DEFAULT NULL,
-  `res_person_2` int(55) DEFAULT NULL,
-  `nres_person_2` int(55) DEFAULT NULL,
-  `res_person_3` int(55) DEFAULT NULL,
-  `nres_person_3` int(55) DEFAULT NULL,
-  `res_person_4` int(55) DEFAULT NULL,
-  `nres_person_4` int(55) DEFAULT NULL,
-  `res_person_5` int(55) DEFAULT NULL,
-  `nres_person_5` int(55) DEFAULT NULL,
-  PRIMARY KEY (`complainant_id`),
-  KEY `res_person_1` (`res_person_1`),
-  KEY `nres_person_1` (`nres_person_1`),
-  KEY `res_person_2` (`res_person_2`),
-  KEY `nres_person_2` (`nres_person_2`),
-  CONSTRAINT `tbl_other_complainants_ibfk_1` FOREIGN KEY (`res_person_1`) REFERENCES `resident` (`resident_id`),
-  CONSTRAINT `tbl_other_complainants_ibfk_2` FOREIGN KEY (`nres_person_1`) REFERENCES `non_resident` (`nresident_id`),
-  CONSTRAINT `tbl_other_complainants_ibfk_3` FOREIGN KEY (`res_person_2`) REFERENCES `resident` (`resident_id`),
-  CONSTRAINT `tbl_other_complainants_ibfk_4` FOREIGN KEY (`nres_person_2`) REFERENCES `non_resident` (`nresident_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
-
-/*Data for the table `tbl_other_complainants` */
-
-insert  into `tbl_other_complainants`(`complainant_id`,`res_person_1`,`nres_person_1`,`res_person_2`,`nres_person_2`,`res_person_3`,`nres_person_3`,`res_person_4`,`nres_person_4`,`res_person_5`,`nres_person_5`) values 
-(1,9,1,16,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(2,NULL,2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(3,NULL,2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(4,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(5,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(6,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(7,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(8,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(9,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(11,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(12,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(13,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(14,8,5,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(15,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(16,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
-
-/*Table structure for table `tbl_other_respondents` */
-
-DROP TABLE IF EXISTS `tbl_other_respondents`;
-
-CREATE TABLE `tbl_other_respondents` (
-  `respondent_id` int(55) NOT NULL AUTO_INCREMENT,
-  `res_person_1` int(55) DEFAULT NULL,
-  `nres_person_1` int(55) DEFAULT NULL,
-  `res_person_2` int(55) DEFAULT NULL,
-  `nres_person_2` int(55) DEFAULT NULL,
-  `res_person_3` int(55) DEFAULT NULL,
-  `nres_person_3` int(55) DEFAULT NULL,
-  `res_person_4` int(55) DEFAULT NULL,
-  `nres_person_4` int(55) DEFAULT NULL,
-  `res_person_5` int(55) DEFAULT NULL,
-  `nres_person_5` int(55) DEFAULT NULL,
-  PRIMARY KEY (`respondent_id`),
-  KEY `res_person_1` (`res_person_1`),
-  KEY `nres_person_1` (`nres_person_1`),
-  KEY `res_person_2` (`res_person_2`),
-  KEY `nres_person_2` (`nres_person_2`),
-  KEY `res_person_3` (`res_person_3`),
-  KEY `nres_person_3` (`nres_person_3`),
-  KEY `res_person_4` (`res_person_4`),
-  KEY `nres_person_4` (`nres_person_4`),
-  KEY `res_person_5` (`res_person_5`),
-  KEY `nres_person_5` (`nres_person_5`),
-  CONSTRAINT `tbl_other_respondents_ibfk_1` FOREIGN KEY (`res_person_1`) REFERENCES `resident` (`resident_id`),
-  CONSTRAINT `tbl_other_respondents_ibfk_10` FOREIGN KEY (`nres_person_5`) REFERENCES `non_resident` (`nresident_id`),
-  CONSTRAINT `tbl_other_respondents_ibfk_2` FOREIGN KEY (`nres_person_1`) REFERENCES `non_resident` (`nresident_id`),
-  CONSTRAINT `tbl_other_respondents_ibfk_3` FOREIGN KEY (`res_person_2`) REFERENCES `resident` (`resident_id`),
-  CONSTRAINT `tbl_other_respondents_ibfk_4` FOREIGN KEY (`nres_person_2`) REFERENCES `non_resident` (`nresident_id`),
-  CONSTRAINT `tbl_other_respondents_ibfk_5` FOREIGN KEY (`res_person_3`) REFERENCES `resident` (`resident_id`),
-  CONSTRAINT `tbl_other_respondents_ibfk_6` FOREIGN KEY (`nres_person_3`) REFERENCES `non_resident` (`nresident_id`),
-  CONSTRAINT `tbl_other_respondents_ibfk_7` FOREIGN KEY (`res_person_4`) REFERENCES `resident` (`resident_id`),
-  CONSTRAINT `tbl_other_respondents_ibfk_8` FOREIGN KEY (`nres_person_4`) REFERENCES `non_resident` (`nresident_id`),
-  CONSTRAINT `tbl_other_respondents_ibfk_9` FOREIGN KEY (`res_person_5`) REFERENCES `resident` (`resident_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
-
-/*Data for the table `tbl_other_respondents` */
-
-insert  into `tbl_other_respondents`(`respondent_id`,`res_person_1`,`nres_person_1`,`res_person_2`,`nres_person_2`,`res_person_3`,`nres_person_3`,`res_person_4`,`nres_person_4`,`res_person_5`,`nres_person_5`) values 
-(1,8,NULL,19,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(3,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(4,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(5,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(6,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(7,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(8,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(9,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(11,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(12,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(13,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(14,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(15,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(16,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 
 /*Table structure for table `tbl_tprs` */
 
@@ -1333,11 +1307,11 @@ CREATE TABLE `tbl_users` (
 
 insert  into `tbl_users`(`user_id`,`username_no`,`pword`,`img_filename`,`fname`,`mname`,`lname`,`suffix`,`depart_no`,`user_at_no`,`isactive`,`isdeleted`) values 
 (1,1,'$2y$10$S4TBGbekXSy8iFzm88xmGetm8S.nYmOqB4j3FmNv9qcGA4M.8Ol8e','715a5404857b4d3cfdbd2747e2eaac79.jpg','Robert','Lumauig','Salas','',4,1,1,0),
-(2,2,'$2y$10$wB0B16FNxf3p2bN4H96P2uQHvAeqIAhUAz8un6gMFnHBlhO.3zw5e','ab67706c0000da84dc7f5b89d9dd705a9e1a8e4f.jpg','Anna','','De Gana','',1,2,0,0),
+(2,2,'$2y$10$1.211oBpH4uHHOSOTuS6V.mlDoYXuB2ho.AhrPEaCgWSx91zjnMES','ab67706c0000da84dc7f5b89d9dd705a9e1a8e4f (1).jpg','Anna','','De Gana','',1,2,0,0),
 (3,3,'$2y$10$y/7ZKZMNkd4rU4MJos7wsOuOPR6xJghztEj.IzqChEHQtl4xbfuGu','465560047_3983565665304630_891432138380119720_n.jpg','Francis','','Obo','',2,3,0,1),
-(4,4,'$2y$10$CdG1ZZhj7EAv4LWWk8f3UexcPTpdEGz1ZG8fMNtPL0DUGM9y7svZe','465560047_3983565665304630_891432138380119720_n (1).jpg','Francis','','Obo','',2,4,0,0),
-(5,5,'$2y$10$iatVIZ7wHxSWYWhHSIiBPueoMzssg.b1mXzuZL5dRUscJop0hbyrW','462570570_1859289424892345_8887677385207056678_n (11).jpg','John Rin','Mark','Hofileña','',3,5,0,0),
-(6,6,'$2y$10$R3sKrZEdoKBIBL.ErisZbuLtHw956.ZrdZrMNM5Ar3ffw0p72TMoW','capture_1732812358.jpg','Robert','','Salas','',1,6,0,0);
+(4,4,'$2y$10$nSZIY7be7iUBANe7Yc6zoeLJP0Mp8qovItfIpKs18.2KCiVIQpN4m','465560047_3983565665304630_891432138380119720_n (2).jpg','Francis','','Obo','',2,4,0,0),
+(5,5,'$2y$10$lSM.Q/q7idwK3sSPeR7nJ.0vvF3Wy00vIi2jOHLY7oSf1HPzhZ/Fm','462570570_1859289424892345_8887677385207056678_n (1).jpg','John Rin','Mark','Hofileña','',3,5,0,0),
+(6,6,'$2y$10$lv5ubpDhZEd3e3DAzyNG6uXIkY2k6wXYEy1SncigZeh78UzFN1U6y','capture_1733740573.jpg','Robert','','Salas','',1,6,0,0);
 
 /*Table structure for table `tbl_users_audit_trail` */
 
@@ -1368,88 +1342,12 @@ CREATE TABLE `tbl_users_audit_trail` (
 /*Data for the table `tbl_users_audit_trail` */
 
 insert  into `tbl_users_audit_trail`(`user_at_id`,`created_dt`,`created_by`,`last_edited_by`,`last_edited_dt`,`deleted_by`,`deleted_dt`,`recovered_by`,`recovered_dt`,`last_login`) values 
-(1,'2024-11-22 04:04:26',1,NULL,NULL,NULL,NULL,NULL,NULL,'2024-12-01 16:55:32'),
-(2,'2024-11-22 04:05:27',1,NULL,NULL,1,'2024-11-22 23:15:25',1,'2024-11-22 22:50:00','2024-11-22 04:23:33'),
+(1,'2024-11-22 04:04:26',1,NULL,NULL,NULL,NULL,NULL,NULL,'2024-12-10 14:06:46'),
+(2,'2024-11-22 04:05:27',1,1,'2024-12-09 15:44:58',1,'2024-11-22 23:15:25',1,'2024-11-22 22:50:00','2024-12-09 16:00:06'),
 (3,'2024-11-28 13:07:57',1,NULL,NULL,1,'2024-11-28 21:48:01',NULL,NULL,NULL),
-(4,'2024-11-28 13:08:11',1,NULL,NULL,NULL,NULL,NULL,NULL,'2024-12-01 11:07:15'),
-(5,'2024-11-28 18:54:03',1,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(6,'2024-11-29 00:14:02',1,1,'2024-11-29 00:45:58',NULL,NULL,NULL,NULL,NULL);
-
-/* Trigger structure for table `non_resident` */
-
-DELIMITER $$
-
-/*!50003 DROP TRIGGER*//*!50032 IF EXISTS */ /*!50003 `trig_ainc_nonres_at` */$$
-
-/*!50003 CREATE */ /*!50017 DEFINER = 'root'@'localhost' */ /*!50003 TRIGGER `trig_ainc_nonres_at` BEFORE INSERT ON `non_resident` FOR EACH ROW BEGIN
-    
-      DECLARE new_id INT;
-      
-     SET new_id = (SELECT MAX(audit_trail_no) FROM non_resident) + 1;
-    IF new_id IS NULL THEN
-        SET new_id = 1;
-    END IF;
-    SET NEW.audit_trail_no = new_id;
-   
-    END */$$
-
-
-DELIMITER ;
-
-/* Trigger structure for table `non_resident` */
-
-DELIMITER $$
-
-/*!50003 DROP TRIGGER*//*!50032 IF EXISTS */ /*!50003 `non_resident_add_audit` */$$
-
-/*!50003 CREATE */ /*!50017 DEFINER = 'root'@'localhost' */ /*!50003 TRIGGER `non_resident_add_audit` AFTER INSERT ON `non_resident` FOR EACH ROW BEGIN
-    -- Declare variables
-    DECLARE user_no INT;
-    DECLARE dept_no INT;
-
-    -- Safely retrieve user and department numbers from the audit trail table
-    SELECT `user_added_no`, `dept_added_no`
-    INTO user_no, dept_no
-    FROM `nonres_audit_trail`
-    WHERE audit_trail_id = NEW.nresident_id 
-    LIMIT 1;
-
-    -- Insert into nonresident_audit table
-    INSERT INTO nonresident_audit (
-        nresident_id, action_type, user_no, dept_no, is_deleted, last_name, first_name, action_data
-    )
-    VALUES (
-        NEW.nresident_id, 
-        'INSERT', 
-        user_no, 
-        dept_no, 
-        NEW.is_deleted, 
-        NEW.last_name, 
-        NEW.first_name,
-        JSON_OBJECT(
-            'img_filename', NEW.img_filename,
-            'last_name', NEW.last_name,
-            'first_name', NEW.first_name,
-            'middle_name', NEW.middle_name,
-            'suffix', NEW.suffix,
-            'house_num', NEW.house_num,
-            'street', NEW.street,
-            'subdivision', NEW.subdivision,
-            'district_brgy', NEW.district_brgy,
-            'city', NEW.city,
-            'province', NEW.province,
-            'zipcode', NEW.zipcode,
-            'sex', NEW.sex,
-            'marital_status', NEW.marital_status,
-            'birth_place', NEW.birth_place,
-            'birth_date', NEW.birth_date,
-            'cellphone_num', NEW.cellphone_num
-        )
-    );
-END */$$
-
-
-DELIMITER ;
+(4,'2024-11-28 13:08:11',1,1,'2024-12-09 15:40:09',NULL,NULL,NULL,NULL,'2024-12-09 15:42:42'),
+(5,'2024-11-28 18:54:03',1,1,'2024-12-02 14:14:31',NULL,NULL,NULL,NULL,'2024-12-09 16:17:45'),
+(6,'2024-11-29 00:14:02',1,1,'2024-12-09 18:36:14',NULL,NULL,NULL,NULL,NULL);
 
 /* Trigger structure for table `non_resident` */
 
@@ -1870,17 +1768,7 @@ DELIMITER $$
     END IF;
     SET NEW.blot_at_no = new_id;
     
-    SET new_id = (SELECT MAX(other_complainant_no) FROM tbl_blotters) + 1;
-    IF new_id IS NULL THEN
-        SET new_id = 1;
-    END IF;
-    SET NEW.other_complainant_no = new_id;
-    
-    SET new_id = (SELECT MAX(other_respondent_no) FROM tbl_blotters) + 1;
-    IF new_id IS NULL THEN
-        SET new_id = 1;
-    END IF;
-    SET NEW.other_respondent_no = new_id;
+ 
     END */$$
 
 
@@ -2162,48 +2050,54 @@ DELIMITER ;
 
 DELIMITER $$
 
-/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `CheckNonResidentBlotterRec`(IN nresident_id INT, in start_from int)
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `CheckNonResidentBlotterRec`(
+    IN nresident_id INT, 
+    IN start_from INT
+)
 BEGIN
-        SELECT 
-            b.blotter_id,
-            aud.blotter_add_dt,
-            CASE 
-                WHEN b.nres_complainant_no =nresident_id THEN 'Complainant' 
-                WHEN b.nres_respondent_no =nresident_id THEN 'Respondent'
-                WHEN c.nres_person_1 =nresident_id OR c.nres_person_2 =nresident_id OR 
-                     c.nres_person_3 =nresident_id OR c.nres_person_4 =nresident_id OR 
-                     c.nres_person_5 =nresident_id THEN 'Other Complainant'
-                WHEN r.nres_person_1 =nresident_id OR r.nres_person_2 =nresident_id OR 
-                     r.nres_person_3 =nresident_id OR r.nres_person_4 =nresident_id OR 
-                     r.nres_person_5 =nresident_id THEN 'Other Respondent'
-                ELSE 'Not Found'
-            END AS person_status,
-            b.blotter_type, 
-            b.desc_incident,
-            b.incident_dt, 
-            b.location_of_incident, 
-            b.date_of_resolution,
-            b.report_status
-        FROM 
-            tbl_blotters b
-            LEFT JOIN tbl_other_complainants c ON c.complainant_id = b.other_complainant_no
-            LEFT JOIN tbl_other_respondents r ON r.respondent_id = b.other_respondent_no
-            LEFT JOIN tbl_blotter_audit_trail aud ON aud.blotter_at_id =  b.blot_at_no
-        WHERE 
-            b.nres_complainant_no =nresident_id 
-            OR b.nres_respondent_no =nresident_id
-            OR c.nres_person_1 =nresident_id 
-            OR c.nres_person_2 =nresident_id 
-            OR c.nres_person_3 =nresident_id 
-            OR c.nres_person_4 =nresident_id 
-            OR c.nres_person_5 =nresident_id
-            OR r.nres_person_1 =nresident_id 
-            OR r.nres_person_2 =nresident_id 
-            OR r.nres_person_3 =nresident_id 
-            OR r.nres_person_4 =nresident_id 
-            OR r.nres_person_5 =nresident_id
-        ORDER BY b.incident_dt DESC
-        LIMIT start_from, 5;
+    SELECT 
+        b.blotter_id,
+        aud.blotter_add_dt,
+        CASE 
+            WHEN b.nres_complainant_no = nresident_id THEN 'Complainant' 
+            WHEN b.nres_respondent_no = nresident_id THEN 'Respondent'
+            WHEN op.non_resident_id = nresident_id THEN 
+                CASE 
+                    WHEN op.party_type = 'complainant' THEN 'Other Complainant'
+                    WHEN op.party_type = 'respondent' THEN 'Other Respondent'
+                    ELSE 'Other Party'
+                END
+            ELSE 'Not Found'
+        END AS person_status,
+        b.blotter_type, 
+        b.desc_incident,
+        b.incident_dt, 
+        b.location_of_incident, 
+        b.date_of_resolution,
+        b.report_status,
+        
+        -- Aggregate results from tbl_blotter_other_person
+        GROUP_CONCAT(DISTINCT op.party_type ORDER BY op.party_type) AS other_party_type,
+        GROUP_CONCAT(DISTINCT op.non_resident_id ORDER BY op.non_resident_id) AS other_non_resident_ids
+
+    FROM 
+        tbl_blotters b
+        LEFT JOIN tbl_blotter_audit_trail aud ON aud.blotter_at_id = b.blot_at_no
+        LEFT JOIN tbl_blotter_other_person op ON op.blotter_id = b.blotter_id
+        
+    WHERE 
+        b.nres_complainant_no = nresident_id 
+        OR b.nres_respondent_no = nresident_id
+        OR op.non_resident_id = nresident_id
+        
+    GROUP BY 
+        b.blotter_id
+
+    ORDER BY 
+        b.incident_dt DESC
+    LIMIT 
+        start_from, 5;
+
 END */$$
 DELIMITER ;
 
@@ -2218,46 +2112,48 @@ DELIMITER $$
     IN start_from INT
 )
 BEGIN
-        SELECT 
-            b.blotter_id,
-            aud.blotter_add_dt,
-            CASE 
-                WHEN b.res_complainant_no = resident_id THEN 'Complainant' 
-                WHEN b.res_respondent_no = resident_id THEN 'Respondent'
-                WHEN c.res_person_1 = resident_id OR c.res_person_2 = resident_id OR 
-                     c.res_person_3 = resident_id OR c.res_person_4 = resident_id OR 
-                     c.res_person_5 = resident_id THEN 'Other Complainant'
-                WHEN r.res_person_1 = resident_id OR r.res_person_2 = resident_id OR 
-                     r.res_person_3 = resident_id OR r.res_person_4 = resident_id OR 
-                     r.res_person_5 = resident_id THEN 'Other Respondent'
-                ELSE 'Not Found'
-            END AS person_status,
-            b.blotter_type, 
-            b.desc_incident,
-            b.incident_dt, 
-            b.location_of_incident, 
-            b.date_of_resolution,
-            b.report_status
-        FROM 
-            tbl_blotters b
-            LEFT JOIN tbl_other_complainants c ON c.complainant_id = b.other_complainant_no
-            LEFT JOIN tbl_other_respondents r ON r.respondent_id = b.other_respondent_no
-            LEFT JOIN tbl_blotter_audit_trail aud ON aud.blotter_at_id =  b.blot_at_no
-        WHERE 
-            b.res_complainant_no = resident_id 
-            OR b.res_respondent_no = resident_id
-            OR c.res_person_1 = resident_id 
-            OR c.res_person_2 = resident_id 
-            OR c.res_person_3 = resident_id 
-            OR c.res_person_4 = resident_id 
-            OR c.res_person_5 = resident_id
-            OR r.res_person_1 = resident_id 
-            OR r.res_person_2 = resident_id 
-            OR r.res_person_3 = resident_id 
-            OR r.res_person_4 = resident_id 
-            OR r.res_person_5 = resident_id
-        ORDER BY b.incident_dt DESC
-        LIMIT start_from, 5;
+    SELECT 
+        b.blotter_id,
+        aud.blotter_add_dt,
+        CASE 
+            WHEN b.res_complainant_no = resident_id THEN 'Complainant' 
+            WHEN b.res_respondent_no = resident_id THEN 'Respondent'
+            WHEN op.resident_id = resident_id THEN 
+                CASE 
+                    WHEN op.party_type = 'Complainant' THEN 'Other Complainant'
+                    WHEN op.party_type = 'Respondent' THEN 'Other Respondent'
+                    ELSE 'Other Party'
+                END
+            ELSE 'Not Found'
+        END AS person_status,
+        b.blotter_type, 
+        b.desc_incident,
+        b.incident_dt, 
+        b.location_of_incident, 
+        b.date_of_resolution,
+        b.report_status,
+        
+        -- Aggregate results from tbl_blotter_other_person
+        GROUP_CONCAT(DISTINCT op.party_type ORDER BY op.party_type) AS other_party_type,
+        GROUP_CONCAT(DISTINCT op.resident_id ORDER BY op.resident_id) AS other_resident_ids
+
+    FROM 
+        tbl_blotters b
+        LEFT JOIN tbl_blotter_audit_trail aud ON aud.blotter_at_id = b.blot_at_no
+        LEFT JOIN tbl_blotter_other_person op ON op.blotter_id = b.blotter_id
+        
+    WHERE 
+        b.res_complainant_no = resident_id 
+        OR b.res_respondent_no = resident_id
+        OR op.resident_id = resident_id 
+        
+    GROUP BY 
+        b.blotter_id
+
+    ORDER BY 
+        b.incident_dt DESC
+    LIMIT start_from, 5;
+
 END */$$
 DELIMITER ;
 
@@ -2267,20 +2163,21 @@ DELIMITER ;
 
 DELIMITER $$
 
-/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `CountNonResidentBlotterEntries`(IN residentId INT)
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `CountNonResidentBlotterEntries`(IN nonResidentId INT)
 BEGIN
-    -- Count the matching entries with the specified resident_id and report_status = 1
-    SELECT COUNT(*)
-    FROM tbl_blotters AS b
-    LEFT JOIN tbl_other_respondents AS orr ON b.blotter_id = orr.respondent_id
-    WHERE 
-        -- Check if resident_id is in tbl_other_respondents nres_person_1 to nres_person_5
-        (orr.nres_person_1 = residentId OR orr.nres_person_2 = residentId 
-         OR orr.nres_person_3 = residentId OR orr.nres_person_4 = residentId 
-         OR orr.nres_person_5 = residentId OR b.nres_respondent_no = residentId)
-        AND
-        -- Only include entries with report_status = 1
-        b.report_status = 0;
+  SELECT COUNT(DISTINCT b.blotter_id) AS total_entries
+FROM tbl_blotters AS b
+LEFT JOIN tbl_blotter_other_person AS tbop 
+    ON b.blotter_id = tbop.blotter_id
+WHERE 
+    (
+        (tbop.non_resident_id = nonResidentId AND tbop.party_type = 'Respondent')
+        OR b.nres_respondent_no = nonResidentId
+    )
+    AND b.report_status = 0;
+
+  
+
 END */$$
 DELIMITER ;
 
@@ -2290,47 +2187,16 @@ DELIMITER ;
 
 DELIMITER $$
 
-/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `CountNonResidentBlotterRec`(IN nresident_id INT)
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `CountNonResidentBlotterRec`(IN nonResidentId INT)
 BEGIN
-     SELECT count(*) FROM (SELECT 
-            b.blotter_id,
-            aud.blotter_add_dt,
-            CASE 
-                WHEN b.nres_complainant_no =nresident_id THEN 'Complainant' 
-                WHEN b.nres_respondent_no =nresident_id THEN 'Respondent'
-                WHEN c.nres_person_1 =nresident_id OR c.nres_person_2 =nresident_id OR 
-                     c.nres_person_3 =nresident_id OR c.nres_person_4 =nresident_id OR 
-                     c.nres_person_5 =nresident_id THEN 'Other Complainant'
-                WHEN r.nres_person_1 =nresident_id OR r.nres_person_2 =nresident_id OR 
-                     r.nres_person_3 =nresident_id OR r.nres_person_4 =nresident_id OR 
-                     r.nres_person_5 =nresident_id THEN 'Other Respondent'
-                ELSE 'Not Found'
-            END AS person_status,
-            b.blotter_type, 
-            b.desc_incident,
-            b.incident_dt, 
-            b.location_of_incident, 
-            b.date_of_resolution,
-            b.report_status
-        FROM 
-            tbl_blotters b
-            LEFT JOIN tbl_other_complainants c ON c.complainant_id = b.other_complainant_no
-            LEFT JOIN tbl_other_respondents r ON r.respondent_id = b.other_respondent_no
-            LEFT JOIN tbl_blotter_audit_trail aud ON aud.blotter_at_id =  b.blot_at_no
-        WHERE 
-            b.nres_complainant_no =nresident_id 
-            OR b.nres_respondent_no =nresident_id
-            OR c.nres_person_1 =nresident_id 
-            OR c.nres_person_2 =nresident_id 
-            OR c.nres_person_3 =nresident_id 
-            OR c.nres_person_4 =nresident_id 
-            OR c.nres_person_5 =nresident_id
-            OR r.nres_person_1 =nresident_id 
-            OR r.nres_person_2 =nresident_id 
-            OR r.nres_person_3 =nresident_id 
-            OR r.nres_person_4 =nresident_id 
-            OR r.nres_person_5 =nresident_id
-        ) as count_entries;
+    SELECT COUNT(distinct b.blotter_id) AS total_entries
+FROM tbl_blotters AS b
+LEFT JOIN tbl_blotter_other_person AS tbop ON b.blotter_id = tbop.blotter_id
+WHERE 
+    -- Check if non_resident_id is involved as a complainant, respondent, or other party
+    (tbop.non_resident_id = nonResidentId OR b.nres_complainant_no = nonResidentId OR b.nres_respondent_no = nonResidentId);
+    
+   
 END */$$
 DELIMITER ;
 
@@ -2340,51 +2206,16 @@ DELIMITER ;
 
 DELIMITER $$
 
-/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `CountPersonBlotterInvolved`(in resident_id int)
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `CountPersonBlotterInvolved`(IN resident_id INT)
 BEGIN
-	
-	 SELECT COUNT(*) AS total_entries
-        FROM (
-            SELECT 
-                b.blotter_id,
-                aud.blotter_add_dt,
-                CASE 
-                    WHEN b.res_complainant_no = resident_id THEN 'Complainant' 
-                    WHEN b.res_respondent_no = resident_id THEN 'Respondent'
-                    WHEN c.res_person_1 = resident_id OR c.res_person_2 = resident_id OR 
-                         c.res_person_3 = resident_id OR c.res_person_4 = resident_id OR 
-                         c.res_person_5 = resident_id THEN 'Other Complainant'
-                    WHEN r.res_person_1 = resident_id OR r.res_person_2 = resident_id OR 
-                         r.res_person_3 = resident_id OR r.res_person_4 = resident_id OR 
-                         r.res_person_5 = resident_id THEN 'Other Respondent'
-                    ELSE 'Not Found'
-                END AS person_status,
-                b.blotter_type, 
-                b.desc_incident,
-                b.incident_dt, 
-                b.location_of_incident, 
-                b.date_of_resolution,
-                b.report_status
-            FROM 
-                tbl_blotters b
-                LEFT JOIN tbl_other_complainants c ON c.complainant_id = b.other_complainant_no
-                LEFT JOIN tbl_other_respondents r ON r.respondent_id = b.other_respondent_no
-                LEFT JOIN tbl_blotter_audit_trail aud ON aud.blotter_at_id =  b.blot_at_no
-            WHERE 
-                b.res_complainant_no = resident_id 
-                OR b.res_respondent_no = resident_id
-                OR c.res_person_1 = resident_id 
-                OR c.res_person_2 = resident_id 
-                OR c.res_person_3 = resident_id 
-                OR c.res_person_4 = resident_id 
-                OR c.res_person_5 = resident_id
-                OR r.res_person_1 = resident_id 
-                OR r.res_person_2 = resident_id 
-                OR r.res_person_3 = resident_id 
-                OR r.res_person_4 = resident_id 
-                OR r.res_person_5 = resident_id
-        ) AS counted_entries;
-	END */$$
+  SELECT COUNT(DISTINCT tb.blotter_id) AS total_entries
+FROM tbl_blotters tb
+JOIN tbl_blotter_other_person tbop ON tbop.blotter_id = tb.blotter_id
+WHERE 
+    (tb.res_complainant_no = resident_id OR tb.res_respondent_no = resident_id)
+    OR tbop.resident_id = resident_id;
+
+END */$$
 DELIMITER ;
 
 /* Procedure structure for procedure `CountResidentBlotterEntries` */
@@ -2395,18 +2226,17 @@ DELIMITER $$
 
 /*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `CountResidentBlotterEntries`(IN residentId INT)
 BEGIN
-    -- Count the matching entries with the specified resident_id and report_status = 1
-    SELECT COUNT(*)
-    FROM tbl_blotters AS b
-    LEFT JOIN tbl_other_respondents AS orr ON b.blotter_id = orr.respondent_id
-    WHERE 
-        -- Check if resident_id is in tbl_other_respondents res_person_1 to res_person_5
-        (orr.res_person_1 = residentId OR orr.res_person_2 = residentId 
-         OR orr.res_person_3 = residentId OR orr.res_person_4 = residentId 
-         OR orr.res_person_5 = residentId OR b.res_respondent_no = residentId)
-        AND
-        -- Only include entries with report_status = 1
-        b.report_status = 0;
+  SELECT COUNT(DISTINCT b.blotter_id) AS total_entries
+FROM tbl_blotters AS b
+LEFT JOIN tbl_blotter_other_person AS tbop 
+    ON b.blotter_id = tbop.blotter_id
+WHERE 
+    (
+        (tbop.resident_id = residentId AND tbop.party_type = 'Respondent')
+        OR b.res_respondent_no = residentId
+    )
+    AND b.report_status = 0;
+
 END */$$
 DELIMITER ;
 
@@ -2477,119 +2307,30 @@ DELIMITER ;
 
 DELIMITER $$
 
-/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `FetchAllComplainant`(IN id int)
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `FetchAllComplainant`(IN search_blotter_id INT)
 BEGIN
-	
-	SELECT 
-    resident.`resident_id` as id,
-    CONCAT(`resident`.`last_name`, ', ', `resident`.`first_name`, ' ', IFNULL(`resident`.`middle_name`, ''), ' ', IFNULL(`resident`.`suffix`, '')) AS `full_name`,
-    'Resident' AS `status`,
-    `resident`.`img_filename`
-FROM 
-    `tbl_other_complainants`
-JOIN 
-    `resident` ON `tbl_other_complainants`.`res_person_1` = `resident`.`resident_id`
-WHERE `tbl_other_complainants`.`res_person_1` IS NOT NULL AND `tbl_other_complainants`.`complainant_id` = id
-UNION ALL
-SELECT 
-    resident.`resident_id` as id,
-    CONCAT(`resident`.`last_name`, ', ', `resident`.`first_name`, ' ', IFNULL(`resident`.`middle_name`, ''), ' ', IFNULL(`resident`.`suffix`, '')) AS `full_name`,
-    'Resident' AS `status`,
-    `resident`.`img_filename`
-FROM 
-    `tbl_other_complainants`
-JOIN 
-    `resident` ON `tbl_other_complainants`.`res_person_2` = `resident`.`resident_id`
-WHERE `tbl_other_complainants`.`res_person_2` IS NOT NULL AND `tbl_other_complainants`.`complainant_id` = id
-UNION ALL
-SELECT 
-	resident.`resident_id` as id,
-    CONCAT(`resident`.`last_name`, ', ', `resident`.`first_name`, ' ', IFNULL(`resident`.`middle_name`, ''), ' ', IFNULL(`resident`.`suffix`, '')) AS `full_name`,
-    'Resident' AS `status`,
-    `resident`.`img_filename`
-FROM 
-    `tbl_other_complainants`
-JOIN 
-    `resident` ON `tbl_other_complainants`.`res_person_3` = `resident`.`resident_id`
-WHERE `tbl_other_complainants`.`res_person_3` IS NOT NULL AND `tbl_other_complainants`.`complainant_id` = id
-UNION ALL
-SELECT 
-	resident.`resident_id` as id,   
-	 CONCAT(`resident`.`last_name`, ', ', `resident`.`first_name`, ' ', IFNULL(`resident`.`middle_name`, ''), ' ', IFNULL(`resident`.`suffix`, '')) AS `full_name`,
-    'Resident' AS `status`,
-    `resident`.`img_filename`
-FROM 
-    `tbl_other_complainants`
-JOIN 
-    `resident` ON `tbl_other_complainants`.`res_person_4` = `resident`.`resident_id`
-WHERE `tbl_other_complainants`.`res_person_4` IS NOT NULL AND `tbl_other_complainants`.`complainant_id` = id
-UNION ALL
-SELECT 
-	resident.`resident_id` as id,
-    CONCAT(`resident`.`last_name`, ', ', `resident`.`first_name`, ' ', IFNULL(`resident`.`middle_name`, ''), ' ', IFNULL(`resident`.`suffix`, '')) AS `full_name`,
-    'Resident' AS `status`,
-    `resident`.`img_filename`
-FROM 
-    `tbl_other_complainants`
-JOIN 
-    `resident` ON `tbl_other_complainants`.`res_person_5` = `resident`.`resident_id`
-WHERE `tbl_other_complainants`.`res_person_5` IS NOT NULL AND `tbl_other_complainants`.`complainant_id` = id
-UNION ALL
-SELECT 
-	non_resident.`nresident_id` as id,    
-	CONCAT(`non_resident`.`last_name`, ', ', `non_resident`.`first_name`, ' ', IFNULL(`non_resident`.`middle_name`, ''), ' ', IFNULL(`non_resident`.`suffix`, '')) AS `full_name`,
-    'Non-Resident' AS `status`,
-    `non_resident`.`img_filename`
-FROM 
-    `tbl_other_complainants`
-JOIN 
-    `non_resident` ON `tbl_other_complainants`.`nres_person_1` = `non_resident`.`nresident_id`
-WHERE `tbl_other_complainants`.`nres_person_1` IS NOT NULL AND `tbl_other_complainants`.`complainant_id` = id
-UNION ALL
-SELECT 
-	non_resident.`nresident_id` as id,
-    CONCAT(`non_resident`.`last_name`, ', ', `non_resident`.`first_name`, ' ', IFNULL(`non_resident`.`middle_name`, ''), ' ', IFNULL(`non_resident`.`suffix`, '')) AS `full_name`,
-    'Non-Resident' AS `status`,
-    `non_resident`.`img_filename`
-FROM 
-    `tbl_other_complainants`
-JOIN 
-    `non_resident` ON `tbl_other_complainants`.`nres_person_2` = `non_resident`.`nresident_id`
-WHERE `tbl_other_complainants`.`nres_person_2` IS NOT NULL AND `tbl_other_complainants`.`complainant_id` = id
-UNION ALL
-SELECT 
-	non_resident.`nresident_id` as id,
-    CONCAT(`non_resident`.`last_name`, ', ', `non_resident`.`first_name`, ' ', IFNULL(`non_resident`.`middle_name`, ''), ' ', IFNULL(`non_resident`.`suffix`, '')) AS `full_name`,
-    'Non-Resident' AS `status`,
-    `non_resident`.`img_filename`
-FROM 
-    `tbl_other_complainants`
-JOIN 
-    `non_resident` ON `tbl_other_complainants`.`nres_person_3` = `non_resident`.`nresident_id`
-WHERE `tbl_other_complainants`.`nres_person_3` IS NOT NULL AND `tbl_other_complainants`.`complainant_id` = id
-UNION ALL
-SELECT 
-	non_resident.`nresident_id` as id,
-    CONCAT(`non_resident`.`last_name`, ', ', `non_resident`.`first_name`, ' ', IFNULL(`non_resident`.`middle_name`, ''), ' ', IFNULL(`non_resident`.`suffix`, '')) AS `full_name`,
-    'Non-Resident' AS `status`,
-    `non_resident`.`img_filename`
-FROM 
-    `tbl_other_complainants`
-JOIN 
-    `non_resident` ON `tbl_other_complainants`.`nres_person_4` = `non_resident`.`nresident_id`
-WHERE `tbl_other_complainants`.`nres_person_4` IS NOT NULL AND `tbl_other_complainants`.`complainant_id` = id
-UNION ALL
-SELECT 
-	non_resident.`nresident_id` as id,
-    CONCAT(`non_resident`.`last_name`, ', ', `non_resident`.`first_name`, ' ', IFNULL(`non_resident`.`middle_name`, ''), ' ', IFNULL(`non_resident`.`suffix`, '')) AS `full_name`,
-    'Non-Resident' AS `status`,
-    `non_resident`.`img_filename`
-FROM 
-    `tbl_other_complainants`
-JOIN 
-    `non_resident` ON `tbl_other_complainants`.`nres_person_5` = `non_resident`.`nresident_id`
-WHERE `tbl_other_complainants`.`nres_person_5` IS NOT NULL AND `tbl_other_complainants`.`complainant_id` = id;
-	END */$$
+    SELECT 
+        COALESCE(r.resident_id, nr.nresident_id) as id,
+        op.blotter_id,concat(
+        COALESCE(r.first_name, nr.first_name),', ',
+        COALESCE(r.last_name, nr.last_name),' ',
+        COALESCE(r.middle_name, nr.middle_name),' ',
+        COALESCE(r.suffix, nr.suffix)) as full_name,
+        COALESCE(r.img_filename, nr.img_filename) as img_filename,
+        CASE
+            WHEN r.resident_id IS NOT NULL THEN 'Resident'
+            WHEN nr.nresident_id IS NOT NULL THEN 'Non-Resident'
+            ELSE 'Unknown'
+        END AS `status`
+    FROM 
+        tbl_blotter_other_person op
+    LEFT JOIN 
+        resident r ON op.resident_id = r.resident_id
+    LEFT JOIN 
+        non_resident nr ON op.non_resident_id = nr.nresident_id
+    WHERE 
+        op.blotter_id = search_blotter_id AND op.party_type = "complainant";
+END */$$
 DELIMITER ;
 
 /* Procedure structure for procedure `FetchAllComplainantsID` */
@@ -2598,97 +2339,24 @@ DELIMITER ;
 
 DELIMITER $$
 
-/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `FetchAllComplainantsID`(IN _id INT)
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `FetchAllComplainantsID`(IN blotter_id INT)
 BEGIN
-    SELECT 
-        resident.`resident_id` AS id,
-        'Resident' AS `status`
+   SELECT 
+        COALESCE(r.resident_id, nr.nresident_id) AS id,
+  
+        CASE
+            WHEN r.resident_id IS NOT NULL THEN 'Resident'
+            WHEN nr.nresident_id IS NOT NULL THEN 'Non-Resident'
+            ELSE 'Unknown'
+        END AS `status`
     FROM 
-        `tbl_other_complainants`
-    JOIN 
-        `resident` ON `tbl_other_complainants`.`res_person_1` = `resident`.`resident_id`
-    WHERE `tbl_other_complainants`.`res_person_1` IS NOT NULL AND `tbl_other_complainants`.`complainant_id` = _id
-    UNION ALL
-    SELECT 
-        resident.`resident_id` AS id,
-        'Resident' AS `status`
-    FROM 
-        `tbl_other_complainants`
-    JOIN 
-        `resident` ON `tbl_other_complainants`.`res_person_2` = `resident`.`resident_id`
-    WHERE `tbl_other_complainants`.`res_person_2` IS NOT NULL AND `tbl_other_complainants`.`complainant_id` = _id
-    UNION ALL
-    SELECT 
-        resident.`resident_id` AS id,
-        'Resident' AS `status`
-    FROM 
-        `tbl_other_complainants`
-    JOIN 
-        `resident` ON `tbl_other_complainants`.`res_person_3` = `resident`.`resident_id`
-    WHERE `tbl_other_complainants`.`res_person_3` IS NOT NULL AND `tbl_other_complainants`.`complainant_id` = _id
-    UNION ALL
-    SELECT 
-        resident.`resident_id` AS id,   
-        'Resident' AS `status`
-    FROM 
-        `tbl_other_complainants`
-    JOIN 
-        `resident` ON `tbl_other_complainants`.`res_person_4` = `resident`.`resident_id`
-    WHERE `tbl_other_complainants`.`res_person_4` IS NOT NULL AND `tbl_other_complainants`.`complainant_id` = _id
-    UNION ALL
-    SELECT 
-        resident.`resident_id` AS id,
-        'Resident' AS `status`
-    FROM 
-        `tbl_other_complainants`
-    JOIN 
-        `resident` ON `tbl_other_complainants`.`res_person_5` = `resident`.`resident_id`
-    WHERE `tbl_other_complainants`.`res_person_5` IS NOT NULL AND `tbl_other_complainants`.`complainant_id` = _id
-    UNION ALL
-    SELECT 
-        non_resident.`nresident_id` AS id,    
-        'Non-Resident' AS `status`
-    FROM 
-        `tbl_other_complainants`
-    JOIN 
-        `non_resident` ON `tbl_other_complainants`.`nres_person_1` = `non_resident`.`nresident_id`
-    WHERE `tbl_other_complainants`.`nres_person_1` IS NOT NULL AND `tbl_other_complainants`.`complainant_id` = _id
-    UNION ALL
-    SELECT 
-        non_resident.`nresident_id` AS id,
-        'Non-Resident' AS `status`
-    FROM 
-        `tbl_other_complainants`
-    JOIN 
-        `non_resident` ON `tbl_other_complainants`.`nres_person_2` = `non_resident`.`nresident_id`
-    WHERE `tbl_other_complainants`.`nres_person_2` IS NOT NULL AND `tbl_other_complainants`.`complainant_id` = _id
-    UNION ALL
-    SELECT 
-        non_resident.`nresident_id` AS id,
-        'Non-Resident' AS `status`
-    FROM 
-        `tbl_other_complainants`
-    JOIN 
-        `non_resident` ON `tbl_other_complainants`.`nres_person_3` = `non_resident`.`nresident_id`
-    WHERE `tbl_other_complainants`.`nres_person_3` IS NOT NULL AND `tbl_other_complainants`.`complainant_id` = _id
-    UNION ALL
-    SELECT 
-        non_resident.`nresident_id` AS id,
-        'Non-Resident' AS `status`
-    FROM 
-        `tbl_other_complainants`
-    JOIN 
-        `non_resident` ON `tbl_other_complainants`.`nres_person_4` = `non_resident`.`nresident_id`
-    WHERE `tbl_other_complainants`.`nres_person_4` IS NOT NULL AND `tbl_other_complainants`.`complainant_id` = _id
-    UNION ALL
-    SELECT 
-        non_resident.`nresident_id` AS id,
-        'Non-Resident' AS `status`
-    FROM 
-        `tbl_other_complainants`
-    JOIN 
-        `non_resident` ON `tbl_other_complainants`.`nres_person_5` = `non_resident`.`nresident_id`
-    WHERE `tbl_other_complainants`.`nres_person_5` IS NOT NULL AND `tbl_other_complainants`.`complainant_id` = _id;
+        tbl_blotter_other_person op
+    LEFT JOIN 
+        resident r ON op.resident_id = r.resident_id
+    LEFT JOIN 
+        non_resident nr ON op.non_resident_id = nr.nresident_id
+    WHERE 
+        op.blotter_id = blotter_id AND op.party_type = "complainant";
 END */$$
 DELIMITER ;
 
@@ -2698,119 +2366,32 @@ DELIMITER ;
 
 DELIMITER $$
 
-/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `FetchAllRespondents`(in id int)
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `FetchAllRespondents`(IN search_blotter_id INT)
 BEGIN
-	
-SELECT 
-    resident.`resident_id` as id, 
-    CONCAT(`resident`.`last_name`, ', ', `resident`.`first_name`, ' ', IFNULL(`resident`.`middle_name`, ''), ' ', IFNULL(`resident`.`suffix`, '')) AS `full_name`,
-    'Resident' AS `status`,
-    `resident`.`img_filename`
-FROM 
-    `tbl_other_respondents`
-JOIN 
-    `resident` ON `tbl_other_respondents`.`res_person_1` = `resident`.`resident_id`
-WHERE `tbl_other_respondents`.`res_person_1` IS NOT NULL AND `tbl_other_respondents`.`respondent_id` = id
-UNION ALL
-SELECT 
-    resident.`resident_id` as id,
-    CONCAT(`resident`.`last_name`, ', ', `resident`.`first_name`, ' ', IFNULL(`resident`.`middle_name`, ''), ' ', IFNULL(`resident`.`suffix`, '')) AS `full_name`,
-    'Resident' AS `status`,
-    `resident`.`img_filename`
-FROM 
-    `tbl_other_respondents`
-JOIN 
-    `resident` ON `tbl_other_respondents`.`res_person_2` = `resident`.`resident_id`
-WHERE `tbl_other_respondents`.`res_person_2` IS NOT NULL  AND `tbl_other_respondents`.`respondent_id` = id
-UNION ALL
-SELECT 
-    resident.`resident_id` as id,
-    CONCAT(`resident`.`last_name`, ', ', `resident`.`first_name`, ' ', IFNULL(`resident`.`middle_name`, ''), ' ', IFNULL(`resident`.`suffix`, '')) AS `full_name`,
-    'Resident' AS `status`,
-    `resident`.`img_filename`
-FROM 
-    `tbl_other_respondents`
-JOIN 
-    `resident` ON `tbl_other_respondents`.`res_person_3` = `resident`.`resident_id`
-WHERE `tbl_other_respondents`.`res_person_3` IS NOT NULL  AND `tbl_other_respondents`.`respondent_id` = id
-UNION ALL
-SELECT 
-    resident.`resident_id` as id,
-    CONCAT(`resident`.`last_name`, ', ', `resident`.`first_name`, ' ', IFNULL(`resident`.`middle_name`, ''), ' ', IFNULL(`resident`.`suffix`, '')) AS `full_name`,
-    'Resident' AS `status`,
-    `resident`.`img_filename`
-FROM 
-    `tbl_other_respondents`
-JOIN 
-    `resident` ON `tbl_other_respondents`.`res_person_4` = `resident`.`resident_id`
-WHERE `tbl_other_respondents`.`res_person_4` IS NOT NULL  AND `tbl_other_respondents`.`respondent_id` = id
-UNION ALL
-SELECT 
-	resident.`resident_id` as id,
-    CONCAT(`resident`.`last_name`, ', ', `resident`.`first_name`, ' ', IFNULL(`resident`.`middle_name`, ''), ' ', IFNULL(`resident`.`suffix`, '')) AS `full_name`,
-    'Resident' AS `status`,
-    `resident`.`img_filename`
-FROM 
-    `tbl_other_respondents`
-JOIN 
-    `resident` ON `tbl_other_respondents`.`res_person_5` = `resident`.`resident_id`
-WHERE `tbl_other_respondents`.`res_person_5` IS NOT NULL  AND `tbl_other_respondents`.`respondent_id` = id
-UNION ALL
-SELECT 
-    non_resident.`nresident_id` as id,
-    CONCAT(`non_resident`.`last_name`, ', ', `non_resident`.`first_name`, ' ', IFNULL(`non_resident`.`middle_name`, ''), ' ', IFNULL(`non_resident`.`suffix`, '')) AS `full_name`,
-    'Non-Resident' AS `status`,
-    `non_resident`.`img_filename`
-FROM 
-    `tbl_other_respondents`
-JOIN 
-    `non_resident` ON `tbl_other_respondents`.`nres_person_1` = `non_resident`.`nresident_id`
-WHERE `tbl_other_respondents`.`nres_person_1` IS NOT NULL  AND `tbl_other_respondents`.`respondent_id` = id
-UNION ALL
-SELECT 
-    non_resident.`nresident_id` as id,
-    CONCAT(`non_resident`.`last_name`, ', ', `non_resident`.`first_name`, ' ', IFNULL(`non_resident`.`middle_name`, ''), ' ', IFNULL(`non_resident`.`suffix`, '')) AS `full_name`,
-    'Non-Resident' AS `status`,
-    `non_resident`.`img_filename`
-FROM 
-    `tbl_other_respondents`
-JOIN 
-    `non_resident` ON `tbl_other_respondents`.`nres_person_2` = `non_resident`.`nresident_id`
-WHERE `tbl_other_respondents`.`nres_person_2` IS NOT NULL  AND `tbl_other_respondents`.`respondent_id` = id
-UNION ALL
-SELECT 
-    non_resident.`nresident_id` as id,
-    CONCAT(`non_resident`.`last_name`, ', ', `non_resident`.`first_name`, ' ', IFNULL(`non_resident`.`middle_name`, ''), ' ', IFNULL(`non_resident`.`suffix`, '')) AS `full_name`,
-    'Non-Resident' AS `status`,
-    `non_resident`.`img_filename`
-FROM 
-    `tbl_other_respondents`
-JOIN 
-    `non_resident` ON `tbl_other_respondents`.`nres_person_3` = `non_resident`.`nresident_id`
-WHERE `tbl_other_respondents`.`nres_person_3` IS NOT NULL  AND `tbl_other_respondents`.`respondent_id` = id
-UNION ALL
-SELECT 
-    non_resident.`nresident_id` as id,
-    CONCAT(`non_resident`.`last_name`, ', ', `non_resident`.`first_name`, ' ', IFNULL(`non_resident`.`middle_name`, ''), ' ', IFNULL(`non_resident`.`suffix`, '')) AS `full_name`,
-    'Non-Resident' AS `status`,
-    `non_resident`.`img_filename`
-FROM 
-    `tbl_other_respondents`
-JOIN 
-    `non_resident` ON `tbl_other_respondents`.`nres_person_4` = `non_resident`.`nresident_id`
-WHERE `tbl_other_respondents`.`nres_person_4` IS NOT NULL  AND `tbl_other_respondents`.`respondent_id` = id
-UNION ALL
-SELECT 
-    non_resident.`nresident_id` as id,
-    CONCAT(`non_resident`.`last_name`, ', ', `non_resident`.`first_name`, ' ', IFNULL(`non_resident`.`middle_name`, ''), ' ', IFNULL(`non_resident`.`suffix`, '')) AS `full_name`,
-    'Non-Resident' AS `status`,
-    `non_resident`.`img_filename`
-FROM 
-    `tbl_other_respondents`
-JOIN 
-    `non_resident` ON `tbl_other_respondents`.`nres_person_5` = `non_resident`.`nresident_id`
-WHERE `tbl_other_respondents`.`nres_person_5` IS NOT NULL  AND `tbl_other_respondents`.`respondent_id` = id;
-	END */$$
+    SELECT 
+        COALESCE(r.resident_id, nr.nresident_id) AS id,
+        op.blotter_id,
+        CONCAT(
+            COALESCE(r.last_name, nr.last_name), ', ',
+            COALESCE(r.first_name, nr.first_name), ' ',
+            IFNULL(COALESCE(r.middle_name, nr.middle_name), ''), ' ',
+            IFNULL(COALESCE(r.suffix, nr.suffix), '')
+        ) AS full_name,
+        COALESCE(r.img_filename, nr.img_filename) AS img_filename,
+        CASE
+            WHEN r.resident_id IS NOT NULL THEN 'Resident'
+            WHEN nr.nresident_id IS NOT NULL THEN 'Non-Resident'
+            ELSE 'Unknown'
+        END AS `status`
+    FROM 
+        tbl_blotter_other_person op
+    LEFT JOIN 
+        resident r ON op.resident_id = r.resident_id
+    LEFT JOIN 
+        non_resident nr ON op.non_resident_id = nr.nresident_id
+    WHERE 
+        op.blotter_id = search_blotter_id AND op.party_type = "respondent";
+END */$$
 DELIMITER ;
 
 /* Procedure structure for procedure `FetchAllRespondentsID` */
@@ -2822,95 +2403,22 @@ DELIMITER $$
 /*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `FetchAllRespondentsID`(in id int)
 BEGIN
 	
-		SELECT 
-    resident.`resident_id` AS id,
-    'Resident' AS `status`
-FROM 
-    `tbl_other_respondents`
-JOIN 
-    `resident` ON `tbl_other_respondents`.`res_person_1` = `resident`.`resident_id`
-WHERE `tbl_other_respondents`.`res_person_1` IS NOT NULL AND `tbl_other_respondents`.`respondent_id` = id
-UNION ALL
-SELECT 
-    resident.`resident_id` AS id,
-    'Resident' AS `status`
-FROM 
-    `tbl_other_respondents`
-JOIN 
-    `resident` ON `tbl_other_respondents`.`res_person_2` = `resident`.`resident_id`
-WHERE `tbl_other_respondents`.`res_person_2` IS NOT NULL AND `tbl_other_respondents`.`respondent_id` = id
-UNION ALL
-SELECT 
-	resident.`resident_id` AS id,
-    'Resident' AS `status`
-FROM 
-    `tbl_other_respondents`
-JOIN 
-    `resident` ON `tbl_other_respondents`.`res_person_3` = `resident`.`resident_id`
-WHERE `tbl_other_respondents`.`res_person_3` IS NOT NULL AND `tbl_other_respondents`.`respondent_id` = id
-UNION ALL
-SELECT 
-	resident.`resident_id` AS id,   
-    'Resident' AS `status`
-FROM 
-    `tbl_other_respondents`
-JOIN 
-    `resident` ON `tbl_other_respondents`.`res_person_4` = `resident`.`resident_id`
-WHERE `tbl_other_respondents`.`res_person_4` IS NOT NULL AND `tbl_other_respondents`.`respondent_id` = id
-UNION ALL
-SELECT 
-	resident.`resident_id` AS id,
-    'Resident' AS `status`
-FROM 
-    `tbl_other_respondents`
-JOIN 
-    `resident` ON `tbl_other_respondents`.`res_person_5` = `resident`.`resident_id`
-WHERE `tbl_other_respondents`.`res_person_5` IS NOT NULL AND `tbl_other_respondents`.`respondent_id` = id
-UNION ALL
-SELECT 
-	non_resident.`nresident_id` AS id,    
-    'Non-Resident' AS `status`
-FROM 
-    `tbl_other_respondents`
-JOIN 
-    `non_resident` ON `tbl_other_respondents`.`nres_person_1` = `non_resident`.`nresident_id`
-WHERE `tbl_other_respondents`.`nres_person_1` IS NOT NULL AND `tbl_other_respondents`.`respondent_id` = id
-UNION ALL
-SELECT 
-	non_resident.`nresident_id` AS id,
-    'Non-Resident' AS `status`
-FROM 
-    `tbl_other_respondents`
-JOIN 
-    `non_resident` ON `tbl_other_respondents`.`nres_person_2` = `non_resident`.`nresident_id`
-WHERE `tbl_other_respondents`.`nres_person_2` IS NOT NULL AND `tbl_other_respondents`.`respondent_id` = id
-UNION ALL
-SELECT 
-	non_resident.`nresident_id` AS id,
-    'Non-Resident' AS `status`
-FROM 
-    `tbl_other_respondents`
-JOIN 
-    `non_resident` ON `tbl_other_respondents`.`nres_person_3` = `non_resident`.`nresident_id`
-WHERE `tbl_other_respondents`.`nres_person_3` IS NOT NULL AND `tbl_other_respondents`.`respondent_id` = id
-UNION ALL
-SELECT 
-	non_resident.`nresident_id` AS id,
-    'Non-Resident' AS `status`
-FROM 
-    `tbl_other_respondents`
-JOIN 
-    `non_resident` ON `tbl_other_respondents`.`nres_person_4` = `non_resident`.`nresident_id`
-WHERE `tbl_other_respondents`.`nres_person_4` IS NOT NULL AND `tbl_other_respondents`.`respondent_id` = id
-UNION ALL
-SELECT 
-	non_resident.`nresident_id` AS id,
-    'Non-Resident' AS `status`
-FROM 
-    `tbl_other_respondents`
-JOIN 
-    `non_resident` ON `tbl_other_respondents`.`nres_person_5` = `non_resident`.`nresident_id`
-WHERE `tbl_other_respondents`.`nres_person_5` IS NOT NULL AND `tbl_other_respondents`.`respondent_id` = id;
+	  SELECT 
+        COALESCE(r.resident_id, nr.nresident_id) AS id,
+  
+        CASE
+            WHEN r.resident_id IS NOT NULL THEN 'Resident'
+            WHEN nr.nresident_id IS NOT NULL THEN 'Non-Resident'
+            ELSE 'Unknown'
+        END AS `status`
+    FROM 
+        tbl_blotter_other_person op
+    LEFT JOIN 
+        resident r ON op.resident_id = r.resident_id
+    LEFT JOIN 
+        non_resident nr ON op.non_resident_id = nr.nresident_id
+    WHERE 
+        op.blotter_id = blotter_id AND op.party_type = "respondent";
 	END */$$
 DELIMITER ;
 
@@ -3069,6 +2577,116 @@ AND (`resident`.`last_name` LIKE search
      OR `tbl_docu_request`.`request_id` LIKE search) 
 ORDER BY `tbl_docu_request`.`request_id` DESC
 LIMIT start_from, lim;
+	END */$$
+DELIMITER ;
+
+/* Procedure structure for procedure `SearchBlotterAudit` */
+
+/*!50003 DROP PROCEDURE IF EXISTS  `SearchBlotterAudit` */;
+
+DELIMITER $$
+
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `SearchBlotterAudit`(in search varchar(255), IN start_from int)
+BEGIN
+	
+	SELECT
+  `ru`.`audit_id`         AS `audit_id`,
+  `ru`.`action_type`      AS `action_type`,
+  `ru`.`action_timestamp` AS `action_timestamp`,
+  `ru`.`blotter_no`       AS `blotter_id`,
+  `tu`.`depart_no`        AS `depart_no`,
+  `un`.`username`         AS `username`,
+  `tu`.`img_filename`     AS `img_filename`,
+  CONCAT(`tu`.`lname`,', ',`tu`.`fname`,' ',`tu`.`mname`,' ',`tu`.`suffix`) AS `fullname`
+FROM `tbl_blotters_audit` `ru`
+    JOIN `tbl_users` `tu`
+      ON `ru`.`user_no` = `tu`.`user_id`
+   JOIN `tbl_username` `un`
+     ON `ru`.`user_no` = `un`.`username_id`
+     
+      WHERE
+        `tu`.`fname` LIKE CONCAT('%', search, '%')
+        OR `tu`.`mname` LIKE CONCAT('%', search, '%')
+        OR `tu`.`lname` LIKE CONCAT('%', search, '%')
+        OR `un`.`username` LIKE CONCAT('%', search, '%')
+    ORDER BY `ru`.`action_timestamp` DESC
+    LIMIT start_from, 10;
+
+	END */$$
+DELIMITER ;
+
+/* Procedure structure for procedure `SearchBlotterAuditDateFilter` */
+
+/*!50003 DROP PROCEDURE IF EXISTS  `SearchBlotterAuditDateFilter` */;
+
+DELIMITER $$
+
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `SearchBlotterAuditDateFilter`( 
+    IN start_from INT, 
+    IN start_date DATE, 
+    IN end_date DATE)
+BEGIN
+	
+	SELECT
+  `ru`.`audit_id`         AS `audit_id`,
+  `ru`.`action_type`      AS `action_type`,
+  `ru`.`action_timestamp` AS `action_timestamp`,
+  `ru`.`blotter_no`       AS `blotter_id`,
+  `tu`.`depart_no`        AS `depart_no`,
+  `un`.`username`         AS `username`,
+  `tu`.`img_filename`     AS `img_filename`,
+  CONCAT(`tu`.`lname`,', ',`tu`.`fname`,' ',`tu`.`mname`,' ',`tu`.`suffix`) AS `fullname`
+FROM `tbl_blotters_audit` `ru`
+    JOIN `tbl_users` `tu`
+      ON `ru`.`user_no` = `tu`.`user_id`
+   JOIN `tbl_username` `un`
+     ON `ru`.`user_no` = `un`.`username_id`
+     
+      WHERE
+       `ru`.`action_timestamp` < CAST(end_date + INTERVAL 1 DAY AS DATETIME)
+    ORDER BY `ru`.`action_timestamp` DESC
+    LIMIT start_from, 10;
+
+	END */$$
+DELIMITER ;
+
+/* Procedure structure for procedure `SearchBlotterAuditWithDate` */
+
+/*!50003 DROP PROCEDURE IF EXISTS  `SearchBlotterAuditWithDate` */;
+
+DELIMITER $$
+
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `SearchBlotterAuditWithDate`( IN search VARCHAR(255), 
+    IN start_from INT, 
+    IN start_date DATE, 
+    IN end_date DATE)
+BEGIN
+	
+	SELECT
+  `ru`.`audit_id`         AS `audit_id`,
+  `ru`.`action_type`      AS `action_type`,
+  `ru`.`action_timestamp` AS `action_timestamp`,
+  `ru`.`blotter_no`       AS `blotter_id`,
+  `tu`.`depart_no`        AS `depart_no`,
+  `un`.`username`         AS `username`,
+  `tu`.`img_filename`     AS `img_filename`,
+  CONCAT(`tu`.`lname`,', ',`tu`.`fname`,' ',`tu`.`mname`,' ',`tu`.`suffix`) AS `fullname`
+FROM `tbl_blotters_audit` `ru`
+    JOIN `tbl_users` `tu`
+      ON `ru`.`user_no` = `tu`.`user_id`
+   JOIN `tbl_username` `un`
+     ON `ru`.`user_no` = `un`.`username_id`
+     
+      WHERE
+        `tu`.`fname` LIKE CONCAT('%', search, '%')
+        OR `tu`.`mname` LIKE CONCAT('%', search, '%')
+        OR `tu`.`lname` LIKE CONCAT('%', search, '%')
+        OR `un`.`username` LIKE CONCAT('%', search, '%')
+         AND `ru`.`action_timestamp` >= CAST(start_date AS DATETIME)
+AND `ru`.`action_timestamp` < CAST(end_date + INTERVAL 1 DAY AS DATETIME)
+    ORDER BY `ru`.`action_timestamp` DESC
+    LIMIT start_from, 10;
+
 	END */$$
 DELIMITER ;
 
@@ -3549,7 +3167,7 @@ BEGIN
     `non_resident`.`cellphone_num`,
     `non_resident`.`is_deleted`
   FROM `non_resident`
-  JOIN `nonres_audit_trail` ON `non_resident`.`audit_trail_no` = `nonres_audit_trail`.`audit_trail_id`
+  JOIN `nonres_audit_trail` ON `non_resident`.`nresident_id` = `nonres_audit_trail`.`audit_trail_id`
   WHERE `is_deleted` = 0
     AND (`last_name` LIKE CONCAT('%', search_query, '%')
       OR `first_name` LIKE CONCAT('%', search_query, '%')
@@ -3653,7 +3271,7 @@ BEGIN
     `non_resident`.`cellphone_num` AS `contact_num`,
     `non_resident`.`is_deleted`
   FROM `non_resident`
-  JOIN `nonres_audit_trail` ON `non_resident`.`audit_trail_no` = `nonres_audit_trail`.`audit_trail_id`
+  JOIN `nonres_audit_trail` ON `non_resident`.`nresident_id` = `nonres_audit_trail`.`audit_trail_id`
   WHERE `is_deleted` = 1
     AND (`last_name` LIKE search_query
       OR `first_name` LIKE search_query
@@ -4386,6 +4004,24 @@ DROP TABLE IF EXISTS `vw_blotters`;
  `respondent_suffix` varchar(10) 
 )*/;
 
+/*Table structure for table `vw_blotters_audit` */
+
+DROP TABLE IF EXISTS `vw_blotters_audit`;
+
+/*!50001 DROP VIEW IF EXISTS `vw_blotters_audit` */;
+/*!50001 DROP TABLE IF EXISTS `vw_blotters_audit` */;
+
+/*!50001 CREATE TABLE  `vw_blotters_audit`(
+ `audit_id` int(11) ,
+ `action_type` enum('INSERT','UPDATE','DELETE','RECOVER') ,
+ `action_timestamp` timestamp ,
+ `blotter_id` int(11) ,
+ `depart_no` int(55) ,
+ `username` varchar(255) ,
+ `img_filename` varchar(255) ,
+ `fullname` varchar(224) 
+)*/;
+
 /*Table structure for table `vw_blotters_deleted` */
 
 DROP TABLE IF EXISTS `vw_blotters_deleted`;
@@ -4521,7 +4157,6 @@ DROP TABLE IF EXISTS `vw_nonresident`;
  `birth_date` date ,
  `birth_place` varchar(255) ,
  `cellphone_num` varchar(50) ,
- `audit_trail_no` int(55) ,
  `is_deleted` tinyint(2) 
 )*/;
 
@@ -4821,6 +4456,13 @@ DROP TABLE IF EXISTS `vw_users`;
 
 /*!50001 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vw_blotters` AS (select `tbl_blotters`.`blotter_id` AS `blotter_id`,`tbl_blotter_audit_trail`.`blotter_add_dt` AS `blotter_add_dt`,(case when (`tbl_blotters`.`res_complainant_no` is not null) then 'Resident' when (`tbl_blotters`.`nres_complainant_no` is not null) then 'Non-Resident' else 'unknown' end) AS `complainant_status`,(case when (`tbl_blotters`.`res_complainant_no` is not null) then `tbl_blotters`.`res_complainant_no` when (`tbl_blotters`.`nres_complainant_no` is not null) then `tbl_blotters`.`nres_complainant_no` else 'unknown' end) AS `complainant_no`,(case when (`tbl_blotters`.`res_respondent_no` is not null) then 'Resident' when (`tbl_blotters`.`nres_respondent_no` is not null) then 'Non-Resident' else 'unknown' end) AS `respondent_status`,(case when (`tbl_blotters`.`res_respondent_no` is not null) then `tbl_blotters`.`res_respondent_no` when (`tbl_blotters`.`nres_respondent_no` is not null) then `tbl_blotters`.`nres_respondent_no` else 'unknown' end) AS `respondent_no`,(case when (`tbl_blotters`.`res_complainant_no` is not null) then `resident_complainant`.`img_filename` when (`tbl_blotters`.`nres_complainant_no` is not null) then convert(`non_resident_complainant`.`img_filename` using utf8mb4) else 'unknown' end) AS `complainant_filename`,(case when (`tbl_blotters`.`res_respondent_no` is not null) then `resident_respondent`.`img_filename` when (`tbl_blotters`.`nres_respondent_no` is not null) then convert(`non_resident_respondent`.`img_filename` using utf8mb4) else 'unknown' end) AS `respondent_filename`,(case when (`tbl_blotters`.`res_complainant_no` is not null) then concat(`resident_complainant`.`house_num`,', ',`resident_complainant`.`street`,', ',`resident_complainant`.`subdivision`,', Camarin Caloocan City') when (`tbl_blotters`.`nres_complainant_no` is not null) then convert(concat(`non_resident_complainant`.`house_num`,', ',`non_resident_complainant`.`street`,', ',`non_resident_complainant`.`subdivision`,', ',`non_resident_complainant`.`city`,', ',`non_resident_complainant`.`province`,', ',`non_resident_complainant`.`zipcode`) using utf8mb4) else 'unknown' end) AS `complainant_address`,(case when (`tbl_blotters`.`res_respondent_no` is not null) then concat(`resident_respondent`.`house_num`,', ',`resident_respondent`.`street`,', ',`resident_respondent`.`subdivision`,', Camarin Caloocan City') when (`tbl_blotters`.`nres_respondent_no` is not null) then convert(concat(`non_resident_respondent`.`house_num`,', ',`non_resident_respondent`.`street`,', ',`non_resident_respondent`.`subdivision`,', ',`non_resident_respondent`.`city`,', ',`non_resident_respondent`.`province`,', ',`non_resident_respondent`.`zipcode`) using utf8mb4) else 'unknown' end) AS `respondent_address`,`tbl_blotters`.`blotter_type` AS `blotter_type`,`tbl_blotters`.`desc_incident` AS `desc_incident`,`tbl_blotters`.`incident_dt` AS `incident_dt`,`tbl_blotters`.`report_status` AS `report_status`,`tbl_blotters`.`is_deleted` AS `is_deleted`,(case when (`tbl_blotters`.`res_complainant_no` is not null) then `resident_complainant`.`last_name` when (`tbl_blotters`.`nres_complainant_no` is not null) then convert(`non_resident_complainant`.`last_name` using utf8mb4) else 'unknown' end) AS `complainant_last_name`,(case when (`tbl_blotters`.`res_complainant_no` is not null) then `resident_complainant`.`first_name` when (`tbl_blotters`.`nres_complainant_no` is not null) then convert(`non_resident_complainant`.`first_name` using utf8mb4) else 'unknown' end) AS `complainant_first_name`,(case when (`tbl_blotters`.`res_complainant_no` is not null) then `resident_complainant`.`middle_name` when (`tbl_blotters`.`nres_complainant_no` is not null) then convert(`non_resident_complainant`.`middle_name` using utf8mb4) else 'unknown' end) AS `complainant_middle_name`,(case when (`tbl_blotters`.`res_complainant_no` is not null) then `resident_complainant`.`suffix` when (`tbl_blotters`.`nres_complainant_no` is not null) then convert(`non_resident_complainant`.`suffix` using utf8mb4) else 'unknown' end) AS `complainant_suffix`,(case when (`tbl_blotters`.`res_respondent_no` is not null) then `resident_respondent`.`last_name` when (`tbl_blotters`.`nres_respondent_no` is not null) then convert(`non_resident_respondent`.`last_name` using utf8mb4) else 'unknown' end) AS `respondent_last_name`,(case when (`tbl_blotters`.`res_respondent_no` is not null) then `resident_respondent`.`first_name` when (`tbl_blotters`.`nres_respondent_no` is not null) then convert(`non_resident_respondent`.`first_name` using utf8mb4) else 'unknown' end) AS `respondent_first_name`,(case when (`tbl_blotters`.`res_respondent_no` is not null) then `resident_respondent`.`middle_name` when (`tbl_blotters`.`nres_respondent_no` is not null) then convert(`non_resident_respondent`.`middle_name` using utf8mb4) else 'unknown' end) AS `respondent_middle_name`,(case when (`tbl_blotters`.`res_respondent_no` is not null) then `resident_respondent`.`suffix` when (`tbl_blotters`.`nres_respondent_no` is not null) then convert(`non_resident_respondent`.`suffix` using utf8mb4) else 'unknown' end) AS `respondent_suffix` from (((((`tbl_blotters` join `tbl_blotter_audit_trail` on((`tbl_blotters`.`blot_at_no` = `tbl_blotter_audit_trail`.`blotter_at_id`))) left join `resident` `resident_complainant` on((`tbl_blotters`.`res_complainant_no` = `resident_complainant`.`resident_id`))) left join `non_resident` `non_resident_complainant` on((`tbl_blotters`.`nres_complainant_no` = `non_resident_complainant`.`nresident_id`))) left join `resident` `resident_respondent` on((`tbl_blotters`.`res_respondent_no` = `resident_respondent`.`resident_id`))) left join `non_resident` `non_resident_respondent` on((`tbl_blotters`.`nres_respondent_no` = `non_resident_respondent`.`nresident_id`)))) */;
 
+/*View structure for view vw_blotters_audit */
+
+/*!50001 DROP TABLE IF EXISTS `vw_blotters_audit` */;
+/*!50001 DROP VIEW IF EXISTS `vw_blotters_audit` */;
+
+/*!50001 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vw_blotters_audit` AS (select `ru`.`audit_id` AS `audit_id`,`ru`.`action_type` AS `action_type`,`ru`.`action_timestamp` AS `action_timestamp`,`ru`.`blotter_no` AS `blotter_id`,`tu`.`depart_no` AS `depart_no`,`un`.`username` AS `username`,`tu`.`img_filename` AS `img_filename`,concat(`tu`.`lname`,', ',`tu`.`fname`,' ',`tu`.`mname`,' ',`tu`.`suffix`) AS `fullname` from ((`tbl_blotters_audit` `ru` join `tbl_users` `tu` on((`ru`.`user_no` = `tu`.`user_id`))) join `tbl_username` `un` on((`ru`.`user_no` = `un`.`username_id`)))) */;
+
 /*View structure for view vw_blotters_deleted */
 
 /*!50001 DROP TABLE IF EXISTS `vw_blotters_deleted` */;
@@ -4854,7 +4496,7 @@ DROP TABLE IF EXISTS `vw_users`;
 /*!50001 DROP TABLE IF EXISTS `vw_nonresident` */;
 /*!50001 DROP VIEW IF EXISTS `vw_nonresident` */;
 
-/*!50001 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vw_nonresident` AS (select `non_resident`.`nresident_id` AS `nresident_id`,`nonres_audit_trail`.`datetime_added` AS `datetime_added`,`non_resident`.`img_filename` AS `img_filename`,`non_resident`.`last_name` AS `last_name`,`non_resident`.`first_name` AS `first_name`,`non_resident`.`middle_name` AS `middle_name`,`non_resident`.`suffix` AS `suffix`,`non_resident`.`house_num` AS `house_num`,`non_resident`.`street` AS `street`,`non_resident`.`subdivision` AS `subdivision`,`non_resident`.`district_brgy` AS `district_brgy`,`non_resident`.`city` AS `city`,`non_resident`.`province` AS `province`,`non_resident`.`zipcode` AS `zipcode`,`non_resident`.`sex` AS `sex`,`non_resident`.`marital_status` AS `marital_status`,`non_resident`.`birth_date` AS `birth_date`,`non_resident`.`birth_place` AS `birth_place`,`non_resident`.`cellphone_num` AS `cellphone_num`,`non_resident`.`audit_trail_no` AS `audit_trail_no`,`non_resident`.`is_deleted` AS `is_deleted` from (`non_resident` join `nonres_audit_trail` on((`non_resident`.`audit_trail_no` = `nonres_audit_trail`.`audit_trail_id`))) where (`non_resident`.`is_deleted` = 0)) */;
+/*!50001 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vw_nonresident` AS (select `non_resident`.`nresident_id` AS `nresident_id`,`nonres_audit_trail`.`datetime_added` AS `datetime_added`,`non_resident`.`img_filename` AS `img_filename`,`non_resident`.`last_name` AS `last_name`,`non_resident`.`first_name` AS `first_name`,`non_resident`.`middle_name` AS `middle_name`,`non_resident`.`suffix` AS `suffix`,`non_resident`.`house_num` AS `house_num`,`non_resident`.`street` AS `street`,`non_resident`.`subdivision` AS `subdivision`,`non_resident`.`district_brgy` AS `district_brgy`,`non_resident`.`city` AS `city`,`non_resident`.`province` AS `province`,`non_resident`.`zipcode` AS `zipcode`,`non_resident`.`sex` AS `sex`,`non_resident`.`marital_status` AS `marital_status`,`non_resident`.`birth_date` AS `birth_date`,`non_resident`.`birth_place` AS `birth_place`,`non_resident`.`cellphone_num` AS `cellphone_num`,`non_resident`.`is_deleted` AS `is_deleted` from (`non_resident` join `nonres_audit_trail` on((`non_resident`.`nresident_id` = `nonres_audit_trail`.`audit_trail_id`))) where (`non_resident`.`is_deleted` = 0)) */;
 
 /*View structure for view vw_nonresident_audit */
 
@@ -4868,7 +4510,7 @@ DROP TABLE IF EXISTS `vw_users`;
 /*!50001 DROP TABLE IF EXISTS `vw_nonresident_deleted` */;
 /*!50001 DROP VIEW IF EXISTS `vw_nonresident_deleted` */;
 
-/*!50001 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vw_nonresident_deleted` AS (select `non_resident`.`nresident_id` AS `nresident_id`,cast(`nonres_audit_trail`.`datetime_added` as date) AS `datetime_added`,`non_resident`.`img_filename` AS `img_filename`,`non_resident`.`last_name` AS `last_name`,`non_resident`.`first_name` AS `first_name`,`non_resident`.`middle_name` AS `middle_name`,`non_resident`.`suffix` AS `suffix`,`non_resident`.`house_num` AS `house_num`,`non_resident`.`street` AS `street`,`non_resident`.`subdivision` AS `subdivision`,`non_resident`.`district_brgy` AS `district_brgy`,`non_resident`.`city` AS `city`,`non_resident`.`province` AS `province`,`non_resident`.`zipcode` AS `zipcode`,`non_resident`.`sex` AS `sex`,`non_resident`.`marital_status` AS `marital_status`,`non_resident`.`birth_date` AS `birth_date`,`non_resident`.`birth_place` AS `birth_place`,`non_resident`.`cellphone_num` AS `cellphone_num`,`non_resident`.`is_deleted` AS `is_deleted` from (`non_resident` join `nonres_audit_trail` on((`non_resident`.`audit_trail_no` = `nonres_audit_trail`.`audit_trail_id`))) where (`non_resident`.`is_deleted` = 1)) */;
+/*!50001 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vw_nonresident_deleted` AS (select `non_resident`.`nresident_id` AS `nresident_id`,cast(`nonres_audit_trail`.`datetime_added` as date) AS `datetime_added`,`non_resident`.`img_filename` AS `img_filename`,`non_resident`.`last_name` AS `last_name`,`non_resident`.`first_name` AS `first_name`,`non_resident`.`middle_name` AS `middle_name`,`non_resident`.`suffix` AS `suffix`,`non_resident`.`house_num` AS `house_num`,`non_resident`.`street` AS `street`,`non_resident`.`subdivision` AS `subdivision`,`non_resident`.`district_brgy` AS `district_brgy`,`non_resident`.`city` AS `city`,`non_resident`.`province` AS `province`,`non_resident`.`zipcode` AS `zipcode`,`non_resident`.`sex` AS `sex`,`non_resident`.`marital_status` AS `marital_status`,`non_resident`.`birth_date` AS `birth_date`,`non_resident`.`birth_place` AS `birth_place`,`non_resident`.`cellphone_num` AS `cellphone_num`,`non_resident`.`is_deleted` AS `is_deleted` from (`non_resident` join `nonres_audit_trail` on((`non_resident`.`nresident_id` = `nonres_audit_trail`.`audit_trail_id`))) where (`non_resident`.`is_deleted` = 1)) */;
 
 /*View structure for view vw_resident */
 

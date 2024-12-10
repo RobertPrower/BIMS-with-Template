@@ -331,9 +331,6 @@ $(document).ready(function(){
         $("#brgy_sona").val(brgysona);
         $("#brgy_district").val(brgydistrict);
 
-
-
-
     })
 
     $("#brgydetailsform").submit(function (e) { 

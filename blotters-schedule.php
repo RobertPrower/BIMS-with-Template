@@ -3,26 +3,17 @@ require_once('includes/connecttodb.php');
 require_once 'includes/config.php';
 require_once 'includes/enforce_login.php';
 
+if ($_SESSION['depart_no'] == 4|| $_SESSION['depart_no'] == 5 || $_SESSION['depart_no'] == 3) {
+    
+}else{
+    header('Location: index.php');
+    exit;
+}  
+
 $logoquery = "SELECT `filename` FROM `certificate-img` WHERE purpose = 'Barangay Logo'";
 $logostmt = $pdo->prepare($logoquery);
 $logostmt->execute();
 $logo = $logostmt->fetchColumn();
-
-function hasPermission($requiredRole) {
-    return isset($_SESSION['user_role']) && $_SESSION['user_role'] === $requiredRole;
-}
-
-if (hasPermission('admin')) {
-
-}
-
-// $_SESSION['user_role'] = $user['role']; // Set user dept
-
-// if ($_SESSION['user_role'] !='admin' || !$_SESSION['user_role'] != 'blotter') {
-//     echo "Access denied!";
-//     exit;
-// }       
-
 $pdo = null; // Close DB
 
 ?>
@@ -68,7 +59,14 @@ $pdo = null; // Close DB
                     <div class="container p-3">
                         <h2 class="main-title">Manage Blotter Schedule</h2>
                         <div class="row pb-3">
-                            <div class="container col-md-12">                              
+                            <div class="container col-md-12">    
+                                <?php 
+                                
+                                require_once 'includes/blotterviewmodal.php';
+                                require_once 'includes/residentviewform.php';
+                                require_once 'includes/nonresidentviewform.php';
+                                
+                                ?>                          
                               <div class="form-check form-switch my-2">
                                   <input class="form-check-input" type="checkbox" id="showpastdates">
                                   <label class="form-check-label" for="showpastdates">Show Past Schedules</label>

@@ -7,7 +7,7 @@ $('#imagefile, #editimagefile').on('change', function() {
     var oldImageSrc = (isEdit) ? $('#editimagePreview').attr('src') : $('#imagePreview').attr('src'); 
 
     if (!file.type.match(imageType)) {
-        swal({
+        swal.fire({
             icon: "error",
             title: "Oops... The uploaded file is not a image!",
             text: "Please upload a vaild image file!",
@@ -25,7 +25,7 @@ $('#imagefile, #editimagefile').on('change', function() {
 
     var extension = file.name.split('.').pop().toLowerCase();
     if(validExtensions.indexOf(extension) == -1) {
-        swal({
+        swal.fire({
             icon: "error",
             title: "Oops... Invalid extension!",
             text: "Only png, jpg, and jpeg are allowed.",
@@ -45,7 +45,7 @@ $('#imagefile, #editimagefile').on('change', function() {
         var img = new Image();
         img.onload = function() {
             if(img.width > 500 || img.height > 500) {
-                swal({
+                swal.fire({
                     icon: "error",
                     title: "Oops... Image Size is too large",
                     text: "Please upload an image with dimensions not exceeding 500x500 pixels.",

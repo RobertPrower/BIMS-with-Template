@@ -1444,7 +1444,7 @@ label {
 }
 
 /* Image preview and webcam feed styling */
-#cameraFeed, #editcameraFeed ,#imagePreview, #editimagePreview{
+#cameraFeed, #editcameraFeed ,#imagePreview, #editimagePreview, #nonres_imagePreview,#nonres_cameraFeed {
   width: 200px !important;               /* Fill the circular container */
   height: 200px !important;
   object-fit:cover;          /* Ensure content covers the circle without distortion */

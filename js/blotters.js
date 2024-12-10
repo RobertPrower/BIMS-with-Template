@@ -123,7 +123,7 @@ $(document).ready(function () {
   }
 
   //Function to search for entries
-  function fetchResults(query, page = 1) {
+  function fetchResults(query, page) {
     if ($("#showdeletedentries").is(":checked")) {
       console.log("Deleted Entries switch has been on");
       $.ajax({
@@ -168,7 +168,12 @@ $(document).ready(function () {
             { value: option.mediator_id, 
             text: option.mediator_name 
             })); 
-          });
+
+            $('#mediator_name_view').append($('<option>', 
+              { value: option.mediator_id, 
+              text: option.mediator_name 
+              })); 
+        });
       }, error: function(xhr, status, error){
         console.error('Error fetching options:', error); 
       }
@@ -263,7 +268,7 @@ $(document).ready(function () {
 
     if (query.length > 0) {
       //Fetch the results by the fetchResults function above
-      fetchResults(query);
+      fetchResults(query, 1);
     } else {
       if ($("#showdeletedentries").is(":checked")) {
         //If query is less than 2 character just reload the table
@@ -292,13 +297,18 @@ $(document).ready(function () {
 
     var page = $(this).data("page");
     console.log("Page:", page);
+    var search = $("#searchbox").val();
 
     $(".main-pagination .pagination-control").removeClass("active");
     $(this).parent().addClass("active");
 
     if ($("#showdeletedentries").is(":checked")) {
       reloadDeletedEntries(page);
-    } else {
+    } else if(search.length > 0){
+
+      fetchResults(search, page)
+
+    }else {
       reloadTable(page);
     }
   });
@@ -634,7 +644,7 @@ $(document).ready(function () {
 
                     } else if (whatparty == "othercomplainant"){
 
-                        if(countComplainant < 5){
+                        if(countComplainant < 10){
                           console.log("Current Count of Complainant :"+countComplainant)
                             if(resultArrayofOtherResRespondent.includes(residentid) || resultArrayofOtherNonResRespondent.includes(residentid) 
                               || resultArrayofOtherNonResComplainant.includes(residentid) || resultArrayofOtherResComplainant.includes(residentid)){
@@ -687,7 +697,7 @@ $(document).ready(function () {
                     }else if(whatparty == "otherrespondent"){
                       console.log("Current Count of Respondent :"+countRespondent)
 
-                        if(countRespondent <= 5){
+                        if(countRespondent <= 10){
                           console.log("Resident Respondent IDs: "+resultArrayofOtherResRespondent)
                           console.log("NonResident Respondent IDs: "+resultArrayofOtherResRespondent)
                           console.log("ID is: "+residentid)
@@ -842,7 +852,7 @@ $(document).ready(function () {
 
                     } else if (whatparty === "othercomplainant"){
 
-                        if(countComplainant < 5){
+                        if(countComplainant < 10){
                             if(resultArrayofOtherResRespondent.includes(residentid) || resultArrayofOtherNonResRespondent.includes(residentid) 
                               || resultArrayofOtherNonResComplainant.includes(residentid) || resultArrayofOtherResComplainant.includes(residentid)){
                                 Swal.fire({
@@ -887,7 +897,7 @@ $(document).ready(function () {
 
                     }else if(whatparty == "otherrespondent"){
                       
-                        if(countRespondent < 5){
+                        if(countRespondent < 10){
                             if(resultArrayofOtherResRespondent.includes(residentid) || resultArrayofOtherNonResRespondent.includes(residentid) 
                               || resultArrayofOtherNonResComplainant.includes(residentid) || resultArrayofOtherResComplainant.includes(residentid)){
 
@@ -1008,7 +1018,7 @@ $(document).ready(function () {
           $(whatmodal + ' [id="blotter_type"]').val(data.blotter_type);
           $(whatmodal + ' [id="incident_desc"]').val(data.desc_incident);
           $(whatmodal + ' [id="case_context"]').val(data.statemnt);
-          $(whatmodal + ' [id="mediator_name"]').val(data.mediator_name)
+          $(whatmodal + ' [id="mediator_name"], #mediator_name_view').val(data.mediator_name)
           $(whatmodal + ' [id="blotter_status"]').val(data.report_status)
           $(whatmodal + ' [id="resolution_date"]').val(data.date_of_resolution)
 
@@ -1110,6 +1120,36 @@ $(document).ready(function () {
             $("#noofcerts").text(response);
           },
         });
+
+        
+        $.ajax({
+          type: "post",
+          url: "includes/residentoperation.php",
+          data: { operation: "CHECK_HIT", resident_id: response.resident_id },
+          dataType: "json",
+          success: function (response) {
+            console.log(response);
+
+            if(response.success == "clear"){
+              $("#ViewResidentModal #with_hit").text("None");
+              $("#ViewResidentModal #blotter_badge").removeClass("text-bg-danger");
+              $("#ViewResidentModal #blotter_badge").removeClass("text-bg-success");
+              $("#ViewResidentModal #blotter_badge").addClass("text-bg-success");
+
+            }else if(response.success == "hit"){
+              $("#ViewResidentModal #with_hit").text("With Hit");
+              $("#ViewResidentModal #blotter_badge").removeClass("text-bg-danger") 
+              $("#ViewResidentModal #blotter_badge").removeClass("text-bg-success");
+              $("#ViewResidentModal #blotter_badge").addClass("text-bg-danger");
+
+            }else{
+              alert("Server replys failed ")
+            }
+          }, error: function (xhr, status, error) {
+            console.error("Error fetching data:", error);
+          },
+        });
+
       },
       error: function (xhr, status, error) {
         console.error("Error fetching table data:", error);
@@ -1168,6 +1208,35 @@ $(document).ready(function () {
             $("#ViewNonResidentModal [id='noofcerts']").text(response[0]);
           },
         });
+
+        $.ajax({
+          type: "post",
+          url: "includes/nonresidentoperation.php",
+          data: { operation: "CHECK_HIT", nresident_id: response.nresident_id },
+          dataType: "json",
+          success: function (response) {
+            console.log(response);
+    
+            if(response.success == "clear"){
+              $("#with_hit").text("None");
+              $("#ViewNonResidentModal #blotter_badge").removeClass("text-bg-danger");
+              $("#ViewNonResidentModal #blotter_badge").removeClass("text-bg-success");
+              $("#ViewNonResidentModal #blotter_badge").addClass("text-bg-success");
+    
+            }else if(response.success == "hit"){
+              $("#ViewNonResidentModal #with_hit").text("With Hit");
+              $("#ViewNonResidentModal #blotter_badge").removeClass("text-bg-danger") 
+              $("#ViewNonResidentModal #blotter_badge").removeClass("text-bg-success");
+              $("#ViewNonResidentModal #blotter_badge").addClass("text-bg-danger");
+    
+            }else{
+              alert("Server replys failed ")
+            }
+          }, error: function (xhr, status, error) {
+            console.error("Error fetching data:", error);
+          },
+        });
+    
       },
       error: function (xhr, status, error) {
         console.error("Error fetching table data:", error);
@@ -1184,7 +1253,7 @@ $(document).ready(function () {
     resultArrayofOtherResComplainant=[]
     resultArrayofOtherResRespondent=[]
 
-    $("#EditBlotterModal input, #EditBlotterModal select").val("");
+    $("#EditBlotterModal input").val("");
 
     console.log("All referencing varable has been reset")
   });
@@ -1333,7 +1402,7 @@ $(document).ready(function () {
   }
 
   $(document).on("click",'#deletebtn',function () {
-      var blotter_id = $(this).data("blotter_id");
+      var blotter_id = $(this).data("id");
       
       Swal.fire({
         title: "Are you sure?",
@@ -1425,6 +1494,276 @@ $(document).ready(function () {
     });   
     
   });
+
+  function reloadmediatortable($deleted){
+    $.ajax({
+      type: "POST",
+      url: "includes/blottersoperation.php",
+      data: {operation: "FETCH_MEDIATORS_TABLE", is_deleted: $deleted},
+      dataType: "HTML",
+      success: function (response) {
+
+        if($deleted == 0){
+          $("#mediatortable tbody").html(response);
+        }else{
+          $("#deletedmediatortable tbody").html(response);
+        }
+          
+      }
+  });
+  }
+
+  $(document).on("click","#nav-deleted_mediator-tab", function () {
+
+    reloadmediatortable(1);
+    
+  });
+
+  $(document).on("click",".recovertmediatorbtn", function () {
+
+    var mediator_id=$(this).data("id");
+
+     Swal.fire({
+        title: "Are you sure?",
+        text: "You about to recover this mediator!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes"
+      }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                type: "POST",
+                url: "includes/blottersoperation.php",
+                data: {operation: "RECOVER_MEDIATOR",mediator_name: mediator_id,},
+                dataType: "JSON",
+                success: function (response) {
+    
+                if(response.success == true){
+                    Swal.fire({
+                        icon: "success",
+                        title: "Success",
+                        text: "Mediator has been Recovered!"
+                    });
+
+                    reloadmediatortable(1)
+                    reloadmediatortable(0)
+                    $("#mediator_name_view, #mediator_name").empty();
+                    generatemediatorname()
+                    
+    
+                }else{
+                    Swal.fire({
+                        icon: "error",
+                        title: "Error",
+                        text: response.message
+                    });
+    
+                    console.log(response.message);
+                }
+                    
+                }, error: function(xhr, status, error) {
+                    console.error('Error fetching resident details:', error);
+            
+                    Swal.fire({
+                        icon: "error",
+                        title: "Oops...",
+                        text: "Something went wrong!"
+                    });
+                }
+            });
+
+
+        }
+      });
+    
+  });
+  
+  $(document).on('click','.editmediatorbtn' ,function (e) { 
+    e.preventDefault();
+
+    console.log("Edit kagawad has been triggered");
+
+    var id = $(this).data('id')
+    var fname = $("#fname_"+id).val();
+    var lname = $("#lname_"+id).val();
+    var mname = $("#mname_"+id).val();
+    var suffix = $("#suffix_"+id).val();
+
+    $.ajax({
+        type: "POST",
+        url: "includes/blottersoperation.php",
+        data: {operation: "EDIT_MEDIATOR", mediator_first_name: fname, mediator_last_name: lname, 
+          mediator_middle_name: mname, mediator_suffix: suffix, mediator_name: id},
+        dataType: "JSON",
+        success: function (response) {
+
+        if(response.success == true){
+            Swal.fire({
+                icon: "success",
+                title: "Success",
+                text: "Mediator has been updated!"
+            });
+
+            reloadmediatortable(0)
+            $("#mediator_name_view, #mediator_name").empty();
+            generatemediatorname()
+
+        }else{
+            Swal.fire({
+                icon: "error",
+                title: "Error",
+                text: response.message
+            });
+
+            console.log(response.message);
+        }
+            
+        }, error: function(xhr, status, error) {
+            console.error('Error fetching resident details:', error);
+    
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Something went wrong!"
+            });
+        }
+    });
+
+    
+});
+
+$(document).on('click','.addmediatorbtn' ,function (e) { 
+    e.preventDefault();
+
+    console.log("Add kagawad has been triggered");
+
+    var mediator_first_name = $("#newmediator_fname").val();
+    var mediator_last_name = $("#newmediator_lname").val();
+    var mediator_middle_name = $("#newmediator_mname").val();
+    var mediator_suffix = $("#newmediator_suffix").val();
+
+    if((mediator_first_name.length !== 0) && (mediator_last_name.length !== 0)){
+        $.ajax({
+            type: "POST",
+            url: "includes/blottersoperation.php",
+            data: {operation:  "ADD_MEDIATOR",mediator_first_name: mediator_first_name, mediator_last_name: mediator_last_name
+              ,mediator_middle_name: mediator_middle_name,mediator_suffix: mediator_suffix
+            },
+            dataType: "JSON",
+            success: function (response) {
+
+            if(response.success == true){
+                Swal.fire({
+                    icon: "success",
+                    title: "Success",
+                    text: "Kagawad has been Added!"
+                });
+
+                reloadmediatortable(0)
+                $("#mediator_name_view, #mediator_name").empty();
+                generatemediatorname()
+
+            }else{
+                Swal.fire({
+                    icon: "error",
+                    title: "Error",
+                    text: response.message
+                });
+
+            }
+                
+            }, error: function(xhr, status, error) {
+                console.error('Error fetching resident details:', error);
+        
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "Something went wrong!"
+                });
+            }
+        });
+
+    }else{
+        Swal.fire({
+            icon: "error",
+            title: "Cannot be empty",
+            text: "Please type first name or Last name first before adding."
+        });
+    }
+    
+});
+
+$("#editmediator").on('click', function(){
+
+  console.log("Fetch kagawad has been triggered");
+  $("#EditMediatorsModal").modal('show')
+
+  reloadmediatortable(0);
+
+})
+
+$(document).on('click','.deletemediatorbtn' ,function (e) { 
+    e.preventDefault();
+
+    console.log("Delete kagawad has been triggered");
+
+    var mediator_id = $(this).data("id");
+
+    Swal.fire({
+        title: "Are you sure?",
+        text: "You about to delete this mediator!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes"
+      }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                type: "POST",
+                url: "includes/blottersoperation.php",
+                data: {operation: "DELETE_MEDIATOR",mediator_name: mediator_id,},
+                dataType: "JSON",
+                success: function (response) {
+    
+                if(response.success == true){
+                    Swal.fire({
+                        icon: "success",
+                        title: "Success",
+                        text: "Mediator has been Deleted!"
+                    });
+
+                    reloadmediatortable(0)
+    
+                }else{
+                    Swal.fire({
+                        icon: "error",
+                        title: "Error",
+                        text: response.message
+                    });
+    
+                    console.log(response.message);
+                }
+                    
+                }, error: function(xhr, status, error) {
+                    console.error('Error fetching resident details:', error);
+            
+                    Swal.fire({
+                        icon: "error",
+                        title: "Oops...",
+                        text: "Something went wrong!"
+                    });
+                }
+            });
+
+
+        }
+      });
+
+    
+});
 
 })
   

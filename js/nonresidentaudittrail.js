@@ -289,6 +289,7 @@ $(document).ready(function () {
               var oldValues = JSON.parse(data[0].old_values);
             
               populatemodal(oldValues);
+              console.log(oldValues)
 
             } else {
                 alert('No old values found for this resident.');
@@ -312,12 +313,13 @@ $(document).ready(function () {
           url: "includes/nonresidentaudittrailoperation.php",
           type: "POST",
           data: { audit_id: audit_id, operation: "FETCH_RESIDENT_NEW_ENTRY" },
-          dataType: "JSON",
+          dataType: "JSON", 
           success: function (data) {
             if (data && data.length > 0 && data[0].new_entry) {
 
               var oldValues = JSON.parse(data[0].new_entry);
              populatemodal(oldValues)
+             console.log(oldValues)
 
             } else {
                 alert('No old values found for this resident.');

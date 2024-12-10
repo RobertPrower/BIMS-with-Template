@@ -146,7 +146,7 @@ $(document).ready(function () {
   }
 
   //Function to search for entries
-  function fetchResults(query, page = 1) {
+  function fetchResults(query, page) {
     if ($("#showdeletedentries").is(":checked")) {
       console.log("Deleted Entries switch has been on");
       $.ajax({
@@ -232,7 +232,7 @@ $(document).ready(function () {
 
     if (query.length > 0) {
       //Fetch the results by the fetchResults function above
-      fetchResults(query);
+      fetchResults(query, 1);
     } else {
       if ($("#showdeletedentries").is(":checked")) {
         //If query is less than 2 character just reload the table
@@ -261,13 +261,18 @@ $(document).ready(function () {
 
     var page = $(this).data("page");
     console.log("Page:", page);
+    var search = $("#searchbox").val();
 
     $(".main-pagination .pagination-control").removeClass("active");
     $(this).parent().addClass("active");
 
     if ($("#showdeletedentries").is(":checked")) {
       reloadDeletedEntries(page);
-    } else {
+    } else if(search.length > 0){
+
+      fetchResults(search, page)
+
+    }else {
       reloadTable(page);
     }
   });
