@@ -9,6 +9,8 @@ if($_SERVER['REQUEST_METHOD']==="POST"){
     require_once '../includes/config.php';
     require_once '../includes/enforce_login.php';
     require_once '../includes/checkforempty.php';
+    require_once '../includes/checkhit.php';
+
 
     date_default_timezone_set('Asia/Manila');
 
@@ -65,6 +67,19 @@ if($_SERVER['REQUEST_METHOD']==="POST"){
         die(json_encode(["success" => false, "message" => "Some fields are empty"]));
 
     }
+
+    if($isResident == "RESIDENT"){
+        if(!empty(check_for_hits($pdo, $ID))){
+            die(json_encode(["success"=>false, "message" => "This person has a Hit in the blotters."]));
+
+        }
+    }else{
+        if(!empty(check_for_hits_for_nres($pdo, $ID))){
+            die(json_encode(["success"=>false, "message" => "This person has a Hit in the blotters."]));
+
+        }
+    }
+
 
     try{
 

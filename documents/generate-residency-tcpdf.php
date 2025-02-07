@@ -8,6 +8,8 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
     require_once('../includes/anti-SQLInject.php');
     require_once('includes/tagalogmonth.php');
     require_once '../includes/checkforempty.php';
+    require_once '../includes/checkhit.php';
+
 
     $nowdate= date("Y-m-d H:i:s"); //Get the date now
     $nowtime = time(); //Get the time now
@@ -37,6 +39,11 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
 
     if(!check_empty_values($checkifempty)){
         die(json_encode(["success" => false, "message" => "Some fields are empty".check_empty_values($checkifempty)]));
+    }
+
+    if(!empty(check_for_hits($pdo, $residentno))){
+        die(json_encode(["success"=>false, "message" => "This person has a Hit in the blotters."]));
+
     }
 
     try{

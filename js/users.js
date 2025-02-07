@@ -249,60 +249,7 @@ $(document).ready(function () {
       });
     });
 
-    $("#usernamepwordform").on("submit",function (e) {
-      e.preventDefault();
-
-      var captureImageData = $("#editimagePreview").attr("src");
-      var formdata  = new FormData(this);
-      formdata.append("operation", "EDIT_USER");
-      formdata.append("captureImageData", captureImageData);
-
-      $.ajax({
-          type: "POST",
-          url: "includes/useroperation.inc.php",
-          data: formdata,
-          dataType: "JSON",
-          processData: false
-          ,contentType: false,
-          success: function (response) {
-
-              if(response.success){
-                  Swal.fire({
-                      icon: "success",
-                      title: "Success",
-                      text: "User has been added",
-                  });
-
-                  $('#UserSignup')[0].reset();
-
-                  $("#imagePreview").attr("src", "includes/img/blank-profile.webp");
-
-                  $("#EditUserModal").modal('hide');
-
-                  reloadTable();
-
-              }else{
-                  Swal.fire({
-                      icon: "error",
-                      title: "Server replies error",
-                      text: "Error :" + response.message,
-                  });
-
-                  $("#EditUserModal").modal('hide');
-
-              }
-          },error: function(jqXHR, textStatus, errorThrown) {
-              console.log("Request failed:", textStatus, errorThrown);
-
-              Swal.fire({
-                icon: "error",
-                title: "AJAX error",
-                text: "Something is wrong.",
-            });
-          }
-      });
-    });
-
+  
     $("#showdeletedentries").click(function () {
       let query = $("#searchbox").val(); // Get the current search query
       if ($(this).is(":checked")) {

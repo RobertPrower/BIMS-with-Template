@@ -117,12 +117,6 @@ if($operation_check == "ADD"){ //For the add operation
     try {
         $pdo->beginTransaction();
 
-        //Record to Audit Trail
-        $audit_query = "INSERT INTO res_audit_trail (added_depart_no, added_by_no)
-        VALUES (?, ?)";
-        $audit_stmt = $pdo->prepare($audit_query);
-        $audit_stmt->execute([$departno, $userid]);
-
         $params[] = $fileName;
     
         // Insert data into the resident table
@@ -132,6 +126,14 @@ if($operation_check == "ADD"){ //For the add operation
         $insert_stmt = $pdo->prepare($insert_query);
         $insert_stmt->execute($params);
 
+        $resident_id=$pdo->lastInsertId();
+
+        //Record to Audit Trail
+        $audit_query = "INSERT INTO res_audit_trail (added_depart_no, added_by_no, resident_id)
+        VALUES (?, ?, ?)";
+        $audit_stmt = $pdo->prepare($audit_query);
+        $audit_stmt->execute([$departno, $userid, $resident_id]);
+
         // Success response encodes it to JSON format for the AJAX to read
         $response = ["success" => true, "message" => "Data Added successfully"];
         echo json_encode($response);
@@ -140,7 +142,7 @@ if($operation_check == "ADD"){ //For the add operation
     } catch (Exception $e) {
     
         $pdo->rollBack();
-        $response = ["success" => false, "message" => "Error updating data: " . $e->getMessage()];
+        $response = ["success" => false, "message" => "Error Adding data: " . $e->getMessage()];
         echo json_encode($response);
     }
 

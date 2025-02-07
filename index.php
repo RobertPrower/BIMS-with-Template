@@ -3,8 +3,6 @@
     require_once 'includes/config.php';
     require_once 'includes/enforce_login.php' ;
 
-    echo $departmentno;
-
     $logoquery = "SELECT `filename` FROM `certificate-img` WHERE purpose = 'Barangay Logo'";
     $logostmt = $pdo->prepare($logoquery);
     $logostmt -> execute();
@@ -13,26 +11,17 @@
     $sqlquery="SELECT COUNT(*) AS total FROM `tbl_docu_request`";
     $stmt= $pdo->prepare($sqlquery);
     $stmt->execute();
-    $result=$stmt->fetchAll(PDO::FETCH_ASSOC);
-    $totalcert=[];
+    $totalcert=$stmt->fetchColumn();
 
-    foreach($result as $total){
-
-      $totalcert[] = $total['total'];
-
-    }
+    $ongoing_blotter_query="SELECT COUNT(*) AS total FROM `tbl_blotters`";
+    $ongoing_blotter_stmt= $pdo->prepare($ongoing_blotter_query);
+    $ongoing_blotter_stmt->execute();
+    $totalongoingblotters=$ongoing_blotter_stmt->fetchColumn();
 
     $sqlquery="SELECT COUNT(*) AS total FROM resident";
     $stmt= $pdo->prepare($sqlquery);
     $stmt->execute();
-    $result=$stmt->fetchAll(PDO::FETCH_ASSOC);
-    $totalresident=[];
-
-    foreach($result as $total){
-
-      $totalresident[] = $total['total'];
-
-    }
+    $totalresident=$stmt->fetchColumn();
 
     $query = "SELECT COUNT(*) AS total_users FROM tbl_users";
     $result = $pdo->query($query);
@@ -137,7 +126,7 @@
                 <i data-feather="bar-chart-2" aria-hidden="true"></i>
               </div>
               <div class="stat-cards-info">
-                <p class="stat-cards-info__num"><?php echo $totalcert[0];?></p>
+                <p class="stat-cards-info__num"><?php echo $totalcert;?></p>
                 <p class="stat-cards-info__title">Total certificates</p>
                 <p class="stat-cards-info__progress">
                 </p>
@@ -180,7 +169,7 @@
                 <i data-feather="home" aria-hidden="true"></i>
               </div>
               <div class="stat-cards-info">
-                <p class="stat-cards-info__num"><?php echo $totalresident[0];?></p>
+                <p class="stat-cards-info__num"><?php echo $totalresident;?></p>
                 <p class="stat-cards-info__title">Total Residents</p>
                 <p class="stat-cards-info__progress"></p>
               </div>
@@ -209,6 +198,20 @@
               <div class="stat-cards-info">
                 <p class="stat-cards-info__num"><?php echo $totalblotters ?></p>
                 <p class="stat-cards-info__title">Total Blotters</p>
+                <p class="stat-cards-info__progress">
+                </p>
+              </div>
+            </article>
+          </div>
+
+          <div class="col-md-6 col-xl-3">
+            <article class="stat-cards-item">
+              <div class="stat-cards-icon purple">
+                <i data-feather="book" aria-hidden="true"></i>
+              </div>
+              <div class="stat-cards-info">
+                <p class="stat-cards-info__num"><?php echo $totalongoingblotters ?></p>
+                <p class="stat-cards-info__title">Total Ongoing Blotters</p>
                 <p class="stat-cards-info__progress">
                 </p>
               </div>

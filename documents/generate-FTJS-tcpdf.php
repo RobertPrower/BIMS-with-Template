@@ -6,6 +6,8 @@ if($_SERVER['REQUEST_METHOD'] =="POST"){
         require_once('../includes/anti-SQLInject.php');
         require_once '../includes/config.php';
         require_once '../includes/enforce_login.php';
+        require_once '../includes/checkhit.php';
+
 
         // Get the current date and time
         $nowdate = date("Y-m-d H:i:s"); // Current date
@@ -31,6 +33,10 @@ if($_SERVER['REQUEST_METHOD'] =="POST"){
         $presentedid=sanitizeData($_POST['presented_id']);
         $IDnumber=sanitizeData($_POST['id_num']);
         $purpose = "Employment";
+
+        if(!empty(check_for_hits($pdo, $residentno))){
+            die(json_encode(["success"=>false, "message" => "This person has a Hit in the blotters."]));
+        }
 
         try{
             $pdo->beginTransaction();

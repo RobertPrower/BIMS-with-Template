@@ -10,6 +10,8 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
     include_once('includes/tagalogmonth.php');
     include_once('../includes/anti-SQLInject.php');
     require_once '../includes/checkforempty.php';
+    require_once '../includes/checkhit.php';
+
 
 
     date_default_timezone_set('Asia/Manila');
@@ -47,6 +49,10 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
         die(json_encode(["success" => false, "message" => "Some fields are empty"]));
     }
 
+    if(!empty(check_for_hits($pdo, $residentno))){
+        die(json_encode(["success"=>false, "message" => "This person has a Hit in the blotters."]));
+
+    }
     try{
 
         $pdo->beginTransaction();

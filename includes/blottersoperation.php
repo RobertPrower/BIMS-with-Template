@@ -241,11 +241,6 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
         
             $pdo->beginTransaction();
         
-            // Insert into the audit trail
-            $audit_trail_query = "INSERT INTO tbl_blotter_audit_trail(assist_by_no) VALUES(?)";
-            $stmt = $pdo->prepare($audit_trail_query);
-            $stmt->execute([$userid]);
-        
             // Insert the blotter record
             $blotter_query = "
                 INSERT INTO tbl_blotters(res_complainant_no, nres_complainant_no, res_respondent_no, nres_respondent_no, 
@@ -265,6 +260,11 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
         
             // Get the last inserted blotter ID
             $blotter_id = $pdo->lastInsertId();
+
+            // Insert into the audit trail
+            $audit_trail_query = "INSERT INTO tbl_blotter_audit_trail(assist_by_no, blotter_id) VALUES(?, ?)";
+            $stmt = $pdo->prepare($audit_trail_query);
+            $stmt->execute([$userid, $blotter_id]);
         
             // Insert other complainants and respondents into tbl_other_parties
             $other_party_query = "

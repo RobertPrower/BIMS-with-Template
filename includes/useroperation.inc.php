@@ -126,7 +126,7 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
             }
 
             if(empty($errors)){
-                if(isset($_FILES['image_file']) && $_FILES['image_file']['error'] == UPLOAD_ERR_OK){
+                if(!empty($_FILES['image_file']) && $_FILES['image_file']['error'] == UPLOAD_ERR_OK){
                     try{
 
                         $img_filename = uploadImageFile("image_file", "img/users_img/");
@@ -137,7 +137,7 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
                         $errors["image_upload_error"]="Error Uploading Image: ".$e->getMessage();
                 
                     }
-                }else if(isset($_POST['captureImageData'])){
+                }else if(!empty($_POST['captureImageData'])){
                     try{
                         $img_filename = captureImageUpload('captureImageData',"img/users_img/");
 

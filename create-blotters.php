@@ -478,29 +478,24 @@
 
                     <div class="col-md-12 card m-4 px-3" style="border-radius: 10px;" style="padding: 10px;">
                         <div class="card-header">
-                        Schedule of the Mediation      
+                        1st Schedule of the Mediation      
                         </div>
 
                         <div class="text-center row">
-                            <div class="form-floating mt-3 mb-3 col-md-2">
+                            <div class="form-floating mt-3 mb-3 col-md-3">
                                 <input type="date" class="form-control" id="schedule_date" name="schedule_date" placeholder="" disabled/>
                                 <label for="subd">Mediation Date</label>
                             </div>
-                            <div class="form-floating mt-3 mb-3 col-md-2">
+                            <div class="form-floating mt-3 mb-3 col-md-3">
                                 <input type="time" class="form-control" id="schedule_starttime" name="schedule_date" placeholder="" disabled/>
                                 <label for="subd">Mediation Start Time</label>
                             </div>
-                            <div class="form-floating mt-3 mb-3 col-md-2">
+                            <div class="form-floating mt-3 mb-3 col-md-3">
                                 <input type="time" class="form-control" id="schedule_endtime" name="schedule_time" placeholder="" disabled/>
                                 <label for="subd">Mediation End Time</label>
                             </div>
-                            <div class="form-floating mt-3 mb-3 col-md-2">
-                            
-                                <input type="color" class="form-control" id="schedule_color" name="schedule_color">
-                                <label for="schedule_color">Schedule Color</label>
-
-                            </div>
-                            <div class="form-floating mt-3 mb-3 col-md-4">
+                        
+                            <div class="form-floating mt-3 mb-3 col-md-3">
                             <select class="form-select" id="mediator_name" name="mediator_name" aria-label="Floating label select example" required>
                                 <option value="" selected hidden>Select Mediator</option>
                             
@@ -511,6 +506,99 @@
 
                     
                     </div>
+
+                    <!-- <div class="col-md-12 card m-4 px-3" style="border-radius: 10px;" style="padding: 10px;">
+                        <div class="card-header">
+                        2nd Schedule of the Mediation      
+                        </div>
+
+                        <div class="text-center row">
+                            <div class="form-floating mt-3 mb-3 col-md-3">
+                                <input type="date" class="form-control" id="schedule_date" name="schedule_date" placeholder="" disabled/>
+                                <label for="subd">Mediation Date</label>
+                            </div>
+                            <div class="form-floating mt-3 mb-3 col-md-3">
+                                <input type="time" class="form-control" id="schedule_starttime" name="schedule_date" placeholder="" disabled/>
+                                <label for="subd">Mediation Start Time</label>
+                            </div>
+                            <div class="form-floating mt-3 mb-3 col-md-3">
+                                <input type="time" class="form-control" id="schedule_endtime" name="schedule_time" placeholder="" disabled/>
+                                <label for="subd">Mediation End Time</label>
+                            </div>
+                        
+                            <div class="form-floating mt-3 mb-3 col-md-3">
+                            <select class="form-select" id="mediator_name" name="mediator_name" aria-label="Floating label select example" required>
+                                <option value="" selected hidden>Select Mediator</option>
+                            
+                            </select>
+                            <label for="mediator_name">Mediator</label>
+                        </div>
+                        </div>
+
+                    
+                    </div>
+
+                    <div class="col-md-12 card m-4 px-3" style="border-radius: 10px;" style="padding: 10px;">
+                        <div class="card-header">
+                        3rd Schedule of the Mediation      
+                        </div>
+
+                        <div class="text-center row">
+                            <div class="form-floating mt-3 mb-3 col-md-3">
+                                <input type="date" class="form-control" id="schedule_date" name="schedule_date" placeholder="" disabled/>
+                                <label for="subd">Mediation Date</label>
+                            </div>
+                            <div class="form-floating mt-3 mb-3 col-md-3">
+                                <input type="time" class="form-control" id="schedule_starttime" name="schedule_date" placeholder="" disabled/>
+                                <label for="subd">Mediation Start Time</label>
+                            </div>
+                            <div class="form-floating mt-3 mb-3 col-md-3">
+                                <input type="time" class="form-control" id="schedule_endtime" name="schedule_time" placeholder="" disabled/>
+                                <label for="subd">Mediation End Time</label>
+                            </div>
+                         
+                            <div class="form-floating mt-3 mb-3 col-md-3">
+                            <select class="form-select" id="mediator_name" name="mediator_name" aria-label="Floating label select example" required>
+                                <option value="" selected hidden>Select Mediator</option>
+                            
+                            </select>
+                            <label for="mediator_name">Mediator</label>
+                        </div>
+                        </div>
+
+                    
+                    </div>
+
+                    <div class="col-md-12 card m-4 px-3" style="border-radius: 10px;" style="padding: 10px;">
+                        <div class="card-header">
+                        4th Schedule of the Mediation      
+                        </div>
+
+                        <div class="text-center row">
+                            <div class="form-floating mt-3 mb-3 col-md-3">
+                                <input type="date" class="form-control" id="schedule_date" name="schedule_date" placeholder="" disabled/>
+                                <label for="subd">Mediation Date</label>
+                            </div>
+                            <div class="form-floating mt-3 mb-3 col-md-3">
+                                <input type="time" class="form-control" id="schedule_starttime" name="schedule_date" placeholder="" disabled/>
+                                <label for="subd">Mediation Start Time</label>
+                            </div>
+                            <div class="form-floating mt-3 mb-3 col-md-3">
+                                <input type="time" class="form-control" id="schedule_endtime" name="schedule_time" placeholder="" disabled/>
+                                <label for="subd">Mediation End Time</label>
+                            </div>
+                           
+                            <div class="form-floating mt-3 mb-3 col-md-3">
+                            <select class="form-select" id="mediator_name" name="mediator_name" aria-label="Floating label select example" required>
+                                <option value="" selected hidden>Select Mediator</option>
+                            
+                            </select>
+                            <label for="mediator_name">Mediator</label>
+                        </div>
+                        </div> 
+
+                    
+                    </div> -->
 
                     <div class="col-md-12 d-flex align-items-center justify-content-between">
                         <b>Step 5: Fill Blotter Details</b>

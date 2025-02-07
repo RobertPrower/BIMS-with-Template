@@ -221,7 +221,6 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
         $stmt = $pdo->prepare($countquery);
         $stmt->execute([$id]);
         $total_records = $stmt -> fetchColumn();
-        echo "Total Records :". $total_records;
         $limit = 5; //To limit the number of pages
         $total_pages = ceil($total_records / $limit);
 

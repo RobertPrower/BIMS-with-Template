@@ -149,6 +149,13 @@ $(document).ready(function () {
                             var mediation_date = blotter.mediation_date + " " + blotter.mediation_starttime;
                             var mediation_enddate = blotter.mediation_date + " " + blotter.mediation_endtime;
     
+                            switch (parseInt(blotter.report_status, 10)){
+                              case 1: schedule_color = "#198754"; break;
+                              case 0: schedule_color = "#ffc107"; break;
+                              case 2: schedule_color = "#dc3545"; break;
+                              default: schedule_color = "#0000";
+                          }
+  
                             events.push({
                                 blotter_id: blotter.blotter_id,
                                 title: blotter.desc_incident,
@@ -158,7 +165,7 @@ $(document).ready(function () {
                                 complainant: blotter.complainant_fullname,
                                 respondent: blotter.respondent_fullname,
                                 report_status: blotter.report_status,
-                                color: blotter.schedule_color
+                                color: schedule_color
                             });
                         });
                         successCallback(events);

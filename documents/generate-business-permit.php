@@ -90,6 +90,17 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
             die(json_encode(["success" => false, "message" => "Some fields are empty"]));
         }
 
+        if($isResident == "RESIDENT"){
+            if(!empty(check_for_hits($pdo, $ID))){
+                die(json_encode(["success"=>false, "message" => "This person has a Hit in the blotters."]));
+            }
+        }else{
+            if(!empty(check_for_hits_for_nres($pdo, $ID))){
+                die(json_encode(["success"=>false, "message" => "This person has a Hit in the blotters."]));
+    
+            }
+        }
+
         try{
             $pdo->beginTransaction();
             

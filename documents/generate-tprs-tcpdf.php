@@ -10,6 +10,8 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
     require_once('../includes/anti-SQLInject.php');
     require_once('includes/tagalogmonth.php');
     require_once '../includes/checkforempty.php';
+    require_once '../includes/checkhit.php';
+
 
 
     // Get the current date and time
@@ -60,6 +62,18 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
         if(!check_empty_values($checkifempty)){
             die(json_encode(["success" => false, "message" => "Some fields are empty"]));
 
+        }
+
+        if($isResident == "RESIDENT"){
+            if(!empty(check_for_hits($pdo, $ID))){
+                die(json_encode(["success"=>false, "message" => "This person has a Hit in the blotters."]));
+    
+            }
+        }else{
+            if(!empty(check_for_hits_for_nres($pdo, $ID))){
+                die(json_encode(["success"=>false, "message" => "This person has a Hit in the blotters."]));
+    
+            }
         }
 
         try{
@@ -114,7 +128,7 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
             if($isResident =="RESIDENT"){
 
                 $certDetailsquery = "INSERT INTO tbl_docu_request (resident_no ,presented_id, ID_number, purpose, pdffile, expiration_date) 
-                            VALUES (:residentno,:presentedid, :IDnumber, :purpose, :filenames, , DATE_ADD(CURDATE(), INTERVAL 1 YEAR));";
+                            VALUES (:residentno,:presentedid, :IDnumber, :purpose, :filenames , DATE_ADD(CURDATE(), INTERVAL 1 YEAR));";
                 $alldatatorequest = [
                     ':residentno' => $ID,
                     ':presentedid' => $presentedid,
@@ -133,7 +147,7 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
             }else{
 
                 $certDetailsquery = "INSERT INTO tbl_docu_request (nresident_no ,presented_id, ID_number, purpose, pdffile, expiration_date) 
-                            VALUES (:residentno,:presentedid, :IDnumber, :purpose, :filenames, , DATE_ADD(CURDATE(), INTERVAL 1 YEAR));";
+                            VALUES (:residentno,:presentedid, :IDnumber, :purpose, :filenames, DATE_ADD(CURDATE(), INTERVAL 1 YEAR));";
                 $alldatatorequest = [
                     ':residentno' => $ID,
                     ':presentedid' => $presentedid,

@@ -1056,6 +1056,22 @@ $(document).ready(function () {
     
   });
 
+  $("#EditBlotterModal #blotter_status").change(function(){
+    var selected_option = $(this).val();
+
+    console.log(typeof selected_option)
+
+    switch(selected_option){
+        case "1":
+        case "2":
+            $("#EditBlotterModal #remarks").prop("disabled", false);
+            console.log("Enable Remarks has been executed");
+        break;
+        default:
+            $("#EditBlotterModal #remarks").prop("disabled", true);
+    }
+})
+
   $(document).on("click",".complainantbtn, .respondentbtn, .viewPersonDetails",function () {
   
     console.log("View Person details has been triggered")
