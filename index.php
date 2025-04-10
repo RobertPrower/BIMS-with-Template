@@ -244,7 +244,6 @@
 
 <script src="js/jquery-3.7.1.min.js"></script>
 <script src="js/sweetalert2.min.js"></script>
-<script src="js/logout.js"></script>
 <!-- Chart library -->
 <script src="./plugins/chart.min.js"></script>
 <!-- Icons library -->

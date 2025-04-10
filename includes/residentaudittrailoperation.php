@@ -1,5 +1,4 @@
 <?php
-
     require_once 'connecttodb.php' ;
     require_once 'config.php';
     require_once 'enforce_login.php';

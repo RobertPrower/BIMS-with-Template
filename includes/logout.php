@@ -2,13 +2,15 @@
 
 session_start();
 
-require_once 'login_model.inc.php';
 require_once 'connecttodb.php';
+require_once 'login_model.inc.php';
 
-if(!mark_as_active($pdo, $_SESSION['user_id'], 0)){
-    echo "User not mark as Active";
-    die();
-    
+
+if (isset($_SESSION['user_id']) && is_int($_SESSION['user_id'])) {
+    if (!mark_as_active($pdo, $_SESSION['user_id'], 0)) {
+        echo "User not marked as inactive";
+        exit(); 
+    }
 }
 
 $_SESSION=[];

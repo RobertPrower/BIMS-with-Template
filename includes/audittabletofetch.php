@@ -99,14 +99,7 @@ foreach ($results as $row) {
             echo'>View Entry
         </button>';
 
-    }
-
-            
-       
-
-        
-
-        
+    }    
     
 }      
     echo '</div>

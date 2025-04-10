@@ -10,8 +10,6 @@
         $whattable = "nrblottertab-pagination-control";
     }
     
-    
-
     // Make the previous button only appear once the page is more than one
     if ($current_page > 1) {
         echo '<li class="page-item modal-pagination-control"><a class="page-link '.$whattable.'" href="#" data-page="' . ($current_page - 1) . '">Previous</a></li>';

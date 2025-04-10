@@ -148,16 +148,21 @@ if($_SERVER['REQUEST_METHOD'] =="POST"){
                 }
 
                 if(isset($logo[0])){
-                    $this->Image("../img/logos/".$logo[0], 10, 5, 25, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false);
+                    $this->Image("../img/logos/".$logo[0], 10, 5, 25, '', 'PNG', '', 'T', false, 300, '',
+                     false, false, 0, false, false, false);
                 }
                 if(isset($logo[1])){
-                    $this->Image("../img/logos/".$logo[1], 35, 7, 23, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false);
+                    $this->Image("../img/logos/".$logo[1], 35, 7, 23, '', 'PNG', '', 'T', false, 300, '',
+                     false, false, 0,
+                     false, false, false);
                 }
                 if(isset($logo[2])){
-                    $this->Image("../img/logos/".$logo[2], 20, 3, 180, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false);
+                    $this->Image("../img/logos/".$logo[2], 20, 3, 180, '', 'PNG', '', 'T', false, 300, '', 
+                    false, false, 0, false, false, false);
                 }
                 if(isset($logo[3])){
-                    $this->Image("../img/logos/".$logo[3], 170, 7, 24, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false);
+                    $this->Image("../img/logos/".$logo[3], 170, 7, 24, '', 'PNG', '', 'T', false, 300, '', 
+                    false, false, 0, false, false, false);
                 }
                 
                 $this->SetLineWidth(0); 
@@ -178,7 +183,8 @@ if($_SERVER['REQUEST_METHOD'] =="POST"){
                     $this->SetFont('Cambria', 'B', 8);
                     
                     // Add the address text
-                    $this->MultiCell(0, 10, $brgydetails['address']."\nTel. No. ".$brgydetails['tel_num']." / Mobile No. ".$brgydetails['cp_num']." E-mail: ".$brgydetails['email'], 0, 'C', 0, 1);
+                    $this->MultiCell(0, 10, $brgydetails['address']."\nTel. No. ".$brgydetails['tel_num']." / Mobile No. ".$brgydetails['cp_num'].
+                    " E-mail: ".$brgydetails['email'], 0, 'C', 0, 1);
                     
             
                 }
@@ -222,19 +228,26 @@ if($_SERVER['REQUEST_METHOD'] =="POST"){
         </p>
 
         <ol style="text-align: justify;">
-            <li>That this is the first time that I will actively look for a job, and therefore requesting that a Barangay Certification be issued in my favor to avail the benefits of the law;</li>
-            <li>That I am aware that the benefit and privilege/s under the said law shall be valid only for one (1) year from the date that the Barangay Certification is issued;</li>
+            <li>That this is the first time that I will actively look for a job, and therefore requesting that a Barangay Certification be issued in my favor 
+            to avail the benefits of the law;</li>
+            <li>That I am aware that the benefit and privilege/s under the said law shall be valid only for one (1) year from the date that the Barangay
+             Certification is issued;</li>
             <li>That I can avail the benefits of the law only once.</li>
-            <li>That I understand that my personal information shall be included in the Roster/List of the First Time Jobseeker and will not be used for any unlawful purpose;</li>
+            <li>That I understand that my personal information shall be included in the Roster/List of the First Time Jobseeker and will not be used for any 
+            unlawful purpose;</li>
             <li>That I will inform and/or report to the Barangay personally through text or other means, or through my family/relatives once I get employed;</li>
-            <li>That I am not a beneficiary of the Job Start Program R.A. No. 10889 and other laws that give me similar exemptions for the documents or transactions exempted under R.A. No. 11261;</li>
-            <li>That if issued the requested Certification, I will not use the same in any fraud, neither falsify nor help and/or assist in the fabrication of the said certification;</li>
-            <li>That this undertaking is made solely for the purpose of obtaining a Barangay Certification consistent with the objective of R.A. No. 11261 and not for any other purposes;</li>
+            <li>That I am not a beneficiary of the Job Start Program R.A. No. 10889 and other laws that give me similar exemptions for the documents or 
+            transactions exempted under R.A. No. 11261;</li>
+            <li>That if issued the requested Certification, I will not use the same in any fraud, neither falsify nor help and/or assist in the fabrication
+             of the said certification;</li>
+            <li>That this undertaking is made solely for the purpose of obtaining a Barangay Certification consistent with the objective of R.A. No. 11261
+             and not for any other purposes;</li>
             <li>That I consent to the use of my personal information pursuant to the Data Privacy Act and other applicable laws, rules, and regulations.</li>
         </ol>
 
         <p style="text-align: justify;">
-            Signed this <strong style="font-weight: bold;">'.date("d").'th</strong> day of <strong style="font-weight: bold;">'.date("F").' '.date('Y').', at Barangay 177, Cielito Homes Subd., Camarin, Caloocan City.
+            Signed this <strong style="font-weight: bold;">'.date("d").'th</strong> day of <strong style="font-weight: bold;">'.date("F").
+            ' '.date('Y').', at Barangay 177, Cielito Homes Subd., Camarin, Caloocan City.
         </p>
         ';
 
@@ -324,11 +337,14 @@ if($_SERVER['REQUEST_METHOD'] =="POST"){
 
         <br><br>
 
-        <h1 style="text-align: center; font-size: 28px">CERTIFICATION <br> <small style="text-align: center; font-size: 12px">(First Time Jobseekers Assistance Act-RA 11261)</small></h1>
+        <h1 style="text-align: center; font-size: 28px">CERTIFICATION <br> <small style="text-align: center; font-size: 12px">
+        (First Time Jobseekers Assistance Act-RA 11261)</small></h1>
 
 
         <p style="text-align: justify; font-family:helvetica; font-size: 12px;">
-        This is to certify that <b style="font-weight: bold;">Mr./Ms. '.$fullname.',</b> a resident of <b style="font-weight: bold;">'.$completeaddress.'</b>, for <b style="font-weight: bold;">'.$numofyears.' years </b>, is a qualified availee of RA 11261 or the First Time Job Seekers Assistance Act of 2019.
+        This is to certify that <b style="font-weight: bold;">Mr./Ms. '.$fullname.',</b> a resident of <b style="font-weight: bold;">
+        '.$completeaddress.'</b>, for <b style="font-weight: bold;">'.$numofyears.' years </b>, is a qualified availee of RA 11261 or the 
+        First Time Job Seekers Assistance Act of 2019.
         </p>
 
         <p style="text-align: justify; font-family:helvetica; font-size: 12px;">
@@ -337,7 +353,8 @@ if($_SERVER['REQUEST_METHOD'] =="POST"){
         </p>
 
         <p style="text-align: justify; font-family:helvetica; font-size: 12px;">
-        Sign this <strong style="font-weight: bold;">'.date("d").'th</strong> day of <strong style="font-weight: bold;">'.date("F").' '.date('Y').'</strong>, at Barangay 177, Cielito Homes Subdivision, Camarin, Caloocan City.
+        Sign this <strong style="font-weight: bold;">'.date("d").'th</strong> day of <strong style="font-weight: bold;">'.date("F").' '
+        .date('Y').'</strong>, at Barangay 177, Cielito Homes Subdivision, Camarin, Caloocan City.
         </p>
 
         <p style="text-align: justify; font-family:helvetica; font-size: 12px;">

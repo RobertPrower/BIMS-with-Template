@@ -1,4 +1,3 @@
-
 <?php
 
 function uploadImageFile($what_field, $target_dir){

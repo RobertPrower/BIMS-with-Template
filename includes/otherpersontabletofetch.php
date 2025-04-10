@@ -4,9 +4,11 @@ echo'<tr id="'.htmlspecialchars($row['id']).'" data-status="'.$row['status'].'" 
 <td hidden class="otherrespondentsIDs">'.htmlspecialchars($row['id']).'</td>';
 
 if(htmlspecialchars($row['status']) == "Resident"){
-    echo '<td><img src="includes/img/resident_img/'.htmlspecialchars($row['img_filename']).'" width="100" height="100" style="object-fit: contain; max-width: 100%; max-height: 100%;"/></td>';
+    echo '<td><img src="includes/img/resident_img/'.htmlspecialchars($row['img_filename']).'" width="100" height="100" 
+    style="object-fit: contain; max-width: 100%; max-height: 100%;"/></td>';
 }else{
-    echo '<td><img src="includes/img/non_resident_img/'.htmlspecialchars($row['img_filename']).'" width="100" height="100" style="object-fit: contain; max-width: 100%; max-height: 100%;"/></td>';
+    echo '<td><img src="includes/img/non_resident_img/'.htmlspecialchars($row['img_filename']).'" width="100" height="100"
+     style="object-fit: contain; max-width: 100%; max-height: 100%;"/></td>';
 }
 
 echo    '<td>'.htmlspecialchars($row['full_name']).'</td>

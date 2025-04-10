@@ -106,7 +106,8 @@ $pdo = null; // Close DB
                             <div class="container mx-2">
                                 <div class="row">
 
-                                    <div class="col-md-2 card m-3 p-3  d-flex justify-content-center align-items-center" style="border-radius: 10px;padding: 10px;object-fit: contain; max-width: 100%; max-height: 100%">
+                                    <div class="col-md-2 card m-3 p-3  d-flex justify-content-center align-items-center" style="border-radius: 10px;padding: 10px;object-fit: 
+                                    contain; max-width: 100%; max-height: 100%">
 
                                         <img src="includes/img/blank-profile.webp" id="ComplainantImg"
                                             width="200" height="200"
@@ -291,8 +292,10 @@ $pdo = null; // Close DB
 
                                     <!-- Button on the right side -->
                                     <div class="d-flex justify-content-end">
-                                        <button type="button" class="btn btn-primary btn-sm my-2 mx-2 AddResidentRespondent" data-whatbutton="SelectResidentRes" data-whatparty="otherrespondent">Add Resident</button>
-                                        <button type="button" class="btn btn-success btn-sm my-2 AddResidentRespondent" data-whatbutton="SelectNonResidentRes" data-whatparty="otherrespondent">Add Non Resident</button>
+                                        <button type="button" class="btn btn-primary btn-sm my-2 mx-2 AddResidentRespondent" data-whatbutton="SelectResidentRes" 
+                                        data-whatparty="otherrespondent">Add Resident</button>
+                                        <button type="button" class="btn btn-success btn-sm my-2 AddResidentRespondent" data-whatbutton="SelectNonResidentRes" 
+                                        data-whatparty="otherrespondent">Add Non Resident</button>
                                     </div>
                                 </div>
                                 <table class="table table-bordered text-center otherrespondent">
@@ -455,8 +458,10 @@ $pdo = null; // Close DB
                 <div class="modal-body">
                 <nav>
                 <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                    <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Add or Edit Mediators</button>
-                    <button class="nav-link" id="nav-deleted_mediator-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Deleted Mediators</button>
+                    <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home"
+                     aria-selected="true">Add or Edit Mediators</button>
+                    <button class="nav-link" id="nav-deleted_mediator-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab"
+                     aria-controls="nav-profile" aria-selected="false">Deleted Mediators</button>
                 </div>
                 </nav>
                 <div class="tab-content" id="nav-tabContent">
@@ -610,7 +615,8 @@ $pdo = null; // Close DB
     <script src="js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.datatables.net/v/bs5/dt-2.1.8/datatables.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@eonasdan/tempus-dominus@6.9.11/dist/js/tempus-dominus.min.js" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha256-BRqBN7dYgABqtY9Hd4ynE+1slnEw+roEPFzQ7TRRfcg=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha256-BRqBN7dYgABqtY9Hd4ynE+1slnEw+roEPFzQ7TRRfcg=" 
+    crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@eonasdan/tempus-dominus@6.9.11/dist/js/jQuery-provider.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
     <script src="js/sweetalert2.min.js"></script>

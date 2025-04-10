@@ -123,8 +123,6 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
 
     }
 
-
-
     class MYPDF extends TCPDF {
         
         //Page header
@@ -155,16 +153,20 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
             }
 
             if(isset($logo[0])){
-                $this->Image("../img/logos/".$logo[0], 10, 5, 25, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false);
+                $this->Image("../img/logos/".$logo[0], 10, 5, 25, '', 'PNG', '', 'T', false, 300, '',
+                 false, false, 0, false, false, false);
             }
             if(isset($logo[1])){
-                $this->Image("../img/logos/".$logo[1], 35, 7, 23, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false);
+                $this->Image("../img/logos/".$logo[1], 35, 7, 23, '', 'PNG', '', 'T', false, 300, '', 
+                false, false, 0, false, false, false);
             }
             if(isset($logo[2])){
-                $this->Image("../img/logos/".$logo[2], 34, 5, 158, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false);
+                $this->Image("../img/logos/".$logo[2], 34, 5, 158, '', 'PNG', '', 'T', false, 300, '',
+                 false, false, 0, false, false, false);
             }
             if(isset($logo[3])){
-                $this->Image("../img/logos/".$logo[3], 170, 8, 24, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false);
+                $this->Image("../img/logos/".$logo[3], 170, 8, 24, '', 'PNG', '', 'T', false, 300, '',
+                 false, false, 0, false, false, false);
             }
             
             $this->SetLineWidth(0); 
@@ -185,7 +187,8 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
                 $this->SetFont('Cambria', 'B', 8);
                 
                 // Add the address text
-                $this->MultiCell(0, 10, $brgydetails['address']."\nTel. No. ".$brgydetails['tel_num']." / Mobile No. ".$brgydetails['cp_num']." E-mail: ".$brgydetails['email'], 0, 'C', 0, 1);
+                $this->MultiCell(0, 10, $brgydetails['address']."\nTel. No. ".$brgydetails['tel_num']." / Mobile No. ".
+                $brgydetails['cp_num']." E-mail: ".$brgydetails['email'], 0, 'C', 0, 1);
                 
         
             }
@@ -293,9 +296,13 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
                 <td class="certbody">
                     <div style="text-align:center; font-family:\'Cambria\',serif;">
                         <h2 style="font-size:22px;">PAGPAPATUNAY NA MAHIRAP</h2>
-                        <p style="font-size:16px;">Sa pamamagitan nito ay pinatutunayan ng tanggapang ito na si <br><b class="bold">'.mb_strtoupper($fullname).'</b>, nakatira sa <strong class="bold">'.$completeaddress.'</strong> ay nabibilang sa mahihirap na mamamayan dito sa aming nasasakupan.</p>
-                        <p style="font-size:16px;">Ang pagpapatunay na ito ay ipinagkaloob upang magamit na basehan upang siya ay makahingi ng tulong na <strong class="bold"><u>'.$purpose.'</u></strong> mula sa tanggapan ng <strong class="bold"><u>'.$agency.'</u></strong>.</p>
-                        <p style="font-size:16px;">Ipinagkaloob ngayong <b class="bold">ika-'.date("j").' ng '.$month.', '.date('Y').'</b> sa tanggapan ng <strong class="bold2">Barangay 177, Cielito Homes Subdivision, Camarin, Lungsod ng Caloocan.</strong></p>
+                        <p style="font-size:16px;">Sa pamamagitan nito ay pinatutunayan ng tanggapang ito na si <br><b class="bold">'
+                        .mb_strtoupper($fullname).'</b>, nakatira sa <strong class="bold">'.$completeaddress.'</strong> ay nabibilang
+                         sa mahihirap na mamamayan dito sa aming nasasakupan.</p>
+                        <p style="font-size:16px;">Ang pagpapatunay na ito ay ipinagkaloob upang magamit na basehan upang siya ay makahingi ng
+                         tulong na <strong class="bold"><u>'.$purpose.'</u></strong> mula sa tanggapan ng <strong class="bold"><u>'.$agency.'</u></strong>.</p>
+                        <p style="font-size:16px;">Ipinagkaloob ngayong <b class="bold">ika-'.date("j").' ng '.$month.', '.date('Y').'
+                        </b> sa tanggapan ng <strong class="bold2">Barangay 177, Cielito Homes Subdivision, Camarin, Lungsod ng Caloocan.</strong></p>
                     </div>
                 </td>
             </tr>

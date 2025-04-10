@@ -7,8 +7,10 @@ foreach ($results as $row) {
     echo '<tr>';
     echo '<td hidden id="nresident_id">' . htmlspecialchars($row['nresident_id']) . '</td>';
     echo '<td>' . htmlspecialchars($row['datetime_added']) . '</td>';
-    echo '<td>' . htmlspecialchars($row['last_name']) . ', ' . htmlspecialchars($row['first_name']) . ' ' . htmlspecialchars($row['middle_name']) . ' ' . htmlspecialchars($row['suffix']) . '</td>';
-    echo '<td>' . htmlspecialchars($row['house_num']) . ', ' . htmlspecialchars($row['street']) . $subd .' '. htmlspecialchars($row['district_brgy']) .' '. htmlspecialchars($row['city']).' '. htmlspecialchars($row['province']).' '. htmlspecialchars($row['zipcode']). '</td>';
+    echo '<td>' . htmlspecialchars($row['last_name']) . ', ' . htmlspecialchars($row['first_name']) . ' ' . htmlspecialchars($row['middle_name']) . ' '
+     . htmlspecialchars($row['suffix']) . '</td>';
+    echo '<td>' . htmlspecialchars($row['house_num']) . ', ' . htmlspecialchars($row['street']) . $subd .' '. htmlspecialchars($row['district_brgy']) .' '
+    . htmlspecialchars($row['city']).' '. htmlspecialchars($row['province']).' '. htmlspecialchars($row['zipcode']). '</td>';
     echo '<td>' . htmlspecialchars($row['sex']) . '</td>';
     echo '<td>' . htmlspecialchars($row['birth_date']) . '</td>';
     echo '<td class="text-center">' . htmlspecialchars($row['cellphone_num']) . '</td>';

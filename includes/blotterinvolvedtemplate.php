@@ -3,7 +3,7 @@
 foreach($result as $row){
 
     echo '<tr>';
-    echo '<td id="resident_id">' . htmlspecialchars($row['blotter_id']) . '</td>';
+    //echo '<td id="resident_id">' . htmlspecialchars($row['blotter_id']) . '</td>';
     
         switch ($row['blotter_type']){
         case 0: echo "<td>Blotter</td>";
@@ -24,8 +24,6 @@ foreach($result as $row){
         break;
         default: echo "<td> Unknown Status </td>";   
     }     
-
-
          
     switch ($row['report_status']){
         case 0: echo "<td><span class='badge-pending'>ONGOING</span> </td>";

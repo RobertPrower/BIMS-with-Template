@@ -23,6 +23,11 @@ $(document).ready(function(){
           })
     }
 
+    $("input[name='birth_date']").datepicker({
+        format: "yyyy-mm-dd",
+        autoclose: true,
+    });
+
     $(document).on("click", "#mediator_name", function () {
 
         var option_length = $("#mediator_name option")

@@ -22,13 +22,13 @@
   <!-- Favicon -->
   <link rel="shortcut icon" href="./img/logos/<?php echo $logo; ?>" type="image/x-icon">
   <!-- Custom styles -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" 
+  integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
   <link rel="stylesheet" href="./css/style.min.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/css/bootstrap-datepicker.min.css" integrity="sha512-34s5cpvaNG3BknEWSuOncX28vz97bRI59UnVtEEpFX536A7BtZSJHsDyFoCl8S7Dt2TPzcrCEoHBGeM4SUBDBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/css/bootstrap-datepicker.min.css" 
+  integrity="sha512-34s5cpvaNG3BknEWSuOncX28vz97bRI59UnVtEEpFX536A7BtZSJHsDyFoCl8S7Dt2TPzcrCEoHBGeM4SUBDBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
   <link rel="stylesheet" href="css/sweetalert2.min.css">
-
-
 
 <body>
   <div class="layer"></div>
@@ -55,7 +55,8 @@
                             <div class="d-flex justify-content-start" style="padding-left: 15px;">
                             
                                 <!-- Button to trigger modal -->
-                                <button type="button" class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#AddNonResidentModal" id="AddNonResidentBtn">New Non Resident</button>    
+                                <button type="button" class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#AddNonResidentModal"
+                                 id="AddNonResidentBtn">New Non Resident</button>    
                                 
                                 <div class="form-check form-switch my-2">
                                     <input class="form-check-input" type="checkbox" id="showdeletedentries">
@@ -69,7 +70,8 @@
                                 <!-- End of Add Resident Modal --> 
 
                                 <!-- Edit Non Resident Modal -->
-                                <div class="modal fade EditNonResidentModal" id="EditNonResidentModal" name="add" tabindex="-1" aria-labelledby="EditNonResidentModalLabel" aria-hidden="true">
+                                <div class="modal fade EditNonResidentModal" id="EditNonResidentModal" name="add" tabindex="-1" 
+                                aria-labelledby="EditNonResidentModalLabel" aria-hidden="true">
                                     <div class="modal-dialog modal-xl">
                                         <div class="modal-content">
                                             <div class="modal-header">
@@ -106,7 +108,8 @@
                                                                         </div>
 
                                                                     </div>
-                                                                        <button type="button" id="editopenCamera" class="btn btn-primary btn-lg col-md-12 editopenCamera" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Please capture a image.">Open Camera</button>
+                                                                        <button type="button" id="editopenCamera" class="btn btn-primary btn-lg col-md-12 editopenCamera" data-bs-toggle="tooltip"
+                                                                         data-bs-placement="top" data-bs-title="Please capture a image.">Open Camera</button>
                                                                         
                                                                         <style>
                                                                             /* Default tooltip styling */
@@ -217,7 +220,8 @@
                                                                 </div> 
 
                                                                 <div class="form-floating mt-3 mb-3 col-md-4">
-                                                                    <input type="number" class="form-control" id="cellphone_number" name="cellphone_number" placeholder="Enter Phone Number Here" maxlength="11" required >
+                                                                    <input type="number" class="form-control" id="cellphone_number" name="cellphone_number" placeholder="Enter Phone Number Here"
+                                                                     maxlength="11" required >
                                                                     <label for="cellphone_number">Phone Number</label>
                                                                 </div> 
 
@@ -311,9 +315,12 @@
 </div>
         
 <script src="js/jquery-3.7.1.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" 
+integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 <script src="js/webcam.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/js/bootstrap-datepicker.min.js" integrity="sha512-LsnSViqQyaXpD4mBBdRYeP6sRwJiJveh2ZIbW41EBrNmKxgr/LFZIiWT6yr+nycvhvauz8c2nYMhrP80YhG7Cw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/js/bootstrap-datepicker.min.js"
+ integrity="sha512-LsnSViqQyaXpD4mBBdRYeP6sRwJiJveh2ZIbW41EBrNmKxgr/LFZIiWT6yr+nycvhvauz8c2nYMhrP80YhG7Cw==" crossorigin="anonymous" 
+ referrerpolicy="no-referrer"></script>
 <script src="js/sweetalert2.min.js"></script>
 <script src="js/nonresidentaction.js"> </script>
 <script src="js/LimitFileUploadAndDisplayImgForEdit.js"></script>

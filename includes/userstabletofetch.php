@@ -7,7 +7,8 @@ foreach ($results as $row) {
     echo '<tr>';
     echo '<td>' . htmlspecialchars($row['created_dt']) . '</td>';
     echo '<td>' . htmlspecialchars($row['username']) . '</td>';
-    echo '<td>' . htmlspecialchars($row['lname']) . ', ' . htmlspecialchars($row['fname']) . ' ' . htmlspecialchars($row['mname']) . ' ' . htmlspecialchars($row['suffix']) . '</td>';
+    echo '<td>' . htmlspecialchars($row['lname']) . ', ' . htmlspecialchars($row['fname']) . ' ' . htmlspecialchars($row['mname']) . 
+    ' ' . htmlspecialchars($row['suffix']) . '</td>';
     echo '<td>' . htmlspecialchars($row['last_login']) . '</td>';
     if($row['isactive']){
         echo '<td><span class="badge-success"> ACTIVE</span> </td>';

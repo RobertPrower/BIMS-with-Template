@@ -920,16 +920,24 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
 
                 echo ' <tr>
                             <td>
-                                <input type="text" id="lname_'.htmlspecialchars($mediator['mediator_id']).'" class="form-control" value="'.htmlspecialchars($mediator['last_name']).'" data-id="'.htmlspecialchars($mediator['mediator_id']).'" placeholder=""/>
+                                <input type="text" id="lname_'.htmlspecialchars($mediator['mediator_id']).'" class="form-control" 
+                                value="'.htmlspecialchars($mediator['last_name']).'" data-id="'.htmlspecialchars($mediator['mediator_id']).'" 
+                                placeholder=""/>
                             </td>
                             <td>
-                                <input type="text" id="fname_'.htmlspecialchars($mediator['mediator_id']).'" class="form-control" value="'.htmlspecialchars($mediator['first_name']).'" data-id="'.htmlspecialchars($mediator['mediator_id']).'" placeholder=""/>
+                                <input type="text" id="fname_'.htmlspecialchars($mediator['mediator_id']).'" class="form-control"
+                                 value="'.htmlspecialchars($mediator['first_name']).'" data-id="'.htmlspecialchars($mediator['mediator_id']).'" 
+                                 placeholder=""/>
                             </td>
                             <td>
-                                <input type="text" id="mname_'.htmlspecialchars($mediator['mediator_id']).'" class="form-control" value="'.htmlspecialchars($mediator['middle_name']).'" data-id="'.htmlspecialchars($mediator['mediator_id']).'" placeholder=""/>
+                                <input type="text" id="mname_'.htmlspecialchars($mediator['mediator_id']).'" class="form-control" 
+                                value="'.htmlspecialchars($mediator['middle_name']).'" data-id="'.htmlspecialchars($mediator['mediator_id']).'"
+                                 placeholder=""/>
                             </td>
                             <td>
-                                <input type="text" id="suffix_'.htmlspecialchars($mediator['mediator_id']).'" class="form-control" value="'.htmlspecialchars($mediator['suffix']).'" data-id="'.htmlspecialchars($mediator['mediator_id']).'" placeholder=""/>
+                                <input type="text" id="suffix_'.htmlspecialchars($mediator['mediator_id']).'" class="form-control" 
+                                value="'.htmlspecialchars($mediator['suffix']).'" data-id="'.htmlspecialchars($mediator['mediator_id']).'" 
+                                placeholder=""/>
                             </td>
                             <td class="d-flex justify-content-center">
 

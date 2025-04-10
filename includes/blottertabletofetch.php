@@ -2,7 +2,7 @@
 foreach($result as $row){
 
 echo '<tr>';
-echo '<td hidden id="resident_id">' . htmlspecialchars($row['blotter_id']) . '</td>';
+//echo '<td hidden id="resident_id">' . htmlspecialchars($row['blotter_id']) . '</td>';
 
     switch ($row['blotter_type']){
     case 0: echo "<td>Blotter</td>";
@@ -15,8 +15,10 @@ echo '<td hidden id="resident_id">' . htmlspecialchars($row['blotter_id']) . '</
 echo '<td>' . htmlspecialchars($row['blotter_add_dt']) . '</td>';
 echo '<td>' . htmlspecialchars($row['incident_dt']) . '</td>';
 echo '<td>' . htmlspecialchars($row['desc_incident']) . '</td>';
-echo '<td>' . htmlspecialchars($row['complainant_last_name']) .', '. htmlspecialchars($row['complainant_first_name']) .' '. htmlspecialchars($row['complainant_middle_name']) .' '. htmlspecialchars($row['complainant_suffix']) . '</td>';
-echo '<td>' . htmlspecialchars($row['respondent_last_name']) .', '. htmlspecialchars($row['respondent_first_name']) .' '. htmlspecialchars($row['respondent_middle_name']) .' '. htmlspecialchars($row['respondent_suffix']) . '</td>';
+echo '<td>' . htmlspecialchars($row['complainant_last_name']) .', '. htmlspecialchars($row['complainant_first_name']) .' 
+'. htmlspecialchars($row['complainant_middle_name']) .' '. htmlspecialchars($row['complainant_suffix']) . '</td>';
+echo '<td>' . htmlspecialchars($row['respondent_last_name']) .', '. htmlspecialchars($row['respondent_first_name']) .'
+ '. htmlspecialchars($row['respondent_middle_name']) .' '. htmlspecialchars($row['respondent_suffix']) . '</td>';
      
 switch ($row['report_status']){
 case 0: echo "<td><span class='badge-pending'>ONGOING</span> </td>";

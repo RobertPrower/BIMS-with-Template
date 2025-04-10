@@ -28,6 +28,7 @@ function mark_as_active(object $pdo, int $user_id, int $whatop) {
         $query = "UPDATE `tbl_users_audit_trail` SET last_login = CURRENT_TIMESTAMP WHERE user_at_id = :user_id";
         $stmt = $pdo->prepare($query);
         $stmt->execute([':user_id' => $user_id]);
+        $pdo=null;
         return true;
     }
 

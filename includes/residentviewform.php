@@ -10,9 +10,12 @@
                 <div class="modal-body">
                     <nav>
                         <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                            <button class="nav-link show" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#profile-tab" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Profile</button>
-                            <button class="nav-link" id="nav-clearance-tab" data-bs-toggle="tab" data-bs-target="#clearance-tab" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Requested Documents</button>
-                            <button class="nav-link" id="nav-blotters-tab" data-bs-toggle="tab" data-bs-target="#nav-contact" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">Blotters Involved</button>
+                            <button class="nav-link show" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#profile-tab"
+                             type="button" role="tab" aria-controls="nav-home" aria-selected="true">Profile</button>
+                            <button class="nav-link" id="nav-clearance-tab" data-bs-toggle="tab" data-bs-target="#clearance-tab" 
+                            type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Requested Documents</button>
+                            <button class="nav-link" id="nav-blotters-tab" data-bs-toggle="tab" data-bs-target="#nav-contact" 
+                            type="button" role="tab" aria-controls="nav-contact" aria-selected="false">Blotters Involved</button>
                         </div>
                     </nav>
                         <!------------------------------------------------------------------------------------------------------------>
@@ -241,8 +244,8 @@
                                         <thead>
                                             <tr class="users-table-info">
                                                 
-                                                <th style="width: 8%;" class="text-center">Blotter ID
-                                                </th>
+                                                <!-- <th style="width: 8%;" class="text-center">Blotter ID
+                                                </th> -->
 
                                                 <th style="width: 10%;" class="text-center">Blotter Type
                                                 </th>

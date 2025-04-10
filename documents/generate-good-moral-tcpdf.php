@@ -118,8 +118,6 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
 
     $pdo=null;
 
-
-
     class MYPDF extends TCPDF {
         
         //Page header
@@ -150,16 +148,20 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
             }
 
             if(isset($logo[0])){
-                $this->Image("../img/logos/".$logo[0], 10, 5, 25, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false);
+                $this->Image("../img/logos/".$logo[0], 10, 5, 25, '', 'PNG', '', 'T', false, 300, '', false, false,
+                 0, false, false, false);
             }
             if(isset($logo[1])){
-                $this->Image("../img/logos/".$logo[1], 35, 7, 23, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false);
+                $this->Image("../img/logos/".$logo[1], 35, 7, 23, '', 'PNG', '', 'T', false, 300, '', false, false,
+                 0, false, false, false);
             }
             if(isset($logo[2])){
-                $this->Image("../img/logos/".$logo[2], 34, 5, 158, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false);
+                $this->Image("../img/logos/".$logo[2], 34, 5, 158, '', 'PNG', '', 'T', false, 300, '', false, false, 
+                0, false, false, false);
             }
             if(isset($logo[3])){
-                $this->Image("../img/logos/".$logo[3], 170, 7, 24, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false);
+                $this->Image("../img/logos/".$logo[3], 170, 7, 24, '', 'PNG', '', 'T', false, 300, '', false, false, 
+                0, false, false, false);
             }
             
             $this->SetLineWidth(0); 
@@ -180,7 +182,8 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
                 $this->SetFont('Cambria', 'B', 8);
                 
                 // Add the address text
-                $this->MultiCell(0, 10, $brgydetails['address']."\nTel. No. ".$brgydetails['tel_num']." / Mobile No. ".$brgydetails['cp_num']." E-mail: ".$brgydetails['email'], 0, 'C', 0, 1);
+                $this->MultiCell(0, 10, $brgydetails['address']."\nTel. No. ".$brgydetails['tel_num']." / Mobile No. ".$brgydetails['cp_num']." E-mail: "
+                .$brgydetails['email'], 0, 'C', 0, 1);
                 
         
             }
@@ -294,11 +297,13 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
                     is bonafide resident of this barangay located at<b class="bold">'.'  '.$completeaddress.' '.'</b>
                     This certification is being issued upon the request of the above-mentioned name for</p>
 
-                    <p class="parag">This is to certify that <b class="bold">'.'  '.$fullname. '  '.'</b> is known to me to be of good moral character, a law-abiding citizen and has no derogatory record in our barangay. </p>
+                    <p class="parag">This is to certify that <b class="bold">'.'  '.$fullname. '  '.'</b> is known to me to be of good moral character, a law-abiding 
+                    citizen and has no derogatory record in our barangay. </p>
 
                     <p>This certification is being issued upon the request of the above-mentioned name for '.$purpose.'</p>
 
-                    <p>Issued this '.date("d").'th day of  <b class="bold">'.date("F").' '.date('Y').'</b>, at Barangay 177, Cielito Homes Subdivision, Camarin, Caloocan City.</p>
+                    <p>Issued this '.date("d").'th day of  <b class="bold">'.date("F").' '.date('Y').'</b>, at Barangay 177, Cielito Homes
+                     Subdivision, Camarin, Caloocan City.</p>
 
                 </td>
             </tr>

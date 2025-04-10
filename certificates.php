@@ -63,7 +63,8 @@
                           
                               <!-- Button to trigger modal -->
                               <a type="button" class="btn btn-primary me-2" href="create-certificates.php">New Certificate</a>
-                              <button class="btn btn-warning me-2" data-bs-toggle="modal" data-bs-target="#ScanqrModal"><img src="img/svg/qr-code-scan.svg" alt="Bootstrap" width="25" height="25"> Scan QR Code</button>
+                              <button class="btn btn-warning me-2" data-bs-toggle="modal" data-bs-target="#ScanqrModal"><img src="img/svg/qr-code-scan.svg" alt="Bootstrap" width="25" height="25"> 
+                              Scan QR Code</button>
                               
                               <?php
                               if($dept === "Admin"){
@@ -240,7 +241,8 @@
 </div>
 <!--JavaScript-->
 <script src="js/jquery-3.7.1.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+ integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
 <script src="js/sweetalert2.min.js"></script>
 <script src="js/residentviewmodal.js"></script>

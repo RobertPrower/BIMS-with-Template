@@ -191,7 +191,8 @@ $(document).ready(function () {
                     dataType: "JSON",
                     success: function (response) {
                         response = response[0]
-                        
+
+                        $("#complainant_respondent_tab").tab("show");
                         $('#ViewBlotterModal [id="fname"]').val(response.complainant_first_name);
                         $('#ViewBlotterModal [id="mname"]').val(response.complainant_middle_name); 
                         $('#ViewBlotterModal [id="lname"]').val(response.complainant_last_name);

@@ -1,4 +1,5 @@
-<div class="modal fade" id="AddNonResidentModal" name="add" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="addBlotterModalLabel" aria-hidden="true">
+<div class="modal fade" id="AddNonResidentModal" name="add" data-bs-backdrop="static" data-bs-keyboard="false"
+ tabindex="-1" aria-labelledby="addBlotterModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header">
@@ -128,7 +129,8 @@
                                 </div> 
 
                                 <div class="form-floating mt-3 mb-3 col-md-4">
-                                    <input type="number" class="form-control" id="cellphone_number" name="cellphone_number" placeholder="Enter Phone Number Here" maxlength="11" required >
+                                    <input type="number" class="form-control" id="cellphone_number" name="cellphone_number" placeholder="Enter Phone Number Here"
+                                     maxlength="11" required >
                                     <label for="cellphone_number">Phone Number</label>
                                 </div> 
 

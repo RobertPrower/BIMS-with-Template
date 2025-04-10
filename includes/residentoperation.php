@@ -155,12 +155,6 @@ if($operation_check == "ADD"){ //For the add operation
  
     if(isset($_FILES['image_file']) && $_FILES['image_file']['error'] === UPLOAD_ERR_OK){
 
-        // try{
-        //     checkForDuplicateFiles($pdo, $residentId, "img/resident_img/");
-        // }catch(Exception $error){
-        //     $response = ["success" => false, "message" => "Error checking duplicate images: ".$error->getMessage()];
-        // }
-
         if($isEmpty === false){
             echo json_encode(["success" => false, "message" => "Some fields are empty"]);
             die();
@@ -178,12 +172,6 @@ if($operation_check == "ADD"){ //For the add operation
 
 
     }elseif(isset($_POST['isfromcamcheck'])){ //Incase the image comes from the camera
-
-        // try{
-        //     checkForDuplicateFiles($pdo, $residentId, "img/resident_img/");
-        // }catch(Exception $error){
-        //     $response = ["success" => false, "message" => "Error checking duplicate images: ".$error->getMessage()];
-        // }
 
         try{
             $fileName = captureImageUpload("isfromcamcheck", "img/resident_img/");
@@ -210,9 +198,11 @@ if($operation_check == "ADD"){ //For the add operation
         $atstmt= $pdo->prepare($update_audit_sql);
         $atstmt -> execute([$departno, $userid, $residentId]);
 
-        $entriestodb = [$fname, $mname, $lname, $suffix, $houseno, $street, $subd,$residentsince, $sex, $maritalstatus, $birthdate, $birthplace, $cellphonenumber, $is_a_voter];
+        $entriestodb = [$fname, $mname, $lname, $suffix, $houseno, $street, $subd,$residentsince, $sex, $maritalstatus,
+         $birthdate, $birthplace, $cellphonenumber, $is_a_voter];
         
-        $sqlquery = "UPDATE resident SET first_name = ?, middle_name = ?, last_name = ?,suffix = ?, house_num = ?, street = ?, subdivision = ?, resident_since=?, sex = ?, marital_status = ?, birth_date = ?, birth_place = ?, cellphone_num = ?, is_a_voter = ?";
+        $sqlquery = "UPDATE resident SET first_name = ?, middle_name = ?, last_name = ?,suffix = ?, house_num = ?,
+         street = ?, subdivision = ?, resident_since=?, sex = ?, marital_status = ?, birth_date = ?, birth_place = ?, cellphone_num = ?, is_a_voter = ?";
         
         if($noimage == false){
             $entriestodb[] = $fileName;

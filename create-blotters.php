@@ -32,7 +32,8 @@
   <link rel="stylesheet" href="css/sweetalert2.min.css">
   <!-- <link rel="stylesheet" href="css/changelogo.css"> -->
   <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/css/bootstrap-datepicker.min.css" integrity="sha512-34s5cpvaNG3BknEWSuOncX28vz97bRI59UnVtEEpFX536A7BtZSJHsDyFoCl8S7Dt2TPzcrCEoHBGeM4SUBDBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/css/bootstrap-datepicker.min.css" 
+  integrity="sha512-34s5cpvaNG3BknEWSuOncX28vz97bRI59UnVtEEpFX536A7BtZSJHsDyFoCl8S7Dt2TPzcrCEoHBGeM4SUBDBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 
 
@@ -64,7 +65,8 @@
                     
                         <!-- Button to trigger modal -->
                         <button type="button" class="btn btn-info me-2" data-bs-toggle="modal" data-bs-target="#AddResidentModal">New Resident</button>
-                        <button type="button" class="btn btn-success me-2" data-bs-toggle="modal" data-bs-target="#AddNonResidentModal" id="AddNonResidentBtn">New Non Resident</button>    
+                        <button type="button" class="btn btn-success me-2" data-bs-toggle="modal" data-bs-target="#AddNonResidentModal" id="AddNonResidentBtn">
+                            New Non Resident</button>    
 
                     </div>
                   
@@ -77,7 +79,8 @@
                         require('includes/schedulemodal.php');
                     ?> 
 
-                    <div class="modal fade" id="AddNonResidentModal" name="add" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="addBlotterModalLabel" aria-hidden="true">
+                    <div class="modal fade" id="AddNonResidentModal" name="add" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" 
+                    aria-labelledby="addBlotterModalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-xl">
                             <div class="modal-content">
                                 <div class="modal-header">
@@ -95,14 +98,16 @@
                                                     <div class="text-center">
                                                         <div class="mt-3 mb-4">
 
-                                                        <div id="nonres_cameraFeedWrapper" class="camera-frame nonres_cameraFeedWrapper" style="width: 200px; height: 200px; display: none;">
+                                                        <div id="nonres_cameraFeedWrapper" class="camera-frame nonres_cameraFeedWrapper" style="width: 200px; height: 200px;
+                                                         display: none;">
                                                                 <div id="nonres_cameraFeed">
                                                                     
                                                                 </div>
                                                             </div>
 
                                                             <!-- Preview image container (shown initially) -->
-                                                            <div id="nonres_imagePreviewWrapper" class="camera-frame nonres_imagePreviewWrapper" style="width: 200px; height: 200px;">
+                                                            <div id="nonres_imagePreviewWrapper" class="camera-frame nonres_imagePreviewWrapper" style="width: 200px; height:
+                                                             200px;">
                                                                 <img src="includes/img/blank-profile.webp" id="nonres_imagePreview" class="imagePreview" alt="Profile Image" />
                                                             </div>
                                                         </div>
@@ -158,7 +163,8 @@
                                                     </div>
 
                                                     <div class="form-floating mt-3 mb-3 col-md-4">
-                                                        <input type="text" class="form-control" id="district_brgy" name="district_brgy" placeholder="Enter Subdivision Here" required>
+                                                        <input type="text" class="form-control" id="district_brgy" name="district_brgy" placeholder="Enter Subdivision Here" 
+                                                        required>
                                                         <label for="district_brgy">District or Brgy</label>
                                                     </div>
 
@@ -188,7 +194,8 @@
                                                     </div>
 
                                                     <div class="form-floating mt-3 mb-3 col-md-4">
-                                                        <select class="form-select" id="marital_status" name="marital_status" aria-label="Floating label select example" required>
+                                                        <select class="form-select" id="marital_status" name="marital_status" aria-label="Floating label select example" 
+                                                        required>
                                                             <option hidden selected>Select</option>
                                                             <option value="Single">Single</option>
                                                             <option value="Married">Married</option>
@@ -204,12 +211,14 @@
                                                     </div> 
 
                                                     <div class="form-floating mt-3 mb-3 col-md-4">
-                                                        <input type="Text" class="form-control" id="birth_place" name="birth_place" placeholder="Enter Birth Place Here"required>
+                                                        <input type="Text" class="form-control" id="birth_place" name="birth_place" placeholder="Enter Birth Place Here"
+                                                        required>
                                                         <label for="birth_place">Birth Place</label>
                                                     </div> 
 
                                                     <div class="form-floating mt-3 mb-3 col-md-4">
-                                                        <input type="number" class="form-control" id="cellphone_number" name="cellphone_number" placeholder="Enter Phone Number Here" maxlength="11" required >
+                                                        <input type="number" class="form-control" id="cellphone_number" name="cellphone_number" 
+                                                        placeholder="Enter Phone Number Here" maxlength="11" required >
                                                         <label for="cellphone_number">Phone Number</label>
                                                     </div> 
 
@@ -238,9 +247,11 @@
 
                     <div class="row">
 
-                        <div class="col-md-2 card m-3 p-3  d-flex justify-content-center align-items-center" style="border-radius: 10px;padding: 10px;object-fit: contain; max-width: 100%; max-height: 100%">
+                        <div class="col-md-2 card m-3 p-3  d-flex justify-content-center align-items-center" style="border-radius: 10px;padding: 10px;object-fit: contain; 
+                        max-width: 100%; max-height: 100%">
                             
-                            <img src="includes/img/blank-profile.webp" id="ComplainantImg" width="200" height="200" style="object-fit: contain; max-width: 100%; max-height: 100%;"/>
+                            <img src="includes/img/blank-profile.webp" id="ComplainantImg" width="200" height="200" style="object-fit: contain; max-width: 100%; max-height:
+                             100%;"/>
                             
                         </div>
 
@@ -288,16 +299,20 @@
                     <div class="col-md-12 d-flex align-items-center justify-content-between">
                         <b>Step 2: Select Respondent Person Record</b>
                         <div class="d-flex">
-                            <button class="btn btn-primary mx-2 respondent SelectResidentBtnRes" id="SelectResidentRes" data-whatparty="respondent">Select Resident</button>
-                            <button class="btn btn-warning respondent SelectNonResidentBtnRes" id="SelectNonResidentRes" data-whatparty="respondent">Select Non-Resident</button>
+                            <button class="btn btn-primary mx-2 respondent SelectResidentBtnRes" id="SelectResidentRes" data-whatparty="respondent">
+                                Select Resident</button>
+                            <button class="btn btn-warning respondent SelectNonResidentBtnRes" id="SelectNonResidentRes" data-whatparty="respondent">
+                                Select Non-Resident</button>
                         </div>
                     </div>
 
                     <div class="row">
 
-                        <div class="col-md-2 card m-3 p-3 d-flex justify-content-center align-items-center" style="border-radius: 10px;padding: 10px;object-fit: contain; max-width: 100%; max-height: 100%">
+                        <div class="col-md-2 card m-3 p-3 d-flex justify-content-center align-items-center" style="border-radius: 10px;padding: 10px;object-fit:
+                         contain; max-width: 100%; max-height: 100%">
                             
-                            <img src="includes/img/blank-profile.webp" id="RespondentImg" width="200" height="200" style="object-fit: contain; max-width: 100%; max-height: 100%"/>
+                            <img src="includes/img/blank-profile.webp" id="RespondentImg" width="200" height="200" style="object-fit: contain; max-width: 100%;
+                             max-height: 100%"/>
                             
                         </div>
 
@@ -361,7 +376,8 @@
                                         <h5>Other Resident Complainants</h5>
                                     </div>
                                     <div class="col-md-6 d-flex justify-content-end">
-                                        <button class="btn btn-primary mx-2 AddOtherPartyBtn" data-whatparty="othercomplainant" data-whatbtn="SelectResidentComplainant" disabled>Add</button>
+                                        <button class="btn btn-primary mx-2 AddOtherPartyBtn" data-whatparty="othercomplainant" data-whatbtn="SelectResidentComplainant" 
+                                        disabled>Add</button>
                                     </div>
                                 </div>
 
@@ -389,7 +405,8 @@
                                         <h5>Other Non-Resident Complainants</h5>
                                     </div>
                                     <div class="col-md-5 d-flex justify-content-end">
-                                        <button class="btn btn-primary mx-2 AddOtherPartyBtn" data-whatparty="othercomplainant" data-whatbtn="SelectNonResidentComplainant" disabled>Add</button>
+                                        <button class="btn btn-primary mx-2 AddOtherPartyBtn" data-whatparty="othercomplainant" data-whatbtn="SelectNonResidentComplainant" 
+                                        disabled>Add</button>
                                     </div>
                                 </div>
                                 <br>
@@ -416,7 +433,8 @@
                                         <h5>Other Resident Respondents</h5>
                                     </div>
                                     <div class="col-md-6 d-flex justify-content-end">
-                                        <button class="btn btn-primary mx-2 AddOtherPartyBtn" data-whatparty="otherrespondent" data-whatbtn="SelectResidentComplainant" disabled>Add</button>
+                                        <button class="btn btn-primary mx-2 AddOtherPartyBtn" data-whatparty="otherrespondent" data-whatbtn="SelectResidentComplainant" 
+                                        disabled>Add</button>
                                     </div>
                                 </div>
                                 <br>
@@ -443,7 +461,8 @@
                                         <h5>Other Non-Resident Respondents</h5>
                                     </div>
                                     <div class="col-md-64 d-flex justify-content-end">
-                                        <button class="btn btn-primary mx-2 AddOtherPartyBtn" data-whatparty="otherrespondent" data-whatbtn="SelectOtherNonResRespondent" disabled>Add</button>
+                                        <button class="btn btn-primary mx-2 AddOtherPartyBtn" data-whatparty="otherrespondent" data-whatbtn="SelectOtherNonResRespondent"
+                                         disabled>Add</button>
                                     </div>
                                 </div>
                                 <br>
@@ -650,7 +669,8 @@
                         </div>
 
                         <div class="form-floating">
-                        <textarea class="form-control" placeholder="Leave a comment here" id="case_context" name="case_context" style="height: 500px; border: 1.5px solid black;"></textarea>
+                        <textarea class="form-control" placeholder="Leave a comment here" id="case_context" name="case_context" 
+                        style="height: 500px; border: 1.5px solid black;"></textarea>
                             <label for="floatingTextarea">Context of the Case</label>
                         </div>
 
@@ -683,10 +703,13 @@
 
 <script src="https://cdn.datatables.net/v/bs5/dt-2.1.8/datatables.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@eonasdan/tempus-dominus@6.9.11/dist/js/tempus-dominus.min.js" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha256-BRqBN7dYgABqtY9Hd4ynE+1slnEw+roEPFzQ7TRRfcg=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha256-BRqBN7dYgABqtY9Hd4ynE+1slnEw+roEPFzQ7TRRfcg=" 
+crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/@eonasdan/tempus-dominus@6.9.11/dist/js/jQuery-provider.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/js/bootstrap-datepicker.min.js" integrity="sha512-LsnSViqQyaXpD4mBBdRYeP6sRwJiJveh2ZIbW41EBrNmKxgr/LFZIiWT6yr+nycvhvauz8c2nYMhrP80YhG7Cw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/js/bootstrap-datepicker.min.js"
+ integrity="sha512-LsnSViqQyaXpD4mBBdRYeP6sRwJiJveh2ZIbW41EBrNmKxgr/LFZIiWT6yr+nycvhvauz8c2nYMhrP80YhG7Cw==" crossorigin="anonymous"
+  referrerpolicy="no-referrer"></script>
 
 
 

@@ -1070,7 +1070,10 @@ $(document).ready(function () {
         default:
             $("#EditBlotterModal #remarks").prop("disabled", true);
     }
-})
+  })
+
+  var residentid;
+  var resident_status;
 
   $(document).on("click",".complainantbtn, .respondentbtn, .viewPersonDetails",function () {
   
@@ -1080,22 +1083,23 @@ $(document).ready(function () {
     var whatstatus = ($(this).hasClass("complainantbtn"))? "#complainant_status": "#respondent_status" ;
     var whatbtn = $(this).data("whatbtn")
     
-    if((!whatbtn === "othercomplainant") && (!whatbtn === "otherrespondent")){
-      var residentid = $(whatstatusid).val();
-      var resident_status = $(whatstatus).val();
+    if((whatbtn == "othercomplainant") && (whatbtn == "otherrespondent")){
+      residentid = $(whatstatusid).val();
+      resident_status = $(whatstatus).val();
     }else{
-      var residentid = $(this).data("id");
-      var resident_status = $(this).data("status");
+      residentid = $(this).attr("data-id");
+      resident_status = $(this).attr("data-status");
 
     }
-    console.log(residentid)
-    console.log(resident_status)
+    console.log("Person ID: "+residentid)
+    console.log("Person Status: "+resident_status)
 
   if(resident_status == "Resident"){
 
-    $("#DocumentDetailsModal, #ViewBlotterModal, #EditBlotterModal").modal('hide');
+    $("#DocumentDetailsModal, #ViewBlotterModal, #EditBlotterModal, #ViewResidentModal, #ViewNonResidentModal").modal('hide');
     $("#ViewResidentModal").modal('show');
-    $("#nav-home-tab").tab("show");
+    $("#ViewResidentModal #nav-home-tab").tab("show");
+    $("#ViewResidentModal #nav-home-tab").addClass("active");
 
     $.ajax({
       url: "includes/modaloperation.php",
@@ -1173,9 +1177,10 @@ $(document).ready(function () {
     });
   }else if(resident_status == "Non-Resident"){
 
-    $("#DocumentDetailsModal,#ViewBlotterModal").modal('hide');
+    $("#DocumentDetailsModal, #ViewBlotterModal, #ViewResidentModal, #ViewNonResidentModal").modal('hide');
     $("#ViewNonResidentModal").modal('show');
     $("#ViewNonResidentModal [id='nav-home-tab']").tab("show");
+
 
     $.ajax({
       url: "includes/modaloperation.php",

@@ -259,15 +259,18 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
             
                 
                 if (isset($logo[1])) {
-                    $this->Image("../img/logos/" . $logo[1], 15, 8, 23, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false); // Second image
+                    $this->Image("../img/logos/" . $logo[1], 15, 8, 23, '', 'PNG', '', 'T', 
+                    false, 300, '', false, false, 0, false, false, false); // Second image
                 }
 
                 if (isset($logo[5])) {
-                    $this->Image("../img/logos/" . $logo[5], 30, 5, 153, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false); // Third image
+                    $this->Image("../img/logos/" . $logo[5], 30, 5, 153, '', 'PNG', '', 'T',
+                     false, 300, '', false, false, 0, false, false, false); // Third image
                 }
 
                 if (isset($logo[3])) {
-                    $this->Image("../img/logos/" . $logo[3], 175, 8, 23, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false); // Fourth image
+                    $this->Image("../img/logos/" . $logo[3], 175, 8, 23, '', 'PNG', '', 'T', 
+                    false, 300, '', false, false, 0, false, false, false); // Fourth image
                 }
             } else {
                 // Handle the case when no images are returned by the query

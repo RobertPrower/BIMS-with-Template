@@ -257,15 +257,18 @@ class MYPDF extends TCPDF {
         
             
             if (isset($logo[1])) {
-                $this->Image("../img/logos/" . $logo[1], 15, 8, 23, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false); // Second image
+                $this->Image("../img/logos/" . $logo[1], 15, 8, 23, '', 'PNG', '', 'T', false, 300, '',
+                 false, false, 0, false, false, false); // Second image
             }
 
             if (isset($logo[5])) {
-                $this->Image("../img/logos/" . $logo[5], 30, 5, 153, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false); // Third image
+                $this->Image("../img/logos/" . $logo[5], 30, 5, 153, '', 'PNG', '', 'T', false, 300, '',
+                 false, false, 0, false, false, false); // Third image
             }
 
             if (isset($logo[3])) {
-                $this->Image("../img/logos/" . $logo[3], 175, 8, 23, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false); // Fourth image
+                $this->Image("../img/logos/" . $logo[3], 175, 8, 23, '', 'PNG', '', 'T', false, 300, '',
+                 false, false, 0, false, false, false); // Fourth image
             }
         } else {
             // Handle the case when no images are returned by the query
@@ -334,13 +337,17 @@ class MYPDF extends TCPDF {
         $this->MultiCell(0, 5, "NOT VALID WITHOUT \n DRY SEAL", 0, 'C', 0, 1, '', '', true);
 
         global $logo; 
-        $this->Image("../img/logos/".$logo[3], 145, 277, 15, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false);
+        $this->Image("../img/logos/".$logo[3], 145, 277, 15, '', 'PNG', '', 'T', false, 300, '', 
+        false, false, 0, false, false, false);
 
-        $this->Image("../img/logos/".$logo[0], 160, 277, 15, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false);
+        $this->Image("../img/logos/".$logo[0], 160, 277, 15, '', 'PNG', '', 'T', false, 300, '', 
+        false, false, 0, false, false, false);
         
-        $this->Image("../img/logos/".$logo[1], 175, 277, 15, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false);
+        $this->Image("../img/logos/".$logo[1], 175, 277, 15, '', 'PNG', '', 'T', false, 300, '',
+         false, false, 0, false, false, false);
 
-        $this->Image("../img/logos/".$logo[4], 188, 275, 20, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false);
+        $this->Image("../img/logos/".$logo[4], 188, 275, 20, '', 'PNG', '', 'T', false, 300, '',
+         false, false, 0, false, false, false);
 
    
     }
@@ -381,7 +388,8 @@ $pdf->AddPage();
 
 // Add image watermark (with transparency)
 $pdf->SetAlpha(0.3); // Set transparency
-$pdf->Image('../img/logos/'.$logo[4], -15, 20, 280, 0, 'PNG', '', '', false, 300, '', false, false, 0); // X, Y, Width, Height
+$pdf->Image('../img/logos/'.$logo[4], -15, 20, 280, 0, 'PNG', '', '', false, 300, '', false, false, 0); 
+// X, Y, Width, Height
 $pdf->SetAlpha(1); // Reset transparenc
 
 $pdf->SetTopMargin(35);
@@ -432,11 +440,13 @@ $html =
 
    $html .=     '.</p>
 
-        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Ang pagpapatunay na ito ay ipinagkaloob sa kahilingan ni <b class="bold">'.'  '.$fullname. '  '.'</b> upang magamit sa kaniyang <b class="bold">'.' '.$purpose.' '.'</b>
+        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Ang pagpapatunay na ito ay ipinagkaloob sa kahilingan ni <b class="bold">'.'  '.$fullname. '  '.'
+        </b> upang magamit sa kaniyang <b class="bold">'.' '.$purpose.' '.'</b>
          na matatagpuan sa <b class="bold">'.' '.$buildingaddress.' '.'</b> na nasasakupan ng Barangay 177, Sona 15, Distrito 1, Lungsod ng Caloocan.
          </p>
 
-         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ipinagkaloob ngayong <b>ika-'.date("j").' ng '.$month.', '.date('Y').'</b> sa tanggapan ng Barangay 177, Cielito Homes Subdivision, Camarin, Lungsod ng Caloocan.</p>
+         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ipinagkaloob ngayong <b>ika-'.date("j").' ng '.$month.', '.date('Y').
+         '</b> sa tanggapan ng Barangay 177, Cielito Homes Subdivision, Camarin, Lungsod ng Caloocan.</p>
                 
     </div>
     

@@ -1,9 +1,5 @@
 <?php
 
-// For the pagination controls of for the modal
-// echo '<nav aria-label="Page navigation">';
-// echo '<ul class="pagination justify-content-end">';
-
 // Make the previous button only appear once the page is more than one
 if ($current_page > 1) {
     echo '<li class="page-item "><a class="page-link pagination-control" href="#" data-page="' . ($current_page - 1) . '">Previous</a></li>';

@@ -74,7 +74,8 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
 
             if(empty($errors)){
                 try{
-                    record_user($pdo ,$current_user,$username, $hashed_password, $fname ,$mname, $lname ,$suffix, $dept, $img_filename);
+                    record_user($pdo ,$current_user,$username, $hashed_password, $fname ,$mname, $lname ,$suffix,
+                     $dept, $img_filename);
                     echo json_encode(["success" => true, "message" => "User Added Successfully"]);
 
                 }catch(Exception $e){
@@ -153,7 +154,8 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
             if(empty($errors)){
                 try{
 
-                    update_user($pdo ,$username, $hashed_password, $fname ,$mname, $lname ,$suffix, $dept, $user_id, $current_user);
+                    update_user($pdo ,$username, $hashed_password, $fname ,$mname, $lname ,$suffix, $dept, $user_id,
+                     $current_user);
                     echo json_encode(["success" => true, "message" => "User Edited Successfully"]);
 
                 }catch(Exception $errors){

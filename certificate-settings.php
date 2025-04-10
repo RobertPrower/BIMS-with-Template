@@ -174,7 +174,8 @@
                                   </div>
                                   <div class="col-1">
                                   <button class="btn btn-success" id="EditBrgyDetailsBtn" data-bs-toggle="modal"  data-bs-target="#EditBrgyDetails"
-                                  data-brgyname="<?php echo $brgy_name[0]?>" data-brgyaddress="<?php echo $brgy_address[0]?>" data-sona="<?php echo $brgy_sona[0] ?>" data-district="<?php echo $brgy_district[0] ?>"
+                                  data-brgyname="<?php echo $brgy_name[0]?>" data-brgyaddress="<?php echo $brgy_address[0]?>" data-sona="<?php echo $brgy_sona[0] ?>" 
+                                  data-district="<?php echo $brgy_district[0] ?>"
                                     data-brgytelnum="<?php echo $brgy_tel_num[0]?>" data-brgycpnum="<?php echo $brgy_cel_num[0]?>" 
                                     data-brgyemail="<?php echo $brgy_email[0]?>"> Edit</button>
                                   </div>
@@ -280,7 +281,8 @@
                                     <h4 class="card-title mb-4">Barangay Officials</h4> 
                                   </div>
                                   <div class="col-1">
-                                  <button class="btn btn-success" id="EditBrgyOfficialsBtn"  data-bs-toggle="modal"  data-bs-target="#EditBrgyOfficials" data-punong_brgy="<?php echo $brgyofficials[0]?>"
+                                  <button class="btn btn-success" id="EditBrgyOfficialsBtn"  data-bs-toggle="modal"  data-bs-target="#EditBrgyOfficials" 
+                                  data-punong_brgy="<?php echo $brgyofficials[0]?>"
                                   data-brgy_sec="<?php echo $brgyofficials[2]?>" data-brgy_sk="<?php echo $brgyofficials[1]?>"> Edit</button>
                                   </div>
                                 </div> 
@@ -331,8 +333,10 @@
                           <div class="modal-body">
                           <nav>
                             <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                              <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Barangay Officials</button>
-                              <button class="nav-link" id="nav-kagawad-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Manage Barangay Kagawad</button>
+                              <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home"
+                               aria-selected="true">Barangay Officials</button>
+                              <button class="nav-link" id="nav-kagawad-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile"
+                               aria-selected="false">Manage Barangay Kagawad</button>
                             </div>
                           </nav>
                             <div class="tab-content" id="nav-tabContent">

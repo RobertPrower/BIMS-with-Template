@@ -26,8 +26,11 @@
   <!-- Favicon -->
   <link rel="shortcut icon" href="./img/logos/<?php echo $logo; ?>" type="image/x-icon">
   <!-- Custom styles -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/css/bootstrap-datepicker.min.css" integrity="sha512-34s5cpvaNG3BknEWSuOncX28vz97bRI59UnVtEEpFX536A7BtZSJHsDyFoCl8S7Dt2TPzcrCEoHBGeM4SUBDBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+   integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/css/bootstrap-datepicker.min.css" 
+  integrity="sha512-34s5cpvaNG3BknEWSuOncX28vz97bRI59UnVtEEpFX536A7BtZSJHsDyFoCl8S7Dt2TPzcrCEoHBGeM4SUBDBw==" crossorigin="anonymous" 
+  referrerpolicy="no-referrer" />
   <link rel="stylesheet" href="./css/style.min.css">
   <link rel="stylesheet" href="./css/sweetalert2.min.css">
 
@@ -107,7 +110,8 @@
                                                     </div>
 
                                                     <div class="form-floating mt-3 mb-3 col-md-12">
-                                                        <input type="text" class="form-control" id="presented_id" name="presented_id" aria-label="Floating label select example" aria-required="true" disabled/>
+                                                        <input type="text" class="form-control" id="presented_id" name="presented_id" aria-label="Floating label select example" 
+                                                        aria-required="true" disabled/>
 
                                                         <label for="presented_id">Presented ID</label>
                                                     </div>
@@ -119,7 +123,8 @@
 
                                                     <div id="is_deleted_con" hidden>
                                                         <div class="form-floating mt-3 mb-3 col-md-12">
-                                                            <select class="form-select" id="is_deleted" name="presented_id" aria-label="Floating label select example" aria-required="true" disabled>
+                                                            <select class="form-select" id="is_deleted" name="presented_id" aria-label="Floating label select example" 
+                                                            aria-required="true" disabled>
                                                                 <option value="1">YES</option>
                                                                 <option value="0">NO</option>
                                                                 
@@ -136,8 +141,6 @@
                                         </div>
                                     </div>
                                 </div>    
-
-
                             </div>
                         </div>
 
@@ -207,14 +210,14 @@
 </div>
 <!--Scripts Must be Always On the Top -->
 <script src="js/jquery-3.7.1.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/js/bootstrap-datepicker.min.js" integrity="sha512-LsnSViqQyaXpD4mBBdRYeP6sRwJiJveh2ZIbW41EBrNmKxgr/LFZIiWT6yr+nycvhvauz8c2nYMhrP80YhG7Cw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" 
+integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/js/bootstrap-datepicker.min.js" 
+integrity="sha512-LsnSViqQyaXpD4mBBdRYeP6sRwJiJveh2ZIbW41EBrNmKxgr/LFZIiWT6yr+nycvhvauz8c2nYMhrP80YhG7Cw==" crossorigin="anonymous"
+ referrerpolicy="no-referrer"></script>
 <script src="js/sweetalert2.min.js"></script>
 <script src="js/documentsaudittrail.js"> </script>
 <script src="js/sidebar.js"></script>
-
-
-
 <!-- Chart library -->
 <script src="./plugins/chart.min.js"></script>
 <!-- Icons library -->

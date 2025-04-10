@@ -60,19 +60,18 @@
         <p id="Status"></p> 
     </div>
     <div class="modal-footer">
-
         <form>
             <button type="button" id="viewResorNonResfromDocu" class="btn btn-primary" data-isfordocu="YES">View Person Details</button>
             <button type="button" id="retrevePDF" data-cert_type="" class="btn btn-info">Reprint</button>
-            <button type="button" id="editDocumentbtn" class="btn btn-success" data-bs-target="#EditDocumentModal" data-bs-toggle="modal" data-expiration="" data-presentedid="" data-id_num="" data-request_id="">Edit</button>
+            <button type="button" id="editDocumentbtn" class="btn btn-success" data-bs-target="#EditDocumentModal" data-bs-toggle="modal" data-expiration="" 
+            data-presentedid="" data-id_num="" data-request_id="">Edit</button>
             <?php
                 if($dept === "Admin"){ 
                     echo '<button type="button" class="btn btn-danger" id="revokebtn">Revoke</button>';
                 }
             ?>
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        </form>
-        
+        </form>       
     </div>
     </div>
 </div>

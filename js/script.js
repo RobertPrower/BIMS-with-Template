@@ -259,7 +259,9 @@ $(document).ready(function () {
       });
     
   });
-/*
+
+  //Code for the auto logout after inactivity
+  
   const SESSION_TIMEOUT = 100; 
   const WARNING_TIME = 20;    
 
@@ -336,5 +338,6 @@ $(document).ready(function () {
 
   $(document).ready(function() {
     initSessionTimeout();
-  });*/
+  });
+  
 });
