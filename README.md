@@ -87,6 +87,7 @@ git clone https://github.com/RobertPrower/BIMS-with-Template
 
 - This project was developed solely for academic purposes and community benefit
 - Designed based on actual operational challenges from Barangay 177, Caloocan City
+- You can use the username "RobertPrower" and Password of "1234" to login into the system. 
 
 ---
 
